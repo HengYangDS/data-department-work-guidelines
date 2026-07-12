@@ -37,23 +37,57 @@
 
 ## 验证证据
 
-接受检查要求：`./scripts/validate-docs.sh --render-dir /tmp/data-guidelines-qa`、
-`markdownlint-cli2 '**/*.md' '#.superpowers/**'`、`git diff --check HEAD` 均须
-退出 0，且 `rg -n '```mermaid' guidelines.md | wc -l` 须输出 `5`。五张图的
-默认 SVG 与 768px 宽 PNG 必须逐张确认：标签未裁切、语义边无不必要交叉、
-起始状态明确，且状态不依赖颜色表达。
+以下命令于 2026-07-12 在本工作树最终执行；全部退出 `0`。渲染目录仅是
+检查产物位置，不是接受证据的唯一载体：本节保留命令、结果和逐图结论。
+
+```bash
+./scripts/validate-docs.sh --render-dir /tmp/data-guidelines-final-20260712
+for svg in /tmp/data-guidelines-final-20260712/*.svg; do
+  mmdc -i "${svg%.svg}.mmd" -o "${svg%.svg}-narrow.png" \
+    -b white --width 768 --height 1100
+done
+for source in /tmp/data-guidelines-final-20260712/*.mmd; do
+  mmdc -i "$source" -o "${source%.mmd}-default.png" -b white
+done
+markdownlint-cli2 '**/*.md' '#.superpowers/**'
+git diff --check HEAD
+rg -n '```mermaid' guidelines.md | wc -l
+```
+
+结果如下：
+
+- 严格质量门：Markdown lint 为 `0` error；校验了 `9` 个 Markdown 文件，
+  提取并渲染 `5` 张 Mermaid 图；退出 `0`。
+- 窄宽渲染循环：生成 `5` 张 768px 宽 PNG；退出 `0`。
+- 默认尺寸渲染循环：生成 `5` 张与默认 SVG 同源的 PNG，用于逐图检查标签和
+  布局；退出 `0`。
+- 独立 Markdown lint：`0` error；退出 `0`。
+- `git diff --check HEAD`：无输出；退出 `0`。
+- Mermaid 计数：输出 `5`。
+
+五张默认 SVG 的结构与同源默认尺寸 PNG 的标签、布局均逐一检查；对应的
+768px 宽 PNG 也逐一检查。每项均确认标签未裁切、语义边无不必要交叉、起始
+状态明确，且状态不依赖颜色表达：
+
+| 图 | 默认 SVG 与同源 PNG 检查 | 768px 宽 PNG 检查 | 结论 |
+| --- | --- | --- | --- |
+| 开始路由 | 起点“首屏定向”明确；六条场景路由可辨；无裁切或无必要交叉。 | 文字可读；六条路由和共同落点完整。 | 通过。 |
+| 可信交付 | 从“权威”到“记录”的起点与顺序明确；反馈边有标签且无无必要交叉。 | 标签可读；反馈关系完整。 | 通过。 |
+| 数据采用 | 从“机会”开始的线性采用路径明确；反馈边有标签且无无必要交叉。 | 标签可读；采用与反馈关系完整。 | 通过。 |
+| 人智协作 | 人、任务边界与验收的起点明确；复核回路可辨且无无必要交叉。 | 换行后的标签可读；责任与复核关系完整。 | 通过。 |
+| 规则生命周期 | 从“观察”开始的决策与回流明确；回流边有标签且无无必要交叉。 | 标签可读；决策与复审回流完整。 | 通过。 |
 
 四条阅读路径均有可复查的锚点与下一步：
 
 | 读者与路径 | 路径证据 | 到达的下一步 |
 | --- | --- | --- |
-| 初读成员 | [`README.md` 的“四条底线”](../../README.md#三分钟定向) → [`guidelines.md#23-四条不可突破的底线`](../../guidelines.md#23-四条不可突破的底线) → [`README.md` 的场景导航](../../README.md#我现在要做什么) → [`guidelines.md#场景行动卡`](../../guidelines.md#场景行动卡) | 按当前场景选择一张行动卡。 |
-| 任务负责人 | [`README.md#我现在要做什么`](../../README.md#我现在要做什么) → [`guidelines.md#启动任务卡`](../../guidelines.md#启动任务卡) / [`guidelines.md#分析与决策卡`](../../guidelines.md#分析与决策卡) → [第 3、4 章](../../guidelines.md#3-统一工作闭环) → [模板与验真](../../guidelines.md#12-常用模板) | 形成问题定义或有界建议，并以模板和证据验收。 |
-| Agent | [`AGENTS.md` 的任务内核卡](../../AGENTS.md#最小加载) → [`guidelines.md#任务内核卡`](../../guidelines.md#任务内核卡) → [`AGENTS.md` 的场景规则](../../AGENTS.md#任务路由) → [`guidelines.md#86-agent-必须停止并升级的情形`](../../guidelines.md#86-agent-必须停止并升级的情形) 与 [`guidelines.md#89-人对-agent-结果的验收清单`](../../guidelines.md#89-人对-agent-结果的验收清单) | 在授权边界内执行；触发停止条件即升级，并由人验收。 |
-| 维护者 | [`README.md#权威与演化`](../../README.md#权威与演化) → [`CHANGELOG.md`](../../CHANGELOG.md) / [`docs/decisions/`](../decisions/) → [`guidelines.md#116-规则与实践的生命周期`](../../guidelines.md#116-规则与实践的生命周期) → [复审入口](../../guidelines.md#复盘与规则演化卡) | 以观察、试验、净增益和定期复审决定纳入、修正或废止。 |
+| 初读成员 | [`README.md` 的“四条底线”](../../README.md#三分钟定向) → [`guidelines.md#23-四条不可突破的底线`](../../guidelines.md#23-四条不可突破的底线) → [`README.md` 的场景导航](../../README.md#我现在要做什么) → [`guidelines.md#场景行动卡`](../../guidelines.md#场景行动卡) | 已到达与当前场景对应的行动卡选择。 |
+| 任务负责人 | [`README.md#我现在要做什么`](../../README.md#我现在要做什么) → [`guidelines.md#启动任务卡`](../../guidelines.md#启动任务卡) / [`guidelines.md#分析与决策卡`](../../guidelines.md#分析与决策卡) → [第 3、4 章](../../guidelines.md#3-统一工作闭环) → [模板与验真](../../guidelines.md#12-常用模板) | 已到达问题定义或有界建议，并可用模板和证据验收。 |
+| Agent | [`AGENTS.md` 的任务内核卡](../../AGENTS.md#最小加载) → [`guidelines.md#任务内核卡`](../../guidelines.md#任务内核卡) → [`AGENTS.md` 的场景规则](../../AGENTS.md#任务路由) → [`guidelines.md#86-agent-必须停止并升级的情形`](../../guidelines.md#86-agent-必须停止并升级的情形) 与 [`guidelines.md#89-人对-agent-结果的验收清单`](../../guidelines.md#89-人对-agent-结果的验收清单) | 已到达授权边界、停止升级和人工验收的下一步。 |
+| 维护者 | [`README.md#权威与演化`](../../README.md#权威与演化) → [`CHANGELOG.md`](../../CHANGELOG.md) / [`docs/decisions/`](../decisions/) → [`guidelines.md#116-规则与实践的生命周期`](../../guidelines.md#116-规则与实践的生命周期) → [复审入口](../../guidelines.md#复盘与规则演化卡) | 已到达以观察、试验、净增益和定期复审决定纳入、修正或废止的入口。 |
 
-本决策的命令输出、图形检查结果和渲染产物路径记录于
-`.superpowers/sdd/task-4-report.md`；该报告是任务证据，不是新的规则来源。
+`.superpowers/sdd/task-4-report.md` 只保留任务执行过程的补充日志；本决策记录
+自身已包含接受所需的命令、结果、图形检查和阅读路径，不依赖任何被忽略文件。
 
 ## 不作的主张
 

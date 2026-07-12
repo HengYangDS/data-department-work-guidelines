@@ -46,7 +46,7 @@ import re
 import sys
 from urllib.parse import unquote
 
-root = Path(sys.argv[1])
+root = Path(sys.argv[1]).resolve()
 render_dir = Path(sys.argv[2])
 expected_mermaid = int(sys.argv[3])
 allow_incomplete = sys.argv[4] == "true"
@@ -185,6 +185,70 @@ PENDING_TASK_3_FRAGMENTS = {
     "复盘与规则演化卡",
 }
 
+SCENE_CARD_HEADINGS = [
+    "启动任务卡",
+    "分析与决策卡",
+    "数据采用与生产卡",
+    "沟通与写作卡",
+    "人智协作卡",
+    "复盘与规则演化卡",
+]
+SCENE_CARD_FIELDS = [
+    "何时使用",
+    "先问什么",
+    "最小输入",
+    "必须产出",
+    "停止/升级条件",
+    "验真方式",
+]
+
+
+def require_within_root(path: Path, source: Path, target: str) -> None:
+    try:
+        path.relative_to(root)
+    except ValueError:
+        raise SystemExit(
+            f"local link escapes repository root: {source.relative_to(root)} -> "
+            f"{target}"
+        )
+
+
+def enforce_scene_card_contract(text: str) -> None:
+    section = re.search(
+        r"^## 场景行动卡[ \t]*$\n(?P<body>.*?)(?=^## |\Z)",
+        text,
+        flags=re.MULTILINE | re.DOTALL,
+    )
+    if section is None:
+        raise SystemExit("missing scene action cards section")
+
+    cards = list(
+        re.finditer(
+            r"^### ([^\n]+?)[ \t]*$",
+            section.group("body"),
+            flags=re.MULTILINE,
+        )
+    )
+    headings = [match.group(1) for match in cards]
+    if headings != SCENE_CARD_HEADINGS:
+        raise SystemExit(
+            "scene action cards must be exactly: "
+            + ", ".join(SCENE_CARD_HEADINGS)
+        )
+
+    body = section.group("body")
+    for index, card in enumerate(cards):
+        card_end = cards[index + 1].start() if index + 1 < len(cards) else len(body)
+        card_body = body[card.end() : card_end]
+        for field in SCENE_CARD_FIELDS:
+            field_pattern = re.compile(rf"\*\*{re.escape(field)}：\*\*")
+            count = len(field_pattern.findall(card_body))
+            if count != 1:
+                raise SystemExit(
+                    f"scene action card field count: {card.group(1)} / {field} = {count}; "
+                    "expected 1"
+                )
+
 
 anchors_by_path: dict[Path, set[str]] = {}
 for path in markdown_files:
@@ -210,6 +274,7 @@ for path in markdown_files:
                 if target_path_text
                 else path.resolve()
             )
+            require_within_root(target_path, path, target)
             if not target_path.exists():
                 raise SystemExit(
                     f"broken local link: {path.relative_to(root)} -> "
@@ -235,6 +300,7 @@ for path in markdown_files:
 
 main = root / "guidelines.md"
 text = main.read_text(encoding="utf-8")
+enforce_scene_card_contract(text)
 required = [
     "# 数据部门工作与人智协作准则",
     "人定其向，智扩其能；协作于事，归责于人。",
