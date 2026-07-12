@@ -29,3 +29,4 @@
 - [`CHANGELOG.md`](./CHANGELOG.md) 记录生效变更。
 - [`docs/decisions/`](./docs/decisions/) 与 [`docs/retrospectives/`](./docs/retrospectives/)
   保存取舍和经验，不重写规则。
+- [`docs/adoption/`](./docs/adoption/) 是真实试用与项目接入的准备包，不构成规则副本。
