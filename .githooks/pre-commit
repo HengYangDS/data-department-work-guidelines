@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Portable ETHOS work-lane admission. It intentionally delegates to the active
+# `ethos` command instead of importing paths from the ETHOS product repository.
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel)"
+command -v ethos >/dev/null || {
+  echo "ETHOS command is required for tracked commits in this repository." >&2
+  exit 127
+}
+
+staged=()
+while IFS= read -r path; do
+  staged+=("$path")
+done < <(git diff --cached --name-only --diff-filter=ACMRD)
+
+[[ ${#staged[@]} -eq 0 ]] && exit 0
+ethos hook admit pre-tool "${staged[@]}" \
+  --root "$repo_root" \
+  --editor-root "$repo_root" \
+  --require-editor-root \
+  --json

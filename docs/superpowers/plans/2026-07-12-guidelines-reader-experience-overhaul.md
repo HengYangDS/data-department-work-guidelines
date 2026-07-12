@@ -37,15 +37,15 @@ Python 3, `glow`, and `pandoc`; no project runtime or build dependency is added.
 
 ## File Structure
 
-| Path | Responsibility |
-| --- | --- |
-| `README.md` | Three-minute human orientation and scene routing |
-| `guidelines.md` | Sole rules, visual models, scene cards, deep rules |
-| `AGENTS.md` | Minimum-loading, task-to-anchor Agent router |
-| `scripts/validate-docs.sh` | Lint, links, contracts, and Mermaid render QA |
-| `CHANGELOG.md` | Reader-experience release record |
-| `docs/decisions/` | Reason, scope, validation, and review record |
-| `docs/superpowers/specs/...design.md` | Approved design; no normative rules |
+| Path                                  | Responsibility                                     |
+| ------------------------------------- | -------------------------------------------------- |
+| `README.md`                           | Three-minute human orientation and scene routing   |
+| `guidelines.md`                       | Sole rules, visual models, scene cards, deep rules |
+| `AGENTS.md`                           | Minimum-loading, task-to-anchor Agent router       |
+| `scripts/validate-docs.sh`            | Lint, links, contracts, and Mermaid render QA      |
+| `CHANGELOG.md`                        | Reader-experience release record                   |
+| `docs/decisions/`                     | Reason, scope, validation, and review record       |
+| `docs/superpowers/specs/...design.md` | Approved design; no normative rules                |
 
 ## Task 1: Establish the document quality gate
 
@@ -104,7 +104,7 @@ Expected before the final wrapping pass: failures for `MD033/no-inline-html` and
 
 Create `scripts/validate-docs.sh` with this executable content:
 
-```bash
+````bash
 #!/usr/bin/env bash
 set -euo pipefail
 
@@ -206,7 +206,7 @@ for source in "$RENDER_DIR"/*.mmd; do
 done
 
 printf 'PASS documentation QA; rendered diagrams: %s\n' "$RENDER_DIR"
-```
+````
 
 Then make it executable:
 
@@ -261,22 +261,22 @@ navigation table:
 ## 三分钟定向
 
 | 先记住 | 含义 |
-| --- | --- |
-| 不欺真 | ... |
-| 不越界 | ... |
-| 不悬责 | ... |
-| 不伪成 | ... |
+| ------ | ---- |
+| 不欺真 | ...  |
+| 不越界 | ...  |
+| 不悬责 | ...  |
+| 不伪成 | ...  |
 
 ## 我现在要做什么？
 
-| 场景 | 进入正文 | 先取用 |
-| --- | --- | --- |
-| 启动复杂任务 | `guidelines.md#...` | 问题定义卡 |
-| 分析、决策或诊断 | `guidelines.md#...` | 分析行动卡 |
-| 数据采用或生产变更 | `guidelines.md#...` | 数据质量行动卡 |
-| 汇报、会议或写作 | `guidelines.md#...` | 沟通与写作行动卡 |
-| 调用、验收或交接 Agent | `guidelines.md#...` | 人智协作行动卡 |
-| 带教、复盘或改规则 | `guidelines.md#...` | 演化行动卡 |
+| 场景                   | 进入正文            | 先取用           |
+| ---------------------- | ------------------- | ---------------- |
+| 启动复杂任务           | `guidelines.md#...` | 问题定义卡       |
+| 分析、决策或诊断       | `guidelines.md#...` | 分析行动卡       |
+| 数据采用或生产变更     | `guidelines.md#...` | 数据质量行动卡   |
+| 汇报、会议或写作       | `guidelines.md#...` | 沟通与写作行动卡 |
+| 调用、验收或交接 Agent | `guidelines.md#...` | 人智协作行动卡   |
+| 带教、复盘或改规则     | `guidelines.md#...` | 演化行动卡       |
 
 ## 权威与演化
 
@@ -303,12 +303,12 @@ Preserve the existing authority order and add this routing table:
 
 ## 任务路由
 
-| 任务 | 必读正文 | 必须确认 |
-| --- | --- | --- |
-| 分析/方案 | ... | 事实、假设、反例、行动 |
-| 数据/生产 | ... | 时点、语义、质量、回滚 |
-| 沟通/写作 | ... | 受众、结论、依据、请求 |
-| 变更/自动化 | ... | 权限、并发、停止条件、验证 |
+| 任务        | 必读正文 | 必须确认                   |
+| ----------- | -------- | -------------------------- |
+| 分析/方案   | ...      | 事实、假设、反例、行动     |
+| 数据/生产   | ...      | 时点、语义、质量、回滚     |
+| 沟通/写作   | ...      | 受众、结论、依据、请求     |
+| 变更/自动化 | ...      | 权限、并发、停止条件、验证 |
 ```
 
 The table must link to final headings rather than repeat their detailed rules.
@@ -514,10 +514,15 @@ Create `docs/decisions/2026-07-12-reader-experience-overhaul.md` with sections:
 > **状态**：已接受
 
 ## 问题
+
 ## 决定
+
 ## 增加、删除与净增益
+
 ## 验证证据
+
 ## 不作的主张
+
 ## 复审触发
 ```
 
@@ -555,12 +560,12 @@ Agent：AGENTS → 任务内核卡 → 场景规则 → 停止条件与验收。
 
 Run:
 
-```bash
+````bash
 ./scripts/validate-docs.sh --render-dir /tmp/data-guidelines-qa
 markdownlint-cli2 '**/*.md' '#.superpowers/**' '#.worktrees/**'
 git diff --check HEAD
 rg -n '```mermaid' guidelines.md | wc -l
-```
+````
 
 Expected: all commands exit `0`; the final command reports `5`.
 
@@ -574,16 +579,16 @@ git commit -m "docs: record reader experience overhaul"
 
 ## Plan Self-Review
 
-| Design requirement | Implemented by |
-| --- | --- |
-| One rule source | Tasks 2–3 retain policy only in `guidelines.md` |
-| Human three-minute orientation | Task 2 README |
-| Agent minimum path | Task 2 AGENTS and Task 3 action cards |
-| Five Mermaid | Task 3 Steps 1 and 3–6; Task 4 renders all |
-| Scene-specific usability | Task 3 Step 2 and Task 4 reading-path walk |
-| Highest visual standards | Task 1 gate and Task 4 narrow/default inspection |
-| No new dependency | Global constraints and Task 1 existing-command gate |
-| Durable change record | Task 4 changelog and decision |
+| Design requirement             | Implemented by                                      |
+| ------------------------------ | --------------------------------------------------- |
+| One rule source                | Tasks 2–3 retain policy only in `guidelines.md`     |
+| Human three-minute orientation | Task 2 README                                       |
+| Agent minimum path             | Task 2 AGENTS and Task 3 action cards               |
+| Five Mermaid                   | Task 3 Steps 1 and 3–6; Task 4 renders all          |
+| Scene-specific usability       | Task 3 Step 2 and Task 4 reading-path walk          |
+| Highest visual standards       | Task 1 gate and Task 4 narrow/default inspection    |
+| No new dependency              | Global constraints and Task 1 existing-command gate |
+| Durable change record          | Task 4 changelog and decision                       |
 
 The plan contains no placeholder tasks. The main risk is prose drift during the
 large `guidelines.md` edit; Task 1 establishes lint and canonical-contract

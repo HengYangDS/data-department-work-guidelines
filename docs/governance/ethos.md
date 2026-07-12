@@ -1,0 +1,58 @@
+---
+subject: data-department-work-guidelines:ethos-adoption
+role: policy
+state: canonical
+relations:
+  canonical_for: repository governance
+---
+
+# 本仓库的 ETHOS 治理
+
+状态：canonical。
+
+目的：将本仓库的变更、证据、完成主张与发布边界纳入 ETHOS；不复制或改写
+[`guidelines.md`](../../guidelines.md) 的工作质量规则。
+
+## 事实边界
+
+- [`guidelines.md`](../../guidelines.md) 是团队工作准则的唯一事实源；README 与
+  AGENTS 只承担路由，ETHOS 只治理仓库操作。
+- 本仓库是**文档型 adopter**。其原生正确性由 Markdown 格式、lint、链接/锚点和
+  Mermaid 渲染共同证明，命令定义在 `.ethos/profile.toml`。
+- 远端为 GitLab SSH 地址，但仓库目前没有 `.gitlab-ci.yml`；因此采用与当前形态相符的
+  `generic` profile。GitLab CI、远端发布和 GitLab 实际渲染都是待外部验证的投影，
+  不是本地完成主张。
+- `.ethos/state/` 是本机租约、证明和协调状态，始终忽略；跟踪的 `.ethos/*.toml`、
+  OpenSpec、文档、脚本与 evidence 才是仓库事实。
+
+## 本地闭环
+
+```mermaid
+flowchart LR
+    A["dev\n已接受本地根"] --> B["candidate/dev\n候选列车"]
+    B --> C["work/*\n已租约工作道"]
+    C --> D["HEAD 绑定的本地证明"]
+    D --> E["ETHOS land"]
+    E --> B
+    B --> F["ETHOS closeout"]
+    F --> A
+    A -. "远端可用且另行验证" .-> G["GitLab 发布投影"]
+```
+
+1. 在 `dev` 观察和启动候选列车；不得直接以 `main` 承担本地接受根。
+2. 只在已租约的 `work/*` 中修改受跟踪文件，并先执行 `ethos lane prewrite`。
+3. 用当前 HEAD 的 `ethos prove --execute --scope docs --expect-head <HEAD> --json`
+   记录本地证明；`ethos land` 只推进候选列车。
+4. 只有受控 closeout 才能把 `candidate/dev` 快进到 `dev`。远端发布必须在连接恢复后
+   单独观察和执行。
+
+## 可移植 hooks
+
+`.githooks/` 只调用可发现的 `ethos` 命令，不依赖某台机器上的 ETHOS 源码路径。执行
+`ethos hook install --json` 后，Git 通过 `core.hooksPath=.githooks` 启用提交、推送和
+引用移动的准入。工作者必须令 `ETHOS_ACTOR` 与 Work Lane 租约的 `holder_ref` 一致。
+
+## 不作的主张
+
+本文件不主张 GitLab CI 已配置、远端引用已同步、GitLab 已验证链接锚点，或团队已经在
+真实工作中采用本准则。这些结论需要各自新鲜、可复查的外部或运行证据。

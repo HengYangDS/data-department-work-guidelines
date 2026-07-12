@@ -1,5 +1,7 @@
 .worktrees/
 .superpowers/
+node_modules/
+docs-qa-artifacts/
 
 # Python and local editor/runtime state.
 .venv/

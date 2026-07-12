@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+# ETHOS pre-push admission for protected refs. Git supplies local/remote ref
+# pairs on stdin; remote success is not asserted by this local hook.
+set -eu
+
+repo_root="$(git rev-parse --show-toplevel)"
+command -v ethos >/dev/null || {
+  echo "ETHOS command is required for protected-ref publication." >&2
+  exit 127
+}
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+  [ -z "$remote_ref" ] && continue
+  case "$local_sha" in
+    0000000000000000000000000000000000000000) continue ;;
+  esac
+  ethos hook pre-push "$remote_ref" "$local_sha" \
+    --remote-head "$remote_sha" \
+    --root "$repo_root" \
+    --json >/dev/null
+done

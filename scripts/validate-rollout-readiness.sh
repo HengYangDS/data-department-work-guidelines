@@ -32,7 +32,10 @@ required_fragments = {
         "## 最小加载",
         "## 任务路由",
         "./guidelines.md#任务内核卡",
+        "./guidelines.md#启动任务卡",
         "./guidelines.md#人智协作卡",
+        "./guidelines.md#复盘与规则演化卡",
+        "## 仓库治理（ETHOS）",
     ],
     "docs/adoption/README.md": [
         "本目录不是规则事实源",

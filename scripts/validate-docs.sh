@@ -30,15 +30,25 @@ if [[ -z "$RENDER_DIR" ]]; then
   trap 'rm -rf "$RENDER_DIR"' EXIT
 fi
 
-for command in python3 markdownlint-cli2 mmdc; do
-  command -v "$command" >/dev/null || {
-    echo "missing required documentation QA command: $command" >&2
+command -v python3 >/dev/null || {
+  echo "missing required documentation QA command: python3" >&2
+  exit 127
+}
+
+PRETTIER="$ROOT/node_modules/.bin/prettier"
+MARKDOWNLINT="$ROOT/node_modules/.bin/markdownlint-cli2"
+MMDC="$ROOT/node_modules/.bin/mmdc"
+for command in "$PRETTIER" "$MARKDOWNLINT" "$MMDC"; do
+  [[ -x "$command" ]] || {
+    echo "missing required repository documentation tool: $command" >&2
+    echo "run: (cd \"$ROOT\" && npm ci --ignore-scripts)" >&2
     exit 127
   }
 done
 
 cd "$ROOT"
-markdownlint-cli2 '**/*.md' '#.superpowers/**' '#.worktrees/**'
+"$MARKDOWNLINT" '**/*.md' '#.superpowers/**' '#.worktrees/**' '#node_modules/**'
+"$PRETTIER" --check '**/*.md'
 
 python3 - "$ROOT" "$RENDER_DIR" "$EXPECTED_MERMAID" "$ALLOW_INCOMPLETE" <<'PY'
 from pathlib import Path
@@ -50,7 +60,7 @@ root = Path(sys.argv[1]).resolve()
 render_dir = Path(sys.argv[2])
 expected_mermaid = int(sys.argv[3])
 allow_incomplete = sys.argv[4] == "true"
-excluded_roots = {".superpowers", ".worktrees"}
+excluded_roots = {".superpowers", ".worktrees", "node_modules"}
 markdown_files = sorted(
     path
     for path in root.rglob("*.md")
@@ -353,7 +363,7 @@ PY
 for source in "$RENDER_DIR"/*.mmd; do
   [[ -e "$source" ]] || continue
   target="${source%.mmd}.svg"
-  mmdc -i "$source" -o "$target" -b white
+  "$MMDC" -i "$source" -o "$target" -b white
   test -s "$target"
 done
 

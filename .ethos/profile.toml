@@ -25,34 +25,35 @@ claims = "evidence/claims"
 agent_skills = ".agents/skills"
 local_state = ".ethos/state"
 
-# Declare your native code-correctness proof so an adopter proof carries a real
-# test / type / lint dimension. Map each required axis (behavior, static-analysis)
-# to one of your own trust-bearing gates, or waive it with a reason. Uncomment and
-# adapt to your toolchain:
-#
-# [proof]
-# code_correctness_gates = ["my-tests", "my-static"]
-#
-# [proof.code_correctness_map]
-# behavior = "my-tests"
-# static-analysis = "my-static"
-#
-# [[proof.gates]]
-# id = "my-tests"
-# kind = "test"
-# command = ["your", "test", "runner"]
-# dimensions = ["test", "coverage"]
-# execution_mode = "subprocess"
-# evidence_class = "proof"
-# trust_bearing = true
-# tool_adapter = "repository-native"
-#
-# [[proof.gates]]
-# id = "my-static"
-# kind = "typing"
-# command = ["your", "type-or-lint", "checker"]
-# dimensions = ["static-analysis"]
-# execution_mode = "subprocess"
-# evidence_class = "contract"
-# trust_bearing = true
-# tool_adapter = "repository-native"
+# ETHOS names these required axes “code correctness”; for this documentation
+# repository they mean reader-visible behavior and static document integrity.
+[proof]
+code_correctness_gates = ["docs-integrity", "markdown-format"]
+
+[proof.code_correctness_map]
+behavior = "docs-integrity"
+static-analysis = "markdown-format"
+
+[[proof.gates]]
+id = "docs-integrity"
+kind = "test"
+command = ["./scripts/validate-docs.sh"]
+asset_classes = ["markdown-docs"]
+dimensions = ["behavior", "documentation", "links", "rendering"]
+execution_mode = "subprocess"
+evidence_class = "proof"
+trust_bearing = true
+tool_adapter = "repository-native"
+network_policy = "offline"
+
+[[proof.gates]]
+id = "markdown-format"
+kind = "lint"
+command = ["./scripts/format-markdown.sh", "--check"]
+asset_classes = ["markdown-docs"]
+dimensions = ["static-analysis", "format", "markdown"]
+execution_mode = "subprocess"
+evidence_class = "contract"
+trust_bearing = true
+tool_adapter = "prettier"
+network_policy = "offline"

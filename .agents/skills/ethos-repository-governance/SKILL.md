@@ -34,5 +34,5 @@ ethos report --json
 
 ## Trust Boundary
 
-This skill is a workflow package projection. Repository source, tests, schemas,
-OpenSpec records, claims, evidence, and ETHOS command JSON remain the source of truth.
+This skill is a workflow package projection. Repository truth remains in source,
+tests, schemas, OpenSpec records, claims, evidence, and ETHOS command JSON.
