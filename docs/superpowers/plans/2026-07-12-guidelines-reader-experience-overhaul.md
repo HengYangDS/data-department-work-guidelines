@@ -92,7 +92,7 @@ docs/retrospectives/2026-07-12-baseline-establishment.md
 Run:
 
 ```bash
-markdownlint-cli2 '**/*.md'
+markdownlint-cli2 '**/*.md' '#.superpowers/**'
 ```
 
 Expected before the final wrapping pass: failures for `MD033/no-inline-html` and
@@ -141,7 +141,7 @@ for command in python3 markdownlint-cli2 mmdc; do
 done
 
 cd "$ROOT"
-markdownlint-cli2 '**/*.md'
+markdownlint-cli2 '**/*.md' '#.superpowers/**'
 
 python3 - "$ROOT" "$RENDER_DIR" "$EXPECTED_MERMAID" <<'PY'
 from pathlib import Path
