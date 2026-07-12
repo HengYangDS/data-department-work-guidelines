@@ -61,6 +61,9 @@ Python 3, `glow`, and `pandoc`; no project runtime or build dependency is added.
   local links, canonical phrases, and five Mermaid SVG renders pass. The
   explicit pre-body mode accepts only zero Mermaid diagrams. Rendered artifacts
   are written to the supplied directory or a temporary directory.
+- In default final mode, local fragments must resolve to a Markdown heading in
+  the target file. The explicit pre-body mode checks local files but defers
+  fragments owned by Task 3, so intermediate routes may be written first.
 
 - [ ] **Step 1: Write the failing quality-gate invocation**
 
@@ -339,7 +342,7 @@ git commit -m "docs: add scene-based reader and agent routes"
 - Produces: five Mermaid diagrams, six action cards, and stable headings targeted
   by README and AGENTS.
 
-- [ ] **Step 1: Add the opening visual route and four-bottom-line card**
+- [ ] **Step 1: Add the opening visual route and task core**
 
 Immediately after the current “如何使用本准则” section, add:
 
@@ -361,7 +364,11 @@ flowchart TB
 ```
 
 Precede it with “本图回答什么：我应从哪条路径进入。” Follow it with a
-six-row scene navigation table that links to the six action cards below.
+six-row scene navigation table that links to the six action cards below. Before
+the diagram, add a `### 任务内核卡` heading: in no more than four short lines,
+route readers to the task's authority, object and boundary, risk level,
+acceptance claim, and the four bottom lines. It is a loading and routing card,
+not a seventh scene action card or a duplicate rule source.
 
 - [ ] **Step 2: Add six action cards without duplicating deep policy**
 
