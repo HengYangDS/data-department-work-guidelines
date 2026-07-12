@@ -155,6 +155,17 @@ def heading_anchors(path: Path) -> set[str]:
     return anchors
 
 
+PENDING_TASK_3_FRAGMENTS = {
+    "任务内核卡",
+    "启动任务卡",
+    "分析与决策卡",
+    "数据采用与生产卡",
+    "沟通与写作卡",
+    "人智协作卡",
+    "复盘与规则演化卡",
+}
+
+
 anchors_by_path: dict[Path, set[str]] = {}
 for path in markdown_files:
     for line in unfenced_lines(path):
@@ -175,14 +186,19 @@ for path in markdown_files:
                 )
             if (
                 separator
-                and not allow_incomplete
                 and target_path.suffix.lower() == ".md"
             ):
                 anchors = anchors_by_path.setdefault(
                     target_path, heading_anchors(target_path)
                 )
                 normalized_fragment = gitlab_anchor(fragment)
-                if normalized_fragment not in anchors:
+                # Pre-body staging defers only the exact Task 3-owned card headings.
+                is_pending_task_3_fragment = (
+                    allow_incomplete
+                    and target_path == (root / "guidelines.md").resolve()
+                    and normalized_fragment in PENDING_TASK_3_FRAGMENTS
+                )
+                if normalized_fragment not in anchors and not is_pending_task_3_fragment:
                     raise SystemExit(
                         f"broken local fragment: {path.relative_to(root)} -> "
                         f"{target}"
