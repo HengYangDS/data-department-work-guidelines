@@ -4,11 +4,13 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 RENDER_DIR=""
 EXPECTED_MERMAID=5
+ALLOW_INCOMPLETE=false
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --allow-incomplete)
       EXPECTED_MERMAID=0
+      ALLOW_INCOMPLETE=true
       shift
       ;;
     --render-dir)
@@ -38,22 +40,28 @@ done
 cd "$ROOT"
 markdownlint-cli2 '**/*.md' '#.superpowers/**'
 
-python3 - "$ROOT" "$RENDER_DIR" "$EXPECTED_MERMAID" <<'PY'
+python3 - "$ROOT" "$RENDER_DIR" "$EXPECTED_MERMAID" "$ALLOW_INCOMPLETE" <<'PY'
 from pathlib import Path
 import re
 import sys
+from urllib.parse import unquote
 
 root = Path(sys.argv[1])
 render_dir = Path(sys.argv[2])
 expected_mermaid = int(sys.argv[3])
+allow_incomplete = sys.argv[4] == "true"
 excluded_root = ".superpowers"
 markdown_files = sorted(
     path
     for path in root.rglob("*.md")
     if path.relative_to(root).parts[:1] != (excluded_root,)
 )
-local_link = re.compile(r"\[[^]]+\]\(([^)#]+)(?:#[^)]+)?\)")
+local_link = re.compile(
+    r"(?<!!)\[[^]]+\]\((?:<([^>]+)>|([^\s)]+))(?:\s+[^)]*)?\)"
+)
 fence_start = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
+atx_heading = re.compile(r"^ {0,3}#{1,6}[ \t]+(.+?)[ \t]*#*[ \t]*$")
+setext_heading = re.compile(r"^ {0,3}(?:=+|-+)[ \t]*$")
 
 
 def fenced_blocks(path: Path):
@@ -86,15 +94,99 @@ def fenced_blocks(path: Path):
         )
 
 
-for path in markdown_files:
-    text = path.read_text(encoding="utf-8")
-    for target in local_link.findall(text):
-        if "://" in target or target.startswith("mailto:"):
+def unfenced_lines(path: Path):
+    active_fence = None
+
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if active_fence is None:
+            match = fence_start.match(line)
+            if match:
+                active_fence = match.group(1)
+                continue
+            yield line
             continue
-        if not (path.parent / target).resolve().exists():
-            raise SystemExit(
-                f"broken local link: {path.relative_to(root)} -> {target}"
+
+        marker = active_fence[0]
+        minimum_length = len(active_fence)
+        if re.match(rf"^ {{0,3}}{re.escape(marker)}{{{minimum_length},}}[ \t]*$", line):
+            active_fence = None
+
+    if active_fence is not None:
+        raise SystemExit(
+            f"unbalanced fenced block: {path.relative_to(root)}"
+        )
+
+
+def gitlab_anchor(heading: str) -> str:
+    normalized = unquote(heading).casefold().strip()
+    retained = "".join(
+        character
+        for character in normalized
+        if character.isalnum() or character in {"_", "-", " ", "\t"}
+    )
+    return re.sub(r"[-\s]+", "-", retained).strip("-")
+
+
+def heading_anchors(path: Path) -> set[str]:
+    lines = list(unfenced_lines(path))
+    anchors: set[str] = set()
+    duplicates: dict[str, int] = {}
+
+    for index, line in enumerate(lines):
+        match = atx_heading.match(line)
+        if match:
+            heading = match.group(1)
+        elif (
+            line.strip()
+            and index + 1 < len(lines)
+            and setext_heading.match(lines[index + 1])
+        ):
+            heading = line.strip()
+        else:
+            continue
+
+        base = gitlab_anchor(heading)
+        if not base:
+            continue
+        duplicate = duplicates.get(base, 0)
+        anchors.add(base if duplicate == 0 else f"{base}-{duplicate}")
+        duplicates[base] = duplicate + 1
+
+    return anchors
+
+
+anchors_by_path: dict[Path, set[str]] = {}
+for path in markdown_files:
+    for line in unfenced_lines(path):
+        for match in local_link.finditer(line):
+            target = match.group(1) or match.group(2)
+            if "://" in target or target.startswith("mailto:"):
+                continue
+            target_path_text, separator, fragment = target.partition("#")
+            target_path = (
+                (path.parent / target_path_text).resolve()
+                if target_path_text
+                else path.resolve()
             )
+            if not target_path.exists():
+                raise SystemExit(
+                    f"broken local link: {path.relative_to(root)} -> "
+                    f"{target_path_text}"
+                )
+            if (
+                separator
+                and not allow_incomplete
+                and target_path.suffix.lower() == ".md"
+            ):
+                anchors = anchors_by_path.setdefault(
+                    target_path, heading_anchors(target_path)
+                )
+                normalized_fragment = gitlab_anchor(fragment)
+                if normalized_fragment not in anchors:
+                    raise SystemExit(
+                        f"broken local fragment: {path.relative_to(root)} -> "
+                        f"{target}"
+                    )
     list(fenced_blocks(path))
 
 main = root / "guidelines.md"
