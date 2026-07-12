@@ -66,7 +66,7 @@ Python 3, `glow`, and `pandoc`; no project runtime or build dependency is added.
   the target file. The explicit pre-body mode checks local files but defers
   fragments owned by Task 3, so intermediate routes may be written first.
 
-- [ ] **Step 1: Write the failing quality-gate invocation**
+- [x] **Step 1: Write the failing quality-gate invocation**
 
 Run from the repository root:
 
@@ -78,7 +78,7 @@ Run from the repository root:
 Expected before implementation: shell failure because `scripts/validate-docs.sh`
 does not exist.
 
-- [ ] **Step 2: Normalize Markdown that currently violates lint**
+- [x] **Step 2: Normalize Markdown that currently violates lint**
 
 Replace every metadata line using `<br>` with separate blockquote paragraphs.
 Wrap prose in these existing files at 80 characters or fewer without changing
@@ -99,7 +99,7 @@ markdownlint-cli2 '**/*.md' '#.superpowers/**'
 Expected before the final wrapping pass: failures for `MD033/no-inline-html` and
 `MD013/line-length`; expected after: `Summary: 0 error(s)`.
 
-- [ ] **Step 3: Create the quality gate**
+- [x] **Step 3: Create the quality gate**
 
 Create `scripts/validate-docs.sh` with this executable content:
 
@@ -213,7 +213,7 @@ Then make it executable:
 chmod +x scripts/validate-docs.sh
 ```
 
-- [ ] **Step 4: Run the quality gate and inspect artifacts**
+- [x] **Step 4: Run the quality gate and inspect artifacts**
 
 Run:
 
@@ -225,7 +225,7 @@ Run:
 Expected: exit `0`, `validated ... Markdown files and extracted 0 diagrams`,
 and no Mermaid rendering error. The default final mode requires five diagrams.
 
-- [ ] **Step 5: Commit the gate**
+- [x] **Step 5: Commit the gate**
 
 ```bash
 git add scripts/validate-docs.sh guidelines.md \
@@ -247,7 +247,7 @@ git commit -m "chore: add guidelines documentation quality gate"
 - Produces: a three-minute human route and a minimum-loading Agent route; neither
   file restates the complete policy.
 
-- [ ] **Step 1: Replace README with the three-minute orientation structure**
+- [x] **Step 1: Replace README with the three-minute orientation structure**
 
 Use this heading sequence and keep each section below 12 lines except the scene
 navigation table:
@@ -288,7 +288,7 @@ navigation table:
 Use the actual final anchor links created in Task 3; run the quality gate to
 prove every local link resolves.
 
-- [ ] **Step 2: Replace AGENTS with the minimum-loading router**
+- [x] **Step 2: Replace AGENTS with the minimum-loading router**
 
 Preserve the existing authority order and add this routing table:
 
@@ -312,7 +312,7 @@ Preserve the existing authority order and add this routing table:
 
 The table must link to final headings rather than repeat their detailed rules.
 
-- [ ] **Step 3: Validate human and Agent entry routes**
+- [x] **Step 3: Validate human and Agent entry routes**
 
 Run:
 
@@ -324,7 +324,7 @@ rg -n '三分钟定向|我现在要做什么|最小加载|任务路由' README.m
 
 Expected: quality gate exit `0`; each of the four entry headings appears once.
 
-- [ ] **Step 4: Commit entry routes**
+- [x] **Step 4: Commit entry routes**
 
 ```bash
 git add README.md AGENTS.md
@@ -343,7 +343,7 @@ git commit -m "docs: add scene-based reader and agent routes"
 - Produces: five Mermaid diagrams, six action cards, and stable headings targeted
   by README and AGENTS.
 
-- [ ] **Step 1: Add the opening visual route and task core**
+- [x] **Step 1: Add the opening visual route and task core**
 
 Immediately after the current “如何使用本准则” section, add:
 
@@ -371,7 +371,7 @@ route readers to the task's authority, object and boundary, risk level,
 acceptance claim, and the four bottom lines. It is a loading and routing card,
 not a seventh scene action card or a duplicate rule source.
 
-- [ ] **Step 2: Add six action cards without duplicating deep policy**
+- [x] **Step 2: Add six action cards without duplicating deep policy**
 
 Create a new `## 场景行动卡` section before the first deep principle chapter.
 Use these exact card headings and six fixed fields:
@@ -396,7 +396,7 @@ Fill each field with one concise, imperative sentence and end each card with
 “深读：” plus links to the existing authoritative deep sections. Do not repeat
 whole tables from those sections.
 
-- [ ] **Step 3: Insert the credible-delivery Mermaid**
+- [x] **Step 3: Insert the credible-delivery Mermaid**
 
 At `### 3.0 可信交付的最小内核`, add this diagram after the kernel chain:
 
@@ -409,7 +409,7 @@ flowchart LR
 
 Precede it with “本图回答什么：一次工作何以从授权走到可信结论。”
 
-- [ ] **Step 4: Insert the data-adoption Mermaid**
+- [x] **Step 4: Insert the data-adoption Mermaid**
 
 At `## 5. 数据部门共同质量契约`, insert:
 
@@ -422,7 +422,7 @@ flowchart LR
 
 Precede it with “本图回答什么：数据为何要经历从线索到受控采用的连续判断。”
 
-- [ ] **Step 5: Insert the human-intelligence Mermaid**
+- [x] **Step 5: Insert the human-intelligence Mermaid**
 
 At `### 8.0 人智协作的含义`, insert:
 
@@ -438,7 +438,7 @@ flowchart TB
 
 Precede it with “本图回答什么：人、智能能力、事实与责任如何各得其位。”
 
-- [ ] **Step 6: Insert the rule-lifecycle Mermaid**
+- [x] **Step 6: Insert the rule-lifecycle Mermaid**
 
 At `### 11.6 规则与实践的生命周期`, insert:
 
@@ -455,7 +455,7 @@ flowchart LR
 
 Precede it with “本图回答什么：规则如何进入、被检验、被修正或退出。”
 
-- [ ] **Step 7: Run canonical body validation**
+- [x] **Step 7: Run canonical body validation**
 
 Run:
 
@@ -466,7 +466,7 @@ Run:
 Expected: five Mermaid `.mmd` and five non-empty `.svg` files; no Markdown lint
 or canonical-contract error.
 
-- [ ] **Step 8: Commit canonical body**
+- [x] **Step 8: Commit canonical body**
 
 ```bash
 git add guidelines.md
@@ -485,7 +485,7 @@ git commit -m "docs: add visual scene routes to guidelines"
 - Consumes: completed body, routes, validation script, and rendered artifacts.
 - Produces: durable decision record plus fresh acceptance evidence.
 
-- [ ] **Step 1: Add the change record**
+- [x] **Step 1: Add the change record**
 
 Add a new top `## [2.1.0] — 2026-07-12` entry to `CHANGELOG.md` with these points:
 
@@ -503,7 +503,7 @@ Add a new top `## [2.1.0] — 2026-07-12` entry to `CHANGELOG.md` with these poi
   仍需通过真实试点验证。
 ```
 
-- [ ] **Step 2: Create the decision record**
+- [x] **Step 2: Create the decision record**
 
 Create `docs/decisions/2026-07-12-reader-experience-overhaul.md` with sections:
 
@@ -523,7 +523,7 @@ Create `docs/decisions/2026-07-12-reader-experience-overhaul.md` with sections:
 State that the change preserves one rule source, uses five diagrams and six
 action cards, and is accepted only after the Task 4 validation commands pass.
 
-- [ ] **Step 3: Render and inspect all diagrams at two widths**
+- [x] **Step 3: Render and inspect all diagrams at two widths**
 
 Run:
 
@@ -539,7 +539,7 @@ Inspect every default SVG and narrow PNG. Reject and revise a diagram if any
 label is clipped, any semantic edge crosses without need, the start state is
 unclear, or the graph relies on color to convey state.
 
-- [ ] **Step 4: Walk the four reading paths**
+- [x] **Step 4: Walk the four reading paths**
 
 Record in the decision file that these paths each reach their next action:
 
@@ -550,7 +550,7 @@ Agent：AGENTS → 任务内核卡 → 场景规则 → 停止条件与验收。
 维护者：README → CHANGELOG/决策 → 规则生命周期 → 复审入口。
 ```
 
-- [ ] **Step 5: Run final verification**
+- [x] **Step 5: Run final verification**
 
 Run:
 
@@ -563,7 +563,7 @@ rg -n '```mermaid' guidelines.md | wc -l
 
 Expected: all commands exit `0`; the final command reports `5`.
 
-- [ ] **Step 6: Commit acceptance record**
+- [x] **Step 6: Commit acceptance record**
 
 ```bash
 git add CHANGELOG.md \
