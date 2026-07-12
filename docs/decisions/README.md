@@ -8,6 +8,13 @@ relations:
 
 # 决策记录
 
+> **状态 Status:** canonical（持久取舍的当前入口）
+>
+> **目的 Purpose:** 路由约束后续维护的取舍及其依据、后果与复审条件。
+>
+> **参见 See also:** [决策索引](decision-index.md)、[已接受决策](accepted/README.md)、
+> [决策记录模板](templates/decision-record.md)。
+
 本目录记录会约束后续维护的取舍：为何做、在何处有效、以何为依据、带来什么后果，以及何时
 应被重新审视。它不形成第二套工作规则。
 

@@ -8,6 +8,13 @@ relations:
 
 # 证据说明
 
+> **状态 Status:** canonical（可审阅证据的当前入口）
+>
+> **目的 Purpose:** 区分持久证据、主张绑定与可再生产物，防止日志替代判断。
+>
+> **参见 See also:** [文档导航](../README.md)、[持久证据根](../../evidence/README.md)、
+> [ETHOS 治理](../governance/ethos.md)。
+
 证据支持主张，不替代规则正文，也不是未经判断的日志堆积。
 
 - [`../../evidence/`](../../evidence/)：ETHOS 的持久证据根，包含主张、按主题归档的

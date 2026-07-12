@@ -1,10 +1,19 @@
+---
+subject: data-department-work-guidelines:adoption-guide
+role: how-to
+state: active
+relations:
+  routes: bounded real-work trials
+---
+
 # 本地采用准备包
 
-> **状态**：本地准备完成；真实试用与远端发布均未在本文件中宣称完成
+> **状态 Status:** active（准备真实试用；真实试用与远端发布均未在本文件中宣称完成）
 >
-> **权威正文**：[guidelines.md](../../guidelines.md)
+> **目的 Purpose:** 让负责人在不新增平行流程、不复制准则的前提下启动并记录真实试用。
 >
-> **用途**：让负责人能够在不新增平行流程、不复制准则的前提下，启动并记录真实试用。
+> **参见 See also:** [`guidelines.md`](../../guidelines.md)、
+> [本地采用决策](../decisions/2026-07-12-local-rollout-readiness.md)。
 
 ## 使用边界
 

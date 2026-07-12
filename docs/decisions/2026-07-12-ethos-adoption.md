@@ -8,13 +8,14 @@ relations:
 
 # 决策：将准则仓库接入 ETHOS adopter
 
-> **日期**：2026-07-12
+> **状态 Status:** canonical（仓库治理的现行决策；本地接入完成，远端发布与 hosted 验证待执行）
 >
-> **状态**：本地接入；远端发布与 hosted 验证待执行
+> **日期 Date:** 2026-07-12
 >
-> **准则事实源**：[guidelines.md](../../guidelines.md)
+> **目的 Purpose:** 将本地变更、证据、完成主张与发布边界纳入同一受控闭环。
 >
-> **仓库治理说明**：[ETHOS 治理](../governance/ethos.md)
+> **参见 See also:** [ETHOS 治理](../governance/ethos.md)、[决策索引](decision-index.md)、
+> [持久证据说明](../evidence/README.md)。
 
 ## 问题
 

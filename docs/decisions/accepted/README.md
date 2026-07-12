@@ -8,6 +8,12 @@ relations:
 
 # 已接受决策
 
+> **状态 Status:** canonical（当前接受的持久取舍目录）
+>
+> **目的 Purpose:** 集中指出当前有效的决策记录，同时保持既有链接稳定。
+>
+> **参见 See also:** [决策索引](../decision-index.md)、[决策记录](../README.md)。
+
 当前已接受的持久取舍由 [决策索引](../decision-index.md) 统一编目：
 
 1. [DR-0001：人智协作](../2026-07-12-human-intelligence-collaboration.md)

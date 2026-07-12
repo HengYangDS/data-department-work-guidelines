@@ -8,13 +8,14 @@ relations:
 
 # DR-XXXX：标题
 
-> **状态**：`proposed` / `accepted` / `superseded`
+> **状态 Status:** canonical（可复用的决策记录模板）
 >
-> **日期**：`YYYY-MM-DD`
+> **目的 Purpose:** 使一项持久判断同时保留范围、依据、后果、验证和复审条件。
 >
-> **范围**：`对象、边界与不适用范围`
+> **参见 See also:** [决策记录](../README.md)、[决策索引](../decision-index.md)。
 >
-> **权威正文或事实源**：`链接`
+> **记录字段 Record fields:** 状态 `proposed` / `accepted` / `superseded`；日期 `YYYY-MM-DD`；
+> 范围 `对象、边界与不适用范围`；权威正文或事实源 `链接`。
 
 ## 问题与依据
 

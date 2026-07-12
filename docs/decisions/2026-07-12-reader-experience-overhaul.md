@@ -8,7 +8,12 @@ relations:
 
 # 决策：准则读者体验重构
 
-> **状态**：已接受
+> **状态 Status:** canonical（读者路径与文档质量的现行设计；已接受）
+>
+> **目的 Purpose:** 让成员与 Agent 以最短正确路径进入同一规范性正文并完成验真。
+>
+> **参见 See also:** [`README.md`](../../README.md)、[`AGENTS.md`](../../AGENTS.md)、
+> [本地采用准备](2026-07-12-local-rollout-readiness.md)。
 
 ## 问题
 

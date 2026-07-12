@@ -8,6 +8,12 @@ relations:
 
 # 决策与实现链接
 
+> **状态 Status:** canonical（决策与可检查实现的当前映射）
+>
+> **目的 Purpose:** 将持久取舍连接到规则、脚本、配置、证据和验证入口。
+>
+> **参见 See also:** [决策索引](decision-index.md)、[ETHOS 治理](../governance/ethos.md)。
+
 本仓库以文档、脚本与治理配置为主要实现载体；下表将持久决策连接到可检查的具体位置。
 
 | 决策                  | 主要实现                                                                                                             | 验证入口                                                         |

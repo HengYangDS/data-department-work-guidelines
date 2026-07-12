@@ -8,6 +8,13 @@ relations:
 
 # 参考资料
 
+> **状态 Status:** canonical（稳定术语与边界的当前入口）
+>
+> **目的 Purpose:** 说明规则、入口、治理与本地证明之间稳定且可引用的边界。
+>
+> **参见 See also:** [文档导航](../README.md)、[ETHOS 治理](../governance/ethos.md)、
+> [`guidelines.md`](../../guidelines.md)。
+
 本目录保存稳定的术语、边界与操作引用。运行中的事实仍以当前仓库内容、受控命令输出和
 已绑定的证据为准。
 

@@ -8,6 +8,13 @@ relations:
 
 # 文档导航
 
+> **状态 Status:** canonical（当前有效的文档导航）
+>
+> **目的 Purpose:** 为成员与 Agent 路由规则、决策、证据、参考与历史，而不复制规则正文。
+>
+> **参见 See also:** [`README.md`](../README.md)、[`AGENTS.md`](../AGENTS.md)、
+> [决策记录](decisions/README.md)。
+
 本目录保存准则的解释、取舍、证据与历史；它们帮助读者理解和维护
 [`guidelines.md`](../guidelines.md)，但不替代该文件作为团队通用规则的唯一事实源。
 

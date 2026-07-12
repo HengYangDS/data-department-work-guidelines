@@ -1,3 +1,11 @@
+---
+subject: data-department-work-guidelines:reader-experience-implementation-plan
+role: plan
+state: archived
+relations:
+  records: 2026-07-12 reader-experience implementation plan
+---
+
 # Guidelines Reader Experience Overhaul Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use

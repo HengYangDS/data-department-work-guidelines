@@ -8,6 +8,12 @@ relations:
 
 # 决策依赖图
 
+> **状态 Status:** canonical（当前决策依赖关系）
+>
+> **目的 Purpose:** 显示关键取舍如何共同约束真实试用、规则演化与仓库治理。
+>
+> **参见 See also:** [决策索引](decision-index.md)、[决策与实现链接](decision-code-links.md)。
+
 ```mermaid
 flowchart LR
     A["DR-0001 人智协作"] --> B["DR-0002 读者体验重构"]

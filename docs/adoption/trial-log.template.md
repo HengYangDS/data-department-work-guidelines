@@ -1,8 +1,20 @@
+---
+subject: data-department-work-guidelines:trial-log-template
+role: template
+state: canonical
+relations:
+  canonical_for: bounded real-work trial records
+---
+
 # 真实试用记录模板
 
-> **性质**：非规范性工作记录；通用规则以 [guidelines.md](../../guidelines.md) 为准
+> **状态 Status:** canonical（可复用的真实试用记录模板）
 >
-> **适用对象**：一项正在发生的 L1/L2 工作，不用于事后补写“成功案例”
+> **目的 Purpose:** 非规范性工作记录：让一项正在发生的 L1/L2 工作留下事实、阻力、证据、
+> 限制与候选改进；不用于事后补写“成功案例”。
+>
+> **参见 See also:** [本地采用准备包](README.md)、[项目接入模板](project-adapter.template.md)、
+> [`guidelines.md`](../../guidelines.md)。
 
 ## 1. 事项与责任
 

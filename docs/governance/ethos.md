@@ -1,5 +1,5 @@
 ---
-subject: data-department-work-guidelines:ethos-adoption
+subject: data-department-work-guidelines:repository-governance
 role: policy
 state: canonical
 relations:
@@ -8,10 +8,15 @@ relations:
 
 # 本仓库的 ETHOS 治理
 
-状态：canonical。
+> **状态 Status:** canonical（仓库治理的当前政策）
+>
+> **目的 Purpose:** 将变更、证据、完成主张与发布边界纳入 ETHOS，而不复制团队工作准则。
+>
+> **参见 See also:** [文档导航](../README.md)、
+> [ETHOS adopter 决策](../decisions/2026-07-12-ethos-adoption.md)、
+> [持久证据说明](../evidence/README.md)。
 
-目的：将本仓库的变更、证据、完成主张与发布边界纳入 ETHOS；不复制或改写
-[`guidelines.md`](../../guidelines.md) 的工作质量规则。
+本文件不复制或改写 [`guidelines.md`](../../guidelines.md) 的工作质量规则。
 
 ## 事实边界
 

@@ -1,0 +1,45 @@
+[claim]
+id = "guidelines-docs-registry-contract-20260712"
+subject = "data-department-work-guidelines:docs-registry-contract"
+state = "active"
+change_id = "docs-registry-contract-20260712"
+summary = "Every governed Markdown document in the guidelines repository exposes unique semantic metadata and reader-visible status, purpose, and cross-reference boundaries; archived design records remain distinguishable from current operational guidance."
+
+[evidence]
+dated = "evidence/chronicle/guidelines-docs-registry-contract-20260712/2026-07-12.md"
+sha256 = "c7724fdd46e97904ecdd5a1f13fa214efc91dbdbc497db7d1a03344c9e155ed7"
+evidence_ids = ["evidence:guidelines-docs-registry-contract-20260712"]
+binding = "The dated Chronicle, the complete docs registry, local document QA, and HEAD-bound proof bind this documentation-contract claim."
+verifier = "semantic_attested"
+tests = [
+  "ethos quality docs-registry --json",
+  "./scripts/validate-docs.sh",
+  "./scripts/validate-rollout-readiness.sh",
+  "ethos prove --execute --scope docs --expect-head $(git rev-parse HEAD) --json",
+]
+
+[evidence.freshness]
+mode = "historical"
+
+[boundary]
+owner = "data-department"
+scope = "Repository documentation metadata, reader-visible status/purpose/cross-references, and local verification; excludes remote publication and real-world adoption outcomes."
+
+[carriers]
+openspec = "openspec/specs/repository-governance"
+fallback = "Treat docs registry health as incomplete and do not claim that document routing or semantic metadata is fully governed."
+kill_signal = "Any current document lacks unique metadata or visible routing, or an archived record is presented as current operational guidance."
+
+[promotion]
+targets = [
+  "docs/_meta/taxonomy.toml",
+  "docs/README.md",
+  "docs/adoption",
+  "docs/decisions",
+  "docs/evidence",
+  "docs/governance/ethos.md",
+  "docs/history",
+  "docs/reference",
+  "docs/superpowers",
+  "evidence/chronicle/guidelines-docs-registry-contract-20260712/2026-07-12.md",
+]

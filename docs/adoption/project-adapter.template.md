@@ -1,8 +1,20 @@
+---
+subject: data-department-work-guidelines:project-adapter-template
+role: template
+state: canonical
+relations:
+  canonical_for: project-local governance adaptation
+---
+
 # 项目接入模板
 
-> **性质**：项目局部适配清单；不复制或重述 [guidelines.md](../../guidelines.md)
+> **状态 Status:** canonical（可复用的项目局部适配模板）
 >
-> **目的**：让成员和 Agent 在项目内找到事实源、权限、风险与验收，而不是把通用准则留在抽象层。
+> **目的 Purpose:** 以项目局部适配清单让项目声明本地事实、权限、风险与验收，
+> 不复制或重述团队通用规则。
+>
+> **参见 See also:** [`AGENTS.md`](../../AGENTS.md)、[`guidelines.md`](../../guidelines.md)、
+> [本地采用准备包](README.md)。
 
 ## 1. 项目权威入口
 

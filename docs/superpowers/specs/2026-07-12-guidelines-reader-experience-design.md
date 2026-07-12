@@ -1,3 +1,11 @@
+---
+subject: data-department-work-guidelines:reader-experience-design-rationale
+role: research
+state: archived
+relations:
+  records: 2026-07-12 reader-experience design rationale
+---
+
 # 数据部门工作与人智协作准则：读者体验重构设计
 
 > **日期**：2026-07-12

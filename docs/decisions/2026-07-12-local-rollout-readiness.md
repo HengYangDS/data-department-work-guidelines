@@ -8,9 +8,12 @@ relations:
 
 # 决策：本地采用准备
 
-> **状态**：本地已就绪；真实试用与远端发布待执行
+> **状态 Status:** canonical（真实试用前的现行准备决策）。本地已就绪；真实试用与远端发布待执行。
 >
-> **权威正文**：[guidelines.md](../../guidelines.md)
+> **目的 Purpose:** 以有界试用和可复查记录替代口头宣导与虚假的采用结论。
+>
+> **参见 See also:** [本地采用准备包](../adoption/README.md)、
+> [读者体验重构](2026-07-12-reader-experience-overhaul.md)。
 
 ## 问题与依据
 
