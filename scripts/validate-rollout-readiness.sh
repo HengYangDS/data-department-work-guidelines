@@ -14,6 +14,7 @@ required_files = {
     "docs/adoption/README.md",
     "docs/adoption/trial-log.template.md",
     "docs/adoption/project-adapter.template.md",
+    "docs/decisions/2026-07-12-local-rollout-readiness.md",
 }
 for relative_path in required_files:
     if not (root / relative_path).is_file():
@@ -47,6 +48,11 @@ required_fragments = {
         "不复制或重述",
         "项目不得复制四条底线、场景卡或 Agent 协议",
         "接入完成只表示接入信息可用",
+    ],
+    "docs/decisions/2026-07-12-local-rollout-readiness.md": [
+        "本地已就绪；真实试用与远端发布待执行",
+        "## 不作的主张",
+        "## 复审条件",
     ],
 }
 

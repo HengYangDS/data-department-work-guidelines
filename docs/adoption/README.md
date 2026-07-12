@@ -26,6 +26,7 @@
 | [试用记录模板](./trial-log.template.md) | 一项真实工作如何留下可复查的采用证据？ | 替代项目工单、验收或决策记录 |
 | [项目接入模板](./project-adapter.template.md) | 项目怎样声明本地事实、权限与验收，而不复制通用准则？ | 重新编写一套团队规则 |
 | [`validate-rollout-readiness.sh`](../../scripts/validate-rollout-readiness.sh) | 阅读路径、模板边界与文档结构是否仍然可用？ | 证明真实试用已经成功 |
+| [本地采用决策](../decisions/2026-07-12-local-rollout-readiness.md) | 为什么只准备器具，而不宣称已采用？ | 代替真实试用与复审 |
 
 ## 进入与复审
 
