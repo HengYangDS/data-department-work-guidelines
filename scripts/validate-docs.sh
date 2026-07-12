@@ -59,6 +59,11 @@ markdown_files = sorted(
 local_link = re.compile(
     r"(?<!!)\[[^]]+\]\((?:<([^>]+)>|([^\s)]+))(?:\s+[^)]*)?\)"
 )
+reference_link = re.compile(r"(?<!!)\[([^]\n]+)\]\[([^]\n]*)\]")
+reference_definition = re.compile(
+    r"^ {0,3}\[([^]\n]+)\]:[ \t]*(?:<([^>\n]+)>|(\S+))"
+    r"(?:[ \t]+(?:\"[^\"]*\"|'[^']*'|\([^)]+\)))?[ \t]*$"
+)
 fence_start = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
 atx_heading = re.compile(r"^ {0,3}#{1,6}[ \t]+(.+?)[ \t]*#*[ \t]*$")
 setext_heading = re.compile(r"^ {0,3}(?:=+|-+)[ \t]*$")
@@ -155,6 +160,21 @@ def heading_anchors(path: Path) -> set[str]:
     return anchors
 
 
+def reference_label(label: str) -> str:
+    return re.sub(r"\s+", " ", label).casefold().strip()
+
+
+def reference_definitions(path: Path) -> dict[str, str]:
+    definitions: dict[str, str] = {}
+    for line in unfenced_lines(path):
+        match = reference_definition.match(line)
+        if match:
+            definitions.setdefault(
+                reference_label(match.group(1)), match.group(2) or match.group(3)
+            )
+    return definitions
+
+
 PENDING_TASK_3_FRAGMENTS = {
     "任务内核卡",
     "启动任务卡",
@@ -168,9 +188,20 @@ PENDING_TASK_3_FRAGMENTS = {
 
 anchors_by_path: dict[Path, set[str]] = {}
 for path in markdown_files:
+    definitions = reference_definitions(path)
     for line in unfenced_lines(path):
-        for match in local_link.finditer(line):
-            target = match.group(1) or match.group(2)
+        targets = [match.group(1) or match.group(2) for match in local_link.finditer(line)]
+        for match in reference_link.finditer(line):
+            label = match.group(2) or match.group(1)
+            target = definitions.get(reference_label(label))
+            if target is None:
+                raise SystemExit(
+                    f"missing local reference definition: {path.relative_to(root)} -> "
+                    f"[{label}]"
+                )
+            targets.append(target)
+
+        for target in targets:
             if "://" in target or target.startswith("mailto:"):
                 continue
             target_path_text, separator, fragment = target.partition("#")
@@ -184,19 +215,16 @@ for path in markdown_files:
                     f"broken local link: {path.relative_to(root)} -> "
                     f"{target_path_text}"
                 )
-            if (
-                separator
-                and target_path.suffix.lower() == ".md"
-            ):
+            if separator and target_path.suffix.lower() == ".md":
                 anchors = anchors_by_path.setdefault(
                     target_path, heading_anchors(target_path)
                 )
                 normalized_fragment = gitlab_anchor(fragment)
-                # Pre-body staging defers only the exact Task 3-owned card headings.
+                # Pre-body staging defers only literal percent-decoded Task 3 headings.
                 is_pending_task_3_fragment = (
                     allow_incomplete
                     and target_path == (root / "guidelines.md").resolve()
-                    and normalized_fragment in PENDING_TASK_3_FRAGMENTS
+                    and unquote(fragment) in PENDING_TASK_3_FRAGMENTS
                 )
                 if normalized_fragment not in anchors and not is_pending_task_3_fragment:
                     raise SystemExit(
