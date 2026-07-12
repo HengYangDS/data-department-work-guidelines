@@ -6,6 +6,8 @@
 
 - [guidelines.md](./guidelines.md)：团队成员与 Agent 共同遵循的唯一准则正文。
 - [AGENTS.md](./AGENTS.md)：Agent 进入本项目时的最小读取与修改约束。
+- [CHANGELOG.md](./CHANGELOG.md)：已发布基线的实质变更记录。
+- [基线建立与发布复盘](./docs/retrospectives/2026-07-12-baseline-establishment.md)：本版本的决策、证据、经验与复审条件。
 
 ## 使用方式
 
