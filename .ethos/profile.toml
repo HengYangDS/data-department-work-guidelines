@@ -57,3 +57,15 @@ evidence_class = "contract"
 trust_bearing = true
 tool_adapter = "prettier"
 network_policy = "offline"
+
+[[proof.gates]]
+id = "repository-root-binding"
+kind = "test"
+command = ["./scripts/test-ethos-repo.sh"]
+asset_classes = ["repository-governance"]
+dimensions = ["governance", "authority", "target-binding"]
+execution_mode = "subprocess"
+evidence_class = "proof"
+trust_bearing = true
+tool_adapter = "repository-native"
+network_policy = "offline"

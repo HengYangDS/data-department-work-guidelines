@@ -20,8 +20,7 @@ while read -r old_value new_value ref_name; do
     refs/heads/*) ;;
     *) continue ;;
   esac
-  ethos hook ref-transaction "$ref_name" "$old_value" "$new_value" \
+  "$repo_root/scripts/ethos-repo.sh" hook ref-transaction "$ref_name" "$old_value" "$new_value" \
     --phase "$phase" \
-    --root "$repo_root" \
     --json >/dev/null
 done

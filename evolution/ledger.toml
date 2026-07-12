@@ -9,6 +9,8 @@ owner = "data-department"
 claim = "A guideline that preserves reality while reducing only the necessary structure will improve work quality only when real task samples, explicit evidence, and bounded revisions are used to calibrate it."
 challenge = "Elegant principles and richer templates can still add ceremony, conceal exceptions, or fail to change decisions unless live work exposes a measurable net gain."
 transition = "observe -> evaluate"
+# `ethos prove` is a capability reference, not an executable shell example.
+# Human and Agent execution is bound through scripts/ethos-repo.sh.
 proof_refs = ["ethos prove", "scripts/validate-docs.sh", "scripts/validate-rollout-readiness.sh"]
 review_refs = ["evidence/chronicle/guidelines-ethos-adopter-baseline-20260712/2026-07-12.md"]
 decision_refs = [

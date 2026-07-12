@@ -3,22 +3,23 @@ id = "guidelines-ethos-adopter-baseline-20260712"
 subject = "data-department-work-guidelines:ethos-adopter-baseline"
 state = "active"
 change_id = "governance-doc-integrity-20260712"
-summary = "The guidelines repository has a local ETHOS adopter baseline that binds document changes to work-lane admission, a semantic documentation kernel, durable claims and Chronicle, and HEAD-bound local proof; remote GitLab publication remains outside this claim."
+summary = "The guidelines repository has a local ETHOS adopter baseline that binds document changes to work-lane admission, a repository-bound ETHOS command adapter, a semantic documentation kernel, durable claims and Chronicle, and HEAD-bound local proof; remote GitLab publication remains outside this claim."
 
 [evidence]
 dated = "evidence/chronicle/guidelines-ethos-adopter-baseline-20260712/2026-07-12.md"
-sha256 = "2f2c64fcbde8b8fe046ff9ff6221f5cb161b4b922a59c7e07a5af86bbec435b3"
+sha256 = "2e0c28267780d320d70a9199d6d301892fb6f6b0df772aec71b498bd07830390"
 evidence_ids = ["evidence:guidelines-ethos-adopter-baseline-20260712"]
-binding = "The dated Chronicle, documentation and governance surfaces, local quality gates, and HEAD-bound ETHOS proof jointly bound this local adopter-baseline claim."
+binding = "The dated Chronicle, documentation and governance surfaces, repository-root binding test, local quality gates, and HEAD-bound ETHOS proof jointly bind this local adopter-baseline claim."
 verifier = "semantic_attested"
 tests = [
   "./scripts/validate-docs.sh",
   "./scripts/validate-rollout-readiness.sh",
-  "ethos quality docs-topology --json",
-  "ethos quality generated-artifacts --json",
-  "ethos quality claims --json",
-  "ethos quality evidence-freshness --json",
-  "ethos prove --execute --scope docs --expect-head $(git rev-parse HEAD) --json",
+  "./scripts/ethos-repo.sh quality docs-topology --json",
+  "./scripts/ethos-repo.sh quality generated-artifacts --json",
+  "./scripts/ethos-repo.sh quality claims --json",
+  "./scripts/ethos-repo.sh quality evidence-freshness --json",
+  "./scripts/test-ethos-repo.sh",
+  "./scripts/ethos-repo.sh prove --execute --scope docs --expect-head $(git rev-parse HEAD) --json",
 ]
 
 [evidence.freshness]
@@ -26,7 +27,7 @@ mode = "historical"
 
 [boundary]
 owner = "data-department"
-scope = "Local documentation-repository governance, evidence structure, work-lane admission, and proof; excludes remote publication and team adoption outcomes."
+scope = "Local documentation-repository governance, evidence structure, work-lane admission, and proof through the external ETHOS runner; excludes remote publication, team adoption outcomes, and ETHOS product embedded-backend/shadow-parity migration."
 
 [carriers]
 openspec = "openspec/specs/repository-governance"
@@ -44,6 +45,8 @@ targets = [
   "evidence/README.md",
   "evidence/chronicle/guidelines-ethos-adopter-baseline-20260712/2026-07-12.md",
   "evolution/ledger.toml",
+  "scripts/ethos-repo.sh",
+  "scripts/test-ethos-repo.sh",
   "scripts/validate-docs.sh",
   "scripts/validate-rollout-readiness.sh",
 ]

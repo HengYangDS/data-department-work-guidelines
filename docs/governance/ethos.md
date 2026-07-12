@@ -45,17 +45,30 @@ flowchart LR
 ```
 
 1. 在 `dev` 观察和启动候选列车；不得直接以 `main` 承担本地接受根。
-2. 只在已租约的 `work/*` 中修改受跟踪文件，并先执行 `ethos lane prewrite`。
-3. 用当前 HEAD 的 `ethos prove --execute --scope docs --expect-head <HEAD> --json`
-   记录本地证明；`ethos land` 只推进候选列车。
+2. 只在已租约的 `work/*` 中修改受跟踪文件，并先执行
+   `./scripts/ethos-repo.sh lane prewrite`。
+3. 用当前 HEAD 的
+   `./scripts/ethos-repo.sh prove --execute --scope docs --expect-head <HEAD> --json`
+   记录本地证明；`./scripts/ethos-repo.sh land` 只推进候选列车。
 4. 只有受控 closeout 才能把 `candidate/dev` 快进到 `dev`。远端发布必须在连接恢复后
    单独观察和执行。
 
+## 仓库根绑定
+
+本机的全局 `ethos` 启动器从 ETHOS 实现仓库加载程序；实现所在位置不是本仓库的治理对象。
+因此本仓库所有人机可执行命令都必须经过
+[`scripts/ethos-repo.sh`](../../scripts/ethos-repo.sh)：它固定 `--root` 为自身所在的 Git
+仓库根，并拒绝调用者传入另一个 `--root`。Git hooks 也使用同一适配器。
+
+`./scripts/test-ethos-repo.sh` 是常驻证明门：它验证适配器报告的审计根等于当前仓库根，且
+调用方无法覆盖该根。没有这项证明，不得把“ETHOS 已治理本仓库”当作完成结论。
+
 ## 可移植 hooks
 
-`.githooks/` 只调用可发现的 `ethos` 命令，不依赖某台机器上的 ETHOS 源码路径。执行
-`ethos hook install --json` 后，Git 通过 `core.hooksPath=.githooks` 启用提交、推送和
-引用移动的准入。工作者必须令 `ETHOS_ACTOR` 与 Work Lane 租约的 `holder_ref` 一致。
+`.githooks/` 只调用仓库绑定的适配器，不依赖某台机器上的 ETHOS 源码路径。执行
+`./scripts/ethos-repo.sh hook install --json` 后，Git 通过
+`core.hooksPath=.githooks` 启用提交、推送和引用移动的准入。工作者必须令
+`ETHOS_ACTOR` 与 Work Lane 租约的 `holder_ref` 一致。
 
 ## 语义文档与持久证据
 
@@ -75,3 +88,8 @@ flowchart LR
 
 本文件不主张 GitLab CI 已配置、远端引用已同步、GitLab 已验证链接锚点，或团队已经在
 真实工作中采用本准则。这些结论需要各自新鲜、可复查的外部或运行证据。
+
+本文件同样不主张 ETHOS 产品与其历史嵌入式后端已完成能力迁移或 shadow parity。当前 adopter
+以外部 ETHOS runner 和本仓库 profile 工作；`quality command-examples` 对产品命令手册的检查，
+以及依赖嵌入式后端的 `parity shadow`，均不构成本仓库的 proof gate。它们若失败，必须如实作为
+ETHOS 产品迁移事项处理，不得由本仓库删除本地脚本、伪造命令或降低文档质量来换取通过。

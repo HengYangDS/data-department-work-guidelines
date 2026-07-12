@@ -1,6 +1,6 @@
 {
   "name": "data-department-work-guidelines",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "private": true,
   "description": "Documentation quality tooling for the data department work guidelines.",
   "prettier": {

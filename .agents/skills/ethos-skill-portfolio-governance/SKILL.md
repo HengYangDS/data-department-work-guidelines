@@ -22,12 +22,12 @@ not a replacement for repository truth.
 
 ## Evidence
 
-Use ETHOS command JSON:
+From the repository root, use the repository-bound adapter:
 
 ```bash
-ethos playbooks check --mode v2-strict --json
-ethos playbooks route --changed --json
-ethos report --json
+./scripts/ethos-repo.sh playbooks check --mode v2-strict --json
+./scripts/ethos-repo.sh playbooks route --changed --json
+./scripts/ethos-repo.sh report --json
 ```
 
 ## Trust Boundary

@@ -15,6 +15,6 @@ surface = ["cli", "docs", "schema", "openspec", "evidence"]
 authority = ["source", "test", "schema", "docs", "openspec", "claim", "evidence"]
 
 [proof_profile]
-default_command = "ethos prove --json"
-executed_command = "ethos prove --execute --json"
+default_command = "./scripts/ethos-repo.sh prove --json"
+executed_command = "./scripts/ethos-repo.sh prove --execute --json"
 required_gates = ["claims", "schemas"]

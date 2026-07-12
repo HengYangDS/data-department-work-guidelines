@@ -14,8 +14,7 @@ while read -r local_ref local_sha remote_ref remote_sha; do
   case "$local_sha" in
     0000000000000000000000000000000000000000) continue ;;
   esac
-  ethos hook pre-push "$remote_ref" "$local_sha" \
+  "$repo_root/scripts/ethos-repo.sh" hook pre-push "$remote_ref" "$local_sha" \
     --remote-head "$remote_sha" \
-    --root "$repo_root" \
     --json >/dev/null
 done

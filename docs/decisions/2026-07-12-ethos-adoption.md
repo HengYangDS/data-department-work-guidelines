@@ -30,7 +30,7 @@ relations:
 - 保持 `guidelines.md` 为唯一规则事实源，不把 ETHOS 文档变成第二套团队准则；
 - 显式采用 `dev → candidate/dev → work/*` 的本地闭环；
 - 以仓库锁定的 Markdown 格式、lint、链接/锚点和 Mermaid 渲染作为原生证明；
-- 使用只调用 `ethos` 公共命令的可移植 hooks，而不把 ETHOS 产品仓库的内部路径复制进来；
+- 使用仓库绑定 ETHOS 适配器的可移植 hooks，而不把 ETHOS 产品仓库的内部路径复制进来；
 - 将 GitLab remote 保持为未验证的发布投影，待连接恢复后另行验证。
 
 ## 初始接入例外
@@ -39,8 +39,18 @@ relations:
 绑定与 `candidate/dev` 是一次有明确 HEAD 的初始化操作。旧的未治理改动已先存入命名
 stash，再由 ETHOS 退役其无绑定分支；后续受跟踪修改必须走 Work Lane 与证明链路。
 
+## 仓库根绑定更正
+
+全局 `ethos` 启动器的实现位置不是本仓库的治理对象。为避免裸命令把实现仓库误作审计根，
+本仓库以 `scripts/ethos-repo.sh` 固定传入本仓库根，并拒绝调用方传入 `--root`。此适配器及
+其回归测试已纳入 proof gate；今后所有人、Agent、hooks、OpenSpec 提示与证据命令均以该适配器
+为入口。
+
 ## 验收与边界
 
-本地验收至少包括：`ethos status`、`ethos audit`、当前 HEAD 的 `ethos prove --execute`
-以及文档质量脚本。它们证明的是本地仓库状态，不证明远端已发布、GitLab CI 已运行、
-GitLab 的锚点算法已实际渲染，或团队运行质量已经提高。
+本地验收至少包括：`./scripts/ethos-repo.sh status`、
+`./scripts/ethos-repo.sh audit`、当前 HEAD 的
+`./scripts/ethos-repo.sh prove --execute` 以及文档质量脚本。它们证明的是本地仓库状态，
+不证明远端已发布、GitLab CI 已运行、GitLab 的锚点算法已实际渲染，或团队运行质量已经提高。
+它们也不证明 ETHOS 产品已完成嵌入式后端迁移或 shadow parity；该类产品迁移结论不属于本
+文档型 adopter 的本地完成主张。

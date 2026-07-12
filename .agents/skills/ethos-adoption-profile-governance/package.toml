@@ -6,7 +6,7 @@ truth = "repository-source-and-contracts"
 digest_algorithm = "sha256"
 include = ["SKILL.md"]
 exclude = [".DS_Store"]
-expected_digest = "sha256:5f949f0e6cd734460e46822bf1cbb7c6594ba8f5472e65f7a97039639cd5cea0"
+expected_digest = "sha256:d045df4bed41d0991ea8daa3f8e55671a5902129e2af226d1ea3ce130fe517b5"
 required_sections = ["When to Use", "Workflow", "Evidence", "Trust Boundary"]
 
 [quality]

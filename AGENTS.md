@@ -37,11 +37,23 @@
 本仓库采用 [ETHOS 本地治理说明](./docs/governance/ethos.md)；
 [`guidelines.md`](./guidelines.md) 仍是工作准则的唯一事实源，ETHOS 只治理变更、证据和发布边界。
 
+所有 ETHOS 命令必须经由仓库绑定适配器 [`scripts/ethos-repo.sh`](./scripts/ethos-repo.sh)
+调用；**不得直接调用裸 `ethos`**。该适配器固定传入当前仓库根，拒绝调用者覆盖
+`--root`，防止 ETHOS 实现仓库被误作受治理对象。
+
 1. 读取当前任务、`AGENTS.md` 与匹配的 `.agents/skills/` 后，先执行
-   `ethos orient --json`、`ethos status --json` 与 `ethos plan --changed --json`。
+   `./scripts/ethos-repo.sh orient --json`、
+   `./scripts/ethos-repo.sh status --json` 与
+   `./scripts/ethos-repo.sh plan --changed --json`。
 2. 只在已租约的 `work/*` Work Lane 修改受跟踪文件；开始写入前，令
-   `ETHOS_ACTOR` 与租约一致，再运行 `ethos lane prewrite <paths>`，并显式提供当前
-   仓库根作为 `--editor-root`，同时使用 `--require-editor-root --json`。
-3. 不得绕过 `dev → candidate/dev → dev` 的本地闭环；完成主张必须绑定当前 HEAD 的
-   `ethos prove --execute --scope docs --expect-head "$(git rev-parse HEAD)" --json`。
+   `ETHOS_ACTOR` 与租约一致，再运行
+   `./scripts/ethos-repo.sh lane prewrite <paths>`，并显式提供当前仓库根作为
+   `--editor-root`，同时使用 `--require-editor-root --json`。
+3. 不得绕过 `dev → candidate/dev → dev` 的本地闭环；完成主张必须绑定当前 HEAD，并执行：
+
+   ```bash
+   ./scripts/ethos-repo.sh prove --execute --scope docs \
+     --expect-head "$(git rev-parse HEAD)" --json
+   ```
+
 4. GitLab 远端和 hosted CI 仅是发布投影；未取得远端证据时，不得声称已发布或已由 GitLab 渲染验证。
