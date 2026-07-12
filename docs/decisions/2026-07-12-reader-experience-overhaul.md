@@ -1,3 +1,11 @@
+---
+subject: data-department-work-guidelines:reader-experience-overhaul
+role: decision
+state: canonical
+relations:
+  canonical_for: reader experience design
+---
+
 # 决策：准则读者体验重构
 
 > **状态**：已接受

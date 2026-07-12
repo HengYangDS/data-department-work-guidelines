@@ -52,6 +52,20 @@ flowchart LR
 `ethos hook install --json` 后，Git 通过 `core.hooksPath=.githooks` 启用提交、推送和
 引用移动的准入。工作者必须令 `ETHOS_ACTOR` 与 Work Lane 租约的 `holder_ref` 一致。
 
+## 语义文档与持久证据
+
+本仓库采用 ETHOS 的最小语义文档内核：
+
+- [`docs/`](../README.md) 负责导航；[`docs/decisions/`](../decisions/README.md)、
+  [`docs/evidence/`](../evidence/README.md)、[`docs/reference/`](../reference/README.md)
+  与 [`docs/history/`](../history/README.md) 分别承担取舍、可审阅依据、稳定边界与历史语境；
+- [`evidence/`](../../evidence/) 是持久主张、Chronicle 与投影材料的根；`build/evidence/`、
+  `build/ethos/` 与 `.ethos/state/` 是可再生或本机状态，不以文件存在即构成仓库事实；
+- [`evolution/ledger.toml`](../../evolution/ledger.toml) 记录待证伪的演化假设，使“持续改进”
+  保持为可验证的学习，而非无边界扩张。
+
+这些结构只承载仓库治理与证据，不复制 `guidelines.md` 的团队工作规则。
+
 ## 不作的主张
 
 本文件不主张 GitLab CI 已配置、远端引用已同步、GitLab 已验证链接锚点，或团队已经在

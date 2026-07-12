@@ -1,8 +1,13 @@
 {
   "name": "data-department-work-guidelines",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "private": true,
   "description": "Documentation quality tooling for the data department work guidelines.",
+  "prettier": {
+    "printWidth": 80,
+    "proseWrap": "preserve",
+    "tabWidth": 2
+  },
   "devDependencies": {
     "@mermaid-js/mermaid-cli": "11.16.0",
     "markdownlint-cli2": "0.22.0",

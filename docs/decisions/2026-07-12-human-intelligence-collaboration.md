@@ -1,3 +1,11 @@
+---
+subject: data-department-work-guidelines:human-intelligence-collaboration
+role: decision
+state: canonical
+relations:
+  canonical_for: human-intelligence collaboration terminology
+---
+
 # 命名决策：人智协作
 
 > **日期**：2026-07-12

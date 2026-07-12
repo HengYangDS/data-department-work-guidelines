@@ -1,0 +1,22 @@
+# 团队准则的演化事实源。它记录待证伪的学习，不把持续改进写成无边界口号。
+schema = "system/schemas/kernel/evolution-ledger.schema.json"
+
+[[hypothesis]]
+id = "guidelines-practice-calibration"
+campaign = "data-department-work-quality"
+state = "active"
+owner = "data-department"
+claim = "A guideline that preserves reality while reducing only the necessary structure will improve work quality only when real task samples, explicit evidence, and bounded revisions are used to calibrate it."
+challenge = "Elegant principles and richer templates can still add ceremony, conceal exceptions, or fail to change decisions unless live work exposes a measurable net gain."
+transition = "observe -> evaluate"
+proof_refs = ["ethos prove", "scripts/validate-docs.sh", "scripts/validate-rollout-readiness.sh"]
+review_refs = ["evidence/chronicle/guidelines-ethos-adopter-baseline-20260712/2026-07-12.md"]
+decision_refs = [
+  "docs/decisions/2026-07-12-local-rollout-readiness.md",
+  "docs/decisions/2026-07-12-reader-experience-overhaul.md",
+]
+retirement_conditions = [
+  "real trial evidence shows no material net gain after a bounded calibration cycle",
+  "a narrower rule set preserves the same decision quality with lower cognitive and operating cost",
+  "the guideline no longer has a maintainer able to review evidence and own revisions",
+]

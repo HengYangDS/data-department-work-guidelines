@@ -1,0 +1,49 @@
+[claim]
+id = "guidelines-ethos-adopter-baseline-20260712"
+subject = "data-department-work-guidelines:ethos-adopter-baseline"
+state = "active"
+change_id = "governance-doc-integrity-20260712"
+summary = "The guidelines repository has a local ETHOS adopter baseline that binds document changes to work-lane admission, a semantic documentation kernel, durable claims and Chronicle, and HEAD-bound local proof; remote GitLab publication remains outside this claim."
+
+[evidence]
+dated = "evidence/chronicle/guidelines-ethos-adopter-baseline-20260712/2026-07-12.md"
+sha256 = "2f2c64fcbde8b8fe046ff9ff6221f5cb161b4b922a59c7e07a5af86bbec435b3"
+evidence_ids = ["evidence:guidelines-ethos-adopter-baseline-20260712"]
+binding = "The dated Chronicle, documentation and governance surfaces, local quality gates, and HEAD-bound ETHOS proof jointly bound this local adopter-baseline claim."
+verifier = "semantic_attested"
+tests = [
+  "./scripts/validate-docs.sh",
+  "./scripts/validate-rollout-readiness.sh",
+  "ethos quality docs-topology --json",
+  "ethos quality generated-artifacts --json",
+  "ethos quality claims --json",
+  "ethos quality evidence-freshness --json",
+  "ethos prove --execute --scope docs --expect-head $(git rev-parse HEAD) --json",
+]
+
+[evidence.freshness]
+mode = "historical"
+
+[boundary]
+owner = "data-department"
+scope = "Local documentation-repository governance, evidence structure, work-lane admission, and proof; excludes remote publication and team adoption outcomes."
+
+[carriers]
+openspec = "openspec/specs/repository-governance"
+fallback = "Treat the repository as locally unproven; do not land, publish, or claim hosted verification until current HEAD-bound proof and any external evidence are available."
+kill_signal = "Any completion claim treats ignored host state, generated output, remote reachability assumptions, or an unexecuted proof as repository truth."
+
+[promotion]
+targets = [
+  ".ethos/profile.toml",
+  ".ethos/rules.toml",
+  ".githooks",
+  "docs/governance/ethos.md",
+  "docs/README.md",
+  "docs/decisions/decision-index.md",
+  "evidence/README.md",
+  "evidence/chronicle/guidelines-ethos-adopter-baseline-20260712/2026-07-12.md",
+  "evolution/ledger.toml",
+  "scripts/validate-docs.sh",
+  "scripts/validate-rollout-readiness.sh",
+]

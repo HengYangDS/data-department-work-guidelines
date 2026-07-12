@@ -1,3 +1,11 @@
+---
+subject: data-department-work-guidelines:ethos-adoption
+role: decision
+state: canonical
+relations:
+  canonical_for: repository governance adoption
+---
+
 # 决策：将准则仓库接入 ETHOS adopter
 
 > **日期**：2026-07-12

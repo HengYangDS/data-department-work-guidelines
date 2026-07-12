@@ -1,3 +1,11 @@
+---
+subject: data-department-work-guidelines:local-rollout-readiness
+role: decision
+state: canonical
+relations:
+  canonical_for: local rollout readiness
+---
+
 # 决策：本地采用准备
 
 > **状态**：本地已就绪；真实试用与远端发布待执行

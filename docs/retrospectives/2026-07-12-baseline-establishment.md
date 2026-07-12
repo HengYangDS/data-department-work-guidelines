@@ -1,3 +1,11 @@
+---
+subject: data-department-work-guidelines:baseline-establishment-retrospective
+role: history
+state: archived
+relations:
+  preserves: baseline establishment context
+---
+
 # 准则基线建立与发布复盘
 
 > **日期**：2026-07-12
