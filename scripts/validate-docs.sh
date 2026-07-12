@@ -38,7 +38,7 @@ for command in python3 markdownlint-cli2 mmdc; do
 done
 
 cd "$ROOT"
-markdownlint-cli2 '**/*.md' '#.superpowers/**'
+markdownlint-cli2 '**/*.md' '#.superpowers/**' '#.worktrees/**'
 
 python3 - "$ROOT" "$RENDER_DIR" "$EXPECTED_MERMAID" "$ALLOW_INCOMPLETE" <<'PY'
 from pathlib import Path
@@ -50,11 +50,11 @@ root = Path(sys.argv[1]).resolve()
 render_dir = Path(sys.argv[2])
 expected_mermaid = int(sys.argv[3])
 allow_incomplete = sys.argv[4] == "true"
-excluded_root = ".superpowers"
+excluded_roots = {".superpowers", ".worktrees"}
 markdown_files = sorted(
     path
     for path in root.rglob("*.md")
-    if path.relative_to(root).parts[:1] != (excluded_root,)
+    if path.relative_to(root).parts[0] not in excluded_roots
 )
 local_link = re.compile(
     r"(?<!!)\[[^]]+\]\((?:<([^>]+)>|([^\s)]+))(?:\s+[^)]*)?\)"

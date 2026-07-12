@@ -49,7 +49,7 @@ done
 for source in /tmp/data-guidelines-final-20260712/*.mmd; do
   mmdc -i "$source" -o "${source%.mmd}-default.png" -b white
 done
-markdownlint-cli2 '**/*.md' '#.superpowers/**'
+markdownlint-cli2 '**/*.md' '#.superpowers/**' '#.worktrees/**'
 git diff --check HEAD
 rg -n '```mermaid' guidelines.md | wc -l
 ```

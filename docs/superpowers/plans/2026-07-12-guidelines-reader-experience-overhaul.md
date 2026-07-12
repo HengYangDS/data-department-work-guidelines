@@ -26,7 +26,8 @@ Python 3, `glow`, and `pandoc`; no project runtime or build dependency is added.
 - Use exactly five Mermaid diagrams in `guidelines.md`; each answers one action
   question and must be renderable by `mmdc`.
 - Remove inline HTML and wrap prose so canonical Markdown passes
-  `markdownlint-cli2 '**/*.md' '#.superpowers/**'` with zero errors.
+  `markdownlint-cli2 '**/*.md' '#.superpowers/**' '#.worktrees/**'` with zero
+  errors.
 - Use no decorative emoji, color-dependent meaning, proprietary renderer, or
   new project dependency.
 - Human responsibility remains explicit: “人定其向，智扩其能；协作于事，归责于人。”
@@ -93,7 +94,7 @@ docs/retrospectives/2026-07-12-baseline-establishment.md
 Run:
 
 ```bash
-markdownlint-cli2 '**/*.md' '#.superpowers/**'
+markdownlint-cli2 '**/*.md' '#.superpowers/**' '#.worktrees/**'
 ```
 
 Expected before the final wrapping pass: failures for `MD033/no-inline-html` and
@@ -142,7 +143,7 @@ for command in python3 markdownlint-cli2 mmdc; do
 done
 
 cd "$ROOT"
-markdownlint-cli2 '**/*.md' '#.superpowers/**'
+markdownlint-cli2 '**/*.md' '#.superpowers/**' '#.worktrees/**'
 
 python3 - "$ROOT" "$RENDER_DIR" "$EXPECTED_MERMAID" <<'PY'
 from pathlib import Path
@@ -556,7 +557,7 @@ Run:
 
 ```bash
 ./scripts/validate-docs.sh --render-dir /tmp/data-guidelines-qa
-markdownlint-cli2 '**/*.md' '#.superpowers/**'
+markdownlint-cli2 '**/*.md' '#.superpowers/**' '#.worktrees/**'
 git diff --check HEAD
 rg -n '```mermaid' guidelines.md | wc -l
 ```
