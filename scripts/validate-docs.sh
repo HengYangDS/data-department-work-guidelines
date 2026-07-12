@@ -44,7 +44,7 @@ python3 - "$ROOT" "$RENDER_DIR" "$EXPECTED_MERMAID" "$ALLOW_INCOMPLETE" <<'PY'
 from pathlib import Path
 import re
 import sys
-from urllib.parse import unquote
+from urllib.parse import unquote, urlparse
 
 root = Path(sys.argv[1]).resolve()
 render_dir = Path(sys.argv[2])
@@ -60,6 +60,7 @@ local_link = re.compile(
     r"(?<!!)\[[^]]+\]\((?:<([^>]+)>|([^\s)]+))(?:\s+[^)]*)?\)"
 )
 reference_link = re.compile(r"(?<!!)\[([^]\n]+)\]\[([^]\n]*)\]")
+shortcut_reference = re.compile(r"(?<!!)(?<!\[)\[([^]\n]+)\](?![\[(])")
 reference_definition = re.compile(
     r"^ {0,3}\[([^]\n]+)\]:[ \t]*(?:<([^>\n]+)>|(\S+))"
     r"(?:[ \t]+(?:\"[^\"]*\"|'[^']*'|\([^)]+\)))?[ \t]*$"
@@ -254,6 +255,8 @@ anchors_by_path: dict[Path, set[str]] = {}
 for path in markdown_files:
     definitions = reference_definitions(path)
     for line in unfenced_lines(path):
+        if reference_definition.match(line):
+            continue
         targets = [match.group(1) or match.group(2) for match in local_link.finditer(line)]
         for match in reference_link.finditer(line):
             label = match.group(2) or match.group(1)
@@ -262,18 +265,33 @@ for path in markdown_files:
                 raise SystemExit(
                     f"missing local reference definition: {path.relative_to(root)} -> "
                     f"[{label}]"
-                )
+            )
             targets.append(target)
 
+        for match in shortcut_reference.finditer(line):
+            label = match.group(1)
+            target = definitions.get(reference_label(label))
+            if target is not None:
+                targets.append(target)
+
         for target in targets:
-            if "://" in target or target.startswith("mailto:"):
+            parsed_target = urlparse(target)
+            if parsed_target.scheme and parsed_target.scheme != "file":
                 continue
             target_path_text, separator, fragment = target.partition("#")
-            target_path = (
-                (path.parent / target_path_text).resolve()
-                if target_path_text
-                else path.resolve()
-            )
+            if parsed_target.scheme == "file":
+                file_target = urlparse(target_path_text)
+                if file_target.netloc not in {"", "localhost"} or not file_target.path.startswith("/"):
+                    raise SystemExit(
+                        f"invalid local file URI: {path.relative_to(root)} -> {target}"
+                    )
+                target_path = Path(unquote(file_target.path)).resolve()
+            else:
+                target_path = (
+                    (path.parent / target_path_text).resolve()
+                    if target_path_text
+                    else path.resolve()
+                )
             require_within_root(target_path, path, target)
             if not target_path.exists():
                 raise SystemExit(
