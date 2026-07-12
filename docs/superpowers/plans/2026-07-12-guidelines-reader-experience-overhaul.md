@@ -57,16 +57,18 @@ Python 3, `glow`, and `pandoc`; no project runtime or build dependency is added.
 **Interfaces:**
 
 - Consumes: repository root and optional `--render-dir <path>`.
-- Produces: exit code `0` only when Markdown lint, local links, canonical phrases,
-  and five Mermaid SVG renders pass; rendered artifacts are written to the
-  supplied directory or a temporary directory.
+- Produces: in its default final mode, exit code `0` only when Markdown lint,
+  local links, canonical phrases, and five Mermaid SVG renders pass. The
+  explicit pre-body mode accepts only zero Mermaid diagrams. Rendered artifacts
+  are written to the supplied directory or a temporary directory.
 
 - [ ] **Step 1: Write the failing quality-gate invocation**
 
 Run from the repository root:
 
 ```bash
-./scripts/validate-docs.sh --render-dir /tmp/data-guidelines-qa
+./scripts/validate-docs.sh --allow-incomplete \
+  --render-dir /tmp/data-guidelines-qa
 ```
 
 Expected before implementation: shell failure because `scripts/validate-docs.sh`
@@ -103,11 +105,25 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 RENDER_DIR=""
+EXPECTED_MERMAID=5
 
-if [[ "${1:-}" == "--render-dir" ]]; then
-  RENDER_DIR="${2:?--render-dir requires a directory}"
-  mkdir -p "$RENDER_DIR"
-fi
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --allow-incomplete)
+      EXPECTED_MERMAID=0
+      shift
+      ;;
+    --render-dir)
+      RENDER_DIR="${2:?--render-dir requires a directory}"
+      mkdir -p "$RENDER_DIR"
+      shift 2
+      ;;
+    *)
+      echo "unknown argument: $1" >&2
+      exit 2
+      ;;
+  esac
+done
 
 if [[ -z "$RENDER_DIR" ]]; then
   RENDER_DIR="$(mktemp -d "${TMPDIR:-/tmp}/data-guidelines-qa.XXXXXX")"
@@ -124,13 +140,14 @@ done
 cd "$ROOT"
 markdownlint-cli2 '**/*.md'
 
-python3 - "$ROOT" "$RENDER_DIR" <<'PY'
+python3 - "$ROOT" "$RENDER_DIR" "$EXPECTED_MERMAID" <<'PY'
 from pathlib import Path
 import re
 import sys
 
 root = Path(sys.argv[1])
 render_dir = Path(sys.argv[2])
+expected_mermaid = int(sys.argv[3])
 markdown_files = sorted(root.rglob("*.md"))
 local_link = re.compile(r"\[[^]]+\]\(([^)#]+)(?:#[^)]+)?\)")
 mermaid_block = re.compile(r"```mermaid\n(.*?)\n```", re.S)
@@ -160,18 +177,24 @@ for phrase in required:
         raise SystemExit(f"missing canonical contract: {phrase}")
 
 blocks = mermaid_block.findall(text)
-if len(blocks) != 5:
-    raise SystemExit(f"expected 5 Mermaid diagrams, found {len(blocks)}")
+if len(blocks) != expected_mermaid:
+    raise SystemExit(
+        f"expected {expected_mermaid} Mermaid diagrams, found {len(blocks)}"
+    )
 
 for index, block in enumerate(blocks, start=1):
     (render_dir / f"guidelines-{index}.mmd").write_text(
         block + "\n", encoding="utf-8"
     )
 
-print(f"validated {len(markdown_files)} Markdown files and extracted 5 diagrams")
+print(
+    f"validated {len(markdown_files)} Markdown files and extracted "
+    f"{len(blocks)} diagrams"
+)
 PY
 
 for source in "$RENDER_DIR"/*.mmd; do
+  [[ -e "$source" ]] || continue
   target="${source%.mmd}.svg"
   mmdc -i "$source" -o "$target" -b white
   test -s "$target"
@@ -191,11 +214,12 @@ chmod +x scripts/validate-docs.sh
 Run:
 
 ```bash
-./scripts/validate-docs.sh --render-dir /tmp/data-guidelines-qa
+./scripts/validate-docs.sh --allow-incomplete \
+  --render-dir /tmp/data-guidelines-qa
 ```
 
-Expected: exit `0`, `validated ... Markdown files and extracted 5 diagrams`, and
-five non-empty SVG files under `/tmp/data-guidelines-qa`.
+Expected: exit `0`, `validated ... Markdown files and extracted 0 diagrams`,
+and no Mermaid rendering error. The default final mode requires five diagrams.
 
 - [ ] **Step 5: Commit the gate**
 
@@ -289,7 +313,8 @@ The table must link to final headings rather than repeat their detailed rules.
 Run:
 
 ```bash
-./scripts/validate-docs.sh --render-dir /tmp/data-guidelines-qa
+./scripts/validate-docs.sh --allow-incomplete \
+  --render-dir /tmp/data-guidelines-qa
 rg -n '三分钟定向|我现在要做什么|最小加载|任务路由' README.md AGENTS.md
 ```
 
