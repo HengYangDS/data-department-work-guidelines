@@ -36,7 +36,7 @@ for command in python3 markdownlint-cli2 mmdc; do
 done
 
 cd "$ROOT"
-markdownlint-cli2 '**/*.md'
+markdownlint-cli2 '**/*.md' '#.superpowers/sdd/**'
 
 python3 - "$ROOT" "$RENDER_DIR" "$EXPECTED_MERMAID" <<'PY'
 from pathlib import Path
@@ -46,14 +46,48 @@ import sys
 root = Path(sys.argv[1])
 render_dir = Path(sys.argv[2])
 expected_mermaid = int(sys.argv[3])
-markdown_files = sorted(root.rglob("*.md"))
+excluded_parts = (".superpowers", "sdd")
+markdown_files = sorted(
+    path
+    for path in root.rglob("*.md")
+    if path.relative_to(root).parts[:2] != excluded_parts
+)
 local_link = re.compile(r"\[[^]]+\]\(([^)#]+)(?:#[^)]+)?\)")
-mermaid_block = re.compile(r"```mermaid\n(.*?)\n```", re.S)
+fence_start = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
+
+
+def fenced_blocks(path: Path):
+    active_fence = None
+    active_info = ""
+    content = []
+
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if active_fence is None:
+            match = fence_start.match(line)
+            if match:
+                active_fence = match.group(1)
+                active_info = match.group(2).strip()
+                content = []
+            continue
+
+        marker = active_fence[0]
+        minimum_length = len(active_fence)
+        if re.match(rf"^ {{0,3}}{re.escape(marker)}{{{minimum_length},}}[ \t]*$", line):
+            yield active_info, "\n".join(content)
+            active_fence = None
+            active_info = ""
+            content = []
+        else:
+            content.append(line)
+
+    if active_fence is not None:
+        raise SystemExit(
+            f"unbalanced fenced block: {path.relative_to(root)}"
+        )
+
 
 for path in markdown_files:
     text = path.read_text(encoding="utf-8")
-    if text.count("```") % 2:
-        raise SystemExit(f"unbalanced fenced block: {path.relative_to(root)}")
     for target in local_link.findall(text):
         if "://" in target or target.startswith("mailto:"):
             continue
@@ -61,6 +95,7 @@ for path in markdown_files:
             raise SystemExit(
                 f"broken local link: {path.relative_to(root)} -> {target}"
             )
+    list(fenced_blocks(path))
 
 main = root / "guidelines.md"
 text = main.read_text(encoding="utf-8")
@@ -74,7 +109,11 @@ for phrase in required:
     if phrase not in text:
         raise SystemExit(f"missing canonical contract: {phrase}")
 
-blocks = mermaid_block.findall(text)
+blocks = [
+    content
+    for info, content in fenced_blocks(main)
+    if info.split(maxsplit=1)[:1] == ["mermaid"]
+]
 if len(blocks) != expected_mermaid:
     raise SystemExit(
         f"expected {expected_mermaid} Mermaid diagrams, found {len(blocks)}"
