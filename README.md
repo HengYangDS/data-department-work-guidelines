@@ -1,6 +1,6 @@
-# 数据部门工作与人—Agent 协作准则
+# 数据部门工作与人智协作准则
 
-本项目维护数据部门通用工作质量及人—Agent 协作准则。
+本项目维护数据部门通用工作质量及人智协作准则。
 
 ## 权威入口
 
@@ -8,6 +8,7 @@
 - [AGENTS.md](./AGENTS.md)：Agent 进入本项目时的最小读取与修改约束。
 - [CHANGELOG.md](./CHANGELOG.md)：已发布基线的实质变更记录。
 - [基线建立与发布复盘](./docs/retrospectives/2026-07-12-baseline-establishment.md)：本版本的决策、证据、经验与复审条件。
+- [人智协作命名决策](./docs/decisions/2026-07-12-human-intelligence-collaboration.md)：总体关系名称、定义、净增益与复审条件。
 
 ## 使用方式
 
