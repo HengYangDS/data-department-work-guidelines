@@ -1,0 +1,6 @@
+[release]
+version_source = "guidelines.md"
+tag_pattern = "v{version}"
+
+[attestation]
+formats = ["in-toto", "slsa", "spdx-lite"]
