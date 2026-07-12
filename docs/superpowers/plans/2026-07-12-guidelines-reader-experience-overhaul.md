@@ -25,7 +25,8 @@ Python 3, `glow`, and `pandoc`; no project runtime or build dependency is added.
   responsibility, and evidence constraints.
 - Use exactly five Mermaid diagrams in `guidelines.md`; each answers one action
   question and must be renderable by `mmdc`.
-- Remove inline HTML and wrap prose so `markdownlint-cli2 '**/*.md'` exits zero.
+- Remove inline HTML and wrap prose so canonical Markdown passes
+  `markdownlint-cli2 '**/*.md' '#.superpowers/**'` with zero errors.
 - Use no decorative emoji, color-dependent meaning, proprietary renderer, or
   new project dependency.
 - Human responsibility remains explicit: “人定其向，智扩其能；协作于事，归责于人。”
@@ -555,7 +556,7 @@ Run:
 
 ```bash
 ./scripts/validate-docs.sh --render-dir /tmp/data-guidelines-qa
-markdownlint-cli2 '**/*.md'
+markdownlint-cli2 '**/*.md' '#.superpowers/**'
 git diff --check HEAD
 rg -n '```mermaid' guidelines.md | wc -l
 ```
