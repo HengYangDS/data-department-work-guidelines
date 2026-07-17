@@ -5,5 +5,6 @@ paths = [
   "evidence/claims/ddwg-release-mirror-policy-20260718.toml",
   "evidence/chronicle/ddwg-release-mirror-policy-20260718/**",
   "openspec/changes/ddwg-release-mirror-policy-20260718/**",
+  "openspec/changes/archive/2026-07-17-ddwg-release-mirror-policy-20260718/**",
   "openspec/specs/repository-governance/spec.md",
 ]

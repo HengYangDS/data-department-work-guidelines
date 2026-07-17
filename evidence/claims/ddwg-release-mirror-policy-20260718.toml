@@ -21,7 +21,7 @@ owner = "data-department"
 scope = "Local accepted-to-release fast-forward policy and local proof; excludes provider publication, remote protection settings, hosted execution, and organizational outcomes."
 
 [carriers]
-openspec = "openspec/changes/ddwg-release-mirror-policy-20260718"
+openspec = "openspec/changes/archive/2026-07-17-ddwg-release-mirror-policy-20260718"
 fallback = "Treat main as an independent release branch until a current exact-HEAD local proof and governed closeout complete."
 kill_signal = "A protected branch moves outside ETHOS closeout, candidate/dev is published, or local proof is presented as forge publication evidence."
 
@@ -31,6 +31,6 @@ targets = [
   "docs/governance/ethos.md",
   "evidence/claims/ddwg-release-mirror-policy-20260718.toml",
   "evidence/chronicle/ddwg-release-mirror-policy-20260718/2026-07-17.md",
-  "openspec/changes/ddwg-release-mirror-policy-20260718",
+  "openspec/changes/archive/2026-07-17-ddwg-release-mirror-policy-20260718",
   "openspec/specs/repository-governance/spec.md",
 ]
