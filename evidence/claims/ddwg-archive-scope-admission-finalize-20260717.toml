@@ -1,9 +1,9 @@
 [claim]
 id = "ddwg-archive-scope-admission-finalize-20260717"
 subject = "data-department-work-guidelines:local-adopter-closeout"
-state = "active"
+state = "historical"
 change_id = "ddwg-archive-scope-admission-finalize-20260717"
-summary = "The documentation adopter's local closeout is governed by a leased active Change and will require official archive plus a separate post-archive proof."
+summary = "The documentation adopter closeout carrier was officially archived; a separate active reconciliation claim owns the resulting current local proof."
 
 [evidence]
 dated = "evidence/chronicle/ddwg-archive-scope-admission-finalize-20260717/2026-07-17.md"
@@ -21,8 +21,8 @@ owner = "data-department"
 scope = "Documentation adopter local lifecycle closure; excludes normative-guide changes, forge publication, hosted execution, and organizational outcomes."
 
 [carriers]
-openspec = "openspec/changes/ddwg-archive-scope-admission-finalize-20260717"
-fallback = "Treat the repository as locally unproven until the carrier is officially archived and a separate current proof succeeds."
+openspec = "openspec/changes/archive/2026-07-17-ddwg-archive-scope-admission-finalize-20260717"
+fallback = "Treat the historical closeout as non-current until the separate reconciliation claim has a current HEAD-bound proof."
 kill_signal = "A material path bypasses its active scope, an archive is manually rewritten, or local proof is presented as remote evidence."
 
 [promotion]
@@ -30,5 +30,5 @@ targets = [
   ".ethos/profile.toml",
   "evidence/claims/ddwg-archive-scope-admission-finalize-20260717.toml",
   "evidence/chronicle/ddwg-archive-scope-admission-finalize-20260717/2026-07-17.md",
-  "openspec/changes/ddwg-archive-scope-admission-finalize-20260717",
+  "openspec/changes/archive/2026-07-17-ddwg-archive-scope-admission-finalize-20260717",
 ]

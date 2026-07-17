@@ -1,0 +1,35 @@
+[claim]
+id = "ddwg-post-archive-proof-reconciliation-20260717"
+subject = "data-department-work-guidelines:post-archive-local-proof"
+state = "active"
+change_id = "ddwg-post-archive-proof-reconciliation-20260717"
+summary = "The dated local-closeout archive is preserved while this distinct active Change binds the resulting tree to fresh local documentation proof."
+
+[evidence]
+dated = "evidence/chronicle/ddwg-post-archive-proof-reconciliation-20260717/2026-07-17.md"
+sha256 = "f36b168b7ecf9bb3573e9ecea153531d91353f4c72d318d3671e301f1303e384"
+evidence_ids = ["evidence:ddwg-post-archive-proof-reconciliation-20260717"]
+binding = "The dated official archive, this distinct active Change, and later executed exact-HEAD proof bind the local-only reconciliation claim."
+verifier = "digest_only"
+tests = []
+
+[evidence.freshness]
+mode = "historical"
+
+[boundary]
+owner = "data-department"
+scope = "Post-archive local documentation proof and candidate eligibility; excludes archive rewrites, provider publication, hosted execution, and organizational outcomes."
+
+[carriers]
+openspec = "openspec/changes/ddwg-post-archive-proof-reconciliation-20260717"
+fallback = "Treat the repository as locally unproven until this Change has a current HEAD-bound proof."
+kill_signal = "The dated archive is modified, the proof is stale, or local proof is presented as provider publication evidence."
+
+[promotion]
+targets = [
+  "evidence/claims/ddwg-archive-scope-admission-finalize-20260717.toml",
+  "evidence/claims/ddwg-post-archive-proof-reconciliation-20260717.toml",
+  "evidence/chronicle/ddwg-post-archive-proof-reconciliation-20260717/2026-07-17.md",
+  "openspec/changes/archive/2026-07-17-ddwg-archive-scope-admission-finalize-20260717",
+  "openspec/changes/ddwg-post-archive-proof-reconciliation-20260717",
+]
