@@ -40,7 +40,8 @@ flowchart LR
     D --> E["ETHOS land"]
     E --> B
     B --> F["ETHOS closeout"]
-    F --> A
+    F --> A["dev\n已接受本地根"]
+    F --> H["main\naccepted 的 fast-forward mirror"]
     A -. "远端可用且另行验证" .-> G["GitLab 发布投影"]
 ```
 
@@ -50,8 +51,10 @@ flowchart LR
 3. 用当前 HEAD 的
    `./scripts/ethos-repo.sh prove --execute --scope docs --expect-head <HEAD> --json`
    记录本地证明；`./scripts/ethos-repo.sh land` 只推进候选列车。
-4. 只有受控 closeout 才能把 `candidate/dev` 快进到 `dev`。远端发布必须在连接恢复后
-   单独观察和执行。
+4. 只有受控 closeout 才能把 `candidate/dev` 快进到 `dev`，并将 `main` 作为
+   `dev` 的本地 fast-forward mirror 同步到同一 SHA。不得直接移动 `main`。
+5. `candidate/dev` 只在本地候选列车中存在，不得推送至 GitLab 或 GitHub；远端发布必须
+   在连接恢复后单独观察和执行，且仅投影 `dev`、`main` 或 `submit/*`。
 
 ## 仓库根绑定
 
