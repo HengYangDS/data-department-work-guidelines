@@ -27,6 +27,13 @@ local_state = ".ethos/state"
 
 # ETHOS names these required axes “code correctness”; for this documentation
 # repository they mean reader-visible behavior and static document integrity.
+[openspec]
+material_paths = [
+  ".ethos/profile.toml",
+  "evidence/**",
+  "openspec/specs/**",
+]
+
 [proof]
 code_correctness_gates = ["docs-integrity", "markdown-format"]
 

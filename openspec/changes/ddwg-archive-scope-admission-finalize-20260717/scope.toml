@@ -1,0 +1,16 @@
+schema_version = 1
+paths = [
+  ".ethos/profile.toml",
+  "scripts/ethos-repo.sh",
+  "scripts/test-ethos-repo.sh",
+  "evidence/claims/guidelines-docs-registry-contract-20260712.toml",
+  "evidence/claims/guidelines-ethos-adopter-baseline-20260712.toml",
+  "evidence/claims/guidelines-adopter-proof-closeout-20260715.toml",
+  "evidence/claims/guidelines-adopter-proof-reconciliation-20260715.toml",
+  "evidence/chronicle/guidelines-adopter-proof-closeout-20260715/**",
+  "evidence/chronicle/guidelines-adopter-proof-reconciliation-20260715/**",
+  "openspec/specs/repository-governance/spec.md",
+  "openspec/changes/guidelines-adopter-proof-reconciliation-20260715/**",
+  "openspec/changes/archive/2026-07-15-guidelines-adopter-proof-closeout-20260715/**",
+  "openspec/changes/archive/2026-07-15-guidelines-adopter-proof-reconciliation-20260715/**",
+]
