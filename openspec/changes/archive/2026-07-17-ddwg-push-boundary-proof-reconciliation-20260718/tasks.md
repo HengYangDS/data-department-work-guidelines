@@ -9,5 +9,5 @@
 ## 2. Prove and close
 
 - [x] 2.1 Validate the evidence lifecycle and execute fresh exact-HEAD proof.
-- [ ] 2.2 Archive this reconciliation through official OpenSpec, then rerun the
+- [x] 2.2 Archive this reconciliation through official OpenSpec, then rerun the
       exact-HEAD proof for local candidate land.
