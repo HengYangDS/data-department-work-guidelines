@@ -3,14 +3,14 @@ id = "guidelines-docs-registry-contract-20260712"
 subject = "data-department-work-guidelines:docs-registry-contract"
 state = "active"
 change_id = "docs-registry-contract-20260712"
-summary = "Every governed Markdown document in the guidelines repository exposes unique semantic metadata and reader-visible status, purpose, and cross-reference boundaries; archived design records remain distinguishable from current operational guidance."
+summary = "Every governed Markdown document in the guidelines repository exposes unique metadata and reader-visible status, purpose, and cross-reference boundaries; archived design records remain distinguishable from current operational guidance."
 
 [evidence]
 dated = "evidence/chronicle/guidelines-docs-registry-contract-20260712/2026-07-12.md"
 sha256 = "c98772cf6394341cf9e428aff96185895e5fcd7dfc3f17a6476cd309956a8c95"
 evidence_ids = ["evidence:guidelines-docs-registry-contract-20260712"]
 binding = "The dated Chronicle, the complete docs registry, local document QA, and HEAD-bound proof bind this documentation-contract claim."
-verifier = "semantic_attested"
+verifier = "digest_only"
 tests = [
   "./scripts/ethos-repo.sh quality docs-registry --json",
   "./scripts/validate-docs.sh",

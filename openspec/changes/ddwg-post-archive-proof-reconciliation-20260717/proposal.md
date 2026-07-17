@@ -11,6 +11,8 @@ Change rather than by the archived carrier.
 
 - Bind the archived closeout carrier to a new active local-proof claim.
 - Record the post-archive proof boundary and run all local documentation gates.
+- Correct two historical local claims to the portable `digest_only` verifier when
+  no candidate-external semantic-attestation receipt exists.
 - Land only after the exact resulting HEAD has a successful proof record.
 
 ## Capabilities
@@ -30,6 +32,7 @@ Change rather than by the archived carrier.
 - Any rewrite of the dated closeout archive.
 - `guidelines.md`, provider publication, hosted rendering, or organizational
   adoption.
+- A fabricated independent semantic review or receipt.
 - Ownership or mutation of foreign Work Lanes.
 
 ## Impact

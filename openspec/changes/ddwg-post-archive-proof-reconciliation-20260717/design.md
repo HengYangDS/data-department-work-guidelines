@@ -19,6 +19,9 @@ scope to team adoption.
 - Keep archive and reconciliation carriers distinct.
 - Use configured local gates plus `ethos prove --execute --scope docs`.
 - Treat any unavailable visual host as a reported proof limitation, not a pass.
+- Preserve the two historical claims' dated evidence but use `digest_only`: the
+  repository has no candidate-external independent-review receipt, and author
+  self-attestation would not satisfy that boundary.
 
 ## Risks / Trade-offs
 

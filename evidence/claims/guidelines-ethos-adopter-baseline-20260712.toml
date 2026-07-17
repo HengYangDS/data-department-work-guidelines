@@ -3,14 +3,14 @@ id = "guidelines-ethos-adopter-baseline-20260712"
 subject = "data-department-work-guidelines:ethos-adopter-baseline"
 state = "active"
 change_id = "governance-doc-integrity-20260712"
-summary = "The guidelines repository has a local ETHOS adopter baseline that binds document changes to work-lane admission, a repository-bound ETHOS command adapter, a semantic documentation kernel, durable claims and Chronicle, and HEAD-bound local proof; remote GitLab publication remains outside this claim."
+summary = "The guidelines repository has a local ETHOS adopter baseline that binds document changes to work-lane admission, a repository-bound ETHOS command adapter, a documentation kernel, durable claims and Chronicle, and HEAD-bound local proof; remote GitLab publication remains outside this claim."
 
 [evidence]
 dated = "evidence/chronicle/guidelines-ethos-adopter-baseline-20260712/2026-07-12.md"
 sha256 = "2e0c28267780d320d70a9199d6d301892fb6f6b0df772aec71b498bd07830390"
 evidence_ids = ["evidence:guidelines-ethos-adopter-baseline-20260712"]
 binding = "The dated Chronicle, documentation and governance surfaces, repository-root binding test, local quality gates, and HEAD-bound ETHOS proof jointly bind this local adopter-baseline claim."
-verifier = "semantic_attested"
+verifier = "digest_only"
 tests = [
   "./scripts/validate-docs.sh",
   "./scripts/validate-rollout-readiness.sh",
