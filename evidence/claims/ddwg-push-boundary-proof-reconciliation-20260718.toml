@@ -1,0 +1,35 @@
+[claim]
+id = "ddwg-push-boundary-proof-reconciliation-20260718"
+subject = "data-department-work-guidelines:push-boundary-post-archive-local-proof"
+state = "active"
+change_id = "ddwg-push-boundary-proof-reconciliation-20260718"
+summary = "The archived DDWG candidate push boundary is preserved while this distinct active carrier binds the resulting tree to fresh local proof."
+
+[evidence]
+dated = "evidence/chronicle/ddwg-push-boundary-proof-reconciliation-20260718/2026-07-17.md"
+sha256 = "75d06c9bc9fbea41cb306f2f2b081bb23e43d6a0c5eaaed344220f8962851149"
+evidence_ids = ["evidence:ddwg-push-boundary-proof-reconciliation-20260718"]
+binding = "The dated boundary archive, this active reconciliation carrier, and later exact-HEAD local proof bind the claim."
+verifier = "digest_only"
+tests = []
+
+[evidence.freshness]
+mode = "historical"
+
+[boundary]
+owner = "data-department"
+scope = "Post-archive local proof of the DDWG candidate push boundary; excludes archive rewrites, remote publication, hosted execution, and organizational outcomes."
+
+[carriers]
+openspec = "openspec/changes/ddwg-push-boundary-proof-reconciliation-20260718"
+fallback = "Treat the candidate push boundary as locally unproven until this active carrier has a current exact-HEAD proof."
+kill_signal = "The dated archive is modified, the proof is stale, or local proof is presented as provider publication evidence."
+
+[promotion]
+targets = [
+  "evidence/claims/ddwg-push-boundary-enforcement-20260718.toml",
+  "evidence/claims/ddwg-push-boundary-proof-reconciliation-20260718.toml",
+  "evidence/chronicle/ddwg-push-boundary-proof-reconciliation-20260718/2026-07-17.md",
+  "openspec/changes/archive/2026-07-17-ddwg-push-boundary-enforcement-20260718",
+  "openspec/changes/ddwg-push-boundary-proof-reconciliation-20260718",
+]

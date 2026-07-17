@@ -1,15 +1,15 @@
 [claim]
 id = "ddwg-push-boundary-enforcement-20260718"
 subject = "data-department-work-guidelines:remote-candidate-push-boundary"
-state = "active"
-change_id = "ddwg-push-boundary-enforcement-20260718"
+state = "historical"
+change_id = "2026-07-17-ddwg-push-boundary-enforcement-20260718"
 summary = "The repository-owned pre-push hook rejects the local candidate train before provider projection and delegates eligible refs to ETHOS admission."
 
 [evidence]
 dated = "evidence/chronicle/ddwg-push-boundary-enforcement-20260718/2026-07-17.md"
 sha256 = "b13ef6eb0e8fe21b41c70afdce870a6540e18581fe7b1d44c7b4b169dac7d743"
 evidence_ids = ["evidence:ddwg-push-boundary-enforcement-20260718"]
-binding = "The active OpenSpec Change, hook regression, proof profile, Chronicle, and later exact-HEAD proof bind this local-only boundary claim."
+binding = "The dated official OpenSpec archive, hook regression, proof profile, and Chronicle preserve this historical local-only boundary claim."
 verifier = "digest_only"
 tests = [
   "./scripts/test-push-boundary.sh",
@@ -24,18 +24,14 @@ owner = "data-department"
 scope = "Local candidate-branch push rejection and eligible-ref delegation; excludes forge-side protection, authentication, remote publication, hosted execution, and organizational outcomes."
 
 [carriers]
-openspec = "openspec/changes/ddwg-push-boundary-enforcement-20260718"
-fallback = "Treat candidate/dev as publication-unsafe until the exact-HEAD local hook proof has passed."
-kill_signal = "candidate/dev is delegated or pushed, an eligible ref bypasses ETHOS delegation, or local hook proof is presented as remote publication evidence."
+openspec = "openspec/changes/archive/2026-07-17-ddwg-push-boundary-enforcement-20260718"
+fallback = "Treat this archived record as historical; rely on the separate active reconciliation claim for current local proof."
+kill_signal = "The dated archive is rewritten, candidate/dev is delegated or pushed, or historical evidence is presented as current provider publication evidence."
 
 [promotion]
 targets = [
-  ".ethos/profile.toml",
-  ".githooks/pre-push",
-  "scripts/test-push-boundary.sh",
-  "docs/governance/ethos.md",
   "evidence/claims/ddwg-push-boundary-enforcement-20260718.toml",
   "evidence/chronicle/ddwg-push-boundary-enforcement-20260718/2026-07-17.md",
-  "openspec/changes/ddwg-push-boundary-enforcement-20260718",
+  "openspec/changes/archive/2026-07-17-ddwg-push-boundary-enforcement-20260718",
   "openspec/specs/repository-governance/spec.md",
 ]
