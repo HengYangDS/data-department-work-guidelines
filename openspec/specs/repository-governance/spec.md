@@ -64,7 +64,16 @@ leave `main` and `dev` at the same SHA.
 The documentation adopter SHALL treat `candidate/dev` as a local candidate
 train. GitLab and GitHub publication projections SHALL NOT receive
 `candidate/dev`; only `dev`, `main`, and `submit/*` are eligible for remote
-projection.
+projection. The repository-owned pre-push hook SHALL reject
+`refs/heads/candidate/dev` as either a local source or remote destination before
+generic ETHOS push admission.
+
+#### Scenario: Candidate projection is rejected locally
+
+- **WHEN** Git supplies `refs/heads/candidate/dev` as either a local source or
+  remote destination in a pre-push pair
+- **THEN** the repository hook exits nonzero before delegation
+- **AND** no remote connection or publication is implied
 
 #### Scenario: Local candidate proof is not publication evidence
 

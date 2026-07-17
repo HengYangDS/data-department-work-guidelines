@@ -76,3 +76,15 @@ evidence_class = "proof"
 trust_bearing = true
 tool_adapter = "repository-native"
 network_policy = "offline"
+
+[[proof.gates]]
+id = "push-boundary"
+kind = "test"
+command = ["./scripts/test-push-boundary.sh"]
+asset_classes = ["repository-governance", "git-hooks"]
+dimensions = ["governance", "publication", "boundary"]
+execution_mode = "subprocess"
+evidence_class = "proof"
+trust_bearing = true
+tool_adapter = "repository-native"
+network_policy = "offline"

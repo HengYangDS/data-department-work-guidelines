@@ -1,0 +1,12 @@
+schema_version = 1
+paths = [
+  ".ethos/profile.toml",
+  ".githooks/pre-push",
+  "scripts/test-push-boundary.sh",
+  "docs/governance/ethos.md",
+  "evidence/claims/ddwg-push-boundary-enforcement-20260718.toml",
+  "evidence/chronicle/ddwg-push-boundary-enforcement-20260718/**",
+  "openspec/changes/ddwg-push-boundary-enforcement-20260718/**",
+  "openspec/changes/archive/2026-07-17-ddwg-push-boundary-enforcement-20260718/**",
+  "openspec/specs/repository-governance/spec.md",
+]
