@@ -1,16 +1,16 @@
 # Documentation adopter archive-closeout tasks
 
-## 1. Admission and reconstruction
+## 1. Admission and active carrier
 
 - [x] 1.1 Start a leased successor Work Lane from the clean candidate baseline.
 - [x] 1.2 Add the legacy material-path declaration through its first-write admission.
-- [ ] 1.3 Restore recorded adopter closeout and reconciliation carriers.
+- [x] 1.3 Record the active local closeout claim and Chronicle.
 
 ## 2. Official lifecycle
 
-- [ ] 2.1 Validate active Change scopes and official OpenSpec artifacts.
-- [ ] 2.2 Archive the reconciliation carrier through the official command.
-- [ ] 2.3 Archive this closeout Change after its own accepted-spec fusion.
+- [ ] 2.1 Validate active Change scope and archive readiness.
+- [ ] 2.2 Archive this closeout carrier through official OpenSpec.
+- [ ] 2.3 Start a separate post-archive reconciliation carrier.
 
 ## 3. Proof and local promotion
 

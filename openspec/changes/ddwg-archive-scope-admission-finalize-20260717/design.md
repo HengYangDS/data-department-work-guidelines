@@ -1,31 +1,29 @@
 ## Context
 
-The candidate baseline is clean, while a legacy unleased work lane contains a
-partially staged manual archive. The manual archive cannot be treated as
-official lifecycle evidence. This leased successor therefore reconstructs the
-admitted materials from the recorded lineage, archives through OpenSpec, and
-proves the resulting exact HEAD.
+The candidate baseline is clean and already contains the normative guideline
+system. A prior foreign lane has no current lease, so it is observed but not
+modified or treated as an authority source.
 
 ## Goals / Non-Goals
 
-**Goals:** preserve historical requirements and evidence, bind material writes
-to an active Change, use official archive/spec fusion, and produce only local
-proof and local branch-transition evidence.
+**Goals:** bind material documentation-adopter changes to a leased current
+Change, perform official archive/spec fusion, and generate only local,
+HEAD-bound proof.
 
-**Non-Goals:** rewrite `guidelines.md`, fabricate practice or organizational
-outcomes, alter foreign lanes, or assert GitLab/GitHub publication.
+**Non-Goals:** rewrite `guidelines.md`, fabricate practice evidence, alter
+foreign lanes, or claim provider publication.
 
 ## Decisions
 
-- Use a fresh leased successor rather than take ownership of the unleased lane.
-- Restore the recorded closeout lineage as source material, then use official
-  OpenSpec archive for the remaining reconciliation carrier.
-- Treat a changed archive as a new semantic HEAD that requires a new proof.
+- Use this leased successor as the sole mutation authority.
+- Archive the closeout carrier through the official OpenSpec command.
+- Start a distinct reconciliation Change after archive because archive changes
+  the semantic proof head.
 
 ## Risks / Trade-offs
 
-[Historical carrier drift] -> compare restored content to recorded commit
-`aa02e4a16e9f2317239078e3b649afc8bf891b5b` before archive.
+[Archive changes the tree] -> require a separate reconciliation carrier and a
+fresh proof after archive.
 
-[Host rendering limitation] -> retain static Markdown/Mermaid validation and
-record any Chromium launch failure as an execution boundary, not a content pass.
+[Visual renderer host failure] -> preserve static Mermaid validation and report
+a Chromium launch failure as an execution boundary, never as a content pass.
