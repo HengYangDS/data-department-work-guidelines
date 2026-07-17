@@ -21,7 +21,7 @@ owner = "data-department"
 scope = "Post-archive local documentation proof and candidate eligibility; excludes archive rewrites, provider publication, hosted execution, and organizational outcomes."
 
 [carriers]
-openspec = "openspec/changes/ddwg-post-archive-proof-reconciliation-20260717"
+openspec = "openspec/changes/archive/2026-07-17-ddwg-post-archive-proof-reconciliation-20260717"
 fallback = "Treat the repository as locally unproven until this Change has a current HEAD-bound proof."
 kill_signal = "The dated archive is modified, the proof is stale, or local proof is presented as provider publication evidence."
 
@@ -31,5 +31,5 @@ targets = [
   "evidence/claims/ddwg-post-archive-proof-reconciliation-20260717.toml",
   "evidence/chronicle/ddwg-post-archive-proof-reconciliation-20260717/2026-07-17.md",
   "openspec/changes/archive/2026-07-17-ddwg-archive-scope-admission-finalize-20260717",
-  "openspec/changes/ddwg-post-archive-proof-reconciliation-20260717",
+  "openspec/changes/archive/2026-07-17-ddwg-post-archive-proof-reconciliation-20260717",
 ]
