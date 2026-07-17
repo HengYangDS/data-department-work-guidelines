@@ -1,3 +1,5 @@
+# Post-archive documentation-proof reconciliation design
+
 ## Context
 
 The official archive is intentionally immutable historical evidence. The
@@ -20,5 +22,5 @@ scope to team adoption.
 
 ## Risks / Trade-offs
 
-[Evidence becomes stale after later edits] -> execute proof after all commits and
-before candidate landing.
+[Evidence becomes stale after later edits] -> execute proof after all commits
+and before candidate landing.

@@ -1,3 +1,5 @@
+# Post-archive documentation-proof reconciliation
+
 ## Why
 
 Official archive moved the local closeout carrier and fused its accepted
@@ -26,7 +28,8 @@ Change rather than by the archived carrier.
 ## Out of Scope
 
 - Any rewrite of the dated closeout archive.
-- `guidelines.md`, provider publication, hosted rendering, or organizational adoption.
+- `guidelines.md`, provider publication, hosted rendering, or organizational
+  adoption.
 - Ownership or mutation of foreign Work Lanes.
 
 ## Impact

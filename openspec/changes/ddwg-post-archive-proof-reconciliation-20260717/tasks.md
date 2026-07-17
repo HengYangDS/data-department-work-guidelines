@@ -13,4 +13,4 @@
 ## 3. Local promotion
 
 - [ ] 3.1 Complete OpenSpec tasks and validate the reconciliation Change.
-- [ ] 3.2 Archive this reconciliation carrier after its preliminary proof; land only after reproof.
+- [ ] 3.2 Archive after preliminary proof; land only after reproof.
