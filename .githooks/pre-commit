@@ -19,3 +19,7 @@ done < <(git diff --cached --name-only --diff-filter=ACMRD)
   --editor-root "$repo_root" \
   --require-editor-root \
   --json
+
+# This is only a repository-specific structural check.  OpenSpec lifecycle and
+# Change admission remain governed by the repository-bound ETHOS command above.
+bash "$repo_root/scripts/validate-governance-boundary.sh"

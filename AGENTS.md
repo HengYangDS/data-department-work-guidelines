@@ -56,4 +56,6 @@
      --expect-head "$(git rev-parse HEAD)" --json
    ```
 
-4. GitLab 远端和 hosted CI 仅是发布投影；未取得远端证据时，不得声称已发布或已由 GitLab 渲染验证。
+4. 本地验证与安装不依赖远端；GitLab 是组织主发布源，GitHub 是独立完整仓库与 CI/CD 镜像平面。
+   `work/*` 与 `candidate/dev` 永不推送，远端只接受 `dev`、`main` 与 `submit/*`。任一远端
+   未配置、不可达或未取得新鲜 ref/CI 证据时，都不得声称该远端已发布或已验证。

@@ -28,10 +28,23 @@ local_state = ".ethos/state"
 # ETHOS names these required axes “code correctness”; for this documentation
 # repository they mean reader-visible behavior and static document integrity.
 [openspec]
+# ETHOS owns this repository-relative admission contract. The companion beside
+# an active Change is product-defined data; it is not an OpenSpec schema.
 material_paths = [
-  ".ethos/profile.toml",
+  ".ethos/**",
+  ".githooks/**",
+  ".github/**",
+  ".gitlab-ci.yml",
+  "AGENTS.md",
+  "CHANGELOG.md",
+  "docs/**",
   "evidence/**",
-  "openspec/specs/**",
+  "evolution/**",
+  "guidelines.md",
+  "openspec/**",
+  "scripts/**",
+  "tests/**",
+  "tools/ci/**",
 ]
 
 [proof]
@@ -44,7 +57,7 @@ static-analysis = "markdown-format"
 [[proof.gates]]
 id = "docs-integrity"
 kind = "test"
-command = ["./scripts/validate-docs.sh"]
+command = ["bash", "./scripts/validate-docs.sh"]
 asset_classes = ["markdown-docs"]
 dimensions = ["behavior", "documentation", "links", "rendering"]
 execution_mode = "subprocess"
@@ -56,7 +69,7 @@ network_policy = "offline"
 [[proof.gates]]
 id = "markdown-format"
 kind = "lint"
-command = ["./scripts/format-markdown.sh", "--check"]
+command = ["bash", "./scripts/format-markdown.sh", "--check"]
 asset_classes = ["markdown-docs"]
 dimensions = ["static-analysis", "format", "markdown"]
 execution_mode = "subprocess"
@@ -68,21 +81,9 @@ network_policy = "offline"
 [[proof.gates]]
 id = "repository-root-binding"
 kind = "test"
-command = ["./scripts/test-ethos-repo.sh"]
+command = ["bash", "./scripts/test-ethos-repo.sh"]
 asset_classes = ["repository-governance"]
 dimensions = ["governance", "authority", "target-binding"]
-execution_mode = "subprocess"
-evidence_class = "proof"
-trust_bearing = true
-tool_adapter = "repository-native"
-network_policy = "offline"
-
-[[proof.gates]]
-id = "push-boundary"
-kind = "test"
-command = ["./scripts/test-push-boundary.sh"]
-asset_classes = ["repository-governance", "git-hooks"]
-dimensions = ["governance", "publication", "boundary"]
 execution_mode = "subprocess"
 evidence_class = "proof"
 trust_bearing = true

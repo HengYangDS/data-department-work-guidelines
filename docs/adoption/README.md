@@ -13,7 +13,7 @@ relations:
 > **目的 Purpose:** 让负责人在不新增平行流程、不复制准则的前提下启动并记录真实试用。
 >
 > **参见 See also:** [`guidelines.md`](../../guidelines.md)、
-> [本地采用决策](../decisions/2026-07-12-local-rollout-readiness.md)。
+> [本地采用决策](../decisions/accepted/DR-0003-local-rollout-readiness.md)。
 
 ## 使用边界
 
@@ -35,7 +35,7 @@ relations:
 | [试用记录模板](./trial-log.template.md)                                        | 一项真实工作如何留下可复查的采用证据？               | 替代项目工单、验收或决策记录 |
 | [项目接入模板](./project-adapter.template.md)                                  | 项目怎样声明本地事实、权限与验收，而不复制通用准则？ | 重新编写一套团队规则         |
 | [`validate-rollout-readiness.sh`](../../scripts/validate-rollout-readiness.sh) | 阅读路径、模板边界与文档结构是否仍然可用？           | 证明真实试用已经成功         |
-| [本地采用决策](../decisions/2026-07-12-local-rollout-readiness.md)             | 为什么只准备器具，而不宣称已采用？                   | 代替真实试用与复审           |
+| [本地采用决策](../decisions/accepted/DR-0003-local-rollout-readiness.md)       | 为什么只准备器具，而不宣称已采用？                   | 代替真实试用与复审           |
 
 ## 进入与复审
 
@@ -44,4 +44,5 @@ relations:
 - 规则演化：[复盘与规则演化卡](../../guidelines.md#复盘与规则演化卡) → [规则生命周期](../../guidelines.md#116-规则与实践的生命周期)。
 
 当试用暴露入口失效、规则重复、Agent 越界、证据不足或维护成本超过净增益时，
-按 [复审触发](../decisions/2026-07-12-reader-experience-overhaul.md#复审触发) 处理。
+按 [DR-0002 的复审触发](../decisions/accepted/
+DR-0002-reader-experience.md#evidence-and-revisit) 处理。

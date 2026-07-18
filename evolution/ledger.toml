@@ -14,8 +14,8 @@ transition = "observe -> evaluate"
 proof_refs = ["ethos prove", "scripts/validate-docs.sh", "scripts/validate-rollout-readiness.sh"]
 review_refs = ["evidence/chronicle/guidelines-ethos-adopter-baseline-20260712/2026-07-12.md"]
 decision_refs = [
-  "docs/decisions/2026-07-12-local-rollout-readiness.md",
-  "docs/decisions/2026-07-12-reader-experience-overhaul.md",
+  "docs/decisions/accepted/DR-0003-local-rollout-readiness.md",
+  "docs/decisions/accepted/DR-0002-reader-experience.md",
 ]
 retirement_conditions = [
   "real trial evidence shows no material net gain after a bounded calibration cycle",

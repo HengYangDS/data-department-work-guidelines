@@ -1,0 +1,16 @@
+stages:
+  - verify
+
+docs:verify:
+  stage: verify
+  image: node:22-bookworm
+  interruptible: true
+  variables:
+    PUPPETEER_SKIP_DOWNLOAD: "true"
+    PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium
+  before_script:
+    - apt-get update
+    - apt-get install --yes --no-install-recommends python3 python3-venv chromium
+    - npm ci --ignore-scripts
+  script:
+    - bash tools/ci/scripts/with-python-runtime.sh -- bash tools/ci/scripts/run-documentation-verification.sh

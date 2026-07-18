@@ -42,9 +42,11 @@ ln -s "$adapter" "$hook_root/scripts/ethos-repo.sh"
 git -C "$hook_root" init -q
 git -C "$hook_root" config user.email boundary@example.invalid
 git -C "$hook_root" config user.name boundary-test
+git -C "$hook_root" config commit.gpgsign false
 touch "$hook_root/fixture"
 git -C "$hook_root" add fixture
 git -C "$hook_root" commit -qm fixture
+
 
 run_hook() {
   printf '%s\n' "$1" |

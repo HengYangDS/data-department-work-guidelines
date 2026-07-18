@@ -4,15 +4,9 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 RENDER_DIR=""
 EXPECTED_MERMAID=5
-ALLOW_INCOMPLETE=false
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --allow-incomplete)
-      EXPECTED_MERMAID=0
-      ALLOW_INCOMPLETE=true
-      shift
-      ;;
     --render-dir)
       RENDER_DIR="${2:?--render-dir requires a directory}"
       mkdir -p "$RENDER_DIR"
@@ -47,10 +41,10 @@ for command in "$PRETTIER" "$MARKDOWNLINT" "$MMDC"; do
 done
 
 cd "$ROOT"
-"$MARKDOWNLINT" '**/*.md' '#.superpowers/**' '#.worktrees/**' '#node_modules/**'
+"$MARKDOWNLINT" '**/*.md' '#.superpowers/**' '#.worktrees/**' '#build/**' '#node_modules/**'
 "$PRETTIER" --check '**/*.md'
 
-python3 - "$ROOT" "$RENDER_DIR" "$EXPECTED_MERMAID" "$ALLOW_INCOMPLETE" <<'PY'
+python3 - "$ROOT" "$RENDER_DIR" "$EXPECTED_MERMAID" <<'PY'
 from pathlib import Path
 import re
 import sys
@@ -59,8 +53,7 @@ from urllib.parse import unquote, urlparse
 root = Path(sys.argv[1]).resolve()
 render_dir = Path(sys.argv[2])
 expected_mermaid = int(sys.argv[3])
-allow_incomplete = sys.argv[4] == "true"
-excluded_roots = {".superpowers", ".worktrees", "node_modules"}
+excluded_roots = {".superpowers", ".worktrees", "build", "node_modules"}
 markdown_files = sorted(
     path
     for path in root.rglob("*.md")
@@ -186,16 +179,6 @@ def reference_definitions(path: Path) -> dict[str, str]:
     return definitions
 
 
-PENDING_TASK_3_FRAGMENTS = {
-    "任务内核卡",
-    "启动任务卡",
-    "分析与决策卡",
-    "数据采用与生产卡",
-    "沟通与写作卡",
-    "人智协作卡",
-    "复盘与规则演化卡",
-}
-
 SCENE_CARD_HEADINGS = [
     "启动任务卡",
     "分析与决策卡",
@@ -313,13 +296,7 @@ for path in markdown_files:
                     target_path, heading_anchors(target_path)
                 )
                 normalized_fragment = gitlab_anchor(fragment)
-                # Pre-body staging defers only literal percent-decoded Task 3 headings.
-                is_pending_task_3_fragment = (
-                    allow_incomplete
-                    and target_path == (root / "guidelines.md").resolve()
-                    and unquote(fragment) in PENDING_TASK_3_FRAGMENTS
-                )
-                if normalized_fragment not in anchors and not is_pending_task_3_fragment:
+                if normalized_fragment not in anchors:
                     raise SystemExit(
                         f"broken local fragment: {path.relative_to(root)} -> "
                         f"{target}"
@@ -366,5 +343,7 @@ for source in "$RENDER_DIR"/*.mmd; do
   "$MMDC" -i "$source" -o "$target" -b white
   test -s "$target"
 done
+
+bash "$ROOT/scripts/validate-text-layout.sh"
 
 printf 'PASS documentation QA; rendered diagrams: %s\n' "$RENDER_DIR"

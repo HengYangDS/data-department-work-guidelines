@@ -26,4 +26,5 @@ relations:
 | 追溯依赖与实施位置       | [决策依赖图](decision-dependency-map.md)；[决策与实现链接](decision-code-links.md) |
 | 新建一项持久取舍         | [决策记录模板](templates/decision-record.md)                                       |
 
-既有决策保留其稳定路径；索引负责指向它们，而不为了目录整齐而破坏已有引用。
+已接受记录位于 `accepted/DR-XXXX-*.md`。文件路径、DR 编号、文档状态与决策状态各司其职：
+不再以日期文件名代替决策身份，也不以 `canonical` 代替 `accepted`。

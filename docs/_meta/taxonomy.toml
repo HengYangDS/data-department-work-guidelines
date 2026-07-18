@@ -31,4 +31,3 @@ allowed = [
 "docs/adoption" = ["how-to", "template", "index"]
 "docs/governance" = ["policy", "explanation", "ledger", "index"]
 "docs/retrospectives" = ["history", "findings", "index"]
-"docs/superpowers" = ["plan", "research", "index"]

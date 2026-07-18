@@ -1,0 +1,38 @@
+name: Documentation verification
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+      - 'submit/**'
+  pull_request:
+    branches:
+      - dev
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    container:
+      image: node:22-bookworm
+    timeout-minutes: 15
+    env:
+      PUPPETEER_SKIP_DOWNLOAD: 'true'
+      PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Python runtime prerequisites and Chromium
+        run: |
+          apt-get update
+          apt-get install --yes --no-install-recommends python3 python3-venv chromium
+
+      - name: Install locked documentation tools
+        run: npm ci --ignore-scripts
+
+      - name: Verify documentation and governance boundaries
+        run: bash tools/ci/scripts/with-python-runtime.sh -- bash tools/ci/scripts/run-documentation-verification.sh

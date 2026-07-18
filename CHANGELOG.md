@@ -2,14 +2,34 @@
 
 本文件记录已进入团队基线的实质变更；工作草稿、会话摘要和未验证设想不在此登记。
 
+## [Unreleased]
+
+### 纠偏
+
+- 将 material governance change 的唯一变更载体收敛为 OpenSpec lifecycle，并新增生命周期与
+  决策边界检查。
+- 将四项已接受取舍重建为稳定编号的 DR，分离文档状态、决策状态、实施任务与验证记录。
+- 移除特定执行方法的文档根；历史仍由 Git 保留，不再作为规范、决策或 proof 载体。
+- 以可复现的 Node、Python 与 Chromium 环境新增 GitLab 主发布与 GitHub 镜像平面的
+  同等文档 CI 定义；remote 配置不构成 GitHub ref、CI 或发布的证据。
+- 远端推送只允许 `dev`、`main` 与 `submit/*`；`work/*` 和 `candidate/dev` 永不推送。
+
+### 未作的主张
+
+- 本项纠偏不追溯宣称 2026-07-12 的原始变更已经过 OpenSpec lifecycle；也不证明
+  GitLab runner 已执行新 job、GitLab 已完成 Markdown 渲染，或真实团队采用已经发生。
+
 ## [2.2.2] — 2026-07-12
 
 ### 调整（2.2.2）
 
 - 新增仓库绑定的 `scripts/ethos-repo.sh`：固定治理对象为当前仓库根，拒绝调用方覆写
   `--root`，避免 ETHOS 实现仓库被误作 adopter。
-- 新增根绑定回归测试，并将其纳入文档型 adopter 的本地 proof gate；Agent 路由、hooks、
-  OpenSpec、证据与技能说明均改由该适配器执行。
+- 新增根绑定回归测试与可选 repository-native gate descriptor；其显式验证适配器 contract，
+  但不进入文档型 adopter 的默认 proof floor。Agent 路由、hooks、OpenSpec、证据与技能说明
+  均改由该适配器执行。
+- repository-native proof descriptor 一律通过 `bash` 调用脚本，不以 Git 文件执行位作为
+  跨平台前提；默认 code-correctness 选择仍只有文档完整性与 Markdown 格式两项。
 - 修复技能包摘要、证据摘要、演化 proof 引用与格式化/链接校验，使 ETHOS 本地证据可复查。
 - 明确本仓库采用外部 ETHOS runner：不把产品嵌入式后端迁移、shadow parity 或产品命令手册
   检查伪装为本仓库已经完成的能力。

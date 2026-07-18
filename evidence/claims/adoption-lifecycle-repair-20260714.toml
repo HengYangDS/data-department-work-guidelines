@@ -1,0 +1,34 @@
+[claim]
+id = "adoption-lifecycle-repair-20260714"
+subject = "data-department-work-guidelines:adoption-lifecycle-repair"
+state = "active"
+change_id = "adoption-lifecycle-repair-20260714"
+summary = "The active Change records the current correction of DDWG governance carriers; it records no archive, acceptance, forge-delivery, provider-run, or organizational-adoption conclusion."
+
+[evidence]
+dated = "evidence/chronicle/adoption-lifecycle-repair-20260714/2026-07-18.md"
+sha256 = "21bc9b5821635e30af8e87da03ee28bfb9fca40b271f9a99df7ab8e1de84ffdd"
+evidence_ids = ["evidence:adoption-lifecycle-repair-20260714"]
+binding = "The active Change, its product-owned scope companion, and this dated observation record the current repair without retrospective certification."
+verifier = "digest_only"
+tests = ["openspec validate --all --strict --json", "./scripts/ethos-repo.sh openspec --lifecycle --json"]
+
+[evidence.freshness]
+mode = "historical"
+
+[boundary]
+owner = "data-department"
+scope = "Correction of DDWG lifecycle, decision, evidence, and publication-boundary topology; excludes retrospective certification, remote publication, hosted CI, and real-work adoption."
+
+[carriers]
+openspec = "openspec/changes/adoption-lifecycle-repair-20260714"
+fallback = "Keep this repository locally unproven until the active Change completes archive and current-HEAD proof."
+kill_signal = "A material DDWG change bypasses the active Change, or a method document becomes a governance carrier again."
+
+[promotion]
+targets = [
+  "openspec/changes/adoption-lifecycle-repair-20260714",
+  "docs/decisions",
+  "docs/governance/ethos.md",
+  "scripts/validate-governance-boundary.sh",
+]

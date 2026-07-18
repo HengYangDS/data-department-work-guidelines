@@ -1,4 +1,0 @@
-schema: spec-driven
-created: 2026-07-17
-goal: Enforce the DDWG local-only candidate publication boundary with a
-  proof-bearing hook test.
