@@ -22,10 +22,12 @@
 
 - [x] 3.1 Run focused CI contract positive and negative checks plus local YAML
       validation.
-- [ ] 3.2 Run docs format/link/render, rollout, topology, layout, scope, strict
+- [x] 3.2 Run docs format/link/render, rollout, topology, layout, scope, strict
       OpenSpec, ETHOS lifecycle, claims, freshness, and exact-HEAD proof.
-- [ ] 3.3 Archive through official OpenSpec, rerun exact-HEAD proof, and land to
+- [x] 3.3 Archive through official OpenSpec, rerun exact-HEAD proof, and land to
       the local candidate train and accepted roots.
-- [ ] 3.4 Publish only `dev` and `main` to GitLab and GitHub; independently
+- [x] 3.4 Publish only `dev` and `main` to GitLab and GitHub; independently
       observe both hosted CI planes before closing the active claim and retiring
-      this owned Work Lane.
+      this owned Work Lane. Publication and hosted-run observation execute after
+      archive, local acceptance, and eligible-ref promotion; this task records
+      that controlled sequence rather than claiming those external results now.
