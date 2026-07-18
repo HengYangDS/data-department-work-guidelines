@@ -28,8 +28,8 @@
 
 - [x] 4.1 Run document format, link, render, rollout, layout, boundary,
       scope, and profile checks.
-- [ ] 4.2 Run strict official OpenSpec, ETHOS lifecycle, claims, freshness,
-      default proof, and explicit root-binding proof.
+- [x] 4.2 Run strict official OpenSpec, ETHOS lifecycle, claims, freshness,
+      default proof, and explicit root-binding proof before official archive.
 - [x] 4.3 Verify the controlled route for official archive, post-archive
       proof, local landing, and clean owned-lane retirement.
 - [x] 4.4 Prepare independent GitLab/GitHub CI and eligible-ref publication
