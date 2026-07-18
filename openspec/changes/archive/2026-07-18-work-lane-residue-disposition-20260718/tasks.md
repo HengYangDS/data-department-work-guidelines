@@ -10,11 +10,11 @@
 
 ## 2. Validate the decision carrier
 
-- [ ] 2.1 Run local topology, format, documentation, strict OpenSpec, ETHOS
+- [x] 2.1 Run local topology, format, documentation, strict OpenSpec, ETHOS
       lifecycle, claim, and exact-HEAD proof checks.
-- [ ] 2.2 Confirm that the normal superseded retirement path rejects the target
+- [x] 2.2 Confirm that the normal superseded retirement path rejects the target
       because its changed-path objects are not absorbed by accepted `dev`.
-- [ ] 2.3 Confirm that this Change neither grants authority over foreign lanes
+- [x] 2.3 Confirm that this Change neither grants authority over foreign lanes
       nor claims remote publication or hosted execution.
 
 ## Post-archive operational boundary

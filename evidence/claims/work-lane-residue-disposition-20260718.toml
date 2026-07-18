@@ -1,15 +1,14 @@
 [claim]
 id = "work-lane-residue-disposition-20260718"
 subject = "data-department-work-guidelines:owned-work-lane-residue-disposition"
-state = "active"
-change_id = "work-lane-residue-disposition-20260718"
-summary = "An active local-only Change records the exact audit and preservation-first disposal boundary for one obsolete owned divergent Work Lane. It does not state that the target was absorbed or merged, and it makes no forge-delivery or provider-run conclusion."
+state = "historical"
+summary = "Historical record of the July 18, 2026 official OpenSpec archive that preserved the exact audit and preservation-first disposal boundary for one obsolete owned divergent Work Lane. It does not state that the target was absorbed or merged, and it makes no forge-delivery, provider-run, or local-retirement conclusion."
 
 [evidence]
 dated = "evidence/chronicle/work-lane-residue-disposition-20260718/2026-07-18.md"
-sha256 = "da3a1ccc7f312604c8a81572e55577b8e31b024a3f474eb632b81fa66569bb0f"
+sha256 = "facff7573f69b59551ed23cb43e9d5708e50b7ef078e281aeedcba27c23b34c5"
 evidence_ids = ["evidence:local-work-lane-object-audit", "evidence:lane-resolution-preserve-retire-decision"]
-binding = "This active claim binds the current Change, its dated Chronicle, and the exact branch/head audit. A later native resolver receipt, if produced after accepted closeout, records only the local disposal effect."
+binding = "The dated Chronicle and official archived Change preserve the July 18 archive observation and exact branch/head audit. A later native resolver receipt, if produced after accepted closeout, records only the separate local disposal effect. This historical record does not bind present repository readiness."
 verifier = "digest_only"
 tests = ["bash ./scripts/ethos-repo.sh openspec --lifecycle --json", "bash ./scripts/ethos-repo.sh prove --execute --scope docs --expect-head <archive-head> --json"]
 
@@ -21,7 +20,7 @@ owner = "repository-maintainer"
 scope = "Preservation-first disposition of work/adoption-lifecycle-repair-finalize-20260717 at its recorded head; excludes branch merge, foreign Work Lane mutation, remote publication, hosted execution, and organizational adoption."
 
 [carriers]
-openspec = "openspec/changes/work-lane-residue-disposition-20260718"
+openspec = "openspec/changes/archive/2026-07-18-work-lane-residue-disposition-20260718"
 fallback = "Keep the target intact and re-audit if its branch, head, lease, or worktree observation changes before the native resolver applies the accepted disposition."
 kill_signal = "The target changes, the exact preservation package cannot verify, a foreign lane is selected, or a local disposal result is presented as remote publication evidence."
 
@@ -29,6 +28,6 @@ kill_signal = "The target changes, the exact preservation package cannot verify,
 targets = [
   "evidence/claims/work-lane-residue-disposition-20260718.toml",
   "evidence/chronicle/work-lane-residue-disposition-20260718/2026-07-18.md",
-  "openspec/changes/work-lane-residue-disposition-20260718",
+  "openspec/changes/archive/2026-07-18-work-lane-residue-disposition-20260718",
   "openspec/specs/repository-governance/spec.md",
 ]
