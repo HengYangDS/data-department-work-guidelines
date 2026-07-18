@@ -1,0 +1,4 @@
+schema: spec-driven
+created: 2026-07-18
+goal: Preserve the canonical hosted Mermaid renderer selection through every
+  documentation verification step in both provider projections.

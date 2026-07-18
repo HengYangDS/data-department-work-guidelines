@@ -1,0 +1,34 @@
+[claim]
+id = "ci-mermaid-rollout-forwarding-repair-20260718"
+subject = "data-department-work-guidelines:hosted-mermaid-rollout-forwarding"
+state = "active"
+summary = "Active OpenSpec Change for the observed nested hosted renderer-selection propagation defect. It is limited to local repair work and does not attest external run success."
+
+[evidence]
+dated = "evidence/chronicle/ci-mermaid-rollout-forwarding-repair-20260718/2026-07-18.md"
+sha256 = "7afbf797345038d772fe66f32457ff5512dcf0073e94c0529dfacb567ab83d49"
+evidence_ids = ["evidence:github-actions:29641340007", "evidence:local-forwarding-contract"]
+binding = "The active Change records the observed nested validation defect and the local forwarding repair boundary. It does not assert an external execution result."
+verifier = "digest_only"
+tests = ["bash tests/validate-ci-runtime-binding.sh", "bash tools/ci/scripts/run-documentation-verification.sh"]
+
+[evidence.freshness]
+mode = "historical"
+
+[boundary]
+owner = "repository-maintainer"
+scope = "Shared hosted renderer selection propagation from direct documentation validation to nested rollout validation."
+
+[carriers]
+openspec = "openspec/changes/ci-mermaid-rollout-forwarding-repair-20260718"
+fallback = "Re-run the local forwarding contract and inspect fresh provider runs after eligible refs are published."
+kill_signal = "A fresh provider run reproduces the nested selection loss or the local forwarding contract fails."
+
+[promotion]
+targets = [
+  "CHANGELOG.md",
+  "docs/governance/ethos.md",
+  "openspec/specs/repository-governance/spec.md",
+  "tests/validate-ci-runtime-binding.sh",
+  "tools/ci/scripts/run-documentation-verification.sh",
+]

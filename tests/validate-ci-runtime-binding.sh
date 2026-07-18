@@ -153,6 +153,84 @@ verifier="$(cat "$ROOT/tools/ci/scripts/run-documentation-verification.sh")"
   echo 'shared verifier does not pass the hosted renderer selection to the validator' >&2
   exit 1
 }
+[[ "$verifier" == *'validate-rollout-readiness.sh "${validate_docs_args[@]}"'* ]] || {
+  echo 'shared verifier does not preserve the hosted renderer selection for rollout validation' >&2
+  exit 1
+}
+
+fixture="$(mktemp -d "${TMPDIR:-/tmp}/ddwg-ci-runtime-binding.XXXXXX")"
+trap 'rm -rf "$fixture"' EXIT
+mkdir -p "$fixture/tools/ci/scripts" "$fixture/node_modules/.bin" "$fixture/scripts"
+git init --quiet "$fixture"
+cp "$ROOT/tools/ci/scripts/run-documentation-verification.sh" \
+  "$fixture/tools/ci/scripts/run-documentation-verification.sh"
+chmod +x "$fixture/tools/ci/scripts/run-documentation-verification.sh"
+touch "$fixture/node_modules/.bin/openspec"
+chmod +x "$fixture/node_modules/.bin/openspec"
+for script in format-markdown.sh validate-docs.sh validate-rollout-readiness.sh \
+  validate-governance-boundary.sh validate-text-layout.sh; do
+  cat > "$fixture/scripts/$script" <<'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+printf '%s:%s\n' "$(basename "$0")" "$*" >> "$DDWG_VERIFIER_CALLS"
+EOF
+  chmod +x "$fixture/scripts/$script"
+done
+for script in validate-docs-options.sh validate-governance-boundary.sh \
+  validate-push-boundary.sh validate-ci-runtime-binding.sh \
+  validate-openspec-material-scope.sh validate-text-layout.sh; do
+  cat > "$fixture/tests-$script" <<'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+printf '%s:%s\n' "$(basename "$0")" "$*" >> "$DDWG_VERIFIER_CALLS"
+EOF
+  mkdir -p "$fixture/tests"
+  mv "$fixture/tests-$script" "$fixture/tests/$script"
+  chmod +x "$fixture/tests/$script"
+done
+cat > "$fixture/node_modules/.bin/openspec" <<'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+printf 'openspec:%s\n' "$*" >> "$DDWG_VERIFIER_CALLS"
+EOF
+calls="$fixture/calls"
+(
+  cd "$fixture"
+  DDWG_HOSTED_RENDERER_CONFIG="$HOSTED_RENDERER_CONFIG" \
+    DDWG_VERIFIER_CALLS="$calls" \
+    bash tools/ci/scripts/run-documentation-verification.sh
+)
+expected_option="--hosted-renderer-config $HOSTED_RENDERER_CONFIG"
+grep -Fqx "validate-docs.sh:$expected_option" "$calls" || {
+  cat "$calls" >&2
+  echo 'shared verifier did not send the hosted renderer selection to direct validation' >&2
+  exit 1
+}
+grep -Fqx "validate-rollout-readiness.sh:$expected_option" "$calls" || {
+  cat "$calls" >&2
+  echo 'shared verifier did not send the hosted renderer selection to rollout validation' >&2
+  exit 1
+}
+if (
+  cd "$fixture"
+  DDWG_HOSTED_RENDERER_CONFIG='tools/ci/config/foreign.json' \
+    DDWG_VERIFIER_CALLS="$fixture/rejected-calls" \
+    bash tools/ci/scripts/run-documentation-verification.sh
+) >"$fixture/rejected-output" 2>&1; then
+  echo 'shared verifier unexpectedly accepted an unsupported hosted renderer selection' >&2
+  exit 1
+fi
+grep -Fqx 'unsupported DDWG_HOSTED_RENDERER_CONFIG: tools/ci/config/foreign.json' \
+  "$fixture/rejected-output" || {
+  cat "$fixture/rejected-output" >&2
+  echo 'shared verifier did not reject unsupported hosted renderer selection' >&2
+  exit 1
+}
+[[ ! -e "$fixture/rejected-calls" ]] || {
+  cat "$fixture/rejected-calls" >&2
+  echo 'shared verifier invoked validation after unsupported renderer selection' >&2
+  exit 1
+}
 
 if command -v actionlint >/dev/null; then
   actionlint "$GITHUB_WORKFLOW"

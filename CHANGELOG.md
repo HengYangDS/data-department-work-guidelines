@@ -17,6 +17,8 @@
   Docker projection 同时将 Git 列为明确运行时前置；两边仍只调用同一仓库 verifier。
 - 将 hosted Chrome 的 sandbox 兼容例外收敛为一份受跟踪的 Puppeteer 配置；GitLab 与 GitHub
   只经同一 verifier 显式选择它，本地 Mermaid 渲染仍保留默认 sandbox 行为。
+- 修复 shared verifier 在 rollout-readiness 的二次文档校验中遗漏 hosted renderer 选择的问题；
+  兼容参数仍只由受控 CI 显式传入，不改变本地默认 sandbox 行为。
 - 远端推送只允许 `dev`、`main` 与 `submit/*`；`work/*` 和 `candidate/dev` 永不推送。
 
 ### 未作的主张
