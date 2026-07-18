@@ -1,14 +1,14 @@
 [claim]
 id = "adopter-real-lifecycle-validation-20260718"
 subject = "data-department-work-guidelines:adopter-real-lifecycle-validation"
-state = "active"
-summary = "Digest-bound local record of DDWG material Change lifecycle and scope-admission observations."
+state = "historical"
+summary = "Historical digest-bound record of the DDWG material Change lifecycle and scope-admission exercise."
 
 [evidence]
 dated = "evidence/chronicle/adopter-real-lifecycle-validation-20260718/2026-07-18.md"
 sha256 = "743f2c8b39938f8c03452417e0dc7f39457c87557c013e4c5d06b88f95620ecd"
 evidence_ids = ["evidence:adopter-real-lifecycle-validation-20260718"]
-binding = "Chronicle digest, official Change carrier, declared companion scope, and listed local command records bind this bounded local observation."
+binding = "The Chronicle digest and official archived Change preserve this bounded local lifecycle observation."
 verifier = "digest_only"
 tests = [
   "./scripts/ethos-repo.sh lane prewrite guidelines.md --editor-root <lane> --require-editor-root --json",
@@ -28,7 +28,7 @@ owner = "data-department"
 scope = "Local DDWG material lifecycle and scope-admission exercise; excludes normative guideline edits, archive, acceptance, remote publication, hosted CI, and organizational adoption."
 
 [carriers]
-openspec = "openspec/changes/adopter-real-lifecycle-validation-20260718"
+openspec = "openspec/changes/archive/2026-07-18-adopter-real-lifecycle-validation-20260718"
 fallback = "Reject material writes unless an official active Change has a valid matching companion scope."
 kill_signal = "A material path passes plan, proof, or prewrite without an official matching Change companion, or lifecycle is treated as a document correctness gate."
 
@@ -36,6 +36,6 @@ kill_signal = "A material path passes plan, proof, or prewrite without an offici
 targets = [
   "evidence/claims/adopter-real-lifecycle-validation-20260718.toml",
   "evidence/chronicle/adopter-real-lifecycle-validation-20260718/2026-07-18.md",
-  "openspec/changes/adopter-real-lifecycle-validation-20260718",
+  "openspec/changes/archive/2026-07-18-adopter-real-lifecycle-validation-20260718",
   "openspec/specs/repository-governance/spec.md",
 ]
