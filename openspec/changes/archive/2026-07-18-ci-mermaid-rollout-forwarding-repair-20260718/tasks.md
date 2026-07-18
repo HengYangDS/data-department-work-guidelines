@@ -27,7 +27,7 @@
 
 ## 4. Closeout boundary
 
-- [ ] 4.1 Archive the completed repository implementation through the official
+- [x] 4.1 Archive the completed repository implementation through the official
       OpenSpec command.
 - [x] 4.2 Keep exact-HEAD proof, local candidate/accepted promotion, publication
       of only `dev` and `main`, and GitLab/GitHub run inspection as separate

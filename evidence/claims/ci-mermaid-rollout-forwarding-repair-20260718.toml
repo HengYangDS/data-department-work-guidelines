@@ -1,14 +1,14 @@
 [claim]
 id = "ci-mermaid-rollout-forwarding-repair-20260718"
 subject = "data-department-work-guidelines:hosted-mermaid-rollout-forwarding"
-state = "active"
-summary = "Active OpenSpec Change for the observed nested hosted renderer-selection propagation defect. It is limited to local repair work and does not attest external run success."
+state = "historical"
+summary = "Historical record of the July 18, 2026 official OpenSpec archive that repaired nested hosted Mermaid renderer-selection propagation. It does not assert current proof, local acceptance, forge delivery, hosted CI, remote rendering, or organizational adoption."
 
 [evidence]
 dated = "evidence/chronicle/ci-mermaid-rollout-forwarding-repair-20260718/2026-07-18.md"
-sha256 = "7afbf797345038d772fe66f32457ff5512dcf0073e94c0529dfacb567ab83d49"
+sha256 = "64f245382ff97d7ea74e68fe6452d6d4c71c765470e4c3035df8bc5b29b95039"
 evidence_ids = ["evidence:github-actions:29641340007", "evidence:local-forwarding-contract"]
-binding = "The active Change records the observed nested validation defect and the local forwarding repair boundary. It does not assert an external execution result."
+binding = "The dated Chronicle and official archived Change preserve this historical lifecycle observation. They do not bind current repository readiness."
 verifier = "digest_only"
 tests = ["bash tests/validate-ci-runtime-binding.sh", "bash tools/ci/scripts/run-documentation-verification.sh"]
 
@@ -20,7 +20,7 @@ owner = "repository-maintainer"
 scope = "Shared hosted renderer selection propagation from direct documentation validation to nested rollout validation."
 
 [carriers]
-openspec = "openspec/changes/ci-mermaid-rollout-forwarding-repair-20260718"
+openspec = "openspec/changes/archive/2026-07-18-ci-mermaid-rollout-forwarding-repair-20260718"
 fallback = "Re-run the local forwarding contract and inspect fresh provider runs after eligible refs are published."
 kill_signal = "A fresh provider run reproduces the nested selection loss or the local forwarding contract fails."
 
