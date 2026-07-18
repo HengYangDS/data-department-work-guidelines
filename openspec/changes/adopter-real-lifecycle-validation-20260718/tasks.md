@@ -19,6 +19,6 @@
 
 - [x] 3.1 Run strict official OpenSpec validation, ETHOS lifecycle, claims, and
       documentation verification.
-- [ ] 3.2 Execute exact-HEAD local proof and land the owned lane to candidate.
-- [ ] 3.3 Archive the completed Change, re-prove the resulting tree, close out
+- [x] 3.2 Execute exact-HEAD local proof and land the owned lane to candidate.
+- [x] 3.3 Archive the completed Change, re-prove the resulting tree, close out
       candidate to accepted/local release, and retire the owned lane.
