@@ -31,6 +31,8 @@ paths = [
   "evolution/ledger.toml",
   "openspec/README.md",
   "openspec/changes/README.md",
+  "openspec/specs/quality/spec.md",
+  "openspec/specs/repository-governance/spec.md",
   "openspec/changes/adoption-lifecycle-repair-20260714/**",
   "openspec/changes/archive/2026-07-17-ddwg-archive-scope-admission-finalize-20260717/**",
   "openspec/changes/archive/2026-07-17-ddwg-post-archive-proof-reconciliation-20260717/**",

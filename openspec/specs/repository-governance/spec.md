@@ -32,20 +32,6 @@ hosted rendering, or organizational adoption.
 - **THEN** its accepted specification and dated archive carrier SHALL be present
 - **AND** only a proof executed at the resulting HEAD may support local land.
 
-### Requirement: Archived documentation closeout requires a distinct current proof carrier
-
-After official OpenSpec archive moves a documentation-adopter closeout, the
-repository SHALL preserve the dated archive unchanged and SHALL use a distinct
-active Change and claim to bind the resulting tree to local proof. The proof
-SHALL be executed at the resulting exact HEAD before candidate land. It SHALL
-NOT imply remote publication, hosted rendering, or organizational adoption.
-
-#### Scenario: Archive is followed by local proof reconciliation
-
-- **WHEN** an official archive has changed the documentation-adopter tree
-- **THEN** a distinct active reconciliation carrier SHALL reference that archive
-- **AND** only its current HEAD-bound proof may support local candidate land.
-
 ### Requirement: Accepted-to-release fast-forward mirror
 
 The documentation adopter SHALL configure `main` as the fast-forward mirror of
@@ -67,8 +53,9 @@ train. GitLab and GitHub publication projections SHALL NOT receive
 projection. The repository-owned pre-push hook SHALL reject
 `refs/heads/candidate/dev` as either a local source or remote destination before
 generic ETHOS push admission. After official archive of a local boundary Change,
-the dated archive SHALL remain unchanged and a distinct active proof carrier
-SHALL bind the resulting tree to fresh exact-HEAD local proof.
+the dated archive SHALL remain unchanged; exact-HEAD local proof of the archived
+resulting tree is sufficient for local candidate landing and SHALL NOT imply
+remote publication, hosted rendering, or organizational adoption.
 
 #### Scenario: Local candidate proof is not publication evidence
 
@@ -89,3 +76,60 @@ SHALL bind the resulting tree to fresh exact-HEAD local proof.
 - **THEN** the repository hook delegates that ref to the repository-bound ETHOS
   admission adapter
 - **AND** local delegation does not assert remote success
+
+### Requirement: One material governance Change owns the repair
+
+The repository SHALL carry the adoption governance correction through one active
+official OpenSpec Change with proposal, design, delta specifications, tasks, and
+an active claim. It SHALL NOT retain an additional active or archived
+reconciliation carrier for the same correction as a substitute for completing
+that Change.
+
+#### Scenario: Material repair is prepared
+
+- **WHEN** the repository changes governance carriers, claims, decision topology,
+  proof boundaries, or publication boundaries
+- **THEN** `adoption-lifecycle-repair-20260714` is the sole substantive Change
+  carrier for that repair
+- **AND THEN** its active claim binds the same Change path.
+
+### Requirement: ETHOS material scope remains product-owned
+
+The repository SHALL declare material path families in `[openspec].material_paths`.
+The active Change SHALL include an ETHOS-owned `scope.toml` companion containing
+only `schema_version` and `paths`. The companion SHALL be described as adjacent
+to OpenSpec, not as an official OpenSpec workflow-schema extension.
+
+#### Scenario: Material path is covered
+
+- **WHEN** ETHOS evaluates a changed declared material path through prewrite,
+  changed planning, or proof
+- **THEN** the path is admitted only when the active Change companion covers it
+- **AND THEN** an uncovered declared path is rejected by the ETHOS command plane.
+
+### Requirement: Historical claims remain honest
+
+A historical claim with no real historic Change carrier SHALL remain historical
+and digest-bound. It SHALL NOT receive a new `change_id` merely to make prior
+work appear lifecycle-compliant.
+
+#### Scenario: Pre-lifecycle record is retained
+
+- **WHEN** a July 12 historical record is retained after this repair
+- **THEN** it makes no current readiness, archive, or remote-publication claim
+- **AND THEN** it is not rebound to the current Change.
+
+### Requirement: Local and remote publication facts are separate
+
+The repository SHALL keep local verification independent of remote publication.
+GitLab SHALL be the organization primary release plane and GitHub SHALL be an
+independent complete repository and CI/CD plane. Local hooks SHALL reject
+`work/*` and `candidate/dev` as publication refs and permit only `dev`, `main`,
+and `submit/*` to reach generic ETHOS push admission.
+
+#### Scenario: Candidate publication is attempted
+
+- **WHEN** Git supplies `candidate/dev` as a local source or remote destination
+  to the pre-push hook
+- **THEN** the hook rejects it before generic push admission
+- **AND THEN** no remote publication result is asserted.
