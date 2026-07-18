@@ -8,9 +8,23 @@ repo_root="$(git rev-parse --show-toplevel 2>/dev/null)" || {
 }
 cd "$repo_root"
 
+hosted_renderer_config="${DDWG_HOSTED_RENDERER_CONFIG:-}"
+validate_docs_args=()
+case "$hosted_renderer_config" in
+  "")
+    ;;
+  tools/ci/config/mermaid-puppeteer-hosted.json)
+    validate_docs_args=(--hosted-renderer-config "$hosted_renderer_config")
+    ;;
+  *)
+    echo "unsupported DDWG_HOSTED_RENDERER_CONFIG: $hosted_renderer_config" >&2
+    exit 2
+    ;;
+esac
+
 node_modules/.bin/openspec validate --all --strict --json
 bash scripts/format-markdown.sh --check
-bash scripts/validate-docs.sh
+bash scripts/validate-docs.sh "${validate_docs_args[@]}"
 bash scripts/validate-rollout-readiness.sh
 bash scripts/validate-governance-boundary.sh
 bash scripts/validate-text-layout.sh

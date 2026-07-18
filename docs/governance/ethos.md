@@ -28,6 +28,10 @@ relations:
   调用同一仓库内 verifier；GitHub 先在 hosted runner 完成 checkout，再显式选择 Node 22
   与 Chrome，GitLab 在 Docker runtime 中先安装 Git、Python 与 Chromium。该 wrapper 只创建
   当前 checkout 的 `build/runtime/venv` 临时运行时，不是证据、Change 生命周期或远端执行主张。
+- 两个 hosted 投影都显式选择同一份受跟踪的
+  `tools/ci/config/mermaid-puppeteer-hosted.json`。它只在受控 CI 中通过共享 verifier 传给
+  Mermaid；本地 `scripts/validate-docs.sh` 默认不加载该配置，因而不把 hosted Chrome 的
+  sandbox 兼容例外扩展为本地默认。
 - 本地验证与安装不依赖远端。GitLab 是组织主发布源；GitHub 是独立完整仓库与 CI/CD
   镜像平面，可在 GitLab 不可用时作为更新与分发替代。两者均只接收 `dev`、`main`
   与 `submit/*`，绝不接收 `work/*` 或 `candidate/dev`。两套等价 CI 定义和两个

@@ -5,6 +5,8 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 GITHUB_WORKFLOW="$ROOT/.github/workflows/docs-verify.yml"
 GITLAB_WORKFLOW="$ROOT/.gitlab-ci.yml"
 BOUND_VERIFIER="bash tools/ci/scripts/with-python-runtime.sh -- bash tools/ci/scripts/run-documentation-verification.sh"
+HOSTED_RENDERER_CONFIG="tools/ci/config/mermaid-puppeteer-hosted.json"
+HOSTED_RENDERER_CONFIG_PATH="$ROOT/$HOSTED_RENDERER_CONFIG"
 
 provider_has_bound_verifier() {
   local projection="$1"
@@ -71,6 +73,10 @@ grep -Fq 'PUPPETEER_EXECUTABLE_PATH: ${{ steps.chrome.outputs.chrome-path }}' "$
   echo 'GitHub workflow must bind Puppeteer to the provisioned Chrome path' >&2
   exit 1
 }
+grep -Fq "DDWG_HOSTED_RENDERER_CONFIG: $HOSTED_RENDERER_CONFIG" "$GITHUB_WORKFLOW" || {
+  echo 'GitHub workflow must select the canonical hosted renderer config' >&2
+  exit 1
+}
 
 gitlab_install_line="$(line_number 'apt-get install' "$GITLAB_WORKFLOW")"
 gitlab_verifier_line="$(line_number 'bash tools/ci/scripts/with-python-runtime\.sh' "$GITLAB_WORKFLOW")"
@@ -86,6 +92,27 @@ for package in python3 python3-venv chromium; do
     exit 1
   }
 done
+grep -Fq "DDWG_HOSTED_RENDERER_CONFIG: \"$HOSTED_RENDERER_CONFIG\"" "$GITLAB_WORKFLOW" || {
+  echo 'GitLab workflow must select the canonical hosted renderer config' >&2
+  exit 1
+}
+
+if grep -Fq -- '--no-sandbox' "$GITHUB_WORKFLOW" "$GITLAB_WORKFLOW"; then
+  echo 'provider workflows must not inline the hosted Chrome compatibility argument' >&2
+  exit 1
+fi
+
+python3 - "$HOSTED_RENDERER_CONFIG_PATH" <<'PY'
+from pathlib import Path
+import json
+import sys
+
+path = Path(sys.argv[1])
+if not path.is_file():
+    raise SystemExit("missing canonical hosted renderer config")
+if json.loads(path.read_text(encoding="utf-8")) != {"args": ["--no-sandbox"]}:
+    raise SystemExit("hosted renderer config is not the narrow expected payload")
+PY
 
 wrapper="$(cat "$ROOT/tools/ci/scripts/with-python-runtime.sh")"
 [[ "$wrapper" == *'build/runtime/venv'* ]] || {
@@ -117,6 +144,16 @@ if ETHOS_RUNTIME_ROOT="/tmp/another-checkout" \
   exit 1
 fi
 
+verifier="$(cat "$ROOT/tools/ci/scripts/run-documentation-verification.sh")"
+[[ "$verifier" == *'DDWG_HOSTED_RENDERER_CONFIG'* ]] || {
+  echo 'shared verifier does not own the hosted renderer config boundary' >&2
+  exit 1
+}
+[[ "$verifier" == *'--hosted-renderer-config'* ]] || {
+  echo 'shared verifier does not pass the hosted renderer selection to the validator' >&2
+  exit 1
+}
+
 if command -v actionlint >/dev/null; then
   actionlint "$GITHUB_WORKFLOW"
 fi
@@ -125,4 +162,4 @@ if command -v yamllint >/dev/null; then
     "$GITHUB_WORKFLOW" "$GITLAB_WORKFLOW"
 fi
 
-echo 'PASS CI runtime binding: runner-native GitHub checkout and Git-capable GitLab use one verifier'
+echo 'PASS CI runtime binding: both providers use one verifier and one narrow hosted renderer config'

@@ -19,6 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
+      DDWG_HOSTED_RENDERER_CONFIG: tools/ci/config/mermaid-puppeteer-hosted.json
       PUPPETEER_SKIP_DOWNLOAD: 'true'
     steps:
       - uses: actions/checkout@v4

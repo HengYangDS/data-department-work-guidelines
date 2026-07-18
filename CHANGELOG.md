@@ -15,6 +15,8 @@
 - **BREAKING** 移除 GitHub 文档 job 的最小 Node container；checkout 改在 hosted runner 上
   完成，再显式选择 Node 22 与 Chrome，避免缺 Git 时 archive fallback 破坏仓库验证边界。GitLab
   Docker projection 同时将 Git 列为明确运行时前置；两边仍只调用同一仓库 verifier。
+- 将 hosted Chrome 的 sandbox 兼容例外收敛为一份受跟踪的 Puppeteer 配置；GitLab 与 GitHub
+  只经同一 verifier 显式选择它，本地 Mermaid 渲染仍保留默认 sandbox 行为。
 - 远端推送只允许 `dev`、`main` 与 `submit/*`；`work/*` 和 `candidate/dev` 永不推送。
 
 ### 未作的主张

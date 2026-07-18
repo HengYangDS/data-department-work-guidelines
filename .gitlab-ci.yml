@@ -6,6 +6,7 @@ docs:verify:
   image: node:22-bookworm
   interruptible: true
   variables:
+    DDWG_HOSTED_RENDERER_CONFIG: "tools/ci/config/mermaid-puppeteer-hosted.json"
     PUPPETEER_SKIP_DOWNLOAD: "true"
     PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium
   before_script:

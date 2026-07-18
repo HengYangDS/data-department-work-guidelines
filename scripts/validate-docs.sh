@@ -4,6 +4,8 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 RENDER_DIR=""
 EXPECTED_MERMAID=5
+HOSTED_RENDERER_CONFIG=""
+CANONICAL_HOSTED_RENDERER_CONFIG="tools/ci/config/mermaid-puppeteer-hosted.json"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -12,12 +14,21 @@ while [[ $# -gt 0 ]]; do
       mkdir -p "$RENDER_DIR"
       shift 2
       ;;
+    --hosted-renderer-config)
+      HOSTED_RENDERER_CONFIG="${2:?--hosted-renderer-config requires a path}"
+      shift 2
+      ;;
     *)
       echo "unknown argument: $1" >&2
       exit 2
       ;;
   esac
 done
+
+if [[ -n "$HOSTED_RENDERER_CONFIG" && "$HOSTED_RENDERER_CONFIG" != "$CANONICAL_HOSTED_RENDERER_CONFIG" ]]; then
+  echo "unsupported hosted renderer config: $HOSTED_RENDERER_CONFIG" >&2
+  exit 2
+fi
 
 if [[ -z "$RENDER_DIR" ]]; then
   RENDER_DIR="$(mktemp -d "${TMPDIR:-/tmp}/data-guidelines-qa.XXXXXX")"
@@ -39,6 +50,26 @@ for command in "$PRETTIER" "$MARKDOWNLINT" "$MMDC"; do
     exit 127
   }
 done
+
+HOSTED_RENDERER_CONFIG_PATH=""
+if [[ -n "$HOSTED_RENDERER_CONFIG" ]]; then
+  HOSTED_RENDERER_CONFIG_PATH="$ROOT/$HOSTED_RENDERER_CONFIG"
+  [[ -f "$HOSTED_RENDERER_CONFIG_PATH" ]] || {
+    echo "missing hosted renderer config: $HOSTED_RENDERER_CONFIG" >&2
+    exit 2
+  }
+
+  python3 - "$HOSTED_RENDERER_CONFIG_PATH" <<'PY'
+from pathlib import Path
+import json
+import sys
+
+path = Path(sys.argv[1])
+payload = json.loads(path.read_text(encoding="utf-8"))
+if payload != {"args": ["--no-sandbox"]}:
+    raise SystemExit("hosted renderer config must contain only the CI compatibility argument")
+PY
+fi
 
 cd "$ROOT"
 "$MARKDOWNLINT" '**/*.md' '#.superpowers/**' '#.worktrees/**' '#build/**' '#node_modules/**'
@@ -340,7 +371,11 @@ PY
 for source in "$RENDER_DIR"/*.mmd; do
   [[ -e "$source" ]] || continue
   target="${source%.mmd}.svg"
-  "$MMDC" -i "$source" -o "$target" -b white
+  mmdc_args=(-i "$source" -o "$target" -b white)
+  if [[ -n "$HOSTED_RENDERER_CONFIG_PATH" ]]; then
+    mmdc_args+=(--puppeteerConfigFile "$HOSTED_RENDERER_CONFIG_PATH")
+  fi
+  "$MMDC" "${mmdc_args[@]}"
   test -s "$target"
 done
 
