@@ -17,22 +17,31 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    container:
-      image: node:22-bookworm
     timeout-minutes: 15
     env:
       PUPPETEER_SKIP_DOWNLOAD: 'true'
-      PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Python runtime prerequisites and Chromium
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - id: chrome
+        uses: browser-actions/setup-chrome@v2
+        with:
+          chrome-version: stable
+
+      - name: Install Python runtime prerequisites
         run: |
-          apt-get update
-          apt-get install --yes --no-install-recommends python3 python3-venv chromium
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends python3 python3-venv
 
       - name: Install locked documentation tools
         run: npm ci --ignore-scripts
 
       - name: Verify documentation and governance boundaries
+        env:
+          PUPPETEER_EXECUTABLE_PATH: ${{ steps.chrome.outputs.chrome-path }}
         run: bash tools/ci/scripts/with-python-runtime.sh -- bash tools/ci/scripts/run-documentation-verification.sh

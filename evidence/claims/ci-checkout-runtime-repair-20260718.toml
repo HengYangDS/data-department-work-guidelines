@@ -1,0 +1,40 @@
+[claim]
+id = "ci-checkout-runtime-repair-20260718"
+subject = "data-department-work-guidelines:ci-checkout-runtime-repair"
+state = "active"
+change_id = "ci-checkout-runtime-repair-20260718"
+summary = "This active Change records a local repair to the hosted documentation checkout contract. It does not assert a GitLab or GitHub remote ref, hosted execution, publication, rendering, or organizational adoption."
+
+[evidence]
+dated = "evidence/chronicle/ci-checkout-runtime-repair-20260718/2026-07-18.md"
+sha256 = "4adf8d259b2cc5d208fbde13f71ce6dd7b2a4ef1369bb1b25fcfb65e1e9c42aa"
+evidence_ids = ["evidence:ci-checkout-runtime-repair-20260718"]
+binding = "The active OpenSpec Change, its scoped repository workflow edits, and this dated Chronicle bind the local repair boundary. Hosted outcomes remain separate evidence."
+verifier = "digest_only"
+tests = [
+  "bash tests/validate-ci-runtime-binding.sh",
+  "bash tools/ci/scripts/run-documentation-verification.sh",
+]
+
+[evidence.freshness]
+mode = "historical"
+
+[boundary]
+owner = "data-department"
+scope = "Runner-native GitHub checkout, explicit GitLab Docker prerequisites, and one repository-owned documentation verifier; excludes remote refs, hosted execution, publication, remote rendering, and organizational adoption."
+
+[carriers]
+openspec = "openspec/changes/ci-checkout-runtime-repair-20260718"
+fallback = "Treat provider CI as unproven until each forge reports a current eligible-ref run; retain local verification as local evidence only."
+kill_signal = "GitHub restores a job-level container, either provider loses a Git checkout before the verifier, provider verifiers diverge, or local evidence is presented as hosted success."
+
+[promotion]
+targets = [
+  "evidence/claims/ci-checkout-runtime-repair-20260718.toml",
+  "evidence/chronicle/ci-checkout-runtime-repair-20260718/2026-07-18.md",
+  "openspec/changes/ci-checkout-runtime-repair-20260718",
+  "openspec/specs/repository-governance/spec.md",
+  ".github/workflows/docs-verify.yml",
+  ".gitlab-ci.yml",
+  "tests/validate-ci-runtime-binding.sh",
+]

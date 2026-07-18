@@ -25,8 +25,9 @@ relations:
 - 本仓库是**文档型 adopter**。其原生正确性由 Markdown 格式、lint、链接/锚点和
   Mermaid 渲染共同证明，命令定义在 `.ethos/profile.toml`。
 - 两个 provider 文档投影只经 `bash tools/ci/scripts/with-python-runtime.sh --`
-  调用同一仓库内 verifier；该 wrapper 只创建当前 checkout 的
-  `build/runtime/venv` 临时运行时，不是证据、Change 生命周期或远端执行主张。
+  调用同一仓库内 verifier；GitHub 先在 hosted runner 完成 checkout，再显式选择 Node 22
+  与 Chrome，GitLab 在 Docker runtime 中先安装 Git、Python 与 Chromium。该 wrapper 只创建
+  当前 checkout 的 `build/runtime/venv` 临时运行时，不是证据、Change 生命周期或远端执行主张。
 - 本地验证与安装不依赖远端。GitLab 是组织主发布源；GitHub 是独立完整仓库与 CI/CD
   镜像平面，可在 GitLab 不可用时作为更新与分发替代。两者均只接收 `dev`、`main`
   与 `submit/*`，绝不接收 `work/*` 或 `candidate/dev`。两套等价 CI 定义和两个

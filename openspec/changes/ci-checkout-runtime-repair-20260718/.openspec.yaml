@@ -1,0 +1,5 @@
+schema: spec-driven
+created: 2026-07-18
+goal: Replace the GitHub job container that prevents a real checkout with a
+  runner-native CI bootstrap, while requiring Git-capable runtime parity on
+  GitLab.

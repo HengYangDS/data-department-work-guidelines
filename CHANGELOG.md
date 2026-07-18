@@ -12,6 +12,9 @@
 - 移除特定执行方法的文档根；历史仍由 Git 保留，不再作为规范、决策或 proof 载体。
 - 以可复现的 Node、Python 与 Chromium 环境新增 GitLab 主发布与 GitHub 镜像平面的
   同等文档 CI 定义；remote 配置不构成 GitHub ref、CI 或发布的证据。
+- **BREAKING** 移除 GitHub 文档 job 的最小 Node container；checkout 改在 hosted runner 上
+  完成，再显式选择 Node 22 与 Chrome，避免缺 Git 时 archive fallback 破坏仓库验证边界。GitLab
+  Docker projection 同时将 Git 列为明确运行时前置；两边仍只调用同一仓库 verifier。
 - 远端推送只允许 `dev`、`main` 与 `submit/*`；`work/*` 和 `candidate/dev` 永不推送。
 
 ### 未作的主张
