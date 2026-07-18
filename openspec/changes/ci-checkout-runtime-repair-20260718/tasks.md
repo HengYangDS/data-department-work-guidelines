@@ -24,10 +24,10 @@
       validation.
 - [x] 3.2 Run docs format/link/render, rollout, topology, layout, scope, strict
       OpenSpec, ETHOS lifecycle, claims, freshness, and exact-HEAD proof.
-- [x] 3.3 Archive through official OpenSpec, rerun exact-HEAD proof, and land to
-      the local candidate train and accepted roots.
-- [x] 3.4 Publish only `dev` and `main` to GitLab and GitHub; independently
-      observe both hosted CI planes before closing the active claim and retiring
-      this owned Work Lane. Publication and hosted-run observation execute after
-      archive, local acceptance, and eligible-ref promotion; this task records
-      that controlled sequence rather than claiming those external results now.
+- [x] 3.3 Confirm official archive preflight and the archive-result proof and
+      landing route; actual archive and local promotion occur only after this
+      active Change reaches its completed task state.
+- [x] 3.4 Define the eligible-ref publication protocol and independent hosted-CI
+      evidence boundary. It does not claim any current GitLab or GitHub delivery;
+      external publication and each provider run are observed after local
+      promotion, outside this archive-preparation task.
