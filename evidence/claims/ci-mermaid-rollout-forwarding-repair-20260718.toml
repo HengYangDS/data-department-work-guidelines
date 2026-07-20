@@ -6,7 +6,7 @@ summary = "Historical record of the July 18, 2026 official OpenSpec archive that
 
 [evidence]
 dated = "evidence/chronicle/ci-mermaid-rollout-forwarding-repair-20260718/2026-07-18.md"
-sha256 = "64f245382ff97d7ea74e68fe6452d6d4c71c765470e4c3035df8bc5b29b95039"
+sha256 = "c4a0e968be82414d72b5df2353fc94643bdc11d22856d69429135f39065f3123"
 evidence_ids = ["evidence:github-actions:29641340007", "evidence:local-forwarding-contract"]
 binding = "The dated Chronicle and official archived Change preserve this historical lifecycle observation. They do not bind current repository readiness."
 verifier = "digest_only"
@@ -20,7 +20,7 @@ owner = "repository-maintainer"
 scope = "Shared hosted renderer selection propagation from direct documentation validation to nested rollout validation."
 
 [carriers]
-openspec = "openspec/changes/archive/2026-07-18-ci-mermaid-rollout-forwarding-repair-20260718"
+openspec = "openspec/changes/archive/2026-07-18-ci-mermaid-rollout-forwarding-repair"
 fallback = "Re-run the local forwarding contract and inspect fresh provider runs after eligible refs are published."
 kill_signal = "A fresh provider run reproduces the nested selection loss or the local forwarding contract fails."
 

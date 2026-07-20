@@ -6,7 +6,7 @@ summary = "Historical record of the July 18, 2026 official OpenSpec archive that
 
 [evidence]
 dated = "evidence/chronicle/ci-checkout-runtime-repair-20260718/2026-07-18.md"
-sha256 = "516328367c23be2cb07c0e36e4c7c2c63c7a88e285d1f8deff9113795e123c87"
+sha256 = "5e056229a208532b2d77852a2d9505fa070eba96ed9f263deef26f84a6aede60"
 evidence_ids = ["evidence:ci-checkout-runtime-repair-20260718"]
 binding = "The dated Chronicle and official archived Change preserve the July 18 archive observation. This is historical evidence and does not bind present repository readiness."
 verifier = "digest_only"
@@ -16,4 +16,4 @@ tests = ["openspec archive ci-checkout-runtime-repair-20260718 --yes --json"]
 mode = "historical"
 
 [carriers]
-openspec = "openspec/changes/archive/2026-07-18-ci-checkout-runtime-repair-20260718"
+openspec = "openspec/changes/archive/2026-07-18-ci-checkout-runtime-repair"

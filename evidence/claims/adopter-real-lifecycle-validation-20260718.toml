@@ -28,7 +28,7 @@ owner = "data-department"
 scope = "Local DDWG material lifecycle and scope-admission exercise; excludes normative guideline edits, archive, acceptance, remote publication, hosted CI, and organizational adoption."
 
 [carriers]
-openspec = "openspec/changes/archive/2026-07-18-adopter-real-lifecycle-validation-20260718"
+openspec = "openspec/changes/archive/2026-07-18-adopter-real-lifecycle-validation"
 fallback = "Reject material writes unless an official active Change has a valid matching companion scope."
 kill_signal = "A material path passes plan, proof, or prewrite without an official matching Change companion, or lifecycle is treated as a document correctness gate."
 
@@ -36,6 +36,6 @@ kill_signal = "A material path passes plan, proof, or prewrite without an offici
 targets = [
   "evidence/claims/adopter-real-lifecycle-validation-20260718.toml",
   "evidence/chronicle/adopter-real-lifecycle-validation-20260718/2026-07-18.md",
-  "openspec/changes/archive/2026-07-18-adopter-real-lifecycle-validation-20260718",
+  "openspec/changes/archive/2026-07-18-adopter-real-lifecycle-validation",
   "openspec/specs/repository-governance/spec.md",
 ]

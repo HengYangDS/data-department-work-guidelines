@@ -6,7 +6,7 @@ summary = "Historical record of the July 18, 2026 official OpenSpec archive that
 
 [evidence]
 dated = "evidence/chronicle/work-lane-residue-disposition-20260718/2026-07-18.md"
-sha256 = "facff7573f69b59551ed23cb43e9d5708e50b7ef078e281aeedcba27c23b34c5"
+sha256 = "be46b0684a599704caa4a2dd73a073ef959cf6cee429518890bc80b046a7c138"
 evidence_ids = ["evidence:local-work-lane-object-audit", "evidence:lane-resolution-preserve-retire-decision"]
 binding = "The dated Chronicle and official archived Change preserve the July 18 archive observation and exact branch/head audit. A later native resolver receipt, if produced after accepted closeout, records only the separate local disposal effect. This historical record does not bind present repository readiness."
 verifier = "digest_only"
@@ -20,7 +20,7 @@ owner = "repository-maintainer"
 scope = "Preservation-first disposition of work/adoption-lifecycle-repair-finalize-20260717 at its recorded head; excludes branch merge, foreign Work Lane mutation, remote publication, hosted execution, and organizational adoption."
 
 [carriers]
-openspec = "openspec/changes/archive/2026-07-18-work-lane-residue-disposition-20260718"
+openspec = "openspec/changes/archive/2026-07-18-work-lane-residue-disposition"
 fallback = "Keep the target intact and re-audit if its branch, head, lease, or worktree observation changes before the native resolver applies the accepted disposition."
 kill_signal = "The target changes, the exact preservation package cannot verify, a foreign lane is selected, or a local disposal result is presented as remote publication evidence."
 
@@ -28,6 +28,6 @@ kill_signal = "The target changes, the exact preservation package cannot verify,
 targets = [
   "evidence/claims/work-lane-residue-disposition-20260718.toml",
   "evidence/chronicle/work-lane-residue-disposition-20260718/2026-07-18.md",
-  "openspec/changes/archive/2026-07-18-work-lane-residue-disposition-20260718",
+  "openspec/changes/archive/2026-07-18-work-lane-residue-disposition",
   "openspec/specs/repository-governance/spec.md",
 ]

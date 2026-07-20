@@ -6,7 +6,7 @@ summary = "Historical record of the July 18, 2026 official OpenSpec archive that
 
 [evidence]
 dated = "evidence/chronicle/adoption-lifecycle-repair-20260714/2026-07-18.md"
-sha256 = "b606c6e6ea2dd2e6dfcc9d69b3e59b671f4b50bb71353f83b68a15eab016745a"
+sha256 = "ca482963c8e91c8666555a2400528992597aaf16214286b10048469a1b7c0288"
 evidence_ids = ["evidence:adoption-lifecycle-repair-20260714"]
 binding = "The dated Chronicle and official archived Change preserve the July 18 archive observation. This is historical evidence and does not bind present repository readiness."
 verifier = "digest_only"
@@ -16,4 +16,4 @@ tests = ["openspec archive adoption-lifecycle-repair-20260714 --yes --json"]
 mode = "historical"
 
 [carriers]
-openspec = "openspec/changes/archive/2026-07-18-adoption-lifecycle-repair-20260714"
+openspec = "openspec/changes/archive/2026-07-18-adoption-lifecycle-repair"

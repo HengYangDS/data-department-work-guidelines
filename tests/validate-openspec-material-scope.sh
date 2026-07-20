@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 CHANGE="adoption-lifecycle-repair-20260714"
 ACTIVE_SCOPE="$ROOT/openspec/changes/$CHANGE/scope.toml"
-ARCHIVE_GLOB="$ROOT/openspec/changes/archive/*-$CHANGE/scope.toml"
+ARCHIVE_GLOB="$ROOT/openspec/changes/archive/*-adoption-lifecycle-repair/scope.toml"
 PROFILE="$ROOT/.ethos/profile.toml"
 
 if [[ -f "$ACTIVE_SCOPE" ]]; then
@@ -13,7 +13,7 @@ if [[ -f "$ACTIVE_SCOPE" ]]; then
   STATE="active"
 else
   shopt -s nullglob
-  archive_scopes=("$ROOT"/openspec/changes/archive/*-"$CHANGE"/scope.toml)
+  archive_scopes=("$ROOT"/openspec/changes/archive/*-adoption-lifecycle-repair/scope.toml)
   shopt -u nullglob
   if (( ${#archive_scopes[@]} != 1 )); then
     printf '%s\n' "expected exactly one archive scope for $CHANGE; found ${#archive_scopes[@]}" >&2
@@ -70,6 +70,35 @@ missing_paths = required_paths.difference(paths)
 if missing_paths:
     raise SystemExit("scope companion misses actual change surfaces: " + ", ".join(sorted(missing_paths)))
 print(f"PASS material scope shape: one product-defined {state} Change companion")
+
+archive_root = profile_path.parents[1] / "openspec" / "changes" / "archive"
+canonical = {
+    "2026-07-18-adopter-real-lifecycle-validation",
+    "2026-07-18-adoption-lifecycle-repair",
+    "2026-07-18-ci-checkout-runtime-repair",
+    "2026-07-18-ci-mermaid-renderer-sandbox-repair",
+    "2026-07-18-ci-mermaid-rollout-forwarding-repair",
+    "2026-07-18-work-lane-residue-disposition",
+}
+legacy = {
+    "2026-07-18-adopter-real-lifecycle-validation-20260718",
+    "2026-07-18-adoption-lifecycle-repair-20260714",
+    "2026-07-18-ci-checkout-runtime-repair-20260718",
+    "2026-07-18-ci-mermaid-renderer-sandbox-repair-20260718",
+    "2026-07-18-ci-mermaid-rollout-forwarding-repair-20260718",
+    "2026-07-18-work-lane-residue-disposition-20260718",
+}
+missing = sorted(name for name in canonical if not (archive_root / name).is_dir())
+present_legacy = sorted(name for name in legacy if (archive_root / name).exists())
+if missing or present_legacy:
+    raise SystemExit(
+        "archive identity normalization mismatch: "
+        + ", ".join(
+            (["missing=" + ",".join(missing)] if missing else [])
+            + (["legacy-present=" + ",".join(present_legacy)] if present_legacy else [])
+        )
+    )
+print("PASS archive identities: six canonical carriers with no legacy duplicates")
 PY
 
 if [[ "$STATE" == "active" && -n "${ETHOS_ACTOR:-}" && "$(git -C "$ROOT" branch --show-current)" == work/* ]]; then

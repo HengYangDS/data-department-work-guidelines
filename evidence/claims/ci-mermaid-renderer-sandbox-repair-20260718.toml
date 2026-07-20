@@ -6,7 +6,7 @@ summary = "Historical record of the July 18, 2026 official OpenSpec archive that
 
 [evidence]
 dated = "evidence/chronicle/ci-mermaid-renderer-sandbox-repair-20260718/2026-07-18.md"
-sha256 = "1883e1988068c176b250097abccb73f912d4b722965b78d64460fd43a42bae31"
+sha256 = "e23efd2a304fc5ee81d3a4a797b4d91a5b30a69d9cfa172427f4a70df7c8330f"
 evidence_ids = ["evidence:ci-mermaid-renderer-sandbox-repair-20260718"]
 binding = "The dated Chronicle and official archived Change preserve this historical lifecycle observation. They do not bind current repository readiness."
 verifier = "digest_only"
@@ -16,4 +16,4 @@ tests = ["openspec archive ci-mermaid-renderer-sandbox-repair-20260718 --yes --j
 mode = "historical"
 
 [carriers]
-openspec = "openspec/changes/archive/2026-07-18-ci-mermaid-renderer-sandbox-repair-20260718"
+openspec = "openspec/changes/archive/2026-07-18-ci-mermaid-renderer-sandbox-repair"

@@ -1,23 +1,16 @@
 # ETHOS repository binding manifest — the adopter entrypoint.
 #
-# This minimal profile makes the repository a recognized ETHOS adopter, so `ethos
-# prove` uses the adopter proof floor instead of the product-core floor. Extend it
-# for your stack; see docs/governance/repository-profile-contract.md.
-schema_version = 1
+# This profile uses the current typed declaration. The root-level guideline is a
+# normative file, not a synthetic rules directory or the repository root.
 profile_id = "data-department-work-guidelines"
-profile_version = "1"
-ethos_contract_version = "1"
-
-[repository]
-kind = "documentation"
-root_subject = "data-department-work-guidelines"
+normative_sources = ["guidelines.md"]
 
 # Repository surface roots. These match the ETHOS defaults; override only the ones
 # your repository places elsewhere.
 [roots]
-# `guidelines.md` is the sole normative source and lives at repository root;
-# ETHOS must not invent or mirror a second rules tree.
-rules = "."
+# `rules` remains a repository-relative directory root. The root-level
+# `guidelines.md` authority is declared above in `normative_sources`.
+rules = "rules"
 docs = "docs"
 durable_evidence = "evidence"
 openspec = "openspec"
