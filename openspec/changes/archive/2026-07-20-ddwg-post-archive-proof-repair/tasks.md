@@ -11,9 +11,9 @@
 
 - [x] 2.1 Restore canonical Markdown blank-line layout without changing the
       dual-Forge runner semantics.
-- [ ] 2.2 Run strict OpenSpec, lifecycle, claims, and an exact-HEAD local docs
+- [x] 2.2 Run strict OpenSpec, lifecycle, claims, and an exact-HEAD local docs
       proof on the repaired Change.
-- [ ] 2.3 Archive this repair only after its exact-HEAD proof passes; candidate
+- [x] 2.3 Archive this repair only after its exact-HEAD proof passes; candidate
       landing and accepted closeout remain separately governed transitions.
 
 ## External boundary
