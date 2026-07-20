@@ -17,7 +17,7 @@
 
 - [x] 3.1 Run strict OpenSpec, lifecycle, claims, scope, profile, and
       documentation checks.
-- [ ] 3.2 Run exact-HEAD local proof and archive this Change through the
+- [x] 3.2 Run exact-HEAD local proof and archive this Change through the
       official command.
 - [ ] 3.3 Re-prove the archive-result HEAD, land the owned lane, and close
       `candidate/dev` to local `dev` and `main`.

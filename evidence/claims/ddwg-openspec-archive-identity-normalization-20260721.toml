@@ -1,47 +1,19 @@
 [claim]
 id = "ddwg-openspec-archive-identity-normalization-20260721"
-change_id = "ddwg-openspec-archive-identity-normalization"
 subject = "data-department-work-guidelines:openspec-archive-identity-normalization"
-state = "active"
-summary = "This active Change normalizes six invalid historical archive carrier paths without changing historical Change identities, observations, or external evidence claims."
+state = "historical"
+summary = "Historical record of the July 20, 2026 official OpenSpec archive that normalized six invalid archive carrier paths. It does not assert current-HEAD readiness, local acceptance, runner deployment, publication, or GitHub Actions/GitLab CI execution."
 
 [evidence]
 dated = "evidence/chronicle/ddwg-openspec-archive-identity-normalization-20260721/2026-07-21.md"
 sha256 = "0c88582077c2198e64152de8c8770f9ea174ee0cec97f3cb3ad222e08420fd8f"
 evidence_ids = ["evidence:ddwg-openspec-archive-identity-normalization-20260721"]
-binding = "This record binds the current repair Change, six canonical archive carrier paths, their location-reference updates, the typed adapter profile, and the exact archive-identity regression. It does not recertify historical Change execution, archive a Change again, prove current acceptance, or establish Forge deployment or CI execution."
+binding = "The dated Chronicle and official archived Change preserve the July 20 archive observation. This is historical evidence and does not bind present repository readiness, runner deployment, publication, or provider execution."
 verifier = "digest_only"
-tests = [
-  "bash tests/validate-openspec-material-scope.sh",
-  "./scripts/ethos-repo.sh openspec --lifecycle --json",
-  "./scripts/ethos-repo.sh quality claims --json",
-  "./scripts/ethos-repo.sh prove --execute --scope docs --expect-head <committed-head> --json",
-]
+tests = ["openspec archive ddwg-openspec-archive-identity-normalization --yes --json"]
 
 [evidence.freshness]
 mode = "historical"
 
-[boundary]
-owner = "data-department-work-guidelines"
-scope = "Canonicalization of six historical OpenSpec archive directory identities and factual carrier-location references; excludes historical fact rewriting, re-archive, local acceptance, runner deployment, publication, hosted CI, and other repositories."
-
 [carriers]
-openspec = "openspec/changes/ddwg-openspec-archive-identity-normalization"
-fallback = "Keep historical carriers intact and block current lifecycle promotion until each invalid archive identity is corrected through one bounded current Change."
-kill_signal = "A legacy archive duplicate remains, a canonical carrier path is missing, a historical logical Change ID or evidence boundary changes without a separate historical-correction basis, or local normalization is presented as Forge execution evidence."
-
-[promotion]
-targets = [
-  ".ethos/profile.toml",
-  "evidence/claims/ddwg-openspec-archive-identity-normalization-20260721.toml",
-  "evidence/chronicle/ddwg-openspec-archive-identity-normalization-20260721/2026-07-21.md",
-  "openspec/changes/ddwg-openspec-archive-identity-normalization",
-  "openspec/changes/archive/2026-07-18-adopter-real-lifecycle-validation",
-  "openspec/changes/archive/2026-07-18-adoption-lifecycle-repair",
-  "openspec/changes/archive/2026-07-18-ci-checkout-runtime-repair",
-  "openspec/changes/archive/2026-07-18-ci-mermaid-renderer-sandbox-repair",
-  "openspec/changes/archive/2026-07-18-ci-mermaid-rollout-forwarding-repair",
-  "openspec/changes/archive/2026-07-18-work-lane-residue-disposition",
-  "openspec/specs/repository-governance/spec.md",
-  "tests/validate-openspec-material-scope.sh",
-]
+openspec = "openspec/changes/archive/2026-07-20-ddwg-openspec-archive-identity-normalization"
