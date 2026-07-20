@@ -29,3 +29,8 @@
 - [x] 3.3 Define provider-specific deployment and hosted-run evidence; install,
       register, publish, and observe those external facts only after local
       closeout.
+
+Candidate landing, accepted-root closeout, runner registration, GitLab remote
+policy tightening, publication, and Forge-specific successful jobs are
+post-archive transitions. They must be proved by their own current receipts and
+are not claimed by this archived checklist.

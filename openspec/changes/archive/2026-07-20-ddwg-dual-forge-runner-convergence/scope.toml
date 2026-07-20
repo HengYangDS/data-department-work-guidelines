@@ -7,7 +7,7 @@ paths = [
   "docs/governance/ethos.md",
   "evidence/claims/ddwg-dual-forge-runner-convergence-20260721.toml",
   "evidence/chronicle/ddwg-dual-forge-runner-convergence-20260721/**",
-  "openspec/changes/ddwg-dual-forge-runner-convergence/**",
+  "openspec/changes/archive/2026-07-20-ddwg-dual-forge-runner-convergence/**",
   "openspec/specs/repository-governance/spec.md",
   "tests/validate-ci-runtime-binding.sh",
 ]
