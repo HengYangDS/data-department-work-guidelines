@@ -1,0 +1,13 @@
+schema_version = 1
+paths = [
+  ".ethos/profile.toml",
+  ".github/workflows/docs-verify.yml",
+  ".gitlab-ci.yml",
+  "CHANGELOG.md",
+  "docs/governance/ethos.md",
+  "evidence/claims/ddwg-dual-forge-runner-convergence-20260721.toml",
+  "evidence/chronicle/ddwg-dual-forge-runner-convergence-20260721/**",
+  "openspec/changes/ddwg-dual-forge-runner-convergence/**",
+  "openspec/specs/repository-governance/spec.md",
+  "tests/validate-ci-runtime-binding.sh",
+]

@@ -55,22 +55,47 @@ if grep -Eq '^    container:' "$GITHUB_WORKFLOW"; then
 fi
 
 github_checkout_line="$(line_number 'uses: actions/checkout@v4' "$GITHUB_WORKFLOW")"
-github_node_line="$(line_number 'uses: actions/setup-node@v4' "$GITHUB_WORKFLOW")"
+github_runtime_line="$(line_number 'Select project-local runner runtimes' "$GITHUB_WORKFLOW")"
 github_first_run_line="$(line_number '^      - name: ' "$GITHUB_WORKFLOW")"
-require_before "$github_checkout_line" "$github_node_line" \
-  'GitHub checkout must precede explicit Node setup'
+github_install_line="$(line_number 'Install locked documentation tools' "$GITHUB_WORKFLOW")"
 require_before "$github_checkout_line" "$github_first_run_line" \
   'GitHub checkout must precede every runtime command'
-grep -Eq "node-version: '22'" "$GITHUB_WORKFLOW" || {
-  echo 'GitHub workflow must select Node 22 explicitly' >&2
+require_before "$github_checkout_line" "$github_runtime_line" \
+  'GitHub checkout must precede project-local runtime selection'
+require_before "$github_runtime_line" "$github_install_line" \
+  'GitHub must select project-local runtimes before npm install'
+for required_label in self-hosted macOS ARM64; do
+  grep -Fq -- "- $required_label" "$GITHUB_WORKFLOW" || {
+    echo "GitHub workflow must require the $required_label runner label" >&2
+    exit 1
+  }
+done
+grep -Fq '${{ vars.DDWG_GITHUB_RUNNER_LABEL }}' "$GITHUB_WORKFLOW" || {
+  echo 'GitHub workflow must select this repository runner through its repository variable' >&2
   exit 1
 }
-grep -Fq 'browser-actions/setup-chrome@v2' "$GITHUB_WORKFLOW" || {
-  echo 'GitHub workflow must install an explicit Chrome runtime' >&2
+grep -Fq "github.event_name != 'pull_request'" "$GITHUB_WORKFLOW" || {
+  echo 'GitHub workflow must reject untrusted fork pull requests on the local runner' >&2
   exit 1
 }
-grep -Fq 'PUPPETEER_EXECUTABLE_PATH: ${{ steps.chrome.outputs.chrome-path }}' "$GITHUB_WORKFLOW" || {
-  echo 'GitHub workflow must bind Puppeteer to the provisioned Chrome path' >&2
+grep -Fq 'github.event.pull_request.head.repo.full_name == github.repository' "$GITHUB_WORKFLOW" || {
+  echo 'GitHub workflow must permit only same-repository pull requests on the local runner' >&2
+  exit 1
+}
+if grep -Eq 'ubuntu-latest|actions/setup-node|browser-actions/setup-chrome|apt-get|sudo ' "$GITHUB_WORKFLOW"; then
+  echo 'GitHub workflow must not depend on a hosted Linux image or provision system runtimes' >&2
+  exit 1
+fi
+grep -Fq "printf '%s\\n' '/opt/homebrew/opt/node@22/bin' >> \"\$GITHUB_PATH\"" "$GITHUB_WORKFLOW" || {
+  echo 'GitHub workflow must expose the project-local Node 22 runtime' >&2
+  exit 1
+}
+grep -Fq "/opt/homebrew/opt/node@22/bin/node --version | grep -Eq '^v22\\.'" "$GITHUB_WORKFLOW" || {
+  echo 'GitHub workflow must verify the selected Node 22 runtime' >&2
+  exit 1
+}
+grep -Fq 'PUPPETEER_EXECUTABLE_PATH: /Applications/Google Chrome.app/Contents/MacOS/Google Chrome' "$GITHUB_WORKFLOW" || {
+  echo 'GitHub workflow must bind Puppeteer to the runner-local Chrome path' >&2
   exit 1
 }
 grep -Fq "DDWG_HOSTED_RENDERER_CONFIG: $HOSTED_RENDERER_CONFIG" "$GITHUB_WORKFLOW" || {
@@ -82,6 +107,14 @@ gitlab_install_line="$(line_number 'apt-get install' "$GITLAB_WORKFLOW")"
 gitlab_verifier_line="$(line_number 'bash tools/ci/scripts/with-python-runtime\.sh' "$GITLAB_WORKFLOW")"
 require_before "$gitlab_install_line" "$gitlab_verifier_line" \
   'GitLab must install runtime prerequisites before the bound verifier'
+grep -Eq '^  tags:$' "$GITLAB_WORKFLOW" || {
+  echo 'GitLab workflow must explicitly select its dedicated runner tag' >&2
+  exit 1
+}
+grep -Eq '^    - ddwg-documentation-ci$' "$GITLAB_WORKFLOW" || {
+  echo 'GitLab workflow must select the ddwg-documentation-ci runner tag' >&2
+  exit 1
+}
 grep -Eq 'apt-get install .*\bgit\b' "$GITLAB_WORKFLOW" || {
   echo 'GitLab runtime prerequisites must install git' >&2
   exit 1

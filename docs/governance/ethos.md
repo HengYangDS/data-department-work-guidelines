@@ -25,9 +25,18 @@ relations:
 - 本仓库是**文档型 adopter**。其原生正确性由 Markdown 格式、lint、链接/锚点和
   Mermaid 渲染共同证明，命令定义在 `.ethos/profile.toml`。
 - 两个 provider 文档投影只经 `bash tools/ci/scripts/with-python-runtime.sh --`
-  调用同一仓库内 verifier；GitHub 先在 hosted runner 完成 checkout，再显式选择 Node 22
-  与 Chrome，GitLab 在 Docker runtime 中先安装 Git、Python 与 Chromium。该 wrapper 只创建
-  当前 checkout 的 `build/runtime/venv` 临时运行时，不是证据、Change 生命周期或远端执行主张。
+  调用同一仓库内 verifier。GitHub 仅选择本仓库的 macOS/ARM64 self-hosted runner：它同时
+  匹配 `self-hosted`、`macOS`、`ARM64` 与 repository variable
+  `DDWG_GITHUB_RUNNER_LABEL`，只允许 push 和同仓库 PR 进入该主机；工作流使用受管 Node 22、
+  本机 Chrome 与 Homebrew Python，不安装 Linux 包或下载浏览器。GitLab 仍在独立 Docker
+  runner 中运行，并以 `ddwg-documentation-ci` tag 显式选择本项目 runner，随后才安装 Git、
+  Python 与 Chromium。该 wrapper 只创建当前 checkout 的 `build/runtime/venv` 临时运行时，
+  不是证据、Change 生命周期或远端执行主张。
+- GitHub 与 GitLab runner 的注册凭据、安装根、工作目录、缓存、LaunchAgent 与权限边界均必须
+  分开；本项目 runner 不可被另一个项目或另一 Forge 复用。GitHub runner 的 repository
+  variable、runner label 与 API readback，以及 GitLab runner 的 remote tag、locked 和
+  `run_untagged=false` readback，分别是各自控制面的证据；仓库 YAML、服务存在或本地 proof
+  不能代替任一 provider 的实际运行证据。
 - 两个 hosted 投影都显式选择同一份受跟踪的
   `tools/ci/config/mermaid-puppeteer-hosted.json`。它只在受控 CI 中通过共享 verifier 传给
   Mermaid；shared verifier 会把同一已校验的选择转交给其嵌套的 rollout-readiness 校验。

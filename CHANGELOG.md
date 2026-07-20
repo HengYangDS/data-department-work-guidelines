@@ -19,12 +19,17 @@
   只经同一 verifier 显式选择它，本地 Mermaid 渲染仍保留默认 sandbox 行为。
 - 修复 shared verifier 在 rollout-readiness 的二次文档校验中遗漏 hosted renderer 选择的问题；
   兼容参数仍只由受控 CI 显式传入，不改变本地默认 sandbox 行为。
+- GitHub 文档 CI 改为本项目独立的 macOS/ARM64 self-hosted runner；以 repository variable
+  绑定专属 label，使用受管 Node 22、本机 Chrome 与 Homebrew Python，并拒绝 fork-origin PR
+  在该本机 runner 上执行。
+- GitLab 文档 CI 显式选择 `ddwg-documentation-ci` 项目 runner tag；runner 的远端 locked、
+  no-untagged-job 收紧与 GitHub runner 的注册/运行证据仍由各 Forge 单独验收。
 - 远端推送只允许 `dev`、`main` 与 `submit/*`；`work/*` 和 `candidate/dev` 永不推送。
 
 ### 未作的主张
 
 - 本项纠偏不追溯宣称 2026-07-12 的原始变更已经过 OpenSpec lifecycle；也不证明
-  GitLab runner 已执行新 job、GitLab 已完成 Markdown 渲染，或真实团队采用已经发生。
+  GitHub/GitLab runner 已执行新 job、任一 Forge 已完成 Markdown 渲染，或真实团队采用已经发生。
 
 ## [2.2.2] — 2026-07-12
 

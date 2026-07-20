@@ -4,6 +4,8 @@ stages:
 docs:verify:
   stage: verify
   image: node:22-bookworm
+  tags:
+    - ddwg-documentation-ci
   interruptible: true
   variables:
     DDWG_HOSTED_RENDERER_CONFIG: "tools/ci/config/mermaid-puppeteer-hosted.json"

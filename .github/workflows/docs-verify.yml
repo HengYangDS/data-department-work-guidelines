@@ -16,33 +16,32 @@ permissions:
 
 jobs:
   verify:
-    runs-on: ubuntu-latest
+    if: >-
+      github.event_name != 'pull_request' ||
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on:
+      - self-hosted
+      - macOS
+      - ARM64
+      - ${{ vars.DDWG_GITHUB_RUNNER_LABEL }}
     timeout-minutes: 15
     env:
       DDWG_HOSTED_RENDERER_CONFIG: tools/ci/config/mermaid-puppeteer-hosted.json
       PUPPETEER_SKIP_DOWNLOAD: 'true'
+      PUPPETEER_EXECUTABLE_PATH: /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: npm
-
-      - id: chrome
-        uses: browser-actions/setup-chrome@v2
-        with:
-          chrome-version: stable
-
-      - name: Install Python runtime prerequisites
+      - name: Select project-local runner runtimes
+        shell: bash
         run: |
-          sudo apt-get update
-          sudo apt-get install --yes --no-install-recommends python3 python3-venv
+          printf '%s\n' '/opt/homebrew/opt/node@22/bin' >> "$GITHUB_PATH"
+          test -x '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+          /opt/homebrew/opt/node@22/bin/node --version | grep -Eq '^v22\.'
+          python3 --version
 
       - name: Install locked documentation tools
         run: npm ci --ignore-scripts
 
       - name: Verify documentation and governance boundaries
-        env:
-          PUPPETEER_EXECUTABLE_PATH: ${{ steps.chrome.outputs.chrome-path }}
         run: bash tools/ci/scripts/with-python-runtime.sh -- bash tools/ci/scripts/run-documentation-verification.sh
