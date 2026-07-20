@@ -1,0 +1,4 @@
+schema: spec-driven
+created: 2026-07-20
+goal: Restore exact-HEAD local documentation proof after archive using a
+  separate bounded Change.

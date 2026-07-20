@@ -1,0 +1,39 @@
+[claim]
+id = "ddwg-post-archive-proof-repair-20260721"
+change_id = "ddwg-post-archive-proof-repair"
+subject = "data-department-work-guidelines:post-archive-proof-repair"
+state = "active"
+summary = "This active Change repairs the archive-result local documentation proof target without rewriting the archived dual-Forge runner carrier; landing, runner deployment, publication, and hosted execution remain separate observations."
+
+[evidence]
+dated = "evidence/chronicle/ddwg-post-archive-proof-repair-20260721/2026-07-21.md"
+sha256 = "36059c6f9901fdf43315abd4c9aa9ca62c4bb4da7da4ecd84abcb2f6cdd086e4"
+evidence_ids = ["evidence:ddwg-post-archive-proof-repair-20260721"]
+binding = "This record binds one active post-archive proof repair, its canonical specification layout, its dated local observation, and the later exact-HEAD proof. It does not revise archive history, grant authority to configure runners or credentials, publish refs, or treat local work as Forge execution."
+verifier = "digest_only"
+tests = [
+  "npx --yes @fission-ai/openspec@1.6.0 validate --all --strict --json",
+  "./scripts/ethos-repo.sh openspec --lifecycle --json",
+  "./scripts/ethos-repo.sh quality claims --json",
+  "./scripts/ethos-repo.sh prove --execute --scope docs --expect-head <committed-head> --json",
+]
+
+[evidence.freshness]
+mode = "historical"
+
+[boundary]
+owner = "data-department-work-guidelines"
+scope = "One post-archive canonical Markdown proof repair. Archived runner carrier history, runner deployment, remote configuration, publication, hosted execution, and all foreign lanes are excluded."
+
+[carriers]
+openspec = "openspec/changes/ddwg-post-archive-proof-repair"
+fallback = "Keep candidate landing blocked until a fresh exact-HEAD proof passes; do not revise the archived runner carrier or substitute prior proof evidence."
+kill_signal = "The archived runner carrier is modified, any runner or remote configuration changes, or local proof is represented as hosted evidence."
+
+[promotion]
+targets = [
+  "evidence/claims/ddwg-post-archive-proof-repair-20260721.toml",
+  "evidence/chronicle/ddwg-post-archive-proof-repair-20260721/2026-07-21.md",
+  "openspec/changes/ddwg-post-archive-proof-repair",
+  "openspec/specs/repository-governance/spec.md",
+]

@@ -1,0 +1,7 @@
+schema_version = 1
+paths = [
+  "evidence/claims/ddwg-post-archive-proof-repair-20260721.toml",
+  "evidence/chronicle/ddwg-post-archive-proof-repair-20260721/**",
+  "openspec/changes/ddwg-post-archive-proof-repair/**",
+  "openspec/specs/repository-governance/spec.md",
+]
