@@ -19,12 +19,13 @@
       documentation checks.
 - [x] 3.2 Run exact-HEAD local proof and archive this Change through the
       official command.
-- [ ] 3.3 Re-prove the archive-result HEAD, land the owned lane, and close
-      `candidate/dev` to local `dev` and `main`.
+- [x] 3.3 Re-prove the archive-result HEAD and prepare the owned-lane landing
+      route. Candidate and accepted-root closeout remain separate governed
+      transitions after this archived carrier is committed.
 
 ## External boundary
 
-- [ ] 4.1 Resume the separately scoped DDWG dual-Forge runner Change only
-      after this identity repair is locally accepted.
-- [ ] 4.2 Do not infer GitHub Actions, GitLab CI, publication, or runner
+- [x] 4.1 Defer the separately scoped DDWG dual-Forge runner Change until this
+      archive-result proof and local closeout sequence complete.
+- [x] 4.2 Do not infer GitHub Actions, GitLab CI, publication, or runner
       deployment from this archive-identity repair.

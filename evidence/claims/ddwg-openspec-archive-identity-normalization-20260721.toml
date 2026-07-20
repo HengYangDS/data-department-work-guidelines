@@ -6,7 +6,7 @@ summary = "Historical record of the July 20, 2026 official OpenSpec archive that
 
 [evidence]
 dated = "evidence/chronicle/ddwg-openspec-archive-identity-normalization-20260721/2026-07-21.md"
-sha256 = "0c88582077c2198e64152de8c8770f9ea174ee0cec97f3cb3ad222e08420fd8f"
+sha256 = "43488de17211cfc79cff189819062b135d54920f6b5c7717d811882ad3da0e0b"
 evidence_ids = ["evidence:ddwg-openspec-archive-identity-normalization-20260721"]
 binding = "The dated Chronicle and official archived Change preserve the July 20 archive observation. This is historical evidence and does not bind present repository readiness, runner deployment, publication, or provider execution."
 verifier = "digest_only"

@@ -4,7 +4,9 @@
 
 ETHOS SHALL keep the Repository Lifecycle Governance family cohesive and
 separate from adopter-specific semantics.
+
 ## Requirements
+
 ### Requirement: Family Boundary
 
 The repository-governance family SHALL describe one bounded product concern.
