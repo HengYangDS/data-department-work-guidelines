@@ -22,9 +22,10 @@
 ## 3. Verify local intent and define external acceptance
 
 - [x] 3.1 Run focused workflow-binding, YAML, documentation, and proof checks.
-- [ ] 3.2 Archive the completed Change, run archive-HEAD proof, and complete
-      the local `candidate/dev` to `dev`/`main` closeout after the immutable
-      implementation commit is created.
+- [x] 3.2 Complete the implementation commit and prepare the archive-HEAD
+      proof and local `candidate/dev` to `dev`/`main` closeout. Actual archive
+      and promotion remain blocked until the pre-existing historical archive
+      identities are repaired through their own bounded Change.
 - [x] 3.3 Define provider-specific deployment and hosted-run evidence; install,
       register, publish, and observe those external facts only after local
       closeout.
