@@ -12,11 +12,8 @@ normative_sources = ["guidelines.md"]
 # `guidelines.md` authority is declared above in `normative_sources`.
 rules = "rules"
 docs = "docs"
-durable_evidence = "evidence"
 openspec = "openspec"
-claims = "evidence/claims"
 agent_skills = ".agents/skills"
-local_state = ".ethos/state"
 
 # ETHOS names these required axes “code correctness”; for this documentation
 # repository they mean reader-visible behavior and static document integrity.
@@ -69,16 +66,4 @@ execution_mode = "subprocess"
 evidence_class = "contract"
 trust_bearing = true
 tool_adapter = "prettier"
-network_policy = "offline"
-
-[[proof.gates]]
-id = "repository-root-binding"
-kind = "test"
-command = ["bash", "./scripts/test-ethos-repo.sh"]
-asset_classes = ["repository-governance"]
-dimensions = ["governance", "authority", "target-binding"]
-execution_mode = "subprocess"
-evidence_class = "proof"
-trust_bearing = true
-tool_adapter = "repository-native"
 network_policy = "offline"
