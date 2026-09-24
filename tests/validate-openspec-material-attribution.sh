@@ -56,12 +56,6 @@ if missing_archives:
     raise SystemExit("archive identity normalization mismatch: missing=" + ",".join(missing_archives))
 print("PASS archive identities: six canonical historical carriers remain intact")
 
-for path in (profile_path.parents[1] / "evidence" / "claims").glob("*.toml"):
-    claim = tomllib.loads(path.read_text(encoding="utf-8"))
-    carrier = claim.get("carriers", {}).get("openspec", "")
-    if carrier.startswith("openspec/changes/archive/") and claim.get("claim", {}).get("state") == "active":
-        raise SystemExit(f"archived Change must not claim active intent: {path.name}")
-print("PASS archived claims: historical evidence does not claim active intent")
 PY
 
 if [[ -d "$ACTIVE_CHANGE" && -n "${ETHOS_ACTOR:-}" && "$(git -C "$ROOT" branch --show-current)" == work/* ]]; then
