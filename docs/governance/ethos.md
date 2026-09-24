@@ -68,9 +68,15 @@ flowchart LR
 1. 在 `dev` 观察和启动候选列车；不得直接以 `main` 承担本地接受根。
 2. 只在已租约的 `work/*` 中修改受跟踪文件，并先执行
    `./scripts/ethos-repo.sh lane prewrite`。
-3. 用当前 HEAD 的
-   `./scripts/ethos-repo.sh prove --execute --full --scope repository --expect-head <HEAD> --json`
-   记录本地证明；`./scripts/ethos-repo.sh land` 只推进候选列车。
+3. Run full repository proof at the current HEAD:
+
+   ```bash
+   ./scripts/ethos-repo.sh prove --execute --full --scope repository \
+     --expect-head "$(git rev-parse HEAD)" --json
+   ```
+
+   `./scripts/ethos-repo.sh land` advances only the candidate train.
+
 4. 只有受控 closeout 才能把 `candidate/dev` 快进到 `dev`，并将 `main` 作为
    `dev` 的本地 fast-forward mirror 同步到同一 SHA。不得直接移动 `main`。
 5. `candidate/dev` 只在本地候选列车中存在，不得推送至 GitLab 或 GitHub；仓库的
