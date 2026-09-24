@@ -71,6 +71,11 @@ if payload != {"args": ["--no-sandbox"]}:
 PY
 fi
 
+PUPPETEER_CONFIG_PATH="$HOSTED_RENDERER_CONFIG_PATH"
+if [[ -z "$PUPPETEER_CONFIG_PATH" && -z "${PUPPETEER_EXECUTABLE_PATH:-}" ]]; then
+  PUPPETEER_CONFIG_PATH="$ROOT/tools/ci/config/mermaid-puppeteer-system.json"
+fi
+
 cd "$ROOT"
 "$MARKDOWNLINT" '**/*.md' '#.superpowers/**' '#.worktrees/**' '#build/**' '#node_modules/**'
 "$PRETTIER" --check '**/*.md'
@@ -372,8 +377,8 @@ for source in "$RENDER_DIR"/*.mmd; do
   [[ -e "$source" ]] || continue
   target="${source%.mmd}.svg"
   mmdc_args=(-i "$source" -o "$target" -b white)
-  if [[ -n "$HOSTED_RENDERER_CONFIG_PATH" ]]; then
-    mmdc_args+=(--puppeteerConfigFile "$HOSTED_RENDERER_CONFIG_PATH")
+  if [[ -n "$PUPPETEER_CONFIG_PATH" ]]; then
+    mmdc_args+=(--puppeteerConfigFile "$PUPPETEER_CONFIG_PATH")
   fi
   "$MMDC" "${mmdc_args[@]}"
   test -s "$target"

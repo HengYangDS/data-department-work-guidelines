@@ -93,19 +93,29 @@ that Change.
   carrier for that repair
 - **AND THEN** its active claim binds the same Change path.
 
-### Requirement: ETHOS material scope remains product-owned
+### Requirement: ETHOS material-path attribution remains product-owned
 
-The repository SHALL declare material path families in `[openspec].material_paths`.
-The active Change SHALL include an ETHOS-owned `scope.toml` companion containing
-only `schema_version` and `paths`. The companion SHALL be described as adjacent
-to OpenSpec, not as an official OpenSpec workflow-schema extension.
+The repository SHALL declare a non-empty `[openspec].material_paths` list.
+Prewrite, changed planning, and proof SHALL attribute each matching fresh path
+to the same single selected active official OpenSpec Change. The attribution is
+a runtime fact, not an authored scope or permission carrier.
 
-#### Scenario: Material path is covered
+#### Scenario: Material path is attributed
 
-- **WHEN** ETHOS evaluates a changed declared material path through prewrite,
-  changed planning, or proof
-- **THEN** the path is admitted only when the active Change companion covers it
-- **AND THEN** an uncovered declared path is rejected by the ETHOS command plane.
+- **WHEN** ETHOS evaluates a changed declared material path with exactly one
+  valid selected active Change
+- **THEN** prewrite, changed planning, and proof report that same Change owner
+- **AND THEN** no `scope.toml`, Commitment field, archive, or local validator
+  participates in authorization.
+
+#### Scenario: Material path has no unique active Change
+
+- **WHEN** no active Change exists, an explicitly selected Change is missing, or
+  more than one active Change could own the path
+- **THEN** the ETHOS command plane rejects the operation with its current
+  missing or ambiguous Change diagnostic
+- **AND THEN** historical carriers and repository-local tests do not substitute
+  for active intent.
 
 ### Requirement: Historical claims remain honest
 
@@ -259,22 +269,8 @@ document correctness gate, or local test log as the Change carrier.
 - **WHEN** a leased Work Lane validates a declared material path
 - **THEN** no active Change or an incomplete active Change is rejected by the
   ETHOS command plane
-- **AND THEN** a valid official Change with a matching ETHOS-owned companion
-  scope admits only its declared material paths
-
-### Requirement: Scope bootstrap remains narrowly controlled
-
-The initial scope companion bootstrap SHALL admit only the exact untracked
-`scope.toml` inside one official new Change directory. After that companion is
-valid, all further material writes SHALL use ordinary matching scope coverage.
-
-#### Scenario: New Change scope companion is created
-
-- **WHEN** one official no-task Change exists and its exact untracked
-  `scope.toml` is requested through prewrite
-- **THEN** ETHOS admits that one file for bootstrap
-- **AND THEN** an uncovered material path remains rejected until the written
-  companion declares matching coverage
+- **AND THEN** a valid single official Change owns matching fresh material paths
+  without a repository-authored companion scope.
 
 ### Requirement: Archived Change carriers have canonical identity
 

@@ -32,5 +32,5 @@ bash tests/validate-docs-options.sh
 bash tests/validate-governance-boundary.sh
 bash tests/validate-push-boundary.sh
 bash tests/validate-ci-runtime-binding.sh
-bash tests/validate-openspec-material-scope.sh
+bash tests/validate-openspec-material-attribution.sh
 bash tests/validate-text-layout.sh

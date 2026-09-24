@@ -9,16 +9,13 @@ PROFILE="$ROOT/.ethos/profile.toml"
   exit 1
 }
 
-gates_json="$(bash "$ROOT/scripts/ethos-repo.sh" quality gates --json)"
-python3 - "$PROFILE" "$gates_json" <<'PY'
+python3 - "$PROFILE" <<'PY'
 from __future__ import annotations
 
-import json
 import sys
 import tomllib
 
-
-profile_path, raw_gates = sys.argv[1:]
+profile_path = sys.argv[1]
 profile = tomllib.load(open(profile_path, "rb"))
 proof = profile["proof"]
 expected_default = ["docs-integrity", "markdown-format"]
@@ -31,28 +28,21 @@ descriptors = proof.get("gates")
 if not isinstance(descriptors, list):
     raise SystemExit("profile proof.gates must be a list")
 by_id = {descriptor.get("id"): descriptor for descriptor in descriptors}
-expected_descriptors = {*expected_default, "repository-root-binding"}
-if set(by_id) != expected_descriptors:
+if set(by_id) != set(expected_default):
     raise SystemExit(
-        "profile descriptor ids must be exactly " + ", ".join(sorted(expected_descriptors))
+        "profile descriptor ids must be exactly " + ", ".join(expected_default)
     )
 for gate_id, descriptor in by_id.items():
     if descriptor.get("command", [None])[0] != "bash":
         raise SystemExit(f"profile descriptor must invoke through bash: {gate_id}")
 
-registry = json.loads(raw_gates)["data"]["gates"]
-adopter_gate_ids = {
-    gate_id for gate_id, gate in registry.items() if gate.get("profile") == "adopter"
-}
-if adopter_gate_ids != expected_descriptors:
-    raise SystemExit(
-        "profile descriptors must all compile into the adopter overlay; got "
-        + ", ".join(sorted(adopter_gate_ids))
-    )
+roots = profile.get("roots", {})
+if set(roots) - {"rules", "docs", "openspec", "agent_skills"}:
+    raise SystemExit("profile retains roots rejected by the accepted typed contract")
 
 print(
     "PASS ETHOS profile: default code-correctness gates="
     + ", ".join(expected_default)
-    + "; explicit descriptor=repository-root-binding"
+    + "; root binding is a separate repository-native validation"
 )
 PY

@@ -1,0 +1,24 @@
+[claim]
+id = "proof-throughput"
+change_id = "proof-throughput"
+subject = "data-department-work-guidelines:ethos-contract-and-github-hosted-docs-ci"
+state = "active"
+summary = "This active Change owns current ETHOS contract alignment, removal of superseded private OpenSpec extensions, repository-bound validation, and GitHub-hosted documentation CI migration. It does not assert archive, proof, closeout, publication, provider execution, or organizational adoption."
+
+[evidence]
+dated = "evidence/chronicle/proof-throughput/2026-09-24.md"
+sha256 = "5cd646c0dd5b91b91a98e8fac606ec3864358dd893409cd4410dd2c5009c3404"
+evidence_ids = ["evidence:proof-throughput", "evidence:ddwg-lane-takeover-20260924"]
+binding = "The dated Chronicle binds the accepted runtime contract, exact-CAS Lease takeover, and active official Change. It does not convert pre-bootstrap history into lifecycle evidence."
+verifier = "digest_only"
+tests = ["openspec validate --all --strict --json", "bash tests/validate-openspec-material-attribution.sh"]
+
+[evidence.freshness]
+mode = "active"
+
+[boundary]
+owner = "data-department-work-guidelines"
+scope = "Current ETHOS contract alignment, removal of superseded private OpenSpec extensions, repository-native validation, and GitHub-hosted documentation CI only; GitLab runner ownership, host services, foreign lanes, and remote execution are excluded."
+
+[carriers]
+openspec = "openspec/changes/proof-throughput"

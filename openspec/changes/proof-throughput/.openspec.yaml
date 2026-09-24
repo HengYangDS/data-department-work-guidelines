@@ -1,0 +1,4 @@
+schema: spec-driven
+created: 2026-09-22
+goal: Restore current ETHOS lifecycle and replace the GitHub self-hosted
+  documentation runner without changing GitLab runner ownership.

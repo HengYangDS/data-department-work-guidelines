@@ -18,16 +18,17 @@ not a replacement for repository truth.
    otherwise be missed.
 3. Keep `SKILL.md` narrow: trigger, workflow, evidence, and trust boundary.
 4. Update activation and package manifest metadata together.
-5. Run strict playbook checks before claiming readiness.
+5. Use current status, changed planning, and proof readiness. These commands
+   do not prove that every agent has loaded the updated instructions.
 
 ## Evidence
 
 From the repository root, use the repository-bound adapter:
 
 ```bash
-./scripts/ethos-repo.sh playbooks check --mode v2-strict --json
-./scripts/ethos-repo.sh playbooks route --changed --json
-./scripts/ethos-repo.sh report --json
+./scripts/ethos-repo.sh status --json
+./scripts/ethos-repo.sh plan --changed --json
+./scripts/ethos-repo.sh prove --json
 ```
 
 ## Trust Boundary

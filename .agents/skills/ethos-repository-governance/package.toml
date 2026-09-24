@@ -6,7 +6,7 @@ truth = "repository-source-and-contracts"
 digest_algorithm = "sha256"
 include = ["SKILL.md"]
 exclude = [".DS_Store"]
-expected_digest = "sha256:d837ca0ea7ede9f8cfa36d6b3ef9e22853291709650522316c0dd9b202199bdb"
+expected_digest = "sha256:60ef1edfc86dfd2954569d603ca1f106b8ceeea1f527d32a183248a1d34efd6a"
 required_sections = ["When to Use", "Workflow", "Evidence", "Trust Boundary"]
 
 [quality]
@@ -22,11 +22,6 @@ command = ["ethos", "status", "--json"]
 id = "ethos.plan"
 kind = "command_readonly"
 command = ["ethos", "plan", "--changed", "--json"]
-
-[[capability]]
-id = "ethos.report"
-kind = "command_readonly"
-command = ["ethos", "report", "--json"]
 
 [[capability]]
 id = "ethos.prove"

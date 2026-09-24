@@ -58,24 +58,21 @@ COMMAND_WRAPPERS = frozenset({"command", "env", "nice", "nohup", "sudo", "time"}
 COMMAND_SUBCOMMANDS = {
     "ethos": frozenset(
         {
-            "audit",
-            "fleet",
-            "handoff",
+            "adopt",
+            "attestation",
             "hook",
             "land",
             "lane",
-            "openspec",
-            "orient",
+            "mcp",
             "plan",
-            "playbooks",
             "prove",
             "publish",
-            "quality",
-            "report",
             "status",
         }
     ),
-    "openspec": frozenset({"archive", "list", "show", "status", "validate"}),
+    "openspec": frozenset(
+        {"archive", "change", "list", "new", "show", "status", "validate"}
+    ),
 }
 
 

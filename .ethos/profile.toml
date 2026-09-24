@@ -18,20 +18,28 @@ agent_skills = ".agents/skills"
 # ETHOS names these required axes “code correctness”; for this documentation
 # repository they mean reader-visible behavior and static document integrity.
 [openspec]
-# ETHOS owns this repository-relative admission contract. The companion beside
-# an active Change is product-defined data; it is not an OpenSpec schema.
+# ETHOS owns this repository-relative admission contract. Changed paths matching
+# these patterns must be attributed to one selected active official Change.
 material_paths = [
+  ".agents/**",
   ".ethos/**",
   ".githooks/**",
   ".github/**",
+  ".gitignore",
   ".gitlab-ci.yml",
+  ".markdownlint-cli2.yaml",
+  ".prettierignore",
   "AGENTS.md",
   "CHANGELOG.md",
+  "CONTRIBUTING.md",
+  "README.md",
   "docs/**",
   "evidence/**",
   "evolution/**",
   "guidelines.md",
   "openspec/**",
+  "package-lock.json",
+  "package.json",
   "scripts/**",
   "tests/**",
   "tools/ci/**",

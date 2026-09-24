@@ -1,7 +1,6 @@
 [meta]
 version = 2
 source_of_truth = "repository"
-expected_registry_digest = "sha256:df81930c92d240d1bb2d70fa07a68b88c576410469490656d0dda6495f6f88af"
 
 [[skill]]
 id = "ethos-repository-governance"
@@ -30,8 +29,8 @@ during_rules = [
   "treat skills as projections over repository truth",
   "use ETHOS command JSON as machine evidence",
 ]
-post_checks = ["ethos playbooks check --mode v2-strict --json", "ethos report --json"]
-commands = ["ethos status", "ethos plan", "ethos prove", "ethos report"]
+post_checks = ["ethos status --json", "ethos prove --json"]
+commands = ["ethos status", "ethos plan", "ethos prove"]
 boundary = "workflow-package-projection"
 
 [[skill]]
@@ -50,9 +49,9 @@ during_rules = [
   "add a skill only for repeated repository-specific procedure",
   "keep SKILL.md narrow and evidence-bound",
 ]
-post_checks = ["ethos playbooks check --mode v2-strict --json", "ethos report --json"]
+post_checks = ["ethos status --json", "ethos prove --json"]
 may_coactivate = ["ethos-repository-governance"]
-commands = ["ethos playbooks check", "ethos playbooks route", "ethos report"]
+commands = ["ethos status", "ethos plan", "ethos prove"]
 boundary = "workflow-package-projection"
 
 [[skill]]
@@ -71,7 +70,7 @@ during_rules = [
   "profile changes proof depth and adapters, not command semantics",
   "durable adopter truth must be promoted into tracked repository surfaces",
 ]
-post_checks = ["ethos playbooks check --mode v2-strict --json", "ethos report --json"]
+post_checks = ["ethos status --json", "ethos prove --json"]
 may_coactivate = ["ethos-repository-governance"]
-commands = ["ethos adopt", "ethos status", "ethos playbooks check", "ethos report", "ethos prove"]
+commands = ["ethos adopt", "ethos status", "ethos plan", "ethos prove"]
 boundary = "workflow-package-projection"

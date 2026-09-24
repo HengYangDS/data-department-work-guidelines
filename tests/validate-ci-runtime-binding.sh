@@ -8,6 +8,7 @@ BOUND_VERIFIER="bash tools/ci/scripts/with-python-runtime.sh -- bash tools/ci/sc
 HOSTED_RENDERER_CONFIG="tools/ci/config/mermaid-puppeteer-hosted.json"
 HOSTED_RENDERER_CONFIG_PATH="$ROOT/$HOSTED_RENDERER_CONFIG"
 
+
 provider_has_bound_verifier() {
   local projection="$1"
   local line
@@ -27,7 +28,7 @@ line_number() {
   local pattern="$1"
   local path="$2"
 
-  grep -n -m1 -E "$pattern" "$path" | cut -d: -f1
+  grep -n -m1 -E "$pattern" "$path" | cut -d: -f1 || true
 }
 
 
@@ -54,48 +55,40 @@ if grep -Eq '^    container:' "$GITHUB_WORKFLOW"; then
   exit 1
 fi
 
-github_checkout_line="$(line_number 'uses: actions/checkout@v4' "$GITHUB_WORKFLOW")"
-github_runtime_line="$(line_number 'Select project-local runner runtimes' "$GITHUB_WORKFLOW")"
-github_first_run_line="$(line_number '^      - name: ' "$GITHUB_WORKFLOW")"
-github_install_line="$(line_number 'Install locked documentation tools' "$GITHUB_WORKFLOW")"
-require_before "$github_checkout_line" "$github_first_run_line" \
-  'GitHub checkout must precede every runtime command'
-require_before "$github_checkout_line" "$github_runtime_line" \
-  'GitHub checkout must precede project-local runtime selection'
-require_before "$github_runtime_line" "$github_install_line" \
-  'GitHub must select project-local runtimes before npm install'
-for required_label in self-hosted macOS ARM64; do
-  grep -Fq -- "- $required_label" "$GITHUB_WORKFLOW" || {
-    echo "GitHub workflow must require the $required_label runner label" >&2
+grep -Fq 'runs-on: ubuntu-latest' "$GITHUB_WORKFLOW" || {
+  echo 'GitHub workflow must use a GitHub-hosted Ubuntu runner' >&2
+  exit 1
+}
+for forbidden in self-hosted macOS ARM64 DDWG_GITHUB_RUNNER_LABEL /opt/homebrew '/Applications/Google Chrome' 'github.event.pull_request.head.repo.full_name'; do
+  if grep -Fq "$forbidden" "$GITHUB_WORKFLOW"; then
+    echo "GitHub workflow retains local-runner residue: $forbidden" >&2
     exit 1
-  }
+  fi
 done
-grep -Fq '${{ vars.DDWG_GITHUB_RUNNER_LABEL }}' "$GITHUB_WORKFLOW" || {
-  echo 'GitHub workflow must select this repository runner through its repository variable' >&2
+
+github_checkout_line="$(line_number 'uses: actions/checkout@[0-9a-f]{40}([[:space:]]|$)' "$GITHUB_WORKFLOW")"
+github_node_line="$(line_number 'uses: actions/setup-node@[0-9a-f]{40}([[:space:]]|$)' "$GITHUB_WORKFLOW")"
+github_chrome_line="$(line_number 'uses: browser-actions/setup-chrome@[0-9a-f]{40}([[:space:]]|$)' "$GITHUB_WORKFLOW")"
+github_install_line="$(line_number 'Install locked documentation tools' "$GITHUB_WORKFLOW")"
+github_verify_line="$(line_number 'Verify documentation and governance boundaries' "$GITHUB_WORKFLOW")"
+require_before "$github_checkout_line" "$github_node_line" \
+  'GitHub checkout must precede Node setup'
+require_before "$github_node_line" "$github_chrome_line" \
+  'GitHub Node setup must precede Chrome setup'
+require_before "$github_chrome_line" "$github_install_line" \
+  'GitHub Chrome setup must precede npm install'
+require_before "$github_install_line" "$github_verify_line" \
+  'GitHub npm install must precede verification'
+grep -Eq '^          node-version: 22$' "$GITHUB_WORKFLOW" || {
+  echo 'GitHub workflow must explicitly select Node 22' >&2
   exit 1
 }
-grep -Fq "github.event_name != 'pull_request'" "$GITHUB_WORKFLOW" || {
-  echo 'GitHub workflow must reject untrusted fork pull requests on the local runner' >&2
+grep -Eq '^        id: chrome$' "$GITHUB_WORKFLOW" || {
+  echo 'GitHub workflow must expose the managed Chrome output' >&2
   exit 1
 }
-grep -Fq 'github.event.pull_request.head.repo.full_name == github.repository' "$GITHUB_WORKFLOW" || {
-  echo 'GitHub workflow must permit only same-repository pull requests on the local runner' >&2
-  exit 1
-}
-if grep -Eq 'ubuntu-latest|actions/setup-node|browser-actions/setup-chrome|apt-get|sudo ' "$GITHUB_WORKFLOW"; then
-  echo 'GitHub workflow must not depend on a hosted Linux image or provision system runtimes' >&2
-  exit 1
-fi
-grep -Fq "printf '%s\\n' '/opt/homebrew/opt/node@22/bin' >> \"\$GITHUB_PATH\"" "$GITHUB_WORKFLOW" || {
-  echo 'GitHub workflow must expose the project-local Node 22 runtime' >&2
-  exit 1
-}
-grep -Fq "/opt/homebrew/opt/node@22/bin/node --version | grep -Eq '^v22\\.'" "$GITHUB_WORKFLOW" || {
-  echo 'GitHub workflow must verify the selected Node 22 runtime' >&2
-  exit 1
-}
-grep -Fq 'PUPPETEER_EXECUTABLE_PATH: /Applications/Google Chrome.app/Contents/MacOS/Google Chrome' "$GITHUB_WORKFLOW" || {
-  echo 'GitHub workflow must bind Puppeteer to the runner-local Chrome path' >&2
+grep -Fq 'PUPPETEER_EXECUTABLE_PATH: ${{ steps.chrome.outputs.chrome-path }}' "$GITHUB_WORKFLOW" || {
+  echo 'GitHub workflow must bind Puppeteer to the Chrome Action output' >&2
   exit 1
 }
 grep -Fq "DDWG_HOSTED_RENDERER_CONFIG: $HOSTED_RENDERER_CONFIG" "$GITHUB_WORKFLOW" || {
@@ -115,11 +108,7 @@ grep -Eq '^    - ddwg-documentation-ci$' "$GITLAB_WORKFLOW" || {
   echo 'GitLab workflow must select the ddwg-documentation-ci runner tag' >&2
   exit 1
 }
-grep -Eq 'apt-get install .*\bgit\b' "$GITLAB_WORKFLOW" || {
-  echo 'GitLab runtime prerequisites must install git' >&2
-  exit 1
-}
-for package in python3 python3-venv chromium; do
+for package in git python3 python3-venv chromium; do
   grep -Eq "apt-get install .*\\b$package\\b" "$GITLAB_WORKFLOW" || {
     echo "GitLab runtime prerequisites must install $package" >&2
     exit 1
@@ -198,8 +187,6 @@ git init --quiet "$fixture"
 cp "$ROOT/tools/ci/scripts/run-documentation-verification.sh" \
   "$fixture/tools/ci/scripts/run-documentation-verification.sh"
 chmod +x "$fixture/tools/ci/scripts/run-documentation-verification.sh"
-touch "$fixture/node_modules/.bin/openspec"
-chmod +x "$fixture/node_modules/.bin/openspec"
 for script in format-markdown.sh validate-docs.sh validate-rollout-readiness.sh \
   validate-governance-boundary.sh validate-text-layout.sh; do
   cat > "$fixture/scripts/$script" <<'EOF'
@@ -211,7 +198,7 @@ EOF
 done
 for script in validate-docs-options.sh validate-governance-boundary.sh \
   validate-push-boundary.sh validate-ci-runtime-binding.sh \
-  validate-openspec-material-scope.sh validate-text-layout.sh; do
+  validate-openspec-material-attribution.sh validate-text-layout.sh; do
   cat > "$fixture/tests-$script" <<'EOF'
 #!/usr/bin/env bash
 set -euo pipefail
@@ -226,6 +213,7 @@ cat > "$fixture/node_modules/.bin/openspec" <<'EOF'
 set -euo pipefail
 printf 'openspec:%s\n' "$*" >> "$DDWG_VERIFIER_CALLS"
 EOF
+chmod +x "$fixture/node_modules/.bin/openspec"
 calls="$fixture/calls"
 (
   cd "$fixture"
@@ -273,4 +261,4 @@ if command -v yamllint >/dev/null; then
     "$GITHUB_WORKFLOW" "$GITLAB_WORKFLOW"
 fi
 
-echo 'PASS CI runtime binding: both providers use one verifier and one narrow hosted renderer config'
+echo 'PASS CI runtime binding: GitHub hosted and GitLab tagged projections share one verifier'

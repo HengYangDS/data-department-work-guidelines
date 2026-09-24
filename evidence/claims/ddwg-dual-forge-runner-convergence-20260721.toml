@@ -2,7 +2,7 @@
 id = "ddwg-dual-forge-runner-convergence-20260721"
 change_id = "ddwg-dual-forge-runner-convergence"
 subject = "data-department-work-guidelines:dual-forge-runner-isolation"
-state = "active"
+state = "historical"
 summary = "This archived Change records the repository-local binding for independent GitHub and GitLab documentation runners; provider registration, policy tightening, publication, and job execution remain separate external observations."
 
 [evidence]

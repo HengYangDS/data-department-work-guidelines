@@ -15,12 +15,10 @@ governance files, planning proof, or validating adoption readiness.
 1. Read `AGENTS.md` and the current governance docs for the target repository.
 2. Run `./scripts/ethos-repo.sh status --json` to classify checkout role and
    required gaps.
-3. Use `./scripts/ethos-repo.sh plan --changed --json` or
-   `./scripts/ethos-repo.sh playbooks route --changed --json`
-   to select the focused governance path.
-4. Run the narrow proof command first, then
-   `./scripts/ethos-repo.sh report --json` before
-   claiming readiness.
+3. Use `./scripts/ethos-repo.sh plan --changed --json` to select the focused
+   governance path.
+4. Run proof readiness, execute the selected gates at the exact HEAD, then
+   inspect `status --json`. Readiness alone is not executed proof.
 
 ## Evidence
 
@@ -34,7 +32,6 @@ audited repository root.
 ./scripts/ethos-repo.sh prove --json
 ./scripts/ethos-repo.sh land --json
 ./scripts/ethos-repo.sh publish --json
-./scripts/ethos-repo.sh report --json
 ```
 
 ## Trust Boundary

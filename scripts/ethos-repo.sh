@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# The global `ethos` launcher runs the ETHOS implementation from its own source
-# checkout. This repository adapter keeps that implementation detail from
-# changing the repository being audited or governed.
+# Bind the installed ETHOS command to this checkout; executable location must
+# never select the repository being audited or governed.
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 [[ -f "$ROOT/.ethos/profile.toml" ]] || {

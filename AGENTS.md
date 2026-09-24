@@ -42,9 +42,9 @@
 `--root`，防止 ETHOS 实现仓库被误作受治理对象。
 
 1. 读取当前任务、`AGENTS.md` 与匹配的 `.agents/skills/` 后，先执行
-   `./scripts/ethos-repo.sh orient --json`、
    `./scripts/ethos-repo.sh status --json` 与
-   `./scripts/ethos-repo.sh plan --changed --json`。
+   `./scripts/ethos-repo.sh plan --changed --json`；对 active Change 使用官方
+   `openspec status --change <change-id> --json`。
 2. 只在已租约的 `work/*` Work Lane 修改受跟踪文件；开始写入前，令
    `ETHOS_ACTOR` 与租约一致，再运行
    `./scripts/ethos-repo.sh lane prewrite <paths>`，并显式提供当前仓库根作为

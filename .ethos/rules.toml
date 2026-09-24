@@ -13,9 +13,9 @@ state_tracked_truth = false
 durable_evidence_roots = ["evidence", "evidence/claims"]
 
 [gates]
-governance_audit = "./scripts/ethos-repo.sh report --json"
+governance_audit = "./scripts/ethos-repo.sh status --json"
 proof = "./scripts/ethos-repo.sh prove --execute --scope docs --expect-head $(git rev-parse HEAD) --json"
-report = "./scripts/ethos-repo.sh report --json"
+report = "./scripts/ethos-repo.sh status --json"
 openspec = "openspec validate --all --strict --json"
 docs_integrity = "./scripts/validate-docs.sh"
 markdown_format = "./scripts/format-markdown.sh --check"

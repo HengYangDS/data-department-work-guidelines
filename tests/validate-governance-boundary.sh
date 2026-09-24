@@ -134,3 +134,16 @@ if bash "$fixture/scripts/validate-governance-boundary.sh" >"$fixture/output" 2>
   exit 1
 fi
 grep -Fq 'DR contains inline command invocation' "$fixture/output"
+
+reset_record
+cat >> "$record" <<'EOF_INNER'
+
+```text
+ethos adopt --apply
+```
+EOF_INNER
+if bash "$fixture/scripts/validate-governance-boundary.sh" >"$fixture/output" 2>&1; then
+  echo "boundary validator accepted a current ETHOS invocation in a text fence" >&2
+  exit 1
+fi
+grep -Fq 'DR contains fenced execution content' "$fixture/output"

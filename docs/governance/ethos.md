@@ -24,19 +24,18 @@ relations:
   AGENTS 只承担路由，ETHOS 只治理仓库操作。
 - 本仓库是**文档型 adopter**。其原生正确性由 Markdown 格式、lint、链接/锚点和
   Mermaid 渲染共同证明，命令定义在 `.ethos/profile.toml`。
-- 两个 provider 文档投影只经 `bash tools/ci/scripts/with-python-runtime.sh --`
-  调用同一仓库内 verifier。GitHub 仅选择本仓库的 macOS/ARM64 self-hosted runner：它同时
-  匹配 `self-hosted`、`macOS`、`ARM64` 与 repository variable
-  `DDWG_GITHUB_RUNNER_LABEL`，只允许 push 和同仓库 PR 进入该主机；工作流使用受管 Node 22、
-  本机 Chrome 与 Homebrew Python，不安装 Linux 包或下载浏览器。GitLab 仍在独立 Docker
-  runner 中运行，并以 `ddwg-documentation-ci` tag 显式选择本项目 runner，随后才安装 Git、
-  Python 与 Chromium。该 wrapper 只创建当前 checkout 的 `build/runtime/venv` 临时运行时，
-  不是证据、Change 生命周期或远端执行主张。
-- GitHub 与 GitLab runner 的注册凭据、安装根、工作目录、缓存、LaunchAgent 与权限边界均必须
-  分开；本项目 runner 不可被另一个项目或另一 Forge 复用。GitHub runner 的 repository
-  variable、runner label 与 API readback，以及 GitLab runner 的 remote tag、locked 和
-  `run_untagged=false` readback，分别是各自控制面的证据；仓库 YAML、服务存在或本地 proof
-  不能代替任一 provider 的实际运行证据。
+- Both provider projections invoke the same repository verifier through
+  `bash tools/ci/scripts/with-python-runtime.sh --`. GitHub uses a managed
+  Ubuntu runner, `actions/checkout@v4`, Node 22, and stable Chrome supplied by
+  a GitHub Action. GitLab remains an independent Docker projection selected by
+  the `ddwg-documentation-ci` tag and installs Git, Python, and Chromium before
+  the verifier. The wrapper creates only checkout-local `build/runtime/venv`;
+  it is not evidence, a Change lifecycle, or a remote-execution claim.
+- GitHub-hosted execution has no DDWG-owned runner registration, label, host
+  path, cache, LaunchAgent, or credential boundary. GitLab runner credentials,
+  installation, work area, cache, and policy remain an independent control
+  plane. Repository YAML, local proof, or a runner-service observation cannot
+  replace either provider's fresh execution evidence.
 - 两个 hosted 投影都显式选择同一份受跟踪的
   `tools/ci/config/mermaid-puppeteer-hosted.json`。它只在受控 CI 中通过共享 verifier 传给
   Mermaid；shared verifier 会把同一已校验的选择转交给其嵌套的 rollout-readiness 校验。
@@ -83,8 +82,8 @@ flowchart LR
 
 实质性治理、规范、proof、决策拓扑、claim 或 authority 变更，先建立一个 active OpenSpec
 Change，并按 proposal → design/specs → tasks/claim → verification → archive 推进。官方
-OpenSpec 校验与仓库绑定的 `./scripts/ethos-repo.sh openspec --lifecycle --json` 共同构成
-生命周期依据；当前 ETHOS runner 的 plan、prove 与 admission 接线以 ETHOS 正式实现为准。
+`openspec validate --all --strict --json` 与仓库绑定的 ETHOS `status`、`plan`、`prove` 和
+admission 共同构成生命周期依据；不得以 repository-local validator 替代这些正式机制。
 Change 归档前不得把实现称为本地完成；归档后仍须以 HEAD 绑定 proof 支撑 land。
 
 DR 只记录持久选择；Chronicle 只记录带日期的实际观察；`guidelines.md` 只记录团队规则。
@@ -92,12 +91,11 @@ DR 只记录持久选择；Chronicle 只记录带日期的实际观察；`guidel
 治理载体。`bash ./scripts/validate-governance-boundary.sh` 只补充检查 DR 形态、日期型
 决策文件和已退役执行方法文档；它不重复实现 OpenSpec lifecycle、claim binding、archive
 preflight 或 material-path admission，也不是 `.ethos/profile.toml` 的 proof gate。
-ETHOS 的 material-path bootstrap contract 已进入 authoritative `dev` runner。本仓库已按其
-实际 contract 声明 `[openspec].material_paths`，并为本 Change 添加只含 `schema_version` 与
-`paths` 的 Change-local `scope.toml` companion。该 companion 属于 ETHOS-owned read model，
-毗邻但不扩展官方 OpenSpec workflow schema；`lane prewrite`、`plan --changed` 与 `prove` 共同
-使用它。任何未覆盖 material path 都必须以 `openspec_material_path_uncovered:<path>` 拒绝，且
-正反例验证后才允许本 Change 归档。
+当前 ETHOS authoritative contract 只在 `[openspec].material_paths` 声明本仓库的实质变更
+表面，并要求 `lane prewrite`、`plan --changed` 与 `prove` 将新鲜路径事实归属于同一个被选中的
+active official Change。归属是运行时事实，不是作者维护的权限清单；本仓库不得新增
+Change-local `scope.toml`、Commitment 字段或其他私有载体。没有 active Change、显式选择不存在的
+Change 或出现多个候选 Change 时，ETHOS command plane 必须 fail closed。
 
 ## 文本空行规则
 
@@ -116,22 +114,21 @@ ETHOS 的 material-path bootstrap contract 已进入 authoritative `dev` runner�
 [`scripts/ethos-repo.sh`](../../scripts/ethos-repo.sh)：它固定 `--root` 为自身所在的 Git
 仓库根，并拒绝调用者传入另一个 `--root`。Git hooks 也使用同一适配器。
 
-`./scripts/test-ethos-repo.sh` 是仓库根绑定 contract 的显式验证：它验证适配器报告的审计根
-等于当前仓库根，且调用方无法覆盖该根。`repository-root-binding` 保留为
-`.ethos/profile.toml` 的可选 repository-native gate descriptor，供修改适配器或其调用边界时
-以 `ethos prove --gate repository-root-binding` 显式执行；它不在
-`[proof].code_correctness_gates`，故不属于 profile 选择的默认 code-correctness floor；该
-profile 只选择 `docs-integrity` 与 `markdown-format`。默认 adopter proof 还会执行 ETHOS
-共享治理门，不能被误写成仅有两个总 gate。三个 repository-native descriptor 都以 `bash`
-调用脚本，不依赖执行位。无论是否执行该可选验证，所有实际 ETHOS 调用和 pre-commit 准入
-仍必须经过根绑定适配器；OpenSpec lifecycle 则仍由 ETHOS command plane 负责，不能由此
-descriptor 取代。
+`./scripts/test-ethos-repo.sh` is the explicit repository-native root-binding
+validation: it verifies that the adapter audits its own repository root and
+rejects a caller-provided replacement root. The accepted typed profile permits
+only the two default descriptors, `docs-integrity` and `markdown-format`; root
+binding is therefore not a profile descriptor or a default-proof gate. All
+actual ETHOS calls and hook admission still pass through the binding adapter.
+OpenSpec lifecycle remains owned by the official OpenSpec and ETHOS command
+planes, not by this validation. Repository-native script invocations use `bash`
+and do not depend on executable bits.
 
 ## 可移植 hooks
 
 `.githooks/` 只调用仓库绑定的适配器，不依赖某台机器上的 ETHOS 源码路径。执行
-`./scripts/ethos-repo.sh hook install --json` 后，Git 通过
-`core.hooksPath=.githooks` 启用提交、推送和引用移动的准入。工作者必须令
+`./scripts/ethos-repo.sh hook install --json` 后，Git 通过 ETHOS-managed
+common hook launchers 启用提交、推送和引用移动的准入。工作者必须令
 `ETHOS_ACTOR` 与 Work Lane 租约的 `holder_ref` 一致。
 
 ## 语义文档与持久证据
