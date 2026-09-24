@@ -30,7 +30,7 @@
 - [x] 4.1 Install locked documentation tools without tracking `node_modules`;
       run format, links, render, rollout, layout, boundary, profile, material-
       attribution, and CI contract checks.
-- [ ] 4.2 Run strict OpenSpec validation and ETHOS admission, plan, and prove
+- [x] 4.2 Run strict OpenSpec validation and ETHOS admission, plan, and prove
       positive and negative cases, plus default proof and root-binding validation
       at the exact HEAD.
 
