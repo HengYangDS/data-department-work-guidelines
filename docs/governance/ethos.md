@@ -69,7 +69,7 @@ flowchart LR
 2. 只在已租约的 `work/*` 中修改受跟踪文件，并先执行
    `./scripts/ethos-repo.sh lane prewrite`。
 3. 用当前 HEAD 的
-   `./scripts/ethos-repo.sh prove --execute --scope docs --expect-head <HEAD> --json`
+   `./scripts/ethos-repo.sh prove --execute --full --scope repository --expect-head <HEAD> --json`
    记录本地证明；`./scripts/ethos-repo.sh land` 只推进候选列车。
 4. 只有受控 closeout 才能把 `candidate/dev` 快进到 `dev`，并将 `main` 作为
    `dev` 的本地 fast-forward mirror 同步到同一 SHA。不得直接移动 `main`。

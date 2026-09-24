@@ -138,3 +138,11 @@ an archived carrier that still claims active intent.
 Rollback before closeout is a lane-local revert or Work Lane retirement through
 ETHOS. No remote or runner rollback is required until a Forge publication has
 actually occurred.
+
+## Delivery proof scope
+
+Ruling: focused docs proof is diagnostic evidence, not repository acceptance.
+Native archive admission requires full repository proof bound to the current
+HEAD and governance context. Delivery instructions therefore use
+prove --execute --full --scope repository; the two declared document gates
+remain unchanged, and root binding remains a separate validation.

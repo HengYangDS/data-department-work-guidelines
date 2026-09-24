@@ -52,7 +52,7 @@
 3. 不得绕过 `dev → candidate/dev → dev` 的本地闭环；完成主张必须绑定当前 HEAD，并执行：
 
    ```bash
-   ./scripts/ethos-repo.sh prove --execute --scope docs \
+   ./scripts/ethos-repo.sh prove --execute --full --scope repository \
      --expect-head "$(git rev-parse HEAD)" --json
    ```
 

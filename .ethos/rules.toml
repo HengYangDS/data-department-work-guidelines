@@ -14,7 +14,7 @@ durable_evidence_roots = ["evidence", "evidence/claims"]
 
 [gates]
 governance_audit = "./scripts/ethos-repo.sh status --json"
-proof = "./scripts/ethos-repo.sh prove --execute --scope docs --expect-head $(git rev-parse HEAD) --json"
+proof = "./scripts/ethos-repo.sh prove --execute --full --scope repository --expect-head $(git rev-parse HEAD) --json"
 report = "./scripts/ethos-repo.sh status --json"
 openspec = "openspec validate --all --strict --json"
 docs_integrity = "./scripts/validate-docs.sh"
