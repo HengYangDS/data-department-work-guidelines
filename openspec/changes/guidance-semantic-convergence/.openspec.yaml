@@ -1,0 +1,6 @@
+schema: spec-driven
+created: 2026-09-25
+retire_capabilities: true
+goal: Make DDWG guidance task-centered and semantically owned, then verify one
+  accepted source across local, GitLab, and GitHub planes without retaining
+  unsupported tracked evidence or copied ETHOS product scaffolds.
