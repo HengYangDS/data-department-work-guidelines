@@ -350,3 +350,33 @@ test("Unreleased comparison begins at the latest versioned release", () => {
     );
   });
 });
+
+test("comparison bases must belong to the published ancestry", () => {
+  fixture((directory, base) => {
+    git(directory, "checkout", "-q", "-b", "side-history", base);
+    commit(directory, "unpublished side history");
+    const sideBase = git(directory, "rev-parse", "HEAD");
+    git(directory, "checkout", "-q", "main");
+
+    const changelog = path.join(directory, "CHANGELOG.md");
+    writeFileSync(changelog, source(sideBase));
+    assert.throws(
+      () => validateChangelog({ repository: directory, selectedTag: "" }),
+      /comparison base is not an ancestor: Unreleased/u,
+    );
+
+    writeFileSync(
+      changelog,
+      preparedSource(
+        sideBase,
+        "## [4.0.0] - 2026-09-25\n\n### Fixed\n\n- Repair a link.\n\n",
+      ),
+    );
+    commit(directory, "prepare release");
+    git(directory, "tag", "-a", "v4.0.0", "-m", "fixture release");
+    assert.throws(
+      () => validateChangelog({ repository: directory, selectedTag: "v4.0.0" }),
+      /comparison base is not an ancestor: 4\.0\.0/u,
+    );
+  });
+});

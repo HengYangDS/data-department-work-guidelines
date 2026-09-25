@@ -298,11 +298,34 @@ export function validateChangelog({
       throw new Error(`release comparison must end at v${label}`);
     }
     if (!(label === "Unreleased" && pending && base === `v${pending}`)) {
-      run("git", ["rev-parse", "--verify", `${base}^{commit}`], {
+      const baseCommit = run(
+        "git",
+        ["rev-parse", "--verify", `${base}^{commit}`],
+        {
+          cwd: repository,
+          capture: true,
+          timeout: 20_000,
+        },
+      ).trim();
+      const targetCommit =
+        label === "Unreleased" || !tags.has(label)
+          ? "HEAD"
+          : `v${label}^{commit}`;
+      run("git", ["rev-parse", "--verify", targetCommit], {
         cwd: repository,
         capture: true,
         timeout: 20_000,
       });
+      try {
+        run("git", ["merge-base", "--is-ancestor", baseCommit, targetCommit], {
+          cwd: repository,
+          capture: true,
+          timeout: 20_000,
+        });
+      } catch (error) {
+        if (error.message !== "git exited 1") throw error;
+        throw new Error(`comparison base is not an ancestor: ${label}`);
+      }
     }
   }
   if (selectedTag) {

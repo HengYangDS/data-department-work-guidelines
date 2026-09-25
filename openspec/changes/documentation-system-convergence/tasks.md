@@ -26,7 +26,7 @@
       metadata, layout, English, and repository boundaries. Remove redundant
       rendering and shape guards, then test failures and the locked dependency
       audit without running any proof property twice.
-- [x] 3.3 Make GitLab and GitHub supply runtimes and invoke the same check;
+- [ ] 3.3 Make GitLab and GitHub supply runtimes and invoke the same check;
       verify workflow contracts and hosted runs at the published source.
 - [x] 3.4 Exercise the full local check on macOS, Linux, and Windows, or mark an
       untested host unqualified; verify no host path or shell is required.
@@ -35,9 +35,10 @@
 
 - [x] 4.1 Define the public compatibility surface and one `VERSION` owner;
       verify the charter agrees and the private npm manifest has no edition.
-- [x] 4.2 Prepare the actual dated `v4.0.0` Keep a Changelog section without
-      fictitious old releases; verify empty `Unreleased`, prospective links,
-      strict headings, categories, dates, SemVer order, and pre/post-tag tests.
+- [ ] 4.2 Keep the immutable `v4.0.0` tag as published, correct its history
+      comparison, and prepare `v4.0.1` as the patch release. Verify empty
+      `Unreleased`, ancestry, prospective links, strict headings, categories,
+      dates, SemVer order, and pre/post-tag tests.
 - [ ] 4.3 Verify the installed ETHOS native release-tag admission rejects a
       commit offered as a tag, an unsigned tag, and a mismatched version.
 - [ ] 4.4 Verify ETHOS historical identity repair selected exact old headers,

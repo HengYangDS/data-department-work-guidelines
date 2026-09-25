@@ -20,7 +20,12 @@ import {
   executionViolation,
   validateDecision,
 } from "../tools/docs/governance.mjs";
-import { currentMarkdown, lycheeBinary, root } from "../tools/docs/runtime.mjs";
+import {
+  currentMarkdown,
+  lycheeBinary,
+  nodeTool,
+  root,
+} from "../tools/docs/runtime.mjs";
 
 const sections = [
   "Context",
@@ -166,6 +171,28 @@ test("one blank line is allowed; visual padding is not", () => {
     blankLineError("fixture.md", "# A\n\n\nText\n"),
     /consecutive blank lines/u,
   );
+});
+
+test("changelog categories may recur under different releases, not one release", () => {
+  const lint = (source) =>
+    spawnSync(
+      process.execPath,
+      [
+        nodeTool("markdownlint-cli2", "markdownlint-cli2"),
+        "--config",
+        ".config/tools/markdownlint-cli2.yaml",
+        "-",
+      ],
+      { cwd: root, encoding: "utf8", input: source, timeout: 10_000 },
+    );
+  const first = "# Changelog\n\n## [4.0.1]\n\n### Fixed\n\n- New.\n\n";
+  const second = "## [4.0.0]\n\n### Fixed\n\n- Old.\n";
+  const separate = lint(first + second);
+  assert.equal(separate.status, 0, separate.stderr);
+
+  const duplicate = lint(first + "### Fixed\n\n- Duplicate.\n");
+  assert.notEqual(duplicate.status, 0);
+  assert.match(duplicate.stderr, /MD024/u);
 });
 
 test("formatting selects source configuration and TOML syntax is checked", () => {

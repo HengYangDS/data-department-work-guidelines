@@ -115,7 +115,8 @@ already distributed 3.0.0 branch edition.
 first, only its six standard categories, strict SemVer headings, real ISO dates,
 and version links. A repository check rejects uncategorized entries, malformed
 sections, version drift, missing or extra local tags, a released comparison to
-a moving branch, and a selected tag that does not identify the exact source.
+a moving branch, a comparison base outside the relevant release ancestry, and
+a selected tag that does not identify the exact source.
 `Unreleased` starts at a prepared current version when one exists, otherwise at
 the latest local release tag. A prepared release moves its changes out of
 `Unreleased` and names the prospective `vVERSION` tag in both comparison
@@ -127,6 +128,14 @@ Forge release tags, so their former prose stays in Git history instead of being
 relabeled as formal releases. Human review of compatibility impact remains
 necessary: a parser cannot infer whether a changed obligation is breaking.
 ETHOS owns signed-tag authority and publication, not this parser.
+
+The signed `v4.0.0` tag was published before hosted CI exposed a comparison to
+an object from the pre-rewrite history. That object remains in this local object
+store but is absent from clean Forge checkouts. ETHOS does not replace published
+tag objects. Keep `v4.0.0` and its failed hosted result as facts, repair the
+comparison against the equivalent rewritten ancestor, and issue `v4.0.1` as a
+patch release after fresh source, hosted, and publication checks. A green
+`v4.0.1` run does not retroactively qualify the earlier tag.
 
 New commits use scoped Conventional Commit subjects under the ETHOS workspace
 policy. This does not authorize changing old messages. The operator's historical
@@ -193,7 +202,7 @@ source commit that has not yet been made.
 5. Finish source checks and read-only remote preflight, then commit the exact
    candidate. Preserve the already verified native identity-repair bundle and
    re-establish proof for every later source commit.
-6. Accept the proved source and create the signed `v4.0.0` tag through ETHOS.
+6. Accept the proved source and create the signed `v4.0.1` tag through ETHOS.
    Publish to GitLab and GitHub as independent exact-CAS effects; require each
    hosted job and Forge Release to be observed at the claimed object.
 7. Archive only after the declared tasks and publication effects have current

@@ -187,15 +187,17 @@ strict SemVer release headings with real ISO dates, newest first, and links to
 version history. The repository quality gate SHALL reject uncategorized prose,
 malformed structure, version disagreement, missing local tag coverage, or a
 comparison for a tagged release that ends at a moving branch instead of its
-tag. `Unreleased` SHALL compare from the prepared current version when one
-exists, or otherwise from the latest local release tag when one exists. A
-prepared release SHALL leave `Unreleased` empty and compare its version section
-to the prospective `vVERSION` tag. That exact prospective tag name MAY be an
-unresolved comparison base before the tag is created; arbitrary unresolved
-refs SHALL NOT pass. The same changelog SHALL remain valid once the signed tag
-exists. A selected release tag SHALL identify the exact source and leave
-`Unreleased` empty. At most one untagged prepared release entry MAY identify
-the current `VERSION`; a heading alone is not publication.
+tag. A resolvable comparison base SHALL also be an ancestor of its tagged
+release or, before tagging, the prepared source; local object presence alone
+SHALL NOT count as published history. `Unreleased` SHALL compare from the
+prepared current version when one exists, or otherwise from the latest local
+release tag when one exists. A prepared release SHALL leave `Unreleased` empty
+and compare its version section to the prospective `vVERSION` tag. That exact
+prospective tag name MAY be an unresolved comparison base before creation;
+no other unresolved ref SHALL pass. The same changelog SHALL remain valid once
+the signed tag exists. A selected release tag SHALL identify the exact source
+and leave `Unreleased` empty. At most one untagged prepared release entry MAY
+identify the current `VERSION`; a heading alone is not publication.
 Native ETHOS SHALL admit signed annotated `vX.Y.Z` tags and publication. Older
 untagged branch editions SHALL NOT be retroactively labeled as formal releases.
 
@@ -222,6 +224,14 @@ untagged branch editions SHALL NOT be retroactively labeled as formal releases.
   older tag, or ends its release comparison at a moving branch
 - **THEN** the quality gate rejects the source before creating the tag
 - **AND THEN** no arbitrary missing ref is treated as a prospective tag.
+
+#### Scenario: A local commit is absent from the published ancestry
+
+- **WHEN** a comparison base resolves in the local object store but is not an
+  ancestor of its release tag or prepared source
+- **THEN** the repository quality gate rejects that comparison before tagging
+- **AND THEN** historical identity repair cannot leave an old object ID in a
+  link merely because it resolves on the maintainer's machine.
 
 #### Scenario: Version, changelog, or tag identities diverge
 
