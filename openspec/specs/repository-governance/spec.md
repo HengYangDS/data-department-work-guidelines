@@ -20,57 +20,17 @@ leave `main` and `dev` at the same SHA.
 - **AND** `main` is not ahead of accepted `dev`
 - **THEN** governed closeout SHALL fast-forward `dev` and `main` to that SHA
 
-### Requirement: Candidate branch remains local-only
-
-The repository SHALL treat `candidate/dev` as a local integration resource.
-GitLab and GitHub SHALL receive only `dev`, `main`, or `proposal/*` refs. The
-repository-owned pre-push boundary SHALL reject `candidate/dev` as a local
-source or remote destination before generic ETHOS admission. Local proof,
-integration, and accepted closeout SHALL NOT imply either remote was updated.
-Formal publication SHALL require a source commit whose signature is verified
-against an operator-owned external trust anchor; the repository SHALL NOT store
-signing credentials or a host-specific trust path.
-
-#### Scenario: Local candidate proof is not publication evidence
-
-- **WHEN** candidate validation or accepted closeout completes locally
-- **THEN** the result SHALL NOT assert a GitLab or GitHub push.
-
-#### Scenario: Candidate push is rejected locally
-
-- **WHEN** Git supplies `refs/heads/candidate/dev` as either a local source or
-  remote destination in a pre-push pair
-- **THEN** the repository hook exits nonzero before delegation
-- **AND THEN** no remote connection or publication is implied.
-
-#### Scenario: Eligible branch remains delegated
-
-- **WHEN** Git supplies `refs/heads/dev`, `refs/heads/main`, or
-  `refs/heads/proposal/*` as a pre-push destination
-- **THEN** the repository hook delegates that ref to the repository-bound ETHOS
-  admission adapter
-- **AND THEN** local delegation does not assert remote success.
-
-#### Scenario: Retired submit prefix is rejected
-
-- **WHEN** Git supplies `refs/heads/submit/*` as a pre-push destination
-- **THEN** the repository hook rejects it before ETHOS delegation
-- **AND THEN** no second proposal branch namespace remains active.
-
-#### Scenario: Source trust is missing
-
-- **WHEN** an accepted source commit lacks a verifiable signature or the
-  operator's external trust anchor is unavailable
-- **THEN** formal publication remains blocked before either peer is updated
-- **AND THEN** a hook-admitted raw Git push is not treated as equivalent proof.
-
 ### Requirement: ETHOS material-path attribution remains product-owned
 
-The repository SHALL declare a non-empty `[openspec].material_paths` list.
-Prewrite, changed planning, and proof SHALL attribute each matching fresh path
+The repository SHALL declare `[openspec].material_paths = ["**"]` so newly
+tracked candidates are not omitted by an enumerated path list. Prewrite,
+changed planning, and proof SHALL attribute each fresh path
 to the same single selected active official OpenSpec Change. The repository
 SHALL NOT use `scope.toml`, a Commitment field, an archive, or another local
-carrier as a second authorization mechanism.
+carrier as a second authorization mechanism. Non-official scope companions
+from retired practice SHALL NOT remain in the present tracked archive tree;
+Git history retains their original objects without certifying them under the
+current contract.
 
 #### Scenario: Material path is attributed
 
@@ -82,37 +42,52 @@ carrier as a second authorization mechanism.
 
 #### Scenario: Material path has no unique active Change
 
-- **WHEN** no active Change exists, an explicitly selected Change is missing, or
-  more than one active Change could own the path
+- **WHEN** no active Change exists, an explicitly selected Change is missing,
+  or more than one active Change could own the path
 - **THEN** the ETHOS command plane rejects the operation with its current
   missing or ambiguous Change diagnostic
 - **AND THEN** historical carriers and repository-local tests do not substitute
   for active intent.
 
+#### Scenario: A newly introduced tracked path is material
+
+- **WHEN** a candidate adds a tracked file outside the repository's former
+  enumerated roots
+- **THEN** ETHOS still requires attribution to one active official Change
+- **AND THEN** no local path-list validator is needed to patch the omission.
+
+#### Scenario: An obsolete companion is removed
+
+- **WHEN** current tracked files are reviewed after source acceptance
+- **THEN** no `scope.toml` remains in a present Change or archive directory
+- **AND THEN** the earlier companion remains recoverable as a historical Git
+  object rather than becoming a new authority or a falsified lifecycle claim.
+
 ### Requirement: Local and remote publication facts are separate
 
-The repository SHALL keep local verification independent of remote publication.
-GitLab SHALL be the organization primary release plane and GitHub SHALL be an
-independent complete repository and CI/CD plane. Local hooks SHALL reject
-`work/*` and `candidate/dev` as publication refs and permit only `dev`, `main`,
-and `proposal/*` to reach generic ETHOS push admission. A configured remote, a
-local accepted ref, or a passing job on a different object SHALL NOT establish
-publication at a particular object. A GitHub fallback claim SHALL require a
-successful product-governed GitHub publication when GitLab is unavailable; the
-repository SHALL NOT substitute a raw push for a product refusal.
+The repository SHALL keep local verification independent of remote
+publication. GitLab SHALL be the organization primary release plane and GitHub
+SHALL be an independent complete repository and CI/CD plane. The installed
+ETHOS Git-common pre-push hook SHALL reject `work/*`, `candidate/dev`, and
+`submit/*` publication destinations. Only `dev`, `main`, and `proposal/*`
+destinations are eligible for further product admission. A configured remote,
+a local accepted ref, or a passing job on a different object SHALL NOT
+establish publication at a particular object. A GitHub fallback claim SHALL
+require a successful product-governed GitHub publication when GitLab is
+unavailable; a raw push SHALL NOT substitute for a product refusal.
 
 #### Scenario: Candidate publication is attempted
 
-- **WHEN** Git supplies `candidate/dev` as a local source or remote destination
-  to the pre-push hook
-- **THEN** the hook rejects it before generic push admission
+- **WHEN** Git supplies `candidate/dev`, `work/*`, or `submit/*` as a remote
+  destination to the installed ETHOS pre-push protocol
+- **THEN** native admission rejects that destination
 - **AND THEN** no remote publication result is asserted.
 
 #### Scenario: A proposal ref is submitted
 
 - **WHEN** Git supplies `proposal/*` as a publication destination
-- **THEN** the repository hook delegates that ref to generic ETHOS admission
-- **AND THEN** delegation alone does not assert remote acceptance.
+- **THEN** the installed ETHOS hook evaluates its remaining admission rules
+- **AND THEN** ref eligibility alone does not assert remote acceptance.
 
 #### Scenario: One Forge is unavailable
 
@@ -124,25 +99,27 @@ repository SHALL NOT substitute a raw push for a product refusal.
 
 ### Requirement: Hosted documentation verification begins from a Git checkout
 
-Each hosted documentation job SHALL invoke the same repository-owned verifier
-from a real Git checkout. GitHub SHALL check out on its managed Ubuntu runner
-before runtime setup and explicitly select Node 22. GitLab SHALL install Git
-before the verifier runs in its Docker runtime. Action references SHALL bind
-immutable maintained releases. A workflow declaration alone SHALL NOT count as
-hosted-CI success.
+Each hosted documentation job SHALL invoke the same shell-independent
+repository-owned verifier from a real Git checkout. GitHub SHALL check out on
+its managed runner before runtime setup and explicitly select the locked Node
+major version. GitLab SHALL provide Git and the same declared toolchain before
+verification. Provider setup MAY differ; the document-quality command and its
+repository-relative inputs SHALL not. Action references SHALL bind immutable
+maintained releases. A workflow declaration alone SHALL NOT count as hosted-CI
+success.
 
 #### Scenario: GitHub runner-native checkout is configured
 
 - **WHEN** the repository validates the GitHub documentation workflow
 - **THEN** the job has no job-level container
-- **AND THEN** checkout precedes runtime commands and explicit Node 22 setup
-- **AND THEN** the shared bound verifier remains the verification command.
+- **AND THEN** checkout precedes runtime commands and explicit Node setup
+- **AND THEN** the shared portable verifier remains the verification command.
 
 #### Scenario: GitLab Docker runtime is configured
 
 - **WHEN** the repository validates the GitLab documentation workflow
-- **THEN** its prerequisite package installation includes Git before the shared
-  bound verifier runs
+- **THEN** Git is available to the shared verifier without requiring a browser
+  package installation
 - **AND THEN** its verifier command is identical to the GitHub projection.
 
 #### Scenario: Hosted evidence remains independent
@@ -151,88 +128,39 @@ hosted-CI success.
 - **THEN** the result SHALL NOT assert that GitLab or GitHub hosted CI has run
   or passed.
 
-### Requirement: Hosted Mermaid rendering uses an explicit CI-only launch configuration
-
-The documentation adopter SHALL retain sandboxed Mermaid rendering by default.
-When the shared hosted documentation verifier runs under a provider projection,
-it SHALL select the same repository-owned Puppeteer launch configuration through
-a repository-relative input. That configuration SHALL be checked in, portable,
-and limited to the hosted Chrome compatibility argument. Provider workflow YAML
-SHALL NOT contain an inline no-sandbox command. Every nested documentation
-validation initiated by that shared verifier SHALL receive the same already
-validated selection. Local workflow validation or rendering SHALL NOT be
-reported as hosted-CI success.
-
-#### Scenario: Local documentation validation has no hosted override
-
-- **WHEN** `scripts/validate-docs.sh` runs without its hosted-renderer option
-- **THEN** Mermaid CLI receives no Puppeteer configuration file
-- **AND THEN** local Chrome sandbox behavior remains unchanged.
-
-#### Scenario: Hosted provider invokes the common verifier
-
-- **WHEN** GitHub or GitLab documentation verification runs
-- **THEN** the projection exports the same repository-relative hosted renderer
-  configuration before the shared bound verifier starts
-- **AND THEN** the verifier selects that configuration through the repository
-  validator rather than a provider-local render command.
-
-#### Scenario: Hosted selection reaches nested rollout validation
-
-- **WHEN** GitHub or GitLab documentation verification selects the canonical
-  hosted renderer configuration
-- **THEN** the shared verifier passes the same validated repository-relative
-  option to both direct documentation validation and rollout-readiness
-  validation
-- **AND THEN** every Mermaid render in that invocation receives the canonical
-  Puppeteer configuration.
-
-#### Scenario: CI override is malformed or inlined
-
-- **WHEN** a projection omits the canonical config, names a different config, or
-  includes an inline no-sandbox string
-- **THEN** the repository CI contract test rejects the projection
-- **AND THEN** no hosted success is inferred from that rejection.
-
-#### Scenario: Unsupported hosted selection stops before validation
-
-- **WHEN** the shared verifier receives an unsupported hosted renderer value
-- **THEN** it fails before invoking direct or rollout validation
-- **AND THEN** no hosted success is inferred from that rejection.
-
 ### Requirement: Per-project dual-Forge runner isolation
 
-GitHub documentation verification SHALL use a GitHub-hosted Ubuntu runner with
-immutable maintained Actions, Node 22, and managed stable Chrome before the
-shared verifier runs. It SHALL NOT use a local self-hosted runner or host path.
-GitLab documentation verification SHALL select the canonical
-`ci-linux-arm64-docker` capability tag, while a separately owned runner must
-actually expose that tag before a hosted success claim. The two providers'
-runtime services, credentials, work areas, caches, and job observations SHALL
-remain independent. Repository YAML SHALL NOT claim runner registration.
+GitHub documentation verification SHALL run the same complete verifier on
+GitHub-hosted Linux, macOS, and Windows runners with immutable maintained
+Actions and Node 22. It SHALL NOT
+use a local self-hosted runner or host path. GitLab SHALL select the canonical
+`ci-linux-arm64-docker` capability tag; a separately owned runner must actually
+expose that tag before hosted success is claimed. The two providers' runtime
+services, credentials, work areas, caches, and job observations SHALL remain
+independent. Repository YAML SHALL NOT claim runner registration.
 
 #### Scenario: Repository workflow bindings are statically valid
 
 - **WHEN** the repository validates its GitHub and GitLab documentation jobs
-- **THEN** GitHub selects `ubuntu-latest`, checks out first, configures Node 22,
-  and binds Puppeteer to managed Chrome
+- **THEN** GitHub selects its three-OS hosted matrix, checks out first, and
+  configures Node 22
 - **AND THEN** GitLab selects `ci-linux-arm64-docker` and both jobs invoke the
-  same repository verifier.
+  same verifier.
 
 #### Scenario: Fork-origin code cannot run on the GitHub local host
 
 - **WHEN** a pull request head repository differs from the GitHub repository
-- **THEN** GitHub-hosted execution does not select or expose a local GitHub host
-- **AND THEN** the workflow retains read-only contents permission and the shared
-  verifier runs only in the managed hosted environment.
+- **THEN** the three-OS GitHub job remains on managed hosted runners with
+  read-only contents permission
+- **AND THEN** the workflow does not select or expose a local GitHub host.
 
 #### Scenario: Local configuration is not hosted evidence
 
 - **WHEN** workflow lint or local proof passes
 - **THEN** the repository does not assert that GitHub Actions or GitLab CI
   executed
-- **AND THEN** each Forge requires a fresh run at the published revision for its
-  own success claim.
+- **AND THEN** each Forge requires a fresh run at the published revision for
+  its own success claim.
 
 ### Requirement: Change completion follows declared obligations
 
@@ -310,3 +238,107 @@ identity SHALL NOT be accepted or published as the completed Change.
   regenerated through an admitted transition
 - **AND THEN** an earlier source proof or Forge job is not reused as proof of
   the archive object.
+
+### Requirement: New commit identity and message policy is native
+
+The ETHOS workspace policy SHALL require trusted SSH signatures and scoped
+Conventional Commit subjects for new commits. Historical identity correction
+SHALL select exact author or committer headers, preserve trees, messages,
+timestamps, and unselected identities, and proceed only through admitted ETHOS
+repair with a verified recovery bundle. Replacement object IDs SHALL be proved
+and reconciled with both Forges before a release tag is admitted. A `.mailmap`,
+raw history rewrite, or rewritten old message SHALL NOT substitute for this
+transition.
+
+#### Scenario: A new commit has an invalid subject
+
+- **WHEN** an unscoped or malformed subject reaches native commit admission
+- **THEN** ETHOS rejects it even if repository formatting checks pass.
+
+#### Scenario: Selected historical identity is corrected
+
+- **WHEN** native repair admits the exact headers, refs, and recovery bundle
+- **THEN** selected identities are corrected and affected descendants re-signed
+- **AND THEN** proof, remote refs, and hosted CI are refreshed for replacement
+  object IDs before tagging.
+
+### Requirement: Versioned guideline releases have one checked identity
+
+The repository SHALL declare its intended guideline release in `VERSION` as a
+strict SemVer 2.0.0 value. The charter SHALL show the same edition and the
+private npm tool manifest SHALL not declare a competing version. The public
+compatibility surface comprises normative obligations, stable reader and Agent
+routes, and documented contributor commands. An incompatible change to that
+surface SHALL take a major increment; backward-compatible additions or
+deprecations SHALL take a minor increment; compatible fixes SHALL take a patch
+increment. Compatibility classification SHALL be reviewed in the official
+Change rather than inferred from a formatted file.
+
+`CHANGELOG.md` SHALL follow Keep a Changelog 1.1.0: `Unreleased` first, only
+applicable Added, Changed, Deprecated, Removed, Fixed, and Security categories,
+strict SemVer release headings with real ISO dates, newest first, and links to
+version history. The repository quality gate SHALL reject uncategorized prose,
+malformed structure, version disagreement, missing local tag coverage, or a
+comparison for a tagged release that ends at a moving branch instead of its
+tag. A resolvable comparison base SHALL also be an ancestor of its tagged
+release or, before tagging, the prepared source; local object presence alone
+SHALL NOT count as published history. `Unreleased` SHALL compare from the
+prepared current version when one exists, or otherwise from the latest local
+release tag when one exists. A prepared release SHALL leave `Unreleased` empty
+and compare its version section to the prospective `vVERSION` tag. That exact
+prospective tag name MAY be an unresolved comparison base before creation;
+no other unresolved ref SHALL pass. The same changelog SHALL remain valid once
+the signed tag exists. A selected release tag SHALL identify the exact source
+and leave `Unreleased` empty. At most one untagged prepared release entry MAY
+identify the current `VERSION`; a heading alone is not publication.
+Native ETHOS SHALL admit signed annotated `vX.Y.Z` tags and publication. Older
+untagged branch editions SHALL NOT be retroactively labeled as formal releases.
+
+#### Scenario: A current release is prepared but not yet tagged
+
+- **WHEN** `VERSION` and the charter agree, `Unreleased` is empty and first,
+  and one dated current-version section is prepared without a local tag
+- **THEN** repository source validation may pass for preparation
+- **AND THEN** `Unreleased` compares from the prospective `vVERSION` tag to
+  `main`, and the prepared section compares to that same prospective tag
+- **AND THEN** no Forge Release or signed tag is claimed from that heading.
+
+#### Scenario: A prepared changelog survives the tag transition
+
+- **WHEN** the signed annotated `vVERSION` tag is created on the exact
+  prepared source
+- **THEN** the same `Unreleased` and release comparison links remain valid
+- **AND THEN** the selected tag check binds the tag to that source without a
+  post-tag source edit.
+
+#### Scenario: A prepared link would fail after tagging
+
+- **WHEN** a prepared release leaves changes in `Unreleased`, compares from an
+  older tag, or ends its release comparison at a moving branch
+- **THEN** the quality gate rejects the source before creating the tag
+- **AND THEN** no arbitrary missing ref is treated as a prospective tag.
+
+#### Scenario: A local commit is absent from the published ancestry
+
+- **WHEN** a comparison base resolves in the local object store but is not an
+  ancestor of its release tag or prepared source
+- **THEN** the repository quality gate rejects that comparison before tagging
+- **AND THEN** historical identity repair cannot leave an old object ID in a
+  link merely because it resolves on the maintainer's machine.
+
+#### Scenario: Version, changelog, or tag identities diverge
+
+- **WHEN** a heading has a nonstandard category, invalid date or SemVer,
+  duplicates another version, lacks a real history link, omits a local tag,
+  or disagrees with `VERSION` or the selected tag's exact source
+- **THEN** the repository quality gate rejects the release candidate
+- **AND THEN** native ETHOS publication cannot substitute a different version
+  or silently treat an untagged earlier edition as a release.
+
+#### Scenario: A breaking contributor command is retired
+
+- **WHEN** documented shell commands are replaced by one portable entrypoint
+- **THEN** the official Change identifies the compatibility break and the next
+  release takes a major increment
+- **AND THEN** migration guidance names the new command without keeping a
+  permanent shell compatibility facade.
