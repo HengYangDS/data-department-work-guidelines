@@ -53,7 +53,7 @@
 - [x] 4.1 Replace fixed card and diagram quotas with checks for current links,
       metadata, every present render, command syntax, decision structure, and
       meaningful negative cases; verify focused regression tests pass.
-- [ ] 4.2 Run locked-tool cold setup, documentation format/link/render, rollout
+- [x] 4.2 Run locked-tool cold setup, documentation format/link/render, rollout
       and governance checks, official OpenSpec strict validation, ETHOS
       admission and changed-plan checks, and `git diff --check`; verify
       `node_modules` is untracked and the worktree is clean after commit.
