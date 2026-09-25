@@ -6,49 +6,64 @@
 
 **Reason**: Copied ETHOS product-family shape is not an adopter requirement.
 
-**Migration**: ETHOS retains its own specification; DDWG keeps only its own observable obligations.
+**Migration**: ETHOS retains its own specification; DDWG keeps only its own
+observable obligations.
 
 ### Requirement: Documentation archive closeout remains proof-bound
 
-**Reason**: It incorrectly requires archive before local integration even when delivery obligations remain.
+**Reason**: It incorrectly requires archive before local integration even when
+delivery obligations remain.
 
-**Migration**: Use Change completion follows declared obligations; prove each new source object at its actual stage.
+**Migration**: Use Change completion follows declared obligations; prove each
+new source object at its actual stage.
 
 ### Requirement: One material governance Change owns the repair
 
-**Reason**: The named July repair is complete historical work, not a permanent requirement on every later Change.
+**Reason**: The named July repair is complete historical work, not a permanent
+requirement on every later Change.
 
-**Migration**: Keep its official archive and use a new selected Change for new material intent.
+**Migration**: Keep its official archive and use a new selected Change for new
+material intent.
 
 ### Requirement: Historical claims remain honest
 
-**Reason**: All retained tracked claim files are historical migration annotations, not a required current proof system.
+**Reason**: All retained tracked claim files are historical migration
+annotations, not a required current proof system.
 
-**Migration**: Preserve their original Git objects; current proof and historical corrections use native Attestations and official Change history.
+**Migration**: Preserve their original Git objects; current proof and historical
+corrections use native Attestations and official Change history.
 
 ### Requirement: Divergent owned Work Lane residue is preserved before retirement
 
-**Reason**: Generic retirement and preservation are owned by ETHOS; the adopter-specific copy encodes one old cleanup campaign.
+**Reason**: Generic retirement and preservation are owned by ETHOS; the
+adopter-specific copy encodes one old cleanup campaign.
 
-**Migration**: Use native lane status and exact retirement receipts; review foreign or dirty content independently of this source Change.
+**Migration**: Use native lane status and exact retirement receipts; review
+foreign or dirty content independently of this source Change.
 
 ### Requirement: Real adopter lifecycle validation remains carrier-bound
 
-**Reason**: The one-off July validation campaign has finished and its active-claim requirement is obsolete.
+**Reason**: The one-off July validation campaign has finished and its
+active-claim requirement is obsolete.
 
-**Migration**: Official OpenSpec and ETHOS continue to govern each new material Change without a tracked claim companion.
+**Migration**: Official OpenSpec and ETHOS continue to govern each new material
+Change without a tracked claim companion.
 
 ### Requirement: Archived Change carriers have canonical identity
 
-**Reason**: This describes a completed path-only archive normalization, not an ongoing DDWG behavior.
+**Reason**: This describes a completed path-only archive normalization, not an
+ongoing DDWG behavior.
 
-**Migration**: Preserve the historical Change and use the official archive identity contract for future Changes.
+**Migration**: Preserve the historical Change and use the official archive
+identity contract for future Changes.
 
 ### Requirement: Post-archive proof repair preserves archive history
 
-**Reason**: This describes a completed repair incident rather than the normal lifecycle.
+**Reason**: This describes a completed repair incident rather than the normal
+lifecycle.
 
-**Migration**: Use the generic exact-source proof and new Change mechanism if a future archive result fails.
+**Migration**: Use the generic exact-source proof and new Change mechanism if a
+future archive result fails.
 
 ## MODIFIED Requirements
 
@@ -76,8 +91,8 @@ integration, and accepted closeout SHALL NOT imply either remote was updated.
 
 - **WHEN** Git supplies `refs/heads/dev`, `refs/heads/main`, or
   `refs/heads/submit/*` as a pre-push destination
-- **THEN** the repository hook delegates that ref to the repository-bound
-  ETHOS admission adapter
+- **THEN** the repository hook delegates that ref to the repository-bound ETHOS
+  admission adapter
 - **AND THEN** local delegation does not assert remote success.
 
 ### Requirement: Hosted documentation verification begins from a Git checkout
@@ -132,16 +147,16 @@ remain independent. Repository YAML SHALL NOT claim runner registration.
 
 - **WHEN** a pull request head repository differs from the GitHub repository
 - **THEN** GitHub-hosted execution does not select or expose a local GitHub host
-- **AND THEN** the workflow retains read-only contents permission and the
-  shared verifier runs only in the managed hosted environment.
+- **AND THEN** the workflow retains read-only contents permission and the shared
+  verifier runs only in the managed hosted environment.
 
 #### Scenario: Local configuration is not hosted evidence
 
 - **WHEN** workflow lint or local proof passes
 - **THEN** the repository does not assert that GitHub Actions or GitLab CI
   executed
-- **AND THEN** each Forge requires a fresh run at the published revision for
-  its own success claim.
+- **AND THEN** each Forge requires a fresh run at the published revision for its
+  own success claim.
 
 ## ADDED Requirements
 
@@ -159,8 +174,7 @@ already complete.
 
 - **WHEN** source proof and local accepted closeout pass but a declared Forge
   job has not run at that source object
-- **THEN** the delivery task remains open and the official Change remains
-  active
+- **THEN** the delivery task remains open and the official Change remains active
 - **AND THEN** local acceptance does not imply whole-Change completion.
 
 #### Scenario: Archive creates a new source object
@@ -193,5 +207,5 @@ facts and inbound consumers are reviewed; Git history remains unchanged.
 
 - **WHEN** only source checks and hosted CI are available
 - **THEN** the repository reports only those source and delivery facts
-- **AND THEN** team adoption remains unproved until actual work observations
-  are reviewed at their producing owner.
+- **AND THEN** team adoption remains unproved until actual work observations are
+  reviewed at their producing owner.

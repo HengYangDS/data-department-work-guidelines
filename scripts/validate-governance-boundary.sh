@@ -26,15 +26,22 @@ if (root / "docs" / "superpowers").exists():
         "docs/superpowers"
     )
 
-legacy_decisions = sorted(decision_root.glob("20??-??-??-*.md"))
+legacy_decisions = sorted(decision_root.rglob("20??-??-??-*.md"))
 if legacy_decisions:
     names = ", ".join(path.relative_to(root).as_posix() for path in legacy_decisions)
     raise SystemExit(f"date-only decision records remain: {names}")
 
-accepted_root = decision_root / "accepted"
-records = sorted(accepted_root.glob("DR-[0-9][0-9][0-9][0-9]-*.md"))
+records = sorted(decision_root.glob("dr-[0-9][0-9][0-9][0-9]-*.md"))
 if not records:
-    raise SystemExit("missing numbered accepted DR records")
+    raise SystemExit("missing stable numbered DR records")
+
+unexpected = sorted(
+    path for path in decision_root.rglob("*.md")
+    if path.name != "README.md" and path not in records
+)
+if unexpected:
+    names = ", ".join(path.relative_to(root).as_posix() for path in unexpected)
+    raise SystemExit(f"noncanonical decision records remain: {names}")
 
 required_sections = [
     "Context",
@@ -192,10 +199,10 @@ def execution_violation(text: str) -> str | None:
 
 for record in records:
     text = record.read_text(encoding="utf-8")
-    decision_id = record.name.split("-", 2)[0] + "-" + record.name.split("-", 2)[1]
+    decision_id = "DR-" + record.name.split("-", 2)[1]
     if f"decision_id: {decision_id}" not in text:
         raise SystemExit(f"DR identity mismatch: {record.relative_to(root)}")
-    if "decision_status: accepted" not in text:
+    if not re.search(r"^decision_status: (accepted|superseded)$", text, re.MULTILINE):
         raise SystemExit(f"DR decision status missing: {record.relative_to(root)}")
     headings = re.findall(r"^## ([^\n]+?)\s*$", text, flags=re.MULTILINE)
     if headings != required_sections:
@@ -209,5 +216,5 @@ for record in records:
             f"DR contains {violation}: {record.relative_to(root)}"
         )
 
-print(f"PASS governance boundary: accepted_drs={len(records)}")
+print(f"PASS governance boundary: numbered_drs={len(records)}")
 PY

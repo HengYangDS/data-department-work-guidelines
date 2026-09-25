@@ -34,7 +34,7 @@ while read -r local_ref local_sha remote_ref remote_sha; do
       exit 1
       ;;
   esac
-  "$repo_root/scripts/ethos-repo.sh" hook pre-push "$remote_ref" "$local_sha" \
+  bash "$repo_root/scripts/ethos-repo.sh" hook pre-push "$remote_ref" "$local_sha" \
     --remote-head "$remote_sha" \
     --json >/dev/null
 done

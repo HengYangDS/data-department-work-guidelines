@@ -1,27 +1,15 @@
 ---
 subject: data-department-work-guidelines:history
-role: index
-state: canonical
+role: history
+state: archived
 relations:
-  canonical_for: historical documentation
+  preserves: non-normative migration context
 ---
 
-# 历史记录
+# 历史语境
 
-> **状态 Status:** canonical（已退役语境的当前入口）
->
-> **目的 Purpose:** 保存迁移与废止的背景，而不让旧叙事覆盖当前规则、决策或证据。
->
-> **参见 See also:** [文档导航](../README.md)、[已废止决策](../decisions/superseded/README.md)、
-> [`CHANGELOG.md`](../../CHANGELOG.md)。
-
-本目录用于保存已退役的理由、迁移记录与归档日志。历史的职责是保留上下文，不覆盖当前
-规则、当前决策或当前证据。
-
-现阶段的版本演化见 [`CHANGELOG.md`](../../CHANGELOG.md)；基线建立的复盘见
-[`docs/retrospectives/`](../retrospectives/)。当一项决策或实践被替代时，应将其转入本目录
-或 [`docs/decisions/superseded/`](../decisions/superseded/)，并保留替代关系。
-
-2026-07-17 起，先前采用 Superpowers 格式的执行计划与设计文件不再作为当前文档拓扑的一部分；
-其历史内容仅由 Git 提交历史追溯。此处历史说明不是规范、证据或生命周期载体，也不把特定方法包
-升格为仓库治理。
+原根目录 `guidelines.md`、曾跟踪的 `evidence/` 集合和旧的 Superpowers 形式计划，
+都可从 Git 历史找回。它们不是当前规则、证明或生命周期载体。
+已完成 Change 的材料留在[官方 OpenSpec 归档](../../openspec/changes/archive/)；
+归档不追溯认证生命周期建立之前的工作。
+现行准则从[文档导航](../README.md)进入。

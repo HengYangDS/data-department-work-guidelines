@@ -3,29 +3,23 @@ subject: data-department-work-guidelines:documentation
 role: index
 state: canonical
 relations:
-  canonical_for: documentation navigation
+  canonical_for: guidance navigation
 ---
 
-# 文档导航
+# 按工作问题进入
 
-> **状态 Status:** canonical（当前有效的文档导航）
->
-> **目的 Purpose:** 为成员与 Agent 路由规则、决策、证据、参考与历史，而不复制规则正文。
->
-> **参见 See also:** [`README.md`](../README.md)、[`AGENTS.md`](../AGENTS.md)、
-> [决策记录](decisions/README.md)。
+| 读者的问题                   | 当前规则                     | 用完应能回答                             |
+| ---------------------------- | ---------------------------- | ---------------------------------------- |
+| 谁有权决定，我必须守住什么？ | [准则宪章](charter.md)       | 对象、事实与行动权威、不可越过的边界。   |
+| 我怎样看清问题并作决定？     | [分析与决策](decide.md)      | 事实、假设、替代方案、决策人和复审条件。 |
+| 什么时候能说任务完成？       | [执行与交付](deliver.md)     | 交付物、当前验证、限制和验收人。         |
+| 这份数据能否用于该场景？     | [数据质量与采用](data.md)    | 来源、时点、语义、质量、权限和退出条件。 |
+| 如何让他人理解并行动？       | [沟通与表达](communicate.md) | 结论、依据、影响、请求和下一步。         |
+| 如何把工作交给 Agent？       | [人智协作](human-agent.md)   | 委托范围、停止条件、核验和人的责任。     |
+| 一条实践值得成为规则吗？     | [实践与演化](evolve.md)      | 失败模式、试验、净增益、维护和退出。     |
 
-本目录保存准则的解释、取舍、证据与历史；它们帮助读者理解和维护
-[`guidelines.md`](../guidelines.md)，但不替代该文件作为团队通用规则的唯一事实源。
+这些页面各自拥有一个主题的当前要求。临时办法、项目局部事实和真实工作记录留在产生它们的工作系统；请引用，不要复制成第二套通用准则。
 
-| 需要什么           | 从这里进入                                                 | 说明                             |
-| ------------------ | ---------------------------------------------------------- | -------------------------------- |
-| 读懂或执行通用规则 | [`guidelines.md`](../guidelines.md)                        | 唯一规范性正文。                 |
-| 快速定向           | [`README.md`](../README.md) 与 [`AGENTS.md`](../AGENTS.md) | 分别面向成员与 Agent 的入口。    |
-| 理解长期取舍       | [决策记录](decisions/README.md)                            | 记录范围、依据、后果与复审条件。 |
-| 查看可复查依据     | [证据说明](evidence/README.md)                             | 区分持久证据与本机生成物。       |
-| 查阅稳定术语与边界 | [参考资料](reference/README.md)                            | 不把临时状态写成规则。           |
-| 追溯已退役背景     | [历史记录](history/README.md)                              | 历史不覆盖当前规则与证据。       |
-
-文档状态以 `canonical`、`active`、`planned`、`experimental`、`superseded` 或
-`archived` 表示；不使用 `current`、`future` 等目录名冒充事实状态。
+仓库变更由[OpenSpec 和 ETHOS](governance/ethos.md)治理；[决策记录](decisions/README.md)只保存无法从当前规则恢复的持久取舍。
+[历史语境](history/README.md)说明旧材料如何追溯，但过去的提交和 OpenSpec 归档不会自行授权当前行动。
+阅读路径可用、仓库检查通过，也不等于团队已经采用准则。

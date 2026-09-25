@@ -1,36 +1,32 @@
 # 变更记录
 
-本文件记录已进入团队基线的实质变更；工作草稿、会话摘要和未验证设想不在此登记。
+本文件记录已接受的版本和下一版候选。候选内容不等于已经发布，更不等于团队已采用。
 
-## [Unreleased]
+## [Unreleased] — v3.0.0 候选
 
-### 纠偏
+### 准则与阅读
 
-- 将 material governance change 的唯一变更载体收敛为 OpenSpec lifecycle，并新增生命周期与
-  决策边界检查。
-- 将四项已接受取舍重建为稳定编号的 DR，分离文档状态、决策状态、实施任务与验证记录。
-- 移除特定执行方法的文档根；历史仍由 Git 保留，不再作为规范、决策或 proof 载体。
-- 以可复现的 Node、Python 与 Chromium 环境新增 GitLab 主发布与 GitHub 镜像平面的
-  同等文档 CI 定义；remote 配置不构成 GitHub ref、CI 或发布的证据。
-- **BREAKING** 移除 GitHub 文档 job 的最小 Node container；checkout 改在 hosted runner 上
-  完成，再显式选择 Node 22 与 Chrome，避免缺 Git 时 archive fallback 破坏仓库验证边界。GitLab
-  Docker projection 同时将 Git 列为明确运行时前置；两边仍只调用同一仓库 verifier。
-- 将 hosted Chrome 的 sandbox 兼容例外收敛为一份受跟踪的 Puppeteer 配置；GitLab 与 GitHub
-  只经同一 verifier 显式选择它，本地 Mermaid 渲染仍保留默认 sandbox 行为。
-- 修复 shared verifier 在 rollout-readiness 的二次文档校验中遗漏 hosted renderer 选择的问题；
-  兼容参数仍只由受控 CI 显式传入，不改变本地默认 sandbox 行为。
-- GitHub documentation CI now uses a GitHub-hosted Ubuntu runner with explicit
-  Node 22 and managed stable Chrome; it no longer selects a DDWG self-hosted
-  runner, repository variable, Homebrew runtime, host Chrome path, or local-host
-  pull-request guard. GitLab remains independently tagged and operated.
-- GitLab 文档 CI 显式选择 `ddwg-documentation-ci` 项目 runner tag；runner 的远端 locked、
-  no-untagged-job 收紧与 GitHub runner 的注册/运行证据仍由各 Forge 单独验收。
-- 远端推送只允许 `dev`、`main` 与 `submit/*`；`work/*` 和 `candidate/dev` 永不推送。
+- **破坏性变更**：取消根目录长文；按读者任务建立一份简短宪章和六个主题，
+  保留必要义务，不保留旧路径和固定卡片数量。
+- 成员、Agent 和文档入口分别服务不同读者；每条现行规则只有一个语义主人。
+- 决策文件使用小写稳定编号；DR 只记录持久取舍，不再存放试用状态和实施日志。
 
-### 未作的主张
+### 质量与治理
 
-- 本项纠偏不追溯宣称 2026-07-12 的原始变更已经过 OpenSpec lifecycle；也不证明
-  GitHub/GitLab runner 已执行新 job、任一 Forge 已完成 Markdown 渲染，或真实团队采用已经发生。
+- 文档检查覆盖 Prettier、Markdown lint、lychee 离线链接与锚点、元数据和全部现存图示；
+  正反例测试不以卡片或图的数量凑质量。
+- 实质变更只由官方 OpenSpec Change 承载，ETHOS 负责路径归属、Work Lane、证明和接受；
+  仓库边界检查不复制生命周期。
+- 移除没有当前消费者的根 `evidence/`、旧试用模板、空脚手架和照搬的技能包；
+  历史字节仍在 Git 与官方归档中，不追溯认证旧工作。
+- 发布声明改用当前 ETHOS 可识别的双远端 topology。GitLab 使用
+  `ci-linux-arm64-docker`，GitHub 使用托管 Ubuntu；两边运行同一验证器。
+  Linux CI 从校验摘要的固定发行包取得 lychee，本地安装不依赖两个 Forge。
+
+### 尚不能据此声称
+
+- 候选源码尚未因此成为已接受版本；GitLab、GitHub 的精确 SHA 与 CI，
+  以及团队真实使用效果，仍需分别观察和验收。
 
 ## [2.2.2] — 2026-07-12
 

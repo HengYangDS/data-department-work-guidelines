@@ -1,6 +1,19 @@
-[release]
-version_source = "guidelines.md"
-tag_pattern = "v{version}"
+[publication]
+local_verification_command = "bash tools/ci/scripts/run-documentation-verification.sh"
+local_installation_command = "npm ci --ignore-scripts"
 
-[attestation]
-formats = ["in-toto", "slsa", "spdx-lite"]
+[[publication.peers]]
+id = "gitlab"
+provider = "gitlab"
+role = "organization_collaboration"
+git_remote = "origin"
+capabilities = ["repository", "ci_cd", "publication"]
+ci_surface = ".gitlab-ci.yml"
+
+[[publication.peers]]
+id = "github"
+provider = "github"
+role = "independent_distribution"
+git_remote = "github"
+capabilities = ["repository", "ci_cd", "publication"]
+ci_surface = ".github/workflows/docs-verify.yml"

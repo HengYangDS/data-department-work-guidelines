@@ -1,19 +1,21 @@
 # ETHOS repository binding manifest — the adopter entrypoint.
 #
-# This profile uses the current typed declaration. The root-level guideline is a
-# normative file, not a synthetic rules directory or the repository root.
+# Normative guidance has one semantic owner per reader task.
 profile_id = "data-department-work-guidelines"
-normative_sources = ["guidelines.md"]
+normative_sources = [
+  "docs/charter.md",
+  "docs/decide.md",
+  "docs/deliver.md",
+  "docs/data.md",
+  "docs/communicate.md",
+  "docs/human-agent.md",
+  "docs/evolve.md",
+]
 
-# Repository surface roots. These match the ETHOS defaults; override only the ones
-# your repository places elsewhere.
+# Repository-relative surface roots.
 [roots]
-# `rules` remains a repository-relative directory root. The root-level
-# `guidelines.md` authority is declared above in `normative_sources`.
-rules = "rules"
 docs = "docs"
 openspec = "openspec"
-agent_skills = ".agents/skills"
 
 # ETHOS names these required axes “code correctness”; for this documentation
 # repository they mean reader-visible behavior and static document integrity.

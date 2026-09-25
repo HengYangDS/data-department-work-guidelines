@@ -7,6 +7,7 @@ repo_root="$(git rev-parse --show-toplevel 2>/dev/null)" || {
   exit 2
 }
 cd "$repo_root"
+export PATH="$repo_root/build/runtime/tool-cache/lychee/0.24.2:$PATH"
 
 hosted_renderer_config="${DDWG_HOSTED_RENDERER_CONFIG:-}"
 validate_docs_args=()
@@ -25,10 +26,12 @@ esac
 node_modules/.bin/openspec validate --all --strict --json
 bash scripts/format-markdown.sh --check
 bash scripts/validate-docs.sh "${validate_docs_args[@]}"
-bash scripts/validate-rollout-readiness.sh "${validate_docs_args[@]}"
+bash scripts/validate-rollout-readiness.sh
 bash scripts/validate-governance-boundary.sh
 bash scripts/validate-text-layout.sh
 bash tests/validate-docs-options.sh
+bash tests/validate-links.sh
+bash tests/validate-ethos-profile.sh
 bash tests/validate-governance-boundary.sh
 bash tests/validate-push-boundary.sh
 bash tests/validate-ci-runtime-binding.sh

@@ -76,22 +76,22 @@ second navigation system before actual readers justify it.
 
 ### Evidence is a relationship, not a repository directory
 
-A result needs evidence if someone relies on it. Its producer, consumer,
-source object, validity period, and retention rule decide the carrier. Source
-proof stays in ETHOS's native Attestation set; code and document history stay
-in Git and archived OpenSpec; hosted execution stays in each Forge; data-work
+A result needs evidence if someone relies on it. Its producer, consumer, source
+object, validity period, and retention rule decide the carrier. Source proof
+stays in ETHOS's native Attestation set; code and document history stay in Git
+and archived OpenSpec; hosted execution stays in each Forge; data-work
 observations stay in the domain system that produced them. A curated teaching
 case may later enter `docs/` after rights, context, and review are established.
 
 The current `evidence/claims/*.toml` files are all historical and have no
-current nonhistorical consumer outside their own dated Chronicle links. They
-are not a product requirement of the installed ETHOS command plane. Before
+current nonhistorical consumer outside their own dated Chronicle links. They are
+not a product requirement of the installed ETHOS command plane. Before
 retirement, review each record for a unique fact that is absent from its
-archived Change, Git commit, or native Attestation. Preserve only such a fact
-in one concise historical topic with exact references. Remove the duplicate
+archived Change, Git commit, or native Attestation. Preserve only such a fact in
+one concise historical topic with exact references. Remove the duplicate
 `docs/evidence/` index, empty parity marker, unsupported tracked claim schema,
-and any repository rule that falsely declares `evidence/` mandatory. Deletion
-is a new Git commit; old bytes remain recoverable without rewriting history.
+and any repository rule that falsely declares `evidence/` mandatory. Deletion is
+a new Git commit; old bytes remain recoverable without rewriting history.
 
 Alternative rejected: moving the entire root to `docs/history/evidence/`. That
 would retain a second status and proof archive while merely changing its path.
@@ -120,10 +120,10 @@ remaining quality and repository-governance contracts are rewritten around
 observable DDWG behavior; the new guidance-discovery capability tests reader
 routing and unique rule ownership. Specs do not repeat each normative paragraph.
 The old repository-governance spec contains many completed one-off repairs;
-those requirements are retired after their current effects and preserved
-history are identified. The official archive must apply the deltas; empty
-placeholder capability directories are removed only after checking the native
-archive result, under the same selected Change, without a private spec merger.
+those requirements are retired after their current effects and preserved history
+are identified. The official archive must apply the deltas; empty placeholder
+capability directories are removed only after checking the native archive
+result, under the same selected Change, without a private spec merger.
 
 Documentation validation checks every present diagram, local link and anchor,
 formatting, metadata, current command example, and repository-specific DR
@@ -132,8 +132,8 @@ boundary. It no longer requires six particular cards, five diagrams, a root
 admission, proof, archive, landing, and publication. Representative reader
 journeys are evaluated separately against the rendered and raw documents:
 identify the applicable rule, its limits, responsible actor, and next action
-without reading unrelated topics. Baseline and after-results are recorded in
-the Change, not promoted into an invented numeric universal length rule.
+without reading unrelated topics. Baseline and after-results are recorded in the
+Change, not promoted into an invented numeric universal length rule.
 
 Alternative rejected: reducing the monolith by moving headings while leaving
 shape-count validators and copied policy in place. That changes path names
@@ -146,8 +146,8 @@ organization's main publication peer and GitHub an independent full repository
 and CI/CD peer. Both receive the same selected source object; neither peer is
 used to reconstruct the other's source. Only `dev`, `main`, and `submit/*` may
 be published. GitLab's job selects the canonical `ci-linux-arm64-docker`
-capability after a matching runner is proven available. GitHub remains hosted
-on Ubuntu with the shared verifier. Runner registration and credentials are
+capability after a matching runner is proven available. GitHub remains hosted on
+Ubuntu with the shared verifier. Runner registration and credentials are
 external to this source Change.
 
 This Change includes delivery obligations. Its active task carrier may travel
@@ -157,12 +157,23 @@ has a new source identity and receives fresh proof and publication observation.
 No task may require its own archive commit's future CI result, which would make
 the task ledger self-referential.
 
+The former `.ethos/release.toml` `[release].version_source` and tag pattern were
+not consumed by the installed publication contract. The current `[publication]`
+section declares one local verifier, one local installation command, and both
+independent peers. `package.json` is the native version owner; the charter
+displays the same version, checked with the lockfile. No remote tag publication
+is authorized by the branch-only policy. Unconsumed `.ethos/rules.toml`,
+`.ethos/assistants.toml`, and generated-artifact declarations are retired
+instead of being cosmetically updated.
+
 ## Risks / Trade-offs
 
-- [A moved rule loses an exception] -> map each old heading and unique obligation
-  to one new owner, inspect the full diff, and test representative countercases.
+- [A moved rule loses an exception] -> map each old heading and unique
+  obligation to one new owner, inspect the full diff, and test representative
+  countercases.
 - [An old tracked record is the sole historical source] -> compare its exact
-  claim and Chronicle to Git, archived OpenSpec, and Attestations before removal.
+  claim and Chronicle to Git, archived OpenSpec, and Attestations before
+  removal.
 - [A link outside the repository targets `guidelines.md`] -> inspect known
   external consumers, document the breaking path change, and preserve the old
   object in Git history; do not claim unknown external links were repaired.
@@ -194,3 +205,81 @@ Before source acceptance, rollback is a governed revert in the owned lane. A
 remote failure leaves the local accepted object intact and the affected peer
 unverified. Retirement failures recover from their native receipt; no broad
 filesystem deletion is a rollback strategy.
+
+## Original-Guidance Disposition
+
+The 1,240-line original `guidelines.md` was reviewed by heading, not split by
+file size. The following map identifies each active obligation's new owner or
+the reason an old carrier is retired. The original bytes remain in Git at
+`fb636e8a47354ebdeb07b869ea60102fd61f2a43` and earlier commits.
+
+| Former section                                                     | Current owner or explicit disposition                                                                                                                                                                                        |
+| ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0, introduction, task card, and six scene cards                    | `README.md` and `docs/README.md` route by task; topic openings contain the action and stop boundary. The fixed card-field quota and duplicated diagram were a presentation constraint, not a work obligation.                |
+| 1, applicability and risk tiers                                    | `docs/charter.md` binds people and Agents and scales form to risk; `docs/deliver.md` supplies the high-risk action boundary. L0/L1/L2 labels are removed because the obligation is risk-proportionate behavior, not a label. |
+| 2, purpose, Dao, authority, semantic kinds and boundaries          | `docs/charter.md` owns purpose, two authorities, and four limits; `docs/decide.md` owns fact/hypothesis/inference/judgment/decision/action distinctions. The six boundaries are made concrete at each task owner.            |
+| 3, define/analyze/decide/execute/verify/learn                      | `docs/decide.md`, `docs/deliver.md`, and `docs/evolve.md` own their respective actions. Seven links are a reasoning chain, not seven required documents.                                                                     |
+| 4, diagnosis and three repair layers                               | `docs/decide.md` owns causal diagnosis; `docs/deliver.md` and `docs/evolve.md` own verification and prevention.                                                                                                              |
+| 5, data quality, point-in-time discipline, adoption and production | `docs/data.md` is the sole rule owner. Domain facts and permissions remain at their actual sources.                                                                                                                          |
+| 6-7, oral and written communication                                | `docs/communicate.md` owns purpose, meeting, escalation, and 信、达、雅. Eleven-section document templates and phrase substitution tables are dropped as over-prescription; their actionable limits remain.                  |
+| 8, human-Agent collaboration                                       | `docs/human-agent.md` owns delegation, verification, stop, parallel work, and handoff; `DR-0001` keeps only the terminology rationale.                                                                                       |
+| 9, status and completion                                           | `docs/deliver.md` owns claim/evidence matching and the verified/accepted/published distinction.                                                                                                                              |
+| 10-11, review, coaching, signals, rule lifecycle and exceptions    | `docs/evolve.md` owns observed improvement, responsibility and rule exit. Fixed meeting cadence, universal scoring and people-ranking are not baseline obligations.                                                          |
+| 12, reusable forms                                                 | The actual task system owns task-specific records. Topic pages give the needed fields and decision boundaries without a second mandatory template library.                                                                   |
+| 13 and conclusion                                                  | Each task page carries its relevant self-check; `docs/charter.md` retains the first-principles synthesis.                                                                                                                    |
+
+## Historical Carrier Disposition
+
+All twelve tracked claims were marked `historical`. Each digest pointed to a
+tracked Chronicle in the same root, so the digest did not independently prove
+current readiness. The pre-removal tree and per-file SHA-256 remain available
+through Git; ten claims also name a real official archived Change. No claim is
+retargeted to this new Change, and no old work is retrospectively certified.
+
+| Former claim / Chronicle topic                          | Actual producer and retained source                                                          |
+| ------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `adopter-real-lifecycle-validation-20260718`            | Official July archive and the historical Git tree; no current guideline proof.               |
+| `adoption-lifecycle-repair-20260714`                    | Official July archive and Git; no retrospective lifecycle certification.                     |
+| `ci-checkout-runtime-repair-20260718`                   | Official July archive, source commit, and old local check output.                            |
+| `ci-mermaid-renderer-sandbox-repair-20260718`           | Official July archive and source configuration.                                              |
+| `ci-mermaid-rollout-forwarding-repair-20260718`         | Official July archive and source test; a cited hosted run must be read from its Forge.       |
+| `ddwg-dual-forge-runner-convergence-20260721`           | Official July archive, source workflow, and each Forge's own control-plane observation.      |
+| `ddwg-openspec-archive-identity-normalization-20260721` | Official July archive and the six canonical Git paths.                                       |
+| `ddwg-post-archive-proof-repair-20260721`               | Official July archive and the exact historical proof object, not a current proof.            |
+| `guidelines-docs-registry-contract-20260712`            | Git tree and dated observation; no missing Change is invented.                               |
+| `guidelines-ethos-adopter-baseline-20260712`            | Git tree and dated observation; the former GitLab path is historical.                        |
+| `proof-throughput` (two dated Chronicles)               | Official September archive, Git commits, and native local receipts for observed transitions. |
+| `work-lane-residue-disposition-20260718`                | Official July archive and any native retirement receipt; the old target state is not reused. |
+
+Three generic, unconsumed `.agents/skills` projections also repeated the ETHOS
+command route and referred to retired evidence roots. `AGENTS.md` and the bound
+adapter now provide the direct repository entry; no second skill activation
+registry is required. Their original bytes remain in Git history.
+
+The former baseline retrospective, local trial templates, empty parity marker,
+and `evolution/ledger.toml` add no separate current authority. The ledger named
+a nonexistent schema and obsolete paths. A minimal history note tells readers
+where the original material lives; it is not a normative or proof root. Future
+evidence must be placed with its producing system and consumed by a concrete
+claim, not promoted into a standing repository directory.
+
+## Reader-Task Walkthrough
+
+This is an internal route and interpretation review, **not** evidence that
+department members have adopted the guidance. At the former HEAD, the human
+entry sent these tasks into a 1,240-line root document through scene-card and
+section anchors; the Agent entry likewise named the root monolith. At the
+current working tree, the following paths and limits were read directly:
+
+| Reader question                                            | Route and applicable rule                                                                                   | Actor, next action, and evidence limit                                                                                                                                                                              |
+| ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Can this backfilled dataset support a historical decision? | `README.md` -> `docs/data.md` -> point-in-time and six-question qualification.                              | A professional owner checks source, available-at time, revisions, quality, and permission; an authorized adopter accepts the use. The route does not validate an actual dataset.                                    |
+| An Agent is asked to explain recurring timeouts.           | `AGENTS.md` -> `docs/README.md` -> `docs/decide.md` and `docs/human-agent.md`.                              | The human supplies authority and source; the Agent separates observation, hypotheses, discriminating tests, and stop conditions. No real timeout has been diagnosed by this walkthrough.                            |
+| May a manager call a delivery complete?                    | `README.md` -> `docs/deliver.md` -> claim/evidence match and separate verified, accepted, published states. | The task owner obtains current object/environment evidence and the required human acceptance. A local check does not prove remote or production delivery.                                                           |
+| Should a repeated exception become a rule?                 | `README.md` -> `docs/evolve.md`, then `docs/governance/ethos.md` only if this repository changes.           | The rule owner names the failure mode, bounded trial, maintenance cost, and exit condition; a material repository edit uses its selected official Change. No team-level net gain is inferred from a published page. |
+
+The route checks establish that each reader reaches one owner and can name a
+next action without opening unrelated topics. They do not establish that a
+reader comprehends the material unaided, that a live task used it, or that
+the department improved. Those claims need observations at the producing work
+system and an actual reviewer.

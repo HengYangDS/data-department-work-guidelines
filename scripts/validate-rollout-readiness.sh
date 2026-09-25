@@ -3,69 +3,44 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
-"$ROOT/scripts/validate-docs.sh" "$@"
+[[ $# -eq 0 ]] || {
+  echo "unknown argument: $1" >&2
+  exit 2
+}
 
 python3 - "$ROOT" <<'PY'
 from pathlib import Path
+import re
 import sys
+import tomllib
 
 root = Path(sys.argv[1])
-required_files = {
-    "docs/adoption/README.md",
-    "docs/adoption/trial-log.template.md",
-    "docs/adoption/project-adapter.template.md",
-    "docs/decisions/accepted/DR-0003-local-rollout-readiness.md",
-}
-for relative_path in required_files:
-    if not (root / relative_path).is_file():
-        raise SystemExit(f"missing rollout artifact: {relative_path}")
-
-required_fragments = {
-    "README.md": [
-        "## 三分钟定向",
-        "## 我现在要做什么？",
-        "./guidelines.md#启动任务卡",
-        "./guidelines.md#复盘与规则演化卡",
-        "./docs/adoption/",
-    ],
-    "AGENTS.md": [
-        "## 最小加载",
-        "## 任务路由",
-        "./guidelines.md#任务内核卡",
-        "./guidelines.md#启动任务卡",
-        "./guidelines.md#人智协作卡",
-        "./guidelines.md#复盘与规则演化卡",
-        "## 仓库治理（ETHOS）",
-    ],
-    "docs/adoption/README.md": [
-        "本目录不是规则事实源",
-        "真实试用与远端发布均未在本文件中宣称完成",
-        "validate-rollout-readiness.sh",
-    ],
-    "docs/adoption/trial-log.template.md": [
-        "非规范性工作记录",
-        "不作的主张",
-        "实际净增益",
-    ],
-    "docs/adoption/project-adapter.template.md": [
-        "不复制或重述",
-        "项目不得复制四条底线、场景卡或 Agent 协议",
-        "接入完成只表示接入信息可用",
-    ],
-    "docs/decisions/accepted/DR-0003-local-rollout-readiness.md": [
-        "本地已就绪；真实试用与远端发布待执行",
-        "不作的主张",
-        "复审触发",
-    ],
+profile = tomllib.loads((root / ".ethos/profile.toml").read_text(encoding="utf-8"))
+normative = profile["normative_sources"]
+route_contract = {
+    "README.md": {"docs/README.md", *normative},
+    "AGENTS.md": {
+        "docs/README.md",
+        "docs/charter.md",
+        "docs/governance/ethos.md",
+    },
+    "docs/README.md": {Path(path).name for path in normative},
 }
 
-for relative_path, fragments in required_fragments.items():
-    text = (root / relative_path).read_text(encoding="utf-8")
-    for fragment in fragments:
-        if fragment not in text:
-            raise SystemExit(
-                f"missing rollout readiness contract: {relative_path}: {fragment}"
-            )
+for source, targets in route_contract.items():
+    text = (root / source).read_text(encoding="utf-8")
+    links = set(re.findall(r"\]\(([^)#]+)(?:#[^)]+)?\)", text))
+    missing = sorted(targets - links)
+    if missing:
+        raise SystemExit(f"missing task routes in {source}: {', '.join(missing)}")
 
-print("PASS rollout readiness: routes, local adapters, and trial boundaries")
+for topic in sorted(route_contract["docs/README.md"] - {"charter.md"}):
+    text = (root / "docs" / topic).read_text(encoding="utf-8")
+    if "**何时使用**" not in text:
+        raise SystemExit(f"missing reader entry in docs/{topic}")
+
+if (root / "guidelines.md").exists():
+    raise SystemExit("retired root monolith remains")
+
+print("PASS navigation readiness; this is not team-adoption evidence")
 PY

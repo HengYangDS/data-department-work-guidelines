@@ -28,6 +28,4 @@ allowed = [
 
 # 内核目录由 ETHOS 统一约束；此处只声明本仓库的扩展目录。
 [extension_roots]
-"docs/adoption" = ["how-to", "template", "index"]
 "docs/governance" = ["policy", "explanation", "ledger", "index"]
-"docs/retrospectives" = ["history", "findings", "index"]

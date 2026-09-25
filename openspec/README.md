@@ -1,23 +1,18 @@
-# OpenSpec Workspace
+# 官方 OpenSpec 工作区
 
-This workspace is the repository's sole change carrier for material work. A
-Change under `openspec/changes/<change-id>/` carries proposal, design, tasks,
-delta specifications, active-claim binding, and closeout intent. It is not a
-second source of rules, decisions, evidence, or execution notes.
+实质仓库变更由 `openspec/changes/<change-id>/` 下的一个 active Change 承载。
+它包含提案、设计、规格增量和 `tasks.md`；任务进度只记在该文件。
+已接受要求由**官方归档**投影到 `openspec/specs/`，不能手改规范来模拟归档。
 
-For material changes to rules, governance, proof, decision topology, claims,
-or authority boundaries, use this lifecycle:
+用 `npm ci --ignore-scripts` 安装锁定工具后验证：
 
-```text
-proposal -> design + delta specs -> tasks + active claim -> implementation + proof -> archive
+```bash
+./node_modules/.bin/openspec validate --all --strict --json
+bash scripts/ethos-repo.sh status --json
+bash scripts/ethos-repo.sh plan --changed --json
 ```
 
-Run both `openspec validate --all --strict --json` and
-`./scripts/ethos-repo.sh openspec --lifecycle --json`. The latter is the
-repository-bound ETHOS projection of the official lifecycle; it is not replaced
-by a repository script. Accepted requirements live under
-`openspec/specs/<capability>/spec.md` only after archive.
-
-`bash ./scripts/validate-governance-boundary.sh` is a supplemental structural
-check for DR shape and retired execution-method documents. It neither validates
-OpenSpec carriers nor admits material paths, claims, or archive transitions.
+ETHOS 负责实质路径归属、写入准入、证明和收尾。
+仓库本地边界脚本只检查 DR 与文档拓扑。
+方法包计划、claim、日期报告或私有范围清单都不能代替 Change。
+归档材料保存历史，不提供当前 HEAD 的证明，也不规定今天的执行顺序。

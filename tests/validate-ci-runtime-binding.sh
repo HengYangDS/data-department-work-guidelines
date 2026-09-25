@@ -70,6 +70,7 @@ github_checkout_line="$(line_number 'uses: actions/checkout@[0-9a-f]{40}([[:spac
 github_node_line="$(line_number 'uses: actions/setup-node@[0-9a-f]{40}([[:space:]]|$)' "$GITHUB_WORKFLOW")"
 github_chrome_line="$(line_number 'uses: browser-actions/setup-chrome@[0-9a-f]{40}([[:space:]]|$)' "$GITHUB_WORKFLOW")"
 github_install_line="$(line_number 'Install locked documentation tools' "$GITHUB_WORKFLOW")"
+github_lychee_line="$(line_number 'Install pinned lychee' "$GITHUB_WORKFLOW")"
 github_verify_line="$(line_number 'Verify documentation and governance boundaries' "$GITHUB_WORKFLOW")"
 require_before "$github_checkout_line" "$github_node_line" \
   'GitHub checkout must precede Node setup'
@@ -79,6 +80,12 @@ require_before "$github_chrome_line" "$github_install_line" \
   'GitHub Chrome setup must precede npm install'
 require_before "$github_install_line" "$github_verify_line" \
   'GitHub npm install must precede verification'
+require_before "$github_lychee_line" "$github_verify_line" \
+  'GitHub pinned lychee setup must precede verification'
+grep -Fq 'run: bash tools/ci/scripts/install-lychee.sh' "$GITHUB_WORKFLOW" || {
+  echo 'GitHub workflow must use the shared pinned lychee bootstrap' >&2
+  exit 1
+}
 grep -Eq '^          node-version: 22$' "$GITHUB_WORKFLOW" || {
   echo 'GitHub workflow must explicitly select Node 22' >&2
   exit 1
@@ -97,23 +104,46 @@ grep -Fq "DDWG_HOSTED_RENDERER_CONFIG: $HOSTED_RENDERER_CONFIG" "$GITHUB_WORKFLO
 }
 
 gitlab_install_line="$(line_number 'apt-get install' "$GITLAB_WORKFLOW")"
+gitlab_lychee_line="$(line_number 'bash tools/ci/scripts/install-lychee\.sh' "$GITLAB_WORKFLOW")"
 gitlab_verifier_line="$(line_number 'bash tools/ci/scripts/with-python-runtime\.sh' "$GITLAB_WORKFLOW")"
 require_before "$gitlab_install_line" "$gitlab_verifier_line" \
   'GitLab must install runtime prerequisites before the bound verifier'
+require_before "$gitlab_install_line" "$gitlab_lychee_line" \
+  'GitLab must install download prerequisites before pinned lychee'
+require_before "$gitlab_lychee_line" "$gitlab_verifier_line" \
+  'GitLab pinned lychee setup must precede verification'
 grep -Eq '^  tags:$' "$GITLAB_WORKFLOW" || {
   echo 'GitLab workflow must explicitly select its dedicated runner tag' >&2
   exit 1
 }
-grep -Eq '^    - ddwg-documentation-ci$' "$GITLAB_WORKFLOW" || {
-  echo 'GitLab workflow must select the ddwg-documentation-ci runner tag' >&2
+grep -Eq '^    - ci-linux-arm64-docker$' "$GITLAB_WORKFLOW" || {
+  echo 'GitLab workflow must select the ci-linux-arm64-docker runner tag' >&2
   exit 1
 }
-for package in git python3 python3-venv chromium; do
+if grep -Fq 'ddwg-documentation-ci' "$GITLAB_WORKFLOW"; then
+  echo 'GitLab workflow retains the obsolete runner tag' >&2
+  exit 1
+fi
+for package in git python3 python3-venv chromium curl ca-certificates; do
   grep -Eq "apt-get install .*\\b$package\\b" "$GITLAB_WORKFLOW" || {
     echo "GitLab runtime prerequisites must install $package" >&2
     exit 1
   }
 done
+
+bootstrap="$ROOT/tools/ci/scripts/install-lychee.sh"
+[[ -f "$bootstrap" ]] || {
+  echo 'missing pinned lychee bootstrap' >&2
+  exit 1
+}
+[[ "$(bash "$bootstrap" --print-spec x86_64)" == *'1f4e0ef7f6554a6ed33dd7ac144fb2e1bbed98598e7af973042fc5cd43951c9a'* ]] || {
+  echo 'x86_64 lychee release checksum is not pinned' >&2
+  exit 1
+}
+[[ "$(bash "$bootstrap" --print-spec aarch64)" == *'91a7bd65685da41b90ccb9bc867a3d649a7818042dae04ff405e55a25bddee4c'* ]] || {
+  echo 'aarch64 lychee release checksum is not pinned' >&2
+  exit 1
+}
 grep -Fq "DDWG_HOSTED_RENDERER_CONFIG: \"$HOSTED_RENDERER_CONFIG\"" "$GITLAB_WORKFLOW" || {
   echo 'GitLab workflow must select the canonical hosted renderer config' >&2
   exit 1
@@ -175,8 +205,8 @@ verifier="$(cat "$ROOT/tools/ci/scripts/run-documentation-verification.sh")"
   echo 'shared verifier does not pass the hosted renderer selection to the validator' >&2
   exit 1
 }
-[[ "$verifier" == *'validate-rollout-readiness.sh "${validate_docs_args[@]}"'* ]] || {
-  echo 'shared verifier does not preserve the hosted renderer selection for rollout validation' >&2
+[[ "$verifier" == *'bash scripts/validate-rollout-readiness.sh'* ]] || {
+  echo 'shared verifier does not run the independent navigation check' >&2
   exit 1
 }
 
@@ -196,7 +226,7 @@ printf '%s:%s\n' "$(basename "$0")" "$*" >> "$DDWG_VERIFIER_CALLS"
 EOF
   chmod +x "$fixture/scripts/$script"
 done
-for script in validate-docs-options.sh validate-governance-boundary.sh \
+for script in validate-docs-options.sh validate-links.sh validate-ethos-profile.sh validate-governance-boundary.sh \
   validate-push-boundary.sh validate-ci-runtime-binding.sh \
   validate-openspec-material-attribution.sh validate-text-layout.sh; do
   cat > "$fixture/tests-$script" <<'EOF'
@@ -227,9 +257,9 @@ grep -Fqx "validate-docs.sh:$expected_option" "$calls" || {
   echo 'shared verifier did not send the hosted renderer selection to direct validation' >&2
   exit 1
 }
-grep -Fqx "validate-rollout-readiness.sh:$expected_option" "$calls" || {
+grep -Fqx 'validate-rollout-readiness.sh:' "$calls" || {
   cat "$calls" >&2
-  echo 'shared verifier did not send the hosted renderer selection to rollout validation' >&2
+  echo 'shared verifier unnecessarily rendered documentation during navigation validation' >&2
   exit 1
 }
 if (

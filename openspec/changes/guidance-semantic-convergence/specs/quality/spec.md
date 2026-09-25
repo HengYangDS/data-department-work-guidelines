@@ -14,11 +14,11 @@ behavior; ETHOS keeps its own product family boundary.
 
 ### Requirement: Repository boundary validation remains structural
 
-The repository SHALL reject a live `docs/superpowers/` execution-method tree,
-a date-named decision record, or an accepted decision record with malformed
-identity or sections. Its boundary validator SHALL NOT claim to perform
-OpenSpec lifecycle, material-path admission, proof, archive, or publication.
-Decision status SHALL come from record metadata rather than status directories.
+The repository SHALL reject a live `docs/superpowers/` execution-method tree, a
+date-named decision record, or an accepted decision record with malformed
+identity or sections. Its boundary validator SHALL NOT claim to perform OpenSpec
+lifecycle, material-path admission, proof, archive, or publication. Decision
+status SHALL come from record metadata rather than status directories.
 
 #### Scenario: Method carrier or malformed DR appears
 
@@ -29,12 +29,12 @@ Decision status SHALL come from record metadata rather than status directories.
 
 ### Requirement: Decision records exclude execution logs
 
-A current DR SHALL use a stable `DR-####` identifier, a lowercase
-`dr-####-*.md` filename, and exactly Context, Decision, Alternatives Rejected,
-Consequences and Boundary, and Evidence and Revisit as level-two sections.
-A DR SHALL contain only durable rationale, not task progress, readiness state,
-command logs, or acceptance reports. The validator SHALL reject executable
-shell syntax while accepting natural-language discussion and evidence links.
+A current DR SHALL use a stable `DR-####` identifier, a lowercase `dr-####-*.md`
+filename, and exactly Context, Decision, Alternatives Rejected, Consequences and
+Boundary, and Evidence and Revisit as level-two sections. A DR SHALL contain
+only durable rationale, not task progress, readiness state, command logs, or
+acceptance reports. The validator SHALL reject executable shell syntax while
+accepting natural-language discussion and evidence links.
 
 #### Scenario: Prose mentions an evidence asset
 
@@ -47,8 +47,8 @@ shell syntax while accepting natural-language discussion and evidence links.
 
 #### Scenario: Decision rationale is checked
 
-- **WHEN** a DR contains a transient delivery-state sentence instead of
-  durable rationale
+- **WHEN** a DR contains a transient delivery-state sentence instead of durable
+  rationale
 - **THEN** repository review moves that state to its owning Change or current
   status surface
 - **AND THEN** the DR retains only the enduring choice and revisit trigger.
@@ -57,12 +57,13 @@ shell syntax while accepting natural-language discussion and evidence links.
 
 ### Requirement: Documentation checks measure supported properties
 
-Documentation validation SHALL check format, local links and fragments,
+Documentation validation SHALL check locked Prettier formatting, Markdown lint,
+local links and fragments through an offline pinned lychee invocation,
 metadata, every present diagram, and current command examples against the
 installed public CLI. It SHALL NOT require an arbitrary number of diagrams,
-cards, topic pages, or tracked historical evidence files. Representative
-member and Agent tasks SHALL be reviewed for correct rule selection and
-interpretation limits before claiming reader readiness.
+cards, topic pages, or tracked historical evidence files. Representative member
+and Agent tasks SHALL be reviewed for correct rule selection and interpretation
+limits before claiming reader readiness.
 
 #### Scenario: A diagram is removed without losing meaning
 

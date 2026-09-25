@@ -16,8 +16,8 @@ done
 
 bash "$fixture/scripts/validate-governance-boundary.sh"
 
-record="$fixture/docs/decisions/accepted/DR-0001-human-intelligence-collaboration.md"
-source_record="$ROOT/docs/decisions/accepted/DR-0001-human-intelligence-collaboration.md"
+record="$fixture/docs/decisions/dr-0001-human-intelligence-collaboration.md"
+source_record="$ROOT/docs/decisions/dr-0001-human-intelligence-collaboration.md"
 reset_record() {
   cp "$source_record" "$record"
 }
@@ -25,8 +25,8 @@ reset_record() {
 reset_record
 cat >> "$record" <<'EOF'
 
-OpenSpec 与 ETHOS 是生命周期概念；[Chronicle 证据](../../../evidence/chronicle/)与
-[校验器资产](../../../scripts/validate-docs.sh)只是可阅读的证据路由，不构成命令记录。
+OpenSpec 与 ETHOS 是生命周期概念；[校验器资产](../../../scripts/validate-docs.sh)
+只是可阅读的证据路由，不构成命令记录。
 
 ethos lifecycle 是治理概念；openspec lifecycle 是 Change 协议，而非本记录中的执行命令。
 EOF
@@ -117,18 +117,10 @@ fi
 grep -Fq 'DR contains shell prompt or command invocation' "$fixture/output"
 
 reset_record
-python3 - "$record" <<'PY'
-from pathlib import Path
-import sys
+cat >> "$record" <<'EOF'
 
-path = Path(sys.argv[1])
-path.write_text(
-    path.read_text(encoding="utf-8").replace(
-        "- **依据与实现**：", "- **依据与实现**：`openspec validate --all --strict --json`；"
-    ),
-    encoding="utf-8",
-)
-PY
+执行记录：`openspec validate --all --strict --json`。
+EOF
 if bash "$fixture/scripts/validate-governance-boundary.sh" >"$fixture/output" 2>&1; then
   echo "boundary validator accepted an inline command invocation in a DR" >&2
   exit 1

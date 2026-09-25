@@ -26,7 +26,7 @@ cat > "$fixture/repo/scripts/ethos-repo.sh" <<'EOF'
 #!/usr/bin/env sh
 exit 0
 EOF
-chmod +x "$fixture/repo/scripts/ethos-repo.sh"
+chmod 644 "$fixture/repo/scripts/ethos-repo.sh"
 
 run_hook() {
   ref="$1"

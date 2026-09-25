@@ -30,13 +30,25 @@ grep -Fqx 'unsupported hosted renderer config: /tmp/foreign-puppeteer-config.jso
 
 fixture="$(mktemp -d "${TMPDIR:-/tmp}/ddwg-renderer-selection.XXXXXX")"
 trap 'rm -f "$output"; rm -rf "$fixture"' EXIT
-mkdir -p "$fixture/scripts" "$fixture/node_modules/.bin" "$fixture/tools/ci/config"
+mkdir -p "$fixture/scripts" "$fixture/node_modules/.bin" "$fixture/tools/ci/config" "$fixture/docs"
 cp "$ROOT/scripts/validate-docs.sh" "$fixture/scripts/"
+cp "$ROOT/scripts/validate-links.sh" "$fixture/scripts/"
 cp "$ROOT"/tools/ci/config/mermaid-puppeteer-*.json "$fixture/tools/ci/config/"
 for command in prettier markdownlint-cli2; do
   printf '#!/usr/bin/env bash\nexit 0\n' > "$fixture/node_modules/.bin/$command"
   chmod +x "$fixture/node_modules/.bin/$command"
 done
+cat > "$fixture/node_modules/.bin/lychee" <<'SH'
+#!/usr/bin/env bash
+set -euo pipefail
+if [[ "${1:-}" == "--version" ]]; then
+  echo 'lychee 0.24.2'
+  exit 0
+fi
+cat >/dev/null
+printf 'invoked\n' > "$LYCHEE_MARKER"
+SH
+chmod +x "$fixture/node_modules/.bin/lychee"
 printf '#!/usr/bin/env bash\nexit 0\n' > "$fixture/scripts/validate-text-layout.sh"
 cat > "$fixture/node_modules/.bin/mmdc" <<'SH'
 #!/usr/bin/env bash
@@ -68,27 +80,32 @@ PY
 printf '<svg/>\n' > "$target"
 SH
 chmod +x "$fixture/node_modules/.bin/mmdc"
-python3 - "$fixture/guidelines.md" <<'PY'
+python3 - "$fixture/docs/topic.md" <<'PY'
 from pathlib import Path
 import sys
 
 lines = [
-    "# 数据部门工作与人智协作准则",
-    "人定其向，智扩其能；协作于事，归责于人。",
-    "借智成事，依实定论，归责于人。",
-    "## 场景行动卡",
+    "---",
+    "subject: fixture:topic",
+    "role: policy",
+    "state: canonical",
+    "relations:",
+    "  canonical_for: fixture route",
+    "---",
+    "",
+    "# One topic",
+    "",
+    "[Self link](#one-topic)",
 ]
-for heading in ("启动任务卡", "分析与决策卡", "数据采用与生产卡", "沟通与写作卡", "人智协作卡", "复盘与规则演化卡"):
-    lines.append(f"### {heading}")
-    lines.extend(f"**{field}：** Fixture." for field in ("何时使用", "先问什么", "最小输入", "必须产出", "停止/升级条件", "验真方式"))
-lines.append("## 8. 人智协作：边界、责任与验真")
-lines.extend(["```mermaid", "graph LR; A-->B", "```"] * 5)
+lines.extend(["", "```mermaid", "graph LR; A-->B", "```"] * 2)
 Path(sys.argv[1]).write_text("\n".join(lines) + "\n", encoding="utf-8")
 PY
 for mode in system explicit hosted; do
   (
     unset PUPPETEER_EXECUTABLE_PATH
     export RENDERER_MODE="$mode"
+    export DDWG_LYCHEE_BIN="$fixture/node_modules/.bin/lychee"
+    export LYCHEE_MARKER="$fixture/render/$mode/lychee.marker"
     args=()
     if [[ "$mode" != system ]]; then
       export PUPPETEER_EXECUTABLE_PATH=/managed/browser
@@ -96,7 +113,34 @@ for mode in system explicit hosted; do
     if [[ "$mode" == hosted ]]; then
       args=(--hosted-renderer-config tools/ci/config/mermaid-puppeteer-hosted.json)
     fi
-    bash "$fixture/scripts/validate-docs.sh" "${args[@]}"
+    bash "$fixture/scripts/validate-docs.sh" \
+      --render-dir "$fixture/render/$mode" "${args[@]}"
+    [[ "$(find "$fixture/render/$mode" -name '*.svg' -type f | wc -l | tr -d ' ')" == 2 ]] || {
+      echo "validator did not render every present diagram in $mode mode" >&2
+      exit 1
+    }
+    [[ -s "$LYCHEE_MARKER" ]] || {
+      echo "documentation validation did not run offline lychee in $mode mode" >&2
+      exit 1
+    }
   )
 done
+cat > "$fixture/docs/duplicate.md" <<'EOF'
+---
+subject: fixture:topic
+role: policy
+state: canonical
+relations:
+  canonical_for: duplicate route
+---
+
+# Duplicate topic
+EOF
+if DDWG_LYCHEE_BIN="$fixture/node_modules/.bin/lychee" \
+  bash "$fixture/scripts/validate-docs.sh" >"$fixture/output" 2>&1; then
+  echo "documentation validator accepted a duplicate document subject" >&2
+  exit 1
+fi
+grep -Fq 'duplicate document subject' "$fixture/output"
+
 echo 'PASS renderer selection: system channel, explicit executable, and isolated hosted compatibility'

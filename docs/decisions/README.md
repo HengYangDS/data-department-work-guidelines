@@ -3,28 +3,23 @@ subject: data-department-work-guidelines:decisions
 role: index
 state: canonical
 relations:
-  canonical_for: decision records
+  canonical_for: durable decision register
 ---
 
 # 决策记录
 
-> **状态 Status:** canonical（持久取舍的当前入口）
->
-> **目的 Purpose:** 路由约束后续维护的取舍及其依据、后果与复审条件。
->
-> **参见 See also:** [决策索引](decision-index.md)、[已接受决策](accepted/README.md)、
-> [决策记录模板](templates/decision-record.md)。
+DR 只留下后人仍须理解的取舍和复审条件；当前规则在[准则](../README.md)，
+变更过程在[官方 Change](../../openspec/README.md)。任务状态、命令结果和验收记录不写进 DR。
+编号稳定、不复用；文件名用小写 `dr-NNNN-meaning.md`。
 
-本目录记录会约束后续维护的取舍：为何做、在何处有效、以何为依据、带来什么后果，以及何时
-应被重新审视。它不形成第二套工作规则。
+| 编号                                                   | 状态   | 持久取舍或历史定位                                    |
+| ------------------------------------------------------ | ------ | ----------------------------------------------------- |
+| [DR-0001](dr-0001-human-intelligence-collaboration.md) | 已接受 | “人智协作”及人的最终责任。                            |
+| [DR-0002](dr-0002-reader-experience.md)                | 已替代 | 曾选择根单体正文；本次语义分层替代其物理方案。        |
+| DR-0003                                                | 已退役 | 本地试用准备状态，不是持久决策；旧记录留在 Git 历史。 |
+| [DR-0004](dr-0004-official-lifecycle.md)               | 已接受 | 实质仓库变更由官方 OpenSpec 与 ETHOS 管理。           |
 
-| 需要什么                 | 从这里进入                                                                         |
-| ------------------------ | ---------------------------------------------------------------------------------- |
-| 浏览已接受的取舍         | [决策索引](decision-index.md)                                                      |
-| 查看当前接受的记录       | [已接受决策](accepted/README.md)                                                   |
-| 查看已失效或被替代的记录 | [已废止决策](superseded/README.md)                                                 |
-| 追溯依赖与实施位置       | [决策依赖图](decision-dependency-map.md)；[决策与实现链接](decision-code-links.md) |
-| 新建一项持久取舍         | [决策记录模板](templates/decision-record.md)                                       |
-
-已接受记录位于 `accepted/DR-XXXX-*.md`。文件路径、DR 编号、文档状态与决策状态各司其职：
-不再以日期文件名代替决策身份，也不以 `canonical` 代替 `accepted`。
+每份 DR 正文**只**使用
+`Context`、`Decision`、`Alternatives Rejected`、
+`Consequences and Boundary`、`Evidence and Revisit`
+五节；状态和编号在元数据中。证据节指向可复查的依据或结果，并说清何时重新审视，不贴命令日志，也不把历史决定追溯认证为当年走过后来的生命周期。
