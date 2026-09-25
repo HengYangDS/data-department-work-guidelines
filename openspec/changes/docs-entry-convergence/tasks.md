@@ -21,8 +21,8 @@
 - [x] 3.1 Run format, Markdown lint, offline links, Mermaid rendering, rollout,
       repository-boundary tests, strict official OpenSpec, ETHOS changed
       planning, and `git diff --check`; review all current links and text.
-- [ ] 3.2 Commit the admitted source with a valid signature, execute exact-HEAD
+- [x] 3.2 Commit the admitted source with a valid signature, execute exact-HEAD
       ETHOS proof, accept it locally, then publish through ETHOS and verify
       GitLab and GitHub refs and CI independently at that object.
-- [ ] 3.3 Reconcile the evidence with these tasks and inspect the owned lane
+- [x] 3.3 Reconcile the evidence with these tasks and inspect the owned lane
       before the official archive transition, preserving foreign work.
