@@ -11,6 +11,8 @@ being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [4.0.0] - 2026-09-26
+
 ### Added
 
 - A task-oriented reading map with a short human entry and a bounded Agent entry.
@@ -46,4 +48,5 @@ being relabeled as formal SemVer releases.
   verification sequence while keeping local, GitLab, and GitHub results separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/bc9cc58d29ff10c5e599fc820f2f3b1381d0f1bd...main
+[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.0.0...main
+[4.0.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/bc9cc58d29ff10c5e599fc820f2f3b1381d0f1bd...v4.0.0
