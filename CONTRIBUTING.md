@@ -1,16 +1,21 @@
-# 贡献本仓库
+# Contributing
 
-先按读者任务找到[当前规则的唯一主人](docs/README.md)，再改文件。
-受跟踪的措辞修订也需要有归属的 Work Lane；实质准则或治理变更还必须属于
-[官方 OpenSpec Change](openspec/README.md)。方法包计划和决策报告不能代替它。
+Find the [single current owner of the rule](docs/README.md) for the reader's
+task before editing a file. Even wording changes to tracked files need an owned
+Work Lane; material changes to guidance or governance also need an
+[official OpenSpec Change](openspec/README.md). A method-pack plan or decision
+report is not a substitute.
 
-在已租约的 Work Lane 中，通过[仓库绑定适配器](docs/governance/ethos.md)
-读取当前 `continuation`。每批受跟踪写入前，对精确路径请求 `lane prewrite`。
-进度只记在 Change 的 `tasks.md`。本地检查、远端发布和团队采用分别验收。
+In a leased Work Lane, use the
+[repository-bound adapter](docs/governance/ethos.md) to read the current
+`continuation`. Request `lane prewrite` for the exact paths before each batch of
+tracked edits. Keep progress only in the Change's `tasks.md`. Verify local
+checks, remote publication, and team use separately.
 
-用 `npm ci --ignore-scripts` 安装锁定的文档工具；`node_modules/` 只留在本机。
-macOS 的 lychee 由 Homebrew 管理，当前质量合同要求 0.24.2。
-两个 Linux CI 从固定上游发行包安装同一版本，并校验 SHA-256。验证当前源码：
+Install the locked documentation tools with `npm ci --ignore-scripts`; keep
+`node_modules/` local. On macOS, Homebrew owns lychee, and the current quality
+contract requires version 0.24.2. Both Linux CI jobs install that version from a
+pinned upstream release and verify its SHA-256. To validate the current source:
 
 ```bash
 bash scripts/format-markdown.sh --check
@@ -21,6 +26,7 @@ bash scripts/validate-governance-boundary.sh
 bash scripts/ethos-repo.sh plan --changed --json
 ```
 
-落地前提交精确变更，对该 HEAD 执行完整证明。
-源码接受、两个 Forge 各自的引用与 CI、真实工作的采用结果，不能互相代替。
-远端只发布 `dev`、`main`、`proposal/*`；`candidate/dev` 与 `work/*` 留在本地。
+Before landing, commit the exact change and run full proof against that HEAD.
+Source acceptance, each Forge's exact ref and CI result, and adoption in real
+work do not establish one another. Only `dev`, `main`, and `proposal/*` may be
+published; `candidate/dev` and `work/*` remain local.

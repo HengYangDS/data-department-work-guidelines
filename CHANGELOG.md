@@ -1,115 +1,168 @@
-# 变更记录
+# Changelog
 
-本文件记录已接受的版本和下一版候选。候选内容不等于已经发布，更不等于团队已采用。
+This log records source editions and changes in the guidelines. An entry does
+not by itself prove that a particular commit was published to either Forge,
+passed hosted CI, or was used by the team. Tags and Forge Releases are separate
+publication objects.
 
-## [Unreleased] — v3.0.0 候选
+## [Unreleased]
 
-### 准则与阅读
+- Converge retained repository text, including the present representation of
+  archived OpenSpec material, on English. Preserve original Git objects and
+  historical meaning; do not retroactively certify earlier work.
 
-- **破坏性变更**：取消根目录长文；按读者任务建立一份简短宪章和六个主题，
-  保留必要义务，不保留旧路径和固定卡片数量。
-- 成员、Agent 和文档入口分别服务不同读者；每条现行规则只有一个语义主人。
-- 决策文件使用小写稳定编号；DR 只记录持久取舍，不再存放试用状态和实施日志。
+## [3.0.0] — 2026-09-25
 
-### 质量与治理
+### Guidelines and Reading
 
-- 文档检查覆盖 Prettier、Markdown lint、lychee 离线链接与锚点、元数据和全部现存图示；
-  正反例测试不以卡片或图的数量凑质量。
-- 实质变更只由官方 OpenSpec Change 承载，ETHOS 负责路径归属、Work Lane、证明和接受；
-  仓库边界检查不复制生命周期。
-- 移除没有当前消费者的根 `evidence/`、旧试用模板、空脚手架和照搬的技能包；
-  历史字节仍在 Git 与官方归档中，不追溯认证旧工作。
-- 发布声明改用当前 ETHOS 可识别的双远端拓扑。GitLab 使用
-  `ci-linux-arm64-docker`，GitHub 使用托管 Ubuntu；两边运行同一验证器。
-  Linux CI 从校验摘要的固定发行包取得 lychee，本地安装不依赖两个 Forge。
-- 提案分支统一为 `proposal/*`，不兼容旧 `submit/*`；候选与执行工作线不推送。
+- **Breaking:** Replaced the long root document with a short charter and six
+  task-oriented topics. Kept necessary obligations, not old paths or fixed
+  counts of cards.
+- Gave members, Agents, and document navigation distinct entries; each current
+  rule has one semantic owner.
+- Used lowercase stable filenames for decision records. DRs retain durable
+  trade-offs rather than trial status or implementation logs.
 
-### 尚不能据此声称
+### Quality and Governance
 
-- 本记录本身不证明哪一提交已被本地接受；GitLab、GitHub 的精确 SHA 与 CI，
-  以及团队真实使用效果，仍须分别观察和验收。
+- Covered Prettier, Markdown lint, offline lychee links and fragments, metadata,
+  and every present diagram. Positive and negative tests do not confuse card or
+  diagram counts with quality.
+- Made one official OpenSpec Change the carrier of each material change. ETHOS
+  owns path attribution, Work Lanes, proof, and acceptance; the repository
+  boundary check does not duplicate the lifecycle.
+- Removed the unconsumed root `evidence/` directory, old trial templates, empty
+  scaffolds, and copied method packs. Historical bytes remain in Git and
+  official archives; past work is not retroactively certified.
+- Declared a dual-Forge topology ETHOS can recognize. GitLab uses
+  `ci-linux-arm64-docker`; GitHub uses hosted Ubuntu. Both invoke the same
+  verifier. Linux CI obtains lychee from a pinned release with SHA-256
+  verification; local installation does not require either Forge.
+- Standardized proposal branches on `proposal/*`, retiring `submit/*`. Candidate
+  and work branches do not publish.
+
+### Limits of This Entry
+
+- This entry does not itself prove which commit was accepted locally, the exact
+  SHA or CI result at either Forge, or actual team use. Check each of those at
+  its own owner and time.
 
 ## [2.2.2] — 2026-07-12
 
-### 调整（2.2.2）
+### Changes in 2.2.2
 
-- 新增仓库绑定的 `scripts/ethos-repo.sh`：固定治理对象为当前仓库根，拒绝调用方覆写
-  `--root`，避免 ETHOS 实现仓库被误作 adopter。
-- 新增根绑定回归测试与可选 repository-native gate descriptor；其显式验证适配器 contract，
-  但不进入文档型 adopter 的默认 proof floor。Agent 路由、hooks、OpenSpec、证据与技能说明
-  均改由该适配器执行。
-- repository-native proof descriptor 一律通过 `bash` 调用脚本，不以 Git 文件执行位作为
-  跨平台前提；默认 code-correctness 选择仍只有文档完整性与 Markdown 格式两项。
-- 修复技能包摘要、证据摘要、演化 proof 引用与格式化/链接校验，使 ETHOS 本地证据可复查。
-- 明确本仓库采用外部 ETHOS runner：不把产品嵌入式后端迁移、shadow parity 或产品命令手册
-  检查伪装为本仓库已经完成的能力。
+- Added the repository-bound `scripts/ethos-repo.sh`, which fixes the governed
+  root and rejects a caller's `--root` override so the ETHOS implementation
+  repository is not mistaken for the adopter.
+- Added root-binding regression tests and, at that time, an optional
+  repository-native gate descriptor for explicit adapter-contract verification.
+  It was not part of the documentation adopter's default proof floor. Agent
+  routes, hooks, OpenSpec, evidence, and skill guidance used the adapter.
+- Called repository-native proof scripts through `bash` rather than relying on
+  executable bits; the default code-correctness selection still had only
+  document integrity and Markdown formatting.
+- Repaired skill summaries, evidence summaries, evolution proof references, and
+  format and link checks to make local ETHOS evidence reviewable.
+- Clarified that this adopter used an external ETHOS runner; it did not claim
+  the product had completed embedded-backend migration, shadow parity, or a
+  product command-manual check.
 
-### 未作的主张（2.2.2）
+### Limits of 2.2.2
 
-- 本版本不证明 ETHOS 产品已修复默认根解析，也不证明产品已完成嵌入式后端迁移或 shadow parity。
-- 本版本不证明远端 GitLab 已发布、CI 已运行、GitLab 已完成渲染验证，或团队已完成真实采用。
+- This edition did not prove that ETHOS had fixed default root resolution or
+  completed embedded-backend migration or shadow parity.
+- It did not prove GitLab publication, CI execution, hosted rendering, or team
+  adoption.
 
 ## [2.2.1] — 2026-07-12
 
-### 调整（2.2.1）
+### Changes in 2.2.1
 
-- 将“约化一切，然后推演一切”收敛为“约其要而不失其真，辨其势而循证推演”：最小内核服务于认识，不得将现实强压为单一模型。
-- 补足 ETHOS adopter 的公共文档、证据、主张与演化骨架，使本地证明面对的是完整的语义契约，而非仅运行自定义文档脚本。
-- 将 Prettier 配置并入 `package.json`；根目录不再保留会被 ETHOS 误判为生成物的 `.prettierrc.json`。
-- 将链接工作树移出仓库根，统一放入相邻的
-  `data-department-work-guidelines-worktrees/`；并将 `.idea/`、`.serena/`、`.DS_Store`
-  纳入共享忽略规则。
+- Replaced “reduce everything, then derive everything” with “keep the essential
+  without losing the real; read the situation and reason from evidence.” A
+  minimal kernel serves understanding rather than forcing reality into one
+  model.
+- Completed the public documentation, evidence, claim, and evolution skeleton of
+  the ETHOS adopter so local proof faced a full semantic contract rather than
+  only custom document scripts.
+- Moved Prettier configuration into `package.json` and removed the root
+  `.prettierrc.json`, which ETHOS could mistake for generated output.
+- Moved linked worktrees outside the repository root into the adjacent
+  `data-department-work-guidelines-worktrees/` directory. Added `.idea/`,
+  `.serena/`, and `.DS_Store` to shared ignores.
 
-### 未作的主张（2.2.1）
+### Limits of 2.2.1
 
-- 本地语义治理与质量门不等同于远端 GitLab 已发布、GitLab CI 已运行、GitLab 已实际渲染，或团队已在真实工作中采用并提升质量。
+- Local semantic governance and quality gates did not establish GitLab
+  publication, CI execution, hosted rendering, or actual team use and quality
+  improvement.
 
 ## [2.2.0] — 2026-07-12
 
-### 调整（2.2.0）
+### Changes in 2.2.0
 
-- 将仓库接入 ETHOS adopter：显式建立本地 `dev → candidate/dev → Work Lane` 闭环、Agent 路由与本地证据边界。
-- 将准则首屏任务表中的章节文字全部改为可点击的正文链接，并补齐 Agent 的启动与复盘路由。
-- 将 Markdown 格式、lint、链接/锚点、Mermaid 渲染统一为仓库锁定的本地质量门。
+- Adopted ETHOS locally with an explicit `dev → candidate/dev → Work Lane` loop,
+  Agent routing, and local evidence boundaries.
+- Turned the chapter labels on the root task table into links to their actual
+  text and added Agent start and review routes.
+- Combined Markdown formatting, lint, links and fragments, and Mermaid rendering
+  into locked local quality gates.
 
-### 未作的主张（2.2.0）
+### Limits of 2.2.0
 
-- 本地 ETHOS 接入不等同于 GitLab CI 已配置、远端已发布、GitLab 已完成渲染验证，或团队已实际采用。
+- Local ETHOS adoption did not establish configured GitLab CI, remote
+  publication, hosted rendering, or actual team use.
 
 ## [2.1.0] — 2026-07-12
 
-### 调整（2.1.0）
+### Changes in 2.1.0
 
-- 重构阅读入口为“三分钟定向—场景路由—深度规则”。
-- 在唯一规则正文中加入五张可渲染 Mermaid 与六张场景行动卡。
-- 将 `README.md` 与 `AGENTS.md` 改为人类和 Agent 的定向入口，不复制规则。
-- 新增可重复执行的文档质量门与视觉渲染检查。
+- Reworked the reading entry as “three-minute orientation → scenario route →
+  detailed rule.”
+- Added five renderable Mermaid diagrams and six scenario action cards to the
+  then-single normative text.
+- Made `README.md` and `AGENTS.md` member and Agent orientation entries rather
+  than copies of the rules.
+- Added repeatable document quality and visual rendering checks.
 
-### 未作的主张（2.1.0）
+### Limits of 2.1.0
 
-- 本版本证明文档可读性与结构质量，不证明团队质量已经提高；
-  仍需通过真实试点验证。
+- That edition showed document readability and structural quality, not improved
+  team work quality; a real pilot was still needed.
 
 ## [2.0.1] — 2026-07-12
 
-### 调整（2.0.1）
+### Changes in 2.0.1
 
-- 将总体关系名称由“人—Agent 协作”调整为“人智协作”。
-- 明确其定义：人定其向，智扩其能；协作于事，归责于人。
-- 保留 Agent（智能体）作为技术实体名称；“人智协作”仅指总体工作关系与责任秩序。
-- 将“借智成事，依实定论，归责于人”确立为本章工作法。
+- Renamed the overall relationship from “human–Agent collaboration” to “human–AI
+  collaboration.”
+- Defined it as people setting direction, intelligence extending capacity,
+  collaboration on the work, and accountability remaining with people.
+- Kept Agent as the name of a technical entity. The broader term names the
+  working relationship and order of responsibility.
+- Established “use intelligence to accomplish the task, judge against reality,
+  and keep accountability human” as the chapter's working principle.
 
 ## [2.0.0] — 2026-07-10
 
-### 新增
+### Added
 
-- 发布数据部门通用工作质量与人智协作准则作为唯一事实源。
-- 建立以《问道》为根的原则层：求真去蔽、见微知变、因物顺势、抱一御繁、分判有度、各正其位、功成化育。
-- 建立可信交付内核：权威 → 对象 → 承诺 → 变更 → 证据 → 主张 → 记录。
-- 建立数据部门共同质量契约，覆盖来源、时点、语义、变化、质量和受控使用。
-- 建立人智协作、完成声明、评审校准、运行培养和规则废止机制。
+- Published a common Data Department baseline for work quality and human–AI
+  collaboration as the sole source of general rules.
+- Set a Way-seeking principle layer: seek truth beyond appearance, notice change
+  in small signals, fit method to subject, hold essentials through complexity,
+  judge proportionately, give each role its place, and let completed work
+  cultivate the system.
+- Defined a trusted-delivery chain: authority → subject → commitment → change →
+  evidence → claim → record.
+- Defined a common data-quality contract covering source, time, meaning,
+  transformation, quality, and controlled use.
+- Established human–AI collaboration, completion claims, review calibration,
+  practical coaching, and rule retirement.
 
-### 边界
+### Boundary
 
-- 本版本是工作质量基线，不是部门岗位说明、项目计划、绩效制度或具体技术标准。
-- 部门整体质量改善尚未由运行数据证明；需通过真实工作试点、周度校准和季度复审验证。
+- The edition was a work-quality baseline, not a job description, project plan,
+  performance policy, or specific technical standard.
+- Department-wide quality improvement had not been shown by operating data and
+  required real-work trials, periodic calibration, and review.

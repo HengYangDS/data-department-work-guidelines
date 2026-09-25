@@ -6,20 +6,26 @@ relations:
   canonical_for: guidance navigation
 ---
 
-# 按工作问题进入
+# Start with the Work Question
 
-| 读者的问题                   | 当前规则                     | 用完应能回答                             |
-| ---------------------------- | ---------------------------- | ---------------------------------------- |
-| 谁有权决定，我必须守住什么？ | [准则宪章](charter.md)       | 对象、事实与行动权威、不可越过的边界。   |
-| 我怎样看清问题并作决定？     | [分析与决策](decide.md)      | 事实、假设、替代方案、决策人和复审条件。 |
-| 什么时候能说任务完成？       | [执行与交付](deliver.md)     | 交付物、当前验证、限制和验收人。         |
-| 这份数据能否用于该场景？     | [数据质量与采用](data.md)    | 来源、时点、语义、质量、权限和退出条件。 |
-| 如何让他人理解并行动？       | [沟通与表达](communicate.md) | 结论、依据、影响、请求和下一步。         |
-| 如何把工作交给 Agent？       | [人智协作](human-agent.md)   | 委托范围、停止条件、核验和人的责任。     |
-| 一条实践值得成为规则吗？     | [实践与演化](evolve.md)      | 失败模式、试验、净增益、维护和退出。     |
+| Your question                            | Current rule                             | You should leave knowing                                                 |
+| ---------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------ |
+| Who may decide, and what must I protect? | [Charter](charter.md)                    | The subject, fact and action authority, and hard boundaries.             |
+| How do I frame the problem and choose?   | [Analysis and decisions](decide.md)      | Facts, hypotheses, alternatives, decision owner, and revisit conditions. |
+| When can I call the work complete?       | [Execution and delivery](deliver.md)     | Deliverable, current verification, limits, and acceptor.                 |
+| May this data support this use?          | [Data quality and adoption](data.md)     | Source, time, meaning, quality, permission, and exit conditions.         |
+| How do I help others understand and act? | [Communication](communicate.md)          | Conclusion, basis, impact, request, and next step.                       |
+| How do I delegate to an Agent?           | [Human–AI collaboration](human-agent.md) | Scope, stop conditions, verification, and human responsibility.          |
+| Should this practice become a rule?      | [Practice and evolution](evolve.md)      | Failure mode, trial, net benefit, maintenance, and retirement.           |
 
-这些页面各自拥有一个主题的当前要求。临时办法、项目局部事实和真实工作记录留在产生它们的工作系统；请引用，不要复制成第二套通用准则。
+Each page owns the current requirements for one topic. Temporary methods,
+project-specific facts, and records of actual work stay in the system that
+produced them. Link to those sources; do not copy them into a second set of
+general guidelines.
 
-仓库变更由[OpenSpec 和 ETHOS](governance/ethos.md)治理；[决策记录](decisions/README.md)只保存无法从当前规则恢复的持久取舍。
-[历史语境](history/README.md)说明旧材料如何追溯，但过去的提交和 OpenSpec 归档不会自行授权当前行动。
-阅读路径可用、仓库检查通过，也不等于团队已经采用准则。
+[OpenSpec and ETHOS](governance/ethos.md) govern repository changes.
+[Decision records](decisions/README.md) retain only choices that cannot be
+reconstructed from current rules. [Historical context](history/README.md)
+explains where older material remains, but past commits and archived Changes do
+not authorize a present action. A readable route and passing repository checks
+do not prove team adoption.

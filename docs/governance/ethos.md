@@ -6,18 +6,23 @@ relations:
   canonical_for: repository change and delivery boundaries
 ---
 
-# 仓库变更与发布
+# Repository Change and Publication
 
-本页只约束**这个仓库的变更**。数据部门的工作准则从[文档导航](../README.md)进入；
-[决策记录](../decisions/README.md)只保留持久取舍。方法包和历史报告都不授予修改权限。
+This page governs **changes to this repository**, not the team's data work.
+Start with the [documentation map](../README.md) for the working guidelines.
+[Decision records](../decisions/README.md) retain durable trade-offs. Method
+packs and historical reports grant no write authority.
 
-## 一个变更，一个权威载体
+## One Change, One Authoritative Carrier
 
-实质变更由一个选定的官方 OpenSpec Change 承载意图、设计、规格增量和 `tasks.md`。
-ETHOS 将实质路径归属于该 active Change，并管理 Work Lane、写入准入、证明与接受。
-DR 解释跨变更仍有效的取舍；五节格式不是另一份 Change 或进度账。
+One selected official OpenSpec Change carries a material change's intent,
+design, specification deltas, and `tasks.md`. ETHOS attributes material paths to
+that active Change and governs the Work Lane, write admission, proof, and
+acceptance. A DR explains a choice that remains useful across Changes; its five
+sections are not another Change or progress ledger.
 
-所有 ETHOS 调用经过仓库绑定适配器，不在不明目录裸调用：
+Call ETHOS through the repository-bound adapter, not from an unknown working
+directory:
 
 ```bash
 bash scripts/ethos-repo.sh status --json
@@ -29,49 +34,67 @@ bash scripts/ethos-repo.sh prove --execute --full --scope repository \
   --expect-head "$(git rev-parse HEAD)" --json
 ```
 
-`lane prewrite` 是对当前状态和精确路径的一次性判断，不是可复用许可。
-只有租约持有人能修改其 `work/*` 工作线。
-[仓库边界检查](../../scripts/validate-governance-boundary.sh)拒绝错误 DR、日期型决策文件和
-重新出现的 `docs/superpowers/`；它不实现官方生命周期、范围准入或归档。
-默认文档证明门只有 `docs-integrity` 和 `markdown-format`；根绑定由适配器和 hooks 保证。
+A `lane prewrite` result judges the exact paths against the current state once;
+it is not reusable permission. Only the lease holder may edit its `work/*` lane.
+The [repository boundary check](../../scripts/validate-governance-boundary.sh)
+rejects malformed DRs, date-named decision files, and a revived
+`docs/superpowers/` tree. It does not implement official lifecycle, scope
+admission, or archival. Default document proof has only `docs-integrity` and
+`markdown-format`; the adapter and hooks bind the root.
 
-## 源码、发布、使用分开验收
+## Accept Source, Publish Refs, and Observe Use Separately
 
-| 层面     | 对应证据最多能证明                                 | 不能单独证明             |
-| -------- | -------------------------------------------------- | ------------------------ |
-| 本地源码 | Change 归属、测试、HEAD 绑定证明、候选落地与接受。 | 任一远端已接收源码。     |
-| GitLab   | 组织仓库精确 OID 的引用和自身 CI 结果。            | GitHub 或团队使用。      |
-| GitHub   | 独立完整仓库精确 OID 的引用和自身托管 CI 结果。    | GitLab 或团队使用。      |
-| 团队实践 | 真实任务中的使用及其效果。                         | 源码和 CI 因而追溯正确。 |
+| Plane         | Evidence can establish                                                          | Evidence cannot establish by itself     |
+| ------------- | ------------------------------------------------------------------------------- | --------------------------------------- |
+| Local source  | Change attribution, tests, HEAD-bound proof, candidate landing, and acceptance. | That either remote received the source. |
+| GitLab        | The organization's exact ref OID and its own CI result.                         | GitHub delivery or team use.            |
+| GitHub        | The independent repository's exact ref OID and its own hosted CI result.        | GitLab delivery or team use.            |
+| Team practice | Use in real tasks and its observed effect.                                      | Retrospective source or CI correctness. |
 
-本地验证和安装不依赖远端。只有 `dev`、`main`、`proposal/*` 可发布；
-`candidate/dev` 与 `work/*` 不发布。
-GitLab 是组织主发布源；GitHub 是独立完整仓库与 CI/CD 平面，
-GitLab 不可用时可承担更新与分发。配置了 remote、本地证明通过或旧 SHA 的 CI 成功，
-都不能证明新 SHA 已交付。
-正式发布还须由 ETHOS 用操作者本机的可信公钥清单核验源提交签名；私钥、该清单及
-本机路径都不进入仓库。原生发布拒绝时，不能用手工推送把该拒绝伪装成通过。
-GitLab 文档作业选择 `ci-linux-arm64-docker`；只有匹配 runner 在该 SHA 上实际跑通，
-才能声称这个托管作业通过。[发布声明](../../.ethos/release.toml)分别列出两个远端。
+Local validation and installation do not depend on either remote. Only `dev`,
+`main`, and `proposal/*` may be published; `candidate/dev` and `work/*` remain
+local. GitLab is the organization's primary publication plane. GitHub is an
+independent complete repository and CI/CD plane, intended to serve updates and
+distribution when GitLab is unavailable. That fallback is a capability claim
+only after a product-governed GitHub publication actually succeeds under that
+condition. Configured remotes, local proof, and CI on an older SHA do not prove
+delivery of a new SHA.
 
-一个 Change 可以先随源码进入 `dev`，同时保留未完成的远端任务。
-观察两个远端后完成任务，再由官方工具归档。归档会改变 HEAD；
-应重新证明适用的源码事实、核对最终远端引用，不复用归档前的结果。
-不要设置“任务完成必须等待其归档提交未来 CI”的循环前置；最终远端观察应单独报告。
+Formal publication also requires ETHOS to verify the source commit's signature
+against the operator's own trusted public-key list. Neither private keys, that
+list, nor its host path belong in this repository. A raw push must not disguise
+a native publication refusal as success. GitLab's documentation job selects
+`ci-linux-arm64-docker`; claim hosted success only after a matching runner
+actually passes at the SHA in question. The
+[release declaration](../../.ethos/release.toml) lists both peers.
 
-## 本地质量与状态边界
+A Change may reach `dev` while remote-delivery tasks remain open. Observe the
+peers independently, complete the declared tasks, and only then archive through
+the official tool. Archival changes HEAD; refresh applicable source proof and
+final remote-ref observations rather than reusing pre-archive results. Do not
+create a circular dependency by requiring future CI on the archival commit
+before the tasks that permit archival can close. Report final remote
+observations separately.
 
-- [ETHOS profile](../../.ethos/profile.toml)声明实质路径和两个默认文档门，
-  不另造 Change scope schema。
-- [仓库绑定适配器](../../scripts/ethos-repo.sh)固定审计根；Git hooks 使用同一入口。
-  `bash scripts/test-ethos-repo.sh` 显式核验根绑定。
-- [文档验证](../../scripts/validate-docs.sh)包含 Prettier、Markdown lint、
-  lychee 离线链接、元数据、当前锚点和每一张现存 Mermaid 图。
-  托管浏览器例外只由 CI verifier 选择，本地默认不继承。
-- `build/`、`node_modules/`、租约和缓存不是仓库事实。
-  证据跟随生产者及具体主张，不必设根目录。
-- Markdown 与配置块之间一个空行；Python 顶层定义之间两个空行、方法之间一个空行。
-  [空行检查](../../scripts/validate-text-layout.sh)只守机械边界，不等于语义验收。
+## Local Quality and State Boundaries
 
-本页不宣称当前远端状态、团队采用或 ETHOS 产品自身的 parity。
-报告这些效果前，应读取当前命令和目标环境在精确版本上的新鲜观察。
+- The [ETHOS profile](../../.ethos/profile.toml) declares material paths and the
+  two default document gates; it does not invent a second Change scope schema.
+- The [repository-bound adapter](../../scripts/ethos-repo.sh) fixes the audit
+  root, and Git hooks use the same entry. `bash scripts/test-ethos-repo.sh`
+  explicitly tests root binding.
+- [Document validation](../../scripts/validate-docs.sh) covers Prettier,
+  Markdown lint, offline lychee links, metadata, current anchors, every present
+  Mermaid diagram, and the English text boundary. Only the CI verifier selects
+  the hosted-browser exception; local validation does not inherit it.
+- `build/`, `node_modules/`, leases, and caches are not repository facts.
+  Evidence belongs with its producer and specific claim; it does not need a root
+  directory.
+- Markdown and configuration blocks use one blank line. Python top-level
+  definitions use two blank lines; methods use one. The
+  [text-layout check](../../scripts/validate-text-layout.sh) guards this
+  mechanical boundary, not semantic acceptance.
+
+This page does not assert present remote state, team adoption, or ETHOS product
+parity. Before reporting any of them, read a fresh observation of the exact
+version in its actual environment.

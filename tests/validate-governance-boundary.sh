@@ -25,10 +25,11 @@ reset_record() {
 reset_record
 cat >> "$record" <<'EOF'
 
-OpenSpec 与 ETHOS 是生命周期概念；[校验器资产](../../../scripts/validate-docs.sh)
-只是可阅读的证据路由，不构成命令记录。
+OpenSpec and ETHOS are lifecycle concepts; the [validator asset](../../../scripts/validate-docs.sh)
+is a readable evidence route, not a command log.
 
-ethos lifecycle 是治理概念；openspec lifecycle 是 Change 协议，而非本记录中的执行命令。
+The ethos lifecycle is a governance concept; the openspec lifecycle is a Change
+protocol, not an execution command in this record.
 EOF
 bash "$fixture/scripts/validate-governance-boundary.sh"
 
@@ -36,7 +37,7 @@ reset_record
 cat >> "$record" <<'EOF'
 
 ```text
-仅作证据路径展示：./scripts/validate-docs.sh
+Evidence path only: ./scripts/validate-docs.sh
 ```
 EOF
 bash "$fixture/scripts/validate-governance-boundary.sh"
@@ -119,7 +120,7 @@ grep -Fq 'DR contains shell prompt or command invocation' "$fixture/output"
 reset_record
 cat >> "$record" <<'EOF'
 
-执行记录：`openspec validate --all --strict --json`。
+Execution log: `openspec validate --all --strict --json`.
 EOF
 if bash "$fixture/scripts/validate-governance-boundary.sh" >"$fixture/output" 2>&1; then
   echo "boundary validator accepted an inline command invocation in a DR" >&2

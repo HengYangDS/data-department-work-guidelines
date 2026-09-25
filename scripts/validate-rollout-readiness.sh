@@ -36,7 +36,7 @@ for source, targets in route_contract.items():
 
 for topic in sorted(route_contract["docs/README.md"] - {"charter.md"}):
     text = (root / "docs" / topic).read_text(encoding="utf-8")
-    if "**何时使用**" not in text:
+    if "**When to use:**" not in text:
         raise SystemExit(f"missing reader entry in docs/{topic}")
 
 if (root / "guidelines.md").exists():

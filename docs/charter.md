@@ -6,56 +6,95 @@ relations:
   canonical_for: purpose authority and non-negotiable work boundaries
 ---
 
-# 数据部门工作准则：宪章
+# Data Department Work Guidelines: Charter
 
-> **准则版本**：v3.0.0
+> **Guideline edition:** v3.0.0
 >
-> **适用**：数据部门成员及受其委托的 Agent。
+> **Applies to:** Data Department members and Agents acting under their
+> delegation.
 >
-> **责任**：数据部门负责人对准则负责，可指定维护者组织修订；具体任务仍由其有权责任人决定和验收。
+> **Accountability:** The department head owns these guidelines and may appoint
+> maintainers to organize revisions. The authorized owner of each task still
+> decides and accepts that task.
 
-## 目的
+## Purpose
 
-数据工作的价值不是拿到文件、跑出表、写出报告或启动流程，而是把现实信号转化为可靠的判断、数据资产与行动。一个结果只有在来源和时点可辨、含义可解释、条件可复验、使用有边界、责任可定位时，才具备进入长期工作系统的资格。
+The value of data work is not a file acquired, a table produced, a report
+written, or a process started. It is the conversion of real-world signals into
+reliable judgments, data assets, and actions. A result belongs in a lasting work
+system only when its source and time can be identified, its meaning explained,
+its conditions checked, its use bounded, and its accountable owner found.
 
-**约其要而不失其真，辨其势而循证推演。**
-任务是检验判断和改进系统的载体；旧方案、工具、文档和已投入成本都不能凌驾于新的事实之上。
-《问道》约束的是求真、尺度、责任与演化的判断，不是可逐句映射的流程图，
-也不是给工程对象另取玄奥名称的理由。
+**Keep the essential without losing the real; read the situation and reason from
+evidence.** A task is a vehicle for testing judgment and improving the system.
+Old approaches, tools, documents, and sunk costs do not outrank new facts. The
+Way-seeking philosophy guides truthfulness, proportion, responsibility, and
+evolution; it is neither a procedure to be mapped line by line nor a reason to
+give engineering objects mystical names.
 
-## 两种权威
+## Two Kinds of Authority
 
-**行动权威**回答谁能决定“做什么”。法律、监管、安全和公司强制政策先行；在其边界内，由当前事项的授权人和责任人决定，再遵守已生效的制度、合同与项目约定。Agent、工具和仓库文件不能自行授予组织权限。
+**Authority to act** answers who may decide what to do. Law, regulation,
+security requirements, and mandatory company policy come first. Within those
+boundaries, the authorized owner of the matter decides, subject to effective
+policies, contracts, and project agreements. An Agent, tool, or repository file
+cannot grant organizational authority to itself.
 
-**事实权威**回答什么能证明“是什么”。以带有来源、时点、对象和范围的一手记录与可重复观察为先；分析与正式记录需要可追溯其原始依据。
-转述、缓存、生成视图、Agent 输出和记忆是线索，未经核验不能提升为事实。行动权威不能使错误事实成立；事实证据也不能自动授予行动权限。
+**Authority about facts** answers what can establish what is true. Prefer
+primary records and repeatable observations with a source, time, subject, and
+scope. Analysis and formal records must trace back to their original basis.
+Retellings, caches, generated views, Agent output, and memory are leads, not
+verified facts. Authority to act cannot make a false fact true; factual evidence
+does not itself grant permission to act.
 
-项目局部规则可以细化事实源、权限和验收。与本准则或上级约束发生实质冲突时，说明冲突及影响，由有权者裁决；不得静默选取方便的一方。
+Project rules may refine sources of truth, permissions, and acceptance. If they
+materially conflict with these guidelines or a higher constraint, expose the
+conflict and its impact for an authorized decision. Do not silently choose the
+convenient rule.
 
-## 四条底线
+## Four Non-Negotiable Boundaries
 
-| 底线   | 具体含义                                                     |
-| ------ | ------------------------------------------------------------ |
-| 不欺真 | 不伪造、隐瞒、选择性呈现事实，也不把未知包装成确定。         |
-| 不越界 | 说明对象、时间、权限、数据、安全、合规和行动的适用范围。     |
-| 不悬责 | 关键判断、决定、变更和验收都有明确的责任人。                 |
-| 不伪成 | 没有与主张匹配的当前证据，就不宣称完成、正确、可用或已采用。 |
+| Boundary                      | What it means                                                                                                |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Tell the truth                | Do not fabricate, hide, or selectively present facts, or dress uncertainty as certainty.                     |
+| Stay in bounds                | State the applicable subject, time, permissions, data, security, compliance, and action limits.              |
+| Name the owner                | Important judgments, decisions, changes, and acceptances have an accountable person.                         |
+| Do not claim false completion | Do not claim a result is complete, correct, usable, or adopted without current evidence matching that claim. |
 
-底线以内允许自主、探索和创造；越过底线必须停止、暴露并升级。
+Within these boundaries, autonomy, exploration, and creative work are welcome.
+When a boundary would be crossed, stop, make it visible, and escalate.
 
-## 形式服从风险
+## Form Follows Risk
 
-低风险、局部且易撤销的工作，可以在一次清楚的沟通中完成；跨角色、耗时或有明显不确定性的工作，需要留下问题、方案、执行和验收依据；涉及生产、敏感数据、安全合规、删除覆盖或对外承诺的工作，需要明确授权、恢复路径、独立复核和人工验收。流程可以轻，事实、边界、责任和证据不能缺席。
+Low-risk, local, easily reversible work may close in one clear exchange. Work
+across roles, over time, or under meaningful uncertainty needs a reviewable
+account of the problem, options, action, and acceptance. Production, sensitive
+data, security or compliance, destructive changes, and external commitments need
+explicit authorization, a recovery path, independent review, and human
+acceptance. The process may be light; facts, boundaries, ownership, and evidence
+may not be absent.
 
-判断一项要求是否合理，问四件事：它避免哪种真实错误；为什么现有接口不足；它新增多少认知和维护成本；什么观察会使它修订或退出。没有可辨失败模式与复审条件的偏好，不直接升为部门规则。
+To judge whether a requirement is worth keeping, ask what real error it
+prevents, why existing interfaces are insufficient, what cognitive and
+maintenance costs it adds, and what observation would cause revision or
+retirement. A preference without an identifiable failure mode and revisit
+condition does not become a department rule.
 
-## 从原则进入行动
+## From Principle to Action
 
-- 要形成判断，按[分析与决策](decide.md)区分观察、解释、取舍与授权。
-- 要交付成果，按[执行与交付](deliver.md)让完成主张受证据约束。
-- 要使用或生产数据，按[数据质量与采用](data.md)审查来源、语义、时点、质量和权限。
-- 要跨人传递判断，按[沟通与表达](communicate.md)先求信，再求达，后求雅。
-- 要调用智能能力，按[人智协作](human-agent.md)扩大能力而不转移人的责任。
-- 要改变团队实践，按[实践与演化](evolve.md)用真实样本判断净增益。
+- For a judgment, use [analysis and decisions](decide.md) to separate
+  observation, interpretation, choice, and authorization.
+- For a result, use [execution and delivery](deliver.md) to bind the completion
+  claim to evidence.
+- For data use or production, use [data quality and adoption](data.md) to
+  examine source, meaning, time, quality, and permission.
+- For conveying judgment, use [communication](communicate.md): first be
+  faithful, then clear, then elegant.
+- For intelligent tools, use [human–AI collaboration](human-agent.md) to extend
+  capability without transferring human responsibility.
+- For team practices, use [practice and evolution](evolve.md) to judge net
+  benefit from real cases.
 
-规则服务于判断，不以填表、图示、会议数量或工具运行代替真实结果。当前可用的阅读路径不证明任何成员已经采用，也不证明部门质量已经提高。
+Rules serve judgment. Forms, diagrams, meeting counts, and tool runs do not
+replace outcomes. An available reading path proves neither that members have
+adopted these guidelines nor that department quality has improved.

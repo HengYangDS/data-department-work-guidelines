@@ -1,8 +1,9 @@
 schema: spec-driven
 context: |
-  ethos-accepted-bootstrap-20260712 uses OpenSpec as the official specification-change surface.
-  Source, tests, schemas, claims, and evidence remain the proof carriers for
-  accepted behavior.
+  This repository uses an official OpenSpec Change for material intent,
+  design, specification deltas, and task progress. ETHOS owns material-path
+  attribution, Work Lane admission, proof, acceptance, and publication.
+  Source, tests, and current observations bound each completion claim.
 rules:
   proposal:
     - Explain the problem, intended change, and explicit out-of-scope boundary.

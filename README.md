@@ -1,15 +1,22 @@
-# 数据部门工作准则
+# Data Department Work Guidelines
 
-我们把来自现实世界的信号，转化为可解释、可复验、可限定使用的判断与数据资产。准则帮助成员在事实、责任、行动和证据之间作出正确区分；它不要求每项工作填同一套表。
+We turn signals from the world into judgments and data assets that can be
+explained, checked, and used within clear limits. These guidelines help us
+separate facts, responsibility, action, and evidence. They do not require every
+task to fill out the same form.
 
-| 现在要解决的问题                                 | 进入                              |
-| ------------------------------------------------ | --------------------------------- |
-| 这套准则为何存在、谁有权决定、哪些底线不可越过？ | [准则宪章](docs/charter.md)       |
-| 问题是什么、如何分析和选择方案？                 | [分析与决策](docs/decide.md)      |
-| 结果能否交付、验证和宣称完成？                   | [执行与交付](docs/deliver.md)     |
-| 一份数据能否进入分析、生产或业务使用？           | [数据质量与采用](docs/data.md)    |
-| 如何汇报、开会、写作或升级风险？                 | [沟通与表达](docs/communicate.md) |
-| 如何委托 Agent，谁负责验真和后果？               | [人智协作](docs/human-agent.md)   |
-| 什么时候应新增、修改或废止一条规则？             | [实践与演化](docs/evolve.md)      |
+| What do you need to resolve?                                                 | Start here                                    |
+| ---------------------------------------------------------------------------- | --------------------------------------------- |
+| Why do these guidelines exist, who may decide, and what must not be crossed? | [Charter](docs/charter.md)                    |
+| What is the problem, and how should we analyze and choose?                   | [Analysis and decisions](docs/decide.md)      |
+| Can a result be delivered, verified, and called complete?                    | [Execution and delivery](docs/deliver.md)     |
+| May a dataset be used for analysis, production, or a business decision?      | [Data quality and adoption](docs/data.md)     |
+| How should we report, meet, write, or escalate a risk?                       | [Communication](docs/communicate.md)          |
+| How should work be delegated to an Agent, and who verifies the result?       | [Human–AI collaboration](docs/human-agent.md) |
+| When should a rule be introduced, changed, or retired?                       | [Practice and evolution](docs/evolve.md)      |
 
-[文档导航](docs/README.md)说明各类材料的职责。修改本仓库请读[贡献说明](CONTRIBUTING.md)；Agent 从[专用入口](AGENTS.md)开始。文档检查、源码接受、远端发布和团队实际采用是不同的事实，分别需要相应证据。
+The [documentation map](docs/README.md) explains what each kind of material
+owns. To change this repository, read [Contributing](CONTRIBUTING.md); Agents
+start at the [Agent entry](AGENTS.md). Document checks, source acceptance,
+remote publication, and actual team use are different facts and require
+different evidence.

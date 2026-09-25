@@ -6,47 +6,78 @@ relations:
   canonical_for: data qualification production and adoption
 ---
 
-# 数据质量与采用
+# Data Quality and Adoption
 
-**何时使用**：取得一份数据、建立指标、做历史研究、上线生产链路或准许业务使用时。文件可读、图表好看或模型有信号，都不能单独证明数据可被采用。
+**When to use:** When acquiring data, defining a metric, studying history,
+deploying a production pipeline, or allowing a business use. A readable file,
+attractive chart, or promising model signal does not by itself establish that
+the data may be adopted.
 
-## 先回答六个问题
+## Answer Six Questions First
 
-| 问题           | 必须辨认的内容                                     |
-| -------------- | -------------------------------------------------- |
-| 从哪里来？     | 原始来源、获取方式、事实源与授权条件。             |
-| 何时可见？     | 事件、发布、采集、入库与实际可观测时间。           |
-| 表达什么？     | 对象、字段、指标、粒度、单位、状态与业务含义。     |
-| 经历什么变化？ | 清洗、映射、修订、回补、聚合与派生逻辑。           |
-| 质量如何？     | 完整性、准确性、一致性、及时性、稳定性与异常边界。 |
-| 如何使用？     | 适用场景、权限、限制、误用风险、责任人与退出条件。 |
+| Question                | What must be known                                                              |
+| ----------------------- | ------------------------------------------------------------------------------- |
+| Where did it come from? | Original source, acquisition method, source of truth, and authorization.        |
+| When was it knowable?   | Event, publication, collection, ingestion, and actual observation times.        |
+| What does it mean?      | Subject, fields, metric, granularity, units, states, and business meaning.      |
+| What changed it?        | Cleaning, mapping, revision, backfill, aggregation, and derivation.             |
+| How good is it?         | Completeness, accuracy, consistency, timeliness, stability, and anomaly limits. |
+| How may it be used?     | Use cases, permissions, limits, misuse risks, owner, and exit conditions.       |
 
-回答不全的数据可以是探索材料，不能被包装成长期可信资产。源头数据、生产数据、实验结果、服务视图、缓存和汇报视图应可区分；后者不能反向成为隐性事实源。修订和回补要保留来源与历史，能解释当前值为何如此。
+Data with unanswered questions may support exploration, but must not be
+presented as a durable trusted asset. Distinguish source data, production data,
+experimental results, service views, caches, and reporting views; a downstream
+view must not quietly become the source of truth. Preserve the source and
+history of revisions and backfills so the current value can be explained.
 
-## 历史研究先守住时点
+## Preserve the Historical Point of View
 
-对于事件分析、模型验证或跨源比较，要区分当时能观察到的事实和今天回看得到的值；检查历史修订、回补、重述、样本存续、实体变化、市场日历、缺失、延迟和冲突。无法证明时点一致时，不必武断地说数据错误，但必须降低结论强度，停止超出证据的研究或业务承诺。使用结论时说明置信度、替代解释与不可下的判断。
+For event analysis, model validation, or cross-source comparison, distinguish
+what could have been observed then from what can be seen in hindsight. Check
+historical revisions, backfills, restatements, survivor bias, entity changes,
+market calendars, missingness, delay, and conflict. If point-in-time consistency
+cannot be proved, do not automatically call the data wrong; lower the strength
+of the conclusion and stop research or business commitments that exceed the
+evidence. State confidence, alternative explanations, and conclusions the data
+cannot support.
 
-## 从线索走到受控采用
+## Move from a Lead to Controlled Use
 
-阶段可合并，判断不可消失。
+Stages may be combined; the judgments may not disappear.
 
-| 阶段 | 要作的判断         | 典型依据                                 |
-| ---- | ------------------ | ---------------------------------------- |
-| 机会 | 值得评估吗？       | 业务问题、价值假设、来源和信息边界。     |
-| 探索 | 数据究竟是什么？   | 样本、语义、时间线、质量画像和替代来源。 |
-| 复验 | 关键结论能重现吗？ | 可重放方法、对照、异常案例和失败说明。   |
-| 生产 | 能稳定运行吗？     | 测试、发布、回补、监控、责任和恢复方案。 |
-| 准入 | 可供此场景使用吗？ | 验收、权限、血缘、限制、否决和退出条件。 |
-| 反馈 | 还值得继续吗？     | 实际使用、质量趋势、成本、事故和复审。   |
+| Stage        | Decision                        | Typical basis                                                          |
+| ------------ | ------------------------------- | ---------------------------------------------------------------------- |
+| Opportunity  | Is evaluation worthwhile?       | Business question, value hypothesis, source, and information boundary. |
+| Exploration  | What is the data?               | Samples, meaning, timeline, quality profile, and alternative sources.  |
+| Reproduction | Can key findings be reproduced? | Replayable method, controls, anomalies, and failure explanation.       |
+| Production   | Can it run reliably?            | Tests, release, backfill, monitoring, ownership, and recovery.         |
+| Admission    | May it serve this use?          | Acceptance, permissions, lineage, limits, veto, and exit conditions.   |
+| Feedback     | Is continued use worthwhile?    | Actual use, quality trends, cost, incidents, and review.               |
 
-“技术上能做”不等于“业务上值得做”；“有信号”不等于“可生产”；“已上线”不等于“可被任意采用”。对探索性、临时性、受限可用和已准入的状态分别标明，不用“先用起来再说”消解风险。
+“Technically possible” is not “worth doing”; “a signal exists” is not
+“production-ready”; “deployed” is not “approved for any use.” Label exploratory,
+temporary, limited-use, and admitted states separately. “Let's use it and see”
+does not erase risk.
 
-## 责任与变更底线
+## Ownership and Change Boundaries
 
-专业责任方定义语义、质量与使用判断；生产责任方保证可上线、可回补、可监控和可恢复；平台方抽象跨域通用能力，不替代专业判断；治理方定义准入、权限、血缘、否决与退出；交付方让资源、依赖和风险可见。跨域事项指定一个主责和清楚的接口，不把所有人笼统写成“共同负责”。
+Domain owners define meaning, quality, and permitted use. Production owners
+ensure deployability, backfill, monitoring, and recovery. Platform owners
+abstract shared capabilities without replacing domain judgment. Governance
+owners define admission, permissions, lineage, veto, and exit. Delivery owners
+make resources, dependencies, and risks visible. Cross-domain work has one lead
+and clear interfaces, not an undifferentiated “everyone is responsible.”
 
-生产、共享资产或关键管理链路的变更须有明确对象、影响、主责与授权；可重放的输入、逻辑、版本和输出；测试、验收、观测；发布窗口、回滚或降级；安全与敏感信息检查；异常升级、人工接管及停止条件。证据要绑定当前版本和环境。
-高风险采用、权限调整、生产发布、删除覆盖和不可逆变更由有权的人确认，Agent 不自行批准。
+Changes to production, shared assets, or critical management chains need a
+defined subject, impact, lead, and authority; replayable inputs, logic, version,
+and outputs; testing, acceptance, and observation; a release window and rollback
+or degradation path; security and sensitive-information checks; escalation,
+human takeover, and stop conditions. Bind evidence to the current version and
+environment. An authorized person confirms high-risk adoption, permission
+changes, production releases, destructive changes, and irreversible actions; an
+Agent does not approve them itself.
 
-进入长期工作系统前，数据至少应**语义可解释、来源可追溯、时间可辨认、过程可复现、质量可验证、运行可观察、责任可定位、使用有边界**。具体完成主张按[执行与交付](deliver.md)收束。
+Before data enters a lasting work system, its **meaning must be explainable,
+source traceable, time identifiable, process reproducible, quality verifiable,
+operation observable, owner identifiable, and use bounded**. Close the specific
+completion claim through [execution and delivery](deliver.md).

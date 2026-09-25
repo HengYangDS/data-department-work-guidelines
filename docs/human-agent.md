@@ -6,37 +6,73 @@ relations:
   canonical_for: human agent delegation verification and responsibility
 ---
 
-# 人智协作
+# Human–AI Collaboration
 
-**何时使用**：成员委托 Agent 检索、分析、起草、改动、测试或评审时。人定方向和权限，智能扩大能力；事实要核验，决定与后果归人。Agent 是执行或推理实体，不是组织授权主体。
+**When to use:** When a member delegates search, analysis, drafting, changes,
+tests, or review to an Agent. People set direction and authority; intelligence
+extends capacity. Verify the facts. Decisions and consequences remain human
+responsibilities. An Agent is an executing or reasoning entity, not a source of
+organizational authorization.
 
-## 委托时给足边界，而不是给一团上下文
+## Delegate a Boundary, Not a Pile of Context
 
-重要委托说明目标和决策用途、当前权威与事实源、对象和范围、非目标、交付物和受众、权限与禁做动作、验收方法、检查点、停止条件及中断交接。低风险任务可简短表达；高风险写明责任人、恢复路径和谁批准不可逆动作。
+A consequential delegation states the goal and decision it supports, current
+authorities and fact sources, subject and scope, non-goals, deliverable and
+audience, permissions and forbidden actions, acceptance method, checkpoints,
+stop conditions, and interruption handoff. A low-risk task can be stated
+briefly. A high-risk one names the owner, recovery path, and who approves
+irreversible actions.
 
-上下文不足但不影响方向和安全时，Agent 标明假设后继续。若目标对象、事实源、授权或不可逆后果无法确认，先停下问清。成员不能把“帮我做完”当作授权范围。
+If missing context does not affect direction or safety, the Agent may continue
+with stated assumptions. If the target, fact source, authority, or irreversible
+consequence cannot be established, stop and ask. “Finish this for me” is not an
+authorization boundary.
 
-| 角色        | 可以做什么                               | 不能转移的责任                   |
-| ----------- | ---------------------------------------- | -------------------------------- |
-| 任务负责人  | 定义目标、授权、组织资源和裁决。         | 目标、边界、风险与结果。         |
-| 执行成员    | 分解、委托、整合、核验。                 | 理解和验收受委托的成果。         |
-| Agent       | 检索、推演、起草、实现、测试、提出选项。 | 不自授组织权限，不替人承诺后果。 |
-| 评审/验收人 | 独立核对事实、变更和证据。               | 不以作者或 Agent 自述代替验收。  |
+| Role                 | May do                                                       | Responsibility that remains                                         |
+| -------------------- | ------------------------------------------------------------ | ------------------------------------------------------------------- |
+| Task owner           | Set the goal, authorize, provide resources, and decide.      | Goal, boundary, risk, and result.                                   |
+| Executing member     | Decompose, delegate, integrate, and verify.                  | Understand and accept delegated output.                             |
+| Agent                | Search, reason, draft, implement, test, and present options. | Must not grant itself authority or promise consequences for people. |
+| Reviewer or acceptor | Independently check facts, changes, and evidence.            | Must not replace acceptance with an author's or Agent's account.    |
 
-**谁调用 Agent，谁负责其上下文、权限、核验与结果。**
+**The person who calls an Agent owns its context, permissions, verification, and
+result.**
 
-## 执行与验真
+## Execute and Verify
 
-Agent 应先确认任务、目标根目录、当前状态和适用局部规则；区分事实、假设、推断、判断、决定和行动；只加载相关材料；在权限内以可逆、可验证的小步推进。写入前核对目标、并发工作与恢复路径。输出先给结论和证据，再给限制与下一步。
+An Agent first confirms the task, target root, current state, and applicable
+local rules. It distinguishes fact, hypothesis, inference, judgment, decision,
+and action; loads only relevant material; and advances in reversible, verifiable
+steps within its authority. Before writing, it checks the target, concurrent
+work, and recovery path. Its output leads with the conclusion and evidence, then
+limits and next steps.
 
-Agent 的记忆、摘要、推测和生成内容是候选材料。来源要核对原文、版本、时间与适用范围；命令结果要核对目标、退出状态和关键输出；代码、分析和文档要做与风险相称的测试或评审。
-人不能仅看 Agent 的自然语言总结：还要核对实际变更、遗漏的反例、当前环境、未覆盖项和高风险授权。
+Agent memory, summaries, guesses, and generated content are candidate material.
+Check a source against the original, version, time, and applicable scope. Check
+a command result against its target, exit status, and decisive output. Test or
+review code, analysis, and documents in proportion to risk. A person must not
+rely solely on an Agent's prose summary: inspect the actual change, missing
+counterexamples, present environment, uncovered cases, and high-risk
+authorization.
 
-多 Agent 只在任务能按独立问题、路径或评审视角拆开时并行；指定整合责任人，避免无协调地修改同一事实源或工作区。多数意见不是证据；分歧回到事实与评价标准。不得覆盖或清理归属不明的成果。
+Use multiple Agents in parallel only when independent questions, paths, or
+review angles can be separated. Name an integration owner and avoid
+uncoordinated edits to the same source of truth or worktree. A majority opinion
+is not evidence; resolve disagreement against facts and criteria. Do not
+overwrite or clean up work of unknown ownership.
 
-## 何时停止与交接
+## Stop and Handoff
 
-指令实质冲突、对象或事实源无法确认、权限不足、动作不可逆且无授权或恢复方案、发现他人未识别工作、验证与预期矛盾或证据过期时，停止相应动作并升级。停止不是失败；用猜测冒充事实继续才是失控。
+Stop the affected action and escalate when instructions materially conflict; the
+target or fact source cannot be identified; authority is insufficient; an action
+is irreversible without authorization or recovery; someone else's unrecognized
+work appears; verification contradicts expectation; or evidence has expired.
+Stopping is not failure. Continuing with a guess presented as fact is loss of
+control.
 
-完成报告说明：实际完成什么、在哪个对象和版本、用什么当前证据验证、证据未证明什么、谁还需验收、未完成项和下一步。中断时保留状态、未提交变更、已尝试与失败原因、恢复入口和不要重复的无效尝试。
-仓库 Agent 另从[专用入口](../AGENTS.md)进入，不把方法包当治理权威。
+A completion report states what was actually done, to which subject and version,
+with what current verification; what the evidence does not show; who must still
+accept; what remains; and the next step. On interruption, preserve state,
+uncommitted work, attempts and failures, the recovery entry, and retries known
+to be ineffective. Repository Agents also start at the
+[Agent entry](../AGENTS.md); a method pack is not governance authority.

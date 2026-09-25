@@ -6,20 +6,24 @@ relations:
   canonical_for: durable decision register
 ---
 
-# 决策记录
+# Decision Records
 
-DR 只留下后人仍须理解的取舍和复审条件；当前规则在[准则](../README.md)，
-变更过程在[官方 Change](../../openspec/README.md)。任务状态、命令结果和验收记录不写进 DR。
-编号稳定、不复用；文件名用小写 `dr-NNNN-meaning.md`。
+A DR preserves a trade-off and revisit condition that future readers still need
+to understand. The current rules live in the [guidelines](../README.md); change
+execution lives in an [official Change](../../openspec/README.md). Task state,
+command output, and acceptance logs do not belong in a DR. IDs are stable and
+never reused; filenames use lowercase `dr-NNNN-meaning.md`.
 
-| 编号                                                   | 状态   | 持久取舍或历史定位                                    |
-| ------------------------------------------------------ | ------ | ----------------------------------------------------- |
-| [DR-0001](dr-0001-human-intelligence-collaboration.md) | 已接受 | “人智协作”及人的最终责任。                            |
-| [DR-0002](dr-0002-reader-experience.md)                | 已替代 | 曾选择根单体正文；本次语义分层替代其物理方案。        |
-| DR-0003                                                | 已退役 | 本地试用准备状态，不是持久决策；旧记录留在 Git 历史。 |
-| [DR-0004](dr-0004-official-lifecycle.md)               | 已接受 | 实质仓库变更由官方 OpenSpec 与 ETHOS 管理。           |
+| Record                                                 | Status     | Durable choice or historical position                                                    |
+| ------------------------------------------------------ | ---------- | ---------------------------------------------------------------------------------------- |
+| [DR-0001](dr-0001-human-intelligence-collaboration.md) | Accepted   | Human–AI collaboration and final human accountability.                                   |
+| [DR-0002](dr-0002-reader-experience.md)                | Superseded | A former root monolith, replaced by the semantic topic structure.                        |
+| DR-0003                                                | Retired    | Local trial readiness was not a durable decision; the old record remains in Git history. |
+| [DR-0004](dr-0004-official-lifecycle.md)               | Accepted   | Official OpenSpec and ETHOS govern material repository changes.                          |
 
-每份 DR 正文**只**使用
-`Context`、`Decision`、`Alternatives Rejected`、
-`Consequences and Boundary`、`Evidence and Revisit`
-五节；状态和编号在元数据中。证据节指向可复查的依据或结果，并说清何时重新审视，不贴命令日志，也不把历史决定追溯认证为当年走过后来的生命周期。
+Each DR body has only five sections: `Context`, `Decision`,
+`Alternatives Rejected`, `Consequences and Boundary`, and
+`Evidence and Revisit`. Metadata carries status and ID. The evidence section
+points to a reviewable basis or outcome and states when to reconsider. It does
+not paste command logs or retroactively claim an earlier decision followed a
+later lifecycle.

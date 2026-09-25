@@ -11,8 +11,10 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 python3 - "$ROOT" <<'PY'
 from __future__ import annotations
 
+import os
 from pathlib import Path
 import re
+import subprocess
 import sys
 
 
@@ -21,10 +23,29 @@ excluded_roots = {".git", ".ethos", "build", "node_modules"}
 flat_suffixes = {".md", ".toml", ".yaml", ".yml", ".json"}
 flat_names = {"AGENTS.md", ".gitlab-ci.yml"}
 violations: list[str] = []
+cjk_text = re.compile(r"[\u2e80-\u9fff\uac00-\ud7af\uf900-\ufaff\uff00-\uffef]")
 
 
 def report(path: Path, line: int, message: str) -> None:
     violations.append(f"{path.relative_to(root)}:{line}: {message}")
+
+
+def repository_text_files() -> list[Path]:
+    result = subprocess.run(
+        ["git", "-C", str(root), "ls-files", "--cached", "--others", "--exclude-standard", "-z"],
+        capture_output=True,
+        check=False,
+    )
+    if result.returncode == 0:
+        return sorted({root / os.fsdecode(name) for name in result.stdout.split(b"\0") if name})
+    if (root / ".git").exists():
+        raise SystemExit("could not inventory tracked and candidate files")
+    return sorted(
+        path
+        for path in root.rglob("*")
+        if path.is_file()
+        and not any(part in {".git", "build", "node_modules"} for part in path.relative_to(root).parts)
+    )
 
 
 def blank_runs(lines: list[str]) -> list[tuple[int, int]]:
@@ -136,8 +157,22 @@ for path in sorted(root.rglob("*")):
     else:
         validate_flat(path, lines)
 
+for path in repository_text_files():
+    if not path.is_file() or path.is_symlink():
+        continue
+    content = path.read_bytes()
+    if b"\0" in content:
+        continue
+    try:
+        lines = content.decode("utf-8").splitlines()
+    except UnicodeDecodeError:
+        continue
+    for number, line in enumerate(lines, start=1):
+        if cjk_text.search(line):
+            report(path, number, "CJK text is not allowed in English repository files")
+
 if violations:
     raise SystemExit("\n".join(violations))
 
-print("PASS text layout: Markdown/config single blanks; Python/Shell top-level definitions double")
+print("PASS text layout and English repository text boundary")
 PY

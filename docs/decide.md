@@ -6,48 +6,81 @@ relations:
   canonical_for: problem framing analysis and decisions
 ---
 
-# 分析与决策
+# Analysis and Decisions
 
-**何时使用**：任务尚未定义清楚、出现异常、需要解释原因或在方案间取舍时。先确定要支持的决定，再决定分析深度；不要先填模板或罗列资料。
+**When to use:** The task is unclear, an anomaly needs explanation, or a choice
+must be made. Decide which decision the analysis must support before choosing
+its depth. Do not begin by filling a template or collecting material.
 
-## 先把问题说对
+## Frame the Right Problem
 
-在现有工单、对话或方案中回答：谁需要在何时决定什么；对象和受影响者是谁；当前状态、目标、非目标与约束是什么；已有事实和关键未知分别是什么；谁主责、谁有权决定、谁验收。低风险事项可以在一次对话中说明，跨人或高风险事项应留下可复查记录。
+In the existing ticket, discussion, or proposal, answer: Who must decide what,
+and by when? What is the subject, who is affected, and what are the present
+state, target, non-goals, and constraints? Which facts are known, and which
+unknowns matter? Who owns the work, who has authority to decide, and who accepts
+it? A low-risk matter may need one conversation; cross-person or high-risk work
+needs a reviewable record.
 
-若对象、权限或不可逆后果不清，先停止相应动作并请有权者裁决。**收集信息不是目标；要说明信息会改变哪项判断。**
+If the subject, authority, or irreversible consequences are unclear, stop the
+affected action and ask an authorized person to decide. **Collecting information
+is not the goal; explain which judgment it could change.**
 
-## 不混用六种语义
+## Keep Six Meanings Distinct
 
-| 表达 | 它回答什么               | 使用时要标明           |
-| ---- | ------------------------ | ---------------------- |
-| 事实 | 观察到了什么             | 来源、对象、时间和范围 |
-| 假设 | 尚待检验的解释是什么     | 可推翻它的观察         |
-| 推断 | 从哪些事实和前提推出什么 | 推理链与替代解释       |
-| 判断 | 按什么标准评价结果       | 标准、置信度和限制     |
-| 决策 | 有权者选了什么           | 决策人、取舍与复审条件 |
-| 行动 | 谁将做什么               | 责任人、期限与完成条件 |
+| Statement  | Question it answers                         | State with it                                     |
+| ---------- | ------------------------------------------- | ------------------------------------------------- |
+| Fact       | What was observed?                          | Source, subject, time, and scope.                 |
+| Hypothesis | What explanation remains untested?          | What observation could refute it.                 |
+| Inference  | What follows from which facts and premises? | Reasoning and alternative explanations.           |
+| Judgment   | How is the result evaluated?                | Criterion, confidence, and limits.                |
+| Decision   | What did the authorized person choose?      | Decision owner, trade-off, and revisit condition. |
+| Action     | Who will do what?                           | Owner, deadline, and completion condition.        |
 
-转述、缓存、Agent 分析或“通常如此”可以提供线索，不能未经核验变成事实。讨论中若改变对象、定义、比较标准或时间截点，必须显式说明。
+A retelling, cache, Agent analysis, or “this is usually true” may provide a
+lead; it does not become a fact without verification. If the subject,
+definition, comparison criterion, or time cutoff changes during discussion, say
+so explicitly.
 
-## 用最小充分模型分析
+## Use the Smallest Sufficient Model
 
-1. 定义核心概念、对象及其因果、依赖、约束与反馈关系；按同一分类轴拆解，不为排版而切碎问题。
-2. 为关键事实标注来源和时点，为未知标注其对决策的影响。把观察与解释分开。
-3. 提出可证伪假设，检查反例、基准情况和“不行动”选项；优先做能区分候选解释的最小实验。
-4. 给出有界结论：证据支持什么、尚不能排除什么、下一次什么观察会改变判断。
+1. Define the central concepts and subjects, then their causal, dependency,
+   constraint, and feedback relationships. Divide along one consistent axis, not
+   for visual neatness.
+2. Attach source and time to important facts; state how each unknown affects the
+   decision. Separate observation from explanation.
+3. Offer falsifiable hypotheses. Check counterexamples, the baseline, and the
+   option of not acting. Prefer the smallest experiment that distinguishes
+   plausible explanations.
+4. Give a bounded conclusion: what the evidence supports, what remains possible,
+   and what later observation would change the judgment.
 
-异常或重复故障还要固定原始表现和时间线，辨认受影响与未受影响对象，解释直接原因以及**为什么现有系统未阻止或未及时发现**。修复应区分立即止损、修正直接原因和消除复发条件；只做前两者，不能宣称机制性解决。
+For an anomaly or repeated failure, preserve the original symptom and timeline,
+distinguish affected from unaffected subjects, and explain both the direct cause
+and **why the existing system did not prevent or detect it in time**. Separate
+immediate containment, direct repair, and prevention of recurrence. Completing
+only the first two is not a systemic fix.
 
-主动检查相关性冒充因果、个例冒充总体、必要条件冒充充分条件、事后结果反推唯一原因、只找支持自身观点的材料，以及中途更换评价标准。
+Watch for correlation presented as causation, a case presented as a population,
+a necessary condition treated as sufficient, a later outcome used to infer a
+unique earlier cause, selective search for supporting evidence, and criteria
+changed midstream.
 
-## 让选择可比较、可执行
+## Make the Choice Comparable and Actionable
 
-对同一待决问题，列出可行选项（包括维持现状），用同一标准比较收益、成本、风险、可逆性和机会成本。建议需说明成立前提、主要反对理由、决定后的第一步和重新评估触发条件。由有权者作决定，分析者不能以材料篇幅替代授权。
+For one decision, include feasible options, including the status quo. Compare
+them on the same basis: benefit, cost, risk, reversibility, and opportunity
+cost. A recommendation states its premises, strongest objection, first step if
+chosen, and revisit trigger. The authorized person decides; a long analysis
+cannot stand in for authorization.
 
-| 当前状态 | 该怎么说、怎么做                         |
-| -------- | ---------------------------------------- |
-| 可执行   | 前提成立，记录决定与第一步。             |
-| 阻断     | 指明不可接受的缺口、责任人和解除条件。   |
-| 暂缓     | 指明缺少什么信息、如何补证以及复审时间。 |
+| State    | Say and do                                                           |
+| -------- | -------------------------------------------------------------------- |
+| Ready    | Premises hold; record the decision and first step.                   |
+| Blocked  | Name the unacceptable gap, owner, and condition for release.         |
+| Deferred | Name the missing information, how to obtain it, and when to revisit. |
 
-“原则上同意”“继续看看”“持续推进”不是决定。结论被新事实推翻时，立即修正，而不是保护已投入成本或先前措辞。进入行动后按[执行与交付](deliver.md)管理依赖、验证与完成主张。
+“Agreed in principle,” “keep looking,” and “continue progressing” are not
+decisions. Correct a conclusion when new facts overturn it rather than
+protecting sunk costs or earlier wording. Once action begins, use
+[execution and delivery](deliver.md) for dependencies, verification, and
+completion claims.

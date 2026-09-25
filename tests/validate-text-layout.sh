@@ -72,4 +72,31 @@ if bash "$fixture/scripts/validate-text-layout.sh" >"$fixture/output" 2>&1; then
 fi
 grep -Fq 'top-level Python definitions require two blank lines' "$fixture/output"
 
-echo 'PASS text layout validator positive and negative cases'
+cat > "$fixture/tests/good.py" <<'EOF_PYTHON'
+def first() -> None:
+    pass
+
+
+class Second:
+    pass
+EOF_PYTHON
+
+expect_language_rejection() {
+  local relative_path="$1"
+  local text="$2"
+  mkdir -p "$(dirname "$fixture/$relative_path")"
+  printf '%s\n' "$text" > "$fixture/$relative_path"
+  if bash "$fixture/scripts/validate-text-layout.sh" >"$fixture/output" 2>&1; then
+    echo "text-layout validator accepted non-English text in $relative_path" >&2
+    exit 1
+  fi
+  grep -Fq "$relative_path:1: CJK text is not allowed" "$fixture/output"
+  rm "$fixture/$relative_path"
+}
+
+expect_language_rejection 'docs/language.md' "A Chinese term: $(python3 -c 'print(chr(0x4e8b) + chr(0x5b9e))')"
+expect_language_rejection 'openspec/changes/archive/history.md' "A Japanese term: $(python3 -c 'print(chr(0x3042) + chr(0x3044))')"
+expect_language_rejection '.ethos/language.toml' "# A Korean term: $(python3 -c 'print(chr(0xd55c) + chr(0xae00))')"
+expect_language_rejection 'docs/punctuation.md' "A fullwidth mark$(python3 -c 'print(chr(0xff1a))')here"
+
+echo 'PASS text layout and repository language positive and negative cases'

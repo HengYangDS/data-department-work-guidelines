@@ -6,10 +6,11 @@ relations:
   preserves: non-normative migration context
 ---
 
-# 历史语境
+# Historical Context
 
-原根目录 `guidelines.md`、曾跟踪的 `evidence/` 集合和旧的 Superpowers 形式计划，
-都可从 Git 历史找回。它们不是当前规则、证明或生命周期载体。
-已完成 Change 的材料留在[官方 OpenSpec 归档](../../openspec/changes/archive/)；
-归档不追溯认证生命周期建立之前的工作。
-现行准则从[文档导航](../README.md)进入。
+The former root `guidelines.md`, the once-tracked `evidence/` collection, and
+earlier Superpowers-form plans remain recoverable from Git history. They are not
+current rules, proof, or lifecycle carriers. Completed Changes remain in the
+[official OpenSpec archive](../../openspec/changes/archive/); an archive does
+not retroactively certify work done before that lifecycle existed. Start with
+the [documentation map](../README.md) for current guidelines.

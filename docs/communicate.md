@@ -6,38 +6,72 @@ relations:
   canonical_for: oral communication writing and escalation
 ---
 
-# 沟通与表达
+# Communication
 
-**何时使用**：要让别人理解事实、作决定、采取行动或接续工作时。先回答读者真正需要什么，而不是把所有经过都搬到首屏。
+**When to use:** When someone needs to understand a fact, make a decision, take
+action, or continue the work. Answer the reader's actual need before recounting
+the entire process.
 
-## 先辨认沟通目的
+## Know What the Exchange Must Accomplish
 
-| 目的 | 本次沟通应产生什么                           |
-| ---- | -------------------------------------------- |
-| 同步 | 对同一对象和事实形成共同认识。               |
-| 讨论 | 补全模型、反例和可行选项。                   |
-| 决策 | 请有权者按明确标准在选项间裁决。             |
-| 升级 | 指出当前权限、资源或风险缺口，请求及时介入。 |
-| 复盘 | 解释机制，决定保留、修正或废弃什么。         |
+| Purpose     | Desired result                                                        |
+| ----------- | --------------------------------------------------------------------- |
+| Synchronize | A shared understanding of the same subject and facts.                 |
+| Discuss     | A better model, counterexamples, and feasible options.                |
+| Decide      | An authorized choice among options against explicit criteria.         |
+| Escalate    | Timely help with an authority, resource, or risk gap.                 |
+| Review      | An explanation of the mechanism and what to keep, change, or discard. |
 
-重要汇报先说**结论或当前状态**，再给两三项关键依据、影响、建议和需要谁在何时作的决定。若没有结论，直说目前缺哪项证据、何时取得。先直接回答问题，再解释；不知道就说不知道。被新证据推翻时改口，不以术语和背景铺陈回避核心问题。
+For an important update, lead with the **conclusion or present state**. Then
+give two or three decisive facts, the impact, a recommendation, and the decision
+needed from whom and by when. If there is no conclusion, state which evidence is
+missing and when it can be obtained. Answer the question first, then explain.
+Say “I don't know” when that is true. Revise a position when new evidence
+overturns it; do not hide the point behind jargon or background.
 
-## 让会议产生决定，而不是转录
+## Make Meetings Produce Decisions, Not Transcripts
 
-会前写明待决问题、必要参与人和输入；能异步解决的不开会。会中先对齐事实和定义，再比较方案；把分歧定位到事实、推理、价值、资源或权限。会后只留下结论、依据、决定、行动、未决与风险，每项行动有责任人、期限和完成标准。没有决定或行动，不声称问题已推进。
+Before a meeting, name the question, necessary participants, and inputs; do not
+meet for work that can be resolved asynchronously. In the meeting, align facts
+and definitions before comparing options. Locate disagreement in facts,
+inference, values, resources, or authority. Afterward, keep only the conclusion,
+basis, decision, actions, open points, and risks. Each action has an owner,
+deadline, and completion criterion. Without a decision or action, do not call
+the problem advanced.
 
-反对意见针对命题、证据或代价，不针对人格和动机。区分“不同意事实”“不同意推理”和“接受推理但风险偏好不同”。当评价标准变化时说明理由。
+Challenge propositions, evidence, and costs, not personalities or motives.
+Distinguish disagreement about a fact from disagreement about an inference, and
+both from a different risk preference despite shared reasoning. Explain any
+change in evaluation criteria.
 
-## 写作按信、达、雅展开
+## Write for Fidelity, Clarity, and Elegance
 
-1. **信**：事实有来源；事实、假设、判断和决定分开；反例、不确定性、失败和限制不被隐去。
-2. **达**：标题让读者知道对象和目的；首屏给结论、决策请求或尚无结论的原因；每段一项主要命题，关键术语首次出现时定义；推理和下一步可执行。
-3. **雅**：删掉不增加信息的套话、重复与装饰；用准确动词和具体名词，结构服务判断，不让图表代替论证。
+1. **Fidelity:** Give facts their sources. Separate facts, hypotheses,
+   judgments, and decisions. Do not hide counterexamples, uncertainty, failure,
+   or limits.
+2. **Clarity:** Let the title identify the subject and purpose. Give the
+   conclusion, decision request, or reason no conclusion is available on the
+   first screen. Make one main point per paragraph, define important terms at
+   first use, and leave reasoning and next steps actionable.
+3. **Elegance:** Remove formulaic filler, repetition, and decoration that add no
+   information. Choose precise verbs and concrete nouns. Let structure serve
+   judgment; do not let a diagram stand in for an argument.
 
-复杂分析或方案可按“摘要与请求 → 对象和边界 → 事实与未知 → 模型和选项 → 取舍与限制 → 行动和验收”渐进展开；简单事项合并层次即可，不须套用十一段格式。写完检查标题、首屏、引用、反例、概念一致性、时间线与因果链是否混淆，以及读者能否据此行动。已有事实源应链接，不复制。
+A complex analysis may unfold as “summary and request → subject and boundary →
+facts and unknowns → model and options → trade-offs and limits → action and
+acceptance.” Combine levels for a simple matter; do not force an eleven-section
+template. Before sending, check the title, first screen, sources,
+counterexamples, terminology, timeline, causal chain, and whether the reader can
+act. Link to an existing source of truth rather than copying it.
 
-## 风险升级说清四件事
+## Escalate Risk in Four Parts
 
-当前是什么风险或阻断；事实与影响面是什么、最晚何时处理；已做何种止损及其结果；有哪些选项、代价和建议，需要谁何时裁决。把“尽快”“基本同意”“应该没问题”换成责任人、时间、已验证事项与剩余风险。
+State the risk or blocker; the facts, impact, and latest safe decision time;
+containment already attempted and its result; and the options, costs,
+recommendation, and person who must decide by when. Replace “soon,” “basically
+agreed,” and “probably fine” with owners, times, verified facts, and remaining
+risks.
 
-报告完成与否还需遵守[执行与交付](deliver.md)的证据边界；如果问题本身尚未定义，先读[分析与决策](decide.md)。
+For a completion report, also follow the evidence boundary in
+[execution and delivery](deliver.md). If the problem itself is still undefined,
+start with [analysis and decisions](decide.md).

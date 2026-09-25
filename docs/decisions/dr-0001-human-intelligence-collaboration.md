@@ -9,26 +9,45 @@ relations:
   canonical_for: human-intelligence collaboration terminology
 ---
 
-# DR-0001：人智协作
+# DR-0001: Human–AI Collaboration
 
 ## Context
 
-“人—Agent 协作”把一种技术实体误作总体关系，“人机协作”又把可调用的智能能力缩减为机械对象。两者都不够清楚地表达人的意向、授权、判断和后果责任。
+“Human–Agent collaboration” elevates a specific technical entity into the name
+of the overall relationship. “Human–machine collaboration” reduces callable
+intelligence to a mechanical object. Neither makes human intent, authorization,
+judgment, and accountability for consequences sufficiently clear.
 
 ## Decision
 
-总体关系称**人智协作**：**人定其向，智扩其能；协作于事，归责于人。** 技术语境仍用 Agent 指具体执行或推理实体。工作法是**借智成事，依实定论，归责于人**。名称不改变人的权限与验真义务。
+Call the overall relationship **human–AI collaboration**: **people set
+direction; intelligence extends capacity; we collaborate on the work, and
+accountability stays with people.** Use Agent for a specific executing or
+reasoning entity in technical contexts. The working principle is **use
+intelligence to accomplish the task, judge against reality, and keep
+accountability human**. The name does not change human authority or verification
+duties.
 
 ## Alternatives Rejected
 
-- “人—Agent 协作”保留中英混杂且将具体实体抬为总体名称。
-- “人机协作”不足以表达智能能力与责任主体的区别。
+- “Human–Agent collaboration” gives the particular entity the name of the whole
+  relationship.
+- “Human–machine collaboration” does not adequately distinguish intelligent
+  capability from the responsible person.
 
 ## Consequences and Boundary
 
-通用准则在[人智协作](../human-agent.md)中使用该术语并规定行为。Agent 可以承接工作，不能成为组织授权人、事实源或后果责任人；名称统一不证明成员已正确委托或验收。
+The general [human–AI collaboration](../human-agent.md) rule uses this term and
+defines the behavior. An Agent can take on work, but cannot become the
+organizational authorizer, fact source, or person accountable for the
+consequences. Consistent naming does not prove that members have delegated or
+accepted work correctly.
 
 ## Evidence and Revisit
 
-原决定及其规范化过程保留在 Git 历史；当前定义见[准则宪章](../charter.md)与[人智协作](../human-agent.md)。
-若“人智”在实际使用中稀释了人的责任，或项目无法准确引用这一概念，应重新评估名称。此记录不追溯认证原决定经过后来的 OpenSpec 生命周期。
+The original decision and its normalization remain in Git history. The present
+definition is in the [charter](../charter.md) and
+[human–AI collaboration](../human-agent.md). Revisit the name if actual use
+weakens human accountability or projects cannot apply it accurately. This record
+does not retroactively certify the original decision under the later OpenSpec
+lifecycle.

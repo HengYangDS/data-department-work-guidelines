@@ -9,28 +9,41 @@ relations:
   superseded_by: guidance-semantic-convergence
 ---
 
-# DR-0002：读者入口与单体正文
+# DR-0002: Reader Entries and the Former Monolith
 
 ## Context
 
-原始准则集中在根目录长文。首次读者难以迅速找到场景、边界与下一步；当时又担心多个入口会复制规则。
+The first guidelines were concentrated in a long root document. New readers
+struggled to find their situation, boundaries, and next step; at the time,
+multiple entries also seemed likely to duplicate rules.
 
 ## Decision
 
-当时选择成员入口、Agent 入口与根目录唯一正文的结构，用行动卡和图示降低通读成本。**本决定的单体物理方案现已被语义主题结构替代，不再约束当前文档布局。**
+The earlier design used a member entry, an Agent entry, and one root text, with
+action cards and diagrams to lower the cost of reading. **That physical monolith
+has since been replaced by semantic topics and no longer governs the current
+layout.**
 
 ## Alternatives Rejected
 
-- 要求所有读者通读全文，进入成本过高。
-- 在入口文件复制完整规则，会造成规则漂移。
+- Requiring every reader to study the whole document made entry too costly.
+- Copying full rules into entry pages would have caused drift.
 
 ## Consequences and Boundary
 
-“按读者任务进入、不要复制规范”仍是有效问题；旧方案中的根长文、固定卡片和图示数量不是持久义务。
-当前入口与主题归属由[文档导航](../README.md)及官方 Change `guidance-semantic-convergence` 承担。保留本编号只为解释历史取舍，不再把旧载体伪装成当前权威。
+“Enter through the reader's task; do not duplicate normative rules” remains a
+valid concern. The former root text and fixed counts of cards and diagrams are
+not durable requirements. The current routes and topic ownership live in the
+[documentation map](../README.md); the archived official Change
+`guidance-semantic-convergence` records the replacement. This ID explains a
+historical choice, not current authority.
 
 ## Evidence and Revisit
 
-原记录与旧结构可从 Git 历史核对；替代方案由官方 Change `guidance-semantic-convergence`
-记录，当前入口见[OpenSpec 工作区](../../openspec/README.md)。
-在 Change 尚未完成之前，不从本记录推论新路径已被团队采用，也不追溯认证原决定经过 OpenSpec 生命周期。若真实读者仍找不到规则或入口复制了正文，应复审当前导航。
+The original record and former structure can be checked in Git history. The
+replacement is recorded in the official Change `guidance-semantic-convergence`;
+the present entry is described in the
+[OpenSpec workspace](../../openspec/README.md). Neither this record nor the
+archive proves team adoption or retroactively certifies the original decision
+under a later lifecycle. Revisit current navigation if real readers still cannot
+find a rule or entries begin copying the normative text.

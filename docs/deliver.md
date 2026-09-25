@@ -6,38 +6,60 @@ relations:
   canonical_for: execution validation and completion claims
 ---
 
-# 执行与交付
+# Execution and Delivery
 
-**何时使用**：准备动手、汇报进展、验收或声称完成时。对每项工作，先让承诺、责任和完成条件可见；流程形式可随风险缩减，可信链不能跳步。
+**When to use:** Before acting, reporting progress, accepting work, or claiming
+completion. Make the commitment, owner, and completion condition visible first.
+The form may shrink with risk; the chain of trust may not skip a link.
 
-> 有权者与对象 → 承诺与边界 → 有界行动 → 当前证据 → 有界主张 → 验收与沉淀。
+> Authorized person and subject → commitment and boundary → bounded action →
+> current evidence → bounded claim → acceptance and learning.
 
-这是一条判断链，不是六份必填文档。低风险、局部且易撤销的事项可在一次沟通中闭合；跨角色或不确定性较大的事项使用现有工作载体；生产、敏感数据、删除覆盖、安全合规或对外承诺，必须明确授权、恢复路径、独立复核和人工验收。
+This is a chain of judgment, not six mandatory documents. Low-risk, local,
+reversible work may close in one exchange. Cross-role or uncertain work uses an
+existing work carrier. Production, sensitive data, destructive changes, security
+or compliance, and external commitments require explicit authorization, a
+recovery path, independent review, and human acceptance.
 
-## 动手前确认
+## Before Acting
 
-| 问题                 | 最低答案                                   |
-| -------------------- | ------------------------------------------ |
-| 做什么、为何现在做？ | 目标对象、成功标准、范围和非目标。         |
-| 谁负责？             | 主责、协作者、有权决定者和验收人。         |
-| 如何推进？           | 关键路径、依赖、资源、期限和可观察检查点。 |
-| 出错怎么办？         | 触发信号、暂停、降级、回滚或人工接管条件。 |
+| Question                         | Minimum answer                                                                |
+| -------------------------------- | ----------------------------------------------------------------------------- |
+| What is being done, and why now? | Target, success criteria, scope, and non-goals.                               |
+| Who is responsible?              | Lead, collaborators, authorized decision owner, and acceptor.                 |
+| How will it proceed?             | Critical path, dependencies, resources, deadline, and observable checkpoints. |
+| What if it goes wrong?           | Triggers to pause, degrade, roll back, or hand control to a person.           |
 
-先检查真实目标位置、当前状态、并发工作和恢复路径，再执行变更。关键路径上的阻断要及时暴露和升级，不以活动数量或“正在积极推进”代替状态变化。范围或风险发生实质变化时，回到有权者重新裁决。
+Check the actual target location, current state, concurrent work, and recovery
+path before making a change. Surface critical-path blockers promptly; activity
+volume and “active progress” are not state changes. If scope or risk materially
+changes, return to the authorized decision owner.
 
-## 证据决定能说到哪里
+## Evidence Sets the Limit of the Claim
 
-每个完成主张回答：**声称什么、针对哪个对象和版本、在何时由谁用什么方法验证、覆盖了什么、仍未证明什么。** 证据应是当前、可复查且与主张同范围的观察。缺证时缩小主张，而非放大措辞。
+Every completion claim must answer: **What is claimed, about which subject and
+version, verified when, by whom, using what method, covering what, and leaving
+what unproved?** Evidence must be current, reviewable, and matched to the
+claim's scope. When evidence is missing, narrow the claim rather than enlarge
+the language.
 
-| 观察到的状态                   | 不能自动声称                 |
-| ------------------------------ | ---------------------------- |
-| 草稿存在、命令可运行或测试通过 | 已评审、整体正确或已验收     |
-| 抽样或演练通过                 | 全量正确或已实际执行         |
-| 本地环境通过                   | 远端、生产或托管环境通过     |
-| 已合并或已发布                 | 已生效、被采用或产生预期效果 |
-| Agent 报告完成                 | 成员已核验并承担结果         |
+| What was observed                                | What it does not establish by itself                           |
+| ------------------------------------------------ | -------------------------------------------------------------- |
+| A draft exists, a command runs, or a test passes | Review, overall correctness, or acceptance.                    |
+| A sample or rehearsal passes                     | Complete correctness or actual execution.                      |
+| A local environment passes                       | A remote, production, or hosted environment passes.            |
+| A change is merged or published                  | It took effect, was adopted, or produced the intended outcome. |
+| An Agent reports completion                      | A member verified and accepted responsibility for the result.  |
 
-交付物应位于约定位置；完成标准逐项满足；风险、限制、未覆盖项和后续责任明确；需要人工验收的事项由有权者实际验收。
-**已验证、已验收、已发布/生效是三个状态。** 不把“执行中”说成“基本完成”，也不把验证自动升级为发布。
+Put the deliverable at the agreed location; satisfy each completion criterion;
+name risks, limits, uncovered cases, and follow-up ownership. Work requiring
+human acceptance is accepted by an authorized person. **Verified, accepted, and
+published or effective are distinct states.** Do not call “in progress” “mostly
+complete,” or promote verification to publication.
 
-对高影响或重复事项，在现有责任系统里留下必要的决定、测试、监控、规则或恢复办法，让同类问题下次更早暴露、更易判断。不要为证明自己努力过而新建无人消费的证据目录或报告。数据交付另见[数据质量与采用](data.md)；仓库源码的特定生命周期见[治理入口](governance/ethos.md)。
+For high-impact or repeated work, leave the necessary decision, test, monitor,
+rule, or recovery path in the existing system of responsibility so the next
+occurrence is found earlier and judged more easily. Do not create an unconsumed
+evidence directory or report to prove effort. For data delivery, see
+[data quality and adoption](data.md); for this repository's source lifecycle,
+see [repository governance](governance/ethos.md).

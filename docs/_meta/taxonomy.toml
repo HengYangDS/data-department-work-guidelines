@@ -26,6 +26,6 @@ allowed = [
   "how-to",
 ]
 
-# 内核目录由 ETHOS 统一约束；此处只声明本仓库的扩展目录。
+# ETHOS governs core directories; only repository extension roots belong here.
 [extension_roots]
 "docs/governance" = ["policy", "explanation", "ledger", "index"]
