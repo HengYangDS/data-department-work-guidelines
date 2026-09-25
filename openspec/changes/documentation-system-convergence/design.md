@@ -175,6 +175,12 @@ while a declared delivery obligation remains open.
 
 ## Migration Plan
 
+The task checklist ends at release-source readiness. Exact-HEAD proof, local
+acceptance, tag creation, dual-Forge publication, official archive, archive-HEAD
+proof and owned-lane retirement are later ETHOS effects. Their evidence is
+observed at each boundary; no task checkbox certifies a future effect or a
+source commit that has not yet been made.
+
 1. Establish this official Change and confirm its ETHOS attribution without a
    companion file.
 2. Inventory each current rule, executable, configuration, archive companion,
@@ -184,11 +190,13 @@ while a declared delivery obligation remains open.
    update both CI projections and current instructions together.
 4. Bind `VERSION`, the charter, and the curated changelog. Test invalid
    categories, versions, dates, links, tag drift, and the pending-release case.
-5. Run local checks and hosted jobs at exact source objects. Accept and publish
-   the source through ETHOS; keep any unobserved delivery obligation open.
-6. With a clean lane and verified bundle, run native historical identity repair
-   only for admitted headers and refs. Re-establish proof and remote projections
-   before signed `v4.0.0` tag and two independent Forge Releases.
-7. Archive only after the declared tasks have current evidence. Refresh proof
-   and remote observations for the archive commit. Retire this owned Work Lane
-   through ETHOS after acceptance, preserving all foreign lanes.
+5. Finish source checks and read-only remote preflight, then commit the exact
+   candidate. Preserve the already verified native identity-repair bundle and
+   re-establish proof for every later source commit.
+6. Accept the proved source and create the signed `v4.0.0` tag through ETHOS.
+   Publish to GitLab and GitHub as independent exact-CAS effects; require each
+   hosted job and Forge Release to be observed at the claimed object.
+7. Archive only after the declared tasks and publication effects have current
+   evidence. Refresh proof and remote observations for the archive commit.
+   Retire this owned Work Lane through ETHOS after acceptance, preserving all
+   foreign lanes.

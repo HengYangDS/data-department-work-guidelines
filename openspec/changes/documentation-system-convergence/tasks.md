@@ -38,19 +38,17 @@
 - [ ] 4.2 Prepare the actual dated `v4.0.0` Keep a Changelog section without
       fictitious old releases; verify empty `Unreleased`, prospective links,
       strict headings, categories, dates, SemVer order, and pre/post-tag tests.
-- [ ] 4.3 Add native ETHOS release-tag admission and prove a mismatched or
-      unsigned target cannot count as a versioned release.
-- [ ] 4.4 Use ETHOS historical identity repair for explicitly selected old
-      commits with a verified recovery bundle; re-sign affected descendants,
-      prove the new accepted HEAD, and reconcile both Forges before tagging.
+- [ ] 4.3 Verify the installed ETHOS native release-tag admission rejects a
+      commit offered as a tag, an unsigned tag, and a mismatched version.
+- [ ] 4.4 Verify ETHOS historical identity repair selected exact old headers,
+      preserved unselected commit fields and a recovery bundle, and re-signed
+      affected descendants without changing historical messages.
 
-## 5. Accept, deliver, and clean up
+## 5. Verify the release source
 
-- [ ] 5.1 Run full local quality, strict OpenSpec, ETHOS planning and exact-HEAD
-      proof, plus `git diff --check`; record the revision and limits.
-- [ ] 5.2 Accept proved source through ETHOS; verify local candidate, `dev`,
-      and `main` refs without publishing local-only branches.
-- [ ] 5.3 Publish through ETHOS; verify both Forge refs, CI, and releases
-      independently, then archive and refresh proof for the archive commit.
-- [ ] 5.4 Retire this owned Work Lane and generated caches after acceptance;
-      review foreign lanes individually without guessing deletion authority.
+- [ ] 5.1 Run full local quality, strict OpenSpec, changed planning, and
+      `git diff --check` on the complete release source; record exact inputs
+      and unproved external limits.
+- [ ] 5.2 Read back candidate, accepted, release, and both Forge refs and
+      protection rules before effect admission; preserve unrelated and
+      foreign work without claiming publication from this preflight.
