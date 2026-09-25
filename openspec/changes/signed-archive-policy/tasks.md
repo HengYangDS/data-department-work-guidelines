@@ -16,13 +16,13 @@
 - [x] 2.1 Run format, lint, offline links, Mermaid rendering, rollout, boundary
       tests, strict official OpenSpec, ETHOS changed planning, and diff checks;
       verify all pass on the changed source.
-- [ ] 2.2 Commit the admitted source with a valid SSH signature, execute
+- [x] 2.2 Commit the admitted source with a valid SSH signature, execute
       exact-HEAD proof, and use ETHOS to accept it on local `dev` and `main`.
-- [ ] 2.3 Publish the accepted source through ETHOS to GitLab and GitHub; verify
+- [x] 2.3 Publish the accepted source through ETHOS to GitLab and GitHub; verify
       exact refs and each peer's hosted documentation job independently.
 
 ## 3. Prepare the official archive
 
-- [ ] 3.1 Reconcile source and delivery evidence against these tasks, confirm
+- [x] 3.1 Reconcile source and delivery evidence against these tasks, confirm
       no open obligation remains, and inspect owned and foreign lane content
       before the official archive transition.
