@@ -281,6 +281,7 @@ export function checkProfile(repository = root) {
   const material = profile.openspec?.material_paths;
   if (
     !Array.isArray(material) ||
+    !material.includes(".gitattributes") ||
     !material.includes("tools/**") ||
     !material.includes("docs/**") ||
     !material.includes("openspec/**") ||
@@ -350,4 +351,11 @@ export function checkConfigPlacement(files = gitFiles()) {
     );
   }
   console.log("PASS tool configuration placement: one .config owner");
+}
+
+export function checkLineEndingAttributes(source = readText(".gitattributes")) {
+  if (source !== "* text=auto eol=lf\n") {
+    throw new Error("Git must check out tracked text with LF on every host");
+  }
+  console.log("PASS Git text checkout: LF on every host");
 }

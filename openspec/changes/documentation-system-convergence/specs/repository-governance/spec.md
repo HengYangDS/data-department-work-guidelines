@@ -167,7 +167,8 @@ The documentation adopter SHALL retain sandboxed Mermaid rendering by default.
 Hosted verification SHALL select the same repository-owned Puppeteer launch
 configuration through a repository-relative environment input. That
 configuration SHALL be checked in, portable, and limited to the hosted Chrome
-compatibility argument. Provider workflow YAML SHALL NOT inline a no-sandbox
+sandbox argument, full-Chrome headless mode, and a bounded startup timeout.
+Provider workflow YAML SHALL NOT inline a no-sandbox
 command. The single verifier SHALL validate the selection before rendering
 every present Mermaid diagram. Local configuration checks SHALL NOT be reported
 as hosted-CI success.

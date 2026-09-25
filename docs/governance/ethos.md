@@ -92,13 +92,13 @@ branch and tag boundaries; they contain no operator key or host path.
 
 ## Quality and local state
 
-`npm run verify` invokes one [portable quality entry](../../tools/docs/cli.mjs):
-locked Prettier for Markdown, code, JSON, and YAML; TOML syntax; Markdown lint;
-CSpell spelling; offline version-checked lychee
-links and fragments, metadata, every present Mermaid diagram, English and
-spacing, repository boundaries, official OpenSpec, version identity, CI
-topology, and negative
-tests. The [supply manifest](../../.config/tools/lychee.json) pins lychee assets
+`npm run verify` invokes one [portable quality entry](../../tools/docs/cli.mjs).
+It checks formatting for Markdown, code, JSON, and YAML; TOML syntax; Markdown
+lint; CSpell spelling; offline, version-checked lychee links and fragments;
+metadata; every present Mermaid diagram; English and spacing; repository
+boundaries; official OpenSpec; version identity; CI topology; and negative
+tests. Git's native `.gitattributes` rule keeps tracked text at LF on every
+host. The [supply manifest](../../.config/tools/lychee.json) pins lychee assets
 by platform and SHA-256; the CI installer verifies the downloaded digest. Local
 validation checks the executable version and never downloads an asset. Explicit
 CI supply and an offline `--asset` path are different operations. A cold offline

@@ -26,6 +26,7 @@ material_paths = [
   ".config/**",
   ".ethos/**",
   ".github/**",
+  ".gitattributes",
   ".gitignore",
   ".gitlab-ci.yml",
   "AGENTS.md",

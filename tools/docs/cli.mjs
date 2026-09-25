@@ -11,6 +11,7 @@ import {
 import {
   checkConfigPlacement,
   checkDecisions,
+  checkLineEndingAttributes,
   checkNavigation,
   checkNoScope,
   checkPortableEntrypoints,
@@ -69,6 +70,7 @@ function checkAll(arguments_) {
   const render = options(arguments_);
   checkProfile();
   checkConfigPlacement();
+  checkLineEndingAttributes();
   checkNoScope();
   checkPortableEntrypoints();
   checkChangelog();

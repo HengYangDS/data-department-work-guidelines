@@ -43,5 +43,7 @@ being relabeled as formal SemVer releases.
 - Bound both hosted documentation checks to real Git checkouts and a common
   verification sequence with runtime-discovered Chromium, while keeping local,
   GitLab, and GitHub results separate.
+- Normalized tracked text checkout to LF and selected bounded full-Chrome
+  headless rendering for hosted verification.
 
 [Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/bc9cc58d29ff10c5e599fc820f2f3b1381d0f1bd...main

@@ -13,6 +13,7 @@ import { test } from "node:test";
 import { parse as parseToml } from "smol-toml";
 import {
   checkConfigPlacement,
+  checkLineEndingAttributes,
   checkNavigation,
   checkPortableEntrypoints,
   checkProfile,
@@ -77,6 +78,8 @@ test("profile rejects material patterns for retired repository roots", () => {
       original.replace('  "tools/**",', '  "scripts/**",\n  "tools/**",'),
     );
     assert.throws(() => checkProfile(directory), /retired material roots/u);
+    writeFileSync(file, original.replace('  ".gitattributes",\n', ""));
+    assert.throws(() => checkProfile(directory), /material paths/u);
   });
 });
 
@@ -162,4 +165,12 @@ test("tool configuration cannot drift back to redundant root files", () => {
       /redundant tool configuration/u,
     );
   }
+});
+
+test("Git checkout normalizes text independently of host autocrlf", () => {
+  assert.doesNotThrow(() => checkLineEndingAttributes());
+  assert.throws(
+    () => checkLineEndingAttributes("* text=auto\n"),
+    /LF on every host/u,
+  );
 });

@@ -114,8 +114,8 @@ ETHOS owns signed-tag authority and publication, not this parser.
 
 New commits use scoped Conventional Commit subjects under the ETHOS workspace
 policy. This does not authorize changing old messages. The operator's historical
-author identity has two email forms in accepted history; once the worktree is
-clean, use native ETHOS identity repair for the exact selected commits only.
+author identity has obsolete email forms in accepted history. Once the worktree
+is clean, use native ETHOS identity repair for the exact selected commits only.
 Readiness must identify admitted refs and worktree registrations. Application
 needs a self-contained verified Git bundle and an exact correction digest. Repair
 preserves trees, messages, timestamps, and unselected identities; re-signing
@@ -145,6 +145,11 @@ open.
 - Host browsers and link checkers differ. Pin the actual tool input, run the
   complete graph on each claimed platform, and report an untested platform as
   unqualified rather than calling the design portable by inspection.
+- Windows may check out every text file with CRLF under its host default;
+  `.gitattributes` gives Git the repository's LF rule. Hosted Chrome for Testing
+  uses full-Chrome headless mode and a bounded 90-second startup timeout rather
+  than Mermaid CLI's 30-second shell-mode default. Hosted runs must still prove
+  both platform repairs.
 - Removing old hooks or wrappers can expose an unguarded command path. Compare
   the installed native hook graph and run negative cases before deletion.
 - A historical branch edition could be mistaken for a formal release. Do not

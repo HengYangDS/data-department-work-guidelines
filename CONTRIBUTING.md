@@ -32,9 +32,11 @@ navigation boundaries, the official OpenSpec workspace, the changelog/version
 contract, CI declarations, and negative tests. `npm run prose` runs the locked
 spelling check alone. Run `npm audit --audit-level=moderate` separately when
 online before source acceptance; both hosted CI planes require it. The offline
-repository verifier does not contact either Forge. A clean
-offline bootstrap requires a prefilled npm cache and the pinned lychee asset;
-that installation path must be tested before claiming offline distribution.
+repository verifier does not contact either Forge. A clean offline bootstrap
+requires a prefilled npm cache and the pinned lychee asset; test that path
+before claiming offline distribution. Git's native `.gitattributes` rule checks
+out tracked text with LF even on Windows; do not replace it with a host-specific
+Git setting.
 Keep `node_modules/`, browser state, and generated output out of Git.
 
 ## Commit and release

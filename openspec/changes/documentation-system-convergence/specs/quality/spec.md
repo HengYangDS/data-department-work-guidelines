@@ -7,23 +7,22 @@
 Documentation validation SHALL have one repository-owned, shell-independent
 entrypoint using the locked toolchain. It SHALL check Prettier formatting of
 Markdown, code, JSON, and YAML; TOML syntax; Markdown lint; CSpell spelling;
-local links and fragments through an offline,
-version-checked lychee invocation, metadata, every present diagram, tracked
-English text and spacing, and repository-specific boundary and rollout
-behavior. CI tool supply SHALL verify the lychee asset digest and run an online
-locked-dependency audit separately from the offline repository verifier.
+offline, version-checked lychee links and fragments; metadata; every present
+diagram; tracked English text and spacing; and repository-specific boundary and
+rollout behavior. CI tool supply SHALL verify the lychee asset digest and run
+an online locked-dependency audit separately from the offline verifier.
 Current command examples SHALL be reviewed against the installed public CLI
 before release rather than treated as parsed proof. The same entrypoint SHALL
 run locally and in both hosted CI planes with explicit repository-relative
 inputs. Tool configuration SHALL live at a required native discovery root or
 one `.config/tools/` owner, not in redundant root copies. It SHALL NOT require
 an arbitrary number of diagrams, cards, topic pages, or tracked historical
-evidence files. It SHALL
-reject a revived tracked shell wrapper or repository-owned hook. A portability
-claim SHALL require the complete declared graph to execute on each claimed host
-OS, not merely a parser test or a moved shell wrapper. Representative member
-and Agent tasks SHALL be reviewed for correct rule selection and interpretation
-limits before claiming reader readiness.
+evidence files. It SHALL reject a revived tracked shell wrapper or
+repository-owned hook. A portability claim SHALL require the complete declared
+graph to execute on each claimed host OS, not merely a parser test or a moved
+shell wrapper. Representative member and Agent tasks SHALL be reviewed for
+correct rule selection and interpretation limits before claiming reader
+readiness.
 
 #### Scenario: A diagram is removed without losing meaning
 
@@ -60,6 +59,12 @@ limits before claiming reader readiness.
   run without a POSIX shell or a host-specific absolute path
 - **AND THEN** missing tools fail visibly rather than being downloaded or
   silently skipped.
+
+#### Scenario: Windows checks out the same text bytes
+
+- **WHEN** Git checks out tracked text on a host with CRLF defaults
+- **THEN** the repository's native `.gitattributes` rule selects LF
+- **AND THEN** the same formatting check evaluates the same text bytes.
 
 ### Requirement: Default proof and root binding are distinct
 
