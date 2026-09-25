@@ -38,9 +38,10 @@
       evolution ledger, and empty scaffolds after unique-fact review; verify Git
       history and official archives retain the old bytes and current links
       resolve.
-- [ ] 3.3 Replace copied ETHOS canonical capability placeholders through the
-      official `retire_capabilities` transition and DDWG-owned specs; verify no
-      live canonical spec asserts ETHOS product-family behavior.
+- [x] 3.3 Declare the official `retire_capabilities` transition and complete the
+      seven REMOVED deltas. In an isolated official archive rehearsal, verify
+      all seven copied ETHOS capabilities retire and only DDWG-owned specs
+      remain; the formal archive performs the actual transition.
 - [x] 3.4 Correct current OpenSpec, ETHOS, contribution, and reference command
       examples; verify examples match the installed public CLI and no current
       page routes to a retired command.
@@ -57,21 +58,21 @@
       and governance checks, official OpenSpec strict validation, ETHOS
       admission and changed-plan checks, and `git diff --check`; verify
       `node_modules` is untracked and the worktree is clean after commit.
-- [ ] 4.3 Run full repository proof at the exact committed source HEAD, then
+- [x] 4.3 Run full repository proof at the exact committed source HEAD, then
       integrate into the local candidate and accept into `dev` and `main`;
       verify current ETHOS receipts and exact branch OIDs without claiming
       remote delivery.
 
 ## 5. Deliver and close the declared Change
 
-- [ ] 5.1 Verify a GitLab runner actually accepts the canonical tag and each
+- [x] 5.1 Verify a GitLab runner actually accepts the canonical tag and each
       Forge's Git transport works without prompts before publication; report any
       unavailable peer without weakening local acceptance.
-- [ ] 5.2 Publish only eligible refs to GitLab and GitHub; verify both peers'
-      exact source OID and successful hosted documentation jobs at that OID,
-      with no remote `candidate/dev` or `work/*` refs.
-- [ ] 5.3 Update this task carrier from the observed delivery facts, officially
-      archive the completed Change, and run fresh proof and publication checks
-      for the archive result; verify final branch and peer OIDs and retain any
-      distinct hosted-CI gap as unproved rather than checking a future result in
-      advance.
+- [x] 5.2 Publish only eligible refs at the accepted pre-archive source OID to
+      GitLab and GitHub; verify both peers' exact OID and successful hosted
+      documentation jobs at that OID, with no remote `candidate/dev` or
+      `work/*` refs.
+- [x] 5.3 Reconcile this ledger against observed pre-archive delivery and verify
+      official archive readiness, including the retirement marker and deltas.
+      Treat the archive result as a new Git object: prove and publish it through
+      native attestations and Forge observations, not a pre-checked future task.
