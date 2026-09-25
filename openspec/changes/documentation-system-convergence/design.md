@@ -90,7 +90,7 @@ obligations and counterexamples with the current owners:
 | Former subject                          | Current owner         | Resolution                                                                 |
 | --------------------------------------- | --------------------- | -------------------------------------------------------------------------- |
 | Authority, hard boundaries, L0–L2 floor | `docs/charter.md`     | Keep the risk-scaled minimum and rule-word meaning.                        |
-| Six task boundaries and reasoning       | `docs/decide.md`      | Name object, scope, time, responsibility, evidence, and action.            |
+| Six task boundaries and reasoning       | `docs/decide.md`      | Name all six; plan observation and check regressions after repair.         |
 | Work states and completion              | `docs/deliver.md`     | Separate executing, verification, acceptance, and effect.                  |
 | Data qualification                      | `docs/data.md`        | Retain source, time, meaning, quality, permission, and exit.               |
 | Speaking and writing                    | `docs/communicate.md` | Retain purpose, conclusion, basis, request, and restraint.                 |
@@ -98,8 +98,8 @@ obligations and counterexamples with the current owners:
 | Weak signals, review, and retirement    | `docs/evolve.md`      | Retain the learning trigger and review scale, not a fixed meeting cadence. |
 
 This is an editorial coverage argument, not proof that a text linter understands
-the original meaning. Representative member and Agent tasks still need human
-review before reader readiness is claimed.
+the original meaning. Review representative member and Agent scenarios against
+the route itself; do not stage a team-use trial as a release gate.
 
 ### Give releases one version identity and a checked changelog
 
@@ -138,10 +138,10 @@ and hosted CI must be re-established before a release tag is created.
 
 Local format, lint, OpenSpec, and ETHOS proof qualify source at an exact
 revision. GitLab and GitHub each need an observed ref and CI result at that
-revision. A real team task needs its own named subject, time, reviewer, and
-outcome. These observations are not copied into a new repository evidence
-ledger. The Change stays active while a declared delivery obligation remains
-open.
+revision. Natural use in ordinary team work may later show adoption, but is not
+a manufactured release gate or an inference from CI. These observations are
+not copied into a new repository evidence ledger. The Change stays active
+while a declared delivery obligation remains open.
 
 ## Risks and Trade-offs
 

@@ -67,6 +67,12 @@ and **why the existing system did not prevent or detect it in time**. Separate
 immediate containment, direct repair, and prevention of recurrence. Completing
 only the first two is not a systemic fix.
 
+Reproduce the original symptom with recorded inputs and conditions when it is
+safe to do so. If reproduction is unsafe or unavailable, define an observation
+or sampling plan that could distinguish the leading hypotheses. After a repair,
+check the original symptom, adjacent paths, and unintended side effects; name
+what was not exercised.
+
 Watch for correlation presented as causation, a case presented as a population,
 a necessary condition treated as sufficient, a later outcome used to infer a
 unique earlier cause, selective search for supporting evidence, and criteria

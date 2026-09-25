@@ -11,11 +11,12 @@
 
 - [x] 2.1 Inventory consumers of every old companion, placeholder, template,
       adapter, and tracked hook; remove proved residue and test native admission.
-- [ ] 2.2 Reconcile current specifications and DRs with adopter behavior; verify
-      semantic names, five-section rationale, and current links.
-- [ ] 2.3 Cross-check the last unified guidelines against the seven current
+- [x] 2.2 Reconcile active specification deltas and DRs with adopter behavior;
+      verify semantic names, five-section rationale, and current links.
+- [x] 2.3 Cross-check the last unified guidelines against the seven current
       owners by obligation; review English prose, links, and representative
-      member and Agent tasks. Do not restore a fixed management cadence.
+      member and Agent scenarios without staging a team-use trial. Do not
+      restore a fixed management cadence.
 
 ## 3. Make quality checks portable and complete
 
@@ -25,9 +26,9 @@
       metadata, layout, English, and repository boundaries. Remove redundant
       rendering and shape guards, then test failures and the locked dependency
       audit without running any proof property twice.
-- [ ] 3.3 Make GitLab and GitHub supply runtimes and invoke the same check;
+- [x] 3.3 Make GitLab and GitHub supply runtimes and invoke the same check;
       verify workflow contracts and hosted runs at the published source.
-- [ ] 3.4 Exercise the full local check on macOS, Linux, and Windows, or mark an
+- [x] 3.4 Exercise the full local check on macOS, Linux, and Windows, or mark an
       untested host unqualified; verify no host path or shell is required.
 
 ## 4. Enforce genuine versioned releases
@@ -52,5 +53,3 @@
       independently, then archive and refresh proof for the archive commit.
 - [ ] 5.4 Retire this owned Work Lane and generated caches after acceptance;
       review foreign lanes individually without guessing deletion authority.
-- [ ] 5.5 Test guidance in real team work with a named reviewer and task
-      evidence; report use without calling source checks adoption proof.

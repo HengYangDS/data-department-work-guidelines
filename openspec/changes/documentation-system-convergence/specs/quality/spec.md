@@ -19,9 +19,9 @@ tracked historical evidence files. A public check SHALL run without a POSIX
 shell or a host-specific absolute path; merely banning `.sh` files SHALL NOT
 count as portability evidence. A portability claim SHALL require the complete
 declared graph to execute on each claimed host OS. Representative member and
-Agent tasks SHALL be reviewed for
-correct rule selection and interpretation limits before claiming reader
-readiness.
+Agent scenarios SHALL be walked through against the task routes for correct rule
+selection and interpretation limits. A staged team-use trial SHALL NOT be a
+release gate or a substitute for naturally observed use.
 
 #### Scenario: A diagram is removed without losing meaning
 

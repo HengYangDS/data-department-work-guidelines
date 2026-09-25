@@ -40,12 +40,12 @@ reader routes, and document quality; it cannot replace OpenSpec or ETHOS.
 
 ## Source, two Forges, and actual use
 
-| Plane         | It can establish                                              | It cannot establish alone        |
-| ------------- | ------------------------------------------------------------- | -------------------------------- |
-| Local source  | Change attribution, checks, exact-HEAD proof, and acceptance. | Delivery to either Forge.        |
-| GitLab        | Its exact ref, hosted CI, and release object.                 | GitHub delivery or team use.     |
-| GitHub        | Its independent ref, hosted CI, and release object.           | GitLab delivery or team use.     |
-| Team practice | An observed result in real work, with owner and reviewer.     | Source or publication integrity. |
+| Plane           | It can establish                                              | It cannot establish alone        |
+| --------------- | ------------------------------------------------------------- | -------------------------------- |
+| Local source    | Change attribution, checks, exact-HEAD proof, and acceptance. | Delivery to either Forge.        |
+| GitLab          | Its exact ref, hosted CI, and release object.                 | GitHub delivery or team use.     |
+| GitHub          | Its independent ref, hosted CI, and release object.           | GitLab delivery or team use.     |
+| Operational use | Naturally observed use in ordinary work, if available.        | Source or publication integrity. |
 
 Local verification does not contact either Forge. Only `dev`, `main`, and
 `proposal/*` may publish; `candidate/dev` and `work/*` are local resources.
@@ -116,4 +116,5 @@ Evidence remains with its producer and specific claim; it needs no root folder.
 
 This page makes no present-tense claim about remote state, team adoption, or
 ETHOS product parity. Observe the exact revision in its actual environment
-before reporting any of them.
+before reporting any of them. Do not stage a team task or recruit a reviewer
+solely to certify adoption of these guidelines.
