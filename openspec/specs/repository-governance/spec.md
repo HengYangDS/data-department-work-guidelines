@@ -7,31 +7,6 @@ separate from adopter-specific semantics.
 
 ## Requirements
 
-### Requirement: Family Boundary
-
-The repository-governance family SHALL describe one bounded product concern.
-
-#### Scenario: Family remains bounded
-
-- **WHEN** ETHOS validates repository governance
-- **THEN** repository-governance requirements are checked without introducing private
-  adopter semantics into the product core
-
-### Requirement: Documentation archive closeout remains proof-bound
-
-A documentation adopter SHALL keep the active Change carrier until the official
-OpenSpec archive has completed. After that archive changes the repository tree,
-the adopter SHALL run a fresh HEAD-bound local proof before candidate landing or
-accepted closeout. Local proof SHALL NOT imply GitLab/GitHub publication,
-hosted rendering, or organizational adoption.
-
-#### Scenario: Official archive changes the proof target
-
-- **WHEN** an active documentation-adopter Change is moved by official OpenSpec
-  archive
-- **THEN** its accepted specification and dated archive carrier SHALL be present
-- **AND** only a proof executed at the resulting HEAD may support local land.
-
 ### Requirement: Accepted-to-release fast-forward mirror
 
 The documentation adopter SHALL configure `main` as the fast-forward mirror of
@@ -47,51 +22,47 @@ leave `main` and `dev` at the same SHA.
 
 ### Requirement: Candidate branch remains local-only
 
-The documentation adopter SHALL treat `candidate/dev` as a local candidate
-train. GitLab and GitHub publication projections SHALL NOT receive
-`candidate/dev`; only `dev`, `main`, and `submit/*` are eligible for remote
-projection. The repository-owned pre-push hook SHALL reject
-`refs/heads/candidate/dev` as either a local source or remote destination before
-generic ETHOS push admission. After official archive of a local boundary Change,
-the dated archive SHALL remain unchanged; exact-HEAD local proof of the archived
-resulting tree is sufficient for local candidate landing and SHALL NOT imply
-remote publication, hosted rendering, or organizational adoption.
+The repository SHALL treat `candidate/dev` as a local integration resource.
+GitLab and GitHub SHALL receive only `dev`, `main`, or `proposal/*` refs. The
+repository-owned pre-push boundary SHALL reject `candidate/dev` as a local
+source or remote destination before generic ETHOS admission. Local proof,
+integration, and accepted closeout SHALL NOT imply either remote was updated.
+Formal publication SHALL require a source commit whose signature is verified
+against an operator-owned external trust anchor; the repository SHALL NOT store
+signing credentials or a host-specific trust path.
 
 #### Scenario: Local candidate proof is not publication evidence
 
 - **WHEN** candidate validation or accepted closeout completes locally
-- **THEN** the result SHALL NOT assert a GitLab or GitHub push
+- **THEN** the result SHALL NOT assert a GitLab or GitHub push.
 
 #### Scenario: Candidate push is rejected locally
 
 - **WHEN** Git supplies `refs/heads/candidate/dev` as either a local source or
   remote destination in a pre-push pair
 - **THEN** the repository hook exits nonzero before delegation
-- **AND** no remote connection or publication is implied
+- **AND THEN** no remote connection or publication is implied.
 
 #### Scenario: Eligible branch remains delegated
 
 - **WHEN** Git supplies `refs/heads/dev`, `refs/heads/main`, or
-  `refs/heads/submit/*` as a pre-push destination
+  `refs/heads/proposal/*` as a pre-push destination
 - **THEN** the repository hook delegates that ref to the repository-bound ETHOS
   admission adapter
-- **AND** local delegation does not assert remote success
+- **AND THEN** local delegation does not assert remote success.
 
-### Requirement: One material governance Change owns the repair
+#### Scenario: Retired submit prefix is rejected
 
-The repository SHALL carry the adoption governance correction through one active
-official OpenSpec Change with proposal, design, delta specifications, tasks, and
-an active claim. It SHALL NOT retain an additional active or archived
-reconciliation carrier for the same correction as a substitute for completing
-that Change.
+- **WHEN** Git supplies `refs/heads/submit/*` as a pre-push destination
+- **THEN** the repository hook rejects it before ETHOS delegation
+- **AND THEN** no second proposal branch namespace remains active.
 
-#### Scenario: Material repair is prepared
+#### Scenario: Source trust is missing
 
-- **WHEN** the repository changes governance carriers, claims, decision topology,
-  proof boundaries, or publication boundaries
-- **THEN** `adoption-lifecycle-repair-20260714` is the sole substantive Change
-  carrier for that repair
-- **AND THEN** its active claim binds the same Change path.
+- **WHEN** an accepted source commit lacks a verifiable signature or the
+  operator's external trust anchor is unavailable
+- **THEN** formal publication remains blocked before either peer is updated
+- **AND THEN** a hook-admitted raw Git push is not treated as equivalent proof.
 
 ### Requirement: ETHOS material-path attribution remains product-owned
 
@@ -118,32 +89,6 @@ carrier as a second authorization mechanism.
 - **AND THEN** historical carriers and repository-local tests do not substitute
   for active intent.
 
-### Requirement: Historical claims remain honest
-
-A historical claim with no real historic Change carrier SHALL remain historical
-and digest-bound. It SHALL NOT receive a new `change_id` merely to make prior
-work appear lifecycle-compliant.
-
-Archiving a Change SHALL NOT by itself prescribe a Claim's state. A dated
-provenance annotation MAY be corrected after its original carrier moves, while
-preserving its original Change ID and evidence digest. Repository tests SHALL
-NOT infer Claim state solely from an archive path.
-
-#### Scenario: Pre-lifecycle record is retained
-
-- **WHEN** a July 12 historical record is retained after this repair
-- **THEN** it makes no current readiness, archive, or remote-publication claim
-- **AND THEN** it is not rebound to the current Change.
-
-#### Scenario: A real archived carrier receives a corrected annotation
-
-- **WHEN** the original Change is observed in its official archive and its dated
-  provenance annotation is corrected
-- **THEN** the reference names that observed archive and retains the original
-  Change ID, Chronicle body, and evidence digest
-- **AND THEN** the Claim state follows the meaning of that record, not a rule
-  inferred from directory placement.
-
 ### Requirement: Local and remote publication facts are separate
 
 The repository SHALL keep local verification independent of remote publication.
@@ -159,49 +104,14 @@ and `submit/*` to reach generic ETHOS push admission.
 - **THEN** the hook rejects it before generic push admission
 - **AND THEN** no remote publication result is asserted.
 
-### Requirement: Divergent owned Work Lane residue is preserved before retirement
-
-A documentation adopter SHALL NOT retire a clean owned Work Lane merely because
-the accepted root contains similarly named paths. When the target has a
-divergent changed-path tree, the repository SHALL carry a separate current
-OpenSpec Change that records the exact branch/head observation, the
-non-absorption finding, a recovery boundary, and the intended native resolution
-disposition. After that Change becomes accepted, ETHOS SHALL re-observe the
-target and create and verify a content-addressed preservation package before
-the exact branch and linked worktree are removed.
-
-#### Scenario: Clean owned residue is not structurally absorbed
-
-- **WHEN** an owned Work Lane is clean but one or more objects for its
-  changed paths differ from the current accepted head
-- **THEN** ordinary landed or superseded retirement SHALL NOT be represented as
-  an absorption outcome
-- **AND THEN** the repository SHALL preserve the exact target through the
-  accepted native resolution before destructive retirement.
-
-#### Scenario: Recorded target becomes stale
-
-- **WHEN** the target branch, head, lease observation, or worktree content
-  changes after the decision is recorded
-- **THEN** ETHOS SHALL reject the old resolution observation
-- **AND THEN** a contributor SHALL re-audit the target instead of applying the
-  prior destructive disposition.
-
-#### Scenario: Residue cleanup is not publication evidence
-
-- **WHEN** a preservation package and local retirement receipt are produced
-- **THEN** they SHALL establish only the local Work Lane disposition
-- **AND THEN** they SHALL NOT assert GitLab or GitHub publication, hosted CI,
-  rendered documentation, or organizational adoption.
-
 ### Requirement: Hosted documentation verification begins from a Git checkout
 
-Every hosted documentation verification projection SHALL invoke the same
-repository-owned bound verifier from a real Git checkout. GitHub SHALL perform
-`actions/checkout@v4` on the hosted runner before any runtime command and SHALL
-select Node 22 explicitly afterward. GitLab SHALL install Git before the bound
-verifier runs in its Docker runtime. A workflow declaration alone SHALL NOT be
-reported as hosted-CI success.
+Each hosted documentation job SHALL invoke the same repository-owned verifier
+from a real Git checkout. GitHub SHALL check out on its managed Ubuntu runner
+before runtime setup and explicitly select Node 22. GitLab SHALL install Git
+before the verifier runs in its Docker runtime. Action references SHALL bind
+immutable maintained releases. A workflow declaration alone SHALL NOT count as
+hosted-CI success.
 
 #### Scenario: GitHub runner-native checkout is configured
 
@@ -272,68 +182,24 @@ reported as hosted-CI success.
 - **THEN** it fails before invoking direct or rollout validation
 - **AND THEN** no hosted success is inferred from that rejection.
 
-### Requirement: Real adopter lifecycle validation remains carrier-bound
-
-A documentation adopter SHALL be able to demonstrate material Change admission
-in an owned Work Lane through the official OpenSpec lifecycle. The validation
-Change SHALL bind a dated active claim and SHALL NOT represent a method package,
-document correctness gate, or local test log as the Change carrier.
-
-#### Scenario: Material lifecycle validation is exercised
-
-- **WHEN** a leased Work Lane validates a declared material path
-- **THEN** no active Change or an incomplete active Change is rejected by the
-  ETHOS command plane
-- **AND THEN** a valid single official Change owns matching fresh material paths
-  without a repository-authored companion scope.
-
-### Requirement: Archived Change carriers have canonical identity
-
-A documentation adopter SHALL name every archived OpenSpec Change as
-`YYYY-MM-DD-<date-free-logical-id>`. A historical Change's logical identifier
-MAY remain in claims, Chronicles, evidence IDs, and historical command records,
-but its archive directory SHALL NOT retain a second temporal suffix. A path-only
-identity normalization SHALL preserve the historic record and SHALL NOT be
-reported as a fresh archive, proof, accepted closeout, publication, or hosted
-execution result.
-
-#### Scenario: Historical archive path is normalized
-
-- **WHEN** an archive directory has one archive-date prefix and a logical ID
-  with a trailing temporal suffix
-- **THEN** the repository moves that carrier to the canonical archive path
-- **AND THEN** carrier-location references resolve to that one path
-- **AND THEN** the historical Change ID, dated observation, and external-evidence
-  boundary remain unchanged.
-
-#### Scenario: Duplicate legacy carrier is forbidden
-
-- **WHEN** a canonical archive path exists for a logical Change
-- **THEN** the former noncanonical archive path is absent
-- **AND THEN** the repository archive audit reports no identity ambiguity.
-
 ### Requirement: Per-project dual-Forge runner isolation
 
-The documentation adopter SHALL use GitHub-hosted Ubuntu runners for GitHub
-documentation verification and one distinct repository-specific GitLab runner
-for GitLab documentation verification. GitHub SHALL select `ubuntu-latest`,
-pin maintained Actions to immutable stable-release commits, explicitly set up
-Node 22, and install stable Chrome through a maintained GitHub Action before the
-shared repository verifier runs.
-GitHub SHALL NOT select `self-hosted`, macOS, ARM64, a repository runner label,
-or a host-local Chrome or Homebrew path. GitLab documentation work SHALL retain
-the `ddwg-documentation-ci` tag; its remote runner SHALL remain locked, reject
-untagged jobs, and expose only that tag. The GitHub-hosted workflow and GitLab
-runner services, credentials, work areas, caches, and evidence records SHALL
-remain separate.
+GitHub documentation verification SHALL use a GitHub-hosted Ubuntu runner with
+immutable maintained Actions, Node 22, and managed stable Chrome before the
+shared verifier runs. It SHALL NOT use a local self-hosted runner or host path.
+GitLab documentation verification SHALL select the canonical
+`ci-linux-arm64-docker` capability tag, while a separately owned runner must
+actually expose that tag before a hosted success claim. The two providers'
+runtime services, credentials, work areas, caches, and job observations SHALL
+remain independent. Repository YAML SHALL NOT claim runner registration.
 
 #### Scenario: Repository workflow bindings are statically valid
 
-- **WHEN** the repository validates its GitHub documentation workflow
-- **THEN** the job selects `ubuntu-latest`, checks out first, configures Node 22,
-  and binds Puppeteer to the Chrome Action output
-- **AND THEN** no self-hosted label, runner variable, macOS path, Homebrew path,
-  or local-host pull-request guard remains.
+- **WHEN** the repository validates its GitHub and GitLab documentation jobs
+- **THEN** GitHub selects `ubuntu-latest`, checks out first, configures Node 22,
+  and binds Puppeteer to managed Chrome
+- **AND THEN** GitLab selects `ci-linux-arm64-docker` and both jobs invoke the
+  same repository verifier.
 
 #### Scenario: Fork-origin code cannot run on the GitHub local host
 
@@ -345,24 +211,57 @@ remain separate.
 #### Scenario: Local configuration is not hosted evidence
 
 - **WHEN** workflow lint or local proof passes
-- **THEN** the repository does not assert that GitHub-hosted Actions or GitLab
-  CI executed
+- **THEN** the repository does not assert that GitHub Actions or GitLab CI
+  executed
 - **AND THEN** each Forge requires a fresh run at the published revision for its
   own success claim.
 
-### Requirement: Post-archive proof repair preserves archive history
+### Requirement: Change completion follows declared obligations
 
-When an official OpenSpec archive changes a repository tree and its resulting
-HEAD fails an existing local proof, the documentation adopter SHALL correct the
-new proof target through a separate active Change. That repair SHALL preserve
-the archived carrier and its historical digest, and its fresh proof SHALL be
-bound to the repaired exact HEAD before candidate landing or accepted closeout.
-Local proof SHALL NOT imply runner registration, publication, or hosted
-execution.
+The repository SHALL keep an official material Change active while any of its
+declared source or delivery tasks remain unverified. Source acceptance MAY
+advance candidate and accepted refs while remote delivery is pending. Archive
+SHALL follow completion of the tasks actually declared, and its resulting Git
+object SHALL receive a fresh applicable proof and publication observation.
+Source-only Changes MAY archive before integration when their obligations are
+already complete.
 
-#### Scenario: Archive-result proof is repaired without rewriting history
+#### Scenario: Source is accepted before hosted delivery
 
-- **WHEN** an archive-result HEAD fails an existing repository proof
-- **THEN** a separate active Change scopes the correction
-- **AND THEN** the archived carrier remains unchanged
-- **AND THEN** only a fresh exact-HEAD proof may support a later local landing.
+- **WHEN** source proof and local accepted closeout pass but a declared Forge
+  job has not run at that source object
+- **THEN** the delivery task remains open and the official Change remains active
+- **AND THEN** local acceptance does not imply whole-Change completion.
+
+#### Scenario: Archive creates a new source object
+
+- **WHEN** completed Change artifacts are officially archived
+- **THEN** the resulting commit is treated as a new source identity for proof
+  and publication
+- **AND THEN** an earlier job result is not represented as CI success at the
+  archive commit.
+
+### Requirement: Evidence remains with its producing owner
+
+The repository SHALL not require a tracked `evidence/` root or a new
+claim/Chronicle pair as a condition of material Change admission. Source proof
+SHALL resolve from current ETHOS Attestations, Git objects, official OpenSpec
+artifacts, and selected Forge observations. A real-work quality or adoption
+claim SHALL name the underlying task and evidence source, its time, scope, and
+reviewer instead of treating repository validation as proof of organizational
+use. Historical tracked evidence MAY be retired in a new commit after unique
+facts and inbound consumers are reviewed; Git history remains unchanged.
+
+#### Scenario: A material Change has no tracked evidence directory
+
+- **WHEN** a complete official Change passes current ETHOS admission and proof
+  without a repository-authored claim or Chronicle
+- **THEN** the repository accepts the native lifecycle result
+- **AND THEN** no local directory is invented to satisfy a historical shape.
+
+#### Scenario: A team-adoption claim is requested
+
+- **WHEN** only source checks and hosted CI are available
+- **THEN** the repository reports only those source and delivery facts
+- **AND THEN** team adoption remains unproved until actual work observations are
+  reviewed at their producing owner.
