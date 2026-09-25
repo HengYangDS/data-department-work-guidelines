@@ -1,6 +1,7 @@
 # guidance-discovery Specification
 
 ## Purpose
+
 Help a member or Agent find the current rule and its limits for a real data-
 department task without mistaking navigation, methods, or historical records for
 another source of authority.
