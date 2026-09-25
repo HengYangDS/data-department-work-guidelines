@@ -270,6 +270,10 @@ export function validateChangelog({
   const latest = [...tags.keys()].sort(semver.rcompare)[0];
   if (latest && semver.lt(version, latest))
     throw new Error(`VERSION ${version} precedes released ${latest}`);
+  const pending =
+    releases[0] && !tags.has(releases[0].version) ? releases[0].version : "";
+  if (pending && sections[0].items)
+    throw new Error("prepared release must not leave Unreleased changes");
   for (const [label, href] of links) {
     const comparison = new URL(href).pathname.split("/compare/")[1];
     const refs = comparison?.split("...");
@@ -277,21 +281,28 @@ export function validateChangelog({
       throw new Error(`history comparison needs two refs: ${label}`);
     }
     const [base, target] = refs;
-    run("git", ["rev-parse", "--verify", `${base}^{commit}`], {
-      cwd: repository,
-      capture: true,
-      timeout: 20_000,
-    });
     if (label === "Unreleased") {
       if (target !== "main") {
         throw new Error("Unreleased comparison must end at main");
       }
-      if (latest && base !== `v${latest}`) {
-        throw new Error(`Unreleased comparison must start at v${latest}`);
+      const expected = pending || latest;
+      if (expected && base !== `v${expected}`) {
+        throw new Error(`Unreleased comparison must start at v${expected}`);
       }
     }
-    if (label !== "Unreleased" && tags.has(label) && target !== `v${label}`) {
+    if (
+      label !== "Unreleased" &&
+      (tags.has(label) || label === pending) &&
+      target !== `v${label}`
+    ) {
       throw new Error(`release comparison must end at v${label}`);
+    }
+    if (!(label === "Unreleased" && pending && base === `v${pending}`)) {
+      run("git", ["rev-parse", "--verify", `${base}^{commit}`], {
+        cwd: repository,
+        capture: true,
+        timeout: 20_000,
+      });
     }
   }
   if (selectedTag) {
@@ -304,6 +315,8 @@ export function validateChangelog({
         `selected release tag disagrees with VERSION or changelog: ${selectedTag}`,
       );
     }
+    if (sections[0].items)
+      throw new Error("tagged release must not contain Unreleased changes");
     const taggedHead = run("git", ["rev-parse", `${selectedTag}^{}`], {
       cwd: repository,
       capture: true,
@@ -321,8 +334,7 @@ export function validateChangelog({
     version,
     releaseCount: releases.length,
     tagCount: tags.size,
-    pending:
-      releases[0] && !tags.has(releases[0].version) ? releases[0].version : "",
+    pending,
   };
 }
 

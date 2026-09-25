@@ -35,8 +35,9 @@
 
 - [x] 4.1 Define the public compatibility surface and one `VERSION` owner;
       verify the charter agrees and the private npm manifest has no edition.
-- [x] 4.2 Curate Keep a Changelog sections without fictitious old releases;
-      test strict headings, categories, dates, links, SemVer order, and tags.
+- [ ] 4.2 Prepare the actual dated `v4.0.0` Keep a Changelog section without
+      fictitious old releases; verify empty `Unreleased`, prospective links,
+      strict headings, categories, dates, SemVer order, and pre/post-tag tests.
 - [ ] 4.3 Add native ETHOS release-tag admission and prove a mismatched or
       unsigned target cannot count as a versioned release.
 - [ ] 4.4 Use ETHOS historical identity repair for explicitly selected old

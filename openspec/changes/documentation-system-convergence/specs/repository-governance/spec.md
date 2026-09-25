@@ -187,19 +187,41 @@ strict SemVer release headings with real ISO dates, newest first, and links to
 version history. The repository quality gate SHALL reject uncategorized prose,
 malformed structure, version disagreement, missing local tag coverage, or a
 comparison for a tagged release that ends at a moving branch instead of its
-tag. `Unreleased` SHALL compare from the latest local release tag when one
-exists. A selected release tag SHALL identify the exact source. At most one
-untagged prepared release entry MAY identify the current `VERSION`; a heading
-alone is not publication.
+tag. `Unreleased` SHALL compare from the prepared current version when one
+exists, or otherwise from the latest local release tag when one exists. A
+prepared release SHALL leave `Unreleased` empty and compare its version section
+to the prospective `vVERSION` tag. That exact prospective tag name MAY be an
+unresolved comparison base before the tag is created; arbitrary unresolved
+refs SHALL NOT pass. The same changelog SHALL remain valid once the signed tag
+exists. A selected release tag SHALL identify the exact source and leave
+`Unreleased` empty. At most one untagged prepared release entry MAY identify
+the current `VERSION`; a heading alone is not publication.
 Native ETHOS SHALL admit signed annotated `vX.Y.Z` tags and publication. Older
 untagged branch editions SHALL NOT be retroactively labeled as formal releases.
 
 #### Scenario: A current release is prepared but not yet tagged
 
-- **WHEN** `VERSION` and the charter agree, `Unreleased` is first, and at most
-  one dated current-version section is prepared without a local tag
+- **WHEN** `VERSION` and the charter agree, `Unreleased` is empty and first,
+  and one dated current-version section is prepared without a local tag
 - **THEN** repository source validation may pass for preparation
+- **AND THEN** `Unreleased` compares from the prospective `vVERSION` tag to
+  `main`, and the prepared section compares to that same prospective tag
 - **AND THEN** no Forge Release or signed tag is claimed from that heading.
+
+#### Scenario: A prepared changelog survives the tag transition
+
+- **WHEN** the signed annotated `vVERSION` tag is created on the exact
+  prepared source
+- **THEN** the same `Unreleased` and release comparison links remain valid
+- **AND THEN** the selected tag check binds the tag to that source without a
+  post-tag source edit.
+
+#### Scenario: A prepared link would fail after tagging
+
+- **WHEN** a prepared release leaves changes in `Unreleased`, compares from an
+  older tag, or ends its release comparison at a moving branch
+- **THEN** the quality gate rejects the source before creating the tag
+- **AND THEN** no arbitrary missing ref is treated as a prospective tag.
 
 #### Scenario: Version, changelog, or tag identities diverge
 

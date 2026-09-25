@@ -116,7 +116,11 @@ first, only its six standard categories, strict SemVer headings, real ISO dates,
 and version links. A repository check rejects uncategorized entries, malformed
 sections, version drift, missing or extra local tags, a released comparison to
 a moving branch, and a selected tag that does not identify the exact source.
-`Unreleased` starts at the latest local release tag when one exists. One current
+`Unreleased` starts at a prepared current version when one exists, otherwise at
+the latest local release tag. A prepared release moves its changes out of
+`Unreleased` and names the prospective `vVERSION` tag in both comparison
+links. Only that exact future tag is allowed to be unresolved before creation;
+the same source then validates after the signed tag exists. One current
 version may be prepared before its tag; that heading is not
 publication evidence. The older 2.x and 3.0.0 branch editions have no local or
 Forge release tags, so their former prose stays in Git history instead of being

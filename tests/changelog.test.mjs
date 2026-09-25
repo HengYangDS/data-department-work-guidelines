@@ -33,6 +33,13 @@ function source(
   return `${intro}## [Unreleased]\n\n### Changed\n\n- Describe a real change.\n\n${releases}[Unreleased]: https://example.invalid/compare/${unreleasedBase}...main\n${releases ? `[4.0.0]: https://example.invalid/compare/${base}...${releaseTarget}\n` : ""}`;
 }
 
+function preparedSource(base, releases, releaseTarget = "v4.0.0") {
+  return source(base, releases, releaseTarget, "v4.0.0").replace(
+    "### Changed\n\n- Describe a real change.\n\n",
+    "",
+  );
+}
+
 function git(directory, ...args) {
   const hooks = path.join(directory, "empty-hooks");
   mkdirSync(hooks, { recursive: true });
@@ -196,7 +203,7 @@ test("only the current version may be a prepared untagged release", () => {
     const changelog = path.join(directory, "CHANGELOG.md");
     writeFileSync(
       changelog,
-      source(
+      preparedSource(
         base,
         "## [4.0.0] - 2026-09-25\n\n### Changed\n\n- Prepared change.\n\n",
       ),
@@ -207,7 +214,7 @@ test("only the current version may be a prepared untagged release", () => {
     );
     writeFileSync(
       changelog,
-      source(
+      preparedSource(
         base,
         "## [4.0.0] - 2026-09-25\n\n### Changed\n\n- Prepared change.\n\n## [3.0.0] - 2026-09-24\n\n### Fixed\n\n- Fictitious older release.\n\n",
       ) + `[3.0.0]: https://example.invalid/compare/${base}...main\n`,
@@ -216,6 +223,56 @@ test("only the current version may be a prepared untagged release", () => {
       () => validateChangelog({ repository: directory, selectedTag: "" }),
       /untagged historical release/u,
     );
+  });
+});
+
+test("a prepared release has one comparison source before and after tagging", () => {
+  fixture((directory, base) => {
+    const changelog = path.join(directory, "CHANGELOG.md");
+    const prepared = preparedSource(
+      base,
+      "## [4.0.0] - 2026-09-25\n\n### Changed\n\n- Prepared change.\n\n",
+    );
+    writeFileSync(changelog, prepared);
+    assert.equal(
+      validateChangelog({ repository: directory, selectedTag: "" }).pending,
+      "4.0.0",
+    );
+    commit(directory, "prepare release");
+    git(directory, "tag", "-a", "v4.0.0", "-m", "fixture release");
+    assert.equal(
+      validateChangelog({ repository: directory, selectedTag: "v4.0.0" })
+        .tagCount,
+      1,
+    );
+  });
+});
+
+test("prepared release links and Unreleased content cannot hide a post-tag failure", () => {
+  fixture((directory, base) => {
+    const changelog = path.join(directory, "CHANGELOG.md");
+    const release =
+      "## [4.0.0] - 2026-09-25\n\n### Changed\n\n- Prepared change.\n\n";
+    for (const [changed, expected] of [
+      [source(base, release, "v4.0.0", "v4.0.0"), /Unreleased changes/u],
+      [
+        preparedSource(base, release).replace(
+          "/compare/v4.0.0...main",
+          `/compare/${base}...main`,
+        ),
+        /Unreleased comparison must start at v4\.0\.0/u,
+      ],
+      [
+        preparedSource(base, release, "main"),
+        /release comparison must end at v4\.0\.0/u,
+      ],
+    ]) {
+      writeFileSync(changelog, changed);
+      assert.throws(
+        () => validateChangelog({ repository: directory, selectedTag: "" }),
+        expected,
+      );
+    }
   });
 });
 
@@ -235,11 +292,9 @@ test("release tags must be annotated and covered by the changelog", () => {
     git(directory, "tag", "-d", "v4.0.0");
     writeFileSync(
       path.join(directory, "CHANGELOG.md"),
-      source(
+      preparedSource(
         base,
         "## [4.0.0] - 2026-09-25\n\n### Changed\n\n- Released change.\n\n",
-        "v4.0.0",
-        "v4.0.0",
       ),
     );
     commit(directory, "prepare release");
@@ -262,11 +317,10 @@ test("tagged release links identify the tag, not a moving branch", () => {
   fixture((directory, base) => {
     writeFileSync(
       path.join(directory, "CHANGELOG.md"),
-      source(
+      preparedSource(
         base,
         "## [4.0.0] - 2026-09-25\n\n### Changed\n\n- Released change.\n\n",
         "main",
-        "v4.0.0",
       ),
     );
     commit(directory, "prepare release");
