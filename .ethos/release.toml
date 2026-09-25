@@ -1,5 +1,8 @@
+[protected_refs]
+tags = ["v*"]
+
 [publication]
-local_verification_command = "bash tools/ci/scripts/run-documentation-verification.sh"
+local_verification_command = "node tools/docs/cli.mjs check"
 local_installation_command = "npm ci --ignore-scripts"
 
 [[publication.peers]]

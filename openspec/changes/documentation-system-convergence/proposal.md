@@ -24,6 +24,10 @@ implementation history.
 - Reconcile current specifications, navigation, decision records, configuration,
   and instructions with the actual repo. Keep one editable owner per rule and
   remove wrappers, metadata, or placeholders that have no current consumer.
+- **BREAKING** Replace documented shell verification commands. Define the
+  guideline and contributor compatibility surface, use one version owner, and
+  enforce Keep a Changelog 1.1.0 and SemVer 2.0.0 through source checks and
+  release-tag admission. Do not invent tags for older branch editions.
 - Qualify local checks and GitLab/GitHub delivery separately. Do not turn a
   configured workflow, a checked task, or passing CI into an adoption claim.
 
@@ -40,7 +44,7 @@ None.
   shapes.
 - `repository-governance`: keep official Change attribution and native ETHOS
   hooks as the only lifecycle authority, and make both hosted verifiers consume
-  the same portable repository check.
+  the same portable repository check and versioned release boundary.
 
 ## Impact
 

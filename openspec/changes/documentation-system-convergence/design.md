@@ -69,6 +69,29 @@ must have a consumer. The root remains a small entry and tool manifest, not a
 second guideline book. Existing decision records are kept only when their
 cross-Change rationale cannot be recovered from current rules and Git history.
 
+### Give releases one version identity and a checked changelog
+
+`VERSION` becomes the sole product-release target because native ETHOS tag
+admission reads that committed file. The private npm tool manifest stops carrying
+a second version. The charter's visible edition must agree with `VERSION`.
+The public compatibility surface is the normative guidance, stable reader and
+Agent routes, and documented contributor commands. Removing those shell commands
+is incompatible, so this train targets 4.0.0 rather than silently changing the
+already distributed 3.0.0 branch edition.
+
+`CHANGELOG.md` uses the official Keep a Changelog introduction, `Unreleased`
+first, only its six standard categories, strict SemVer headings, real ISO dates,
+and version links. A repository check rejects uncategorized entries, malformed
+sections, version drift, missing or extra local tags, a released comparison to
+a moving branch, and a selected tag that does not identify the exact source.
+`Unreleased` starts at the latest local release tag when one exists. One current
+version may be prepared before its tag; that heading is not
+publication evidence. The older 2.x and 3.0.0 branch editions have no local or
+Forge release tags, so their former prose stays in Git history instead of being
+relabeled as formal releases. Human review of compatibility impact remains
+necessary: a parser cannot infer whether a changed obligation is breaking.
+ETHOS owns signed-tag authority and publication, not this parser.
+
 ### Separate source, delivery, and use evidence
 
 Local format, lint, render, OpenSpec, and ETHOS proof qualify source at an exact
@@ -86,11 +109,17 @@ open.
 - A single entrypoint can become a monolith. Keep orchestration thin and give
   each irreducible property a focused test rather than building a generic
   validation framework.
+- Local lychee validation checks the executable version, not its binary digest.
+  CI supply verifies the declared asset digest; do not call an arbitrary local
+  installation checksum-pinned.
 - Host browsers and link checkers differ. Pin the actual tool input, run the
   complete graph on each claimed platform, and report an untested platform as
   unqualified rather than calling the design portable by inspection.
 - Removing old hooks or wrappers can expose an unguarded command path. Compare
   the installed native hook graph and run negative cases before deletion.
+- A historical branch edition could be mistaken for a formal release. Do not
+  backdate or create a tag to make the record look complete; publish the first
+  genuine versioned release only after its exact source and tag pass admission.
 
 ## Migration Plan
 
@@ -100,8 +129,10 @@ open.
    and inbound consumer. Remove only proved duplicate or obsolete carriers.
 3. Replace shell-required repository checks with the locked entrypoint and
    focused tests. Update both CI projections and current instructions together.
-4. Run the complete local matrix and hosted jobs at exact source objects.
+4. Bind `VERSION`, the charter, and the curated changelog. Test invalid
+   categories, versions, dates, links, tag drift, and the pending-release case.
+5. Run the complete local matrix and hosted jobs at exact source objects.
    Accept source through ETHOS; keep any unobserved delivery obligation open.
-5. Archive only after the declared tasks have current evidence. Refresh proof
+6. Archive only after the declared tasks have current evidence. Refresh proof
    and remote observations for the archive commit. Retire this owned Work Lane
    through ETHOS after acceptance, preserving all foreign lanes.

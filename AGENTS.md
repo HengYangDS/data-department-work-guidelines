@@ -1,18 +1,16 @@
 # Agent Entry
 
-This repository holds the Data Department work guidelines. Start with the
-[documentation map](docs/README.md) for the task, and load only the relevant
-topic. The [charter](docs/charter.md) sets the purpose, authority, and
-non-negotiable boundaries. An Agent may investigate, draft, and execute within
-its delegated scope; authorization, acceptance, and accountability for
-consequences remain with people.
+This repository holds the Data Department work guidelines. Start at the
+[task map](docs/README.md) and read only the topic relevant to the work. The
+[charter](docs/charter.md) defines purpose, authority, and hard boundaries.
+An Agent may investigate and execute within a delegated scope; people retain
+authorization, acceptance, and responsibility for consequences.
 
-Before changing this repository, read
-[repository governance](docs/governance/ethos.md), run
-`bash scripts/ethos-repo.sh status --json`, and follow the current
-`continuation`. One selected official OpenSpec Change carries a material change,
-and execution occurs only in a leased Work Lane. Before writing a tracked path,
-run `lane prewrite` for the exact paths with `--editor-root` and
-`--require-editor-root`. Method packs, decision records, test logs, and
-historical claims grant no write authority. A completion claim needs evidence
-bound to the actual source and environment.
+Before changing tracked source, read [repository governance](docs/governance/ethos.md)
+and run `ethos status --json` from the intended worktree. Follow its current
+`verdict`, gaps, next action, and continuation. Material work belongs to one
+selected official OpenSpec Change in an owned, leased Work Lane. Obtain a passing
+`ethos lane prewrite` decision for the exact paths and worktree immediately
+before writing. The installed ETHOS command and Git-common hooks own admission;
+method packs, DRs, local tests, and historical claims do not grant it. Bind
+completion claims to the actual source and environment.

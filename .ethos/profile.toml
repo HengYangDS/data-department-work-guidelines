@@ -23,9 +23,8 @@ openspec = "openspec"
 # ETHOS owns this repository-relative admission contract. Changed paths matching
 # these patterns must be attributed to one selected active official Change.
 material_paths = [
-  ".agents/**",
+  ".config/**",
   ".ethos/**",
-  ".githooks/**",
   ".github/**",
   ".gitignore",
   ".gitlab-ci.yml",
@@ -35,16 +34,13 @@ material_paths = [
   "CHANGELOG.md",
   "CONTRIBUTING.md",
   "README.md",
+  "VERSION",
   "docs/**",
-  "evidence/**",
-  "evolution/**",
-  "guidelines.md",
   "openspec/**",
   "package-lock.json",
   "package.json",
-  "scripts/**",
   "tests/**",
-  "tools/ci/**",
+  "tools/**",
 ]
 
 [proof]
@@ -57,7 +53,7 @@ static-analysis = "markdown-format"
 [[proof.gates]]
 id = "docs-integrity"
 kind = "test"
-command = ["bash", "./scripts/validate-docs.sh"]
+command = ["node", "tools/docs/cli.mjs", "check"]
 asset_classes = ["markdown-docs"]
 dimensions = ["behavior", "documentation", "links", "rendering"]
 execution_mode = "subprocess"
@@ -69,7 +65,7 @@ network_policy = "offline"
 [[proof.gates]]
 id = "markdown-format"
 kind = "lint"
-command = ["bash", "./scripts/format-markdown.sh", "--check"]
+command = ["node", "tools/docs/cli.mjs", "format", "--check"]
 asset_classes = ["markdown-docs"]
 dimensions = ["static-analysis", "format", "markdown"]
 execution_mode = "subprocess"

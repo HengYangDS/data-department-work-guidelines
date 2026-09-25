@@ -6,101 +6,110 @@ relations:
   canonical_for: repository change and delivery boundaries
 ---
 
-# Repository Change and Publication
+# Repository Change and Release
 
-This page governs **changes to this repository**, not the team's data work.
-Start with the [documentation map](../README.md) for the working guidelines.
-[Decision records](../decisions/README.md) retain durable trade-offs. Method
-packs and historical reports grant no write authority.
+This page governs **this repository**, not the department's data work. Start at
+the [task map](../README.md) for the working rules. A
+[decision record](../decisions/README.md) keeps only durable rationale; it
+cannot authorize a change.
 
-## One Change, One Authoritative Carrier
+## One Change, one authority
 
-One selected official OpenSpec Change carries a material change's intent,
-design, specification deltas, and `tasks.md`. ETHOS attributes material paths to
-that active Change and governs the Work Lane, write admission, proof, and
-acceptance. A DR explains a choice that remains useful across Changes; its five
-sections are not another Change or progress ledger.
+A selected official OpenSpec Change owns material intent, deltas, design, and
+`tasks.md`. ETHOS binds changed paths to that Change and governs the leased Work
+Lane, write admission, proof, acceptance, and publication. The compiled
+Commitment is transient; this repository adds no private `scope.toml`, tracked
+claim ledger, or second lifecycle.
 
-Call ETHOS through the repository-bound adapter, not from an unknown working
-directory:
+Run the installed `ethos` command in the intended worktree:
 
-```bash
-bash scripts/ethos-repo.sh status --json
-bash scripts/ethos-repo.sh lane prewrite --paths docs/decide.md \
-  --editor-root "$PWD" --require-editor-root --json
-bash scripts/ethos-repo.sh plan --changed --json
-./node_modules/.bin/openspec validate --all --strict --json
-bash scripts/ethos-repo.sh prove --execute --full --scope repository \
-  --expect-head "$(git rev-parse HEAD)" --json
+```text
+ethos status --json
+ethos lane prewrite --paths docs/decide.md --editor-root . --require-editor-root --json
+ethos plan --changed --json
+npm run verify
 ```
 
-A `lane prewrite` result judges the exact paths against the current state once;
-it is not reusable permission. Only the lease holder may edit its `work/*` lane.
-The [repository boundary check](../../scripts/validate-governance-boundary.sh)
-rejects malformed DRs, date-named decision files, and a revived
-`docs/superpowers/` tree. It does not implement official lifecycle, scope
-admission, or archival. Default document proof has only `docs-integrity` and
-`markdown-format`; the adapter and hooks bind the root.
+Use the current result, not this sequence as blanket permission. A passing
+`lane prewrite` admits only the exact paths and state it observed. Commit the
+source, take its OID from `git rev-parse HEAD`, and pass that exact OID to
+`ethos prove --execute --full --scope repository --expect-head OID --json`.
+The installed Git-common hooks, not tracked copies, enforce commit and push
+admission. The [repository check](../../tools/docs/cli.mjs) guards DR shape,
+reader routes, and document quality; it cannot replace OpenSpec or ETHOS.
 
-## Accept Source, Publish Refs, and Observe Use Separately
+## Source, two Forges, and actual use
 
-| Plane         | Evidence can establish                                                          | Evidence cannot establish by itself     |
-| ------------- | ------------------------------------------------------------------------------- | --------------------------------------- |
-| Local source  | Change attribution, tests, HEAD-bound proof, candidate landing, and acceptance. | That either remote received the source. |
-| GitLab        | The organization's exact ref OID and its own CI result.                         | GitHub delivery or team use.            |
-| GitHub        | The independent repository's exact ref OID and its own hosted CI result.        | GitLab delivery or team use.            |
-| Team practice | Use in real tasks and its observed effect.                                      | Retrospective source or CI correctness. |
+| Plane         | It can establish                                              | It cannot establish alone        |
+| ------------- | ------------------------------------------------------------- | -------------------------------- |
+| Local source  | Change attribution, checks, exact-HEAD proof, and acceptance. | Delivery to either Forge.        |
+| GitLab        | Its exact ref, hosted CI, and release object.                 | GitHub delivery or team use.     |
+| GitHub        | Its independent ref, hosted CI, and release object.           | GitLab delivery or team use.     |
+| Team practice | An observed result in real work, with owner and reviewer.     | Source or publication integrity. |
 
-Local validation and installation do not depend on either remote. Only `dev`,
-`main`, and `proposal/*` may be published; `candidate/dev` and `work/*` remain
-local. GitLab is the organization's primary publication plane. GitHub is an
-independent complete repository and CI/CD plane, intended to serve updates and
-distribution when GitLab is unavailable. That fallback is a capability claim
-only after a product-governed GitHub publication actually succeeds under that
-condition. Configured remotes, local proof, and CI on an older SHA do not prove
-delivery of a new SHA.
+Local verification does not contact either Forge. Only `dev`, `main`, and
+`proposal/*` may publish; `candidate/dev` and `work/*` are local resources.
+GitLab is the organization's primary publication plane. GitHub is a complete
+independent repository and CI/CD plane, intended as a distribution alternative
+when GitLab is unavailable. A configured peer or older green job does not prove
+that fallback. Claim it only after ETHOS actually publishes the selected object
+to GitHub while GitLab is unavailable, then verify the exact remote ref.
+Never use a raw push to disguise a native refusal.
 
-Formal publication also requires ETHOS to verify the source commit's signature
-against the operator's own trusted public-key list. Neither private keys, that
-list, nor its host path belong in this repository. A raw push must not disguise
-a native publication refusal as success. The
-[workspace policy](../../.ethos/workspace.toml) requires SSH signing for new
-commits, including an official archive commit. Each clone supplies its own
-local author and committer identity, public signing-key path, and protected
-external trust anchor; no person or host path is pinned in tracked policy.
-Inspect an archive commit's signature and attribution before accepting it.
-GitLab's documentation job selects
-`ci-linux-arm64-docker`; claim hosted success only after a matching runner
-actually passes at the SHA in question. The
-[release declaration](../../.ethos/release.toml) lists both peers.
+A Change may reach `dev` while a declared delivery task remains open. Observe
+each peer independently, complete the tasks, and only then archive officially.
+Archive creates a new commit: refresh proof and final remote observations for
+that identity. Do not reuse CI from an earlier SHA as archive-HEAD evidence.
 
-A Change may reach `dev` while remote-delivery tasks remain open. Observe the
-peers independently, complete the declared tasks, and only then archive through
-the official tool. Archival changes HEAD; refresh applicable source proof and
-final remote-ref observations rather than reusing pre-archive results. Do not
-create a circular dependency by requiring future CI on the archival commit
-before the tasks that permit archival can close. Report final remote
-observations separately.
+## Versioned releases
 
-## Local Quality and State Boundaries
+[`VERSION`](../../VERSION) is the single intended release identity. The
+[charter](../charter.md) shows that edition; the private npm manifest does not
+repeat it. The public compatibility surface is the normative rules, stable
+member and Agent routes, and documented contributor commands. Under
+[SemVer 2.0.0](https://semver.org/spec/v2.0.0.html), incompatible changes to
+that surface require a major increment, compatible additions or deprecations a
+minor increment, and compatible fixes a patch increment. A reviewer must assess
+meaning and migration in the official Change; no parser can infer compatibility
+from a diff alone.
 
-- The [ETHOS profile](../../.ethos/profile.toml) declares material paths and the
-  two default document gates; it does not invent a second Change scope schema.
-- The [repository-bound adapter](../../scripts/ethos-repo.sh) fixes the audit
-  root, and Git hooks use the same entry. `bash scripts/test-ethos-repo.sh`
-  explicitly tests root binding.
-- [Document validation](../../scripts/validate-docs.sh) covers Prettier,
-  Markdown lint, offline lychee links, metadata, current anchors, every present
-  Mermaid diagram, and the English text boundary. Only the CI verifier selects
-  the hosted-browser exception; local validation does not inherit it.
-- `build/`, `node_modules/`, leases, and caches are not repository facts.
-  Evidence belongs with its producer and specific claim; it does not need a root
-  directory.
-- Markdown and configuration blocks use one blank line. Python top-level
-  definitions use two blank lines; methods use one. The
-  [text-layout check](../../scripts/validate-text-layout.sh) guards this
-  mechanical boundary, not semantic acceptance.
+[`CHANGELOG.md`](../../CHANGELOG.md) follows
+[Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/). The default
+`docs-integrity` proof gate and both CI jobs reject malformed headings,
+categories, dates, links, version drift, and tag mismatch. At most one current
+version may be prepared without a tag. A heading, branch, or CI result is not a
+versioned release. ETHOS admits only an exact, signed annotated `vX.Y.Z` tag
+matching the committed `VERSION`; each Forge Release and asset must then be
+observed separately. Older untagged branch editions stay in Git history, not a
+fabricated release sequence.
 
-This page does not assert present remote state, team adoption, or ETHOS product
-parity. Before reporting any of them, read a fresh observation of the exact
-version in its actual environment.
+New commits and official archive commits require trusted SSH signatures. Each
+clone supplies its own local identity, public signing-key path, and protected
+trust anchor outside this repository. Inspect attribution and signature before
+acceptance. The [workspace policy](../../.ethos/workspace.toml) and
+[release declaration](../../.ethos/release.toml) state the enforceable local
+branch and tag boundaries; they contain no operator key or host path.
+
+## Quality and local state
+
+`npm run verify` invokes one [portable quality entry](../../tools/docs/cli.mjs):
+locked Prettier, Markdown lint, offline version-checked lychee links and
+fragments,
+metadata, every present Mermaid diagram, English and spacing, repository
+boundaries, official OpenSpec, version identity, CI topology, and negative
+tests. The [supply manifest](../../.config/tools/lychee.json) pins lychee assets
+by platform and SHA-256; the CI installer verifies the downloaded digest. Local
+validation checks the executable version and never downloads an asset. Explicit
+CI supply and an offline `--asset` path are different operations. A cold offline
+installation is not qualified until its full dependency bundle has been tested.
+
+GitHub runs Linux, macOS, and Windows hosted jobs; GitLab selects the
+`ci-linux-arm64-docker` runner. Workflow declarations alone are not hosted
+success. Markdown and configuration use one blank line between blocks;
+Prettier and the repository check enforce their supported parts. `build/`,
+`node_modules/`, leases, and caches are local resources, not repository facts.
+Evidence remains with its producer and specific claim; it needs no root folder.
+
+This page makes no present-tense claim about remote state, team adoption, or
+ETHOS product parity. Observe the exact revision in its actual environment
+before reporting any of them.

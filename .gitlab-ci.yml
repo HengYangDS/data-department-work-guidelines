@@ -8,13 +8,13 @@ docs:verify:
     - ci-linux-arm64-docker
   interruptible: true
   variables:
+    GIT_DEPTH: "0"
     DDWG_HOSTED_RENDERER_CONFIG: "tools/ci/config/mermaid-puppeteer-hosted.json"
     PUPPETEER_SKIP_DOWNLOAD: "true"
     PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium
   before_script:
-    - apt-get update
-    - apt-get install --yes --no-install-recommends git python3 python3-venv chromium curl ca-certificates
+    - apt-get update && apt-get install --yes --no-install-recommends git chromium ca-certificates
     - npm ci --ignore-scripts
-    - bash tools/ci/scripts/install-lychee.sh
+    - node tools/ci/install-lychee.mjs --download
   script:
-    - bash tools/ci/scripts/with-python-runtime.sh -- bash tools/ci/scripts/run-documentation-verification.sh
+    - npm run verify

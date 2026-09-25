@@ -1,23 +1,23 @@
 # Official OpenSpec Workspace
 
-One active Change under `openspec/changes/<change-id>/` carries each material
-repository change. It contains the proposal, design, specification deltas, and
-`tasks.md`; task progress lives only there. Accepted requirements enter
-`openspec/specs/` through **official archival**, not by hand-editing a spec to
-imitate that transition.
+One active Change under `openspec/changes/<change-id>/` carries a material
+repository change's proposal, design, specification deltas, and `tasks.md`.
+Task progress lives only there. Accepted requirements enter `openspec/specs/`
+through official archival; do not hand-edit a current spec to imitate it.
 
-Install the locked tools with `npm ci --ignore-scripts`, then validate:
+Install locked tools with `npm ci --ignore-scripts`, then run the official
+validator and ETHOS from the selected worktree:
 
-```bash
-./node_modules/.bin/openspec validate --all --strict --json
-bash scripts/ethos-repo.sh status --json
-bash scripts/ethos-repo.sh plan --changed --json
+```text
+node_modules/.bin/openspec validate --all --strict --json
+ethos status --json
+ethos plan --changed --json
 ```
 
-ETHOS owns material-path attribution, write admission, proof, and closeout. The
-repository boundary script checks only DRs and document topology. A method-pack
-plan, claim, dated report, or private scope list cannot replace a Change.
-Archived material preserves historical context; it is neither proof for the
-current HEAD nor today's execution order. Editorial translations of a tracked
-archive are later changes visible in Git, not evidence that the original
-artifact was filed in English or passed a later lifecycle.
+ETHOS owns material-path attribution, write admission, proof, and closeout.
+`npm run verify` guards repository-specific document and decision topology; it
+is not another lifecycle or scope authority. A method-pack plan, claim, dated
+report, or private scope list cannot replace a Change. Official archives and
+Git history preserve what happened, not proof for the current HEAD or today's
+execution order. Editing an archived text later does not certify its original
+language or lifecycle.

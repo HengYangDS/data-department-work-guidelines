@@ -6,12 +6,15 @@
 
 Documentation validation SHALL have one repository-owned, shell-independent
 entrypoint using the locked toolchain. It SHALL check Prettier formatting,
-Markdown lint, local links and fragments through an offline pinned lychee
-invocation, metadata, every present diagram, current command examples, tracked
-English text, and repository-specific boundary and rollout behavior. The same
-entrypoint SHALL run locally and in both hosted CI planes with explicit
+Markdown lint, local links and fragments through an offline, version-checked
+lychee invocation, metadata, every present diagram, tracked English text, and
+repository-specific boundary and rollout behavior. CI tool supply SHALL verify
+the lychee asset digest. Current command examples SHALL be reviewed against
+the installed public CLI before release rather than treated as parsed proof.
+The same entrypoint SHALL run locally and in both hosted CI planes with explicit
 repository-relative inputs. It SHALL NOT require an arbitrary number of
-diagrams, cards, topic pages, or tracked historical evidence files. A portability
+diagrams, cards, topic pages, or tracked historical evidence files. It SHALL
+reject a revived tracked shell wrapper or repository-owned hook. A portability
 claim SHALL require the complete declared graph to execute on each claimed host
 OS, not merely a parser test or a moved shell wrapper. Representative member
 and Agent tasks SHALL be reviewed for correct rule selection and interpretation
@@ -27,8 +30,15 @@ limits before claiming reader readiness.
 
 - **WHEN** a current instruction names a command absent from the installed
   public CLI
-- **THEN** the repository check or review reports the stale instruction
+- **THEN** release review against the installed CLI reports the stale instruction
 - **AND THEN** a valid link or formatted code block does not hide it.
+
+#### Scenario: An obsolete shell carrier returns
+
+- **WHEN** a candidate adds a `.sh` file, tracked `.githooks/` file, or old
+  `scripts/` entrypoint
+- **THEN** the portable repository check rejects it before source acceptance
+- **AND THEN** native ETHOS hooks remain the only Git admission mechanism.
 
 #### Scenario: A fresh supported host runs the full graph
 
