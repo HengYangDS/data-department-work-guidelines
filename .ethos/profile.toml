@@ -12,11 +12,6 @@ normative_sources = [
   "docs/evolve.md",
 ]
 
-# Repository-relative surface roots.
-[roots]
-docs = "docs"
-openspec = "openspec"
-
 # ETHOS names these required axes “code correctness”; for this documentation
 # repository they mean reader-visible behavior and static document integrity.
 [openspec]
