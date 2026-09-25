@@ -49,6 +49,8 @@ bash scripts/ethos-repo.sh prove --execute --full --scope repository \
 GitLab 是组织主发布源；GitHub 是独立完整仓库与 CI/CD 平面，
 GitLab 不可用时可承担更新与分发。配置了 remote、本地证明通过或旧 SHA 的 CI 成功，
 都不能证明新 SHA 已交付。
+正式发布还须由 ETHOS 用操作者本机的可信公钥清单核验源提交签名；私钥、该清单及
+本机路径都不进入仓库。原生发布拒绝时，不能用手工推送把该拒绝伪装成通过。
 GitLab 文档作业选择 `ci-linux-arm64-docker`；只有匹配 runner 在该 SHA 上实际跑通，
 才能声称这个托管作业通过。[发布声明](../../.ethos/release.toml)分别列出两个远端。
 

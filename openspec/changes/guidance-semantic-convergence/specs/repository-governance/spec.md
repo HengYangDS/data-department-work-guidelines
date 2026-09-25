@@ -74,6 +74,9 @@ GitLab and GitHub SHALL receive only `dev`, `main`, or `proposal/*` refs. The
 repository-owned pre-push boundary SHALL reject `candidate/dev` as a local
 source or remote destination before generic ETHOS admission. Local proof,
 integration, and accepted closeout SHALL NOT imply either remote was updated.
+Formal publication SHALL require a source commit whose signature is verified
+against an operator-owned external trust anchor; the repository SHALL NOT store
+signing credentials or a host-specific trust path.
 
 #### Scenario: Local candidate proof is not publication evidence
 
@@ -100,6 +103,13 @@ integration, and accepted closeout SHALL NOT imply either remote was updated.
 - **WHEN** Git supplies `refs/heads/submit/*` as a pre-push destination
 - **THEN** the repository hook rejects it before ETHOS delegation
 - **AND THEN** no second proposal branch namespace remains active.
+
+#### Scenario: Source trust is missing
+
+- **WHEN** an accepted source commit lacks a verifiable signature or the
+  operator's external trust anchor is unavailable
+- **THEN** formal publication remains blocked before either peer is updated
+- **AND THEN** a hook-admitted raw Git push is not treated as equivalent proof.
 
 ### Requirement: Hosted documentation verification begins from a Git checkout
 
