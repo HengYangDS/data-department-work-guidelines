@@ -1,7 +1,7 @@
 import { checkChangelog } from "./changelog.mjs";
 import { checkCi } from "./ci.mjs";
 import {
-  checkDocuments,
+  checkDocumentMetadata,
   checkLinks,
   checkSpelling,
   checkTextLayout,
@@ -9,36 +9,13 @@ import {
   lintMarkdown,
 } from "./content.mjs";
 import {
-  checkConfigPlacement,
   checkDecisions,
   checkLineEndingAttributes,
   checkNavigation,
   checkNoScope,
-  checkPortableEntrypoints,
   checkProfile,
 } from "./governance.mjs";
 import { gitFiles, run, runNodeTool } from "./runtime.mjs";
-
-function options(arguments_) {
-  const parsed = {
-    renderDir: "",
-    hostedRendererConfig: process.env.DDWG_HOSTED_RENDERER_CONFIG || "",
-  };
-  for (let index = 0; index < arguments_.length; index += 1) {
-    const name = arguments_[index];
-    if (name === "--render-dir" || name === "--hosted-renderer-config") {
-      const value = arguments_[index + 1];
-      if (!value || value.startsWith("--"))
-        throw new Error(`${name} requires a value`);
-      parsed[name === "--render-dir" ? "renderDir" : "hostedRendererConfig"] =
-        value;
-      index += 1;
-    } else {
-      throw new Error(`unknown argument: ${name}`);
-    }
-  }
-  return parsed;
-}
 
 function validateOpenSpec() {
   const output = runNodeTool(
@@ -66,19 +43,15 @@ function runTests() {
   run(process.execPath, ["--test", ...files], { timeout: 180_000 });
 }
 
-function checkAll(arguments_) {
-  const render = options(arguments_);
+function checkAll() {
   checkProfile();
-  checkConfigPlacement();
   checkLineEndingAttributes();
   checkNoScope();
-  checkPortableEntrypoints();
   checkChangelog();
   validateOpenSpec();
-  formatSource();
   lintMarkdown();
   checkSpelling();
-  checkDocuments(render);
+  checkDocumentMetadata();
   checkLinks();
   checkTextLayout();
   checkDecisions();
@@ -92,7 +65,13 @@ const [command, ...arguments_] = process.argv.slice(2);
 try {
   switch (command) {
     case "check":
-      checkAll(arguments_);
+      if (arguments_.length) throw new Error("check accepts no arguments");
+      checkAll();
+      break;
+    case "verify":
+      if (arguments_.length) throw new Error("verify accepts no arguments");
+      formatSource();
+      checkAll();
       break;
     case "format":
       if (
@@ -111,9 +90,6 @@ try {
       if (arguments_.length) throw new Error("prose accepts no arguments");
       checkSpelling();
       break;
-    case "render":
-      checkDocuments(options(arguments_));
-      break;
     case "links":
       if (arguments_.length) throw new Error("links accepts no arguments");
       checkLinks();
@@ -126,7 +102,6 @@ try {
       if (arguments_.length) throw new Error("boundary accepts no arguments");
       checkDecisions();
       checkNoScope();
-      checkPortableEntrypoints();
       break;
     case "navigation":
       if (arguments_.length) throw new Error("navigation accepts no arguments");
@@ -138,7 +113,7 @@ try {
       break;
     default:
       throw new Error(
-        "usage: node tools/docs/cli.mjs check|format|lint|prose|render|links|changelog|boundary|navigation|test",
+        "usage: node tools/docs/cli.mjs verify|check|format|lint|prose|links|changelog|boundary|navigation|test",
       );
   }
 } catch (error) {

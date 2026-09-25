@@ -3,7 +3,6 @@ import { readText } from "./runtime.mjs";
 
 const verifier = "npm run verify";
 const auditCommand = "npm audit --audit-level=moderate";
-const renderer = ".config/tools/mermaid-hosted.json";
 const hostMatrix = ["ubuntu-latest", "macos-latest", "windows-latest"];
 
 function parseYaml(source, name) {
@@ -23,14 +22,6 @@ function requireStep(steps, prefix) {
 }
 
 export function validateCi(githubSource, gitlabSource) {
-  if (
-    githubSource.includes("--no-sandbox") ||
-    gitlabSource.includes("--no-sandbox")
-  ) {
-    throw new Error(
-      "provider workflow must not inline a browser sandbox override",
-    );
-  }
   const github = parseYaml(githubSource, "GitHub workflow");
   const gitlab = parseYaml(gitlabSource, "GitLab pipeline");
   const job = github.jobs?.verify;
@@ -63,21 +54,11 @@ export function validateCi(githubSource, gitlabSource) {
     throw new Error("GitHub must fetch full history and release tags");
   }
   const setupNode = requireStep(steps, "actions/setup-node");
-  const setupChrome = requireStep(steps, "browser-actions/setup-chrome");
-  if (!(
-    checkout.index < setupNode.index && setupNode.index < setupChrome.index
-  )) {
+  if (checkout.index >= setupNode.index) {
     throw new Error("GitHub checkout and runtime setup are out of order");
   }
-  if (
-    String(setupNode.step.with?.["node-version"]) !== "22" ||
-    !/^\d+\.\d+\.\d+\.\d+$/u.test(
-      String(setupChrome.step.with?.["chrome-version"]),
-    )
-  ) {
-    throw new Error(
-      "GitHub Node 22 or version-pinned stable Chrome is missing",
-    );
+  if (String(setupNode.step.with?.["node-version"]) !== "22") {
+    throw new Error("GitHub Node 22 is missing");
   }
   const commands = steps.map((step) => step.run?.trim()).filter(Boolean);
   const install = commands.indexOf("npm ci --ignore-scripts");
@@ -91,17 +72,6 @@ export function validateCi(githubSource, gitlabSource) {
       "GitHub dependency audit, supply, and common verification are out of order",
     );
   }
-  if (
-    job.env?.DDWG_HOSTED_RENDERER_CONFIG !== renderer ||
-    job.env?.PUPPETEER_SKIP_DOWNLOAD !== "true"
-  ) {
-    throw new Error("GitHub hosted renderer selection is missing");
-  }
-  const verificationStep = steps.find((step) => step.run?.trim() === verifier);
-  if (!verificationStep?.env?.PUPPETEER_EXECUTABLE_PATH) {
-    throw new Error("GitHub verifier lacks the managed Chrome path");
-  }
-
   const gitlabJob = gitlab["docs:verify"];
   if (
     !gitlabJob ||
@@ -115,30 +85,9 @@ export function validateCi(githubSource, gitlabSource) {
   if (String(gitlabJob.variables?.GIT_DEPTH) !== "0") {
     throw new Error("GitLab must fetch full history and release tags");
   }
-  if (
-    gitlabJob.variables?.DDWG_HOSTED_RENDERER_CONFIG !== renderer ||
-    gitlabJob.variables?.PUPPETEER_SKIP_DOWNLOAD !== "true"
-  ) {
-    throw new Error("GitLab hosted renderer selection is missing");
-  }
   const before = gitlabJob.before_script;
   if (
     !Array.isArray(before) ||
-    !before.some((command) =>
-      /apt-get install.*\bgit\b.*\bchromium\b/u.test(command),
-    )
-  ) {
-    throw new Error("GitLab runtime must supply Git and Chromium");
-  }
-  if (
-    gitlabJob.variables?.PUPPETEER_EXECUTABLE_PATH ||
-    !before.includes(
-      'export PUPPETEER_EXECUTABLE_PATH="$(command -v chromium)"',
-    )
-  ) {
-    throw new Error("GitLab must use runtime-discovered Chromium");
-  }
-  if (
     before.indexOf("npm ci --ignore-scripts") < 0 ||
     before.indexOf("npm ci --ignore-scripts") >= before.indexOf(auditCommand) ||
     before.indexOf(auditCommand) >=
@@ -155,7 +104,6 @@ export function validateCi(githubSource, gitlabSource) {
     hosts: hostMatrix,
     verifier,
     audit: auditCommand,
-    browser: "runtime-discovered",
   };
 }
 

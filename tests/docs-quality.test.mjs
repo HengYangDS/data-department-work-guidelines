@@ -10,9 +10,7 @@ import {
   checkSpelling,
   documentMetadata,
   formatTargets,
-  mermaidFences,
   repositoryFileUri,
-  rendererConfig,
   textViolations,
 } from "../tools/docs/content.mjs";
 import {
@@ -74,19 +72,6 @@ test("document metadata rejects a duplicate key", () => {
   assert.throws(
     () => documentMetadata("docs/fixture.md", source),
     /invalid document metadata/u,
-  );
-});
-
-test("Mermaid extraction checks every present fence, not a fixed count", () => {
-  assert.equal(mermaidFences("docs/fixture.md", "# Fixture\n").length, 0);
-  assert.equal(
-    mermaidFences("docs/fixture.md", "```mermaid\ngraph TD\n A-->B\n```\n")
-      .length,
-    1,
-  );
-  assert.throws(
-    () => mermaidFences("docs/fixture.md", "```mermaid\ngraph TD\n"),
-    /unbalanced/u,
   );
 });
 
@@ -159,22 +144,12 @@ test("current decision tree rejects date names, superseded records, and method c
   });
 });
 
-test("current Change tree refuses obsolete scope companions", () => {
+test("a private Change scope companion cannot return", () => {
   fixture((directory) => {
-    const archive = path.join(
-      directory,
-      "openspec",
-      "changes",
-      "archive",
-      "fixture",
-    );
-    mkdirSync(archive, { recursive: true });
-    writeFileSync(
-      path.join(archive, "scope.toml"),
-      "schema_version = 1\n",
-      "utf8",
-    );
-    assert.throws(() => checkNoScope(directory), /scope companions/u);
+    const change = path.join(directory, "openspec", "changes", "fixture");
+    mkdirSync(change, { recursive: true });
+    writeFileSync(path.join(change, "scope.toml"), "schema_version = 1\n");
+    assert.throws(() => checkNoScope(directory), /scope companion/u);
   });
 });
 
@@ -225,22 +200,6 @@ test("current Markdown inventory excludes official archives, not live topics", (
   );
 });
 
-test("renderer selection accepts only the CI-owned override", () => {
-  assert.throws(() => rendererConfig("other/puppeteer.json"), /unsupported/u);
-  assert.match(
-    rendererConfig(".config/tools/mermaid-hosted.json"),
-    /mermaid-hosted\.json$/u,
-  );
-  const previous = process.env.PUPPETEER_EXECUTABLE_PATH;
-  try {
-    process.env.PUPPETEER_EXECUTABLE_PATH = "/test/browser";
-    assert.equal(rendererConfig(""), "");
-  } finally {
-    if (previous === undefined) delete process.env.PUPPETEER_EXECUTABLE_PATH;
-    else process.env.PUPPETEER_EXECUTABLE_PATH = previous;
-  }
-});
-
 test("the public check command rejects incomplete-mode waivers", () => {
   const result = spawnSync(
     process.execPath,
@@ -252,7 +211,7 @@ test("the public check command rejects incomplete-mode waivers", () => {
     },
   );
   assert.notEqual(result.status, 0);
-  assert.match(result.stderr, /unknown argument/u);
+  assert.match(result.stderr, /check accepts no arguments/u);
 });
 
 test("English and spacing failures identify a file and line", () => {

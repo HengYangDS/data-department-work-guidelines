@@ -22,25 +22,7 @@ openspec = "openspec"
 [openspec]
 # ETHOS owns this repository-relative admission contract. Changed paths matching
 # these patterns must be attributed to one selected active official Change.
-material_paths = [
-  ".config/**",
-  ".ethos/**",
-  ".github/**",
-  ".gitattributes",
-  ".gitignore",
-  ".gitlab-ci.yml",
-  "AGENTS.md",
-  "CHANGELOG.md",
-  "CONTRIBUTING.md",
-  "README.md",
-  "VERSION",
-  "docs/**",
-  "openspec/**",
-  "package-lock.json",
-  "package.json",
-  "tests/**",
-  "tools/**",
-]
+material_paths = ["**"]
 
 [proof]
 code_correctness_gates = ["docs-integrity", "markdown-format"]
@@ -54,7 +36,7 @@ id = "docs-integrity"
 kind = "test"
 command = ["node", "tools/docs/cli.mjs", "check"]
 asset_classes = ["markdown-docs"]
-dimensions = ["behavior", "documentation", "links", "rendering"]
+dimensions = ["behavior", "documentation", "links"]
 execution_mode = "subprocess"
 evidence_class = "proof"
 trust_bearing = true

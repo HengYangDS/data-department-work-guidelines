@@ -1,8 +1,8 @@
-import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
 import { parse as parseToml } from "smol-toml";
 import { documentMetadata } from "./content.mjs";
-import { filePath, gitFiles, readText, root } from "./runtime.mjs";
+import { readText, root } from "./runtime.mjs";
 
 const requiredSections = [
   "Context",
@@ -278,27 +278,8 @@ export function checkProfile(repository = root) {
       );
     }
   }
-  const material = profile.openspec?.material_paths;
-  if (
-    !Array.isArray(material) ||
-    !material.includes(".gitattributes") ||
-    !material.includes("tools/**") ||
-    !material.includes("docs/**") ||
-    !material.includes("openspec/**") ||
-    new Set(material).size !== material.length
-  ) {
-    throw new Error("profile material paths are missing or duplicated");
-  }
-  const retired = new Set([
-    ".agents/**",
-    ".githooks/**",
-    "evidence/**",
-    "evolution/**",
-    "guidelines.md",
-    "scripts/**",
-  ]);
-  if (material.some((pattern) => retired.has(pattern))) {
-    throw new Error("profile contains retired material roots");
+  if (JSON.stringify(profile.openspec?.material_paths) !== '["**"]') {
+    throw new Error("profile must admit all tracked candidates");
   }
   console.log(
     "PASS ETHOS profile: one Change authority and two portable proof gates",
@@ -310,47 +291,12 @@ export function checkNoScope(repository = root) {
   const companions = filesUnder(changes).filter(
     (file) => path.basename(file) === "scope.toml",
   );
-  if (companions.length)
+  if (companions.length) {
     throw new Error(
-      `obsolete scope companions remain: ${companions.join(", ")}`,
-    );
-  console.log("PASS official Change tree: no scope companion");
-}
-
-export function checkPortableEntrypoints(files = gitFiles()) {
-  const obsolete = files.filter(
-    (relative) =>
-      relative.endsWith(".sh") ||
-      relative.startsWith("scripts/") ||
-      relative.startsWith(".githooks/") ||
-      relative.startsWith("tools/ci/scripts/"),
-  );
-  if (obsolete.length) {
-    throw new Error(`obsolete shell or hook carriers: ${obsolete.join(", ")}`);
-  }
-  console.log("PASS portable repository entrypoints: no legacy shell carriers");
-}
-
-export function checkConfigPlacement(files = gitFiles()) {
-  const required = [
-    ".config/tools/cspell.json",
-    ".config/tools/lychee.json",
-    ".config/tools/markdownlint-cli2.yaml",
-    ".config/tools/mermaid-hosted.json",
-    ".config/tools/mermaid-local.json",
-  ];
-  const old = files.filter(
-    (relative) =>
-      [".markdownlint-cli2.yaml", ".prettierignore"].includes(relative) ||
-      relative.startsWith("tools/ci/config/"),
-  );
-  const missing = required.filter((relative) => !files.includes(relative));
-  if (old.length || missing.length) {
-    throw new Error(
-      `redundant tool configuration or missing .config owner: ${[...old, ...missing].join(", ")}`,
+      `private scope companion remains: ${companions.join(", ")}`,
     );
   }
-  console.log("PASS tool configuration placement: one .config owner");
+  console.log("PASS Change boundary: no private scope companion");
 }
 
 export function checkLineEndingAttributes(source = readText(".gitattributes")) {

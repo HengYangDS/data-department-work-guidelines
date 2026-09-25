@@ -37,13 +37,13 @@ being relabeled as formal SemVer releases.
 - Removed non-official `scope.toml` companions, redundant placeholders, and a
   superseded decision record from the present tree. Git retains their original
   objects without retroactive lifecycle certification.
+- Removed browser-backed rendering and its CI supply chain after the sole
+  diagram proved redundant with the surrounding guidance.
 
 ### Fixed
 
 - Bound both hosted documentation checks to real Git checkouts and a common
-  verification sequence with runtime-discovered Chromium, while keeping local,
-  GitLab, and GitHub results separate.
-- Normalized tracked text checkout to LF and pinned a stable Chrome for Testing
-  build so the macOS installer preserves its app bundle.
+  verification sequence while keeping local, GitLab, and GitHub results separate.
+- Normalized tracked text checkout to LF across supported hosts.
 
 [Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/bc9cc58d29ff10c5e599fc820f2f3b1381d0f1bd...main

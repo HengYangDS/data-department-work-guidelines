@@ -1,7 +1,6 @@
 import {
   existsSync,
   lstatSync,
-  mkdirSync,
   mkdtempSync,
   readFileSync,
   realpathSync,
@@ -35,9 +34,6 @@ const textExtensions = new Set([
   ".mjs",
   ".js",
 ]);
-const hostedConfig = ".config/tools/mermaid-hosted.json";
-const systemConfig = ".config/tools/mermaid-local.json";
-
 export function formatTargets(files = gitFiles()) {
   return [
     ...currentMarkdown(files),
@@ -115,73 +111,9 @@ export function documentMetadata(relative, source) {
   return metadata;
 }
 
-export function mermaidFences(relative, source) {
-  const diagrams = [];
-  const lines = source.split(/\r?\n/u);
-  let opening = null;
-  for (let index = 0; index < lines.length; index += 1) {
-    const line = lines[index];
-    if (!opening) {
-      const match = /^ {0,3}(`{3,}|~{3,})(.*)$/u.exec(line);
-      if (match) {
-        opening = {
-          char: match[1][0],
-          length: match[1].length,
-          info: match[2].trim(),
-          start: index + 1,
-          body: [],
-        };
-      }
-      continue;
-    }
-    const closing = new RegExp(
-      `^ {0,3}${opening.char}{${opening.length},}\\s*$`,
-      "u",
-    );
-    if (closing.test(line)) {
-      if (opening.info.split(/\s+/u)[0] === "mermaid") {
-        diagrams.push({
-          relative,
-          line: opening.start,
-          source: `${opening.body.join("\n")}\n`,
-        });
-      }
-      opening = null;
-    } else {
-      opening.body.push(line);
-    }
-  }
-  if (opening) {
-    throw new Error(`unbalanced fenced block: ${relative}:${opening.start}`);
-  }
-  return diagrams;
-}
-
-export function rendererConfig(selection) {
-  if (selection && selection !== hostedConfig) {
-    throw new Error(`unsupported hosted renderer config: ${selection}`);
-  }
-  if (selection) {
-    const payload = JSON.parse(readText(selection));
-    if (
-      JSON.stringify(payload) !== JSON.stringify({ args: ["--no-sandbox"] })
-    ) {
-      throw new Error(
-        "hosted renderer config must contain only the CI compatibility argument",
-      );
-    }
-    return filePath(selection);
-  }
-  return process.env.PUPPETEER_EXECUTABLE_PATH ? "" : filePath(systemConfig);
-}
-
-export function checkDocuments({ renderDir, hostedRendererConfig = "" } = {}) {
-  if (existsSync(filePath("guidelines.md"))) {
-    throw new Error("retired root guidelines.md remains in current topology");
-  }
+export function checkDocumentMetadata() {
   const files = currentMarkdown();
   const subjects = new Map();
-  const diagrams = [];
   for (const relative of files) {
     const source = readText(relative);
     if (relative.startsWith("docs/")) {
@@ -193,37 +125,8 @@ export function checkDocuments({ renderDir, hostedRendererConfig = "" } = {}) {
       }
       subjects.set(subject, relative);
     }
-    diagrams.push(...mermaidFences(relative, source));
   }
-  const ownedDirectory = !renderDir;
-  const output = renderDir
-    ? path.resolve(renderDir)
-    : mkdtempSync(temporaryRoot());
-  mkdirSync(output, { recursive: true });
-  try {
-    const config = rendererConfig(hostedRendererConfig);
-    for (const [index, diagram] of diagrams.entries()) {
-      const stem = `${diagram.relative.replace(/[^a-zA-Z0-9-]/gu, "--")}-${index + 1}`;
-      const input = path.join(output, `${stem}.mmd`);
-      const target = path.join(output, `${stem}.svg`);
-      writeFileSync(input, diagram.source, "utf8");
-      const args = ["-i", input, "-o", target, "-b", "white"];
-      if (config) args.push("--puppeteerConfigFile", config);
-      runNodeTool("@mermaid-js/mermaid-cli", "mmdc", args, {
-        timeout: 120_000,
-      });
-      if (!existsSync(target) || !readFileSync(target).length) {
-        throw new Error(
-          `Mermaid produced no SVG: ${diagram.relative}:${diagram.line}`,
-        );
-      }
-    }
-    console.log(
-      `PASS documents: ${files.length} Markdown files, ${diagrams.length} rendered diagrams`,
-    );
-  } finally {
-    if (ownedDirectory) rmSync(output, { recursive: true, force: true });
-  }
+  console.log(`PASS document metadata: ${subjects.size} current pages`);
 }
 
 export function repositoryFileUri(uri) {

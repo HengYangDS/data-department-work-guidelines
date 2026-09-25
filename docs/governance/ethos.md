@@ -95,7 +95,7 @@ branch and tag boundaries; they contain no operator key or host path.
 `npm run verify` invokes one [portable quality entry](../../tools/docs/cli.mjs).
 It checks formatting for Markdown, code, JSON, and YAML; TOML syntax; Markdown
 lint; CSpell spelling; offline, version-checked lychee links and fragments;
-metadata; every present Mermaid diagram; English and spacing; repository
+metadata; English and spacing; repository
 boundaries; official OpenSpec; version identity; CI topology; and negative
 tests. Git's native `.gitattributes` rule keeps tracked text at LF on every
 host. The [supply manifest](../../.config/tools/lychee.json) pins lychee assets
@@ -106,8 +106,8 @@ installation is not qualified until its full dependency bundle has been tested.
 Both hosted CI planes run `npm audit --audit-level=moderate` during online tool
 supply; local source verification does not require network access.
 
-GitHub runs Linux, macOS, and Windows hosted jobs with a pinned stable Chrome
-for Testing build; GitLab selects the `ci-linux-arm64-docker` runner. Workflow
+GitHub runs Linux, macOS, and Windows hosted jobs; GitLab selects the
+`ci-linux-arm64-docker` runner. Workflow
 declarations alone are not hosted success. Markdown and configuration use one
 blank line between blocks. Prettier and the repository check enforce their
 supported parts. `build/`,

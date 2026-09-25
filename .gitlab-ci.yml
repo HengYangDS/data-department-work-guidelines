@@ -9,11 +9,7 @@ docs:verify:
   interruptible: true
   variables:
     GIT_DEPTH: "0"
-    DDWG_HOSTED_RENDERER_CONFIG: ".config/tools/mermaid-hosted.json"
-    PUPPETEER_SKIP_DOWNLOAD: "true"
   before_script:
-    - apt-get update && apt-get install --yes --no-install-recommends git chromium ca-certificates
-    - 'export PUPPETEER_EXECUTABLE_PATH="$(command -v chromium)"'
     - npm ci --ignore-scripts
     - npm audit --audit-level=moderate
     - node tools/ci/install-lychee.mjs --download

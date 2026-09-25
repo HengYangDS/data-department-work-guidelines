@@ -22,8 +22,9 @@
 - [x] 3.1 Build one locked, shell-independent check entry under `tools/`; prove
       its command behavior with positive and negative tests.
 - [x] 3.2 Consolidate formatting, lint, spelling, offline lychee links,
-      diagrams, metadata, layout, English, boundary, and rollout checks; test
-      failures and clear the locked dependency audit.
+      metadata, layout, English, and repository boundaries. Remove redundant
+      rendering and shape guards, then test failures and the locked dependency
+      audit without running any proof property twice.
 - [ ] 3.3 Make GitLab and GitHub supply runtimes and invoke the same check;
       verify workflow contracts and hosted runs at the published source.
 - [ ] 3.4 Exercise the full local check on macOS, Linux, and Windows, or mark an

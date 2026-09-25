@@ -3,9 +3,10 @@
 ## Why
 
 The guidelines now have a useful English reading route, but the repository is
-not yet a dependable example of its own advice. Obsolete non-OpenSpec scope
-files remain in the current tree; checks are spread across shell scripts and
-platform assumptions; some current specifications still describe ETHOS rather
+not yet a dependable example of its own advice. At the start of this Change,
+obsolete non-OpenSpec scope files remained in the current tree; checks were
+spread across shell scripts and platform assumptions; some specifications
+described ETHOS rather
 than this adopter. A clean reading experience is not enough if a new maintainer
 cannot reproduce its quality checks or distinguish current rules from old
 implementation history.
@@ -17,8 +18,8 @@ implementation history.
   redundant files from the current tree. Git retains the original objects; the
   cleanup does not certify or rewrite past work.
 - Give document verification one portable, locked entrypoint. Format, Markdown
-  lint, spelling, links, diagram rendering, repository-specific boundaries, and
-  their negative tests must have clear owners and run without a POSIX shell as
+  lint, spelling, links, repository-specific boundaries, and their negative
+  tests must have clear owners and run without a POSIX shell as
   the required interface. CI may adapt to each provider's runtime but must
   invoke the same repository check and audit locked dependencies.
 - Reconcile current specifications, navigation, decision records, configuration,

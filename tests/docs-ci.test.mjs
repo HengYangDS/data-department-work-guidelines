@@ -10,26 +10,11 @@ test("both providers invoke one verifier on declared hosts", () => {
   const result = validateCi(github, gitlab);
   assert.equal(result.verifier, "npm run verify");
   assert.equal(result.audit, "npm audit --audit-level=moderate");
-  assert.equal(result.browser, "runtime-discovered");
   assert.deepEqual(result.hosts, [
     "ubuntu-latest",
     "macos-latest",
     "windows-latest",
   ]);
-});
-
-test("GitLab cannot pin a host Chromium path", () => {
-  assert.throws(
-    () =>
-      validateCi(
-        github,
-        gitlab.replace(
-          'export PUPPETEER_EXECUTABLE_PATH="$(command -v chromium)"',
-          "export PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium",
-        ),
-      ),
-    /runtime-discovered Chromium/u,
-  );
 });
 
 test("both providers refuse to skip the dependency audit", () => {
@@ -54,18 +39,10 @@ test("both providers refuse to skip the dependency audit", () => {
   );
 });
 
-test("macOS Chrome supply preserves the app bundle through an exact version", () => {
-  assert.throws(
-    () => validateCi(github.replace("154.0.8037.57", "stable"), gitlab),
-    /version-pinned stable Chrome/u,
-  );
-});
-
-test("CI contract refuses an inline browser sandbox override", () => {
-  assert.throws(
-    () => validateCi(`${github}\n# --no-sandbox\n`, gitlab),
-    /inline/u,
-  );
+test("both providers supply tools without a browser installation", () => {
+  assert.doesNotMatch(github, /setup-chrome|PUPPETEER|mermaid/u);
+  assert.doesNotMatch(gitlab, /chromium|PUPPETEER|mermaid|apt-get/u);
+  assert.equal(validateCi(github, gitlab).verifier, "npm run verify");
 });
 
 test("CI contract refuses a missing checkout and a changed verifier", () => {

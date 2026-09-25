@@ -2,9 +2,10 @@
 
 ## Context
 
-The accepted source already has a short repository entry and a seven-question
-reader map. It also has a locked Node toolchain, twenty tracked shell files, two
-redundant OpenSpec placeholders, nine archived non-official scope companions,
+At the start of this Change, the accepted source had a short repository entry
+and a seven-question reader map. It also had a locked Node toolchain, twenty
+tracked shell files, two redundant OpenSpec placeholders, nine archived
+non-official scope companions,
 and current quality checks whose orchestration is split between `scripts/` and
 `tools/ci/scripts/`. The active ETHOS runtime at this repository's common Git
 directory is built from the current ETHOS `dev` source. Its material attribution
@@ -45,9 +46,20 @@ directories. It will fail with a named missing dependency rather than silently
 install from the network. Platform-specific tool acquisition remains an
 installation concern and is tested on each supported host. A shell wrapper is
 not a portability layer; merely moving it from `scripts/` to `tools/` would
-preserve the defect. Provider YAML can supply the runtime and browser, then call
-the same entrypoint. The exact tool versions and browser inputs remain locked or
-explicitly checked.
+preserve the defect. Provider YAML supplies the Node runtime and pinned link
+checker, then calls the same entrypoint. The exact tool versions remain locked
+or explicitly checked.
+
+### Remove the browser chain without weakening the reader rule
+
+The only Mermaid diagram restated the surrounding learning loop. It did not
+carry a unique decision, condition, or exception. Removing it also removes
+Mermaid CLI, Puppeteer, browser installation, and two renderer configurations
+from the required verification path. This is not a ban on visual explanation:
+a later visual needs a demonstrated reader benefit and an appropriate check
+before its rendered form is claimed as verified. The two default proof gates
+also split work cleanly: `docs-integrity` checks document behavior and
+`markdown-format` owns formatting; the standalone verifier runs both once.
 
 ### Call ETHOS natively; do not keep a second hook plane
 
@@ -124,7 +136,7 @@ and hosted CI must be re-established before a release tag is created.
 
 ### Separate source, delivery, and use evidence
 
-Local format, lint, render, OpenSpec, and ETHOS proof qualify source at an exact
+Local format, lint, OpenSpec, and ETHOS proof qualify source at an exact
 revision. GitLab and GitHub each need an observed ref and CI result at that
 revision. A real team task needs its own named subject, time, reviewer, and
 outcome. These observations are not copied into a new repository evidence
@@ -142,16 +154,12 @@ open.
 - Local lychee validation checks the executable version, not its binary digest.
   CI supply verifies the declared asset digest; do not call an arbitrary local
   installation checksum-pinned.
-- Host browsers and link checkers differ. Pin the actual tool input, run the
+- Host link checkers may differ. Pin the actual tool input, run the
   complete graph on each claimed platform, and report an untested platform as
   unqualified rather than calling the design portable by inspection.
 - Windows may check out every text file with CRLF under its host default;
-  `.gitattributes` gives Git the repository's LF rule. On macOS, the Chrome
-  setup action's channel installer can drop the `.app` path component, as its
-  [upstream report](https://github.com/browser-actions/setup-chrome/issues/658)
-  documents. Select an exact officially verified stable Chrome for Testing
-  version so the version installer preserves the bundle. Hosted runs must still
-  prove both repairs.
+  `.gitattributes` gives Git the repository's LF rule. Hosted runs must still
+  prove that repair on the selected source.
 - Removing old hooks or wrappers can expose an unguarded command path. Compare
   the installed native hook graph and run negative cases before deletion.
 - A historical branch edition could be mistaken for a formal release. Do not
@@ -168,7 +176,8 @@ open.
 2. Inventory each current rule, executable, configuration, archive companion,
    and inbound consumer. Remove only proved duplicate or obsolete carriers.
 3. Replace shell-required repository checks with the locked entrypoint and
-   focused tests. Update both CI projections and current instructions together.
+   focused tests. Remove browser supply when no current visual requires it;
+   update both CI projections and current instructions together.
 4. Bind `VERSION`, the charter, and the curated changelog. Test invalid
    categories, versions, dates, links, tag drift, and the pending-release case.
 5. Run local checks and hosted jobs at exact source objects. Accept and publish

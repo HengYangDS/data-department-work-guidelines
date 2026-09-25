@@ -33,16 +33,6 @@ on one person's tacit knowledge, could cause material loss if forgotten, or
 will be repeated by Agents needs a reusable prevention mechanism. Choose its
 lightest effective owner rather than another report.
 
-```mermaid
-flowchart LR
-    O["Observation"] --> H["Hypothesis"] --> T["Trial"] --> V{"Net benefit?"}
-    V -- "Yes" --> A["Adopt and review"]
-    V -- "No" --> R["Revise or reject"]
-    A --> D{"Still useful?"}
-    D -- "No" --> X["Retire"]
-    D -- "Yes" --> A
-```
-
 A reusable asset may be a test, monitor, checklist, decision record, example,
 rule, platform capability, or clearer ownership interface. Choose the lightest
 option that can be found, used, and maintained. Link to an existing authority

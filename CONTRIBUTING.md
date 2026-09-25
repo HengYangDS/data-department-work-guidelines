@@ -17,8 +17,7 @@ repository does not maintain a competing hook implementation.
 Install the locked Node dependencies with `npm ci --ignore-scripts`. Use lychee
 0.24.2 from your platform's native installation owner or install a previously
 supplied, SHA-256-pinned asset with
-`node tools/ci/install-lychee.mjs --asset PATH`. Supply Chrome locally, or set
-`PUPPETEER_EXECUTABLE_PATH` to the installed browser. Then run:
+`node tools/ci/install-lychee.mjs --asset PATH`. Then run:
 
 ```text
 npm run verify
@@ -26,9 +25,8 @@ ethos plan --changed --json
 ```
 
 `npm run verify` checks Markdown, code, JSON, and YAML formatting, TOML syntax,
-Markdown lint, metadata, every present
-diagram, offline links and fragments, English text and spelling, decision and
-navigation boundaries, the official OpenSpec workspace, the changelog/version
+Markdown lint, metadata, offline links and fragments, English text and spelling,
+decision and navigation boundaries, the official OpenSpec workspace, the changelog/version
 contract, CI declarations, and negative tests. `npm run prose` runs the locked
 spelling check alone. Run `npm audit --audit-level=moderate` separately when
 online before source acceptance; both hosted CI planes require it. The offline
@@ -37,7 +35,7 @@ requires a prefilled npm cache and the pinned lychee asset; test that path
 before claiming offline distribution. Git's native `.gitattributes` rule checks
 out tracked text with LF even on Windows; do not replace it with a host-specific
 Git setting.
-Keep `node_modules/`, browser state, and generated output out of Git.
+Keep `node_modules/` and generated output out of Git.
 
 ## Commit and release
 

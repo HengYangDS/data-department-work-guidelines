@@ -12,10 +12,8 @@ import path from "node:path";
 import { test } from "node:test";
 import { parse as parseToml } from "smol-toml";
 import {
-  checkConfigPlacement,
   checkLineEndingAttributes,
   checkNavigation,
-  checkPortableEntrypoints,
   checkProfile,
 } from "../tools/docs/governance.mjs";
 import { root } from "../tools/docs/runtime.mjs";
@@ -69,17 +67,18 @@ test("profile rejects a third proof gate and an old shell entrypoint", () => {
   });
 });
 
-test("profile rejects material patterns for retired repository roots", () => {
+test("profile admits every tracked candidate without an enumerated path list", () => {
   fixture((directory) => {
     const file = path.join(directory, ".ethos", "profile.toml");
     const original = readFileSync(file, "utf8");
     writeFileSync(
       file,
-      original.replace('  "tools/**",', '  "scripts/**",\n  "tools/**",'),
+      original.replace(
+        'material_paths = ["**"]',
+        'material_paths = ["docs/**"]',
+      ),
     );
-    assert.throws(() => checkProfile(directory), /retired material roots/u);
-    writeFileSync(file, original.replace('  ".gitattributes",\n', ""));
-    assert.throws(() => checkProfile(directory), /material paths/u);
+    assert.throws(() => checkProfile(directory), /all tracked candidates/u);
   });
 });
 
@@ -105,23 +104,6 @@ test("navigation rejects a missing map, repeated root topic, and missing reader 
   });
 });
 
-test("portable entrypoints reject revived shell wrappers or tracked hooks", () => {
-  assert.doesNotThrow(() =>
-    checkPortableEntrypoints(["tools/docs/cli.mjs", "docs/README.md"]),
-  );
-  for (const file of [
-    "scripts/validate-docs.sh",
-    ".githooks/pre-push",
-    "tools/ci/scripts/wrapper",
-    "tests/legacy.sh",
-  ]) {
-    assert.throws(
-      () => checkPortableEntrypoints(["tools/docs/cli.mjs", file]),
-      /obsolete shell or hook carriers/u,
-    );
-  }
-});
-
 test("native commit policy rejects unscoped or vague subjects", () => {
   const workspace = parseToml(
     readFileSync(path.join(root, ".ethos/workspace.toml"), "utf8"),
@@ -143,27 +125,6 @@ test("native commit policy rejects unscoped or vague subjects", () => {
     "fix(quality): vague. ",
   ]) {
     assert.equal(subject.test(invalid), false, invalid);
-  }
-});
-
-test("tool configuration cannot drift back to redundant root files", () => {
-  const current = [
-    ".config/tools/markdownlint-cli2.yaml",
-    ".config/tools/mermaid-hosted.json",
-    ".config/tools/mermaid-local.json",
-    ".config/tools/lychee.json",
-    ".config/tools/cspell.json",
-  ];
-  assert.doesNotThrow(() => checkConfigPlacement(current));
-  for (const old of [
-    ".markdownlint-cli2.yaml",
-    ".prettierignore",
-    "tools/ci/config/mermaid-puppeteer-hosted.json",
-  ]) {
-    assert.throws(
-      () => checkConfigPlacement([...current, old]),
-      /redundant tool configuration/u,
-    );
   }
 });
 

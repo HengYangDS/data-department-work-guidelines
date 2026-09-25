@@ -4,8 +4,9 @@
 
 ### Requirement: ETHOS material-path attribution remains product-owned
 
-The repository SHALL declare a non-empty `[openspec].material_paths` list.
-Prewrite, changed planning, and proof SHALL attribute each matching fresh path
+The repository SHALL declare `[openspec].material_paths = ["**"]` so newly
+tracked candidates are not omitted by an enumerated path list. Prewrite,
+changed planning, and proof SHALL attribute each fresh path
 to the same single selected active official OpenSpec Change. The repository
 SHALL NOT use `scope.toml`, a Commitment field, an archive, or another local
 carrier as a second authorization mechanism. Non-official scope companions
@@ -29,6 +30,13 @@ current contract.
   missing or ambiguous Change diagnostic
 - **AND THEN** historical carriers and repository-local tests do not substitute
   for active intent.
+
+#### Scenario: A newly introduced tracked path is material
+
+- **WHEN** a candidate adds a tracked file outside the repository's former
+  enumerated roots
+- **THEN** ETHOS still requires attribution to one active official Change
+- **AND THEN** no local path-list validator is needed to patch the omission.
 
 #### Scenario: An obsolete companion is removed
 
@@ -76,7 +84,7 @@ unavailable; a raw push SHALL NOT substitute for a product refusal.
 Each hosted documentation job SHALL invoke the same shell-independent
 repository-owned verifier from a real Git checkout. GitHub SHALL check out on
 its managed runner before runtime setup and explicitly select the locked Node
-major version. GitLab SHALL supply Git and the same declared toolchain before
+major version. GitLab SHALL provide Git and the same declared toolchain before
 verification. Provider setup MAY differ; the document-quality command and its
 repository-relative inputs SHALL not. Action references SHALL bind immutable
 maintained releases. A workflow declaration alone SHALL NOT count as hosted-CI
@@ -92,8 +100,8 @@ success.
 #### Scenario: GitLab Docker runtime is configured
 
 - **WHEN** the repository validates the GitLab documentation workflow
-- **THEN** its prerequisite package installation includes Git before the shared
-  verifier runs
+- **THEN** Git is available to the shared verifier without requiring a browser
+  package installation
 - **AND THEN** its verifier command is identical to the GitHub projection.
 
 #### Scenario: Hosted evidence remains independent
@@ -106,7 +114,7 @@ success.
 
 GitHub documentation verification SHALL run the same complete verifier on
 GitHub-hosted Linux, macOS, and Windows runners with immutable maintained
-Actions, Node 22, and an exact stable Chrome for Testing version. It SHALL NOT
+Actions and Node 22. It SHALL NOT
 use a local self-hosted runner or host path. GitLab SHALL select the canonical
 `ci-linux-arm64-docker` capability tag; a separately owned runner must actually
 expose that tag before hosted success is claimed. The two providers' runtime
@@ -116,8 +124,8 @@ independent. Repository YAML SHALL NOT claim runner registration.
 #### Scenario: Repository workflow bindings are statically valid
 
 - **WHEN** the repository validates its GitHub and GitLab documentation jobs
-- **THEN** GitHub selects its three-OS hosted matrix, checks out first,
-  configures Node 22, and binds Puppeteer to managed Chrome
+- **THEN** GitHub selects its three-OS hosted matrix, checks out first, and
+  configures Node 22
 - **AND THEN** GitLab selects `ci-linux-arm64-docker` and both jobs invoke the
   same verifier.
 
@@ -160,37 +168,6 @@ transition.
 - **THEN** selected identities are corrected and affected descendants re-signed
 - **AND THEN** proof, remote refs, and hosted CI are refreshed for replacement
   object IDs before tagging.
-
-### Requirement: Hosted rendering uses one validated launch configuration
-
-The documentation adopter SHALL retain sandboxed Mermaid rendering by default.
-Hosted verification SHALL select the same repository-owned Puppeteer launch
-configuration through a repository-relative environment input. That
-configuration SHALL be checked in, portable, and limited to the hosted Chrome
-compatibility argument. Provider workflow YAML SHALL NOT inline a no-sandbox
-command. The single verifier SHALL validate the selection before rendering
-every present Mermaid diagram. Local configuration checks SHALL NOT be reported
-as hosted-CI success.
-
-#### Scenario: Local rendering has no hosted override
-
-- **WHEN** the portable verifier runs without a hosted renderer selection
-- **THEN** it does not select the no-sandbox hosted configuration
-- **AND THEN** local Chrome sandbox behavior remains unchanged.
-
-#### Scenario: A hosted provider selects the common verifier
-
-- **WHEN** GitHub or GitLab runs documentation verification
-- **THEN** its job provides the same repository-relative hosted configuration
-  before invoking `npm run verify`
-- **AND THEN** every diagram in that invocation uses that validated selection.
-
-#### Scenario: A hosted selection is unsupported
-
-- **WHEN** a provider names a different configuration or puts a no-sandbox
-  command in workflow YAML
-- **THEN** the repository quality check rejects the projection
-- **AND THEN** no hosted success is inferred from that rejection.
 
 ### Requirement: Versioned guideline releases have one checked identity
 
@@ -245,11 +222,13 @@ untagged branch editions SHALL NOT be retroactively labeled as formal releases.
 
 ### Requirement: Hosted Mermaid rendering uses an explicit CI-only launch configuration
 
-**Reason:** Its required scenarios describe a nested shell rollout validator
-that no longer exists in the portable single-verifier design.
+**Reason:** The sole diagram repeated surrounding prose. Keeping browser-backed
+rendering for it imposed a separate supply chain on every local and hosted
+verification path without a distinct reader benefit.
 
-**Migration:** The added hosted-rendering requirement retains the sandbox
-boundary while applying one validated configuration to every diagram.
+**Migration:** The diagram and renderer dependencies are removed together. A
+future visual that needs rendering requires its own justified, tested tool
+contract before its publication is claimed.
 
 ### Requirement: Candidate branch remains local-only
 
