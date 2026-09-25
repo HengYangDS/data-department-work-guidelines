@@ -63,7 +63,13 @@ delivery of a new SHA.
 Formal publication also requires ETHOS to verify the source commit's signature
 against the operator's own trusted public-key list. Neither private keys, that
 list, nor its host path belong in this repository. A raw push must not disguise
-a native publication refusal as success. GitLab's documentation job selects
+a native publication refusal as success. The
+[workspace policy](../../.ethos/workspace.toml) requires SSH signing for new
+commits, including an official archive commit. Each clone supplies its own
+local author and committer identity, public signing-key path, and protected
+external trust anchor; no person or host path is pinned in tracked policy.
+Inspect an archive commit's signature and attribution before accepting it.
+GitLab's documentation job selects
 `ci-linux-arm64-docker`; claim hosted success only after a matching runner
 actually passes at the SHA in question. The
 [release declaration](../../.ethos/release.toml) lists both peers.

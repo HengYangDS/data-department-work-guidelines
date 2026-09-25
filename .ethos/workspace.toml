@@ -14,3 +14,8 @@ work_branch_prefix = "work/"
 proposal_branch_prefix = "proposal/"
 release_mirror = "accepted_ff"
 canonical_sibling_worktrees = true
+
+[commit_policy]
+subject_pattern = "^.+$"
+signing_required = true
+signing_format = "ssh"

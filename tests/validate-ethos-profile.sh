@@ -52,6 +52,15 @@ if "docs/charter.md" not in normative:
 if any(not (root / path).is_file() for path in normative):
     raise SystemExit("profile names a missing normative topic")
 
+workspace = tomllib.loads((root / ".ethos/workspace.toml").read_text(encoding="utf-8"))
+commit_policy = workspace.get("commit_policy")
+if not isinstance(commit_policy, dict) or commit_policy != {
+    "subject_pattern": "^.+$",
+    "signing_required": True,
+    "signing_format": "ssh",
+}:
+    raise SystemExit("workspace must require SSH-signed commits without fixed identity")
+
 release = tomllib.loads((root / ".ethos/release.toml").read_text(encoding="utf-8"))
 if "release" in release or "attestation" in release:
     raise SystemExit("release policy retains unused legacy declarations")
@@ -80,6 +89,6 @@ if not (root / "guidelines.md").exists() and int(version.split(".", 1)[0]) < 3:
 print(
     "PASS ETHOS profile: default code-correctness gates="
     + ", ".join(expected_default)
-    + "; root binding is a separate repository-native validation"
+    + "; signed commits are declared without fixed identity"
 )
 PY
