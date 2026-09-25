@@ -2,8 +2,8 @@
 
 ## Purpose
 
-ETHOS SHALL keep the Quality And Determinism family cohesive and separate from adopter-specific
-semantics.
+Define the documentation repository's quality boundary: checks establish source
+properties, not Change authority, remote delivery, or team adoption.
 
 ## Requirements
 

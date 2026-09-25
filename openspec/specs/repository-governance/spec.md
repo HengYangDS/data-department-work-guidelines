@@ -2,8 +2,8 @@
 
 ## Purpose
 
-ETHOS SHALL keep the Repository Lifecycle Governance family cohesive and
-separate from adopter-specific semantics.
+Define this repository's Change, source-acceptance, and publication
+boundaries without creating a second authority beside ETHOS and official OpenSpec.
 
 ## Requirements
 

@@ -13,8 +13,7 @@ __pycache__/
 *.py[cod]
 
 # ETHOS local coordination state is host-local.
-.ethos/state/*
-!.ethos/state/.gitignore
+.ethos/state/
 
 # Local generated output and caches are not repository truth.
 .cache/

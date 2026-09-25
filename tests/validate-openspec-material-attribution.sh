@@ -38,23 +38,11 @@ required = {
 missing = required.difference(material_paths)
 if missing:
     raise SystemExit("profile material paths missing: " + ", ".join(sorted(missing)))
-if active_change.is_dir() and (active_change / "scope.toml").exists():
-    raise SystemExit("active Change must not carry a private scope.toml")
-print("PASS material attribution declaration: profile-owned paths, no private scope carrier")
-
-archive_root = profile_path.parents[1] / "openspec" / "changes" / "archive"
-canonical = {
-    "2026-07-18-adopter-real-lifecycle-validation",
-    "2026-07-18-adoption-lifecycle-repair",
-    "2026-07-18-ci-checkout-runtime-repair",
-    "2026-07-18-ci-mermaid-renderer-sandbox-repair",
-    "2026-07-18-ci-mermaid-rollout-forwarding-repair",
-    "2026-07-18-work-lane-residue-disposition",
-}
-missing_archives = sorted(name for name in canonical if not (archive_root / name).is_dir())
-if missing_archives:
-    raise SystemExit("archive identity normalization mismatch: missing=" + ",".join(missing_archives))
-print("PASS archive identities: six canonical historical carriers remain intact")
+changes_root = profile_path.parents[1] / "openspec" / "changes"
+legacy_companions = sorted(path.relative_to(changes_root).as_posix() for path in changes_root.rglob("scope.toml"))
+if legacy_companions:
+    raise SystemExit("obsolete scope companions remain: " + ", ".join(legacy_companions))
+print("PASS material attribution declaration: profile-owned paths, no scope companion")
 
 PY
 

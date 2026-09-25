@@ -12,6 +12,8 @@
     "@fission-ai/openspec": "1.13.1",
     "@mermaid-js/mermaid-cli": "11.16.0",
     "markdownlint-cli2": "0.22.0",
-    "prettier": "3.9.5"
+    "prettier": "3.9.5",
+    "smol-toml": "1.9.0",
+    "yaml": "2.9.1"
   }
 }
