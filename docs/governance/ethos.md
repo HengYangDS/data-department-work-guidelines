@@ -93,15 +93,18 @@ branch and tag boundaries; they contain no operator key or host path.
 ## Quality and local state
 
 `npm run verify` invokes one [portable quality entry](../../tools/docs/cli.mjs):
-locked Prettier, Markdown lint, offline version-checked lychee links and
-fragments,
-metadata, every present Mermaid diagram, English and spacing, repository
-boundaries, official OpenSpec, version identity, CI topology, and negative
+locked Prettier for Markdown, code, JSON, and YAML; TOML syntax; Markdown lint;
+CSpell spelling; offline version-checked lychee
+links and fragments, metadata, every present Mermaid diagram, English and
+spacing, repository boundaries, official OpenSpec, version identity, CI
+topology, and negative
 tests. The [supply manifest](../../.config/tools/lychee.json) pins lychee assets
 by platform and SHA-256; the CI installer verifies the downloaded digest. Local
 validation checks the executable version and never downloads an asset. Explicit
 CI supply and an offline `--asset` path are different operations. A cold offline
 installation is not qualified until its full dependency bundle has been tested.
+Both hosted CI planes run `npm audit --audit-level=moderate` during online tool
+supply; local source verification does not require network access.
 
 GitHub runs Linux, macOS, and Windows hosted jobs; GitLab selects the
 `ci-linux-arm64-docker` runner. Workflow declarations alone are not hosted

@@ -25,7 +25,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
     env:
-      DDWG_HOSTED_RENDERER_CONFIG: tools/ci/config/mermaid-puppeteer-hosted.json
+      DDWG_HOSTED_RENDERER_CONFIG: .config/tools/mermaid-hosted.json
       PUPPETEER_SKIP_DOWNLOAD: "true"
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -45,6 +45,9 @@ jobs:
 
       - name: Install locked documentation tools
         run: npm ci --ignore-scripts
+
+      - name: Audit locked dependencies
+        run: npm audit --audit-level=moderate
 
       - name: Install pinned lychee
         run: node tools/ci/install-lychee.mjs --download

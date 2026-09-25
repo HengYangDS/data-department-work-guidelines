@@ -10,7 +10,9 @@ import {
 import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
+import { parse as parseToml } from "smol-toml";
 import {
+  checkConfigPlacement,
   checkNavigation,
   checkPortableEntrypoints,
   checkProfile,
@@ -113,6 +115,51 @@ test("portable entrypoints reject revived shell wrappers or tracked hooks", () =
     assert.throws(
       () => checkPortableEntrypoints(["tools/docs/cli.mjs", file]),
       /obsolete shell or hook carriers/u,
+    );
+  }
+});
+
+test("native commit policy rejects unscoped or vague subjects", () => {
+  const workspace = parseToml(
+    readFileSync(path.join(root, ".ethos/workspace.toml"), "utf8"),
+  );
+  assert.equal(workspace.commit_policy.signing_required, true);
+  const subject = new RegExp(workspace.commit_policy.subject_pattern);
+  for (const valid of [
+    "fix(quality): bind fixture identity to its own repository",
+    "docs(guidance)!: restore risk-scaled work rules",
+    "chore(openspec): archive completed change",
+  ]) {
+    assert.equal(subject.test(valid), true, valid);
+  }
+  for (const invalid of [
+    "update docs",
+    "docs: change everything",
+    "WIP",
+    "fix(quality): ",
+    "fix(quality): vague. ",
+  ]) {
+    assert.equal(subject.test(invalid), false, invalid);
+  }
+});
+
+test("tool configuration cannot drift back to redundant root files", () => {
+  const current = [
+    ".config/tools/markdownlint-cli2.yaml",
+    ".config/tools/mermaid-hosted.json",
+    ".config/tools/mermaid-local.json",
+    ".config/tools/lychee.json",
+    ".config/tools/cspell.json",
+  ];
+  assert.doesNotThrow(() => checkConfigPlacement(current));
+  for (const old of [
+    ".markdownlint-cli2.yaml",
+    ".prettierignore",
+    "tools/ci/config/mermaid-puppeteer-hosted.json",
+  ]) {
+    assert.throws(
+      () => checkConfigPlacement([...current, old]),
+      /redundant tool configuration/u,
     );
   }
 });

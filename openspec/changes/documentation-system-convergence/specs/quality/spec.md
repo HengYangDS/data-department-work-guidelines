@@ -5,15 +5,20 @@
 ### Requirement: Documentation checks measure supported properties
 
 Documentation validation SHALL have one repository-owned, shell-independent
-entrypoint using the locked toolchain. It SHALL check Prettier formatting,
-Markdown lint, local links and fragments through an offline, version-checked
-lychee invocation, metadata, every present diagram, tracked English text, and
-repository-specific boundary and rollout behavior. CI tool supply SHALL verify
-the lychee asset digest. Current command examples SHALL be reviewed against
-the installed public CLI before release rather than treated as parsed proof.
-The same entrypoint SHALL run locally and in both hosted CI planes with explicit
-repository-relative inputs. It SHALL NOT require an arbitrary number of
-diagrams, cards, topic pages, or tracked historical evidence files. It SHALL
+entrypoint using the locked toolchain. It SHALL check Prettier formatting of
+Markdown, code, JSON, and YAML; TOML syntax; Markdown lint; CSpell spelling;
+local links and fragments through an offline,
+version-checked lychee invocation, metadata, every present diagram, tracked
+English text and spacing, and repository-specific boundary and rollout
+behavior. CI tool supply SHALL verify the lychee asset digest and run an online
+locked-dependency audit separately from the offline repository verifier.
+Current command examples SHALL be reviewed against the installed public CLI
+before release rather than treated as parsed proof. The same entrypoint SHALL
+run locally and in both hosted CI planes with explicit repository-relative
+inputs. Tool configuration SHALL live at a required native discovery root or
+one `.config/tools/` owner, not in redundant root copies. It SHALL NOT require
+an arbitrary number of diagrams, cards, topic pages, or tracked historical
+evidence files. It SHALL
 reject a revived tracked shell wrapper or repository-owned hook. A portability
 claim SHALL require the complete declared graph to execute on each claimed host
 OS, not merely a parser test or a moved shell wrapper. Representative member
@@ -39,6 +44,13 @@ limits before claiming reader readiness.
   `scripts/` entrypoint
 - **THEN** the portable repository check rejects it before source acceptance
 - **AND THEN** native ETHOS hooks remain the only Git admission mechanism.
+
+#### Scenario: Prose or dependency supply fails
+
+- **WHEN** a current Markdown file contains a misspelling
+- **THEN** the locked spelling check rejects it without a local waiver.
+- **WHEN** the locked dependency audit reports a moderate-or-higher advisory
+- **THEN** each hosted job fails before running the repository verifier.
 
 #### Scenario: A fresh supported host runs the full graph
 

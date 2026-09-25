@@ -43,9 +43,9 @@ cannot grant organizational authority to itself.
 **Authority about facts** answers what can establish what is true. Prefer
 primary records and repeatable observations with a source, time, subject, and
 scope. Analysis and formal records must trace back to their original basis.
-Retellings, caches, generated views, Agent output, and memory are leads, not
-verified facts. Authority to act cannot make a false fact true; factual evidence
-does not itself grant permission to act.
+Secondhand accounts, caches, generated views, Agent output, and memory are
+leads, not verified facts. Authority to act cannot make a false fact true;
+factual evidence does not itself grant permission to act.
 
 Project rules may refine sources of truth, permissions, and acceptance. If they
 materially conflict with these guidelines or a higher constraint, expose the
@@ -66,13 +66,22 @@ When a boundary would be crossed, stop, make it visible, and escalate.
 
 ## Form Follows Risk
 
-Low-risk, local, easily reversible work may close in one clear exchange. Work
-across roles, over time, or under meaningful uncertainty needs a reviewable
-account of the problem, options, action, and acceptance. Production, sensitive
-data, security or compliance, destructive changes, and external commitments need
-explicit authorization, a recovery path, independent review, and human
-acceptance. The process may be light; facts, boundaries, ownership, and evidence
-may not be absent.
+The same rule words bind members and their Agents unless a rule names a narrower
+subject. **Must** and **must not** mark a hard boundary; **should** is the
+default unless a reason for departure is given; **may** leaves a choice to the
+responsible person. Risk determines the form, not whether the underlying duty
+exists.
+
+| Level         | When it applies                                                                                                  | Minimum response                                                                                                                |
+| ------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| L0: light     | Local, reversible work without an external commitment.                                                           | State the conclusion, basis, and action in one clear exchange.                                                                  |
+| L1: standard  | Cross-role or extended work, competing options, or material uncertainty.                                         | Record the problem, options, execution path, and acceptance in the existing work carrier.                                       |
+| L2: high risk | Production, funds, sensitive data, security or compliance, deletion, irreversibility, or an external commitment. | Obtain a written decision and explicit authorization, a rollback or degradation path, independent review, and human acceptance. |
+
+Do not call a task L0 merely to avoid a necessary record. Within every level,
+facts, scope, ownership, and evidence must remain clear. For a cross-domain
+task, the lead and professional interfaces may be shared; end-to-end
+responsibility may not be dissolved into “everyone.”
 
 To judge whether a requirement is worth keeping, ask what real error it
 prevents, why existing interfaces are insufficient, what cognitive and

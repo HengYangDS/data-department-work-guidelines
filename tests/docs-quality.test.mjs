@@ -7,7 +7,9 @@ import { test } from "node:test";
 import { pathToFileURL } from "node:url";
 import {
   blankLineError,
+  checkSpelling,
   documentMetadata,
+  formatTargets,
   mermaidFences,
   repositoryFileUri,
   rendererConfig,
@@ -191,6 +193,27 @@ test("one blank line is allowed; visual padding is not", () => {
   );
 });
 
+test("formatting selects source configuration and TOML syntax is checked", () => {
+  const targets = formatTargets([
+    "docs/README.md",
+    ".config/tools/lychee.json",
+    "openspec/config.yaml",
+    ".github/workflows/docs-verify.yml",
+    "tools/docs/cli.mjs",
+  ]);
+  for (const file of [
+    ".config/tools/lychee.json",
+    "openspec/config.yaml",
+    ".github/workflows/docs-verify.yml",
+  ]) {
+    assert.ok(targets.includes(file), file);
+  }
+  assert.match(
+    textViolations(".ethos/workspace.toml", "[invalid\n")[0],
+    /invalid TOML/u,
+  );
+});
+
 test("current Markdown inventory excludes official archives, not live topics", () => {
   assert.deepEqual(
     currentMarkdown([
@@ -205,8 +228,8 @@ test("current Markdown inventory excludes official archives, not live topics", (
 test("renderer selection accepts only the CI-owned override", () => {
   assert.throws(() => rendererConfig("other/puppeteer.json"), /unsupported/u);
   assert.match(
-    rendererConfig("tools/ci/config/mermaid-puppeteer-hosted.json"),
-    /mermaid-puppeteer-hosted\.json$/u,
+    rendererConfig(".config/tools/mermaid-hosted.json"),
+    /mermaid-hosted\.json$/u,
   );
   const previous = process.env.PUPPETEER_EXECUTABLE_PATH;
   try {
@@ -267,6 +290,19 @@ test("pinned lychee rejects a broken local fragment", () => {
       },
     );
     assert.notEqual(result.status, 0);
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test("locked prose spelling rejects a real typo without changing source", () => {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-spelling-test-"));
+  try {
+    const file = path.join(directory, "sample.md");
+    writeFileSync(file, "The result is verified.\n", "utf8");
+    assert.doesNotThrow(() => checkSpelling([file]));
+    writeFileSync(file, "The result is veriified.\n", "utf8");
+    assert.throws(() => checkSpelling([file]), /exited 1/u);
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }

@@ -50,6 +50,13 @@ function git(directory, ...args) {
     {
       encoding: "utf8",
       timeout: 15_000,
+      env: {
+        ...process.env,
+        GIT_AUTHOR_NAME: "Release Fixture",
+        GIT_AUTHOR_EMAIL: "release@example.invalid",
+        GIT_COMMITTER_NAME: "Release Fixture",
+        GIT_COMMITTER_EMAIL: "release@example.invalid",
+      },
     },
   );
   assert.equal(result.status, 0, result.stderr);
@@ -60,10 +67,6 @@ function commit(directory, message) {
   git(directory, "add", ".");
   git(
     directory,
-    "-c",
-    "user.name=Release Fixture",
-    "-c",
-    "user.email=release@example.invalid",
     "-c",
     "commit.gpgsign=false",
     "commit",

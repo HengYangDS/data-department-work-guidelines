@@ -16,6 +16,8 @@ being relabeled as formal SemVer releases.
 - A task-oriented reading map with a short human entry and a bounded Agent entry.
 - An independent GitHub repository and CI/CD plane alongside the organization’s
   GitLab publication plane.
+- Locked spelling and dependency-audit checks in the shared documentation
+  quality path.
 
 ### Changed
 
@@ -23,6 +25,10 @@ being relabeled as formal SemVer releases.
   topic pages; current tracked guidance and OpenSpec text use English.
 - Material repository changes use one official OpenSpec Change, while ETHOS owns
   Work Lanes, admission, proof, acceptance, and governed publication.
+- Restored risk-scaled work obligations and review meanings in the short reader
+  route without restoring the old fixed management cadence.
+- New commits require scoped Conventional Commit subjects; historical identity
+  correction is admitted only through ETHOS rather than a `.mailmap`.
 
 ### Removed
 
@@ -35,7 +41,7 @@ being relabeled as formal SemVer releases.
 ### Fixed
 
 - Bound both hosted documentation checks to real Git checkouts and a common
-  verification sequence, while keeping local, GitLab, and GitHub results
-  separate.
+  verification sequence with runtime-discovered Chromium, while keeping local,
+  GitLab, and GitHub results separate.
 
 [Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/bc9cc58d29ff10c5e599fc820f2f3b1381d0f1bd...main

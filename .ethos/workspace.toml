@@ -16,6 +16,7 @@ release_mirror = "accepted_ff"
 canonical_sibling_worktrees = true
 
 [commit_policy]
-subject_pattern = "^.+$"
+# Conventional Commits 1.0.0, with a repository-required scope and short subject.
+subject_pattern = '^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)\([a-z][a-z0-9-]*\)!?: [a-z][^\r\n]{0,68}[a-z0-9]$'
 signing_required = true
 signing_format = "ssh"

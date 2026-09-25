@@ -138,6 +138,29 @@ independent. Repository YAML SHALL NOT claim runner registration.
 
 ## ADDED Requirements
 
+### Requirement: New commit identity and message policy is native
+
+The ETHOS workspace policy SHALL require trusted SSH signatures and scoped
+Conventional Commit subjects for new commits. Historical identity correction
+SHALL select exact author or committer headers, preserve trees, messages,
+timestamps, and unselected identities, and proceed only through admitted ETHOS
+repair with a verified recovery bundle. Replacement object IDs SHALL be proved
+and reconciled with both Forges before a release tag is admitted. A `.mailmap`,
+raw history rewrite, or rewritten old message SHALL NOT substitute for this
+transition.
+
+#### Scenario: A new commit has an invalid subject
+
+- **WHEN** an unscoped or malformed subject reaches native commit admission
+- **THEN** ETHOS rejects it even if repository formatting checks pass.
+
+#### Scenario: Selected historical identity is corrected
+
+- **WHEN** native repair admits the exact headers, refs, and recovery bundle
+- **THEN** selected identities are corrected and affected descendants re-signed
+- **AND THEN** proof, remote refs, and hosted CI are refreshed for replacement
+  object IDs before tagging.
+
 ### Requirement: Hosted rendering uses one validated launch configuration
 
 The documentation adopter SHALL retain sandboxed Mermaid rendering by default.
@@ -164,7 +187,7 @@ as hosted-CI success.
 
 #### Scenario: A hosted selection is unsupported
 
-- **WHEN** a provider names a different configuration or inlines a no-sandbox
+- **WHEN** a provider names a different configuration or puts a no-sandbox
   command in workflow YAML
 - **THEN** the repository quality check rejects the projection
 - **AND THEN** no hosted success is inferred from that rejection.
@@ -203,7 +226,7 @@ untagged branch editions SHALL NOT be retroactively labeled as formal releases.
 
 #### Scenario: Version, changelog, or tag identities diverge
 
-- **WHEN** a heading has a noncanonical category, invalid date or SemVer,
+- **WHEN** a heading has a nonstandard category, invalid date or SemVer,
   duplicates another version, lacks a real history link, omits a local tag,
   or disagrees with `VERSION` or the selected tag's exact source
 - **THEN** the repository quality gate rejects the release candidate

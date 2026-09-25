@@ -329,3 +329,25 @@ export function checkPortableEntrypoints(files = gitFiles()) {
   }
   console.log("PASS portable repository entrypoints: no legacy shell carriers");
 }
+
+export function checkConfigPlacement(files = gitFiles()) {
+  const required = [
+    ".config/tools/cspell.json",
+    ".config/tools/lychee.json",
+    ".config/tools/markdownlint-cli2.yaml",
+    ".config/tools/mermaid-hosted.json",
+    ".config/tools/mermaid-local.json",
+  ];
+  const old = files.filter(
+    (relative) =>
+      [".markdownlint-cli2.yaml", ".prettierignore"].includes(relative) ||
+      relative.startsWith("tools/ci/config/"),
+  );
+  const missing = required.filter((relative) => !files.includes(relative));
+  if (old.length || missing.length) {
+    throw new Error(
+      `redundant tool configuration or missing .config owner: ${[...old, ...missing].join(", ")}`,
+    );
+  }
+  console.log("PASS tool configuration placement: one .config owner");
+}

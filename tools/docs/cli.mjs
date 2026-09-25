@@ -3,11 +3,13 @@ import { checkCi } from "./ci.mjs";
 import {
   checkDocuments,
   checkLinks,
+  checkSpelling,
   checkTextLayout,
   formatSource,
   lintMarkdown,
 } from "./content.mjs";
 import {
+  checkConfigPlacement,
   checkDecisions,
   checkNavigation,
   checkNoScope,
@@ -66,12 +68,14 @@ function runTests() {
 function checkAll(arguments_) {
   const render = options(arguments_);
   checkProfile();
+  checkConfigPlacement();
   checkNoScope();
   checkPortableEntrypoints();
   checkChangelog();
   validateOpenSpec();
   formatSource();
   lintMarkdown();
+  checkSpelling();
   checkDocuments(render);
   checkLinks();
   checkTextLayout();
@@ -101,6 +105,10 @@ try {
       if (arguments_.length) throw new Error("lint accepts no arguments");
       lintMarkdown();
       break;
+    case "prose":
+      if (arguments_.length) throw new Error("prose accepts no arguments");
+      checkSpelling();
+      break;
     case "render":
       checkDocuments(options(arguments_));
       break;
@@ -128,7 +136,7 @@ try {
       break;
     default:
       throw new Error(
-        "usage: node tools/docs/cli.mjs check|format|lint|render|links|changelog|boundary|navigation|test",
+        "usage: node tools/docs/cli.mjs check|format|lint|prose|render|links|changelog|boundary|navigation|test",
       );
   }
 } catch (error) {

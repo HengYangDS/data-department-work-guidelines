@@ -13,15 +13,17 @@
       adapter, and tracked hook; remove proved residue and test native admission.
 - [ ] 2.2 Reconcile current specifications and DRs with adopter behavior; verify
       semantic names, five-section rationale, and current links.
-- [ ] 2.3 Review the seven-topic route and tracked English prose for one owner
-      per rule; verify links and representative member and Agent tasks.
+- [ ] 2.3 Cross-check the last unified guidelines against the seven current
+      owners by obligation; review English prose, links, and representative
+      member and Agent tasks. Do not restore a fixed management cadence.
 
 ## 3. Make quality checks portable and complete
 
 - [x] 3.1 Build one locked, shell-independent check entry under `tools/`; prove
       its command behavior with positive and negative tests.
-- [x] 3.2 Consolidate formatting, lint, offline lychee links, diagrams,
-      metadata, layout, English, boundary, and rollout checks; test failures.
+- [x] 3.2 Consolidate formatting, lint, spelling, offline lychee links,
+      diagrams, metadata, layout, English, boundary, and rollout checks; test
+      failures and clear the locked dependency audit.
 - [ ] 3.3 Make GitLab and GitHub supply runtimes and invoke the same check;
       verify workflow contracts and hosted runs at the published source.
 - [ ] 3.4 Exercise the full local check on macOS, Linux, and Windows, or mark an
@@ -35,6 +37,9 @@
       test strict headings, categories, dates, links, SemVer order, and tags.
 - [ ] 4.3 Add native ETHOS release-tag admission and prove a mismatched or
       unsigned target cannot count as a versioned release.
+- [ ] 4.4 Use ETHOS historical identity repair for explicitly selected old
+      commits with a verified recovery bundle; re-sign affected descendants,
+      prove the new accepted HEAD, and reconcile both Forges before tagging.
 
 ## 5. Accept, deliver, and clean up
 

@@ -18,7 +18,7 @@ Change-local `scope.toml`.
 - Each quality property has one executable owner; provider-specific CI setup
   stops at runtime supply and invokes that same command.
 - Current rule owners, decision rationale, and navigation are concise and
-  non-duplicative. Historical Git objects remain truthful without keeping
+  not duplicated. Historical Git objects remain truthful without keeping
   non-official companions in the current tree.
 - ETHOS and official OpenSpec retain admission, proof, archive, and publication
   authority. Repository checks enforce only repository-specific semantics.
@@ -69,6 +69,26 @@ must have a consumer. The root remains a small entry and tool manifest, not a
 second guideline book. Existing decision records are kept only when their
 cross-Change rationale cannot be recovered from current rules and Git history.
 
+### Preserve the former guideline's obligations, not its length
+
+The last unified `guidelines.md` had 1,240 lines. The new route is not accepted
+merely because it has seven topics or passes Markdown checks. Compare its
+obligations and counterexamples with the current owners:
+
+| Former subject                          | Current owner         | Resolution                                                                 |
+| --------------------------------------- | --------------------- | -------------------------------------------------------------------------- |
+| Authority, hard boundaries, L0–L2 floor | `docs/charter.md`     | Keep the risk-scaled minimum and rule-word meaning.                        |
+| Six task boundaries and reasoning       | `docs/decide.md`      | Name object, scope, time, responsibility, evidence, and action.            |
+| Work states and completion              | `docs/deliver.md`     | Separate executing, verification, acceptance, and effect.                  |
+| Data qualification                      | `docs/data.md`        | Retain source, time, meaning, quality, permission, and exit.               |
+| Speaking and writing                    | `docs/communicate.md` | Retain purpose, conclusion, basis, request, and restraint.                 |
+| Human–AI delegation                     | `docs/human-agent.md` | State that submission retains human responsibility.                        |
+| Weak signals, review, and retirement    | `docs/evolve.md`      | Retain the learning trigger and review scale, not a fixed meeting cadence. |
+
+This is an editorial coverage argument, not proof that a text linter understands
+the original meaning. Representative member and Agent tasks still need human
+review before reader readiness is claimed.
+
 ### Give releases one version identity and a checked changelog
 
 `VERSION` becomes the sole product-release target because native ETHOS tag
@@ -91,6 +111,16 @@ Forge release tags, so their former prose stays in Git history instead of being
 relabeled as formal releases. Human review of compatibility impact remains
 necessary: a parser cannot infer whether a changed obligation is breaking.
 ETHOS owns signed-tag authority and publication, not this parser.
+
+New commits use scoped Conventional Commit subjects under the ETHOS workspace
+policy. This does not authorize changing old messages. The operator's historical
+author identity has two email forms in accepted history; once the worktree is
+clean, use native ETHOS identity repair for the exact selected commits only.
+Readiness must identify admitted refs and worktree registrations. Application
+needs a self-contained verified Git bundle and an exact correction digest. Repair
+preserves trees, messages, timestamps, and unselected identities; re-signing
+descendants changes object IDs, so proof, accepted refs, both Forge projections,
+and hosted CI must be re-established before a release tag is created.
 
 ### Separate source, delivery, and use evidence
 
@@ -120,6 +150,9 @@ open.
 - A historical branch edition could be mistaken for a formal release. Do not
   backdate or create a tag to make the record look complete; publish the first
   genuine versioned release only after its exact source and tag pass admission.
+- Historical identity repair can make remote updates non-fast-forward. Keep the
+  recovery bundle outside the repository, inspect every selected header and
+  affected ref, and stop if native admission cannot preserve unrelated work.
 
 ## Migration Plan
 
@@ -131,8 +164,11 @@ open.
    focused tests. Update both CI projections and current instructions together.
 4. Bind `VERSION`, the charter, and the curated changelog. Test invalid
    categories, versions, dates, links, tag drift, and the pending-release case.
-5. Run the complete local matrix and hosted jobs at exact source objects.
-   Accept source through ETHOS; keep any unobserved delivery obligation open.
-6. Archive only after the declared tasks have current evidence. Refresh proof
+5. Run local checks and hosted jobs at exact source objects. Accept and publish
+   the source through ETHOS; keep any unobserved delivery obligation open.
+6. With a clean lane and verified bundle, run native historical identity repair
+   only for admitted headers and refs. Re-establish proof and remote projections
+   before signed `v4.0.0` tag and two independent Forge Releases.
+7. Archive only after the declared tasks have current evidence. Refresh proof
    and remote observations for the archive commit. Retire this owned Work Lane
    through ETHOS after acceptance, preserving all foreign lanes.

@@ -35,6 +35,23 @@ path before making a change. Surface critical-path blockers promptly; activity
 volume and “active progress” are not state changes. If scope or risk materially
 changes, return to the authorized decision owner.
 
+## Name the State, Not the Effort
+
+| State                  | What it permits you to say                                                                        |
+| ---------------------- | ------------------------------------------------------------------------------------------------- |
+| Unframed               | The problem, scope, or completion condition is still missing.                                     |
+| Planned                | A route and owner exist; execution has not happened.                                              |
+| Executing              | Work is under way; the result has not passed verification.                                        |
+| Blocked                | A prerequisite prevents the affected action; name the gap and escalation.                         |
+| Awaiting verification  | The deliverable exists, but the agreed checks have not passed.                                    |
+| Verified               | Checks passed for a stated subject, version, environment, and limit.                              |
+| Accepted               | An authorized acceptor confirmed the agreed result.                                               |
+| Published or effective | The result reached the target environment or entered use; verify this separately from acceptance. |
+
+Do not rename “executing” as “almost done,” or infer publication from
+verification. A blocked task can contain useful work; the blocked claim remains
+blocked until its prerequisite changes.
+
 ## Evidence Sets the Limit of the Claim
 
 Every completion claim must answer: **What is claimed, about which subject and

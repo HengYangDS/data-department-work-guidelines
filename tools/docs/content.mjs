@@ -10,6 +10,7 @@ import {
 } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { parse as parseToml } from "smol-toml";
 import YAML from "yaml";
 import {
   currentMarkdown,
@@ -34,27 +35,49 @@ const textExtensions = new Set([
   ".mjs",
   ".js",
 ]);
-const hostedConfig = "tools/ci/config/mermaid-puppeteer-hosted.json";
-const systemConfig = "tools/ci/config/mermaid-puppeteer-system.json";
+const hostedConfig = ".config/tools/mermaid-hosted.json";
+const systemConfig = ".config/tools/mermaid-local.json";
+
+export function formatTargets(files = gitFiles()) {
+  return [
+    ...currentMarkdown(files),
+    ...files.filter(
+      (relative) =>
+        /^(?:tools|tests)\/.*\.mjs$/u.test(relative) ||
+        /\.(?:json|ya?ml)$/u.test(relative),
+    ),
+  ].filter((relative) => existsSync(filePath(relative)));
+}
 
 export function formatSource({ check = true } = {}) {
+  const targets = formatTargets();
   runNodeTool("prettier", "prettier", [
     check ? "--check" : "--write",
-    "--no-error-on-unmatched-pattern",
-    "**/*.md",
-    "tools/**/*.mjs",
-    "tests/**/*.test.mjs",
+    ...targets,
   ]);
 }
 
 export function lintMarkdown() {
   runNodeTool("markdownlint-cli2", "markdownlint-cli2", [
-    "**/*.md",
-    "#.superpowers/**",
-    "#.worktrees/**",
-    "#build/**",
-    "#node_modules/**",
+    "--config",
+    ".config/tools/markdownlint-cli2.yaml",
+    ...currentMarkdown().map((relative) => `:${relative}`),
   ]);
+}
+
+export function checkSpelling(files = currentMarkdown()) {
+  if (!files.length)
+    throw new Error("no current Markdown files to spell-check");
+  runNodeTool("cspell", "cspell", [
+    "lint",
+    "--config",
+    ".config/tools/cspell.json",
+    "--no-progress",
+    "--force-check",
+    "--file",
+    ...files,
+  ]);
+  console.log(`PASS prose spelling: ${files.length} Markdown files`);
 }
 
 export function documentMetadata(relative, source) {
@@ -271,6 +294,13 @@ export function blankLineError(relative, source) {
 
 export function textViolations(relative, source) {
   const errors = [];
+  if (relative.endsWith(".toml")) {
+    try {
+      parseToml(source);
+    } catch (error) {
+      errors.push(`${relative}: invalid TOML: ${error.message}`);
+    }
+  }
   for (const [index, line] of source.split(/\r?\n/u).entries()) {
     if (cjk.test(line))
       errors.push(`${relative}:${index + 1}: CJK text is not allowed`);

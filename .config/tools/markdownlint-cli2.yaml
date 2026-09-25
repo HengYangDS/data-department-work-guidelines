@@ -4,5 +4,3 @@ config:
     code_blocks: false
     tables: false
     headings: false
-ignores:
-  - "openspec/changes/archive/**"

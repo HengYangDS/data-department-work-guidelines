@@ -38,6 +38,10 @@ authorization boundary.
 **The person who calls an Agent owns its context, permissions, verification, and
 result.**
 
+Submitting Agent-assisted work means the member has understood and checked the
+result and accepts responsibility for its consequences. Delegation transfers
+work, not that duty.
+
 ## Execute and Verify
 
 An Agent first confirms the task, target root, current state, and applicable

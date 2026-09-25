@@ -25,10 +25,14 @@ npm run verify
 ethos plan --changed --json
 ```
 
-`npm run verify` checks formatting, Markdown lint, metadata, every present
-diagram, offline links and fragments, English text, decision and navigation
-boundaries, the official OpenSpec workspace, the changelog/version contract,
-CI declarations, and negative tests. It does not contact either Forge. A clean
+`npm run verify` checks Markdown, code, JSON, and YAML formatting, TOML syntax,
+Markdown lint, metadata, every present
+diagram, offline links and fragments, English text and spelling, decision and
+navigation boundaries, the official OpenSpec workspace, the changelog/version
+contract, CI declarations, and negative tests. `npm run prose` runs the locked
+spelling check alone. Run `npm audit --audit-level=moderate` separately when
+online before source acceptance; both hosted CI planes require it. The offline
+repository verifier does not contact either Forge. A clean
 offline bootstrap requires a prefilled npm cache and the pinned lychee asset;
 that installation path must be tested before claiming offline distribution.
 Keep `node_modules/`, browser state, and generated output out of Git.
@@ -40,6 +44,11 @@ signature. Configure your clone's local author, committer, public signing-key
 path, and protected external trust anchor using your own identity. Do not copy
 another host's path or store credentials here. Inspect the exact commit's
 signature and attribution before acceptance.
+
+Use a scoped [Conventional Commit](https://www.conventionalcommits.org/en/v1.0.0/)
+subject such as `docs(guidance): clarify data-use boundaries`. A breaking
+change still needs explicit compatibility review in the official Change. A
+well-formed subject cannot prove the content is correct.
 
 [`VERSION`](VERSION) names the next guideline release;
 [`CHANGELOG.md`](CHANGELOG.md) follows Keep a Changelog and SemVer. The private

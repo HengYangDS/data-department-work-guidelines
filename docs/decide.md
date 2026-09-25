@@ -25,6 +25,13 @@ If the subject, authority, or irreversible consequences are unclear, stop the
 affected action and ask an authorized person to decide. **Collecting information
 is not the goal; explain which judgment it could change.**
 
+Make six boundaries explicit when they matter: **object** (the system, data,
+people, or decision), **scope** (in and out), **time** (fact cutoff and period
+of validity), **responsibility** (lead, decision maker, reviewer, and those to
+inform), **evidence** (what it does and does not establish), and **action**
+(what is authorized and what requires escalation). An attractive solution to
+an unnamed subject is not yet a proposal.
+
 ## Keep Six Meanings Distinct
 
 | Statement  | Question it answers                         | State with it                                     |

@@ -2,7 +2,8 @@ import YAML from "yaml";
 import { readText } from "./runtime.mjs";
 
 const verifier = "npm run verify";
-const renderer = "tools/ci/config/mermaid-puppeteer-hosted.json";
+const auditCommand = "npm audit --audit-level=moderate";
+const renderer = ".config/tools/mermaid-hosted.json";
 const hostMatrix = ["ubuntu-latest", "macos-latest", "windows-latest"];
 
 function parseYaml(source, name) {
@@ -76,13 +77,14 @@ export function validateCi(githubSource, gitlabSource) {
   }
   const commands = steps.map((step) => step.run?.trim()).filter(Boolean);
   const install = commands.indexOf("npm ci --ignore-scripts");
+  const audit = commands.indexOf(auditCommand);
   const supply = commands.indexOf(
     "node tools/ci/install-lychee.mjs --download",
   );
   const verify = commands.indexOf(verifier);
-  if (!(install >= 0 && install < supply && supply < verify)) {
+  if (!(install >= 0 && install < audit && audit < supply && supply < verify)) {
     throw new Error(
-      "GitHub dependency supply and common verification are out of order",
+      "GitHub dependency audit, supply, and common verification are out of order",
     );
   }
   if (
@@ -125,17 +127,32 @@ export function validateCi(githubSource, gitlabSource) {
     throw new Error("GitLab runtime must supply Git and Chromium");
   }
   if (
-    !before.includes("npm ci --ignore-scripts") ||
-    !before.includes("node tools/ci/install-lychee.mjs --download")
+    gitlabJob.variables?.PUPPETEER_EXECUTABLE_PATH ||
+    !before.includes(
+      'export PUPPETEER_EXECUTABLE_PATH="$(command -v chromium)"',
+    )
   ) {
-    throw new Error("GitLab locked tool supply is missing");
+    throw new Error("GitLab must use runtime-discovered Chromium");
+  }
+  if (
+    before.indexOf("npm ci --ignore-scripts") < 0 ||
+    before.indexOf("npm ci --ignore-scripts") >= before.indexOf(auditCommand) ||
+    before.indexOf(auditCommand) >=
+      before.indexOf("node tools/ci/install-lychee.mjs --download")
+  ) {
+    throw new Error("GitLab dependency audit or locked tool supply is missing");
   }
   if (JSON.stringify(gitlabJob.script) !== JSON.stringify([verifier])) {
     throw new Error(
       "GitLab must invoke the same repository verifier as GitHub",
     );
   }
-  return { hosts: hostMatrix, verifier };
+  return {
+    hosts: hostMatrix,
+    verifier,
+    audit: auditCommand,
+    browser: "runtime-discovered",
+  };
 }
 
 export function checkCi() {

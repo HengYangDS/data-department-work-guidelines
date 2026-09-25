@@ -28,8 +28,6 @@ material_paths = [
   ".github/**",
   ".gitignore",
   ".gitlab-ci.yml",
-  ".markdownlint-cli2.yaml",
-  ".prettierignore",
   "AGENTS.md",
   "CHANGELOG.md",
   "CONTRIBUTING.md",

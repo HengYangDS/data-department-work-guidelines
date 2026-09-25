@@ -9,11 +9,49 @@ const gitlab = readText(".gitlab-ci.yml");
 test("both providers invoke one verifier on declared hosts", () => {
   const result = validateCi(github, gitlab);
   assert.equal(result.verifier, "npm run verify");
+  assert.equal(result.audit, "npm audit --audit-level=moderate");
+  assert.equal(result.browser, "runtime-discovered");
   assert.deepEqual(result.hosts, [
     "ubuntu-latest",
     "macos-latest",
     "windows-latest",
   ]);
+});
+
+test("GitLab cannot pin a host Chromium path", () => {
+  assert.throws(
+    () =>
+      validateCi(
+        github,
+        gitlab.replace(
+          'export PUPPETEER_EXECUTABLE_PATH="$(command -v chromium)"',
+          "export PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium",
+        ),
+      ),
+    /runtime-discovered Chromium/u,
+  );
+});
+
+test("both providers refuse to skip the dependency audit", () => {
+  assert.throws(
+    () =>
+      validateCi(
+        github.replace(
+          "run: npm audit --audit-level=moderate",
+          "run: echo skipped",
+        ),
+        gitlab,
+      ),
+    /dependency audit/u,
+  );
+  assert.throws(
+    () =>
+      validateCi(
+        github,
+        gitlab.replace("- npm audit --audit-level=moderate", "- echo skipped"),
+      ),
+    /dependency audit/u,
+  );
 });
 
 test("CI contract refuses an inline browser sandbox override", () => {

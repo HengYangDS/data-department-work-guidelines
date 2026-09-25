@@ -24,6 +24,15 @@ untested preference is not a department rule. Retire a rule that has lost its
 subject, has no user, duplicates a source of truth, or costs more than it
 returns.
 
+Watch small changes without treating one anomaly as a trend: drifting
+definitions, recurring questions, temporary human rescue, expired evidence,
+ambiguous ownership, intermittent failures, and slight delays can be early
+signals of a system defect. Check their pattern, impact, and direction before
+building a remedy. A problem that recurs, crosses people or projects, depends
+on one person's tacit knowledge, could cause material loss if forgotten, or
+will be repeated by Agents needs a reusable prevention mechanism. Choose its
+lightest effective owner rather than another report.
+
 ```mermaid
 flowchart LR
     O["Observation"] --> H["Hypothesis"] --> T["Trial"] --> V{"Net benefit?"}
@@ -60,6 +69,19 @@ blocker are hard risks. Fluent presentation or effort does not cancel them. If
 scoring is used, define the levels, observable behavior, and purpose; do not
 treat a score as a person's overall worth.
 
+Every task must meet the hard boundaries. Critical responsibilities should be
+performed independently and reliably. Call a result exceptional only when it
+also transfers a method, reduces recurring cost, or improves others' capacity.
+If a five-level review is used, keep its meaning stable:
+
+| Level             | Observable delivery risk                                                                          |
+| ----------------- | ------------------------------------------------------------------------------------------------- |
+| 1: unacceptable   | The subject, facts, or responsibility are confused enough to invite a wrong action.               |
+| 2: below standard | Useful fragments exist, but reasoning, evidence, or delivery has a material gap.                  |
+| 3: borderline     | The work is usable with guidance, not yet reliable independently.                                 |
+| 4: meets standard | The person can independently make bounded judgments, executable choices, and reliable acceptance. |
+| 5: strong         | The result also leaves a transferable method or system improvement.                               |
+
 ## Observe the System Without Worshipping Numbers
 
 Watch for rework from unclear goals or definitions, quality failures found
@@ -70,10 +92,16 @@ supports, its fact source, period, boundary, and how it could be gamed.
 Investigate anomalies through cases and mechanisms; do not equate them directly
 with individual performance.
 
-The team may sample real work in existing meetings, tickets, and reviews without
-creating a department-wide report to satisfy a fixed cadence. Managers clarify
-direction, priorities, resources, and cross-domain decisions, and protect honest
-disclosure of uncertainty; system defects must not be blamed on individuals.
+For every L1 or L2 task, align the subject and success condition at the start,
+verify at the end, and preserve a handoff when interrupted. Review real work
+samples at natural decision and delivery points. Look for recurring failures,
+escaped quality issues, Agent misuse, and needless coordination, then retain,
+revise, or retire rules by observed net benefit. Do this in existing meetings,
+tickets, and reviews, without a fixed calendar or department-wide status
+report. Managers clarify direction, priorities, resources, and cross-domain
+decisions, and protect honest disclosure of uncertainty; system defects must
+not be blamed on individuals.
+
 Members own end-to-end results in their remit. Guideline maintainers gather
 conflicts and signs of obsolescence, and state the reason, evidence, and
 effective scope for each addition or deletion.
