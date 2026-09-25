@@ -113,7 +113,20 @@ PY
     ETHOS_CHANGE="$CHANGE" ETHOS_ACTOR="$ETHOS_ACTOR" \
       bash "$ROOT/scripts/ethos-repo.sh" plan --changed --json
   })"
-  python3 - "$plan" "$CHANGE" <<'PY'
+  if [[ "$(python3 -c 'import json, sys; print(json.loads(sys.argv[1])["state"])' "$plan")" == "no_changes" ]]; then
+    python3 - "$plan" <<'PY'
+import json
+import sys
+
+result = json.loads(sys.argv[1])
+if result.get("verdict") != "pass" or result.get("summary", {}).get("changed") is not False:
+    raise SystemExit("clean planning did not report an honest no-changes result")
+if result.get("data", {}).get("path_attributions"):
+    raise SystemExit("clean planning invented material-path attribution")
+print("PASS clean planning: no changed paths; changed-path cases are not asserted")
+PY
+  else
+    python3 - "$plan" "$CHANGE" <<'PY'
 from pathlib import Path
 import json
 import sys
@@ -122,18 +135,19 @@ result = json.loads(sys.argv[1])
 change = sys.argv[2]
 if result.get("verdict") != "pass":
     raise SystemExit("changed planning rejected the selected active Change")
-artifact = Path(result["data"]["artifact_reference"]["path"])
-payload = json.loads(artifact.read_text(encoding="utf-8"))
-attributions = payload.get("data", {}).get("path_attributions", [])
+data = result.get("data", {})
+if artifact := data.get("artifact_reference"):
+    data = json.loads(Path(artifact["path"]).read_text(encoding="utf-8")).get("data", {})
+attributions = data.get("path_attributions", [])
 if not attributions or any(item.get("change_id") != change for item in attributions):
     raise SystemExit("changed planning did not attribute every path to the selected Change")
 print("PASS material attribution plan: all changed paths share one active Change")
 PY
 
-  ETHOS_CHANGE="$negative_change" ETHOS_ACTOR="$ETHOS_ACTOR" \
-    bash "$ROOT/scripts/ethos-repo.sh" plan --changed --json \
-      >"$negative_output" 2>&1 || true
-  python3 - "$negative_output" "$negative_change" <<'PY'
+    ETHOS_CHANGE="$negative_change" ETHOS_ACTOR="$ETHOS_ACTOR" \
+      bash "$ROOT/scripts/ethos-repo.sh" plan --changed --json \
+        >"$negative_output" 2>&1 || true
+    python3 - "$negative_output" "$negative_change" <<'PY'
 from pathlib import Path
 import json
 import sys
@@ -144,6 +158,7 @@ if payload.get("verdict") != "block" or expected not in payload.get("required_ga
     raise SystemExit("changed planning did not preserve the missing-Change diagnostic")
 print("PASS material attribution plan negative: missing Change fails closed")
 PY
+  fi
 
   proof="$(bash "$ROOT/scripts/ethos-repo.sh" prove --scope docs --change "$CHANGE" --json)"
   python3 - "$proof" "$CHANGE" <<'PY'
