@@ -217,6 +217,10 @@ verifier="$(cat "$ROOT/tools/ci/scripts/run-documentation-verification.sh")"
   echo 'shared verifier does not run the independent navigation check' >&2
   exit 1
 }
+[[ "$verifier" == *'bash tests/validate-rollout-readiness.sh'* ]] || {
+  echo 'shared verifier does not test the navigation boundary' >&2
+  exit 1
+}
 
 fixture="$(mktemp -d "${TMPDIR:-/tmp}/ddwg-ci-runtime-binding.XXXXXX")"
 trap 'rm -rf "$fixture"' EXIT
@@ -235,6 +239,7 @@ EOF
   chmod +x "$fixture/scripts/$script"
 done
 for script in validate-docs-options.sh validate-links.sh validate-ethos-profile.sh validate-governance-boundary.sh \
+  validate-rollout-readiness.sh \
   validate-push-boundary.sh validate-ci-runtime-binding.sh \
   validate-openspec-material-attribution.sh validate-text-layout.sh; do
   cat > "$fixture/tests-$script" <<'EOF'
@@ -268,6 +273,11 @@ grep -Fqx "validate-docs.sh:$expected_option" "$calls" || {
 grep -Fqx 'validate-rollout-readiness.sh:' "$calls" || {
   cat "$calls" >&2
   echo 'shared verifier unnecessarily rendered documentation during navigation validation' >&2
+  exit 1
+}
+[[ "$(grep -Fxc 'validate-rollout-readiness.sh:' "$calls")" -eq 2 ]] || {
+  cat "$calls" >&2
+  echo 'shared verifier did not run both navigation validation and its regression' >&2
   exit 1
 }
 if (

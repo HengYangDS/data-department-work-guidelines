@@ -25,7 +25,7 @@ general guidelines.
 
 [OpenSpec and ETHOS](governance/ethos.md) govern repository changes.
 [Decision records](decisions/README.md) retain only choices that cannot be
-reconstructed from current rules. [Historical context](history/README.md)
-explains where older material remains, but past commits and archived Changes do
-not authorize a present action. A readable route and passing repository checks
-do not prove team adoption.
+reconstructed from current rules. Past commits and archived Changes preserve
+context, not current rules or proof; they do not retrospectively certify work
+done before the lifecycle existed. A readable route and passing repository
+checks do not prove team adoption.

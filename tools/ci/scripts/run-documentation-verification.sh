@@ -27,6 +27,7 @@ node_modules/.bin/openspec validate --all --strict --json
 bash scripts/format-markdown.sh --check
 bash scripts/validate-docs.sh "${validate_docs_args[@]}"
 bash scripts/validate-rollout-readiness.sh
+bash tests/validate-rollout-readiness.sh
 bash scripts/validate-governance-boundary.sh
 bash scripts/validate-text-layout.sh
 bash tests/validate-docs-options.sh

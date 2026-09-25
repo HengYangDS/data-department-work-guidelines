@@ -18,7 +18,7 @@ root = Path(sys.argv[1])
 profile = tomllib.loads((root / ".ethos/profile.toml").read_text(encoding="utf-8"))
 normative = profile["normative_sources"]
 route_contract = {
-    "README.md": {"docs/README.md", *normative},
+    "README.md": {"docs/README.md"},
     "AGENTS.md": {
         "docs/README.md",
         "docs/charter.md",
@@ -33,6 +33,15 @@ for source, targets in route_contract.items():
     missing = sorted(targets - links)
     if missing:
         raise SystemExit(f"missing task routes in {source}: {', '.join(missing)}")
+
+root_text = (root / "README.md").read_text(encoding="utf-8")
+root_links = set(re.findall(r"\]\(([^)#]+)(?:#[^)]+)?\)", root_text))
+duplicate_topics = sorted(root_links & set(normative))
+if duplicate_topics:
+    raise SystemExit(f"root entry repeats topic routes: {', '.join(duplicate_topics)}")
+
+if (root / "docs/history/README.md").exists():
+    raise SystemExit("redundant historical-context page remains")
 
 for topic in sorted(route_contract["docs/README.md"] - {"charter.md"}):
     text = (root / "docs" / topic).read_text(encoding="utf-8")
