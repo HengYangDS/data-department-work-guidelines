@@ -70,7 +70,7 @@ future archive result fails.
 ### Requirement: Candidate branch remains local-only
 
 The repository SHALL treat `candidate/dev` as a local integration resource.
-GitLab and GitHub SHALL receive only `dev`, `main`, or `submit/*` refs. The
+GitLab and GitHub SHALL receive only `dev`, `main`, or `proposal/*` refs. The
 repository-owned pre-push boundary SHALL reject `candidate/dev` as a local
 source or remote destination before generic ETHOS admission. Local proof,
 integration, and accepted closeout SHALL NOT imply either remote was updated.
@@ -90,10 +90,16 @@ integration, and accepted closeout SHALL NOT imply either remote was updated.
 #### Scenario: Eligible branch remains delegated
 
 - **WHEN** Git supplies `refs/heads/dev`, `refs/heads/main`, or
-  `refs/heads/submit/*` as a pre-push destination
+  `refs/heads/proposal/*` as a pre-push destination
 - **THEN** the repository hook delegates that ref to the repository-bound ETHOS
   admission adapter
 - **AND THEN** local delegation does not assert remote success.
+
+#### Scenario: Retired submit prefix is rejected
+
+- **WHEN** Git supplies `refs/heads/submit/*` as a pre-push destination
+- **THEN** the repository hook rejects it before ETHOS delegation
+- **AND THEN** no second proposal branch namespace remains active.
 
 ### Requirement: Hosted documentation verification begins from a Git checkout
 

@@ -144,7 +144,7 @@ without changing reader behavior or authority.
 The local source can be accepted without either remote. GitLab remains the
 organization's main publication peer and GitHub an independent full repository
 and CI/CD peer. Both receive the same selected source object; neither peer is
-used to reconstruct the other's source. Only `dev`, `main`, and `submit/*` may
+used to reconstruct the other's source. Only `dev`, `main`, and `proposal/*` may
 be published. GitLab's job selects the canonical `ci-linux-arm64-docker`
 capability after a matching runner is proven available. GitHub remains hosted on
 Ubuntu with the shared verifier. Runner registration and credentials are

@@ -59,6 +59,14 @@ grep -Fq 'runs-on: ubuntu-latest' "$GITHUB_WORKFLOW" || {
   echo 'GitHub workflow must use a GitHub-hosted Ubuntu runner' >&2
   exit 1
 }
+grep -Fqx "      - 'proposal/**'" "$GITHUB_WORKFLOW" || {
+  echo 'GitHub workflow must verify proposal/* branches' >&2
+  exit 1
+}
+if grep -Fq "'submit/**'" "$GITHUB_WORKFLOW"; then
+  echo 'GitHub workflow must not retain the retired submit/* trigger' >&2
+  exit 1
+fi
 for forbidden in self-hosted macOS ARM64 DDWG_GITHUB_RUNNER_LABEL /opt/homebrew '/Applications/Google Chrome' 'github.event.pull_request.head.repo.full_name'; do
   if grep -Fq "$forbidden" "$GITHUB_WORKFLOW"; then
     echo "GitHub workflow retains local-runner residue: $forbidden" >&2

@@ -28,9 +28,9 @@ while read -r local_ref local_sha remote_ref remote_sha; do
   esac
 
   case "$remote_ref" in
-    refs/heads/dev|refs/heads/main|refs/heads/submit/*) ;;
+    refs/heads/dev|refs/heads/main|refs/heads/proposal/*) ;;
     *)
-      echo "remote publication rejects $remote_ref; only dev, main, and submit/* are allowed" >&2
+      echo "remote publication rejects $remote_ref; only dev, main, and proposal/* are allowed" >&2
       exit 1
       ;;
   esac

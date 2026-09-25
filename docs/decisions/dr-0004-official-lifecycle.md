@@ -32,7 +32,7 @@ ETHOS 管理 Work Lane、写入准入、证明、接受与发布边界。
 ## Consequences and Boundary
 
 源码接受、GitLab 组织主发布、GitHub 独立完整镜像与 CI/CD 是不同效果，分别验收。
-仅 `dev`、`main`、`submit/*` 可发布到远端；`candidate/dev` 与 `work/*` 留在本地。
+候选与执行工作线留在本地；远端可发布分支由当前仓库治理合同约束。
 具体命令、runner 选择和 profile 字段由[当前治理合同](../governance/ethos.md)
 与相关 Change 承担，不冻结在 DR 中。
 

@@ -44,7 +44,7 @@ bash scripts/ethos-repo.sh prove --execute --full --scope repository \
 | GitHub   | 独立完整仓库精确 OID 的引用和自身托管 CI 结果。    | GitLab 或团队使用。      |
 | 团队实践 | 真实任务中的使用及其效果。                         | 源码和 CI 因而追溯正确。 |
 
-本地验证和安装不依赖远端。只有 `dev`、`main`、`submit/*` 可发布；
+本地验证和安装不依赖远端。只有 `dev`、`main`、`proposal/*` 可发布；
 `candidate/dev` 与 `work/*` 不发布。
 GitLab 是组织主发布源；GitHub 是独立完整仓库与 CI/CD 平面，
 GitLab 不可用时可承担更新与分发。配置了 remote、本地证明通过或旧 SHA 的 CI 成功，

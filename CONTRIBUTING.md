@@ -23,4 +23,4 @@ bash scripts/ethos-repo.sh plan --changed --json
 
 落地前提交精确变更，对该 HEAD 执行完整证明。
 源码接受、两个 Forge 各自的引用与 CI、真实工作的采用结果，不能互相代替。
-远端只发布 `dev`、`main`、`submit/*`；`candidate/dev` 与 `work/*` 留在本地。
+远端只发布 `dev`、`main`、`proposal/*`；`candidate/dev` 与 `work/*` 留在本地。
