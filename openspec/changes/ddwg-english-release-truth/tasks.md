@@ -39,12 +39,12 @@
 - [x] 4.1 Run format, Markdown lint, offline links, Mermaid rendering, text
       layout, rollout, governance boundary, official strict OpenSpec, and
       `git diff --check`; review the diff for meaning and link drift.
-- [ ] 4.2 Run ETHOS changed planning, commit the admitted source, and execute
+- [x] 4.2 Run ETHOS changed planning, commit the admitted source, and execute
       exact-HEAD full proof; verify accepted-local closeout through the product
       command plane.
-- [ ] 4.3 Publish the accepted source object through the admitted product
+- [x] 4.3 Publish the accepted source object through the admitted product
       route; verify GitLab and GitHub refs and their own CI independently at that
       object, and report an unavailable peer without substitution.
-- [ ] 4.4 Verify that all declared source and delivery obligations are complete
-      and official archive readiness passes; inventory the owned lane and
-      preserve all foreign lanes. The archive transition follows this task.
+- [x] 4.4 Reconcile all declared source and delivery obligations against
+      exact-source proof and provider CI observations; inventory the owned lane
+      and preserve foreign lanes before the official archive transition.

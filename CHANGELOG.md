@@ -5,16 +5,13 @@ not by itself prove that a particular commit was published to either Forge,
 passed hosted CI, or was used by the team. Tags and Forge Releases are separate
 publication objects.
 
-## [Unreleased]
-
-- Converge retained repository text, including the present representation of
-  archived OpenSpec material, on English. Preserve original Git objects and
-  historical meaning; do not retroactively certify earlier work.
-
 ## [3.0.0] — 2026-09-25
 
 ### Guidelines and Reading
 
+- Published all retained tracked guidance and OpenSpec text in English. The
+  editorial translation of an archived artifact preserves its original Git
+  object and does not retroactively certify earlier work.
 - **Breaking:** Replaced the long root document with a short charter and six
   task-oriented topics. Kept necessary obligations, not old paths or fixed
   counts of cards.
