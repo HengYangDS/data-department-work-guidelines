@@ -106,10 +106,11 @@ installation is not qualified until its full dependency bundle has been tested.
 Both hosted CI planes run `npm audit --audit-level=moderate` during online tool
 supply; local source verification does not require network access.
 
-GitHub runs Linux, macOS, and Windows hosted jobs; GitLab selects the
-`ci-linux-arm64-docker` runner. Workflow declarations alone are not hosted
-success. Markdown and configuration use one blank line between blocks;
-Prettier and the repository check enforce their supported parts. `build/`,
+GitHub runs Linux, macOS, and Windows hosted jobs with a pinned stable Chrome
+for Testing build; GitLab selects the `ci-linux-arm64-docker` runner. Workflow
+declarations alone are not hosted success. Markdown and configuration use one
+blank line between blocks. Prettier and the repository check enforce their
+supported parts. `build/`,
 `node_modules/`, leases, and caches are local resources, not repository facts.
 Evidence remains with its producer and specific claim; it needs no root folder.
 

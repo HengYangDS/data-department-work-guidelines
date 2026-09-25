@@ -71,9 +71,13 @@ export function validateCi(githubSource, gitlabSource) {
   }
   if (
     String(setupNode.step.with?.["node-version"]) !== "22" ||
-    setupChrome.step.with?.["chrome-version"] !== "stable"
+    !/^\d+\.\d+\.\d+\.\d+$/u.test(
+      String(setupChrome.step.with?.["chrome-version"]),
+    )
   ) {
-    throw new Error("GitHub Node 22 or stable Chrome setup is missing");
+    throw new Error(
+      "GitHub Node 22 or version-pinned stable Chrome is missing",
+    );
   }
   const commands = steps.map((step) => step.run?.trim()).filter(Boolean);
   const install = commands.indexOf("npm ci --ignore-scripts");

@@ -54,6 +54,13 @@ test("both providers refuse to skip the dependency audit", () => {
   );
 });
 
+test("macOS Chrome supply preserves the app bundle through an exact version", () => {
+  assert.throws(
+    () => validateCi(github.replace("154.0.8037.57", "stable"), gitlab),
+    /version-pinned stable Chrome/u,
+  );
+});
+
 test("CI contract refuses an inline browser sandbox override", () => {
   assert.throws(
     () => validateCi(`${github}\n# --no-sandbox\n`, gitlab),

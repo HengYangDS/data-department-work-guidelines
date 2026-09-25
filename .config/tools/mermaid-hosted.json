@@ -1,5 +1,3 @@
 {
-  "args": ["--no-sandbox"],
-  "headless": true,
-  "timeout": 90000
+  "args": ["--no-sandbox"]
 }

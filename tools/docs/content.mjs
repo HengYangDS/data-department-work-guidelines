@@ -164,11 +164,10 @@ export function rendererConfig(selection) {
   if (selection) {
     const payload = JSON.parse(readText(selection));
     if (
-      JSON.stringify(payload) !==
-      JSON.stringify({ args: ["--no-sandbox"], headless: true, timeout: 90000 })
+      JSON.stringify(payload) !== JSON.stringify({ args: ["--no-sandbox"] })
     ) {
       throw new Error(
-        "hosted renderer config must select bounded full-Chrome headless mode",
+        "hosted renderer config must contain only the CI compatibility argument",
       );
     }
     return filePath(selection);

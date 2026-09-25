@@ -106,8 +106,8 @@ success.
 
 GitHub documentation verification SHALL run the same complete verifier on
 GitHub-hosted Linux, macOS, and Windows runners with immutable maintained
-Actions, Node 22, and managed stable Chrome. It SHALL NOT use a local
-self-hosted runner or host path. GitLab SHALL select the canonical
+Actions, Node 22, and an exact stable Chrome for Testing version. It SHALL NOT
+use a local self-hosted runner or host path. GitLab SHALL select the canonical
 `ci-linux-arm64-docker` capability tag; a separately owned runner must actually
 expose that tag before hosted success is claimed. The two providers' runtime
 services, credentials, work areas, caches, and job observations SHALL remain
@@ -167,8 +167,7 @@ The documentation adopter SHALL retain sandboxed Mermaid rendering by default.
 Hosted verification SHALL select the same repository-owned Puppeteer launch
 configuration through a repository-relative environment input. That
 configuration SHALL be checked in, portable, and limited to the hosted Chrome
-sandbox argument, full-Chrome headless mode, and a bounded startup timeout.
-Provider workflow YAML SHALL NOT inline a no-sandbox
+compatibility argument. Provider workflow YAML SHALL NOT inline a no-sandbox
 command. The single verifier SHALL validate the selection before rendering
 every present Mermaid diagram. Local configuration checks SHALL NOT be reported
 as hosted-CI success.

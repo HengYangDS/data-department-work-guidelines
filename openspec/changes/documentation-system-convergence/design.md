@@ -146,10 +146,12 @@ open.
   complete graph on each claimed platform, and report an untested platform as
   unqualified rather than calling the design portable by inspection.
 - Windows may check out every text file with CRLF under its host default;
-  `.gitattributes` gives Git the repository's LF rule. Hosted Chrome for Testing
-  uses full-Chrome headless mode and a bounded 90-second startup timeout rather
-  than Mermaid CLI's 30-second shell-mode default. Hosted runs must still prove
-  both platform repairs.
+  `.gitattributes` gives Git the repository's LF rule. On macOS, the Chrome
+  setup action's channel installer can drop the `.app` path component, as its
+  [upstream report](https://github.com/browser-actions/setup-chrome/issues/658)
+  documents. Select an exact officially verified stable Chrome for Testing
+  version so the version installer preserves the bundle. Hosted runs must still
+  prove both repairs.
 - Removing old hooks or wrappers can expose an unguarded command path. Compare
   the installed native hook graph and run negative cases before deletion.
 - A historical branch edition could be mistaken for a formal release. Do not
