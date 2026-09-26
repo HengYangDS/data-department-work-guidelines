@@ -36,21 +36,26 @@
       acquisition-versus-offline-execution route, explicit Node/npm, Git, and
       ETHOS prerequisites, integrity command, and failure boundary; verify all
       current examples against installed CLIs and repository checks.
-- [x] 3.2 Prepare the compatible minor edition in `VERSION`, charter, and Keep a
-      Changelog without fabricating a tag or Forge Release; verify SemVer,
-      changelog, spelling, links, formatting, and full source checks.
+- [x] 3.2 Prepare the major edition in `VERSION`, charter, and Keep a
+      Changelog for the incompatible Node/npm contributor prerequisite. Do not
+      fabricate a tag or Forge Release; verify SemVer, changelog, spelling,
+      links, formatting, and full source checks.
 - [ ] 3.3 Review the native ETHOS ordering for source acceptance, active Change,
       release asset publication, and archive; execute only the sequence admitted
       by current `status`, `plan`, `prove`, and release decisions, and verify no
       task is checked before its own evidence exists.
-- [x] 3.4 Prepare a corrective patch edition for source changes after the
-      signed minor-version tag without moving that tag. Bind its new bundle,
-      charter edition, changelog, and contributor route to the same version;
-      verify release identity and full source checks before acceptance.
-- [ ] 3.5 Reconcile the GitLab VM Runner's exact image allowlist, local digest
-      cache, and local-only pull policy with the pinned CI image before
-      unpausing it. Reject a tag-only cache and prove a same-SHA job executes on
-      Runner #52; do not use a successful older image job as acceptance.
+- [x] 3.4 Replace the Node 22/npm 10-only tool checks with a declared Node
+      26/npm 11 contract, update current stable locked tools, and pin both CI
+      planes to the same runtime line. Verify old-line rejection, focused tests,
+      fresh locked installation, and dependency audit.
+- [ ] 3.5 Reconcile Runner #52's allowlist, local digest cache, and
+      local-only pull policy with the exact Node 26 CI image. Reject a tag-only
+      cache and prove a job at the new source SHA executes on that runner;
+      earlier Node 22 jobs are not acceptance.
+- [x] 3.6 Restructure existing canonical OpenSpec requirement prose without
+      changing its duties; verify zero native strict findings before and after
+      a disposable archive simulation. The real Change remains active until
+      delivery obligations are evidenced.
 
 ## 4. Publish and close the exact release
 

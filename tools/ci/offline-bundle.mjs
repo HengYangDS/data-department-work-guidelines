@@ -17,7 +17,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
 import { projectPackageRequest } from "./gitlab-package.mjs";
-import { root, run } from "../docs/runtime.mjs";
+import { declaredToolRuntime, root, run } from "../docs/runtime.mjs";
 
 const recordKeys = [
   "fileName",
@@ -49,8 +49,8 @@ export function validateBundleRecord(record, source) {
   }
   if (
     record.schemaVersion !== 1 ||
-    record.nodeMajor !== 22 ||
-    record.npmMajor !== 10 ||
+    record.nodeMajor !== source.nodeMajor ||
+    record.npmMajor !== source.npmMajor ||
     !/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/u.test(record.version) ||
     record.version !== source.version ||
     record.fileName !==
@@ -238,7 +238,8 @@ export function sourceIdentity(repository) {
   const lycheeSha256 = digestBytes(
     readFileSync(path.join(repository, ".config", "tools", "lychee.json")),
   );
-  return { version, lockSha256, lycheeSha256 };
+  const runtime = declaredToolRuntime(repository);
+  return { version, lockSha256, lycheeSha256, ...runtime };
 }
 
 export function assembleBundle({
@@ -260,8 +261,8 @@ export function assembleBundle({
   } catch (error) {
     if (error.code !== "ENOENT") throw error;
   }
-  if (Number.parseInt(process.versions.node, 10) !== 22) {
-    throw new Error("offline bundle builder requires Node 22");
+  if (Number.parseInt(process.versions.node, 10) !== source.nodeMajor) {
+    throw new Error(`offline bundle builder requires Node ${source.nodeMajor}`);
   }
   const lychee = JSON.parse(
     readFileSync(
@@ -307,8 +308,6 @@ export function assembleBundle({
     const manifest = {
       schemaVersion: 1,
       ...source,
-      nodeMajor: 22,
-      npmMajor: 10,
       cacheFileCount,
       assets,
       licenses,
@@ -328,8 +327,6 @@ export function assembleBundle({
       ...source,
       fileName,
       sha256: digestBytes(readFileSync(archive)),
-      nodeMajor: 22,
-      npmMajor: 10,
     };
     inspectBundle(archive, record, source);
     return record;
@@ -362,8 +359,8 @@ export function validateExtractedBundle(directory, repository) {
     manifest.version !== source.version ||
     manifest.lockSha256 !== source.lockSha256 ||
     manifest.lycheeSha256 !== source.lycheeSha256 ||
-    manifest.nodeMajor !== 22 ||
-    manifest.npmMajor !== 10
+    manifest.nodeMajor !== source.nodeMajor ||
+    manifest.npmMajor !== source.npmMajor
   ) {
     throw new Error("offline bundle manifest does not match source");
   }
@@ -520,7 +517,7 @@ export function installBundle({
   const archive = path.resolve(bundlePath);
   validateBundleRecord(record, source);
   if (Number.parseInt(process.versions.node, 10) !== record.nodeMajor) {
-    throw new Error("offline bundle requires Node 22");
+    throw new Error(`offline bundle requires Node ${record.nodeMajor}`);
   }
   const nodeModules = path.join(repository, "node_modules");
   if (pathExists(nodeModules)) {
@@ -545,8 +542,10 @@ export function installBundle({
       capture: true,
       timeout: 10_000,
     }).trim();
-    if (!/^10\./u.test(npmVersion)) {
-      throw new Error(`offline bundle requires npm 10, got ${npmVersion}`);
+    if (!npmVersion.startsWith(`${record.npmMajor}.`)) {
+      throw new Error(
+        `offline bundle requires npm ${record.npmMajor}, got ${npmVersion}`,
+      );
     }
     startedNpmInstall = true;
     commandRunner(
@@ -687,8 +686,9 @@ export function buildReleaseBundle({
   licenseDirectory,
   outputPath,
 }) {
-  if (Number.parseInt(process.versions.node, 10) !== 22) {
-    throw new Error("offline bundle builder requires Node 22");
+  const source = sourceIdentity(repository);
+  if (Number.parseInt(process.versions.node, 10) !== source.nodeMajor) {
+    throw new Error(`offline bundle builder requires Node ${source.nodeMajor}`);
   }
   const lock = JSON.parse(
     readFileSync(path.join(repository, "package-lock.json"), "utf8"),
@@ -714,9 +714,9 @@ export function buildReleaseBundle({
       env: onlineEnv,
       timeout: 10_000,
     });
-    if (!/^10\./u.test(npmVersion)) {
+    if (!npmVersion.startsWith(`${source.npmMajor}.`)) {
       throw new Error(
-        `offline bundle builder requires npm 10, got ${npmVersion}`,
+        `offline bundle builder requires npm ${source.npmMajor}, got ${npmVersion}`,
       );
     }
     boundedNpm(["ci", "--ignore-scripts", "--no-audit", "--no-fund"], {

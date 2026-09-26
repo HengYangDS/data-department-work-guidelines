@@ -11,13 +11,12 @@ another source of authority.
 ### Requirement: Task-oriented guidance discovery
 
 The repository SHALL provide one concise human entry and one bounded Agent
-entry. The human entry SHALL hand off to one task-oriented documentation map
-rather than repeat its topic inventory. For a data qualification, analysis,
-delivery, communication, Agent delegation, or rule-revision task, the map or
-Agent entry SHALL lead to the applicable normative topic, its scope and
-responsible decision owner, and the next action without requiring unrelated
-topics to be read first. Historical context MAY be summarized at the map but
-SHALL NOT appear as another current rule or proof source.
+entry. The human entry SHALL link to a task map, not repeat its topic inventory.
+For data qualification, analysis, delivery, communication, delegation, or rule
+revision, the route SHALL identify the applicable normative topic, scope,
+decision owner, and next action without unrelated reading. The map MAY
+summarize history only as non-normative context, never as a current rule or
+proof.
 
 #### Scenario: Member qualifies data for use
 
@@ -73,17 +72,12 @@ reviewer; format, link, local proof, or CI success alone SHALL NOT establish it.
 
 ### Requirement: Task routes preserve the work-quality contract
 
-The concise entry and seven normative topics SHALL retain the distinct duties
-needed to act on the last accepted unified guideline without restoring a root
-monolith. Members and Agents SHALL find the same hard boundaries, risk-scaled
-minimums, six task boundaries, distinct work states, evidence-bounded completion,
-and triggers for learning through the topic relevant to their task. Editorial
-review SHALL compare each unique obligation and its important counterexamples
-against that former edition and the unaccepted criterion-system draft. Each
-substantive duty SHALL have one current owner or an explicit, authorized removal
-reason; shorter prose, matching headings, or a previous checklist assertion
-SHALL NOT establish semantic coverage. Rejected fixed management cadence and
-redundant rule, playbook, or evidence stores SHALL NOT return by default.
+The concise entry and seven normative topics SHALL preserve the last accepted
+unified guideline's distinct duties without a root monolith. For a relevant
+task, members and Agents SHALL find hard boundaries, risk-scaled minimums, six
+task boundaries, distinct work states, evidence-bounded completion, and learning
+triggers. Rejected fixed cadence and redundant rule, playbook, or evidence
+stores SHALL NOT return by default.
 
 #### Scenario: A high-risk task enters the route
 
@@ -107,6 +101,14 @@ redundant rule, playbook, or evidence stores SHALL NOT return by default.
 - **THEN** the evolution topic requires pattern and impact review and the
   lightest effective prevention mechanism
 - **AND THEN** it does not require a fixed meeting calendar or new report.
+
+### Requirement: Semantic coverage requires editorial review
+
+Editorial review SHALL compare every unique obligation and important
+counterexample with the former accepted edition and the unaccepted
+criterion-system draft. Each substantive duty SHALL have one current owner or
+an explicit authorized removal reason. Shorter prose, matching headings, or an
+old checklist SHALL NOT establish semantic coverage.
 
 #### Scenario: Earlier prose contains a unique duty
 

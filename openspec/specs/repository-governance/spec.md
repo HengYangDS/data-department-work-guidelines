@@ -22,15 +22,12 @@ leave `main` and `dev` at the same SHA.
 
 ### Requirement: ETHOS material-path attribution remains product-owned
 
-The repository SHALL declare `[openspec].material_paths = ["**"]` so newly
-tracked candidates are not omitted by an enumerated path list. Prewrite,
-changed planning, and proof SHALL attribute each fresh path
-to the same single selected active official OpenSpec Change. The repository
-SHALL NOT use `scope.toml`, a Commitment field, an archive, or another local
-carrier as a second authorization mechanism. Non-official scope companions
-from retired practice SHALL NOT remain in the present tracked archive tree;
-Git history retains their original objects without certifying them under the
-current contract.
+The repository SHALL set `[openspec].material_paths = ["**"]` so new tracked
+paths are included. ETHOS prewrite, changed planning, and proof SHALL attribute
+each fresh path to the same selected active official Change. `scope.toml`,
+Commitment fields, archives, and local carriers SHALL NOT authorize work.
+Obsolete companions SHALL leave the current tree; Git history preserves their
+objects without retrospective certification.
 
 #### Scenario: Material path is attributed
 
@@ -65,16 +62,13 @@ current contract.
 
 ### Requirement: Local and remote publication facts are separate
 
-The repository SHALL keep local verification independent of remote
-publication. GitLab SHALL be the organization primary release plane and GitHub
-SHALL be an independent complete repository and CI/CD plane. The installed
-ETHOS Git-common pre-push hook SHALL reject `work/*`, `candidate/dev`, and
-`submit/*` publication destinations. Only `dev`, `main`, and `proposal/*`
-destinations are eligible for further product admission. A configured remote,
-a local accepted ref, or a passing job on a different object SHALL NOT
-establish publication at a particular object. A GitHub fallback claim SHALL
-require a successful product-governed GitHub publication when GitLab is
-unavailable; a raw push SHALL NOT substitute for a product refusal.
+Local verification SHALL NOT imply publication. GitLab SHALL be the primary
+release plane; GitHub an independent repository and CI/CD plane. Native hooks
+SHALL reject `work/*`, `candidate/dev`, and `submit/*` publication; only
+`dev`, `main`, and `proposal/*` may proceed to admission. Configured remotes,
+local refs, and other-SHA jobs SHALL NOT prove publication. GitHub fallback
+requires actual ETHOS-governed publication while GitLab is unavailable, not a
+raw push after refusal.
 
 #### Scenario: Candidate publication is attempted
 
@@ -99,14 +93,12 @@ unavailable; a raw push SHALL NOT substitute for a product refusal.
 
 ### Requirement: Hosted documentation verification begins from a Git checkout
 
-Each hosted documentation job SHALL invoke the same shell-independent
-repository-owned verifier from a real Git checkout. GitHub SHALL check out on
-its managed runner before runtime setup and explicitly select the locked Node
-major version. GitLab SHALL provide Git and the same declared toolchain before
-verification. Provider setup MAY differ; the document-quality command and its
-repository-relative inputs SHALL not. Action references SHALL bind immutable
-maintained releases. A workflow declaration alone SHALL NOT count as hosted-CI
-success.
+Each hosted job SHALL run the same shell-independent verifier from a Git
+checkout. GitHub SHALL check out first on a managed runner, then select the
+locked Node major; GitLab SHALL supply Git and the same toolchain. Provider
+setup MAY differ; the command and repository-relative inputs SHALL NOT.
+Actions SHALL pin immutable maintained releases. Workflow YAML alone SHALL
+NOT count as hosted execution.
 
 #### Scenario: GitHub runner-native checkout is configured
 
@@ -130,20 +122,18 @@ success.
 
 ### Requirement: Per-project dual-Forge runner isolation
 
-GitHub documentation verification SHALL run the same complete verifier on
-GitHub-hosted Linux, macOS, and Windows runners with immutable maintained
-Actions and Node 22. It SHALL NOT
-use a local self-hosted runner or host path. GitLab SHALL select the canonical
-`ci-linux-arm64-docker` capability tag; a separately owned runner must actually
-expose that tag before hosted success is claimed. The two providers' runtime
-services, credentials, work areas, caches, and job observations SHALL remain
-independent. Repository YAML SHALL NOT claim runner registration.
+GitHub SHALL run the full verifier on hosted Linux, macOS, and Windows with
+pinned Actions and the declared Node line, never a local runner or host path.
+GitLab SHALL select `ci-linux-arm64-docker`; a real runner must expose
+that tag before success is claimed. Provider services, credentials,
+workspaces, caches, and job observations SHALL remain independent.
+YAML SHALL NOT claim runner registration.
 
 #### Scenario: Repository workflow bindings are statically valid
 
 - **WHEN** the repository validates its GitHub and GitLab documentation jobs
 - **THEN** GitHub selects its three-OS hosted matrix, checks out first, and
-  configures Node 22
+  configures the declared Node line
 - **AND THEN** GitLab selects `ci-linux-arm64-docker` and both jobs invoke the
   same verifier.
 
@@ -164,13 +154,12 @@ independent. Repository YAML SHALL NOT claim runner registration.
 
 ### Requirement: Change completion follows declared obligations
 
-The repository SHALL keep an official material Change active while any of its
-declared source or delivery tasks remain unverified. Source acceptance MAY
-advance candidate and accepted refs while remote delivery is pending. Archive
-SHALL follow completion of the tasks actually declared, and its resulting Git
-object SHALL receive a fresh applicable proof and publication observation.
-Source-only Changes MAY archive before integration when their obligations are
-already complete.
+An official material Change SHALL remain active while any declared source or
+delivery task lacks evidence. Source MAY advance to candidate and accepted
+refs before remote delivery. ETHOS SHALL archive only after declared tasks
+complete; its new Git object requires fresh proof and publication observation.
+A source-only Change MAY archive before integration when its obligations are
+complete.
 
 #### Scenario: Source is accepted before hosted delivery
 
@@ -189,14 +178,12 @@ already complete.
 
 ### Requirement: Evidence remains with its producing owner
 
-The repository SHALL not require a tracked `evidence/` root or a new
-claim/Chronicle pair as a condition of material Change admission. Source proof
-SHALL resolve from current ETHOS Attestations, Git objects, official OpenSpec
-artifacts, and selected Forge observations. A real-work quality or adoption
-claim SHALL name the underlying task and evidence source, its time, scope, and
-reviewer instead of treating repository validation as proof of organizational
-use. Historical tracked evidence MAY be retired in a new commit after unique
-facts and inbound consumers are reviewed; Git history remains unchanged.
+Change admission SHALL NOT require a tracked `evidence/` root or claim/Chronicle
+pair. Source proof SHALL use current ETHOS Attestations, Git objects, official
+OpenSpec artifacts, and Forge observations. Adoption claims SHALL name a real
+task, evidence source, time, scope, and reviewer, not repository validation.
+Historical tracked evidence MAY be retired in a new commit only after reviewing
+unique facts and inbound consumers; Git history remains unchanged.
 
 #### Scenario: A material Change has no tracked evidence directory
 
@@ -214,13 +201,11 @@ facts and inbound consumers are reviewed; Git history remains unchanged.
 
 ### Requirement: Repository-generated commits follow the signed source contract
 
-The repository SHALL declare an SSH commit policy requiring signatures on new
-commits, including commits generated by the official archive transition. It
-SHALL not pin a person's author, committer, key, or host path in tracked policy.
-An operator SHALL supply clone-local Git identity, a public signing-key path,
-and an external protected trust anchor before generating such a commit. An
-unsigned archive object or an object carrying an unintended host-derived
-identity SHALL NOT be accepted or published as the completed Change.
+New commits, including official archive commits, SHALL have trusted SSH
+signatures. Tracked policy SHALL NOT pin a person, key, or host path; the
+operator supplies clone-local identity, a public signing-key path, and an
+external trust anchor. An unsigned or unintended host-derived archive object
+SHALL NOT be accepted or published as completed Change work.
 
 #### Scenario: Configured clone archives a completed Change
 
@@ -241,14 +226,12 @@ identity SHALL NOT be accepted or published as the completed Change.
 
 ### Requirement: New commit identity and message policy is native
 
-The ETHOS workspace policy SHALL require trusted SSH signatures and scoped
-Conventional Commit subjects for new commits. Historical identity correction
-SHALL select exact author or committer headers, preserve trees, messages,
-timestamps, and unselected identities, and proceed only through admitted ETHOS
-repair with a verified recovery bundle. Replacement object IDs SHALL be proved
-and reconciled with both Forges before a release tag is admitted. A `.mailmap`,
-raw history rewrite, or rewritten old message SHALL NOT substitute for this
-transition.
+ETHOS SHALL require trusted SSH signatures and scoped Conventional Commit
+subjects on new commits. Historical identity repair SHALL select exact author
+or committer headers, preserve trees, messages, timestamps, and unselected
+identities, and use admitted ETHOS repair with a verified recovery bundle.
+Replacement IDs SHALL be proved and reconciled with both Forges before tagging;
+`.mailmap`, raw rewrite, or rewritten messages SHALL NOT substitute.
 
 #### Scenario: A new commit has an invalid subject
 
@@ -262,37 +245,72 @@ transition.
 - **AND THEN** proof, remote refs, and hosted CI are refreshed for replacement
   object IDs before tagging.
 
-### Requirement: Versioned guideline releases have one checked identity
+### Requirement: Version identity follows SemVer compatibility
 
-The repository SHALL declare its intended guideline release in `VERSION` as a
-strict SemVer 2.0.0 value. The charter SHALL show the same edition and the
-private npm tool manifest SHALL not declare a competing version. The public
-compatibility surface comprises normative obligations, stable reader and Agent
-routes, and documented contributor commands. An incompatible change to that
-surface SHALL take a major increment; backward-compatible additions or
-deprecations SHALL take a minor increment; compatible fixes SHALL take a patch
-increment. Compatibility classification SHALL be reviewed in the official
-Change rather than inferred from a formatted file.
+`VERSION` SHALL hold one strict SemVer 2.0.0 value matching the charter; the
+private npm manifest SHALL NOT declare a competing version. The public surface
+is normative duties, stable member and Agent routes, and contributor commands.
+Incompatible changes SHALL increment major, compatible additions or
+deprecations minor, and compatible fixes patch. The official Change SHALL
+review compatibility rather than infer it from formatting.
+
+#### Scenario: A breaking contributor command is retired
+
+- **WHEN** documented shell commands are replaced by one portable entrypoint
+- **THEN** the official Change identifies the compatibility break and the next
+  release takes a major increment
+- **AND THEN** migration guidance names the new command without keeping a
+  permanent shell compatibility facade.
+
+### Requirement: Changelog structure follows Keep a Changelog
 
 `CHANGELOG.md` SHALL follow Keep a Changelog 1.1.0: `Unreleased` first, only
-applicable Added, Changed, Deprecated, Removed, Fixed, and Security categories,
-strict SemVer release headings with real ISO dates, newest first, and links to
-version history. The repository quality gate SHALL reject uncategorized prose,
-malformed structure, version disagreement, missing local tag coverage, or a
-comparison for a tagged release that ends at a moving branch instead of its
-tag. A resolvable comparison base SHALL also be an ancestor of its tagged
-release or, before tagging, the prepared source; local object presence alone
-SHALL NOT count as published history. `Unreleased` SHALL compare from the
-prepared current version when one exists, or otherwise from the latest local
-release tag when one exists. A prepared release SHALL leave `Unreleased` empty
-and compare its version section to the prospective `vVERSION` tag. That exact
-prospective tag name MAY be an unresolved comparison base before creation;
-no other unresolved ref SHALL pass. The same changelog SHALL remain valid once
-the signed tag exists. A selected release tag SHALL identify the exact source
-and leave `Unreleased` empty. At most one untagged prepared release entry MAY
-identify the current `VERSION`; a heading alone is not publication.
-Native ETHOS SHALL admit signed annotated `vX.Y.Z` tags and publication. Older
-untagged branch editions SHALL NOT be retroactively labeled as formal releases.
+applicable Added, Changed, Deprecated, Removed, Fixed, and Security categories;
+strict SemVer headings, real ISO dates, newest-first order, and version-history
+links. The quality gate SHALL reject uncategorized prose, malformed headings,
+duplicate versions, version disagreement, missing local tag coverage, and
+invalid links.
+
+#### Scenario: Version, changelog, or tag identities diverge
+
+- **WHEN** a heading has a nonstandard category, invalid date or SemVer,
+  duplicates another version, lacks a real history link, omits a local tag,
+  or disagrees with `VERSION` or the selected tag's exact source
+- **THEN** the repository quality gate rejects the release candidate
+- **AND THEN** native ETHOS publication cannot substitute a different version
+  or silently treat an untagged earlier edition as a release.
+
+### Requirement: Release comparison links bind ancestry and tags
+
+A release comparison base SHALL be an ancestor of its tag or prepared source;
+local object presence is insufficient. Tagged comparisons SHALL end at the
+tag, not a moving branch. `Unreleased` SHALL compare from a prepared current
+version or, otherwise, the latest local release tag. A prepared version section
+SHALL compare to prospective `vVERSION`; only that exact missing tag MAY be
+unresolved. The same links SHALL remain valid after tagging.
+
+#### Scenario: A prepared link would fail after tagging
+
+- **WHEN** a prepared release leaves changes in `Unreleased`, compares from an
+  older tag, or ends its release comparison at a moving branch
+- **THEN** the quality gate rejects the source before creating the tag
+- **AND THEN** no arbitrary missing ref is treated as a prospective tag.
+
+#### Scenario: A local commit is absent from the published ancestry
+
+- **WHEN** a comparison base resolves in the local object store but is not an
+  ancestor of its release tag or prepared source
+- **THEN** the repository quality gate rejects that comparison before tagging
+- **AND THEN** historical identity repair cannot leave an old object ID in a
+  link merely because it resolves on the maintainer's machine.
+
+### Requirement: Prepared and published release states remain distinct
+
+At most one untagged prepared release entry MAY match `VERSION`;
+`Unreleased` SHALL be empty for it and for a selected release tag. A heading
+alone SHALL NOT establish publication. ETHOS SHALL admit only signed annotated
+`vX.Y.Z` tags at the exact source. Earlier untagged branch editions SHALL NOT
+be retroactively called releases.
 
 #### Scenario: A current release is prepared but not yet tagged
 
@@ -310,38 +328,6 @@ untagged branch editions SHALL NOT be retroactively labeled as formal releases.
 - **THEN** the same `Unreleased` and release comparison links remain valid
 - **AND THEN** the selected tag check binds the tag to that source without a
   post-tag source edit.
-
-#### Scenario: A prepared link would fail after tagging
-
-- **WHEN** a prepared release leaves changes in `Unreleased`, compares from an
-  older tag, or ends its release comparison at a moving branch
-- **THEN** the quality gate rejects the source before creating the tag
-- **AND THEN** no arbitrary missing ref is treated as a prospective tag.
-
-#### Scenario: A local commit is absent from the published ancestry
-
-- **WHEN** a comparison base resolves in the local object store but is not an
-  ancestor of its release tag or prepared source
-- **THEN** the repository quality gate rejects that comparison before tagging
-- **AND THEN** historical identity repair cannot leave an old object ID in a
-  link merely because it resolves on the maintainer's machine.
-
-#### Scenario: Version, changelog, or tag identities diverge
-
-- **WHEN** a heading has a nonstandard category, invalid date or SemVer,
-  duplicates another version, lacks a real history link, omits a local tag,
-  or disagrees with `VERSION` or the selected tag's exact source
-- **THEN** the repository quality gate rejects the release candidate
-- **AND THEN** native ETHOS publication cannot substitute a different version
-  or silently treat an untagged earlier edition as a release.
-
-#### Scenario: A breaking contributor command is retired
-
-- **WHEN** documented shell commands are replaced by one portable entrypoint
-- **THEN** the official Change identifies the compatibility break and the next
-  release takes a major increment
-- **AND THEN** migration guidance names the new command without keeping a
-  permanent shell compatibility facade.
 
 ### Requirement: Repository reuse rights have one MIT grant
 
@@ -368,15 +354,13 @@ statement; it SHALL NOT infer rights merely from repository visibility.
 
 ### Requirement: Each Forge supplies its pinned documentation tool independently
 
-The GitLab documentation job SHALL fetch its pinned lychee asset from the same
-GitLab project's generic package registry through the platform-provided CI API
-URL, project ID, and job token. It SHALL NOT depend on GitHub Releases or
-silently fall back to another Forge when the package is missing. The GitHub job
-MAY use its pinned GitHub upstream asset path. Both SHALL check the same
-committed SHA-256 and executable version before repository verification. The
-job token SHALL be sent only as a request header, never stored in the URL,
-repository, or logs. Local offline installation from an explicitly supplied
-asset SHALL remain available without either Forge.
+GitLab SHALL fetch pinned lychee from its own project's generic package
+registry using
+its CI API URL, project ID, and job token, never a GitHub fallback. GitHub MAY
+use its pinned upstream asset. Both SHALL verify committed SHA-256 and
+executable version before checks. The token SHALL appear only in a request
+header, never in a URL, source, or log. A local supplied-asset install SHALL
+work without either Forge.
 
 #### Scenario: GitLab runs while GitHub is unavailable
 

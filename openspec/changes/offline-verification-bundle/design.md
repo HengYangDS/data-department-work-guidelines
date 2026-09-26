@@ -3,11 +3,11 @@
 ## Context
 
 See [the proposal](proposal.md) for the observed cold-cache failure. The current
-verifier runs through locked npm packages plus lychee 0.24.2. The npm lock
-contains 252 installed packages and no platform-specific or install-script
-packages; an isolated clean-cache prime produced an 11.6 MB cache, and a second
-`npm ci --offline --ignore-scripts` installed all 252 packages from it on macOS.
-This proves feasibility on one host, not a portable release. The existing lychee
+verifier runs through locked npm packages plus lychee 0.24.2. The original
+feasibility probe used a 252-package lock without platform-specific or
+install-script packages: an isolated 11.6 MB cache then supported a real
+`npm ci --offline --ignore-scripts` on macOS. That historical probe does not
+qualify the refreshed lock or other hosts. The existing lychee
 installer already checks each declared platform archive's SHA-256 and version
 from `.config/tools/lychee.json`.
 
@@ -39,6 +39,17 @@ whose tagged-release digests are pinned in that manifest. Every currently locked
 npm package contains a license file in its cached tarball; the builder checks
 this before distribution. The repository's MIT license does not relicense
 bundled third-party bytes.
+
+### Declare the runtime once
+
+The npm manifest declares the supported Node 26/npm 11 major lines. Repository
+checks, CI validation, the bundle builder, and bundle installation derive their
+major checks from that declaration. The release bundle records the same majors
+so a consumer can reject incompatible cache readers before installation. The
+CI source pins an immutable official Node 26 image index on GitLab and selects
+Node 26 on GitHub-hosted runners. Node 22 is not a guideline requirement and
+receives no compatibility facade. Raising the contributor prerequisite is a
+SemVer major change, not a patch release.
 
 ### Bind bytes before extraction
 
@@ -89,9 +100,9 @@ exact reference and its local Docker store must resolve it before the Runner
 is unpaused. A tag-only image previously passed older jobs but could not run a
 new digest; trying to fetch the new image at job start then depended on a slow
 external layer route. Re-pin to an official OCI index already verified in the
-VM cache for the corrective patch edition. Keep the Runner's pull policy
-local-only after preflight; do not weaken the source pin or call a prior job
-proof of the new source.
+VM cache for the Node 26 major edition. Keep the Runner's pull policy
+local-only after preflight; do not weaken the source pin or call a prior Node 22
+job proof of the new source.
 
 ### Keep three evidence layers distinct
 
@@ -112,10 +123,10 @@ authority for Change, Work Lane, proof, tag, and publication admission.
   every binary digest, and build from explicit acquired inputs. A missing
   platform archive blocks the offline release claim rather than shrinking the
   declared platform set silently.
-- **Npm cache format varies across npm majors** → State the supported Node
-  22/npm line in the manifest; exercise the exact release bundle on each hosted
-  OS and reject incompatible cache readers. If a new npm major is needed,
-  prepare a new bundle and source revision.
+- **Npm cache format varies across npm majors** → Record the declared Node
+  26/npm 11 lines in the bundle; exercise the exact release bundle on each
+  hosted OS and reject incompatible cache readers. A later major requires a
+  new source revision and bundle.
 - **Archive extraction security** → Verify the trusted whole-file digest first,
   reject unsafe and non-regular members, extract only into an owned temporary
   directory, and test traversal, symlink, duplicate, and truncation cases.
@@ -131,17 +142,19 @@ authority for Change, Work Lane, proof, tag, and publication admission.
 
 ## Migration Plan
 
-1. Add the builder, installer, tracked bundle identity, and adversarial tests in
-   the owned Work Lane. Prepare the next minor version and contributor route
-   without changing department guidance semantics.
+1. Add the builder, installer, tracked bundle identity, and adversarial tests
+   in the owned Work Lane. Move the tools to the declared Node 26/npm 11 line,
+   refresh stable locked dependencies, and prepare the major edition without
+   changing department guidance semantics.
 2. Build the bundle from a clean cache and all five pinned lychee archives. Test
    actual offline installation and the full verifier on macOS, Linux, and
    Windows; keep source proof and artifact digest tied to the tested revision.
-3. Complete the official Change according to current ETHOS and OpenSpec
-   decisions. Create a signed version tag only after exact-source acceptance;
-   publish the one bundle object to each Forge and read back each SHA-256. A
-   Forge outage leaves its publication claim open rather than causing a raw push
-   or silent substitution.
+3. Accept the exact source while its delivery tasks remain open. Create the
+   signed version tag only after that acceptance; publish the same bundle to
+   both Forges, read back each SHA-256, and run the complete hosted matrix. Only
+   then complete the delivery tasks and archive officially. Refresh proof and
+   publication observation for the archive commit. A Forge outage leaves its
+   own claim open rather than causing a raw push or silent substitution.
 4. If a bundle is defective before tagging, rebuild and update the tracked
    digest in a new accepted source commit. After tagging, do not change its
    object; issue a new patch release for a source or artifact-contract repair.

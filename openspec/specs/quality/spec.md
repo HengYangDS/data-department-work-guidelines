@@ -50,16 +50,12 @@ accepting natural-language discussion and evidence links.
 
 ### Requirement: Default proof and root binding are distinct
 
-The profile default `code_correctness_gates` SHALL be exactly `docs-integrity`
-and `markdown-format`, and its profile-native descriptors SHALL be exactly that
-same default floor. The installed ETHOS command and Git-common hooks SHALL
-resolve the selected worktree and enforce write admission directly; no tracked
-repository adapter or extra profile descriptor SHALL act as another authority.
-The default proof commands SHALL invoke the same portable,
-repository-relative entrypoint and SHALL not depend on executable bits or
-POSIX shell availability. The `docs-integrity` command SHALL not rerun the
-formatter already owned by `markdown-format`; the standalone full verifier
-SHALL run that formatter once.
+The profile SHALL list exactly `docs-integrity` and `markdown-format` as
+default gates and descriptors. Both SHALL use a repository-relative Node
+entrypoint without executable bits or a POSIX shell. The former SHALL omit
+formatting; the latter owns it, while standalone verification runs it once.
+Installed ETHOS and Git-common hooks SHALL bind the selected worktree and
+enforce admission without a tracked adapter or optional gate.
 
 #### Scenario: Root-binding contract is audited
 
@@ -83,26 +79,14 @@ SHALL run that formatter once.
 - **AND WHEN** ETHOS executes the two default proof gates
 - **THEN** `docs-integrity` omits formatting and `markdown-format` owns it.
 
-### Requirement: Documentation checks measure supported properties
+### Requirement: One portable documentation verifier measures source properties
 
-Documentation validation SHALL have one repository-owned, shell-independent
-entrypoint using the locked toolchain. It SHALL check Prettier formatting of
+One shell-independent locked verifier SHALL check Prettier formatting of
 Markdown, code, JSON, and YAML; TOML syntax; Markdown lint; CSpell spelling;
-offline, version-checked lychee links and fragments; metadata; tracked English
-text and spacing; and repository-specific decision and navigation boundaries.
-CI tool supply SHALL verify the lychee asset digest and run
-an online locked-dependency audit separately from the offline verifier.
-Current command examples SHALL be reviewed against the installed public CLI
-before release rather than treated as parsed proof. The same entrypoint SHALL
-run locally and in both hosted CI planes with repository-relative inputs. It
-SHALL NOT require an arbitrary number of diagrams, cards, topic pages, or
-tracked historical evidence files. A public check SHALL run without a POSIX
-shell or a host-specific absolute path; merely banning `.sh` files SHALL NOT
-count as portability evidence. A portability claim SHALL require the complete
-declared graph to execute on each claimed host OS. Representative member and
-Agent scenarios SHALL be walked through against the task routes for correct rule
-selection and interpretation limits. A staged team-use trial SHALL NOT be a
-release gate or a substitute for naturally observed use.
+offline, version-checked lychee links and fragments; metadata; English,
+spacing, decision records, and navigation. The same entrypoint SHALL run
+locally and on both CI planes with repository-relative inputs. Diagram, card,
+topic, and tracked evidence counts SHALL NOT determine validity.
 
 #### Scenario: A diagram is removed without losing meaning
 
@@ -111,18 +95,27 @@ release gate or a substitute for naturally observed use.
 - **THEN** documentation validation passes without a diagram-count waiver or
   browser installation.
 
+#### Scenario: A public check is invoked without a POSIX shell
+
+- **WHEN** a supported host invokes `npm run verify` without a POSIX shell
+- **THEN** the check uses the same repository-relative Node entrypoint
+- **AND THEN** no repository-authored shell wrapper or browser is needed.
+
+### Requirement: Tool supply and portability require executed checks
+
+CI SHALL verify the pinned lychee digest and audit locked dependencies online,
+separately from offline source verification. Public checks SHALL not require a
+POSIX shell or host-specific absolute paths. Banning `.sh` files alone SHALL
+not prove portability: each claimed OS must execute the complete graph.
+Current command examples SHALL be reviewed against the installed public CLI
+before release; parsed prose alone is not proof.
+
 #### Scenario: A command was retired by its product
 
 - **WHEN** a current instruction names a command absent from the installed
   public CLI
 - **THEN** release review against the installed CLI reports the stale instruction
 - **AND THEN** a valid link or formatted code block does not hide it.
-
-#### Scenario: A public check is invoked without a POSIX shell
-
-- **WHEN** a supported host invokes `npm run verify` without a POSIX shell
-- **THEN** the check uses the same repository-relative Node entrypoint
-- **AND THEN** no repository-authored shell wrapper or browser is needed.
 
 #### Scenario: Prose or dependency supply fails
 
@@ -146,16 +139,28 @@ release gate or a substitute for naturally observed use.
 - **THEN** the repository's native `.gitattributes` rule selects LF
 - **AND THEN** the same formatting check evaluates the same text bytes.
 
+### Requirement: Reader interpretation is reviewed without staged adoption theater
+
+Representative member and Agent tasks SHALL be walked through the task routes
+for correct rule selection and interpretation limits. A staged team-use trial
+SHALL NOT be a release gate or substitute for naturally observed use.
+
+#### Scenario: A member or Agent follows a task route
+
+- **WHEN** a representative task requires a decision, data qualification, or
+  delivery boundary
+- **THEN** editorial review verifies that the task route selects the relevant
+  rule and states its interpretation limit
+- **AND THEN** this review is not reported as actual team adoption.
+
 ### Requirement: Retained repository text uses English
 
-The repository SHALL present retained tracked reader guidance, operational
-instructions, decisions, changelog entries, OpenSpec artifacts, code comments,
-and test prose in English. Documentation validation SHALL reject CJK characters
-in tracked or unignored candidate text files and SHALL report the file and line.
-The automated check SHALL complement, not replace, editorial review for clear
-English and faithful translation. Git history SHALL remain intact; translating a
-currently tracked archived artifact SHALL NOT imply that its earlier form was
-English or that earlier work passed a later governance lifecycle.
+Tracked reader guidance, operations, decisions, changelog, OpenSpec artifacts,
+code comments, and test prose SHALL be English. The validator SHALL reject CJK
+in tracked or unignored candidate text with file and line. Human review SHALL
+assess clarity and faithful translation. Git history remains unchanged;
+translating a tracked archive SHALL NOT certify its earlier language or
+lifecycle retroactively.
 
 #### Scenario: A candidate reintroduces Chinese prose
 

@@ -1,16 +1,22 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { validateCi } from "../tools/docs/ci.mjs";
-import { readText } from "../tools/docs/runtime.mjs";
+import { assertNodeRuntime, readText } from "../tools/docs/runtime.mjs";
 
 const github = readText(".github/workflows/docs-verify.yml");
 const gitlab = readText(".gitlab-ci.yml");
 const offline = readText(".github/workflows/offline-verify.yml");
 
+test("the repository check rejects an undeclared Node major", () => {
+  assert.doesNotThrow(() => assertNodeRuntime("26.10.0"));
+  assert.throws(() => assertNodeRuntime("22.23.3"), /Node 26/u);
+});
+
 test("both providers invoke one verifier on declared hosts", () => {
   const result = validateCi(github, gitlab);
   assert.equal(result.verifier, "npm run verify");
   assert.equal(result.audit, "npm audit --audit-level=moderate");
+  assert.equal(result.nodeMajor, 26);
   assert.deepEqual(result.hosts, [
     "ubuntu-latest",
     "macos-latest",
@@ -48,14 +54,37 @@ test("both providers supply tools without a browser installation", () => {
 
 test("GitLab jobs pin the official multiarch Node image by digest", () => {
   const image = gitlab.match(
-    /image: (node:22-bookworm@sha256:[0-9a-f]{64})/u,
+    /image: (public\.ecr\.aws\/docker\/library\/node:26-bookworm@sha256:[0-9a-f]{64})/u,
   )?.[1];
   assert.ok(image, "GitLab Node image is not digest-pinned");
-  assert.equal(gitlab.split(`image: ${image}`).length - 1, 2);
+  assert.equal(gitlab.split(`image: ${image}`).length - 1, 1);
   assert.throws(
     () =>
-      validateCi(github, gitlab.replace(image, "node:22-bookworm"), offline),
+      validateCi(
+        github,
+        gitlab.replace(image, "public.ecr.aws/docker/library/node:26-bookworm"),
+        offline,
+      ),
     /digest-pinned/u,
+  );
+});
+
+test("CI runtime follows the declared stable Node line", () => {
+  assert.throws(
+    () =>
+      validateCi(
+        github.replace("node-version: 26", "node-version: 22"),
+        gitlab,
+      ),
+    /Node 26/u,
+  );
+  assert.throws(
+    () =>
+      validateCi(
+        github,
+        gitlab.replace("node:26-bookworm", "node:22-bookworm"),
+      ),
+    /Node 26/u,
   );
 });
 

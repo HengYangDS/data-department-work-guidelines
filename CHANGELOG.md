@@ -11,13 +11,21 @@ being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
-## [4.2.2] - 2026-09-26
+## [5.0.0] - 2026-09-27
+
+### Changed
+
+- **Breaking:** Documentation verification and its offline bundle now require
+  Node 26 and npm 11 instead of Node 22 and npm 10. Updated the locked OpenSpec
+  and Prettier tools to their current stable releases.
 
 ### Fixed
 
-- Aligned the GitLab Linux ARM64 image pin with a verified Node 22 OCI index.
-  The VM Runner now allows only that digest and uses its local cache rather
-  than pulling a floating tag at job start.
+- Pinned GitLab CI to a digest-addressed Node 26 image admitted by the Linux
+  ARM64 Runner's local-only image policy, removing a floating-tag pull from its
+  declared job path.
+- Reorganized canonical OpenSpec requirement prose to satisfy native strict
+  validation without changing department work obligations.
 
 ## [4.2.1] - 2026-09-26
 
@@ -100,8 +108,8 @@ being relabeled as formal SemVer releases.
   verification sequence while keeping local, GitLab, and GitHub results separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.2.2...main
-[4.2.2]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.2.1...v4.2.2
+[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.0...main
+[5.0.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.2.1...v5.0.0
 [4.2.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.2.0...v4.2.1
 [4.2.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.1.1...v4.2.0
 [4.1.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.1.0...v4.1.1

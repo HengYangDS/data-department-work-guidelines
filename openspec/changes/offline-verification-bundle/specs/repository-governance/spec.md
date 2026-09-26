@@ -4,14 +4,12 @@
 
 ### Requirement: Offline verification supply is a separately observed release asset
 
-A versioned release that claims offline verification SHALL publish a
-source-bound bundle with identical verified SHA-256 bytes on GitLab and GitHub.
-The bundle SHALL be generated from the release's locked dependency and lychee
-manifests without embedding credentials, operator paths, a tracked
-`node_modules/` tree, or ETHOS runtime state. The release's source, bundle,
-Forge refs, hosted jobs, and Forge Release objects SHALL be observed separately.
-Acquisition of the bundle MAY use either Forge before going offline; execution
-after acquisition SHALL not depend on either Forge.
+An offline-capable release SHALL publish source-bound bundle bytes with the
+same verified SHA-256 on GitLab and GitHub. Build inputs SHALL be the locked
+package and lychee manifests; the bundle SHALL contain no credentials, host
+paths, `node_modules/`, or ETHOS state. Source, bundle, refs, jobs, and Release
+objects SHALL be observed separately. Acquisition MAY use either Forge; use
+after acquisition SHALL not require one.
 
 #### Scenario: Both Forges publish the release bundle
 

@@ -39,8 +39,8 @@ function record(overrides = {}) {
     sha256: digest("archive"),
     lockSha256: digest("lock"),
     lycheeSha256: digest("lychee"),
-    nodeMajor: 22,
-    npmMajor: 10,
+    nodeMajor: 26,
+    npmMajor: 11,
     ...overrides,
   };
 }
@@ -49,6 +49,8 @@ const source = {
   version: "4.2.0",
   lockSha256: digest("lock"),
   lycheeSha256: digest("lychee"),
+  nodeMajor: 26,
+  npmMajor: 11,
 };
 
 test("bundle identity is bound to the exact source inputs", () => {
@@ -59,14 +61,20 @@ test("bundle identity is bound to the exact source inputs", () => {
     { lycheeSha256: digest("other lychee") },
     { sha256: "0".repeat(64) },
     { fileName: "../offline-tools.tar.gz" },
-    { nodeMajor: 26 },
-    { npmMajor: 11 },
+    { nodeMajor: 22 },
+    { npmMajor: 10 },
     { unexpected: "second authority" },
   ]) {
     assert.throws(() => validateBundleRecord(record(changed), source));
   }
   assert.throws(() =>
     validateBundleRecord(record(), { ...source, version: "4.3.0" }),
+  );
+  assert.throws(() =>
+    validateBundleRecord(record(), { ...source, nodeMajor: 22 }),
+  );
+  assert.throws(() =>
+    validateBundleRecord(record(), { ...source, npmMajor: 10 }),
   );
 });
 
@@ -201,6 +209,10 @@ function buildFixture(run) {
     mkdirSync(assetDirectory);
     mkdirSync(licenseDirectory);
     writeFileSync(path.join(repository, "VERSION"), "4.2.0\n");
+    writeFileSync(
+      path.join(repository, "package.json"),
+      JSON.stringify({ engines: { node: "26.x", npm: "11.x" } }),
+    );
     writeFileSync(path.join(repository, "package-lock.json"), "fixture lock\n");
     writeFileSync(
       path.join(cacheDirectory, "_cacache", "index-v5", "entry"),
@@ -257,6 +269,8 @@ test("builder admits only pinned, licensed, regular supply", () => {
       version: built.version,
       lockSha256: built.lockSha256,
       lycheeSha256: built.lycheeSha256,
+      nodeMajor: built.nodeMajor,
+      npmMajor: built.npmMajor,
     });
     assert.equal(checked.sha256, built.sha256);
   });
@@ -360,7 +374,7 @@ test("installer invokes only the locked offline supply path", () => {
         path.basename(args[0]) === "npm-cli.js" &&
         args[1] === "--version"
       )
-        return "10.9.4\n";
+        return "11.20.0\n";
       if (
         command === process.execPath &&
         path.basename(args[0]) === "npm-cli.js" &&
@@ -405,7 +419,7 @@ test("installer invokes only the locked offline supply path", () => {
     const calls = [];
     const commandRunner = (command, args) => {
       calls.push([command, path.basename(args[0]), args[1]]);
-      if (args[1] === "--version") return "10.9.4\n";
+      if (args[1] === "--version") return "11.20.0\n";
       throw new Error("simulated offline cache miss");
     };
     assert.throws(
@@ -762,7 +776,7 @@ test("npm CLI is a JavaScript entrypoint on POSIX and Windows layouts", () => {
     timeout: 10_000,
   });
   assert.equal(version.status, 0, version.stderr);
-  assert.match(version.stdout, /^10\./u);
+  assert.match(version.stdout, /^11\./u);
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-npm-layout-"));
   try {
     const cli = path.join(

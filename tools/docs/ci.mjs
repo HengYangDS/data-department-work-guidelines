@@ -1,5 +1,5 @@
 import YAML from "yaml";
-import { readText } from "./runtime.mjs";
+import { declaredToolRuntime, readText } from "./runtime.mjs";
 
 const verifier = "npm run verify";
 const auditCommand = "npm audit --audit-level=moderate";
@@ -10,7 +10,6 @@ const offlineHostMatrix = [
   "macos-latest",
   "windows-latest",
 ];
-const gitlabImage = /^node:22-bookworm@sha256:[0-9a-f]{64}$/u;
 
 function parseYaml(source, name) {
   const document = YAML.parseDocument(source, { uniqueKeys: true });
@@ -28,7 +27,7 @@ function requireStep(steps, prefix) {
   return { index, step: steps[index] };
 }
 
-function validateOfflineWorkflow(source) {
+function validateOfflineWorkflow(source, nodeMajor) {
   const workflow = parseYaml(source, "GitHub offline workflow");
   if (
     workflow.on?.workflow_dispatch?.inputs?.tag?.required !== true ||
@@ -75,9 +74,11 @@ function validateOfflineWorkflow(source) {
   }
   if (
     checkout.index >= setupNode.index ||
-    String(setupNode.step.with?.["node-version"]) !== "22"
+    String(setupNode.step.with?.["node-version"]) !== String(nodeMajor)
   ) {
-    throw new Error("offline release must configure Node 22 after checkout");
+    throw new Error(
+      `offline release must configure Node ${nodeMajor} after checkout`,
+    );
   }
   const commands = steps.filter((step) => typeof step.run === "string");
   if (
@@ -106,7 +107,8 @@ function validateGitLabOffline(gitlab, expectedImage) {
   const job = gitlab["offline:verify"];
   if (!job) throw new Error("GitLab offline verification job is missing");
   if (
-    job.image !== expectedImage ||
+    job.image !== undefined ||
+    gitlab.default?.image !== expectedImage ||
     JSON.stringify(job.tags) !== JSON.stringify(["ci-linux-arm64-docker"]) ||
     String(job.variables?.GIT_DEPTH) !== "0"
   ) {
@@ -144,6 +146,11 @@ export function validateCi(
 ) {
   const github = parseYaml(githubSource, "GitHub workflow");
   const gitlab = parseYaml(gitlabSource, "GitLab pipeline");
+  const { nodeMajor } = declaredToolRuntime();
+  const imagePattern = new RegExp(
+    `^public\\.ecr\\.aws/docker/library/node:${nodeMajor}-bookworm@sha256:[0-9a-f]{64}$`,
+    "u",
+  );
   const job = github.jobs?.verify;
   if (!github.on?.push?.tags?.includes("v*")) {
     throw new Error("GitHub must verify version tags as well as branches");
@@ -177,8 +184,8 @@ export function validateCi(
   if (checkout.index >= setupNode.index) {
     throw new Error("GitHub checkout and runtime setup are out of order");
   }
-  if (String(setupNode.step.with?.["node-version"]) !== "22") {
-    throw new Error("GitHub Node 22 is missing");
+  if (String(setupNode.step.with?.["node-version"]) !== String(nodeMajor)) {
+    throw new Error(`GitHub Node ${nodeMajor} is missing`);
   }
   const commands = steps.map((step) => step.run?.trim()).filter(Boolean);
   const install = commands.indexOf("npm ci --ignore-scripts");
@@ -193,13 +200,15 @@ export function validateCi(
     );
   }
   const gitlabJob = gitlab["docs:verify"];
+  const gitlabImage = gitlab.default?.image;
   if (
     !gitlabJob ||
-    !gitlabImage.test(gitlabJob.image ?? "") ||
+    gitlabJob.image !== undefined ||
+    !imagePattern.test(gitlabImage ?? "") ||
     !gitlabJob.tags?.includes("ci-linux-arm64-docker")
   ) {
     throw new Error(
-      "GitLab verification must use a digest-pinned Node 22 image and declared Docker runner",
+      `GitLab verification must use a digest-pinned Node ${nodeMajor} image and declared Docker runner`,
     );
   }
   if (String(gitlabJob.variables?.GIT_DEPTH) !== "0") {
@@ -230,8 +239,9 @@ export function validateCi(
   }
   return {
     hosts: hostMatrix,
-    offlineHosts: validateOfflineWorkflow(offlineSource),
-    gitlabOfflineHost: validateGitLabOffline(gitlab, gitlabJob.image),
+    offlineHosts: validateOfflineWorkflow(offlineSource, nodeMajor),
+    gitlabOfflineHost: validateGitLabOffline(gitlab, gitlabImage),
+    nodeMajor,
     verifier,
     audit: auditCommand,
   };

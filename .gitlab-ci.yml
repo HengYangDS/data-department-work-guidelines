@@ -1,9 +1,11 @@
 stages:
   - verify
 
+default:
+  image: public.ecr.aws/docker/library/node:26-bookworm@sha256:2aaae6d91f99fee84cfc92da9b52c22a185752d247746052bbc3f961e44478c6
+
 docs:verify:
   stage: verify
-  image: node:22-bookworm@sha256:dd5847a04b0deee391fa145f1f4c6d214196668b6bcc7988ebed67249f226844
   tags:
     - ci-linux-arm64-docker
   interruptible: true
@@ -18,7 +20,6 @@ docs:verify:
 
 offline:verify:
   stage: verify
-  image: node:22-bookworm@sha256:dd5847a04b0deee391fa145f1f4c6d214196668b6bcc7988ebed67249f226844
   tags:
     - ci-linux-arm64-docker
   interruptible: true

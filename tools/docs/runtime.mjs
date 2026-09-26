@@ -21,6 +21,30 @@ export function readText(relative) {
   return readFileSync(filePath(relative), "utf8");
 }
 
+export function declaredToolRuntime(repository = root) {
+  const { engines } = JSON.parse(
+    readFileSync(path.join(repository, "package.json"), "utf8"),
+  );
+  const major = (value, name) => {
+    const match = /^([1-9]\d*)\.x$/u.exec(value);
+    if (!match) throw new Error(`invalid declared ${name} major`);
+    return Number(match[1]);
+  };
+  return {
+    nodeMajor: major(engines?.node, "Node"),
+    npmMajor: major(engines?.npm, "npm"),
+  };
+}
+
+export function assertNodeRuntime(version = process.versions.node) {
+  const { nodeMajor } = declaredToolRuntime();
+  if (Number(version.split(".")[0]) !== nodeMajor) {
+    throw new Error(
+      `repository tools require Node ${nodeMajor}, got ${version}`,
+    );
+  }
+}
+
 export function run(command, args = [], options = {}) {
   const {
     capture = false,

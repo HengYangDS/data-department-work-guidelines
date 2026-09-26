@@ -4,16 +4,13 @@
 
 ### Requirement: A supplied offline bundle can install the complete verification toolchain
 
-For each declared host platform, the repository SHALL accept a release-bound
-offline bundle that contains every locked npm package required by
-`npm ci --offline --ignore-scripts` and that platform's pinned lychee asset.
-Given a supported Node/npm and Git installation, the complete repository
-verification graph SHALL run from an empty application cache without contacting
-npm, GitLab, GitHub, or another remote. The bundle SHALL be checked against
-committed source identities and an externally supplied or source-pinned bundle
-digest before its contents are trusted. ETHOS installation and governance remain
-a separate product prerequisite; a repository bundle SHALL NOT impersonate ETHOS
-authority.
+On each declared platform, a release-bound bundle SHALL supply every
+package needed by `npm ci --offline --ignore-scripts` and the pinned lychee
+asset. Supported Node/npm and Git SHALL complete actual installation and full
+verification from an empty application cache without network. Before
+extraction, the installer SHALL match committed source identities and an
+external or source-pinned digest. ETHOS remains separate; the bundle SHALL NOT
+impersonate its authority.
 
 #### Scenario: Cold local verification succeeds without network access
 

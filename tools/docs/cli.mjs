@@ -17,7 +17,7 @@ import {
   checkNoScope,
   checkProfile,
 } from "./governance.mjs";
-import { gitFiles, run, runNodeTool } from "./runtime.mjs";
+import { assertNodeRuntime, gitFiles, run, runNodeTool } from "./runtime.mjs";
 
 function validateOpenSpec() {
   const output = runNodeTool(
@@ -68,6 +68,7 @@ function checkAll() {
 
 const [command, ...arguments_] = process.argv.slice(2);
 try {
+  assertNodeRuntime();
   switch (command) {
     case "check":
       if (arguments_.length) throw new Error("check accepts no arguments");

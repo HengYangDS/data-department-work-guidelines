@@ -2,12 +2,14 @@
 
 ## Why
 
-A fresh copy of this repository cannot install its locked verification tools
+At Change opening, a fresh copy could not install its locked verification tools
 from an empty npm cache without contacting the npm registry. A live cold-cache
 probe failed with a cache-miss error, while `npm ci --offline --dry-run`
-misleadingly exited successfully. The current release supplies source and a
-pinned lychee route, but not the complete dependency input needed to verify it
-when both Forges or the registry are unavailable.
+misleadingly exited successfully. The then-current release supplied source and
+a pinned lychee route, but not the complete dependency input needed to verify
+it when both Forges or the registry were unavailable. The previous Node 22/npm 10
+pin is a tooling choice, not a department-guideline requirement; retaining it
+would ship an obsolete verification prerequisite.
 
 ## What Changes
 
@@ -33,10 +35,12 @@ when both Forges or the registry are unavailable.
   for the next release. A pre-supplied local copy remains usable without either
   Forge. Keep source, bundle, hosted CI, Forge Release, and actual use as
   separate claims.
-- Add a backward-compatible offline contributor route and a minor guideline
-  release. Keep Node 22/npm, Git, and the installed ETHOS product as explicit
-  host prerequisites owned outside this repository; do not claim bare-OS
-  installation or bundle ETHOS as a second command plane.
+- Move the toolchain to the current stable Node 26/npm 11 line and update the
+  locked OpenSpec and Prettier packages. Derive runtime checks from the npm
+  manifest rather than duplicating a Node 22 constant in code and CI. The
+  contributor prerequisite changes incompatibly, so prepare a SemVer major
+  edition. Git and the installed ETHOS product remain separate prerequisites;
+  do not claim bare-OS installation or bundle ETHOS as another command plane.
 
 ## Capabilities
 
@@ -48,16 +52,19 @@ None.
 
 - `quality`: a cold local verification installation with a supplied release
   bundle must run without network access on each claimed platform and reject
-  incomplete or altered supply.
+  incomplete or altered supply. Runtime and CI checks must follow the declared
+  stable toolchain rather than an unrelated fixed major.
 - `repository-governance`: each release's offline verification bundle must be
   bound to its source and observed independently on both Forge release planes
   before offline distribution is claimed.
 
 ## Impact
 
-The Change may update the existing Node tooling, quality tests, CI declarations,
-contributor and governance guidance, release declaration, `VERSION`, charter
-edition, and changelog. Its generated bundle and npm cache remain untracked
-release inputs. It does not change the normative department work rules, MIT
-grant, ETHOS authority, or historical release objects. A release asset cannot be
-called portable until each declared host executes the full offline graph.
+The Change may update the existing Node tooling, locked dependencies, quality
+tests, CI declarations, contributor and governance guidance, release declaration,
+`VERSION`, charter edition, and changelog. Canonical OpenSpec prose may be
+restructured to satisfy native strict validation without changing its duties.
+The generated bundle and npm cache remain untracked release inputs. This does
+not change department work rules, the MIT grant, ETHOS authority, or historical
+release objects. A release asset is not portable until each declared host
+executes the full offline graph.
