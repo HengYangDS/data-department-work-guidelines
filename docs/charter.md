@@ -19,26 +19,42 @@ relations:
 
 ## Purpose
 
+Start here when the question is who may decide, which facts may be trusted, or
+which boundary must hold. Pause when the subject, authority, or consequence is
+unclear; use [execution and delivery](deliver.md) to verify a later result.
+
 The value of data work is not a file acquired, a table produced, a report
-written, or a process started. It is the conversion of real-world signals into
-reliable judgments, data assets, and actions. A result belongs in a lasting work
-system only when its source and time can be identified, its meaning explained,
-its conditions checked, its use bounded, and its accountable owner found.
+written, or a process started. This guideline is a work-quality contract against
+four failures: disordered reasoning that confuses facts with choices; quick
+fixes that leave the underlying mechanism untouched; communication that leaves
+no one able to decide or act; and AI that produces more material without making
+judgment or outcomes more reliable.
+
+A task should resolve the matter, test the judgment and its limits, and leave
+the system better able to recognize or handle the next occurrence. These are
+three distinct outcomes, not three required reports. Data work converts
+real-world signals into reliable judgments, data assets, and actions. A result
+belongs in a lasting work system only when its source and time can be
+identified, its meaning explained, its conditions checked, its use bounded, and
+its accountable owner found.
 
 **Keep the essential without losing the real; read the situation and reason from
 evidence.** A task is a vehicle for testing judgment and improving the system.
-Old approaches, tools, documents, and sunk costs do not outrank new facts. The
-Way-seeking philosophy guides truthfulness, proportion, responsibility, and
-evolution; it is neither a procedure to be mapped line by line nor a reason to
-give engineering objects mystical names.
+First understand what is happening; then use only the structure needed for a
+sound decision and a reliable result. Revise that structure when the evidence
+changes. This is the practical force of the underlying philosophy, not a reason
+to give ordinary engineering objects mystical names. Old approaches, tools,
+documents, and sunk costs do not outrank new facts.
 
 ## Two Kinds of Authority
 
 **Authority to act** answers who may decide what to do. Law, regulation,
 security requirements, and mandatory company policy come first. Within those
 boundaries, the authorized owner of the matter decides, subject to effective
-policies, contracts, and project agreements. An Agent, tool, or repository file
-cannot grant organizational authority to itself.
+policies, contracts, and project agreements. Work plans, provisional
+agreements, and personal preferences guide execution but cannot override an
+authorized decision or an effective obligation. An Agent, tool, or repository
+file cannot grant organizational authority to itself.
 
 **Authority about facts** answers what can establish what is true. Prefer
 primary records and repeatable observations with a source, time, subject, and

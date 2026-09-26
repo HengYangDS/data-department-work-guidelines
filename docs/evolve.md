@@ -11,7 +11,9 @@ relations:
 **When to use:** A problem repeats, coaching or review is needed, a template,
 tool, or rule is proposed, or an existing mechanism has become a burden. The aim
 of learning is to find the next failure earlier, judge it more easily, and need
-less manual rescue—not to increase the file count.
+less manual rescue—not to increase the file count. Do not adopt a new rule
+without an observed failure, a bounded trial, a responsible owner, and evidence
+of net benefit.
 
 ## Start with a Real Failure Mode
 
@@ -86,14 +88,23 @@ Investigate anomalies through cases and mechanisms; do not equate them directly
 with individual performance.
 
 For every L1 or L2 task, align the subject and success condition at the start,
-verify at the end, and preserve a handoff when interrupted. Review real work
-samples at natural decision and delivery points. Look for recurring failures,
-escaped quality issues, Agent misuse, and needless coordination, then retain,
-revise, or retire rules by observed net benefit. Do this in existing meetings,
-tickets, and reviews, without a fixed calendar or department-wide status
-report. Managers clarify direction, priorities, resources, and cross-domain
-decisions, and protect honest disclosure of uncertainty. They must not use
-these guidelines for retrospective fault-finding, ceremonial review, or
+recheck facts, options, and authority at material decisions or changed risk,
+verify at the end, and preserve a handoff when interrupted. Escalate high-risk
+signals when observed; a calendar must not delay containment or a decision.
+
+At least monthly, the manager examines a real work sample and accumulated weak
+signals: recurring failures, escaped quality issues, Agent misuse, and needless
+coordination. Decide whether a small correction is needed. At least quarterly,
+the guideline maintainer reviews the net benefit of current rules, templates,
+tools, and Agent practices with their users; keep, revise, or retire them. L2
+work may set a shorter task-specific interval at authorization. Use existing
+meetings, tickets, and reviews; record a material decision and its owner in
+that carrier. No separate meeting, universal weekly 30-minute session, or
+“nothing happened” activity report is required.
+
+Managers clarify direction, priorities, resources, and cross-domain decisions,
+and protect honest disclosure of uncertainty. They must not use these
+guidelines for retrospective fault-finding, ceremonial review, or
 micromanagement. When goals conflict, priorities drift, resources are short,
 decisions stall, or interfaces mislead, repair the management system before
 blaming a member's capability. Within those boundaries, the person closest

@@ -78,9 +78,12 @@ human acceptance is accepted by an authorized person. **Verified, accepted, and
 published or effective are distinct states.** Do not call “in progress” “mostly
 complete,” or promote verification to publication.
 
-For high-impact or repeated work, leave the necessary decision, test, monitor,
-rule, or recovery path in the existing system of responsibility so the next
-occurrence is found earlier and judged more easily. Do not create an unconsumed
-evidence directory or report to prove effort. For data delivery, see
+For L1 and L2 work, leave the material decision, actual result, limits, and
+remaining owner in the existing ticket, review, or decision carrier. Without a
+reviewable endpoint, do not say the organization has learned from the work. For
+high-impact or repeated work, leave the necessary test, monitor, rule, or
+recovery path in the existing system of responsibility so the next occurrence
+is found earlier and judged more easily. Do not create an unconsumed evidence
+directory or report to prove effort. For data delivery, see
 [data quality and adoption](data.md); for this repository's source lifecycle,
 see [repository governance](governance/ethos.md).

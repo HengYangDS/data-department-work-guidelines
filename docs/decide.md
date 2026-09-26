@@ -10,7 +10,9 @@ relations:
 
 **When to use:** The task is unclear, an anomaly needs explanation, or a choice
 must be made. Decide which decision the analysis must support before choosing
-its depth. Do not begin by filling a template or collecting material.
+its depth. Do not begin by filling a template or collecting material. If the
+decision owner or subject is unknown, pause the affected action; test a proposed
+answer against shared criteria, counterexamples, and stated limits.
 
 ## Frame the Right Problem
 
@@ -51,8 +53,10 @@ so explicitly.
 ## Use the Smallest Sufficient Model
 
 1. Define the central concepts and subjects, then their causal, dependency,
-   constraint, and feedback relationships. Divide along one consistent axis, not
-   for visual neatness.
+   constraint, and feedback relationships. Divide along one consistent axis so
+   the parts do not overlap, together cover the problem, and each return to the
+   decision the analysis must support. A long list or polished prose cannot
+   substitute for that model.
 2. Attach source and time to important facts; state how each unknown affects the
    decision. Separate observation from explanation.
 3. Offer falsifiable hypotheses. Check counterexamples, the baseline, and the

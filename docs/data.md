@@ -11,7 +11,8 @@ relations:
 **When to use:** When acquiring data, defining a metric, studying history,
 deploying a production pipeline, or allowing a business use. A readable file,
 attractive chart, or promising model signal does not by itself establish that
-the data may be adopted.
+the data may be adopted. Keep a proposed use exploratory until its meaning,
+quality, permission, and reproduction evidence support that specific decision.
 
 ## Answer Six Questions First
 
@@ -25,10 +26,14 @@ the data may be adopted.
 | How may it be used?     | Use cases, permissions, limits, misuse risks, owner, and exit conditions.       |
 
 Data with unanswered questions may support exploration, but must not be
-presented as a durable trusted asset. Distinguish source data, production data,
-experimental results, service views, caches, and reporting views; a downstream
-view must not quietly become the source of truth. Preserve the source and
-history of revisions and backfills so the current value can be explained.
+presented as a durable trusted asset. Exploratory code and temporary data may
+move quickly inside that boundary. Before either enters a shared, production,
+or decision path, qualify its meaning, quality, permissions, and reproducibility
+for that specific use; otherwise keep it marked as exploratory. Distinguish
+source data, production data, experimental results, service views, caches, and
+reporting views; a downstream view must not quietly become the source of truth.
+Preserve the source and history of revisions and backfills so the current value
+can be explained.
 
 ## Preserve the Historical Point of View
 

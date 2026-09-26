@@ -10,7 +10,8 @@ relations:
 
 **When to use:** When someone needs to understand a fact, make a decision, take
 action, or continue the work. Answer the reader's actual need before recounting
-the entire process.
+the entire process. If decisive facts or authority are missing, state the gap;
+test whether an independent reader can identify the basis, limits, and request.
 
 ## Know What the Exchange Must Accomplish
 
@@ -34,7 +35,9 @@ overturns it; do not hide the point behind jargon or background.
 ## Make Meetings Produce Decisions, Not Transcripts
 
 Before a meeting, name the question, necessary participants, and inputs; do not
-meet for work that can be resolved asynchronously. In the meeting, align facts
+meet for work that can be resolved asynchronously. Do not invite someone only
+out of courtesy if they supply no necessary fact, hold no decision authority,
+and own no action. In the meeting, align facts
 and definitions before comparing options. Locate disagreement in facts,
 inference, values, resources, or authority. Afterward, keep only the conclusion,
 basis, decision, actions, open points, and risks. Each action has an owner,
@@ -63,8 +66,10 @@ A complex analysis may unfold as “summary and request → subject and boundary
 facts and unknowns → model and options → trade-offs and limits → action and
 acceptance.” Combine levels for a simple matter; do not force an eleven-section
 template. Before sending, check the title, first screen, sources,
-counterexamples, terminology, timeline, causal chain, and whether the reader can
-act. Link to an existing source of truth rather than copying it.
+counterexamples, terminology, and causal chain; a timeline alone does not prove
+cause. Ask whether a reader outside the work can restate the conclusion, basis,
+limits, and next action without filling gaps. Link to an existing source of
+truth rather than copying it.
 
 ## Escalate Risk in Four Parts
 

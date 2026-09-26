@@ -12,7 +12,9 @@ relations:
 tests, or review to an Agent. People set direction and authority; intelligence
 extends capacity. Verify the facts. Decisions and consequences remain human
 responsibilities. An Agent is an executing or reasoning entity, not a source of
-organizational authorization.
+organizational authorization. Stop when the target, fact source, or permission
+cannot be established; a person checks the actual work and evidence before
+accepting an Agent's result.
 
 ## Delegate a Boundary, Not a Pile of Context
 
@@ -62,7 +64,8 @@ with the reported scope; inspect missing counterexamples, the current
 environment, uncovered cases, and high-risk authorization.
 
 Use multiple Agents in parallel only when independent questions, paths, or
-review angles can be separated. Give each subtask explicit inputs, outputs,
+review angles can be separated. Default parallel work to independent read-only
+research, review, or cross-checking. Give each subtask explicit inputs, outputs,
 scope, stop conditions, and ownership. Name an integration owner and avoid
 uncoordinated edits to the same source of truth or worktree. A majority opinion
 is not evidence; resolve disagreement against facts and criteria. Do not
@@ -78,9 +81,12 @@ continuing would hide a failure, pollute a source of truth, or enlarge harm.
 Stopping is not failure. Continuing with a guess presented as fact is loss of
 control.
 
-A completion report states what was actually done, to which subject and version,
-with what current verification; what the evidence does not show; who must still
-accept; what remains; and the next step. On interruption, preserve state,
-uncommitted work, attempts and failures, the recovery entry, and retries known
-to be ineffective. Repository Agents also start at the
+A completion report states the outcome (complete, partial, blocked, or
+deferred), target and version, actual changes, current verification method and
+result, and where the evidence can be inspected. Name risks, limits,
+assumptions, unresolved questions, and any acceptance still needed. End with
+the next responsible person, action, and due time; do not write only “follow
+up.” On interruption, preserve state, uncommitted work, attempts and failures,
+the recovery entry, and retries known to be ineffective. Repository Agents also
+start at the
 [Agent entry](../AGENTS.md); a method pack is not governance authority.

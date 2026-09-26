@@ -18,6 +18,12 @@ relations:
 | How do I delegate to an Agent?           | [Human–AI collaboration](human-agent.md) | Scope, stop conditions, verification, and human responsibility.          |
 | Should this practice become a rule?      | [Practice and evolution](evolve.md)      | Failure mode, trial, net benefit, maintenance, and retirement.           |
 
+Choose the question that blocks your next action and open that page first. At
+its opening, identify the decision owner and what must be known before acting;
+stop when authority, target, or critical facts are missing. Before reporting a
+result, follow its verification and acceptance link. The map is a route, not a
+second checklist of the seven topics.
+
 Each page owns the current requirements for one topic. Temporary methods,
 project-specific facts, and records of actual work stay in the system that
 produced them. Link to those sources; do not copy them into a second set of
