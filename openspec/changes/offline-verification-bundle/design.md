@@ -168,9 +168,10 @@ checks, not a weaker proof assertion during this release.
    Windows; keep source proof and artifact digest tied to the tested revision.
 3. Accept the exact source while its delivery tasks remain open. Create the
    signed version tag only after that acceptance; publish the same bundle to
-   both Forges, read back each SHA-256, and run the complete hosted matrix. Only
-   then complete the delivery tasks and archive officially. Refresh proof and
-   publication observation for the archive commit. A Forge outage leaves its
+   both Forges, read back each SHA-256, and run the complete hosted matrix.
+   Complete the pre-archive tasks only from that evidence. ETHOS then archives
+   the Change in a new signed commit; prove and publish that HEAD before
+   retiring the Work Lane and disposable staging. A Forge outage leaves its
    own claim open rather than causing a raw push or silent substitution.
 4. If a bundle is defective before tagging, rebuild and update the tracked
    digest in a new accepted source commit. After tagging, do not change its

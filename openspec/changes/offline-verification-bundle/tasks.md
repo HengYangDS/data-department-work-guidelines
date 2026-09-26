@@ -24,7 +24,7 @@
       `npm run verify` with outbound access disabled on macOS; verify no
       registry or Forge request is made. Do not use `npm ci --dry-run` as
       acceptance.
-- [ ] 2.3 Add a post-publication GitLab package acquisition and offline job;
+- [x] 2.3 Add a post-publication GitLab package acquisition and offline job;
       run the same release bundle's complete offline install and full verifier
       on GitHub-hosted macOS, Linux x86/ARM, Windows, and the declared GitLab
       Linux ARM64 runner. Verify each job at the exact source SHA and disclose
@@ -40,7 +40,7 @@
       Changelog for the incompatible Node/npm contributor prerequisite. Do not
       fabricate a tag or Forge Release; verify SemVer, changelog, spelling,
       links, formatting, and full source checks.
-- [ ] 3.3 Review the native ETHOS ordering for source acceptance, active Change,
+- [x] 3.3 Review the native ETHOS ordering for source acceptance, active Change,
       release asset publication, and archive; execute only the sequence admitted
       by current `status`, `plan`, `prove`, and release decisions, and verify no
       task is checked before its own evidence exists.
@@ -64,14 +64,14 @@
 
 ## 4. Publish and close the exact release
 
-- [ ] 4.1 Commit signed source, obtain exact-HEAD full proof, and close it
+- [x] 4.1 Commit signed source, obtain exact-HEAD full proof, and close it
       through the governed candidate and accepted roots; verify commit
       signature, clean worktree directories, and local `dev`/`main` identity.
-- [ ] 4.2 Create the admitted signed version tag and publish the same source and
+- [x] 4.2 Create the admitted signed version tag and publish the same source and
       bundle to GitLab and GitHub; verify both remote refs, both hosted CI
       results, both Forge Release objects, and read-back SHA-256 of both bundle
       assets.
-- [ ] 4.3 Complete the official Change and archive through ETHOS only after
-      declared tasks are evidenced; refresh proof and publication observations
-      for the archive commit, retire the merged Work Lane, and verify no
-      disposable worktree or release staging copy remains.
+- [x] 4.3 Confirm the exact release source, signed tag, both Forge Releases,
+      read-back bundle digests, and full hosted offline matrix agree before
+      requesting official archive. Do not treat archive, proof of its new HEAD,
+      publication, or lane retirement as a precondition of this task.
