@@ -4,30 +4,13 @@
 
 ### Requirement: Task routes preserve the work-quality contract
 
-The concise entry and seven normative topics SHALL retain the distinct duties
-needed to act on the last accepted unified guideline without restoring a root
-monolith. Members and Agents SHALL find the same hard boundaries, risk-scaled
-minimums, six task boundaries, distinct work states, evidence-bounded
-completion, and triggers for learning through the topic relevant to their task.
-The guidance SHALL keep three outcomes distinct: the matter is resolved, the
-judgment is tested within its limits, and the work system is made more capable
-of handling the next occurrence.
-
-A topic SHALL state each unique duty at the point where its reader must act:
-analysis decomposition covers the whole problem without overlapping categories
-and returns each part to the governing decision; exploratory data or code SHALL
-NOT enter a shared, production, or decision path before meaning, quality,
-permission, and reproducibility are qualified; Agent parallel work and
-completion reports SHALL expose their evidence and human responsibility.
-Task routes SHALL make the relevant start, stop, and verification boundary
-findable without a second normative card inventory.
-
-The evolution topic SHALL combine checks at material task transitions with a
-monthly real-work and systemic-signal calibration and a quarterly net-benefit
-review of rules and tools. High-risk signals SHALL be escalated when observed,
-not held for a calendar review. The periodic floor SHALL reuse existing work
-carriers and SHALL NOT require a separate meeting, a fixed meeting duration,
-or a department-wide activity report.
+The entry and seven topics SHALL preserve the unified guideline's duties
+without a root monolith. Readers SHALL find hard boundaries, risk-scaled
+minimums, six task boundaries, work states, evidence limits, and learning
+triggers. Resolving the matter, testing judgment within its limits, and
+improving the system for the next occurrence SHALL remain distinct outcomes.
+Each topic SHALL expose start, stop, and verification cues without a second
+card inventory.
 
 #### Scenario: A high-risk task enters the route
 
@@ -44,6 +27,43 @@ or a department-wide activity report.
 - **THEN** the delivery topic distinguishes executing, verified, accepted,
   and published or effective states
 - **AND THEN** the claim does not outrun its current subject-bound evidence.
+
+#### Scenario: Repeated weak signals appear
+
+- **WHEN** small failures, drift, or human rescue recur before the next review
+- **THEN** the evolution topic requires immediate pattern and impact review and
+  the lightest effective prevention mechanism
+- **AND THEN** the periodic floor does not postpone risk escalation.
+
+### Requirement: Semantic coverage requires editorial review
+
+Editorial review SHALL compare each unique duty and important counterexample
+with the former accepted guideline. An unaccepted draft MAY inform this only
+when exact bytes and provenance exist; it is not current authority. Each duty
+SHALL have one current owner or an explicit authorized removal reason. Short
+prose, matching headings, and prior checklist claims SHALL NOT prove coverage.
+Redundant rule, playbook, evidence, and template stores SHALL NOT return by
+default.
+
+#### Scenario: Earlier prose contains a unique duty
+
+- **WHEN** an editorial comparison finds a concrete counterexample or stop
+  condition in the former unified guideline that the current topic does not
+  express
+- **THEN** the current topic is amended or a reasoned, authorized removal is
+  recorded in the official Change
+- **AND THEN** the retired draft is not promoted into a second live rule tree.
+
+## ADDED Requirements
+
+### Requirement: Point-of-use analysis, data, and Agent boundaries
+
+Analysis SHALL divide the whole problem into non-overlapping parts tied to
+the governing decision. Exploratory data or code SHALL NOT enter a shared,
+production, or decision path until meaning, quality, permission, and
+reproducibility are qualified. Parallel Agent work SHALL default to independent
+read-only review with one integrator; reports SHALL expose evidence, limits,
+and human responsibility.
 
 #### Scenario: An analysis is split into parts
 
@@ -71,6 +91,22 @@ or a department-wide activity report.
   next responsible actor and time explicit
 - **AND THEN** a human still verifies and accepts the consequential result.
 
+#### Scenario: Parallel Agents inspect one task
+
+- **WHEN** independent Agent subtasks are assigned in parallel
+- **THEN** research and review default to read-only work with explicit scope
+  and stop conditions
+- **AND THEN** one integrator owns the combined result, and a person remains
+  responsible for consequential acceptance.
+
+### Requirement: Feedback combines events and periodic review
+
+Evolution SHALL check material task transitions, calibrate real work and
+weak signals at least monthly, and review rules and tools for net benefit at
+least quarterly. High-risk signals SHALL be escalated when observed, not held
+for a calendar. Reviews SHALL reuse existing carriers and SHALL NOT require a
+new meeting, fixed duration, or department-wide activity report.
+
 #### Scenario: Weak signals accumulate without an incident
 
 - **WHEN** a month passes without a single event that forces a systemic review
@@ -78,30 +114,3 @@ or a department-wide activity report.
   an existing carrier and decide whether a mechanism needs correction
 - **AND THEN** a quarterly review tests whether current rules and tools still
   return more value than they cost, without staging a ceremonial new meeting.
-
-#### Scenario: Repeated weak signals appear
-
-- **WHEN** small failures, drift, or human rescue recur before the next review
-- **THEN** the evolution topic requires immediate pattern and impact review and
-  the lightest effective prevention mechanism
-- **AND THEN** the periodic floor does not postpone risk escalation.
-
-### Requirement: Semantic coverage requires editorial review
-
-Editorial review SHALL compare each unique obligation and its important
-counterexamples against the former accepted unified guideline. An unaccepted
-draft MAY inform that comparison only when its exact bytes and provenance are
-available; it is not a second source of current authority. Each substantive
-duty SHALL have one current owner or an explicit, authorized removal reason.
-Shorter prose, matching headings, or a previous checklist assertion SHALL NOT
-establish semantic coverage. Redundant rule, playbook, evidence, and template
-stores SHALL NOT return by default.
-
-#### Scenario: Earlier prose contains a unique duty
-
-- **WHEN** an editorial comparison finds a concrete counterexample or stop
-  condition in the former unified guideline that the current topic does not
-  express
-- **THEN** the current topic is amended or a reasoned, authorized removal is
-  recorded in the official Change
-- **AND THEN** the retired draft is not promoted into a second live rule tree.
