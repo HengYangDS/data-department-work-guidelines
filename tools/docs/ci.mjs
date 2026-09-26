@@ -21,7 +21,84 @@ function requireStep(steps, prefix) {
   return { index, step: steps[index] };
 }
 
-export function validateCi(githubSource, gitlabSource) {
+function validateOfflineWorkflow(source) {
+  const workflow = parseYaml(source, "GitHub offline workflow");
+  if (
+    workflow.on?.workflow_dispatch?.inputs?.tag?.required !== true ||
+    workflow.on?.workflow_dispatch?.inputs?.tag?.type !== "string" ||
+    JSON.stringify(workflow.on?.release?.types) !==
+      JSON.stringify(["published"])
+  ) {
+    throw new Error(
+      "offline verification requires a published release trigger",
+    );
+  }
+  const job = workflow.jobs?.verify;
+  if (
+    workflow.permissions?.contents !== "read" ||
+    !job ||
+    job.container ||
+    JSON.stringify(job.strategy?.matrix?.os) !== JSON.stringify(hostMatrix) ||
+    job["runs-on"] !== "${{ matrix.os }}"
+  ) {
+    throw new Error("offline verification must use read-only hosted runners");
+  }
+  const expectedRef = "${{ github.event.release.tag_name || inputs.tag }}";
+  if (job.env?.DDWG_RELEASE_TAG !== expectedRef || job.env?.GH_TOKEN) {
+    throw new Error("offline verification must bind the exact release tag");
+  }
+  const steps = job.steps;
+  if (!Array.isArray(steps) || steps.length !== 5)
+    throw new Error("offline verification requires exact five steps");
+  for (const step of steps) {
+    if (step.uses && !/^[^@]+@[0-9a-f]{40}$/u.test(step.uses)) {
+      throw new Error(`offline action is not pinned by commit: ${step.uses}`);
+    }
+  }
+  const checkout = requireStep(steps, "actions/checkout");
+  const setupNode = requireStep(steps, "actions/setup-node");
+  if (
+    checkout.step.with?.ref !== expectedRef ||
+    checkout.step.with?.["fetch-depth"] !== 0
+  ) {
+    throw new Error(
+      "offline release checkout must use full history and the exact tag",
+    );
+  }
+  if (
+    checkout.index >= setupNode.index ||
+    String(setupNode.step.with?.["node-version"]) !== "22"
+  ) {
+    throw new Error("offline release must configure Node 22 after checkout");
+  }
+  const commands = steps.filter((step) => typeof step.run === "string");
+  if (
+    commands[0]?.run !== "node tools/ci/offline-bundle.mjs acquire-github" ||
+    setupNode.index >= steps.indexOf(commands[0])
+  ) {
+    throw new Error("offline acquisition must follow runtime setup");
+  }
+  if (
+    commands[0].env?.GH_TOKEN !== "${{ github.token }}" ||
+    commands[0].env?.GH_PROMPT_DISABLED !== "1" ||
+    commands.slice(1).some((step) => step.env?.GH_TOKEN)
+  ) {
+    throw new Error("offline acquisition needs a step-scoped read-only token");
+  }
+  if (commands[1]?.run !== "node tools/ci/offline-bundle.mjs install") {
+    throw new Error("offline installation must use the pinned bundle");
+  }
+  if (commands[2]?.run !== verifier || commands.length !== 3) {
+    throw new Error("offline verifier must run the full repository check");
+  }
+  return hostMatrix;
+}
+
+export function validateCi(
+  githubSource,
+  gitlabSource,
+  offlineSource = readText(".github/workflows/offline-verify.yml"),
+) {
   const github = parseYaml(githubSource, "GitHub workflow");
   const gitlab = parseYaml(gitlabSource, "GitLab pipeline");
   const job = github.jobs?.verify;
@@ -110,6 +187,7 @@ export function validateCi(githubSource, gitlabSource) {
   }
   return {
     hosts: hostMatrix,
+    offlineHosts: validateOfflineWorkflow(offlineSource),
     verifier,
     audit: auditCommand,
   };
@@ -119,6 +197,7 @@ export function checkCi() {
   const result = validateCi(
     readText(".github/workflows/docs-verify.yml"),
     readText(".gitlab-ci.yml"),
+    readText(".github/workflows/offline-verify.yml"),
   );
   console.log(
     `PASS CI contract: ${result.hosts.join(", ")} and GitLab share ${result.verifier}; hosted runs remain separate evidence`,

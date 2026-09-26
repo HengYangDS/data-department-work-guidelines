@@ -5,6 +5,7 @@ import { readText } from "../tools/docs/runtime.mjs";
 
 const github = readText(".github/workflows/docs-verify.yml");
 const gitlab = readText(".gitlab-ci.yml");
+const offline = readText(".github/workflows/offline-verify.yml");
 
 test("both providers invoke one verifier on declared hosts", () => {
   const result = validateCi(github, gitlab);
@@ -102,4 +103,57 @@ test("GitLab CI cannot regress to a GitHub-hosted tool download", () => {
     () => validateCi(github, gitlab.replace("--gitlab-package", "--download")),
     /GitLab.*supply/u,
   );
+});
+
+test("offline release CI runs the source-pinned bundle on three hosted systems", () => {
+  assert.deepEqual(validateCi(github, gitlab, offline).offlineHosts, [
+    "ubuntu-latest",
+    "macos-latest",
+    "windows-latest",
+  ]);
+  for (const [changed, reason] of [
+    [
+      offline.replace("types: [published]", "types: [created]"),
+      /published release/u,
+    ],
+    [offline.replace("fetch-depth: 0", "fetch-depth: 1"), /full history/u],
+    [
+      offline.replace(
+        "actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+        "actions/setup-node@main",
+      ),
+      /not pinned/u,
+    ],
+    [
+      offline.replace(
+        "run: node tools/ci/offline-bundle.mjs acquire-github",
+        "run: echo skipped",
+      ),
+      /offline acquisition/u,
+    ],
+    [
+      offline.replace(
+        "run: node tools/ci/offline-bundle.mjs install",
+        "run: npm ci",
+      ),
+      /offline installation/u,
+    ],
+    [
+      offline.replace("run: npm run verify", "run: npm run partial"),
+      /offline verifier/u,
+    ],
+    [
+      offline.replace("GH_TOKEN: ${{ github.token }}", "GH_TOKEN: fixture"),
+      /read-only token/u,
+    ],
+    [
+      offline.replace(
+        "      - name: Install without remote supply",
+        `      - uses: actions/cache@${"0".repeat(40)}\n      - name: Install without remote supply`,
+      ),
+      /exact five steps/u,
+    ],
+  ]) {
+    assert.throws(() => validateCi(github, gitlab, changed), reason);
+  }
 });

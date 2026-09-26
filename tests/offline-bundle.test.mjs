@@ -15,6 +15,7 @@ import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 import {
+  acquireGitHubBundle,
   assembleBundle,
   assertSafeBundleListing,
   inspectBundle,
@@ -506,3 +507,97 @@ test("an empty npm cache cannot satisfy the actual offline install", () => {
     rmSync(directory, { recursive: true, force: true });
   }
 });
+
+test("GitHub acquisition selects one exact release asset and verifies it", () => {
+  buildFixture((inputs) => {
+    const built = assembleBundle(inputs);
+    const recordPath = path.join(
+      inputs.repository,
+      ".config",
+      "tools",
+      "offline-bundle.json",
+    );
+    writeFileSync(recordPath, JSON.stringify(built));
+    const environment = {
+      GITHUB_REPOSITORY: "Example/Repository",
+      DDWG_RELEASE_TAG: "v4.2.0",
+      GH_TOKEN: "fixture-only",
+    };
+    let calls = 0;
+    const download = ({ tag, repository, fileName, directory, env }) => {
+      calls += 1;
+      assert.equal(tag, "v4.2.0");
+      assert.equal(repository, "Example/Repository");
+      assert.equal(fileName, built.fileName);
+      assert.equal(env.GH_PROMPT_DISABLED, "1");
+      copyFileSync(inputs.outputPath, path.join(directory, fileName));
+    };
+    const result = acquireGitHubBundle({
+      repository: inputs.repository,
+      environment,
+      download,
+    });
+    assert.equal(result.sha256, built.sha256);
+    assert.equal(calls, 1);
+    assert.equal(
+      acquireGitHubBundle({
+        repository: inputs.repository,
+        environment,
+        download: () => {
+          throw new Error("must not download twice");
+        },
+      }).sha256,
+      built.sha256,
+    );
+    for (const changed of [
+      { DDWG_RELEASE_TAG: "v4.1.1" },
+      { GITHUB_REPOSITORY: "invalid" },
+      { GH_TOKEN: "" },
+    ]) {
+      assert.throws(() =>
+        acquireGitHubBundle({
+          repository: inputs.repository,
+          environment: { ...environment, ...changed },
+          download,
+        }),
+      );
+    }
+  });
+  buildFixture((inputs) => {
+    const built = assembleBundle(inputs);
+    writeFileSync(
+      path.join(inputs.repository, ".config", "tools", "offline-bundle.json"),
+      JSON.stringify(built),
+    );
+    const target = path.join(
+      inputs.repository,
+      "build",
+      "artifacts",
+      "offline-bundle",
+      built.fileName,
+    );
+    assert.throws(() =>
+      acquireGitHubBundle({
+        repository: inputs.repository,
+        environment: {
+          GITHUB_REPOSITORY: "Example/Repository",
+          DDWG_RELEASE_TAG: "v4.2.0",
+          GH_TOKEN: "fixture-only",
+        },
+        download: ({ directory, fileName }) =>
+          writeFileSync(path.join(directory, fileName), "altered"),
+      }),
+    );
+    assert.equal(pathExistsForTest(target), false);
+  });
+});
+
+function pathExistsForTest(file) {
+  try {
+    readFileSync(file);
+    return true;
+  } catch (error) {
+    if (error.code === "ENOENT") return false;
+    throw error;
+  }
+}

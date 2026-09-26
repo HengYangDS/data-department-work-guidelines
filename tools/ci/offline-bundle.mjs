@@ -759,26 +759,35 @@ function cli(argv) {
     return;
   }
   if (
+    mode === "acquire-github" &&
+    !parsed.bundle &&
+    !parsed.assets &&
+    !parsed.licenses &&
+    !parsed.output
+  ) {
+    const result = acquireGitHubBundle();
+    console.log(`PASS offline acquisition: ${result.version} ${result.sha256}`);
+    return;
+  }
+  if (
     (mode === "inspect" || mode === "install") &&
-    parsed.bundle &&
     !parsed.assets &&
     !parsed.licenses &&
     !parsed.output
   ) {
     const record = readBundleRecord();
+    const bundlePath =
+      parsed.bundle ??
+      path.join(root, "build", "artifacts", "offline-bundle", record.fileName);
     const result =
       mode === "inspect"
-        ? verifyBundle({ bundlePath: parsed.bundle, record })
-        : installBundle({
-            bundlePath: parsed.bundle,
-            record,
-            repository: root,
-          });
+        ? verifyBundle({ bundlePath, record })
+        : installBundle({ bundlePath, record, repository: root });
     console.log(`PASS offline ${mode}: ${result.version} ${result.sha256}`);
     return;
   }
   throw new Error(
-    "usage: node tools/ci/offline-bundle.mjs build --assets DIR --licenses DIR --output FILE | inspect --bundle FILE | install --bundle FILE",
+    "usage: node tools/ci/offline-bundle.mjs build --assets DIR --licenses DIR --output FILE | acquire-github | inspect [--bundle FILE] | install [--bundle FILE]",
   );
 }
 
@@ -791,5 +800,80 @@ if (
   } catch (error) {
     console.error(error instanceof Error ? error.message : String(error));
     process.exitCode = 1;
+  }
+}
+
+function downloadGitHubRelease({ tag, repository, fileName, directory, env }) {
+  const result = spawnSync(
+    "gh",
+    [
+      "release",
+      "download",
+      tag,
+      "--repo",
+      repository,
+      "--pattern",
+      fileName,
+      "--dir",
+      directory,
+    ],
+    {
+      env,
+      input: "",
+      encoding: "utf8",
+      timeout: 90_000,
+      maxBuffer: 1024 * 1024,
+    },
+  );
+  if (result.error) {
+    throw new Error(
+      `GitHub release download failed: ${result.error.code ?? "unknown"}`,
+    );
+  }
+  if (result.status !== 0) {
+    throw new Error(`GitHub release download failed: exit ${result.status}`);
+  }
+}
+
+export function acquireGitHubBundle({
+  repository = root,
+  environment = process.env,
+  download = downloadGitHubRelease,
+} = {}) {
+  const record = readBundleRecord(repository);
+  const tag = environment.DDWG_RELEASE_TAG;
+  const githubRepository = environment.GITHUB_REPOSITORY;
+  if (tag !== `v${record.version}`) {
+    throw new Error("GitHub release tag does not match source version");
+  }
+  if (!/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/u.test(githubRepository ?? "")) {
+    throw new Error("GitHub repository identity is missing or invalid");
+  }
+  if (!environment.GH_TOKEN || /[\r\n]/u.test(environment.GH_TOKEN)) {
+    throw new Error("GitHub release identity is missing or invalid");
+  }
+  const directory = path.join(
+    repository,
+    "build",
+    "artifacts",
+    "offline-bundle",
+  );
+  const target = path.join(directory, record.fileName);
+  if (pathExists(target)) {
+    return verifyBundle({ bundlePath: target, record, repository });
+  }
+  mkdirSync(directory, { recursive: true });
+  try {
+    download({
+      tag,
+      repository: githubRepository,
+      fileName: record.fileName,
+      directory,
+      env: { ...environment, GH_PROMPT_DISABLED: "1" },
+    });
+    return verifyBundle({ bundlePath: target, record, repository });
+  } catch (error) {
+    rmSync(target, { force: true });
+    throw error;
   }
 }
