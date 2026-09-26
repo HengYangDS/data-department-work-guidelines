@@ -42,8 +42,9 @@ None.
 ## Impact
 
 The Change may revise the existing task map and normative topic pages, the
-`guidance-discovery` specification, and tests that protect routing and source
-ownership. It adds no second normative tree, root guideline, template library,
+`guidance-discovery` specification, release Changelog, and tests that protect
+routing and source ownership. It adds no second normative tree, root
+guideline, template library,
 claim ledger, or repository-specific lifecycle. The old mandatory meeting
 length and eleven-section document template are not restored. Historical
 Changes remain historical, and neither a passing repository check nor this

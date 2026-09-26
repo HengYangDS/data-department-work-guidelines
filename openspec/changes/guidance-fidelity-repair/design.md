@@ -163,8 +163,11 @@ Change owns only guidance fidelity. The two must not be merged into one task
 list or retroactively certified by the older Change. Finish and accept the
 offline source locally when ETHOS proof permits; keep its delivery tasks open.
 Then use ETHOS `lane refresh-base` to place this Change on that accepted
-candidate, resolve the charter edition line if needed, and rerun every check on
-the resulting exact HEAD. Only the final accepted source may be tagged. The
+candidate, resolve the charter edition line, and amend the prepared `v5.0.0`
+Changelog entry to name the restored duties and feedback floor. Older entries
+remain historical; do not rewrite them as if the restored rule had applied then.
+Rerun every check on the resulting exact HEAD. Only the final accepted
+source may be tagged. The
 existing offline bundle bytes may be reused only if its declared inputs still
 match; rerun a true cold offline install and full verification for the final
 source revision before claiming host qualification. Neither prior CI nor the
