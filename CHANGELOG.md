@@ -21,6 +21,12 @@ being relabeled as formal SemVer releases.
 
 ### Fixed
 
+- Restored the three outcomes of a task; clarified who may decide versus
+  what counts as evidence, how to divide a problem completely, and when
+  exploratory data or code is ready for shared use.
+- Reinstated monthly review of real work and weak signals and quarterly
+  review of whether rules and tools earn their cost, without a mandatory
+  weekly meeting or a new reporting form.
 - Pinned GitLab CI to a digest-addressed Node 26 image admitted by the Linux
   ARM64 Runner's local-only image policy, removing a floating-tag pull from its
   declared job path.

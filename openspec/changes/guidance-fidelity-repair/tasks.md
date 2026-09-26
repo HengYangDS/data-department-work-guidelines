@@ -34,13 +34,13 @@
 
 ## 3. Integrate and check the final source
 
-- [ ] 3.1 After the offline source is locally accepted, refresh this Work Lane
+- [x] 3.1 After the offline source is locally accepted, refresh this Work Lane
       through ETHOS onto the current candidate, inspect the full diff, align
       the charter edition, and amend the prepared `v5.0.0` Changelog entry for
       restored duties and feedback rhythm. Verify the two Changes retain
       separate intent and tasks without a stale `4.2.2` source claim or a
       rewritten older release entry.
-- [ ] 3.2 Revisit every disposition and reader route on the refreshed source;
+- [x] 3.2 Revisit every disposition and reader route on the refreshed source;
       run the repository format, lint, spelling, link, render, and negative
       tests plus official OpenSpec strict validation and changed-path planning.
       Do not check this task from the earlier branch or a prior CI run.

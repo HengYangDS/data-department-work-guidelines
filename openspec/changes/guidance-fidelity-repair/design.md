@@ -13,11 +13,10 @@ mentioned `rules/` plus `playbooks/` draft has no recoverable tracked content
 in the current refs, unreachable commits, or preserved lane artifacts; do not
 claim an exact comparison with absent bytes.
 
-This Work Lane starts from `candidate/dev` at `921f9cdd04b661b90bcea62f6305f16c4c38b11a`
-while the independent offline-tooling Work Lane has prepared a later source.
-Their seven topic pages differ only at the charter edition line. Before land or
-release, refresh this lane onto the accepted candidate and recheck that fact;
-neither branch name nor this observation guarantees a conflict-free future.
+The independent offline-tooling Change owns a later candidate source.
+Refresh this Work Lane through ETHOS onto that accepted candidate before land;
+then inspect the combined diff and rerun the checks. An earlier conflict-free
+comparison or review CI cannot qualify the final source.
 
 ## Goals / Non-Goals
 
