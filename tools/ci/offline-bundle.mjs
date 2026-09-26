@@ -8,6 +8,7 @@ import {
   mkdtempSync,
   readFileSync,
   readdirSync,
+  realpathSync,
   rmSync,
   writeFileSync,
 } from "node:fs";
@@ -436,6 +437,50 @@ function pathExists(target) {
   }
 }
 
+export function npmCliPath({
+  platform = process.platform,
+  pathValue = process.env.PATH ?? "",
+} = {}) {
+  const directories = [
+    ...new Set([
+      ...pathValue.split(path.delimiter),
+      path.dirname(process.execPath),
+    ]),
+  ].filter(Boolean);
+  const launchers =
+    platform === "win32" ? ["npm.cmd", "npm.exe", "npm"] : ["npm"];
+  for (const directory of directories) {
+    for (const name of launchers) {
+      const launcher = path.join(directory, name);
+      if (!pathExists(launcher)) continue;
+      const resolved = realpathSync(launcher);
+      if (
+        path.basename(resolved) === "npm-cli.js" &&
+        lstatSync(resolved).isFile()
+      ) {
+        return resolved;
+      }
+    }
+    for (const candidate of [
+      path.join(directory, "node_modules", "npm", "bin", "npm-cli.js"),
+      path.join(
+        directory,
+        "..",
+        "lib",
+        "node_modules",
+        "npm",
+        "bin",
+        "npm-cli.js",
+      ),
+    ]) {
+      if (pathExists(candidate) && lstatSync(candidate).isFile()) {
+        return path.resolve(candidate);
+      }
+    }
+  }
+  throw new Error("supported npm JavaScript entrypoint is unavailable");
+}
+
 function isolatedNpmEnvironment(
   directory,
   cacheDirectory,
@@ -492,7 +537,8 @@ export function installBundle({
     validateExtractedBundle(temporary, repository);
     const cacheDirectory = path.join(temporary, "npm-cache");
     const env = isolatedNpmEnvironment(temporary, cacheDirectory);
-    const npmVersion = commandRunner("npm", ["--version"], {
+    const npmCli = npmCliPath();
+    const npmVersion = commandRunner(process.execPath, [npmCli, "--version"], {
       cwd: repository,
       env,
       capture: true,
@@ -503,8 +549,9 @@ export function installBundle({
     }
     startedNpmInstall = true;
     commandRunner(
-      "npm",
+      process.execPath,
       [
+        npmCli,
         "ci",
         "--offline",
         "--ignore-scripts",
@@ -594,7 +641,7 @@ export function validateLockSupply(lock) {
 }
 
 function boundedNpm(args, { cwd, env, timeout = 150_000 }) {
-  const result = spawnSync("npm", args, {
+  const result = spawnSync(process.execPath, [npmCliPath(), ...args], {
     cwd,
     env,
     encoding: "utf8",

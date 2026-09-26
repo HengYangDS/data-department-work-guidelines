@@ -20,6 +20,7 @@ import {
   assertSafeBundleListing,
   inspectBundle,
   installBundle,
+  npmCliPath,
   readBundleRecord,
   validateBundleRecord,
   validateExtractedBundle,
@@ -346,8 +347,17 @@ test("installer invokes only the locked offline supply path", () => {
     const calls = [];
     const commandRunner = (command, args, options) => {
       calls.push({ command, args, options });
-      if (command === "npm" && args[0] === "--version") return "10.9.4\n";
-      if (command === "npm" && args[0] === "ci") {
+      if (
+        command === process.execPath &&
+        path.basename(args[0]) === "npm-cli.js" &&
+        args[1] === "--version"
+      )
+        return "10.9.4\n";
+      if (
+        command === process.execPath &&
+        path.basename(args[0]) === "npm-cli.js" &&
+        args[1] === "ci"
+      ) {
         assert.ok(args.includes("--offline"));
         assert.ok(args.includes("--ignore-scripts"));
         assert.ok(args.includes("--cache"));
@@ -368,16 +378,17 @@ test("installer invokes only the locked offline supply path", () => {
       commandRunner,
     });
     assert.equal(result.version, "4.2.0");
-    assert.deepEqual(
-      calls.map(({ command, args }) => [command, args[0]]),
-      [
-        ["npm", "--version"],
-        ["npm", "ci"],
-        [
-          process.execPath,
-          path.join(inputs.repository, "tools", "ci", "install-lychee.mjs"),
-        ],
-      ],
+    assert.equal(calls.length, 3);
+    assert.equal(calls[0].command, process.execPath);
+    assert.equal(path.basename(calls[0].args[0]), "npm-cli.js");
+    assert.equal(calls[0].args[1], "--version");
+    assert.equal(calls[1].command, process.execPath);
+    assert.equal(path.basename(calls[1].args[0]), "npm-cli.js");
+    assert.equal(calls[1].args[1], "ci");
+    assert.equal(calls[2].command, process.execPath);
+    assert.equal(
+      calls[2].args[0],
+      path.join(inputs.repository, "tools", "ci", "install-lychee.mjs"),
     );
     assert.deepEqual(calls[2].args.slice(1, 2), ["--asset"]);
   });
@@ -385,8 +396,8 @@ test("installer invokes only the locked offline supply path", () => {
     const built = assembleBundle(inputs);
     const calls = [];
     const commandRunner = (command, args) => {
-      calls.push([command, args[0]]);
-      if (args[0] === "--version") return "10.9.4\n";
+      calls.push([command, path.basename(args[0]), args[1]]);
+      if (args[1] === "--version") return "10.9.4\n";
       throw new Error("simulated offline cache miss");
     };
     assert.throws(
@@ -400,8 +411,8 @@ test("installer invokes only the locked offline supply path", () => {
       /offline cache miss/u,
     );
     assert.deepEqual(calls, [
-      ["npm", "--version"],
-      ["npm", "ci"],
+      [process.execPath, "npm-cli.js", "--version"],
+      [process.execPath, "npm-cli.js", "ci"],
     ]);
   });
   buildFixture((inputs) => {
@@ -484,8 +495,15 @@ test("an empty npm cache cannot satisfy the actual offline install", () => {
     writeFileSync(userConfig, "");
     writeFileSync(globalConfig, "");
     const result = spawnSync(
-      "npm",
-      ["ci", "--offline", "--ignore-scripts", "--no-audit", "--no-fund"],
+      process.execPath,
+      [
+        npmCliPath(),
+        "ci",
+        "--offline",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund",
+      ],
       {
         cwd: directory,
         encoding: "utf8",
@@ -601,3 +619,30 @@ function pathExistsForTest(file) {
     throw error;
   }
 }
+
+test("npm CLI is a JavaScript entrypoint on POSIX and Windows layouts", () => {
+  const actual = npmCliPath();
+  assert.equal(path.basename(actual), "npm-cli.js");
+  const version = spawnSync(process.execPath, [actual, "--version"], {
+    encoding: "utf8",
+    timeout: 10_000,
+  });
+  assert.equal(version.status, 0, version.stderr);
+  assert.match(version.stdout, /^10\./u);
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-npm-layout-"));
+  try {
+    const cli = path.join(
+      directory,
+      "node_modules",
+      "npm",
+      "bin",
+      "npm-cli.js",
+    );
+    mkdirSync(path.dirname(cli), { recursive: true });
+    writeFileSync(path.join(directory, "npm.cmd"), "fixture");
+    writeFileSync(cli, "fixture");
+    assert.equal(npmCliPath({ platform: "win32", pathValue: directory }), cli);
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
