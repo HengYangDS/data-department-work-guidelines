@@ -1,7 +1,8 @@
 {
   "version": "0.24.2",
   "source": "https://github.com/lycheeverse/lychee/releases/tag/lychee-v0.24.2",
-  "download_base": "https://github.com/lycheeverse/lychee/releases/download/lychee-v0.24.2",
+  "github_download_base": "https://github.com/lycheeverse/lychee/releases/download/lychee-v0.24.2",
+  "gitlab_package_name": "lychee",
   "assets": {
     "darwin-arm64": {
       "name": "lychee-aarch64-apple-darwin.tar.gz",

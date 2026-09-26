@@ -99,8 +99,10 @@ metadata; English and spacing; repository
 boundaries; official OpenSpec; version identity; CI topology; and negative
 tests. Git's native `.gitattributes` rule keeps tracked text at LF on every
 host. The [supply manifest](../../.config/tools/lychee.json) pins lychee assets
-by platform and SHA-256; the CI installer verifies the downloaded digest. Local
-validation checks the executable version and never downloads an asset. Explicit
+by platform and SHA-256. GitLab CI fetches that asset from this project's
+package registry with its own job token; GitHub CI uses the pinned upstream
+GitHub release. Both verify the digest before extraction. Local validation
+checks the executable version and never downloads an asset. Explicit
 CI supply and an offline `--asset` path are different operations. A cold offline
 installation is not qualified until its full dependency bundle has been tested.
 Both hosted CI planes run `npm audit --audit-level=moderate` during online tool

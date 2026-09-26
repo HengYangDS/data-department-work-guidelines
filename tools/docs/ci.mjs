@@ -89,11 +89,19 @@ export function validateCi(githubSource, gitlabSource) {
   if (
     !Array.isArray(before) ||
     before.indexOf("npm ci --ignore-scripts") < 0 ||
-    before.indexOf("npm ci --ignore-scripts") >= before.indexOf(auditCommand) ||
-    before.indexOf(auditCommand) >=
-      before.indexOf("node tools/ci/install-lychee.mjs --download")
+    before.indexOf("npm ci --ignore-scripts") >= before.indexOf(auditCommand)
   ) {
     throw new Error("GitLab dependency audit or locked tool supply is missing");
+  }
+  if (
+    JSON.stringify(before) !==
+    JSON.stringify([
+      "npm ci --ignore-scripts",
+      auditCommand,
+      "node tools/ci/install-lychee.mjs --gitlab-package",
+    ])
+  ) {
+    throw new Error("GitLab tool supply must use its own package registry");
   }
   if (JSON.stringify(gitlabJob.script) !== JSON.stringify([verifier])) {
     throw new Error(

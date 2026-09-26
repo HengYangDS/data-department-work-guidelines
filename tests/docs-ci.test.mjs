@@ -96,3 +96,10 @@ test("versioned CI refuses shallow history or missing tag triggers", () => {
     /full history/u,
   );
 });
+
+test("GitLab CI cannot regress to a GitHub-hosted tool download", () => {
+  assert.throws(
+    () => validateCi(github, gitlab.replace("--gitlab-package", "--download")),
+    /GitLab.*supply/u,
+  );
+});

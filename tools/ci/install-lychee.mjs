@@ -33,7 +33,56 @@ export function selectedAsset(
     ...asset,
     key,
     version: manifest.version,
-    url: `${manifest.download_base}/${asset.name}`,
+    url: `${manifest.github_download_base}/${asset.name}`,
+  };
+}
+
+export function gitlabPackageRequest(
+  asset = selectedAsset(),
+  environment = process.env,
+) {
+  const apiUrl = environment.CI_API_V4_URL;
+  const projectId = environment.CI_PROJECT_ID;
+  const token = environment.CI_JOB_TOKEN;
+  let api;
+  try {
+    api = new URL(apiUrl);
+  } catch {
+    throw new Error("GitLab CI API URL is missing or invalid");
+  }
+  const apiPath = api.pathname.replace(/\/+$/u, "");
+  if (
+    !["http:", "https:"].includes(api.protocol) ||
+    api.username ||
+    api.password ||
+    api.search ||
+    api.hash ||
+    !apiPath.endsWith("/api/v4")
+  ) {
+    throw new Error("GitLab CI API URL is not a trusted API base");
+  }
+  if (!/^\d+$/u.test(projectId ?? ""))
+    throw new Error("GitLab CI project ID is missing or invalid");
+  if (!token || /[\r\n]/u.test(token))
+    throw new Error("GitLab CI job token is missing or invalid");
+  const packageName = manifest.gitlab_package_name;
+  if (!/^[a-z][a-z0-9-]*$/u.test(packageName ?? ""))
+    throw new Error("GitLab package name is missing or invalid");
+  if (!asset.name || path.basename(asset.name) !== asset.name)
+    throw new Error("lychee asset name is not portable");
+  const route = [
+    apiPath,
+    "projects",
+    projectId,
+    "packages/generic",
+    packageName,
+    manifest.version,
+    encodeURIComponent(asset.name),
+  ].join("/");
+  return {
+    url: new URL(route, api.origin).href,
+    headers: { "JOB-TOKEN": token },
+    redirect: "error",
   };
 }
 
@@ -76,8 +125,12 @@ function verifiedCached(target) {
   return true;
 }
 
-async function download(url) {
-  const response = await fetch(url, { signal: AbortSignal.timeout(90_000) });
+export async function downloadAsset(request) {
+  const response = await fetch(request.url, {
+    headers: request.headers,
+    redirect: request.redirect ?? "follow",
+    signal: AbortSignal.timeout(90_000),
+  });
   if (!response.ok)
     throw new Error(`lychee download failed: HTTP ${response.status}`);
   if (!response.body) throw new Error("lychee download returned no body");
@@ -98,17 +151,26 @@ export function assertAssetDigest(bytes, asset) {
     throw new Error(`lychee asset digest mismatch: ${asset.name}`);
 }
 
-export async function install({ assetFile = "", allowDownload = false } = {}) {
+export async function install({ assetFile = "", downloadSource = "" } = {}) {
+  if (assetFile && downloadSource)
+    throw new Error("choose one lychee supply path");
   const selected = selectedAsset();
+  const request = assetFile
+    ? null
+    : downloadSource === "github"
+      ? { url: selected.url }
+      : downloadSource === "gitlab"
+        ? gitlabPackageRequest(selected)
+        : null;
   const binaryName = process.platform === "win32" ? "lychee.exe" : "lychee";
   const directory = filePath(
     `build/runtime/tool-cache/lychee/${selected.version}/${selected.key}`,
   );
   const target = path.join(directory, binaryName);
-  if (verifiedCached(target)) return target;
-  if (!assetFile && !allowDownload) {
+  if (!assetFile && !request) {
+    if (verifiedCached(target)) return target;
     throw new Error(
-      "lychee is not cached; provide --asset PATH for offline supply or --download in CI",
+      "lychee is not cached; provide --asset PATH, --download, or --gitlab-package",
     );
   }
   mkdirSync(directory, { recursive: true });
@@ -117,7 +179,7 @@ export async function install({ assetFile = "", allowDownload = false } = {}) {
     const archive = path.join(temporary, selected.name);
     const bytes = assetFile
       ? readFileSync(path.resolve(assetFile))
-      : await download(selected.url);
+      : await downloadAsset(request);
     assertAssetDigest(bytes, selected);
     writeFileSync(archive, bytes);
     safeArchiveEntries(
@@ -157,11 +219,19 @@ if (
   const args = process.argv.slice(2);
   const print = args.length === 1 && args[0] === "--print-spec";
   const downloadRequested = args.length === 1 && args[0] === "--download";
+  const gitlabRequested = args.length === 1 && args[0] === "--gitlab-package";
   const localAsset = args.length === 2 && args[0] === "--asset" ? args[1] : "";
   if (print) {
     console.log(JSON.stringify(selectedAsset(), null, 2));
-  } else if (downloadRequested || localAsset) {
-    install({ assetFile: localAsset, allowDownload: downloadRequested })
+  } else if (downloadRequested || gitlabRequested || localAsset) {
+    install({
+      assetFile: localAsset,
+      downloadSource: gitlabRequested
+        ? "gitlab"
+        : downloadRequested
+          ? "github"
+          : "",
+    })
       .then((target) =>
         console.log(
           `PASS pinned lychee installed: ${path.relative(root, target)}`,
@@ -173,7 +243,7 @@ if (
       });
   } else {
     console.error(
-      "usage: node tools/ci/install-lychee.mjs --print-spec|--asset PATH|--download",
+      "usage: node tools/ci/install-lychee.mjs --print-spec|--asset PATH|--download|--gitlab-package",
     );
     process.exitCode = 2;
   }

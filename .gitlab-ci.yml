@@ -12,6 +12,6 @@ docs:verify:
   before_script:
     - npm ci --ignore-scripts
     - npm audit --audit-level=moderate
-    - node tools/ci/install-lychee.mjs --download
+    - node tools/ci/install-lychee.mjs --gitlab-package
   script:
     - npm run verify
