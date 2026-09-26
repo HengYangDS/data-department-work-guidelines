@@ -2,6 +2,39 @@
 
 ## ADDED Requirements
 
+### Requirement: Product-owned code evidence accompanies document proof
+
+The profile SHALL retain exactly the `docs-integrity` and `markdown-format`
+default gate IDs and their repository-relative Node commands. Each SHALL bind
+an ETHOS-owned verification provider for its mapped behavior or static-analysis
+axis. ETHOS SHALL execute native Node tests with coverage and JavaScript syntax
+checks from the accepted product runtime, conjoined with the respective
+document command for the same committed tree. A command exit code,
+repository-authored report, or claimed provider result SHALL NOT establish
+native code correctness. The repository profile check SHALL reject a missing or
+misdirected provider without adding a third default gate.
+
+#### Scenario: Document command passes but native code fails
+
+- **WHEN** both repository document commands exit successfully but a tracked
+  JavaScript test fails or production module is not exercised
+- **THEN** ETHOS blocks full proof for the behavior axis
+- **AND THEN** a repository-authored test report cannot turn the result green.
+
+#### Scenario: Native code passes but a document command fails
+
+- **WHEN** ETHOS obtains valid native code evidence but the document command
+  for either mapped gate fails
+- **THEN** that gate and full proof remain blocked
+- **AND THEN** native evidence does not excuse a broken document check.
+
+#### Scenario: Both sides of each gate pass
+
+- **WHEN** both document commands and their ETHOS-owned native verifiers pass
+  for the exact committed source
+- **THEN** the two existing gate IDs satisfy their mapped quality obligations
+- **AND THEN** no additional default gate or private lifecycle is required.
+
 ### Requirement: A supplied offline bundle can install the complete verification toolchain
 
 On each declared platform, a release-bound bundle SHALL supply every

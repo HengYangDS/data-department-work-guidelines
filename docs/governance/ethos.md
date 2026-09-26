@@ -95,9 +95,15 @@ branch and tag boundaries; they contain no operator key or host path.
 `npm run verify` invokes one [portable quality entry](../../tools/docs/cli.mjs).
 It checks formatting for Markdown, code, JSON, and YAML; TOML syntax; Markdown
 lint; CSpell spelling; offline, version-checked lychee links and fragments;
-metadata; English and spacing; repository
-boundaries; official OpenSpec; version identity; CI topology; and negative
-tests. Git's native `.gitattributes` rule keeps tracked text at LF on every
+metadata; English and spacing; repository boundaries; official OpenSpec; version
+identity; CI topology; and negative tests. The two default ETHOS gates retain
+their repository-relative document commands. ETHOS also runs its own Node
+behavior and static verifiers for the tracked JavaScript tooling; each gate
+passes only when its document command and product-owned verifier both pass for
+the committed tree. Command output and repository-authored report files cannot
+supply that native evidence. This is code-quality proof, not another lifecycle.
+
+Git's native `.gitattributes` rule keeps tracked text at LF on every
 host. The [supply manifest](../../.config/tools/lychee.json) pins lychee assets
 by platform and SHA-256. GitLab CI fetches that asset from this project's
 package registry with its own job token; GitHub CI uses the pinned upstream

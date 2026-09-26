@@ -68,6 +68,29 @@ test("profile rejects a third proof gate and an old shell entrypoint", () => {
   });
 });
 
+test("profile requires product-owned native evidence on both document gates", () => {
+  fixture((directory) => {
+    const file = path.join(directory, ".ethos", "profile.toml");
+    const original = readFileSync(file, "utf8");
+    const behavior =
+      'verification_providers = ["ethos.adapters.gates.code_quality:behavior_report"]';
+    const staticAnalysis =
+      'verification_providers = ["ethos.adapters.gates.code_quality:static_report"]';
+    assert.ok(original.includes(behavior));
+    assert.ok(original.includes(staticAnalysis));
+    writeFileSync(file, original.replace(`${behavior}\n`, ""));
+    assert.throws(
+      () => checkProfile(directory),
+      /native verification provider/u,
+    );
+    writeFileSync(file, original.replace(staticAnalysis, behavior));
+    assert.throws(
+      () => checkProfile(directory),
+      /native verification provider/u,
+    );
+  });
+});
+
 test("profile admits every tracked candidate without an enumerated path list", () => {
   fixture((directory) => {
     const file = path.join(directory, ".ethos", "profile.toml");

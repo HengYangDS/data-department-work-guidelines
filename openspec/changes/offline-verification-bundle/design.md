@@ -114,6 +114,23 @@ source tag and hosted jobs do not substitute for asset read-back; an asset
 listing does not substitute for cross-platform execution. ETHOS remains the
 authority for Change, Work Lane, proof, tag, and publication admission.
 
+### Keep document checks and native code evidence in one proof floor
+
+The profile retains the two existing gate IDs and their portable document
+commands. For each mapped code axis, its gate also names an accepted ETHOS
+verification provider. ETHOS executes that provider in its own runtime and
+requires both the document command and native result to pass for the committed
+tree. The behavior provider runs actual Node tests and verifies coverage of
+tracked production modules; the static provider checks tracked JavaScript
+syntax. Neither a successful command alone nor a repository-authored report can
+qualify those code axes. The repository profile check rejects an absent or
+misdirected provider. No third default gate or private lifecycle is added.
+
+The document check still runs repository tests, so the behavior provider repeats
+some tests for now. That cost is explicit: removing tests from the document
+command requires a separate verified refactor that preserves all document
+checks, not a weaker proof assertion during this release.
+
 ## Risks / Trade-offs
 
 - **Third-party redistribution** → Preserve npm package license files and the

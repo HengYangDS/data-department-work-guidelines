@@ -53,7 +53,9 @@ None.
 - `quality`: a cold local verification installation with a supplied release
   bundle must run without network access on each claimed platform and reject
   incomplete or altered supply. Runtime and CI checks must follow the declared
-  stable toolchain rather than an unrelated fixed major.
+  stable toolchain rather than an unrelated fixed major. The existing two
+  document proof commands must be conjoined with ETHOS-owned native evidence
+  for the tracked JavaScript tooling.
 - `repository-governance`: each release's offline verification bundle must be
   bound to its source and observed independently on both Forge release planes
   before offline distribution is claimed.

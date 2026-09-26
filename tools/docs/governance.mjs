@@ -271,10 +271,24 @@ export function checkProfile(repository = root) {
     ["node", "tools/docs/cli.mjs", "check"],
     ["node", "tools/docs/cli.mjs", "format", "--check"],
   ];
+  const verificationProviders = [
+    ["ethos.adapters.gates.code_quality:behavior_report"],
+    ["ethos.adapters.gates.code_quality:static_report"],
+  ];
   for (const [index, gate] of profile.proof.gates.entries()) {
     if (JSON.stringify(gate.command) !== JSON.stringify(commands[index])) {
       throw new Error(
         `profile ${gate.id} must invoke the portable repository entrypoint`,
+      );
+    }
+    if (
+      JSON.stringify(gate.verification_providers) !==
+        JSON.stringify(verificationProviders[index]) ||
+      gate.execution_mode !== "verified-command" ||
+      gate.tool_adapter !== "ethos"
+    ) {
+      throw new Error(
+        `profile ${gate.id} lacks its native verification provider`,
       );
     }
   }
@@ -282,7 +296,7 @@ export function checkProfile(repository = root) {
     throw new Error("profile must admit all tracked candidates");
   }
   console.log(
-    "PASS ETHOS profile: one Change authority and two portable proof gates",
+    "PASS ETHOS profile: two document commands with product-owned code evidence",
   );
 }
 

@@ -57,6 +57,11 @@
       a disposable archive simulation. The real Change remains active until
       delivery obligations are evidenced.
 
+- [x] 3.7 Bind the accepted ETHOS product-owned Node behavior and static
+      verifiers to the two existing documentation gates. Keep their commands
+      and default gate count unchanged; test missing or misdirected providers,
+      run the full repository verifier, and validate the official Change.
+
 ## 4. Publish and close the exact release
 
 - [ ] 4.1 Commit signed source, obtain exact-HEAD full proof, and close it

@@ -12,8 +12,8 @@ normative_sources = [
   "docs/evolve.md",
 ]
 
-# ETHOS names these required axes “code correctness”; for this documentation
-# repository they mean reader-visible behavior and static document integrity.
+# The two default commands check repository documents. ETHOS independently
+# verifies tracked JavaScript behavior and static syntax for the mapped axes.
 [openspec]
 # ETHOS owns this repository-relative admission contract. Changed paths matching
 # these patterns must be attributed to one selected active official Change.
@@ -30,22 +30,24 @@ static-analysis = "markdown-format"
 id = "docs-integrity"
 kind = "test"
 command = ["node", "tools/docs/cli.mjs", "check"]
-asset_classes = ["markdown-docs"]
+verification_providers = ["ethos.adapters.gates.code_quality:behavior_report"]
+asset_classes = ["markdown-docs", "javascript-code"]
 dimensions = ["behavior", "documentation", "links"]
-execution_mode = "subprocess"
+execution_mode = "verified-command"
 evidence_class = "proof"
 trust_bearing = true
-tool_adapter = "repository-native"
+tool_adapter = "ethos"
 network_policy = "offline"
 
 [[proof.gates]]
 id = "markdown-format"
 kind = "lint"
 command = ["node", "tools/docs/cli.mjs", "format", "--check"]
-asset_classes = ["markdown-docs"]
+verification_providers = ["ethos.adapters.gates.code_quality:static_report"]
+asset_classes = ["markdown-docs", "javascript-code"]
 dimensions = ["static-analysis", "format", "markdown"]
-execution_mode = "subprocess"
+execution_mode = "verified-command"
 evidence_class = "contract"
 trust_bearing = true
-tool_adapter = "prettier"
+tool_adapter = "ethos"
 network_policy = "offline"
