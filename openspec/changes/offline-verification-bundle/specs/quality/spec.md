@@ -4,15 +4,13 @@
 
 ### Requirement: Product-owned code evidence accompanies document proof
 
-The profile SHALL retain exactly the `docs-integrity` and `markdown-format`
-default gate IDs and their repository-relative Node commands. Each SHALL bind
-an ETHOS-owned verification provider for its mapped behavior or static-analysis
-axis. ETHOS SHALL execute native Node tests with coverage and JavaScript syntax
-checks from the accepted product runtime, conjoined with the respective
-document command for the same committed tree. A command exit code,
-repository-authored report, or claimed provider result SHALL NOT establish
-native code correctness. The repository profile check SHALL reject a missing or
-misdirected provider without adding a third default gate.
+`docs-integrity` and `markdown-format` SHALL bind ETHOS-owned behavior or
+static-analysis providers to repository-relative Node commands. ETHOS SHALL
+conjoin each command with native Node tests, coverage, and JavaScript syntax
+checks from its accepted runtime on the same committed tree. Neither command
+output nor a repository-authored report SHALL prove code correctness. Profile
+validation SHALL reject missing or misdirected providers without adding a
+third gate.
 
 #### Scenario: Document command passes but native code fails
 
