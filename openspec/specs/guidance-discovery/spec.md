@@ -73,15 +73,17 @@ reviewer; format, link, local proof, or CI success alone SHALL NOT establish it.
 
 ### Requirement: Task routes preserve the work-quality contract
 
-The concise entry and seven normative topics SHALL retain the obligations
-needed to act on the former unified guidelines without restoring a root
+The concise entry and seven normative topics SHALL retain the distinct duties
+needed to act on the last accepted unified guideline without restoring a root
 monolith. Members and Agents SHALL find the same hard boundaries, risk-scaled
-minimums, six task boundaries, distinct work states, evidence-bounded
-completion, and triggers for learning through the topic relevant to their
-task. The repository SHALL NOT mistake a shorter page or a matching heading
-for semantic coverage. Editorial review SHALL compare obligations and
-counterexamples against the last accepted unified edition. A fixed management
-meeting or reporting cadence is not required.
+minimums, six task boundaries, distinct work states, evidence-bounded completion,
+and triggers for learning through the topic relevant to their task. Editorial
+review SHALL compare each unique obligation and its important counterexamples
+against that former edition and the unaccepted criterion-system draft. Each
+substantive duty SHALL have one current owner or an explicit, authorized removal
+reason; shorter prose, matching headings, or a previous checklist assertion
+SHALL NOT establish semantic coverage. Rejected fixed management cadence and
+redundant rule, playbook, or evidence stores SHALL NOT return by default.
 
 #### Scenario: A high-risk task enters the route
 
@@ -105,3 +107,12 @@ meeting or reporting cadence is not required.
 - **THEN** the evolution topic requires pattern and impact review and the
   lightest effective prevention mechanism
 - **AND THEN** it does not require a fixed meeting calendar or new report.
+
+#### Scenario: Earlier prose contains a unique duty
+
+- **WHEN** an editorial comparison finds a concrete counterexample or stop
+  condition in the former unified guideline that the current topic does not
+  express
+- **THEN** the current topic is amended or a reasoned, authorized removal is
+  recorded in the official Change
+- **AND THEN** the retired draft is not promoted into a second live rule tree.
