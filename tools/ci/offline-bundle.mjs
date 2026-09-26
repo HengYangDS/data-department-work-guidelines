@@ -16,6 +16,7 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
+import { projectPackageRequest } from "./gitlab-package.mjs";
 import { root, run } from "../docs/runtime.mjs";
 
 const recordKeys = [
@@ -775,7 +776,7 @@ export function verifyBundle({ bundlePath, record, repository = root }) {
   }
 }
 
-function cli(argv) {
+async function cli(argv) {
   const [mode, ...options] = argv;
   const parsed = parseArgs({
     args: options,
@@ -817,6 +818,17 @@ function cli(argv) {
     return;
   }
   if (
+    mode === "acquire-gitlab" &&
+    !parsed.bundle &&
+    !parsed.assets &&
+    !parsed.licenses &&
+    !parsed.output
+  ) {
+    const result = await acquireGitLabBundle();
+    console.log(`PASS offline acquisition: ${result.version} ${result.sha256}`);
+    return;
+  }
+  if (
     (mode === "inspect" || mode === "install") &&
     !parsed.assets &&
     !parsed.licenses &&
@@ -834,7 +846,7 @@ function cli(argv) {
     return;
   }
   throw new Error(
-    "usage: node tools/ci/offline-bundle.mjs build --assets DIR --licenses DIR --output FILE | acquire-github | inspect [--bundle FILE] | install [--bundle FILE]",
+    "usage: node tools/ci/offline-bundle.mjs build --assets DIR --licenses DIR --output FILE | acquire-github | acquire-gitlab | inspect [--bundle FILE] | install [--bundle FILE]",
   );
 }
 
@@ -842,12 +854,10 @@ if (
   process.argv[1] &&
   path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
 ) {
-  try {
-    cli(process.argv.slice(2));
-  } catch (error) {
+  cli(process.argv.slice(2)).catch((error) => {
     console.error(error instanceof Error ? error.message : String(error));
     process.exitCode = 1;
-  }
+  });
 }
 
 function downloadGitHubRelease({ tag, repository, fileName, directory, env }) {
@@ -918,6 +928,75 @@ export function acquireGitHubBundle({
       directory,
       env: { ...environment, GH_PROMPT_DISABLED: "1" },
     });
+    return verifyBundle({ bundlePath: target, record, repository });
+  } catch (error) {
+    rmSync(target, { force: true });
+    throw error;
+  }
+}
+
+export function gitlabBundleRequest(record, environment = process.env) {
+  if (
+    environment.CI_COMMIT_TAG !== `v${record.version}` ||
+    !["api", "web"].includes(environment.CI_PIPELINE_SOURCE)
+  ) {
+    throw new Error("GitLab release pipeline does not match the source tag");
+  }
+  return projectPackageRequest(
+    {
+      packageName: "release-assets",
+      version: `v${record.version}`,
+      fileName: record.fileName,
+    },
+    environment,
+  );
+}
+
+export async function acquireGitLabBundle({
+  repository = root,
+  environment = process.env,
+  fetcher = fetch,
+} = {}) {
+  const record = readBundleRecord(repository);
+  const request = gitlabBundleRequest(record, environment);
+  const directory = path.join(
+    repository,
+    "build",
+    "artifacts",
+    "offline-bundle",
+  );
+  const target = path.join(directory, record.fileName);
+  if (pathExists(target)) {
+    return verifyBundle({ bundlePath: target, record, repository });
+  }
+  mkdirSync(directory, { recursive: true });
+  try {
+    let response;
+    try {
+      response = await fetcher(request.url, {
+        headers: request.headers,
+        redirect: request.redirect,
+        signal: AbortSignal.timeout(90_000),
+      });
+    } catch {
+      throw new Error("GitLab release bundle download failed");
+    }
+    if (!response.ok || !response.body) {
+      throw new Error(
+        `GitLab release bundle download failed: HTTP ${response.status}`,
+      );
+    }
+    const limit = 128 * 1024 * 1024;
+    const chunks = [];
+    let size = 0;
+    for await (const chunk of response.body) {
+      size += chunk.length;
+      if (size > limit) {
+        throw new Error("GitLab release bundle exceeds the size limit");
+      }
+      chunks.push(chunk);
+    }
+    writeFileSync(target, Buffer.concat(chunks));
     return verifyBundle({ bundlePath: target, record, repository });
   } catch (error) {
     rmSync(target, { force: true });

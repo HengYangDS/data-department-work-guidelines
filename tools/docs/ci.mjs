@@ -10,6 +10,7 @@ const offlineHostMatrix = [
   "macos-latest",
   "windows-latest",
 ];
+const gitlabImage = /^node:22-bookworm@sha256:[0-9a-f]{64}$/u;
 
 function parseYaml(source, name) {
   const document = YAML.parseDocument(source, { uniqueKeys: true });
@@ -101,6 +102,41 @@ function validateOfflineWorkflow(source) {
   return offlineHostMatrix;
 }
 
+function validateGitLabOffline(gitlab, expectedImage) {
+  const job = gitlab["offline:verify"];
+  if (!job) throw new Error("GitLab offline verification job is missing");
+  if (
+    job.image !== expectedImage ||
+    JSON.stringify(job.tags) !== JSON.stringify(["ci-linux-arm64-docker"]) ||
+    String(job.variables?.GIT_DEPTH) !== "0"
+  ) {
+    throw new Error("GitLab offline verification needs the declared runner");
+  }
+  const expectedRules = [
+    { if: '$CI_COMMIT_TAG && $CI_PIPELINE_SOURCE == "web"' },
+    { if: '$CI_COMMIT_TAG && $CI_PIPELINE_SOURCE == "api"' },
+  ];
+  if (JSON.stringify(job.rules) !== JSON.stringify(expectedRules)) {
+    throw new Error("GitLab offline job requires a post-publication pipeline");
+  }
+  if (job.before_script) {
+    throw new Error("GitLab offline job cannot install online supply");
+  }
+  const commands = job.script;
+  if (commands?.[0] !== "node tools/ci/offline-bundle.mjs acquire-gitlab") {
+    throw new Error("GitLab offline acquisition must use its own package");
+  }
+  if (commands[1] !== "node tools/ci/offline-bundle.mjs install") {
+    throw new Error("GitLab offline installation must use the pinned bundle");
+  }
+  if (commands[2] !== verifier || commands.length !== 3) {
+    throw new Error(
+      "GitLab offline verifier must run the full repository check",
+    );
+  }
+  return job.tags[0];
+}
+
 export function validateCi(
   githubSource,
   gitlabSource,
@@ -159,11 +195,11 @@ export function validateCi(
   const gitlabJob = gitlab["docs:verify"];
   if (
     !gitlabJob ||
-    gitlabJob.image !== "node:22-bookworm" ||
+    !gitlabImage.test(gitlabJob.image ?? "") ||
     !gitlabJob.tags?.includes("ci-linux-arm64-docker")
   ) {
     throw new Error(
-      "GitLab verification must use the declared Node 22 Docker runner",
+      "GitLab verification must use a digest-pinned Node 22 image and declared Docker runner",
     );
   }
   if (String(gitlabJob.variables?.GIT_DEPTH) !== "0") {
@@ -195,6 +231,7 @@ export function validateCi(
   return {
     hosts: hostMatrix,
     offlineHosts: validateOfflineWorkflow(offlineSource),
+    gitlabOfflineHost: validateGitLabOffline(gitlab, gitlabJob.image),
     verifier,
     audit: auditCommand,
   };

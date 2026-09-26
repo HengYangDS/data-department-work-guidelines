@@ -74,6 +74,15 @@ application dependency state, then delegates lychee installation to the existing
 effect. `npm ci --offline --dry-run` is excluded from acceptance because it
 returned success with an empty cache while actual installation failed.
 
+GitLab acquires the bundle from its own generic package registry with the
+current project's job token. The request is bound to the checked-out release
+tag, rejects redirects, and verifies the committed digest before installation.
+The offline job runs in an explicitly started tag pipeline after the package
+and Release exist; the initial tag-push pipeline cannot depend on an asset that
+has not yet been published. GitHub's published-Release event starts its hosted
+matrix. These are two delivery routes for the same source-bound bytes, not two
+bundle formats or a second release authority.
+
 ### Keep three evidence layers distinct
 
 Repository tests verify manifest, member, digest, no-fallback, and error
@@ -103,7 +112,9 @@ authority for Change, Work Lane, proof, tag, and publication admission.
 - **Release asset publication after source acceptance** → Keep source
   acceptance, bundle qualification, and each Forge Release as distinct states.
   Do not archive an active Change with a false completed delivery task or
-  rewrite a signed tag to repair an asset.
+  rewrite a signed tag to repair an asset. If a tagged source lacks a required
+  CI job, a new patch edition carries that source correction and its own
+  version-bound bundle.
 - **Host prerequisites remain external** → Document Node/npm, Git, and installed
   ETHOS explicitly. A cold bare OS is not claimed to be ready merely because the
   repository bundle exists.

@@ -14,6 +14,7 @@ import {
 import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
+import * as offline from "../tools/ci/offline-bundle.mjs";
 import {
   acquireGitHubBundle,
   assembleBundle,
@@ -187,6 +188,7 @@ test("bundle inspection rejects incomplete supply", async () => {
 
 function buildFixture(run) {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-build-test-"));
+  const cleanup = () => rmSync(directory, { recursive: true, force: true });
   try {
     const repository = path.join(directory, "repository");
     const cacheDirectory = path.join(directory, "cache");
@@ -227,7 +229,7 @@ function buildFixture(run) {
       JSON.stringify(lychee),
     );
     const outputPath = path.join(directory, record().fileName);
-    return run({
+    const result = run({
       repository,
       cacheDirectory,
       assetDirectory,
@@ -235,8 +237,14 @@ function buildFixture(run) {
       outputPath,
       assetName,
     });
-  } finally {
-    rmSync(directory, { recursive: true, force: true });
+    if (result && typeof result.then === "function") {
+      return result.finally(cleanup);
+    }
+    cleanup();
+    return result;
+  } catch (error) {
+    cleanup();
+    throw error;
   }
 }
 
@@ -607,6 +615,132 @@ test("GitHub acquisition selects one exact release asset and verifies it", () =>
       }),
     );
     assert.equal(pathExistsForTest(target), false);
+  });
+});
+
+test("GitLab acquisition uses only the same project's pinned release package", async () => {
+  assert.equal(typeof offline.gitlabBundleRequest, "function");
+  assert.equal(typeof offline.acquireGitLabBundle, "function");
+  await buildFixture(async (inputs) => {
+    const built = assembleBundle(inputs);
+    writeFileSync(
+      path.join(inputs.repository, ".config", "tools", "offline-bundle.json"),
+      JSON.stringify(built),
+    );
+    const environment = {
+      CI_API_V4_URL: "http://gitlab.example.test/api/v4",
+      CI_PROJECT_ID: "12345",
+      CI_JOB_TOKEN: "fixture-only",
+      CI_COMMIT_TAG: "v4.2.0",
+      CI_PIPELINE_SOURCE: "api",
+    };
+    const request = offline.gitlabBundleRequest(built, environment);
+    assert.equal(
+      request.url,
+      `http://gitlab.example.test/api/v4/projects/12345/packages/generic/release-assets/v4.2.0/${built.fileName}`,
+    );
+    assert.deepEqual(request.headers, { "JOB-TOKEN": "fixture-only" });
+    assert.equal(request.redirect, "error");
+    for (const changed of [
+      { CI_API_V4_URL: "http://gitlab.example.test/other" },
+      { CI_PROJECT_ID: "other" },
+      { CI_JOB_TOKEN: "" },
+      { CI_JOB_TOKEN: "line\nbreak" },
+      { CI_COMMIT_TAG: "v4.1.1" },
+      { CI_PIPELINE_SOURCE: "push" },
+    ]) {
+      assert.throws(() =>
+        offline.gitlabBundleRequest(built, { ...environment, ...changed }),
+      );
+    }
+    assert.throws(
+      () =>
+        offline.gitlabBundleRequest(
+          { ...built, fileName: "../outside.tar.gz" },
+          environment,
+        ),
+      /asset name/u,
+    );
+    const bytes = readFileSync(inputs.outputPath);
+    let calls = 0;
+    const fetcher = async (url, options) => {
+      calls += 1;
+      assert.equal(url, request.url);
+      assert.equal(options.redirect, "error");
+      assert.equal(options.headers["JOB-TOKEN"], "fixture-only");
+      return new Response(bytes, { status: 200 });
+    };
+    const result = await offline.acquireGitLabBundle({
+      repository: inputs.repository,
+      environment,
+      fetcher,
+    });
+    assert.equal(result.sha256, built.sha256);
+    assert.equal(calls, 1);
+    assert.equal(
+      (
+        await offline.acquireGitLabBundle({
+          repository: inputs.repository,
+          environment,
+          fetcher: () => {
+            throw new Error("must not download twice");
+          },
+        })
+      ).sha256,
+      built.sha256,
+    );
+  });
+  await buildFixture(async (inputs) => {
+    const built = assembleBundle(inputs);
+    writeFileSync(
+      path.join(inputs.repository, ".config", "tools", "offline-bundle.json"),
+      JSON.stringify(built),
+    );
+    const target = path.join(
+      inputs.repository,
+      "build",
+      "artifacts",
+      "offline-bundle",
+      built.fileName,
+    );
+    const environment = {
+      CI_API_V4_URL: "http://gitlab.example.test/api/v4",
+      CI_PROJECT_ID: "12345",
+      CI_JOB_TOKEN: "fixture-only",
+      CI_COMMIT_TAG: "v4.2.0",
+      CI_PIPELINE_SOURCE: "api",
+    };
+    for (const fetcher of [
+      async () => new Response("altered", { status: 200 }),
+      async () =>
+        new Response("redirect", {
+          status: 302,
+          headers: { Location: "https://other.example.test/asset" },
+        }),
+      async () => new Response("missing", { status: 404 }),
+    ]) {
+      await assert.rejects(() =>
+        offline.acquireGitLabBundle({
+          repository: inputs.repository,
+          environment,
+          fetcher,
+        }),
+      );
+      assert.equal(pathExistsForTest(target), false);
+    }
+    await assert.rejects(
+      () =>
+        offline.acquireGitLabBundle({
+          repository: inputs.repository,
+          environment,
+          fetcher: async () => {
+            throw new Error("fixture-only must not leak");
+          },
+        }),
+      (error) =>
+        error.message === "GitLab release bundle download failed" &&
+        !error.message.includes("fixture-only"),
+    );
   });
 });
 

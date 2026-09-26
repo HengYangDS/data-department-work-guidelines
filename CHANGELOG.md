@@ -11,6 +11,15 @@ being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [4.2.1] - 2026-09-26
+
+### Fixed
+
+- Closed a release-validation gap with a post-publication GitLab job that
+  obtains the source-pinned bundle from the same project's package registry.
+  It refuses redirects, altered bytes, and mismatched tags before installation;
+  hosted success remains a separate release acceptance requirement.
+
 ## [4.2.0] - 2026-09-26
 
 ### Added
@@ -83,7 +92,8 @@ being relabeled as formal SemVer releases.
   verification sequence while keeping local, GitLab, and GitHub results separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.2.0...main
+[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.2.1...main
+[4.2.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.2.0...v4.2.1
 [4.2.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.1.1...v4.2.0
 [4.1.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.1.0...v4.1.1
 [4.1.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.0.1...v4.1.0

@@ -117,11 +117,14 @@ does not relicense them. Both hosted CI planes run
 verification does not require network access.
 
 GitHub runs Linux, macOS, and Windows hosted jobs; GitLab selects the
-`ci-linux-arm64-docker` runner. Workflow
-declarations alone are not hosted success. Markdown and configuration use one
-blank line between blocks. Prettier and the repository check enforce their
-supported parts. `build/`,
-`node_modules/`, leases, and caches are local resources, not repository facts.
+`ci-linux-arm64-docker` runner. GitLab's offline job is started on the exact
+tag only after its release package exists; an earlier tag-push documentation
+job cannot qualify that asset. Workflow declarations alone are not hosted
+success.
+
+Markdown and configuration use one blank line between blocks. Prettier and the
+repository check enforce their supported parts. `build/`, `node_modules/`,
+leases, and caches are local resources, not repository facts.
 Evidence remains with its producer and specific claim; it needs no root folder.
 
 This page makes no present-tense claim about remote state, team adoption, or

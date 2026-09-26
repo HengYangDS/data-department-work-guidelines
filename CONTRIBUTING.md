@@ -26,15 +26,14 @@ ethos plan --changed --json
 
 `npm run verify` checks Markdown, code, JSON, and YAML formatting, TOML syntax,
 Markdown lint, metadata, offline links and fragments, English text and spelling,
-decision and navigation boundaries, the official OpenSpec workspace, the changelog/version
-contract, CI declarations, and negative tests. `npm run prose` runs the locked
-spelling check alone. Run `npm audit --audit-level=moderate` separately when
-online before source acceptance; both hosted CI planes require it. The offline
-repository verifier does not contact either Forge.
+decision and navigation boundaries, the official OpenSpec workspace, the
+changelog/version contract, CI declarations, and negative tests. `npm run prose`
+runs the locked spelling check alone. Run `npm audit --audit-level=moderate`
+separately when online before source acceptance; both hosted CI planes require
+it. The offline repository verifier does not contact either Forge.
 
 For a release with the matching source-pinned bundle already on the machine,
-start from a
-fresh checkout with Node 22/npm 10 and Git installed:
+start from a fresh checkout with Node 22/npm 10 and Git installed:
 
 ```text
 node tools/ci/offline-bundle.mjs inspect --bundle PATH
@@ -53,6 +52,12 @@ portable offline distribution before the exact asset and full host matrix have
 been observed. Git's native `.gitattributes` rule checks out tracked text with
 LF even on Windows; do not replace it with a host-specific Git setting.
 Keep `node_modules/` and generated output out of Git.
+
+GitHub's published Release starts its offline host matrix. GitLab's
+`offline:verify` runs in an explicitly started tag pipeline **after** its own
+package and Release are available; a tag-push `docs:verify` result is not
+offline qualification. The job obtains the package through the current
+project's CI identity, not through GitHub or an operator's credentials.
 
 ## Commit and release
 

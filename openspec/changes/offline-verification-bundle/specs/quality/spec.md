@@ -43,3 +43,13 @@ authority.
   on each declared platform using the release's bundle
 - **AND THEN** one platform's successful install or a static matrix declaration
   does not qualify another platform.
+
+#### Scenario: GitLab qualifies its native Linux release asset
+
+- **WHEN** the same-project GitLab package and Release are available for the
+  checked-out signed tag
+- **THEN** a post-publication pipeline on the declared Linux ARM64 runner
+  obtains the package with its project job token and rejects redirects or
+  altered bytes before installation
+- **AND THEN** the complete offline install and full verifier run at the tag's
+  exact source SHA; a successful tag-push documentation job is not a substitute.

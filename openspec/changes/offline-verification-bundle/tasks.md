@@ -19,13 +19,15 @@
       verification before extraction, safe-member checks, actual
       `npm ci --offline --ignore-scripts`, and reuse of the pinned lychee
       `--asset` installer; verify focused positive and negative tests.
-- [x] 2.2 From an empty application cache and no `node_modules/` or lychee
-      cache, run the actual offline install and full `npm run verify` with
-      outbound access disabled on macOS; verify no registry or Forge request is
-      made. Do not use `npm ci --dry-run` as acceptance.
-- [ ] 2.3 Run the same release bundle's complete offline install and full
-      verifier on GitHub-hosted Linux and Windows, and on the declared GitLab
-      Linux ARM64 runner; verify each job at the exact source SHA and disclose
+- [ ] 2.2 From an empty application cache and no `node_modules/` or lychee
+      cache, run the final release bundle's actual offline install and full
+      `npm run verify` with outbound access disabled on macOS; verify no
+      registry or Forge request is made. Do not use `npm ci --dry-run` as
+      acceptance.
+- [ ] 2.3 Add a post-publication GitLab package acquisition and offline job;
+      run the same release bundle's complete offline install and full verifier
+      on GitHub-hosted macOS, Linux x86/ARM, Windows, and the declared GitLab
+      Linux ARM64 runner. Verify each job at the exact source SHA and disclose
       any unavailable host rather than counting YAML as execution.
 
 ## 3. Make the reader and release route accurate
@@ -41,6 +43,10 @@
       release asset publication, and archive; execute only the sequence admitted
       by current `status`, `plan`, `prove`, and release decisions, and verify no
       task is checked before its own evidence exists.
+- [ ] 3.4 Prepare a corrective patch edition for source changes after the
+      signed minor-version tag without moving that tag. Bind its new bundle,
+      charter edition, changelog, and contributor route to the same version;
+      verify release identity and full source checks before acceptance.
 
 ## 4. Publish and close the exact release
 

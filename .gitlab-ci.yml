@@ -3,7 +3,7 @@ stages:
 
 docs:verify:
   stage: verify
-  image: node:22-bookworm
+  image: node:22-bookworm@sha256:363e1587494626837fa7f9a23bdb453d13b0ff3c67c705c2805cfc69c2d2fad7
   tags:
     - ci-linux-arm64-docker
   interruptible: true
@@ -14,4 +14,20 @@ docs:verify:
     - npm audit --audit-level=moderate
     - node tools/ci/install-lychee.mjs --gitlab-package
   script:
+    - npm run verify
+
+offline:verify:
+  stage: verify
+  image: node:22-bookworm@sha256:363e1587494626837fa7f9a23bdb453d13b0ff3c67c705c2805cfc69c2d2fad7
+  tags:
+    - ci-linux-arm64-docker
+  interruptible: true
+  rules:
+    - if: '$CI_COMMIT_TAG && $CI_PIPELINE_SOURCE == "web"'
+    - if: '$CI_COMMIT_TAG && $CI_PIPELINE_SOURCE == "api"'
+  variables:
+    GIT_DEPTH: "0"
+  script:
+    - node tools/ci/offline-bundle.mjs acquire-gitlab
+    - node tools/ci/offline-bundle.mjs install
     - npm run verify

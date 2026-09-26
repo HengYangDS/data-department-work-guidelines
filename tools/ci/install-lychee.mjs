@@ -14,6 +14,7 @@ import {
 } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { projectPackageRequest } from "./gitlab-package.mjs";
 import { filePath, root, run } from "../docs/runtime.mjs";
 
 export const manifest = JSON.parse(
@@ -41,49 +42,14 @@ export function gitlabPackageRequest(
   asset = selectedAsset(),
   environment = process.env,
 ) {
-  const apiUrl = environment.CI_API_V4_URL;
-  const projectId = environment.CI_PROJECT_ID;
-  const token = environment.CI_JOB_TOKEN;
-  let api;
-  try {
-    api = new URL(apiUrl);
-  } catch {
-    throw new Error("GitLab CI API URL is missing or invalid");
-  }
-  const apiPath = api.pathname.replace(/\/+$/u, "");
-  if (
-    !["http:", "https:"].includes(api.protocol) ||
-    api.username ||
-    api.password ||
-    api.search ||
-    api.hash ||
-    !apiPath.endsWith("/api/v4")
-  ) {
-    throw new Error("GitLab CI API URL is not a trusted API base");
-  }
-  if (!/^\d+$/u.test(projectId ?? ""))
-    throw new Error("GitLab CI project ID is missing or invalid");
-  if (!token || /[\r\n]/u.test(token))
-    throw new Error("GitLab CI job token is missing or invalid");
-  const packageName = manifest.gitlab_package_name;
-  if (!/^[a-z][a-z0-9-]*$/u.test(packageName ?? ""))
-    throw new Error("GitLab package name is missing or invalid");
-  if (!asset.name || path.basename(asset.name) !== asset.name)
-    throw new Error("lychee asset name is not portable");
-  const route = [
-    apiPath,
-    "projects",
-    projectId,
-    "packages/generic",
-    packageName,
-    manifest.version,
-    encodeURIComponent(asset.name),
-  ].join("/");
-  return {
-    url: new URL(route, api.origin).href,
-    headers: { "JOB-TOKEN": token },
-    redirect: "error",
-  };
+  return projectPackageRequest(
+    {
+      packageName: manifest.gitlab_package_name,
+      version: manifest.version,
+      fileName: asset.name,
+    },
+    environment,
+  );
 }
 
 export function safeArchiveEntries(listing) {

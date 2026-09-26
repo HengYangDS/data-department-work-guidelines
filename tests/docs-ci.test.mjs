@@ -46,6 +46,19 @@ test("both providers supply tools without a browser installation", () => {
   assert.equal(validateCi(github, gitlab).verifier, "npm run verify");
 });
 
+test("GitLab jobs pin the official multiarch Node image by digest", () => {
+  const image = gitlab.match(
+    /image: (node:22-bookworm@sha256:[0-9a-f]{64})/u,
+  )?.[1];
+  assert.ok(image, "GitLab Node image is not digest-pinned");
+  assert.equal(gitlab.split(`image: ${image}`).length - 1, 2);
+  assert.throws(
+    () =>
+      validateCi(github, gitlab.replace(image, "node:22-bookworm"), offline),
+    /digest-pinned/u,
+  );
+});
+
 test("CI contract refuses a missing checkout and a changed verifier", () => {
   assert.throws(
     () =>
@@ -156,5 +169,37 @@ test("offline release CI runs the source-pinned bundle on four hosted systems", 
     ],
   ]) {
     assert.throws(() => validateCi(github, gitlab, changed), reason);
+  }
+});
+
+test("GitLab offline release CI runs only after a release asset is available", () => {
+  const result = validateCi(github, gitlab, offline);
+  assert.equal(result.gitlabOfflineHost, "ci-linux-arm64-docker");
+  for (const [changed, reason] of [
+    [gitlab.replace(/\noffline:verify:[\s\S]*$/u, ""), /GitLab offline/u],
+    [
+      gitlab.replace(
+        'CI_PIPELINE_SOURCE == "api"',
+        'CI_PIPELINE_SOURCE == "push"',
+      ),
+      /post-publication/u,
+    ],
+    [
+      gitlab.replace("acquire-gitlab", "acquire-github"),
+      /GitLab offline acquisition/u,
+    ],
+    [
+      gitlab.replace("offline-bundle.mjs install", "npm ci"),
+      /GitLab offline installation/u,
+    ],
+    [
+      gitlab.replace(
+        /(offline:verify:[\s\S]*?    - )npm run verify/u,
+        "$1npm run partial",
+      ),
+      /GitLab offline verifier/u,
+    ],
+  ]) {
+    assert.throws(() => validateCi(github, changed, offline), reason);
   }
 });
