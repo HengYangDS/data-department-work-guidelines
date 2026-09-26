@@ -36,3 +36,28 @@ after acquisition SHALL not depend on either Forge.
   missing, mismatched, or untested on a claimed host
 - **THEN** source and hosted verification facts remain reportable
 - **AND THEN** cold offline distribution remains unqualified.
+
+### Requirement: GitLab Runner image admission matches the source pin
+
+The declared GitLab Linux ARM64 Runner SHALL allow only the exact OCI image
+digest pinned by both repository CI jobs and SHALL use a local-only image pull
+policy. Before unpausing that Runner, the deployment owner SHALL verify that
+its Docker store resolves the same digest for Linux ARM64. A cached image under
+a floating tag, an older successful job, or an available registry endpoint
+SHALL NOT substitute for that check.
+
+#### Scenario: Exact image is ready before a job
+
+- **WHEN** the Runner policy allows the CI image digest and Docker resolves it
+  locally for Linux ARM64
+- **THEN** the Runner may be admitted for an exact-source job without fetching
+  a replacement image at job start
+- **AND THEN** hosted success is claimed only after that job actually passes.
+
+#### Scenario: Cache or allowlist differs from source
+
+- **WHEN** the pinned digest is absent from the Runner allowlist or local Docker
+  store, even if the matching image tag exists
+- **THEN** the Runner remains paused or the job fails closed under its local-only
+  pull policy
+- **AND THEN** the source pin is not weakened to obtain a passing CI result.

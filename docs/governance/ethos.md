@@ -119,7 +119,10 @@ verification does not require network access.
 GitHub runs Linux, macOS, and Windows hosted jobs; GitLab selects the
 `ci-linux-arm64-docker` runner. GitLab's offline job is started on the exact
 tag only after its release package exists; an earlier tag-push documentation
-job cannot qualify that asset. Workflow declarations alone are not hosted
+job cannot qualify that asset. Before admitting the GitLab runner, its
+deployment owner must verify that the exact OCI image digest in
+`.gitlab-ci.yml` is allowed and locally cached. A tag-only image or a successful
+older job is not that check. Workflow declarations alone are not hosted
 success.
 
 Markdown and configuration use one blank line between blocks. Prettier and the

@@ -19,7 +19,7 @@
       verification before extraction, safe-member checks, actual
       `npm ci --offline --ignore-scripts`, and reuse of the pinned lychee
       `--asset` installer; verify focused positive and negative tests.
-- [ ] 2.2 From an empty application cache and no `node_modules/` or lychee
+- [x] 2.2 From an empty application cache and no `node_modules/` or lychee
       cache, run the final release bundle's actual offline install and full
       `npm run verify` with outbound access disabled on macOS; verify no
       registry or Forge request is made. Do not use `npm ci --dry-run` as
@@ -43,10 +43,14 @@
       release asset publication, and archive; execute only the sequence admitted
       by current `status`, `plan`, `prove`, and release decisions, and verify no
       task is checked before its own evidence exists.
-- [ ] 3.4 Prepare a corrective patch edition for source changes after the
+- [x] 3.4 Prepare a corrective patch edition for source changes after the
       signed minor-version tag without moving that tag. Bind its new bundle,
       charter edition, changelog, and contributor route to the same version;
       verify release identity and full source checks before acceptance.
+- [ ] 3.5 Reconcile the GitLab VM Runner's exact image allowlist, local digest
+      cache, and local-only pull policy with the pinned CI image before
+      unpausing it. Reject a tag-only cache and prove a same-SHA job executes on
+      Runner #52; do not use a successful older image job as acceptance.
 
 ## 4. Publish and close the exact release
 

@@ -83,6 +83,16 @@ has not yet been published. GitHub's published-Release event starts its hosted
 matrix. These are two delivery routes for the same source-bound bytes, not two
 bundle formats or a second release authority.
 
+The GitLab VM's Docker image is a separate prerequisite. The source pins one
+OCI index digest, while the deployment-owned Runner policy must allow that
+exact reference and its local Docker store must resolve it before the Runner
+is unpaused. A tag-only image previously passed older jobs but could not run a
+new digest; trying to fetch the new image at job start then depended on a slow
+external layer route. Re-pin to an official OCI index already verified in the
+VM cache for the corrective patch edition. Keep the Runner's pull policy
+local-only after preflight; do not weaken the source pin or call a prior job
+proof of the new source.
+
 ### Keep three evidence layers distinct
 
 Repository tests verify manifest, member, digest, no-fallback, and error
