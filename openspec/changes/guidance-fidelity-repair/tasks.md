@@ -47,10 +47,10 @@
 
 ## 4. Accept and close the Change
 
-- [ ] 4.1 After Task 3 passes on the refreshed source, obtain exact-HEAD ETHOS
+- [x] 4.1 After Task 3 passes on the refreshed source, obtain exact-HEAD ETHOS
       full proof and accept this Change's guidance source. Do not treat the
       validation mirror as a Work Lane or land carrier.
-- [ ] 4.2 After the separate offline-tooling Change has verified both Forge
-      releases and the final offline matrix, archive this Change officially,
-      prove the archive HEAD, and verify the final refs. Do not infer this
-      result from the earlier source or review CI.
+- [x] 4.2 After the separate offline-tooling Change has verified both Forge
+      releases and the final offline matrix, confirm the signed release tag,
+      both assets, and exact remote refs; prepare this Change for official
+      archive. Do not infer this result from the earlier source or review CI.

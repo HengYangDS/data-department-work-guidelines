@@ -198,7 +198,9 @@ old macOS probe transfers automatically to that revision.
 3. Run formatting, spelling, lint, links, rendering, official OpenSpec strict
    validation, repository tests, and ETHOS admission and proof on the changed
    source. Refresh onto the accepted candidate before any land decision.
-4. Accept source through ETHOS, then coordinate the final version tag, both
-   Forge publications, offline matrix, Change archive, and Work Lane retirement
-   with the separate offline-tooling Change. A failed final host or Forge keeps
-   only its own claim open; no raw push or false checkbox substitutes for it.
+4. Accept source through ETHOS, then observe the signed tag, both Forge
+   publications, and the offline matrix with the separate offline-tooling
+   Change. Complete the pre-archive tasks only from that evidence. ETHOS then
+   archives the Change in a new commit; prove and publish that HEAD before
+   retiring its Work Lane. A failed host or Forge keeps its claim open; no raw
+   push or false checkbox substitutes for it.
