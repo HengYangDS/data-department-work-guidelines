@@ -11,6 +11,15 @@ being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [4.2.0] - 2026-09-26
+
+### Added
+
+- Added a source-pinned offline verification bundle and a local installer that
+  uses a complete locked npm cache and pinned lychee assets without contacting
+  either Forge during installation. Bundled third-party tools retain their own
+  licenses; the repository's MIT grant remains for its source and documentation.
+
 ## [4.1.1] - 2026-09-26
 
 ### Fixed
@@ -74,7 +83,8 @@ being relabeled as formal SemVer releases.
   verification sequence while keeping local, GitLab, and GitHub results separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.1.1...main
+[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.2.0...main
+[4.2.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.1.1...v4.2.0
 [4.1.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.1.0...v4.1.1
 [4.1.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.0.1...v4.1.0
 [4.0.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.0.0...v4.0.1

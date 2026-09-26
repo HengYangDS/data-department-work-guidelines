@@ -1,3 +1,4 @@
+import { readBundleRecord } from "../ci/offline-bundle.mjs";
 import { checkChangelog } from "./changelog.mjs";
 import { checkCi } from "./ci.mjs";
 import {
@@ -48,6 +49,8 @@ function checkAll() {
   checkProfile();
   checkLineEndingAttributes();
   checkLicense();
+  const bundle = readBundleRecord();
+  console.log(`PASS source-pinned offline bundle identity: v${bundle.version}`);
   checkNoScope();
   checkChangelog();
   validateOpenSpec();

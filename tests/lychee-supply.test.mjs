@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
-import { createServer } from "node:http";
 import { test } from "node:test";
 import {
   assertAssetDigest,
@@ -113,37 +112,29 @@ test("GitLab package request refuses missing or untrusted CI inputs", () => {
   }
 });
 
-test("authenticated package download refuses redirects before forwarding identity", async () => {
-  let assetHits = 0;
-  let seenToken = "";
-  const server = createServer((request, response) => {
-    if (request.url === "/redirect") {
-      response.writeHead(302, { Location: "/asset" });
-      response.end();
-      return;
-    }
-    assetHits += 1;
-    seenToken = request.headers["job-token"];
-    response.end("bounded asset");
+test("authenticated package download refuses redirects before forwarding identity", async (context) => {
+  const calls = [];
+  let response = new Response("bounded asset");
+  context.mock.method(globalThis, "fetch", async (url, options) => {
+    calls.push({ url, options });
+    return response;
   });
-  await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
-  try {
-    const base = `http://127.0.0.1:${server.address().port}`;
-    const request = {
-      url: `${base}/asset`,
-      headers: { "JOB-TOKEN": "fixture-only" },
-      redirect: "error",
-    };
-    assert.equal((await downloadAsset(request)).toString(), "bounded asset");
-    assert.equal(seenToken, "fixture-only");
-    await assert.rejects(
-      downloadAsset({ ...request, url: `${base}/redirect` }),
-    );
-    assert.equal(assetHits, 1);
-  } finally {
-    server.closeAllConnections();
-    await new Promise((resolve) => server.close(resolve));
-  }
+  const request = {
+    url: "https://fixture.invalid/asset",
+    headers: { "JOB-TOKEN": "fixture-only" },
+    redirect: "error",
+  };
+  assert.equal((await downloadAsset(request)).toString(), "bounded asset");
+  assert.equal(calls[0].url, request.url);
+  assert.deepEqual(calls[0].options.headers, request.headers);
+  assert.equal(calls[0].options.redirect, "error");
+  assert.doesNotMatch(calls[0].url, /fixture-only/u);
+  response = new Response(null, {
+    status: 302,
+    headers: { Location: "https://fixture.invalid/other" },
+  });
+  await assert.rejects(downloadAsset(request), /HTTP 302/u);
+  assert.equal(calls.length, 2);
 });
 
 test("GitLab CLI mode fails closed without CI identity", () => {

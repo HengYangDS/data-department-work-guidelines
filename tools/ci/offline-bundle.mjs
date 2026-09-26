@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { spawnSync } from "node:child_process";
 import {
   copyFileSync,
   cpSync,
@@ -12,7 +13,9 @@ import {
 } from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { run } from "../docs/runtime.mjs";
+import { fileURLToPath } from "node:url";
+import { parseArgs } from "node:util";
+import { root, run } from "../docs/runtime.mjs";
 
 const recordKeys = [
   "fileName",
@@ -314,7 +317,10 @@ export function assembleBundle({
     );
     mkdirSync(path.dirname(archive), { recursive: true });
     created = true;
-    run("tar", ["-czf", archive, "-C", stage, "."], { timeout: 90_000 });
+    run("tar", ["-czf", archive, "-C", stage, "."], {
+      timeout: 90_000,
+      env: { ...process.env, COPYFILE_DISABLE: "1" },
+    });
     const record = {
       schemaVersion: 1,
       ...source,
@@ -430,7 +436,11 @@ function pathExists(target) {
   }
 }
 
-function isolatedNpmEnvironment(directory, cacheDirectory) {
+function isolatedNpmEnvironment(
+  directory,
+  cacheDirectory,
+  { offline = true } = {},
+) {
   const userConfig = path.join(directory, "empty-user.npmrc");
   const globalConfig = path.join(directory, "empty-global.npmrc");
   writeFileSync(userConfig, "");
@@ -447,7 +457,7 @@ function isolatedNpmEnvironment(directory, cacheDirectory) {
     npm_config_userconfig: userConfig,
     npm_config_globalconfig: globalConfig,
     npm_config_cache: cacheDirectory,
-    npm_config_offline: "true",
+    npm_config_offline: String(offline),
     npm_config_audit: "false",
     npm_config_fund: "false",
     npm_config_update_notifier: "false",
@@ -535,5 +545,251 @@ export function installBundle({
     throw error;
   } finally {
     rmSync(temporary, { recursive: true, force: true });
+  }
+}
+
+export function validateLockSupply(lock) {
+  if (
+    lock?.lockfileVersion !== 3 ||
+    !lock.packages ||
+    typeof lock.packages !== "object"
+  ) {
+    throw new Error("offline bundle requires an npm v3 lockfile");
+  }
+  let count = 0;
+  for (const [location, entry] of Object.entries(lock.packages)) {
+    if (!location) continue;
+    if (!location.startsWith("node_modules/") || !entry) {
+      throw new Error(`unsupported offline package location: ${location}`);
+    }
+    let resolved;
+    try {
+      resolved = new URL(entry.resolved);
+    } catch {
+      throw new Error(`missing package source: ${location}`);
+    }
+    if (
+      resolved.protocol !== "https:" ||
+      resolved.hostname !== "registry.npmjs.org" ||
+      location.includes("..") ||
+      location.includes("\\") ||
+      resolved.username ||
+      resolved.password ||
+      resolved.search ||
+      resolved.hash ||
+      entry.optional ||
+      entry.os ||
+      entry.cpu ||
+      entry.hasInstallScript ||
+      !/^sha512-[A-Za-z0-9+/]+={0,2}$/u.test(entry.integrity ?? "")
+    ) {
+      throw new Error(
+        `offline package is not portable public supply: ${location}`,
+      );
+    }
+    count += 1;
+  }
+  if (!count) throw new Error("offline bundle lockfile has no packages");
+  return count;
+}
+
+function boundedNpm(args, { cwd, env, timeout = 150_000 }) {
+  const result = spawnSync("npm", args, {
+    cwd,
+    env,
+    encoding: "utf8",
+    input: "",
+    timeout,
+    maxBuffer: 4 * 1024 * 1024,
+  });
+  if (result.error) {
+    throw new Error(`npm execution failed: ${result.error.code ?? "unknown"}`);
+  }
+  if (result.status !== 0) {
+    const cause = result.stderr?.includes("ENOTCACHED")
+      ? "cache incomplete"
+      : `exit ${result.status}`;
+    throw new Error(`locked npm installation failed: ${cause}`);
+  }
+  return result.stdout.trim();
+}
+
+function checkPackageLicenses(installation, lock) {
+  let count = 0;
+  for (const location of Object.keys(lock.packages)) {
+    if (!location) continue;
+    const packageDirectory = path.join(installation, location);
+    const manifest = JSON.parse(
+      readFileSync(path.join(packageDirectory, "package.json"), "utf8"),
+    );
+    const licenseFiles = readdirSync(packageDirectory).filter((name) =>
+      /^(?:LICENSE|LICENCE|COPYING|NOTICE)(?:[.-]|$)/iu.test(name),
+    );
+    if (!manifest.license || !licenseFiles.length) {
+      throw new Error(`offline package lacks its license: ${location}`);
+    }
+    count += 1;
+  }
+  return count;
+}
+
+export function buildReleaseBundle({
+  repository,
+  assetDirectory,
+  licenseDirectory,
+  outputPath,
+}) {
+  if (Number.parseInt(process.versions.node, 10) !== 22) {
+    throw new Error("offline bundle builder requires Node 22");
+  }
+  const lock = JSON.parse(
+    readFileSync(path.join(repository, "package-lock.json"), "utf8"),
+  );
+  const packageCount = validateLockSupply(lock);
+  const temporary = mkdtempSync(path.join(os.tmpdir(), "ddwg-bundle-prime-"));
+  try {
+    const online = path.join(temporary, "online");
+    const offline = path.join(temporary, "offline");
+    const cacheDirectory = path.join(temporary, "cache");
+    for (const checkout of [online, offline]) {
+      mkdirSync(checkout);
+      for (const name of ["package.json", "package-lock.json"]) {
+        copyFileSync(path.join(repository, name), path.join(checkout, name));
+      }
+    }
+    mkdirSync(cacheDirectory);
+    const onlineEnv = isolatedNpmEnvironment(temporary, cacheDirectory, {
+      offline: false,
+    });
+    const npmVersion = boundedNpm(["--version"], {
+      cwd: online,
+      env: onlineEnv,
+      timeout: 10_000,
+    });
+    if (!/^10\./u.test(npmVersion)) {
+      throw new Error(
+        `offline bundle builder requires npm 10, got ${npmVersion}`,
+      );
+    }
+    boundedNpm(["ci", "--ignore-scripts", "--no-audit", "--no-fund"], {
+      cwd: online,
+      env: onlineEnv,
+    });
+    const licensedPackageCount = checkPackageLicenses(online, lock);
+    if (licensedPackageCount !== packageCount) {
+      throw new Error("offline package license inventory is incomplete");
+    }
+    const offlineEnv = { ...onlineEnv, npm_config_offline: "true" };
+    boundedNpm(
+      ["ci", "--offline", "--ignore-scripts", "--no-audit", "--no-fund"],
+      {
+        cwd: offline,
+        env: offlineEnv,
+        timeout: 90_000,
+      },
+    );
+    return {
+      record: assembleBundle({
+        repository,
+        cacheDirectory,
+        assetDirectory,
+        licenseDirectory,
+        outputPath,
+      }),
+      packageCount,
+      licensedPackageCount,
+      npmVersion,
+    };
+  } finally {
+    rmSync(temporary, { recursive: true, force: true });
+  }
+}
+
+export function readBundleRecord(repository = root) {
+  const record = JSON.parse(
+    readFileSync(
+      path.join(repository, ".config", "tools", "offline-bundle.json"),
+      "utf8",
+    ),
+  );
+  return validateBundleRecord(record, sourceIdentity(repository));
+}
+
+export function verifyBundle({ bundlePath, record, repository = root }) {
+  const archive = path.resolve(bundlePath);
+  inspectBundle(archive, record, sourceIdentity(repository));
+  const temporary = mkdtempSync(path.join(os.tmpdir(), "ddwg-bundle-check-"));
+  try {
+    run("tar", ["-xf", archive, "-C", temporary], { timeout: 90_000 });
+    validateExtractedBundle(temporary, repository);
+    return { version: record.version, sha256: record.sha256 };
+  } finally {
+    rmSync(temporary, { recursive: true, force: true });
+  }
+}
+
+function cli(argv) {
+  const [mode, ...options] = argv;
+  const parsed = parseArgs({
+    args: options,
+    options: {
+      assets: { type: "string" },
+      licenses: { type: "string" },
+      output: { type: "string" },
+      bundle: { type: "string" },
+    },
+    strict: true,
+    allowPositionals: false,
+  }).values;
+  if (
+    mode === "build" &&
+    parsed.assets &&
+    parsed.licenses &&
+    parsed.output &&
+    !parsed.bundle
+  ) {
+    const result = buildReleaseBundle({
+      repository: root,
+      assetDirectory: path.resolve(parsed.assets),
+      licenseDirectory: path.resolve(parsed.licenses),
+      outputPath: path.resolve(parsed.output),
+    });
+    console.error(`PASS ${result.packageCount} locked packages and licenses`);
+    console.log(JSON.stringify(result.record, null, 2));
+    return;
+  }
+  if (
+    (mode === "inspect" || mode === "install") &&
+    parsed.bundle &&
+    !parsed.assets &&
+    !parsed.licenses &&
+    !parsed.output
+  ) {
+    const record = readBundleRecord();
+    const result =
+      mode === "inspect"
+        ? verifyBundle({ bundlePath: parsed.bundle, record })
+        : installBundle({
+            bundlePath: parsed.bundle,
+            record,
+            repository: root,
+          });
+    console.log(`PASS offline ${mode}: ${result.version} ${result.sha256}`);
+    return;
+  }
+  throw new Error(
+    "usage: node tools/ci/offline-bundle.mjs build --assets DIR --licenses DIR --output FILE | inspect --bundle FILE | install --bundle FILE",
+  );
+}
+
+if (
+  process.argv[1] &&
+  path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+) {
+  try {
+    cli(process.argv.slice(2));
+  } catch (error) {
+    console.error(error instanceof Error ? error.message : String(error));
+    process.exitCode = 1;
   }
 }

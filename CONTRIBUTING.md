@@ -30,11 +30,28 @@ decision and navigation boundaries, the official OpenSpec workspace, the changel
 contract, CI declarations, and negative tests. `npm run prose` runs the locked
 spelling check alone. Run `npm audit --audit-level=moderate` separately when
 online before source acceptance; both hosted CI planes require it. The offline
-repository verifier does not contact either Forge. A clean offline bootstrap
-requires a prefilled npm cache and the pinned lychee asset; test that path
-before claiming offline distribution. Git's native `.gitattributes` rule checks
-out tracked text with LF even on Windows; do not replace it with a host-specific
-Git setting.
+repository verifier does not contact either Forge.
+
+For a release with the matching source-pinned bundle already on the machine,
+start from a
+fresh checkout with Node 22/npm 10 and Git installed:
+
+```text
+node tools/ci/offline-bundle.mjs inspect --bundle PATH
+node tools/ci/offline-bundle.mjs install --bundle PATH
+npm run verify
+```
+
+The installer verifies the bundle before extraction, uses `npm ci --offline` and
+the existing pinned lychee asset path, and never downloads a missing tool.
+Obtain the bundle from either Forge while online or transfer it separately;
+acquisition and offline execution are different claims. ETHOS is a separate
+installed product prerequisite for Change admission and proof. The bundle's
+third-party packages retain their own license texts; the repository MIT grant
+covers repository source and documentation, not those packages. Do not claim
+portable offline distribution before the exact asset and full host matrix have
+been observed. Git's native `.gitattributes` rule checks out tracked text with
+LF even on Windows; do not replace it with a host-specific Git setting.
 Keep `node_modules/` and generated output out of Git.
 
 ## Commit and release

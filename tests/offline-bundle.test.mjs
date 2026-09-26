@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
 import {
   appendFileSync,
+  copyFileSync,
   mkdirSync,
   mkdtempSync,
   readFileSync,
@@ -18,9 +19,12 @@ import {
   assertSafeBundleListing,
   inspectBundle,
   installBundle,
+  readBundleRecord,
   validateBundleRecord,
   validateExtractedBundle,
+  validateLockSupply,
 } from "../tools/ci/offline-bundle.mjs";
+import { root } from "../tools/docs/runtime.mjs";
 
 const digest = (text) => createHash("sha256").update(text).digest("hex");
 
@@ -415,4 +419,90 @@ test("installer invokes only the locked offline supply path", () => {
       /node_modules/u,
     );
   });
+});
+
+test("universal npm cache excludes platform and private supply", () => {
+  const packageEntry = {
+    resolved: "https://registry.npmjs.org/example/-/example-1.0.0.tgz",
+    integrity: `sha512-${Buffer.alloc(64).toString("base64")}`,
+  };
+  const lock = {
+    lockfileVersion: 3,
+    packages: { "": {}, "node_modules/example": packageEntry },
+  };
+  assert.equal(validateLockSupply(lock), 1);
+  for (const changed of [
+    { resolved: "http://registry.npmjs.org/example.tgz" },
+    { resolved: "https://user:pass@registry.npmjs.org/example.tgz" },
+    { resolved: "https://registry.npmjs.org/example.tgz?token=fixture" },
+    { resolved: "https://other.example.test/example.tgz" },
+    { optional: true },
+    { os: ["darwin"] },
+    { cpu: ["arm64"] },
+    { hasInstallScript: true },
+    { integrity: "" },
+  ]) {
+    assert.throws(() =>
+      validateLockSupply({
+        ...lock,
+        packages: {
+          ...lock.packages,
+          "node_modules/example": { ...packageEntry, ...changed },
+        },
+      }),
+    );
+  }
+});
+
+test("tracked bundle identity rejects source drift", () => {
+  buildFixture((inputs) => {
+    const built = assembleBundle(inputs);
+    const recordPath = path.join(
+      inputs.repository,
+      ".config",
+      "tools",
+      "offline-bundle.json",
+    );
+    writeFileSync(recordPath, JSON.stringify(built));
+    assert.deepEqual(readBundleRecord(inputs.repository), built);
+    writeFileSync(path.join(inputs.repository, "package-lock.json"), "altered");
+    assert.throws(() => readBundleRecord(inputs.repository), /source/u);
+  });
+});
+
+test("an empty npm cache cannot satisfy the actual offline install", () => {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-empty-cache-"));
+  try {
+    for (const name of ["package.json", "package-lock.json"]) {
+      copyFileSync(path.join(root, name), path.join(directory, name));
+    }
+    const cache = path.join(directory, "cache");
+    mkdirSync(cache);
+    const userConfig = path.join(directory, "empty-user.npmrc");
+    const globalConfig = path.join(directory, "empty-global.npmrc");
+    writeFileSync(userConfig, "");
+    writeFileSync(globalConfig, "");
+    const result = spawnSync(
+      "npm",
+      ["ci", "--offline", "--ignore-scripts", "--no-audit", "--no-fund"],
+      {
+        cwd: directory,
+        encoding: "utf8",
+        timeout: 30_000,
+        env: {
+          ...process.env,
+          npm_config_cache: cache,
+          npm_config_userconfig: userConfig,
+          npm_config_globalconfig: globalConfig,
+          npm_config_offline: "true",
+          npm_config_audit: "false",
+          npm_config_fund: "false",
+        },
+      },
+    );
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /ENOTCACHED/u);
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
 });

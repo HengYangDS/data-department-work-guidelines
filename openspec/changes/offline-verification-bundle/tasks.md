@@ -2,24 +2,24 @@
 
 ## 1. Lock the offline supply contract
 
-- [ ] 1.1 Add failing tests for an empty npm cache, incomplete cache, altered
+- [x] 1.1 Add failing tests for an empty npm cache, incomplete cache, altered
       lychee archive, source mismatch, unsafe archive member, and prohibited
       network fallback; verify each failure is observed before implementation.
-- [ ] 1.2 Add a source-pinned bundle identity and source validation for
+- [x] 1.2 Add a source-pinned bundle identity and source validation for
       `VERSION`, lockfile digest, lychee manifest digest, asset name, and
       SHA-256; verify malformed and divergent identities fail focused tests.
-- [ ] 1.3 Build one universal bundle from an isolated npm cache, all five pinned
+- [x] 1.3 Build one universal bundle from an isolated npm cache, all five pinned
       lychee archives, and their tagged license texts. Exclude logs, symlinks,
       host paths, and credentials; verify package license files, builder
       inventory, and bundle digest against its source record.
 
 ## 2. Install and verify without a remote
 
-- [ ] 2.1 Implement the explicit local bundle installer with whole-archive
+- [x] 2.1 Implement the explicit local bundle installer with whole-archive
       verification before extraction, safe-member checks, actual
       `npm ci --offline --ignore-scripts`, and reuse of the pinned lychee
       `--asset` installer; verify focused positive and negative tests.
-- [ ] 2.2 From an empty application cache and no `node_modules/` or lychee
+- [x] 2.2 From an empty application cache and no `node_modules/` or lychee
       cache, run the actual offline install and full `npm run verify` with
       outbound access disabled on macOS; verify no registry or Forge request is
       made. Do not use `npm ci --dry-run` as acceptance.
@@ -30,11 +30,11 @@
 
 ## 3. Make the reader and release route accurate
 
-- [ ] 3.1 Update contributor and governance guidance with one short
+- [x] 3.1 Update contributor and governance guidance with one short
       acquisition-versus-offline-execution route, explicit Node/npm, Git, and
       ETHOS prerequisites, integrity command, and failure boundary; verify all
       current examples against installed CLIs and repository checks.
-- [ ] 3.2 Prepare the compatible minor edition in `VERSION`, charter, and Keep a
+- [x] 3.2 Prepare the compatible minor edition in `VERSION`, charter, and Keep a
       Changelog without fabricating a tag or Forge Release; verify SemVer,
       changelog, spelling, links, formatting, and full source checks.
 - [ ] 3.3 Review the native ETHOS ordering for source acceptance, active Change,

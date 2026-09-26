@@ -103,10 +103,18 @@ by platform and SHA-256. GitLab CI fetches that asset from this project's
 package registry with its own job token; GitHub CI uses the pinned upstream
 GitHub release. Both verify the digest before extraction. Local validation
 checks the executable version and never downloads an asset. Explicit
-CI supply and an offline `--asset` path are different operations. A cold offline
-installation is not qualified until its full dependency bundle has been tested.
-Both hosted CI planes run `npm audit --audit-level=moderate` during online tool
-supply; local source verification does not require network access.
+CI supply and an offline `--asset` path are different operations. The
+source-pinned offline bundle adds a complete npm cache and all declared lychee
+archives; its release identity lives in
+[`.config/tools/offline-bundle.json`](../../.config/tools/offline-bundle.json).
+A bundle file on disk is not offline qualification: the actual install and full
+verifier must run with no remote supply on each claimed host, and both Forge
+assets must be retrieved and compared by SHA-256. The
+[contributor route](../../CONTRIBUTING.md) owns the commands. Bundled npm
+packages and lychee retain their upstream licenses; the repository MIT grant
+does not relicense them. Both hosted CI planes run
+`npm audit --audit-level=moderate` during online tool supply; local source
+verification does not require network access.
 
 GitHub runs Linux, macOS, and Windows hosted jobs; GitLab selects the
 `ci-linux-arm64-docker` runner. Workflow
