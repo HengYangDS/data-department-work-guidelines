@@ -105,9 +105,10 @@ test("GitLab CI cannot regress to a GitHub-hosted tool download", () => {
   );
 });
 
-test("offline release CI runs the source-pinned bundle on three hosted systems", () => {
+test("offline release CI runs the source-pinned bundle on four hosted systems", () => {
   assert.deepEqual(validateCi(github, gitlab, offline).offlineHosts, [
     "ubuntu-latest",
+    "ubuntu-24.04-arm",
     "macos-latest",
     "windows-latest",
   ]);

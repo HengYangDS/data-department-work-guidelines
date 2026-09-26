@@ -4,6 +4,12 @@ import { readText } from "./runtime.mjs";
 const verifier = "npm run verify";
 const auditCommand = "npm audit --audit-level=moderate";
 const hostMatrix = ["ubuntu-latest", "macos-latest", "windows-latest"];
+const offlineHostMatrix = [
+  "ubuntu-latest",
+  "ubuntu-24.04-arm",
+  "macos-latest",
+  "windows-latest",
+];
 
 function parseYaml(source, name) {
   const document = YAML.parseDocument(source, { uniqueKeys: true });
@@ -38,7 +44,8 @@ function validateOfflineWorkflow(source) {
     workflow.permissions?.contents !== "read" ||
     !job ||
     job.container ||
-    JSON.stringify(job.strategy?.matrix?.os) !== JSON.stringify(hostMatrix) ||
+    JSON.stringify(job.strategy?.matrix?.os) !==
+      JSON.stringify(offlineHostMatrix) ||
     job["runs-on"] !== "${{ matrix.os }}"
   ) {
     throw new Error("offline verification must use read-only hosted runners");
@@ -91,7 +98,7 @@ function validateOfflineWorkflow(source) {
   if (commands[2]?.run !== verifier || commands.length !== 3) {
     throw new Error("offline verifier must run the full repository check");
   }
-  return hostMatrix;
+  return offlineHostMatrix;
 }
 
 export function validateCi(
