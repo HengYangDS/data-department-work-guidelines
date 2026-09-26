@@ -8,10 +8,10 @@
 - [ ] 1.2 Add a source-pinned bundle identity and source validation for
       `VERSION`, lockfile digest, lychee manifest digest, asset name, and
       SHA-256; verify malformed and divergent identities fail focused tests.
-- [ ] 1.3 Build one universal bundle from an isolated npm cache and all five
-      pinned lychee archives, excluding logs, symlinks, host paths, and
-      credentials; verify the builder's inventory and bundle digest against its
-      source record.
+- [ ] 1.3 Build one universal bundle from an isolated npm cache, all five pinned
+      lychee archives, and their tagged license texts. Exclude logs, symlinks,
+      host paths, and credentials; verify package license files, builder
+      inventory, and bundle digest against its source record.
 
 ## 2. Install and verify without a remote
 

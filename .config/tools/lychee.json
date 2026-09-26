@@ -24,5 +24,15 @@
       "name": "lychee-x86_64-pc-windows-msvc.zip",
       "sha256": "32975d1493ee1a975d6bb41e4fb56fe419cb442ded628bb772ba2e614acfacad"
     }
+  },
+  "licenses": {
+    "LICENSE-APACHE": {
+      "sha256": "992df51ac0d6b07c1d7cb310dbeb60ed72b03a6a937779b273f82bdb6a757f6f",
+      "source": "https://github.com/lycheeverse/lychee/blob/lychee-v0.24.2/LICENSE-APACHE"
+    },
+    "LICENSE-MIT": {
+      "sha256": "7175e5dd1db3111bbab4e5bafcab2544780452bb6ca8f347b0187446498630d1",
+      "source": "https://github.com/lycheeverse/lychee/blob/lychee-v0.24.2/LICENSE-MIT"
+    }
   }
 }

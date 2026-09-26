@@ -15,13 +15,15 @@ when both Forges or the registry are unavailable.
   exact npm cache entries required by `package-lock.json` and the pinned lychee
   archives for every declared host platform. The bundle is a release asset, not
   a tracked `node_modules/` tree or a permanent vendored dependency directory.
+  Retain upstream license texts for redistributed tools; the repository MIT
+  grant does not relicense them.
 - Add one Node-based bundle builder and installer under the existing `tools/ci/`
   owner. The builder accepts explicit, previously acquired inputs, verifies
   lockfile and archive digests, excludes npm logs and credentials, and produces
-  a deterministic manifest and archive. The installer rejects unsafe members,
-  mismatched source identity, incomplete cache, altered assets, and implicit
-  network fallback before invoking the locked offline install and existing
-  lychee installer.
+  a deterministic manifest and one digest-verified archive. The installer
+  rejects unsafe members, mismatched source identity, incomplete cache, altered
+  assets, and implicit network fallback before invoking the locked offline
+  install and existing lychee installer.
 - Exercise the complete offline install and `npm run verify` path from an empty
   application cache on the declared macOS, Linux, and Windows hosts. A dry-run
   exit code alone is not acceptance. The repository check and both hosted CI

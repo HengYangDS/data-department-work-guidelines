@@ -34,7 +34,11 @@ implicit platform-selection download and lets either Forge distribute the same
 bytes. It is not committed: a large binary vendor tree would make every guidance
 edit carry toolchain payload and duplicate the lockfile's dependency ownership.
 Platform-specific binary selection remains in the existing lychee manifest and
-installer.
+installer. The archive also includes lychee's Apache-2.0 and MIT license texts,
+whose tagged-release digests are pinned in that manifest. Every currently locked
+npm package contains a license file in its cached tarball; the builder checks
+this before distribution. The repository's MIT license does not relicense
+bundled third-party bytes.
 
 ### Bind bytes before extraction
 
@@ -82,6 +86,9 @@ authority for Change, Work Lane, proof, tag, and publication admission.
 
 ## Risks / Trade-offs
 
+- **Third-party redistribution** → Preserve npm package license files and the
+  exact lychee dual-license texts in the bundle; verify the manifest and avoid
+  labeling third-party bytes as repository MIT content.
 - **Large or unavailable upstream supply** → Keep the bundle outside Git, pin
   every binary digest, and build from explicit acquired inputs. A missing
   platform archive blocks the offline release claim rather than shrinking the

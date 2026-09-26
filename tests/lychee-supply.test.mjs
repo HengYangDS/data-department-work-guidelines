@@ -25,6 +25,14 @@ test("official supply declares exactly the qualified host assets", () => {
     assert.match(asset.sha256, /^[0-9a-f]{64}$/u);
     assert.ok(selectedAsset(...key.split("-")).url.endsWith(asset.name));
   }
+  assert.deepEqual(Object.keys(manifest.licenses).sort(), [
+    "LICENSE-APACHE",
+    "LICENSE-MIT",
+  ]);
+  for (const license of Object.values(manifest.licenses)) {
+    assert.match(license.sha256, /^[0-9a-f]{64}$/u);
+    assert.match(license.source, /lychee-v0\.24\.2/u);
+  }
   assert.throws(() => selectedAsset("win32", "arm64"), /unsupported/u);
 });
 
