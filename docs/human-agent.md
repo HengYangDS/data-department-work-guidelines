@@ -45,22 +45,25 @@ work, not that duty.
 ## Execute and Verify
 
 An Agent first confirms the task, target root, current state, and applicable
-local rules. It distinguishes fact, hypothesis, inference, judgment, decision,
+local rules, then restates the goal, scope, non-goals, and completion condition.
+It distinguishes fact, hypothesis, inference, judgment, decision,
 and action; loads only relevant material; and advances in reversible, verifiable
 steps within its authority. Before writing, it checks the target, concurrent
 work, and recovery path. Its output leads with the conclusion and evidence, then
 limits and next steps.
 
 Agent memory, summaries, guesses, and generated content are candidate material.
-Check a source against the original, version, time, and applicable scope. Check
-a command result against its target, exit status, and decisive output. Test or
-review code, analysis, and documents in proportion to risk. A person must not
-rely solely on an Agent's prose summary: inspect the actual change, missing
-counterexamples, present environment, uncovered cases, and high-risk
-authorization.
+Check a source against the original, version, time, and applicable scope. Keep
+the command, target, exit status, and decisive output with the producing task;
+inspect them before relying on the result. Test or review code, analysis, and
+documents in proportion to risk. A person must not
+rely solely on an Agent's prose summary: compare changed paths and content
+with the reported scope; inspect missing counterexamples, the current
+environment, uncovered cases, and high-risk authorization.
 
 Use multiple Agents in parallel only when independent questions, paths, or
-review angles can be separated. Name an integration owner and avoid
+review angles can be separated. Give each subtask explicit inputs, outputs,
+scope, stop conditions, and ownership. Name an integration owner and avoid
 uncoordinated edits to the same source of truth or worktree. A majority opinion
 is not evidence; resolve disagreement against facts and criteria. Do not
 overwrite or clean up work of unknown ownership.
@@ -70,7 +73,8 @@ overwrite or clean up work of unknown ownership.
 Stop the affected action and escalate when instructions materially conflict; the
 target or fact source cannot be identified; authority is insufficient; an action
 is irreversible without authorization or recovery; someone else's unrecognized
-work appears; verification contradicts expectation; or evidence has expired.
+work appears; verification contradicts expectation; evidence has expired; or
+continuing would hide a failure, pollute a source of truth, or enlarge harm.
 Stopping is not failure. Continuing with a guess presented as fact is loss of
 control.
 

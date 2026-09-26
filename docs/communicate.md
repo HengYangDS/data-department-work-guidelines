@@ -24,8 +24,10 @@ the entire process.
 
 For an important update, lead with the **conclusion or present state**. Then
 give two or three decisive facts, the impact, a recommendation, and the decision
-needed from whom and by when. If there is no conclusion, state which evidence is
-missing and when it can be obtained. Answer the question first, then explain.
+needed from whom and by when. A status update names what changed since the
+previous report, not how much activity occurred. If there is no conclusion,
+state which evidence is missing and when it can be obtained. Answer the
+question first, then explain.
 Say “I don't know” when that is true. Revise a position when new evidence
 overturns it; do not hide the point behind jargon or background.
 

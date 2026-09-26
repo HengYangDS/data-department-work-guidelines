@@ -11,6 +11,7 @@ import {
 import {
   checkDecisions,
   checkLineEndingAttributes,
+  checkLicense,
   checkNavigation,
   checkNoScope,
   checkProfile,
@@ -46,6 +47,7 @@ function runTests() {
 function checkAll() {
   checkProfile();
   checkLineEndingAttributes();
+  checkLicense();
   checkNoScope();
   checkChangelog();
   validateOpenSpec();

@@ -13,3 +13,6 @@ To change this repository, read [Contributing](CONTRIBUTING.md); Agents start
 at the [Agent entry](AGENTS.md). Document checks, source acceptance, remote
 publication, and actual team use are different facts and require different
 evidence.
+
+The repository source and associated documentation are available under the
+[MIT License](LICENSE).

@@ -11,6 +11,18 @@ being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [4.1.0] - 2026-09-26
+
+### Added
+
+- Adopted the MIT license for repository source and associated documentation.
+
+### Fixed
+
+- Restored explicit evidence contrasts, diagnostic and solution criteria,
+  Agent stop and scope checks, and accountable management boundaries in the
+  existing English topic pages. The rejected fixed meeting cadence remains out.
+
 ## [4.0.1] - 2026-09-26
 
 ### Fixed
@@ -55,6 +67,7 @@ being relabeled as formal SemVer releases.
   verification sequence while keeping local, GitLab, and GitHub results separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.0.1...main
+[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.1.0...main
+[4.1.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.0.1...v4.1.0
 [4.0.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.0.0...v4.0.1
 [4.0.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/b72b5e813ead5f5d5203ac7672eb72c8f32ecd1e...v4.0.0

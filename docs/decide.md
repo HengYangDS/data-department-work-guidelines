@@ -57,7 +57,9 @@ so explicitly.
    decision. Separate observation from explanation.
 3. Offer falsifiable hypotheses. Check counterexamples, the baseline, and the
    option of not acting. Prefer the smallest experiment that distinguishes
-   plausible explanations.
+   plausible explanations. Rank candidates by explanatory power, likelihood
+   under the known facts, and the cost of a decisive test. An easy test does not
+   make a weak explanation more likely.
 4. Give a bounded conclusion: what the evidence supports, what remains possible,
    and what later observation would change the judgment.
 
@@ -71,19 +73,24 @@ Reproduce the original symptom with recorded inputs and conditions when it is
 safe to do so. If reproduction is unsafe or unavailable, define an observation
 or sampling plan that could distinguish the leading hypotheses. After a repair,
 check the original symptom, adjacent paths, and unintended side effects; name
-what was not exercised.
+what was not exercised. In review, distinguish judgments that helped from those
+that failed, and explain why; a fix without changed judgment invites recurrence.
 
 Watch for correlation presented as causation, a case presented as a population,
 a necessary condition treated as sufficient, a later outcome used to infer a
-unique earlier cause, selective search for supporting evidence, and criteria
-changed midstream.
+unique earlier cause, selective search for supporting evidence, criteria
+changed midstream, and an appeal to “best practice” without checking its
+applicable boundary.
 
 ## Make the Choice Comparable and Actionable
 
 For one decision, include feasible options, including the status quo. Compare
 them on the same basis: benefit, cost, risk, reversibility, and opportunity
-cost. A recommendation states its premises, strongest objection, first step if
-chosen, and revisit trigger. The authorized person decides; a long analysis
+cost. Prefer an option that removes the main failure mode, can operate with
+actual resources, is observable and recoverable, reduces long-term maintenance
+and manual rescue, and has a clear replacement condition. A recommendation
+states its premises, strongest objection, first step if chosen, and revisit
+trigger. The authorized person decides; a long analysis
 cannot stand in for authorization.
 
 | State    | Say and do                                                           |

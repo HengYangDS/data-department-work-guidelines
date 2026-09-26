@@ -8,7 +8,7 @@ relations:
 
 # Data Department Work Guidelines: Charter
 
-> **Guideline edition:** v4.0.1
+> **Guideline edition:** v4.1.0
 >
 > **Applies to:** Data Department members and Agents acting under their
 > delegation.
@@ -87,7 +87,11 @@ To judge whether a requirement is worth keeping, ask what real error it
 prevents, why existing interfaces are insufficient, what cognitive and
 maintenance costs it adds, and what observation would cause revision or
 retirement. A preference without an identifiable failure mode and revisit
-condition does not become a department rule.
+condition does not become a department rule. Apply the same test to a new
+concept, role, process, tool, or document: if it carries no irreplaceable
+obligation, merge it with its owner or remove it. Prefer one clear interface
+or automatic check to recurring meetings and reminders when they control the
+same risk.
 
 ## From Principle to Action
 

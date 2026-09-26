@@ -53,11 +53,13 @@ direction.
 Review evidence before judging delivery risk. At minimum, inspect problem
 framing, the logical model, evidence and uncertainty, trade-offs, execution and
 acceptance, oral and written communication, and delegation and verification of
-Agents. Fabricating or hiding facts, claiming completion without current
-verification, exceeding authority on a high-risk change, and concealing a
-blocker are hard risks. Fluent presentation or effort does not cancel them. If
-scoring is used, define the levels, observable behavior, and purpose; do not
-treat a score as a person's overall worth.
+Agents. Hard risks include fabricated or selectively hidden facts; uncertainty
+presented as certainty; completion without current verification; Agent output
+treated as fact or authorization; high-risk action beyond authority; concealed
+blockers or scope changes; and repeated manual rescue without prevention.
+Fluent presentation, effort, or tool speed does not cancel them. If scoring is
+used, define its levels, observable behavior, and purpose; do not treat a score
+as a person's overall worth.
 
 Every task must meet the hard boundaries. Critical responsibilities should be
 performed independently and reliably. Call a result exceptional only when it
@@ -76,9 +78,10 @@ If a five-level review is used, keep its meaning stable:
 
 Watch for rework from unclear goals or definitions, quality failures found
 downstream, repeated incidents, late exposure of risk, reopened completion
-claims, reasons decisions wait, handoff continuity, Agent misuse, and whether a
-new mechanism lowers total cost. For every metric, first name the decision it
-supports, its fact source, period, boundary, and how it could be gamed.
+claims, reasons decisions wait, handoff continuity, Agent misuse, growth
+from guided execution toward independent judgment, and whether a new mechanism
+lowers total cost. For every metric, first name the decision it supports, its
+fact source, period, boundary, and how it could be gamed.
 Investigate anomalies through cases and mechanisms; do not equate them directly
 with individual performance.
 
@@ -89,12 +92,17 @@ escaped quality issues, Agent misuse, and needless coordination, then retain,
 revise, or retire rules by observed net benefit. Do this in existing meetings,
 tickets, and reviews, without a fixed calendar or department-wide status
 report. Managers clarify direction, priorities, resources, and cross-domain
-decisions, and protect honest disclosure of uncertainty; system defects must
-not be blamed on individuals.
+decisions, and protect honest disclosure of uncertainty. They must not use
+these guidelines for retrospective fault-finding, ceremonial review, or
+micromanagement. When goals conflict, priorities drift, resources are short,
+decisions stall, or interfaces mislead, repair the management system before
+blaming a member's capability. Within those boundaries, the person closest
+to the facts chooses the method; management should not prescribe every step.
 
-Members own end-to-end results in their remit. Guideline maintainers gather
-conflicts and signs of obsolescence, and state the reason, evidence, and
-effective scope for each addition or deletion.
+Members own end-to-end results in their remit and disclose unknowns, risks,
+dependencies, and failures without waiting to be asked. Guideline maintainers
+gather conflicts and signs of obsolescence, and state the reason, evidence,
+effective time, and scope for each addition or deletion.
 
 In an emergency, protect people, data, production, and compliance first. Contain
 harm before filling in the record if needed, but record the temporary decision's

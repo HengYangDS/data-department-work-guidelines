@@ -60,16 +60,20 @@ what unproved?** Evidence must be current, reviewable, and matched to the
 claim's scope. When evidence is missing, narrow the claim rather than enlarge
 the language.
 
-| What was observed                                | What it does not establish by itself                           |
-| ------------------------------------------------ | -------------------------------------------------------------- |
-| A draft exists, a command runs, or a test passes | Review, overall correctness, or acceptance.                    |
-| A sample or rehearsal passes                     | Complete correctness or actual execution.                      |
-| A local environment passes                       | A remote, production, or hosted environment passes.            |
-| A change is merged or published                  | It took effect, was adopted, or produced the intended outcome. |
-| An Agent reports completion                      | A member verified and accepted responsibility for the result.  |
+| What was observed                                | What it does not establish by itself                             |
+| ------------------------------------------------ | ---------------------------------------------------------------- |
+| A draft exists, a command runs, or a test passes | Review, overall correctness, or acceptance.                      |
+| A sample or rehearsal passes                     | Complete correctness or actual execution.                        |
+| A dry-run succeeds                               | The actual action occurred.                                      |
+| A content digest matches                         | The content is semantically correct or fit for its intended use. |
+| A local environment passes                       | A remote, production, or hosted environment passes.              |
+| A change is merged                               | It reached the target publication plane.                         |
+| A revision is published                          | It took effect, was adopted, or produced the intended outcome.   |
+| An Agent reports completion                      | A member verified and accepted responsibility for the result.    |
 
 Put the deliverable at the agreed location; satisfy each completion criterion;
-name risks, limits, uncovered cases, and follow-up ownership. Work requiring
+name risks, limits, uncovered cases, and follow-up ownership. Reach the
+agreed lifecycle state; a nearby state is not a substitute. Work requiring
 human acceptance is accepted by an authorized person. **Verified, accepted, and
 published or effective are distinct states.** Do not call “in progress” “mostly
 complete,” or promote verification to publication.
