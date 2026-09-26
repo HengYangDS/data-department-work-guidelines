@@ -48,7 +48,7 @@
       26/npm 11 contract, update current stable locked tools, and pin both CI
       planes to the same runtime line. Verify old-line rejection, focused tests,
       fresh locked installation, and dependency audit.
-- [ ] 3.5 Reconcile Runner #52's allowlist, local digest cache, and
+- [x] 3.5 Reconcile Runner #52's allowlist, local digest cache, and
       local-only pull policy with the exact Node 26 CI image. Reject a tag-only
       cache and prove a job at the new source SHA executes on that runner;
       earlier Node 22 jobs are not acceptance.
