@@ -11,8 +11,15 @@ const categories = [
   "Fixed",
   "Security",
 ];
-const releaseHeading = /^## \[([^\]]+)\] - (\d{4}-\d{2}-\d{2})$/u;
+const releaseHeading =
+  /^## \[([^\]]+)\] - (\d{4}-\d{2}-\d{2})(?: \[YANKED\])?$/u;
 const linkDefinition = /^\[([^\]]+)\]: (https:\/\/\S+)$/u;
+
+function directTagRef(url) {
+  if (url.pathname.includes("/compare/")) return "";
+  const match = /\/releases\/tag\/([^/]+)$/u.exec(url.pathname);
+  return match ? decodeURIComponent(match[1]) : "";
+}
 
 export function strictVersion(value) {
   if (
@@ -57,7 +64,6 @@ export function parseChangelog(source) {
   const links = new Map();
   let section = null;
   let category = null;
-  let lastCategory = -1;
   let linkDefinitionsStarted = false;
   for (const [index, line] of lines.entries()) {
     const number = index + 1;
@@ -116,7 +122,6 @@ export function parseChangelog(source) {
       }
       sections.push(section);
       category = null;
-      lastCategory = -1;
       continue;
     }
     if (line.startsWith("### ")) {
@@ -125,15 +130,13 @@ export function parseChangelog(source) {
           `change category precedes Unreleased at line ${number}`,
         );
       const name = line.slice(4);
-      const position = categories.indexOf(name);
-      if (position < 0 || position <= lastCategory) {
+      if (!categories.includes(name) || section.categories.has(name)) {
         throw new Error(
-          `noncanonical or out-of-order category at line ${number}: ${name}`,
+          `noncanonical or repeated category at line ${number}: ${name}`,
         );
       }
       section.categories.set(name, 0);
       category = name;
-      lastCategory = position;
       continue;
     }
     if (line.startsWith("#### "))
@@ -164,8 +167,16 @@ export function parseChangelog(source) {
     const href = links.get(label);
     if (!href) throw new Error(`missing history link for ${label}`);
     const url = new URL(href);
-    if (url.protocol !== "https:" || !url.pathname.includes("/compare/")) {
-      throw new Error(`history link must be an HTTPS comparison: ${label}`);
+    if (
+      url.protocol !== "https:" ||
+      !(
+        url.pathname.includes("/compare/") ||
+        (label !== "Unreleased" && directTagRef(url))
+      )
+    ) {
+      throw new Error(
+        `history link must be an HTTPS comparison or tag: ${label}`,
+      );
     }
   }
   for (const label of links.keys()) {
@@ -275,7 +286,21 @@ export function validateChangelog({
   if (pending && sections[0].items)
     throw new Error("prepared release must not leave Unreleased changes");
   for (const [label, href] of links) {
-    const comparison = new URL(href).pathname.split("/compare/")[1];
+    const url = new URL(href);
+    const tagRef = directTagRef(url);
+    if (tagRef) {
+      if (label !== releases.at(-1)?.version) {
+        throw new Error("direct tag link is only valid for the oldest release");
+      }
+      if (!tags.has(label)) {
+        throw new Error("direct tag link requires an annotated local tag");
+      }
+      if (tagRef !== `v${label}`) {
+        throw new Error(`tag link must identify v${label}`);
+      }
+      continue;
+    }
+    const comparison = url.pathname.split("/compare/")[1];
     const refs = comparison?.split("...");
     if (refs?.length !== 2 || !refs[0] || !refs[1]) {
       throw new Error(`history comparison needs two refs: ${label}`);

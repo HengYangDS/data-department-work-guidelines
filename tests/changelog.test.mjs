@@ -40,6 +40,16 @@ function preparedSource(base, releases, releaseTarget = "v4.0.0") {
   );
 }
 
+function firstReleaseTagSource(base) {
+  return preparedSource(
+    base,
+    "## [4.0.0] - 2026-09-25\n\n### Added\n\n- First release.\n\n",
+  ).replace(
+    `[4.0.0]: https://example.invalid/compare/${base}...v4.0.0`,
+    "[4.0.0]: https://example.invalid/releases/tag/v4.0.0",
+  );
+}
+
 function git(directory, ...args) {
   const hooks = path.join(directory, "empty-hooks");
   mkdirSync(hooks, { recursive: true });
@@ -136,6 +146,44 @@ test("Keep a Changelog grammar rejects custom headings and categories", () => {
     valid.replace("[Unreleased]:", "[Current]:"),
   ]) {
     assert.throws(() => parseChangelog(changed));
+  }
+});
+
+test("official yanked headings and category orderings are valid", () => {
+  const base = "a".repeat(40);
+  const released = source(
+    base,
+    "## [4.0.0] - 2026-09-25 [YANKED]\n\n### Added\n\n- Add a feature.\n\n### Fixed\n\n- Repair a bug.\n\n### Changed\n\n- Change a behavior.\n\n",
+  );
+  assert.deepEqual(
+    [...parseChangelog(released).sections[1].categories.keys()],
+    ["Added", "Fixed", "Changed"],
+  );
+  for (const invalid of [
+    released.replace("[YANKED]", "[RETRACTED]"),
+    released.replace("[YANKED]", "[yanked]"),
+    released.replace(
+      "### Changed\n\n- Change a behavior.",
+      "### Fixed\n\n- Change a behavior.",
+    ),
+    released.replace(
+      "### Changed\n\n- Change a behavior.",
+      "### Quality\n\n- Change a behavior.",
+    ),
+  ]) {
+    assert.throws(() => parseChangelog(invalid));
+  }
+});
+
+test("strict SemVer prerelease and build identifiers remain valid in headings", () => {
+  const base = "a".repeat(40);
+  for (const version of ["4.0.0-alpha.1", "4.0.0+build.1"]) {
+    const released = source(
+      base,
+      `## [${version}] - 2026-09-25\n\n### Fixed\n\n- Repair a bug.\n\n`,
+      `v${version}`,
+    ).replace("[4.0.0]:", `[${version}]:`);
+    assert.equal(parseChangelog(released).sections[1].version, version);
   }
 });
 
@@ -328,6 +376,89 @@ test("tagged release links identify the tag, not a moving branch", () => {
     assert.throws(
       () => validateChangelog({ repository: directory, selectedTag: "v4.0.0" }),
       /release comparison must end at v4\.0\.0/u,
+    );
+  });
+});
+
+test("the oldest annotated release may link directly to its exact tag", () => {
+  fixture((directory, base) => {
+    const changelog = path.join(directory, "CHANGELOG.md");
+    const valid = firstReleaseTagSource(base);
+    writeFileSync(changelog, valid);
+    commit(directory, "prepare first release");
+    git(directory, "tag", "-a", "v4.0.0", "-m", "fixture release");
+    assert.equal(
+      validateChangelog({ repository: directory, selectedTag: "v4.0.0" })
+        .tagCount,
+      1,
+    );
+
+    writeFileSync(
+      changelog,
+      valid.replace("/releases/tag/v4.0.0", "/releases/tag/v3.0.0"),
+    );
+    assert.throws(
+      () => validateChangelog({ repository: directory, selectedTag: "" }),
+      /tag link must identify v4\.0\.0/u,
+    );
+
+    writeFileSync(
+      changelog,
+      valid.replace(
+        "/releases/tag/v4.0.0",
+        "/compare/side...side/releases/tag/v4.0.0",
+      ),
+    );
+    assert.throws(
+      () => validateChangelog({ repository: directory, selectedTag: "" }),
+      /release comparison must end at v4\.0\.0/u,
+    );
+  });
+});
+
+test("an untagged prepared release cannot use the direct-tag exception", () => {
+  fixture((directory, base) => {
+    writeFileSync(
+      path.join(directory, "CHANGELOG.md"),
+      firstReleaseTagSource(base),
+    );
+    assert.throws(
+      () => validateChangelog({ repository: directory, selectedTag: "" }),
+      /direct tag link requires an annotated local tag/u,
+    );
+  });
+});
+
+test("later tagged releases cannot use the first-release link exception", () => {
+  fixture((directory, base) => {
+    git(directory, "tag", "-a", "v3.0.0", "-m", "older fixture release");
+    const changelog = [
+      intro,
+      "## [Unreleased]",
+      "",
+      "## [4.0.0] - 2026-09-25",
+      "",
+      "### Fixed",
+      "",
+      "- Fix the current version.",
+      "",
+      "## [3.0.0] - 2026-09-24",
+      "",
+      "### Added",
+      "",
+      "- Add the first version.",
+      "",
+      "[Unreleased]: https://example.invalid/compare/v4.0.0...main",
+      "[4.0.0]: https://example.invalid/releases/tag/v4.0.0",
+      "[3.0.0]: https://example.invalid/releases/tag/v3.0.0",
+      "",
+    ].join("\n");
+    writeFileSync(path.join(directory, "CHANGELOG.md"), changelog);
+    commit(directory, "prepare later release");
+    git(directory, "tag", "-a", "v4.0.0", "-m", "current fixture release");
+    assert.throws(
+      () => validateChangelog({ repository: directory, selectedTag: "" }),
+      /direct tag link is only valid for the oldest release/u,
     );
   });
 });

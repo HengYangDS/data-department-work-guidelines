@@ -79,6 +79,12 @@ only an admitted, signed annotated tag and observed Forge release objects can
 establish versioned publication. Previous untagged branch editions are not
 retroactively presented as tagged releases.
 
+The changelog check accepts the official `[YANKED]` heading marker and the six
+standard categories in any order, without duplicates. The oldest tagged
+release may link directly to its exact tag; later releases use comparisons.
+These checks establish structure and local identity, not whether the prose is
+useful to readers.
+
 Commit the exact source and run ETHOS proof against that HEAD before landing.
 Only `dev`, `main`, and `proposal/*` are publishable refs. Candidate and Work
 Lane branches remain local. Verify local acceptance, each Forge ref and CI run,

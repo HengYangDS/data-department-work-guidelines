@@ -11,6 +11,12 @@ being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+### Fixed
+
+- Aligned the changelog gate with Keep a Changelog's valid `[YANKED]` marker,
+  category ordering, and first-release tag link while retaining release
+  identity and comparison-ancestry checks.
+
 ## [5.0.0] - 2026-09-27
 
 ### Changed
