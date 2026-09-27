@@ -17,11 +17,14 @@
 - [x] 2.2 Signed commit `8f933d7` passed exact-HEAD ETHOS proof
       `bdfd2543`; candidate and accepted `dev` contain the repair.
 
-## 3. Publication and closeout
+## 3. Publication acceptance before archive
 
-- [ ] 3.1 Decide and document SemVer impact, then prepare and sign a patch
-      release if this public fix is released; verify all version identities agree.
-- [ ] 3.2 If released, publish and retrieve identical offline assets on
-      GitLab and GitHub; run platform CI and offline checks for the exact tag.
-- [ ] 3.3 Archive officially, refresh exact-HEAD proof and remote
-      observations, then retire only this landed lane; verify owned cleanup.
+- [x] 3.1 Classify the compatible verifier fix as patch `v5.0.1`;
+      `VERSION`, charter, changelog, signed tag `1a4ddc5`, and source
+      `b427731` agree.
+- [x] 3.2 Retrieve both Forge assets and verify SHA-256 `2fbeef2b`;
+      GitHub offline run `36293623140` passed four platforms and GitLab
+      post-publication pipeline `8383` passed on Runner #52.
+- [x] 3.3 Verify both remote `dev`, `main`, and `v5.0.1` refs identify
+      `b427731`, both Release objects exist, and the offline bundle
+      installed and passed 71 tests in a clean local checkout.
