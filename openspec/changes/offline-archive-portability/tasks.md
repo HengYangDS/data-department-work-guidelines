@@ -15,7 +15,7 @@
 - [x] 2.1 Classify and prepare the compatible patch edition in `VERSION`,
       charter, Changelog, and the existing bundle record; pass version, SemVer,
       Changelog, and source-identity tests without changing `v5.0.1`.
-- [ ] 2.2 Build the patch archive from its declared inputs and run a clean,
+- [x] 2.2 Build the patch archive from its declared inputs and run a clean,
       no-network macOS installation plus the full verifier; match the committed
       digest and observe no archive warning or host metadata.
 - [ ] 2.3 Pass `npm run verify`, official OpenSpec strict validation, ETHOS

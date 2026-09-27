@@ -34,9 +34,9 @@ second archive format or parser, or weaken digest and safe-member admission.
    the stderr refusal with a zero-exit warning command. The hosted offline
    matrix remains the cross-platform acceptance, not a local fixture alone.
 4. Classify the packaging correction as a compatible patch edition. Build
-   from the signed release source, pin its digest in the existing manifest,
-   publish the same bytes independently to both Forges, and retain the old
-   release unmodified.
+   from the final declared inputs, pin the resulting digest in the signed
+   source, publish those same bytes independently to both Forges, and retain
+   the old release unmodified.
 
 ## Risks / Trade-offs
 
