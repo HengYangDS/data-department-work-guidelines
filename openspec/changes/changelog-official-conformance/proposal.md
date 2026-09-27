@@ -32,7 +32,7 @@ None.
 
 ## Impact
 
-This change affects the existing changelog parser, its tests, the
-`repository-governance` spec, and the current `Unreleased` note. It does not
-alter department work rules, tag history, Forge assets, or ETHOS authority.
+This patch release affects the existing changelog parser, its tests, the
+`repository-governance` spec, and the contributor route. It does not alter
+department work rules, existing tags or Forge assets, or ETHOS authority.
 Human editorial review still owns whether entries are useful and complete.

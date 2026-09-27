@@ -14,8 +14,8 @@
 - [x] 2.1 Verify locally: `npm run verify` passed 71 tests; official
       `openspec validate --all --strict --json` passed 4 items; ETHOS
       `plan --changed` passed with two gates; `git diff --check` passed.
-- [ ] 2.2 Commit signed source, run exact-HEAD ETHOS proof, and land the
-      accepted change into `dev`; verify `dev` contains the repair.
+- [x] 2.2 Signed commit `8f933d7` passed exact-HEAD ETHOS proof
+      `bdfd2543`; candidate and accepted `dev` contain the repair.
 
 ## 3. Publication and closeout
 

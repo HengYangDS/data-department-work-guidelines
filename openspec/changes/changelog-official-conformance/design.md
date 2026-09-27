@@ -43,6 +43,15 @@ comparison links retain their two-ref syntax, tag endpoint, and ancestry
 checks. This is narrower than accepting arbitrary release pages or dropping
 the existing comparison contract.
 
+### Release the public verifier correction as a patch
+
+The change removes false failures from a documented contributor command
+without changing a normative department duty or requiring migration. SemVer
+therefore calls for a compatible patch edition, `v5.0.1`, rather than a minor
+or major edition. Its offline bundle has the same locked supply inputs as
+`v5.0.0` but a new version-bound manifest and digest; existing release objects
+remain immutable.
+
 ## Risks / Trade-offs
 
 - A parser can prove structure and local identity, not that a remote URL
