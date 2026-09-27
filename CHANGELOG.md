@@ -11,6 +11,13 @@ being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [5.0.2] - 2026-09-27
+
+### Fixed
+
+- Removed host-specific extended attributes from the offline bundle and made
+  archive warnings fail verification instead of silently passing on Linux.
+
 ## [5.0.1] - 2026-09-27
 
 ### Fixed
@@ -122,7 +129,8 @@ being relabeled as formal SemVer releases.
   verification sequence while keeping local, GitLab, and GitHub results separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.1...main
+[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.2...main
+[5.0.2]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.1...v5.0.2
 [5.0.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.0...v5.0.1
 [5.0.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.2.1...v5.0.0
 [4.2.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.2.0...v4.2.1

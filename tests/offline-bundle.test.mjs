@@ -14,6 +14,7 @@ import {
 import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
+import { gunzipSync } from "node:zlib";
 import * as offline from "../tools/ci/offline-bundle.mjs";
 import {
   acquireGitHubBundle,
@@ -27,7 +28,7 @@ import {
   validateExtractedBundle,
   validateLockSupply,
 } from "../tools/ci/offline-bundle.mjs";
-import { root } from "../tools/docs/runtime.mjs";
+import { root, run as runCommand } from "../tools/docs/runtime.mjs";
 
 const digest = (text) => createHash("sha256").update(text).digest("hex");
 
@@ -133,6 +134,24 @@ test("bundle archive admits only regular files in its declared roots", () => {
   );
   assert.throws(() =>
     assertSafeBundleListing(names, verbose.split("\n").slice(0, -1).join("\n")),
+  );
+});
+
+test("archive command warnings cannot establish clean verification", () => {
+  assert.equal(
+    runCommand(process.execPath, ["-e", 'process.stdout.write("clean")'], {
+      capture: true,
+      rejectStderr: true,
+    }),
+    "clean",
+  );
+  assert.throws(
+    () =>
+      runCommand(process.execPath, ["-e", 'process.stderr.write("warning")'], {
+        capture: true,
+        rejectStderr: true,
+      }),
+    /warning output/u,
   );
 });
 
@@ -321,6 +340,19 @@ test("builder admits only pinned, licensed, regular supply", () => {
     });
   }
 });
+
+test(
+  "macOS builder omits extended attributes from the archive",
+  { skip: process.platform !== "darwin" },
+  () => {
+    buildFixture((inputs) => {
+      assembleBundle(inputs);
+      const archive = gunzipSync(readFileSync(inputs.outputPath));
+      assert.equal(archive.includes(Buffer.from("LIBARCHIVE.xattr.")), false);
+      assert.equal(archive.includes(Buffer.from("SCHILY.xattr.")), false);
+    });
+  },
+);
 
 test("extracted bundle contents agree with source and pinned supply", () => {
   buildFixture((inputs) => {

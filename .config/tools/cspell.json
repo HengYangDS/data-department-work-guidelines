@@ -2,6 +2,7 @@
   "version": "0.2",
   "language": "en",
   "words": [
+    "COPYFILE",
     "ETHOS",
     "GitLab",
     "GitHub",
@@ -11,6 +12,7 @@
     "prewrite",
     "replayable",
     "sandboxed",
-    "SemVer"
+    "SemVer",
+    "xattrs"
   ]
 }

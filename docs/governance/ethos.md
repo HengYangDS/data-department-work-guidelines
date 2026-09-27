@@ -116,6 +116,8 @@ archives; its release identity lives in
 A bundle file on disk is not offline qualification: the actual install and full
 verifier must run with no remote supply on each claimed host, and both Forge
 assets must be retrieved and compared by SHA-256. The
+archive excludes host extended attributes; archive inspection and extraction
+reject warning output even when the archive tool exits successfully. The
 [contributor route](../../CONTRIBUTING.md) owns the commands. Bundled npm
 packages and lychee retain their upstream licenses; the repository MIT grant
 does not relicense them. Both hosted CI planes run

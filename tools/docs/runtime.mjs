@@ -50,25 +50,30 @@ export function run(command, args = [], options = {}) {
     capture = false,
     cwd = root,
     env = process.env,
+    rejectStderr = false,
     timeout = 120_000,
   } = options;
+  const piped = capture || rejectStderr;
   const result = spawnSync(command, args, {
     cwd,
     env,
     encoding: "utf8",
     timeout,
     maxBuffer: 16 * 1024 * 1024,
-    stdio: capture ? ["ignore", "pipe", "pipe"] : "inherit",
+    stdio: piped ? ["ignore", "pipe", "pipe"] : "inherit",
   });
   if (result.error) {
     throw new Error(`${command}: ${result.error.message}`);
   }
   if (result.status !== 0) {
-    if (capture) {
+    if (capture && !rejectStderr) {
       process.stdout.write(result.stdout ?? "");
       process.stderr.write(result.stderr ?? "");
     }
     throw new Error(`${command} exited ${result.status ?? "without status"}`);
+  }
+  if (rejectStderr && result.stderr) {
+    throw new Error(`${command} emitted warning output`);
   }
   return capture ? result.stdout : "";
 }

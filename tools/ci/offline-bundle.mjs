@@ -161,10 +161,12 @@ export function inspectBundle(bundlePath, record, source) {
   }
   const names = run("tar", ["-tf", archive], {
     capture: true,
+    rejectStderr: true,
     timeout: 30_000,
   });
   const verbose = run("tar", ["-tvf", archive], {
     capture: true,
+    rejectStderr: true,
     timeout: 30_000,
   });
   assertSafeBundleListing(names, verbose);
@@ -318,9 +320,10 @@ export function assembleBundle({
     );
     mkdirSync(path.dirname(archive), { recursive: true });
     created = true;
-    run("tar", ["-czf", archive, "-C", stage, "."], {
+    run("tar", ["--no-xattrs", "-czf", archive, "-C", stage, "."], {
       timeout: 90_000,
       env: { ...process.env, COPYFILE_DISABLE: "1" },
+      rejectStderr: true,
     });
     const record = {
       schemaVersion: 1,
@@ -530,6 +533,7 @@ export function installBundle({
   let startedNpmInstall = false;
   try {
     run("tar", ["-xf", archive, "-C", temporary], {
+      rejectStderr: true,
       timeout: 90_000,
     });
     validateExtractedBundle(temporary, repository);
@@ -768,7 +772,10 @@ export function verifyBundle({ bundlePath, record, repository = root }) {
   inspectBundle(archive, record, sourceIdentity(repository));
   const temporary = mkdtempSync(path.join(os.tmpdir(), "ddwg-bundle-check-"));
   try {
-    run("tar", ["-xf", archive, "-C", temporary], { timeout: 90_000 });
+    run("tar", ["-xf", archive, "-C", temporary], {
+      rejectStderr: true,
+      timeout: 90_000,
+    });
     validateExtractedBundle(temporary, repository);
     return { version: record.version, sha256: record.sha256 };
   } finally {
