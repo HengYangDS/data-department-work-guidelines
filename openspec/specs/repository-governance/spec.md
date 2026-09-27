@@ -264,14 +264,13 @@ review compatibility rather than infer it from formatting.
 
 ### Requirement: Changelog structure follows Keep a Changelog
 
-`CHANGELOG.md` SHALL follow Keep a Changelog 1.1.0: `Unreleased` first, only
-applicable Added, Changed, Deprecated, Removed, Fixed, and Security categories
-in any order without repetition within a section; strict SemVer headings,
-optional official `[YANKED]` suffixes, real ISO dates, newest-first order, and
-version-history links. The quality gate SHALL reject uncategorized prose,
-malformed headings, duplicate versions, version disagreement, missing local tag
-coverage, and invalid links. It SHALL NOT reject an otherwise valid entry
-solely for using an official category order or yanked-release marker.
+`CHANGELOG.md` SHALL follow Keep a Changelog 1.1.0: `Unreleased` first;
+only applicable Added, Changed, Deprecated, Removed, Fixed, and Security
+categories, once per section in any order; strict SemVer headings with
+optional `[YANKED]`; real ISO dates; newest-first versions; and history
+links. The gate SHALL reject uncategorized prose, malformed headings,
+duplicate versions, version drift, missing local tag coverage, and invalid
+links.
 
 #### Scenario: Version, changelog, or tag identities diverge
 
@@ -292,14 +291,13 @@ solely for using an official category order or yanked-release marker.
 
 ### Requirement: Release comparison links bind ancestry and tags
 
-A release comparison base SHALL be an ancestor of its tag or prepared source;
-local object presence is insufficient. Tagged comparisons SHALL end at the
-tag, not a moving branch. The oldest tagged release MAY instead link directly
-to its exact `vVERSION` tag; a prepared or later release SHALL NOT use this
-exception. `Unreleased` SHALL compare from a prepared current version or,
-otherwise, the latest local release tag. A prepared version section SHALL
-compare to prospective `vVERSION`; only that exact missing tag MAY be
-unresolved. The same links SHALL remain valid after tagging.
+Comparison bases SHALL be ancestors of tagged or prepared source; mere local
+object presence is insufficient. Tagged comparisons SHALL end at their tag,
+not a branch. Only the oldest tagged release MAY link directly to its exact
+`vVERSION` tag. `Unreleased` SHALL compare from the prepared current version
+or latest local tag. A prepared release SHALL compare to prospective
+`vVERSION`; no other missing ref is allowed. Links SHALL remain valid after
+tagging.
 
 #### Scenario: A prepared link would fail after tagging
 
