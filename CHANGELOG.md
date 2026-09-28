@@ -11,6 +11,14 @@ being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [5.0.5] - 2026-09-29
+
+### Fixed
+
+- Applied the existing format and lint checks to retained OpenSpec Markdown,
+  and the one-blank-line rule to every repository text candidate, including
+  archives and files without filename extensions.
+
 ## [5.0.4] - 2026-09-28
 
 ### Fixed
@@ -153,7 +161,8 @@ being relabeled as formal SemVer releases.
   verification sequence while keeping local, GitLab, and GitHub results separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.4...main
+[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.5...main
+[5.0.5]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.4...v5.0.5
 [5.0.4]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.3...v5.0.4
 [5.0.3]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.2...v5.0.3
 [5.0.2]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.1...v5.0.2

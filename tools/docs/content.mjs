@@ -20,23 +20,15 @@ import {
   root,
   run,
   runNodeTool,
+  sourceMarkdown,
   temporaryRoot,
 } from "./runtime.mjs";
 
 const requiredMetadata = ["subject", "role", "state", "relations"];
 const cjk = /[\u2e80-\u9fff\uac00-\ud7af\uf900-\ufaff\uff00-\uffef]/u;
-const textExtensions = new Set([
-  ".md",
-  ".toml",
-  ".yaml",
-  ".yml",
-  ".json",
-  ".mjs",
-  ".js",
-]);
 export function formatTargets(files = gitFiles()) {
   return [
-    ...currentMarkdown(files),
+    ...sourceMarkdown(files),
     ...files.filter(
       (relative) =>
         /^(?:tools|tests)\/.*\.mjs$/u.test(relative) ||
@@ -57,7 +49,7 @@ export function lintMarkdown() {
   runNodeTool("markdownlint-cli2", "markdownlint-cli2", [
     "--config",
     ".config/tools/markdownlint-cli2.yaml",
-    ...currentMarkdown().map((relative) => `:${relative}`),
+    ...sourceMarkdown().map((relative) => `:${relative}`),
   ]);
 }
 
@@ -208,13 +200,8 @@ export function textViolations(relative, source) {
     if (cjk.test(line))
       errors.push(`${relative}:${index + 1}: CJK text is not allowed`);
   }
-  if (
-    textExtensions.has(path.extname(relative)) &&
-    !relative.startsWith("openspec/changes/archive/")
-  ) {
-    const error = blankLineError(relative, source);
-    if (error) errors.push(error);
-  }
+  const error = blankLineError(relative, source);
+  if (error) errors.push(error);
   return errors;
 }
 

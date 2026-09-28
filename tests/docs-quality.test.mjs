@@ -25,6 +25,7 @@ import {
   lycheeBinary,
   nodeTool,
   root,
+  sourceMarkdown,
 } from "../tools/docs/runtime.mjs";
 
 const sections = [
@@ -198,12 +199,14 @@ test("changelog categories may recur under different releases, not one release",
 test("formatting selects source configuration and TOML syntax is checked", () => {
   const targets = formatTargets([
     "docs/README.md",
+    "openspec/changes/archive/2026-09-28-spelling-supply-refresh/design.md",
     ".config/tools/lychee.json",
     "openspec/config.yaml",
     ".github/workflows/docs-verify.yml",
     "tools/docs/cli.mjs",
   ]);
   for (const file of [
+    "openspec/changes/archive/2026-09-28-spelling-supply-refresh/design.md",
     ".config/tools/lychee.json",
     "openspec/config.yaml",
     ".github/workflows/docs-verify.yml",
@@ -217,14 +220,13 @@ test("formatting selects source configuration and TOML syntax is checked", () =>
 });
 
 test("current Markdown inventory excludes official archives, not live topics", () => {
-  assert.deepEqual(
-    currentMarkdown([
-      "README.md",
-      "docs/decide.md",
-      "openspec/changes/archive/old/spec.md",
-    ]),
-    ["README.md", "docs/decide.md"],
-  );
+  const files = [
+    "README.md",
+    "docs/decide.md",
+    "openspec/changes/archive/old/spec.md",
+  ];
+  assert.deepEqual(sourceMarkdown(files), files);
+  assert.deepEqual(currentMarkdown(files), ["README.md", "docs/decide.md"]);
 });
 
 test("the public check command rejects incomplete-mode waivers", () => {
@@ -250,6 +252,16 @@ test("English and spacing failures identify a file and line", () => {
     textViolations("docs/example.md", "# Heading\n\n\nText\n")[0],
     /docs\/example\.md:3/u,
   );
+});
+
+test("spacing rejects archived text and files without extensions without rejecting one blank line", () => {
+  for (const file of ["openspec/changes/archive/example/spec.md", "LICENSE"]) {
+    assert.deepEqual(textViolations(file, "First\n\nSecond\n"), []);
+    assert.match(
+      textViolations(file, "First\n\n\nSecond\n")[0],
+      /:3: consecutive blank lines/u,
+    );
+  }
 });
 
 test("pinned lychee rejects a broken local fragment", () => {
