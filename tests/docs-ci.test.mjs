@@ -147,6 +147,44 @@ test("GitLab CI cannot regress to a GitHub-hosted tool download", () => {
   );
 });
 
+test("GitLab jobs require one canonical ARM64 container capability", () => {
+  const canonical = gitlab;
+  const offlineTag =
+    /(offline:verify:[\s\S]*?  tags:\n)    - ci-linux-arm64-container\n/u;
+  assert.doesNotMatch(canonical, /ci-linux-arm64-docker/u);
+  assert.match(canonical, offlineTag);
+  assert.equal(
+    validateCi(github, canonical, offline).gitlabOfflineHost,
+    "ci-linux-arm64-container",
+  );
+  for (const changed of [
+    canonical.replaceAll("ci-linux-arm64-container", "ci-linux-arm64-docker"),
+    canonical.replace(
+      "    - ci-linux-arm64-container\n",
+      "    - ci-linux-arm64-docker\n",
+    ),
+    canonical.replace("    - ci-linux-arm64-container\n", ""),
+    canonical.replace(
+      "    - ci-linux-arm64-container\n",
+      "    - ci-linux-arm64-container\n    - ci-linux-arm64-docker\n",
+    ),
+    canonical.replace(offlineTag, "$1"),
+    canonical.replace(
+      offlineTag,
+      "$1    - ci-linux-arm64-container\n    - ci-linux-arm64-docker\n",
+    ),
+    canonical.replace(
+      /(offline:verify:[\s\S]*?    - )ci-linux-arm64-container/u,
+      "$1ci-linux-arm64-docker",
+    ),
+  ]) {
+    assert.throws(
+      () => validateCi(github, changed, offline),
+      /GitLab.*runner/u,
+    );
+  }
+});
+
 test("offline release CI runs the source-pinned bundle on four hosted systems", () => {
   assert.deepEqual(validateCi(github, gitlab, offline).offlineHosts, [
     "ubuntu-latest",
@@ -203,7 +241,7 @@ test("offline release CI runs the source-pinned bundle on four hosted systems", 
 
 test("GitLab offline release CI runs only after a release asset is available", () => {
   const result = validateCi(github, gitlab, offline);
-  assert.equal(result.gitlabOfflineHost, "ci-linux-arm64-docker");
+  assert.equal(result.gitlabOfflineHost, "ci-linux-arm64-container");
   for (const [changed, reason] of [
     [gitlab.replace(/\noffline:verify:[\s\S]*$/u, ""), /GitLab offline/u],
     [

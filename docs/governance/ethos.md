@@ -125,13 +125,13 @@ does not relicense them. Both hosted CI planes run
 verification does not require network access.
 
 GitHub runs Linux, macOS, and Windows hosted jobs; GitLab selects the
-`ci-linux-arm64-docker` runner. GitLab's offline job is started on the exact
-tag only after its release package exists; an earlier tag-push documentation
-job cannot qualify that asset. Before admitting the GitLab runner, its
-deployment owner must verify that the exact OCI image digest in
-`.gitlab-ci.yml` is allowed and locally cached. A tag-only image or a successful
-older job is not that check. Workflow declarations alone are not hosted
-success.
+`ci-linux-arm64-container` capability on its project-locked runner. GitLab's
+offline job is started on the exact tag only after its release package exists;
+an earlier tag-push documentation job cannot qualify that asset. Before
+admitting the GitLab runner, its deployment owner must verify that the exact
+OCI image digest in `.gitlab-ci.yml` is allowed and cached locally. Neither a
+tag-only image nor an older successful job satisfies that check. Workflow
+declarations alone are not hosted success.
 
 Markdown and configuration use one blank line between blocks. Prettier and the
 repository check enforce their supported parts. `build/`, `node_modules/`,

@@ -3,6 +3,7 @@ import { declaredToolRuntime, readText } from "./runtime.mjs";
 
 const verifier = "npm run verify";
 const auditCommand = "npm audit --audit-level=moderate";
+const gitlabCapability = "ci-linux-arm64-container";
 const hostMatrix = ["ubuntu-latest", "macos-latest", "windows-latest"];
 const offlineHostMatrix = [
   "ubuntu-latest",
@@ -109,7 +110,7 @@ function validateGitLabOffline(gitlab, expectedImage) {
   if (
     job.image !== undefined ||
     gitlab.default?.image !== expectedImage ||
-    JSON.stringify(job.tags) !== JSON.stringify(["ci-linux-arm64-docker"]) ||
+    JSON.stringify(job.tags) !== JSON.stringify([gitlabCapability]) ||
     String(job.variables?.GIT_DEPTH) !== "0"
   ) {
     throw new Error("GitLab offline verification needs the declared runner");
@@ -205,10 +206,10 @@ export function validateCi(
     !gitlabJob ||
     gitlabJob.image !== undefined ||
     !imagePattern.test(gitlabImage ?? "") ||
-    !gitlabJob.tags?.includes("ci-linux-arm64-docker")
+    JSON.stringify(gitlabJob.tags) !== JSON.stringify([gitlabCapability])
   ) {
     throw new Error(
-      `GitLab verification must use a digest-pinned Node ${nodeMajor} image and declared Docker runner`,
+      `GitLab verification must use a digest-pinned Node ${nodeMajor} image and declared container runner capability`,
     );
   }
   if (String(gitlabJob.variables?.GIT_DEPTH) !== "0") {

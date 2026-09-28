@@ -7,7 +7,7 @@ default:
 docs:verify:
   stage: verify
   tags:
-    - ci-linux-arm64-docker
+    - ci-linux-arm64-container
   interruptible: true
   variables:
     GIT_DEPTH: "0"
@@ -21,7 +21,7 @@ docs:verify:
 offline:verify:
   stage: verify
   tags:
-    - ci-linux-arm64-docker
+    - ci-linux-arm64-container
   interruptible: true
   rules:
     - if: '$CI_COMMIT_TAG && $CI_PIPELINE_SOURCE == "web"'
