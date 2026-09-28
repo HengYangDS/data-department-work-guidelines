@@ -14,13 +14,13 @@
 - [x] 2.1 Prepare `v5.0.4` in `VERSION`, the charter, Changelog, and bundle
       identity; verify the repository version/Changelog and bundle-input
       contract tests agree without altering older tags.
-- [ ] 2.2 Build and inspect one bundle from the new lock and pinned lychee
+- [x] 2.2 Build and inspect one bundle from the new lock and pinned lychee
       archives; verify its SHA-256 and perform a fresh macOS offline install
       followed by the full repository verifier with no remote tool supply.
 
 ## 3. Accept the source
 
-- [ ] 3.1 Run the full repository verifier, strict official OpenSpec validation,
+- [x] 3.1 Run the full repository verifier, strict official OpenSpec validation,
       and `git diff --check`; verify no check skips the hostile spelling case
       or depends on `node_modules/` being tracked.
 - [ ] 3.2 Commit the exact source with the required signature; verify ETHOS
