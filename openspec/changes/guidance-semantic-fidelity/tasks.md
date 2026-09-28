@@ -39,6 +39,6 @@
 - [x] 2.1 Review the English task routes against the repaired duties and run
       `npm run verify`, strict official OpenSpec validation, and
       `git diff --check`; verify every declared check passes on this Work Lane.
-- [ ] 2.2 Run `ethos plan --changed --json` and exact-HEAD full proof after a
+- [x] 2.2 Run `ethos plan --changed --json` and exact-HEAD full proof after a
       signed source commit; verify attribution and proof bind this Change and
       that exact commit, not a previous release.
