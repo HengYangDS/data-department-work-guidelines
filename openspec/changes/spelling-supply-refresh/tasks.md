@@ -23,6 +23,6 @@
 - [x] 3.1 Run the full repository verifier, strict official OpenSpec validation,
       and `git diff --check`; verify no check skips the hostile spelling case
       or depends on `node_modules/` being tracked.
-- [ ] 3.2 Commit the exact source with the required signature; verify ETHOS
+- [x] 3.2 Commit the exact source with the required signature; verify ETHOS
       changed-path attribution and full proof against that HEAD before asking
       the native archive transition to close this source-only Change.
