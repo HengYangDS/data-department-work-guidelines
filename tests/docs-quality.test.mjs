@@ -293,3 +293,39 @@ test("locked prose spelling rejects a real typo without changing source", () => 
     rmSync(directory, { recursive: true, force: true });
   }
 });
+
+test("locked prose spelling checks an explicit file despite ignorePaths", () => {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-spelling-force-"));
+  try {
+    const file = path.join(directory, "misspelled.md");
+    const config = path.join(directory, "cspell.json");
+    writeFileSync(file, "The result is veriified.\n", "utf8");
+    writeFileSync(
+      config,
+      JSON.stringify({
+        version: "0.2",
+        language: "en",
+        ignorePaths: ["**/misspelled.md"],
+      }),
+      "utf8",
+    );
+    const result = spawnSync(
+      process.execPath,
+      [
+        nodeTool("cspell", "cspell"),
+        "lint",
+        "--config",
+        config,
+        "--no-progress",
+        "--force-check",
+        "--file",
+        file,
+      ],
+      { encoding: "utf8", timeout: 15_000 },
+    );
+    assert.equal(result.status, 1, result.stderr);
+    assert.match(`${result.stdout}\n${result.stderr}`, /veriified/u);
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
