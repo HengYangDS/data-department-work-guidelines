@@ -124,7 +124,7 @@ NOT count as hosted execution.
 
 GitHub SHALL run the full verifier on hosted Linux, macOS, and Windows with
 pinned Actions and the declared Node line, never a local runner or host path.
-GitLab SHALL select `ci-linux-arm64-docker`; a real runner must expose
+GitLab SHALL select `ci-linux-arm64-container`; a real runner must expose
 that tag before success is claimed. Provider services, credentials,
 workspaces, caches, and job observations SHALL remain independent.
 YAML SHALL NOT claim runner registration.
@@ -134,8 +134,8 @@ YAML SHALL NOT claim runner registration.
 - **WHEN** the repository validates its GitHub and GitLab documentation jobs
 - **THEN** GitHub selects its three-OS hosted matrix, checks out first, and
   configures the declared Node line
-- **AND THEN** GitLab selects `ci-linux-arm64-docker` and both jobs invoke the
-  same verifier.
+- **AND THEN** GitLab selects `ci-linux-arm64-container` and both jobs invoke
+  the same verifier.
 
 #### Scenario: Fork-origin code cannot run on the GitHub local host
 
