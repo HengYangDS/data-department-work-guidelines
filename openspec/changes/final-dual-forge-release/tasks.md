@@ -4,7 +4,8 @@
 
 - [x] 1.1 Compare every accepted commit since `v5.0.5` with the public
       compatibility surface; add the missing GitLab selector correction to
-      Unreleased and verify the Changelog/SemVer checks and source diff.
+      Unreleased and verify the Changelog/SemVer checks, source diff, and a
+      negative regression for the documented locked OpenSpec command.
 - [x] 1.2 Separate the document-only `check` command from the complete
       standalone `verify` path; verify `check` omits the Node test run while
       `verify` still executes all tests once and both commands keep their

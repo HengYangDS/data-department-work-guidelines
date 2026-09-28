@@ -106,6 +106,33 @@ test("profile admits every tracked candidate without an enumerated path list", (
   });
 });
 
+test("OpenSpec entry selects only the locked portable CLI", () => {
+  const source = readFileSync(path.join(root, "openspec", "README.md"), "utf8");
+  const expected =
+    "npm exec --offline --no --package=@fission-ai/openspec -- openspec validate --all --strict --json";
+  const requirePortableCommand = (text) => {
+    const commands = text
+      .split(/\r?\n/u)
+      .filter((line) =>
+        line.includes("openspec validate --all --strict --json"),
+      );
+    assert.deepEqual(commands, [expected], "locked portable OpenSpec CLI");
+  };
+  requirePortableCommand(source);
+  for (const invalid of [
+    "node_modules/.bin/openspec validate --all --strict --json",
+    "openspec validate --all --strict --json",
+    "npm exec --offline -- openspec validate --all --strict --json",
+    "npm exec --no --package=@fission-ai/openspec -- openspec validate --all --strict --json",
+    "npm exec --offline --no -- openspec validate --all --strict --json",
+  ]) {
+    assert.throws(
+      () => requirePortableCommand(source.replace(expected, invalid)),
+      /locked portable OpenSpec CLI/u,
+    );
+  }
+});
+
 test("navigation rejects a missing map, repeated root topic, and missing reader cue", () => {
   fixture((directory) => {
     checkNavigation(directory);
