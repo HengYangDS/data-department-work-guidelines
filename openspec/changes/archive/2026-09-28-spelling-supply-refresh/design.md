@@ -3,7 +3,7 @@
 ## Context
 
 See the [proposal](proposal.md) for the defect. The accepted
-[quality specification](../../specs/quality/spec.md) already requires a locked
+[quality specification](../../../specs/quality/spec.md) already requires a locked
 spelling check that rejects a real typo without a local waiver. At the source
 base, CSpell 10.3.4 exits zero with `Files checked: 0` for an explicit
 `--force-check --file` input also matched by `ignorePaths`. A temporary
