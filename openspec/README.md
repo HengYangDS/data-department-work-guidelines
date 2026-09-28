@@ -9,10 +9,14 @@ Install locked tools with `npm ci --ignore-scripts`, then run the official
 validator and ETHOS from the selected worktree:
 
 ```text
-node_modules/.bin/openspec validate --all --strict --json
+npm exec --offline --no --package=@fission-ai/openspec -- openspec validate --all --strict --json
 ethos status --json
 ethos plan --changed --json
 ```
+
+The explicit package selection and `--no` make a missing local installation
+fail instead of falling back to a global CLI or cached package. `--offline`
+prevents a registry fetch.
 
 ETHOS owns material-path attribution, write admission, proof, and closeout.
 `npm run verify` guards repository-specific document and decision topology; it
