@@ -16,6 +16,9 @@ before this source is frozen for a final release.
 - Qualify the common quality floor through the accepted ETHOS product's public
   commands in this repository, AI Gateway CLI, and Codex Responses Proxy. This
   Change modifies neither ETHOS nor the other adopters.
+- Keep the standalone repository verifier complete while leaving Node test
+  execution to ETHOS's native behavior provider during proof, not duplicating
+  it inside the document gate command.
 - Rebuild the source-pinned offline tool bundle, qualify the same signed source
   and asset on the declared local and hosted platforms, and publish them to
   GitLab and GitHub independently. Retain the older signed release unchanged.

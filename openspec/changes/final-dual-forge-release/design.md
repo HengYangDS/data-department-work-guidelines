@@ -28,6 +28,14 @@ Git-common runtime into a foreign active lane as a shortcut. Only then freeze
 this repository's release inputs. A local fixture or green ETHOS source proof
 is not an adopter result.
 
+The current `docs-integrity` command also runs the repository's Node tests,
+which ETHOS's native behavior provider executes again. Separate these owners:
+`node tools/docs/cli.mjs check` validates repository source properties without
+running Node tests; `npm run verify` still formats, checks, and runs all tests
+once. ETHOS proof conjoins the document command with its own native test
+evidence. Do not accept the document command's exit code or stdout as a
+substitute for those native results.
+
 ### Classify before assigning the version
 
 Compare the complete diff since `v5.0.5` with the normative rules, reader and

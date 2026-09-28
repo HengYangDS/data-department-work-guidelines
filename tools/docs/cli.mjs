@@ -45,7 +45,7 @@ function runTests() {
   run(process.execPath, ["--test", ...files], { timeout: 180_000 });
 }
 
-function checkAll() {
+function checkRepository() {
   checkProfile();
   checkLineEndingAttributes();
   checkLicense();
@@ -62,8 +62,7 @@ function checkAll() {
   checkDecisions();
   checkNavigation();
   checkCi();
-  runTests();
-  console.log("PASS repository documentation verification");
+  console.log("PASS repository source checks");
 }
 
 const [command, ...arguments_] = process.argv.slice(2);
@@ -72,12 +71,14 @@ try {
   switch (command) {
     case "check":
       if (arguments_.length) throw new Error("check accepts no arguments");
-      checkAll();
+      checkRepository();
       break;
     case "verify":
       if (arguments_.length) throw new Error("verify accepts no arguments");
       formatSource();
-      checkAll();
+      checkRepository();
+      runTests();
+      console.log("PASS repository documentation verification");
       break;
     case "format":
       if (

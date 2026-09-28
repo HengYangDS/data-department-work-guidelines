@@ -17,6 +17,8 @@ being relabeled as formal SemVer releases.
   a POSIX-only shim path or a global executable.
 - Switched new GitLab jobs to the canonical Linux ARM64 container capability;
   immutable historical tags retain their original Runner selector.
+- Removed the second Node test run from ETHOS's document gate while keeping the
+  standalone verifier's full test coverage.
 
 ## [5.0.5] - 2026-09-29
 
