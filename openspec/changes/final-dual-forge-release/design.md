@@ -28,8 +28,14 @@ Git-common runtime into a foreign active lane as a shortcut. Only then freeze
 this repository's release inputs. A local fixture or green ETHOS source proof
 is not an adopter result.
 
-The current `docs-integrity` command also runs the repository's Node tests,
-which ETHOS's native behavior provider executes again. Separate these owners:
+The locked supply and a candidate bundle may be prepared before that product
+acceptance. They are not a final release qualification: after acceptance,
+recheck the committed version, lockfile, lychee manifest, and runtime majors
+against the bundle record; rebuild and rerun affected checks if any input
+changed. Keep the Changelog's changes Unreleased until the release date is
+known and the final source is ready to sign.
+
+Keep document checks and native behavior evidence separate:
 `node tools/docs/cli.mjs check` validates repository source properties without
 running Node tests; `npm run verify` still formats, checks, and runs all tests
 once. ETHOS proof conjoins the document command with its own native test
@@ -42,9 +48,9 @@ Compare the complete diff since `v5.0.5` with the normative rules, reader and
 Agent routes, and contributor commands. The known CI selector and OpenSpec
 invocation corrections appear compatible and would form a patch edition,
 tentatively `v5.0.6`; a later incompatible finding changes that decision
-before `VERSION` or a tag is finalized. Keep the Changelog's Unreleased section
-honest until the exact source and bundle are ready. Include the operational CI
-selector correction, which has not yet been recorded there.
+before a tag is finalized. `VERSION` may identify the prepared next edition in
+this Work Lane without making it a release. Keep the Changelog's Unreleased
+section honest until the exact source, asset, and release date are ready.
 
 ### Bind the asset to the final source
 
@@ -87,9 +93,10 @@ not pre-checked task boxes.
 
 ## Migration Plan
 
-Reconcile the post-tag diff and complete the ETHOS adopter prerequisite.
-Prepare the edition and locked bundle in this leased Work Lane, then run local
-and official checks on its final source. Commit and prove that source. Observe
+Reconcile the post-tag diff and prepare the locked bundle in this leased Work
+Lane while ETHOS adopter acceptance progresses. Revalidate the prepared inputs,
+complete that acceptance, then finalize the dated edition and run local and
+official checks on its final source. Commit and prove that source. Observe
 the native land, archive, proof, two-Forge publication, signed tag, release
 assets, full offline matrices, and digest comparison in dependency order.
 Retire only this Change's temporary refs and owned Work Lane after all effects

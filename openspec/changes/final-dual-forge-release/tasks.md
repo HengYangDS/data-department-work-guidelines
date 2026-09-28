@@ -21,7 +21,7 @@
 
 ## 2. Qualify the source-pinned offline input
 
-- [ ] 2.1 Build the complete bundle from locked supply and upstream licenses,
+- [x] 2.1 Build the complete bundle from locked supply and upstream licenses,
       commit its actual source-bound digest record, inspect its contents, and
       verify a cold local offline install plus full repository check without
       network access.
