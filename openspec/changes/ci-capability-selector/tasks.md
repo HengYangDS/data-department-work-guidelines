@@ -15,12 +15,13 @@
 
 ## 2. Prove and observe the exact source
 
-- [ ] 2.1 Commit with a trusted signature, run changed-path ETHOS planning
+- [x] 2.1 Commit with a trusted signature, run changed-path ETHOS planning
       and full proof for that exact HEAD, and confirm both default gates bind
       the same committed source.
-- [ ] 2.2 Publish only eligible refs through ETHOS, obtain the required
-      GitHub checks, and observe GitLab and GitHub jobs and branch refs at the
-      exact new HEAD. A local check or older pipeline is not hosted evidence.
-- [ ] 2.3 Confirm Runner #52 still exposes the canonical tag and that the new
-      GitLab job selected it. Tell the platform owner the old tag is eligible
-      for retirement only after this proof; do not edit Runner metadata here.
+- [x] 2.2 Publish the source HEAD only to eligible proposal refs through
+      ETHOS. Observe GitHub's three-OS checks, the GitLab documentation job,
+      and both proposal refs at that SHA; do not call this accepted-branch
+      evidence.
+- [x] 2.3 Confirm Runner #52 still exposes the canonical tag and that the new
+      GitLab job selected it. Tell the platform owner the old tag remains in
+      use by 12 signed releases; do not edit Runner metadata here.

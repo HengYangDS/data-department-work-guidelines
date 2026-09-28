@@ -8,7 +8,8 @@ former `ci-linux-arm64-docker` and canonical
 `ci-linux-arm64-container`. The repository's two GitLab jobs, CI validator,
 test, governance page, and current specification still select the former tag.
 The signed `v5.0.5` tag and its release assets identify an earlier, already
-qualified source object; they are not migration targets.
+qualified source object; they are not migration targets. All 12 signed release
+tags from `v4.0.0` through `v5.0.5` embed the former Runner tag.
 
 ## Goals / Non-Goals
 
@@ -38,14 +39,19 @@ runner-config file is justified for one value.
 
 ### Cut over without a scheduling gap
 
-The platform owner keeps both tags during source migration. After a signed
-source commit passes local checks and exact-HEAD ETHOS proof, publish it through
-the native eligible-ref path and observe the GitLab job on that same SHA and
-Runner #52. Only then may the platform owner retire the former tag. A passed
-job at `v5.0.5`, a dry-run, or a different SHA cannot qualify the new selector.
-If the new job cannot schedule, leave the former tag in place and correct the
-source or Runner binding through its owner; do not delete or weaken a gate to
-make the pipeline green.
+The platform owner keeps both tags while source moves. After a signed source
+commit passes local checks and exact-HEAD ETHOS proof, publish it through the
+native eligible-ref path and observe the GitLab job on that same SHA and
+Runner #52. A passed job at `v5.0.5`, a dry-run, or a different SHA cannot
+qualify the new selector. If the new job cannot schedule, correct the source
+or Runner binding through its owner; do not delete or weaken a gate to make
+the pipeline green.
+
+The former tag remains a compatibility route for immutable release refs.
+Success on a proposal or accepted branch cannot authorize its removal: those
+12 published tags would then lose their GitLab replay path. Retirement needs a
+separate accepted replacement for that historical consumer, not a cosmetic
+cleanup decision.
 
 ### Keep the release identity honest
 
@@ -58,8 +64,10 @@ inventing a patch version for a Runner rename.
 
 ## Risks / Trade-offs
 
-- **Jobs become stranded during transition** → Keep the old tag until the exact
-  new GitLab job passes; never change both Runner and source at once.
+- **Jobs become stranded during transition** → Keep both tags while the new
+  source is qualified; never change Runner and source at once.
+- **Historical release CI stops scheduling** → Retain the old project-local
+  alias while immutable release tags still require it.
 - **Local YAML is mistaken for registration** → Inspect Runner #52 through the
   GitLab API and bind hosted success to the new SHA and tag.
 - **A fallback tag hides a bad route** → Require exactly one canonical tag in
@@ -72,8 +80,15 @@ inventing a patch version for a Runner rename.
 Finish the official specification and tasks, then write failing selector tests
 before the minimal source edit. Run the full repository verifier, strict
 OpenSpec validation, `git diff --check`, changed-path planning, a signed commit,
-and exact-HEAD ETHOS proof. Use native land and publish; observe both Forge
-refs and hosted jobs on the new SHA. Archive the completed Change officially,
-refresh proof for its archive commit, and publish that exact accepted object.
-Tell the platform owner only after the new GitLab route is proven; retire this
-owned Work Lane and any temporary proposal ref without touching the Runner.
+and exact-HEAD ETHOS proof. Publish that source to temporary `proposal/*` refs
+through ETHOS and observe both Forge checks at its exact SHA. These are review
+checks, not accepted-branch evidence.
+
+After recording those observed source tasks, sign and prove the progress
+commit. Archive the completed Change officially, prove the archive HEAD, and
+land through the native candidate and accepted-root transitions. Publish that
+final object to `dev` and `main`, with fresh hosted checks at its own SHA. If
+GitHub protection requires checks before promotion, qualify the archive HEAD
+on a temporary proposal ref first. Retire the proposal ref and owned Work Lane
+after exact remote observation. Tell the platform owner why the old alias still
+has historical consumers; do not touch Runner metadata here.

@@ -15,9 +15,10 @@ would make the verifier reject the new route.
   image, commands, permissions, or post-release offline trigger.
 - Align the existing CI validator, negative tests, current governance text,
   and repository-governance requirement with the new route.
-- Keep the old Runner tag active until the exact new commit has passed its
-  GitLab job. Runner metadata and later old-tag retirement belong to the
-  separate platform owner.
+- Keep the old Runner tag as a project-local compatibility alias for the 12
+  immutable release tags that still select it. The separate platform owner
+  may retire it only after an accepted replacement replay path; this Change
+  does not alter Runner metadata.
 
 ## Capabilities
 
