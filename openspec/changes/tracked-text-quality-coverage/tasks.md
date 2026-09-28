@@ -20,7 +20,7 @@
 - [x] 2.1 Classify the public impact and align `VERSION`, charter edition,
       Changelog, and offline-bundle identity for `v5.0.5`; verify no earlier
       tag or historical record is rewritten.
-- [ ] 2.2 Build and inspect one bundle from the locked supply, record its
+- [x] 2.2 Build and inspect one bundle from the locked supply, record its
       digest, and perform a clean macOS offline installation followed by the
       full verifier. Check the online dependency audit separately.
 
@@ -29,7 +29,8 @@
 - [ ] 3.1 Sign the committed source and run ETHOS changed-path planning and
       full proof for its exact HEAD; verify the quality delta and both native
       default proof gates bind the same committed tree.
-- [ ] 3.2 Archive this source-only Change through the official ETHOS command,
-      then refresh full proof for the archive HEAD before local acceptance.
-      Keep remote publication and host qualification as separately observed
-      release effects, not retroactive evidence for this task list.
+- [ ] 3.2 Confirm every source task has current evidence, the official Change
+      validates strictly, and the exact source is ready for the native archive
+      transition. Keep the later archive, post-archive proof, remote
+      publication, and host qualification as separately observed effects, not
+      retroactive evidence for this task list.
