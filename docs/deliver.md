@@ -26,7 +26,7 @@ recovery path, independent review, and human acceptance.
 | Question                         | Minimum answer                                                                |
 | -------------------------------- | ----------------------------------------------------------------------------- |
 | What is being done, and why now? | Target, success criteria, scope, and non-goals.                               |
-| Who is responsible?              | Lead, collaborators, authorized decision owner, and acceptor.                 |
+| Who is responsible?              | Task lead, collaborators, authorized decision owner, and acceptor.            |
 | How will it proceed?             | Critical path, dependencies, resources, deadline, and observable checkpoints. |
 | What if it goes wrong?           | Triggers to pause, degrade, roll back, or hand control to a person.           |
 

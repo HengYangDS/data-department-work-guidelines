@@ -28,9 +28,17 @@ give two or three decisive facts, the impact, a recommendation, and the decision
 needed from whom and by when. A status update names what changed since the
 previous report, not how much activity occurred. If there is no conclusion,
 state which evidence is missing and when it can be obtained. Answer the
-question first, then explain.
+question first, then explain. If no decision is requested, give the next
+action, its owner and due time, and the condition that will show it is done.
 Say “I don't know” when that is true. Revise a position when new evidence
 overturns it; do not hide the point behind jargon or background.
+
+> **Illustrative escalation:** “Do not promote the revised price history yet.
+> The vendor changed earlier values, but we have not verified when those values
+> became knowable. A historical simulation with today's file may answer a
+> hindsight question rather than the one we need. I have kept the file
+> exploratory. Before the planned release window, the decision owner needs to
+> choose: obtain the earlier snapshot and rerun the check, or defer admission.”
 
 ## Make Meetings Produce Decisions, Not Transcripts
 

@@ -11,6 +11,23 @@ being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [5.0.3] - 2026-09-28
+
+### Added
+
+- Gave members and Agents one illustrative market-history decision path from
+  point-in-time research through production and permitted use, with a concise
+  communication and delegation example.
+
+### Fixed
+
+- Clarified task lead, decision owner, reviewer, and acceptor roles without
+  imposing a form on light work; separated data admission from observed
+  adoption and exposed fact-versus-action authority conflicts.
+- Restored distinct data projections and production permission checks, Agent
+  delegation constraints and verification time, correction signals, actionable
+  status updates, and the boundary for making Agent output a durable fact.
+
 ## [5.0.2] - 2026-09-27
 
 ### Fixed
@@ -129,7 +146,8 @@ being relabeled as formal SemVer releases.
   verification sequence while keeping local, GitLab, and GitHub results separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.2...main
+[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.3...main
+[5.0.3]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.2...v5.0.3
 [5.0.2]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.1...v5.0.2
 [5.0.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.0...v5.0.1
 [5.0.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.2.1...v5.0.0

@@ -11,8 +11,9 @@ relations:
 **When to use:** When acquiring data, defining a metric, studying history,
 deploying a production pipeline, or allowing a business use. A readable file,
 attractive chart, or promising model signal does not by itself establish that
-the data may be adopted. Keep a proposed use exploratory until its meaning,
-quality, permission, and reproduction evidence support that specific decision.
+the data may be admitted for a specific use. Keep a proposed use exploratory
+until evidence of its meaning, quality, permission, and reproducibility supports
+that decision.
 
 ## Answer Six Questions First
 
@@ -30,8 +31,9 @@ presented as a durable trusted asset. Exploratory code and temporary data may
 move quickly inside that boundary. Before either enters a shared, production,
 or decision path, qualify its meaning, quality, permissions, and reproducibility
 for that specific use; otherwise keep it marked as exploratory. Distinguish
-source data, production data, experimental results, service views, caches, and
-reporting views; a downstream view must not quietly become the source of truth.
+source data, production data, experimental results, service views,
+platform-derived views, and reporting views. Catalogs, caches, and Agent
+summaries are projections; none may quietly become the source of truth.
 Preserve the source and history of revisions and backfills so the current value
 can be explained.
 
@@ -46,7 +48,7 @@ of the conclusion and stop research or business commitments that exceed the
 evidence. State confidence, alternative explanations, and conclusions the data
 cannot support.
 
-## Move from a Lead to Controlled Use
+## Move from a Signal to Controlled Use
 
 Stages may be combined; the judgments may not disappear.
 
@@ -64,23 +66,52 @@ Stages may be combined; the judgments may not disappear.
 temporary, limited-use, and admitted states separately. “Let's use it and see”
 does not erase risk.
 
+Admission permits a specified use under stated conditions. Adoption is observed
+use within those conditions, not a label inferred from deployment.
+
+### Worked decision: revised market history
+
+**Illustrative case, not a recorded incident.** A vendor republishes historical
+prices after a correction. A researcher wants to backtest a strategy: simulate
+decisions that would have been made before the correction. The question is not
+only whether today's series is accurate, but what was knowable at each decision
+time.
+
+| Gate            | Evidence to obtain                                                             | Stop if missing                               |
+| --------------- | ------------------------------------------------------------------------------ | --------------------------------------------- |
+| Research claim  | Earlier snapshot, availability time, and correction history.                   | Do not call the backtest point-in-time valid. |
+| Production feed | Replayable inputs and outputs, tests, monitoring, access review, and recovery. | Keep the file exploratory.                    |
+| Use admission   | Domain meaning, rights and veto, authorized decision, and acceptance.          | Do not infer permission from deployment.      |
+
+An Agent may locate snapshots, compare revisions, or run replay checks within its
+delegation. It cannot decide that the dataset is admitted. The task lead brings
+the evidence and open risks to the decision owner and acceptor; later observed
+use, not this table, establishes adoption.
+
 ## Ownership and Change Boundaries
 
 Domain owners define meaning, quality, and permitted use. Production owners
 ensure deployability, backfill, monitoring, and recovery. Platform owners
-abstract shared capabilities without replacing domain judgment. Governance
-owners define admission, permissions, lineage, veto, and exit. Delivery owners
-make resources, dependencies, and risks visible. Cross-domain work has one lead
-and clear interfaces, not an undifferentiated “everyone is responsible.”
+abstract repeated, cross-domain capabilities needed for durable operation
+without replacing domain judgment. Governance owners define admission,
+permissions, lineage, veto, and exit. Delivery owners
+make resources, dependencies, and risks visible. Cross-domain data work has one
+accountable task lead and clear professional interfaces, not an
+undifferentiated “everyone is responsible.”
 
-Changes to production, shared assets, or critical management chains need a
-defined subject, impact, lead, and authority; replayable inputs, logic, version,
-and outputs; testing, acceptance, and observation; a release window and rollback
-or degradation path; security and sensitive-information checks; escalation,
-human takeover, and stop conditions. Bind evidence to the current version and
-environment. An authorized person confirms high-risk adoption, permission
-changes, production releases, destructive changes, and irreversible actions; an
-Agent does not approve them itself.
+Changes to production, shared assets, or critical management chains require:
+
+- A defined subject, impact, task lead, and authority.
+- Replayable inputs, logic, version, and outputs.
+- Tests, acceptance criteria, and operational observation.
+- A release window and rollback or degradation path.
+- Security, access-permission, and sensitive-information checks.
+- Escalation, human takeover, and stop conditions.
+- Evidence bound to the current version and environment.
+
+The authorized decision owner approves admission for high-risk use, permission
+changes, production releases, destructive changes, and irreversible actions.
+An Agent may assist but cannot approve them.
 
 Before data enters a lasting work system, its **meaning must be explainable,
 source traceable, time identifiable, process reproducible, quality verifiable,

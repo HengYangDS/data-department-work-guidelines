@@ -20,8 +20,9 @@ accepting an Agent's result.
 
 A consequential delegation states the goal and decision it supports, current
 authorities and fact sources, subject and scope, non-goals, deliverable and
-audience, permissions and forbidden actions, acceptance method, checkpoints,
-stop conditions, and interruption handoff. A low-risk task can be stated
+audience, time, security, compatibility, and cost constraints, permissions and
+forbidden actions, acceptance method, checkpoints, stop conditions, and
+interruption handoff. A low-risk task can be stated
 briefly. A high-risk one names the owner, recovery path, and who approves
 irreversible actions.
 
@@ -30,12 +31,22 @@ with stated assumptions. If the target, fact source, authority, or irreversible
 consequence cannot be established, stop and ask. “Finish this for me” is not an
 authorization boundary.
 
-| Role                 | May do                                                       | Responsibility that remains                                         |
-| -------------------- | ------------------------------------------------------------ | ------------------------------------------------------------------- |
-| Task owner           | Set the goal, authorize, provide resources, and decide.      | Goal, boundary, risk, and result.                                   |
-| Executing member     | Decompose, delegate, integrate, and verify.                  | Understand and accept delegated output.                             |
-| Agent                | Search, reason, draft, implement, test, and present options. | Must not grant itself authority or promise consequences for people. |
-| Reviewer or acceptor | Independently check facts, changes, and evidence.            | Must not replace acceptance with an author's or Agent's account.    |
+> **Illustrative delegation:** “Compare the vendor's earlier and revised price
+> snapshots for the stated research cutoff. Work read-only. Report the source
+> and observation time of each value, the differences, and what cannot be
+> verified. Stop if the earlier snapshot is missing or a production write would
+> be needed; do not approve the data for use.”
+
+| Role             | May do                                                        | Responsibility that remains                                         |
+| ---------------- | ------------------------------------------------------------- | ------------------------------------------------------------------- |
+| Task lead        | Clarify the goal and boundary; coordinate work and decisions. | End-to-end result, risk, and escalation.                            |
+| Executing member | Decompose, delegate, integrate, and verify.                   | Understand and check Agent output before submission.                |
+| Agent            | Search, reason, draft, implement, test, and present options.  | Must not grant itself authority or promise consequences for people. |
+| Reviewer         | Independently check facts, changes, and evidence.             | State findings and limits; review alone does not authorize action.  |
+| Acceptor         | Confirm agreed completion when authorized.                    | Make the acceptance decision; do not rely on the Agent's account.   |
+
+A task lead may also decide or accept when authorized. The lead's title alone
+grants neither power.
 
 **The person who calls an Agent owns its context, permissions, verification, and
 result.**
@@ -55,13 +66,16 @@ work, and recovery path. Its output leads with the conclusion and evidence, then
 limits and next steps.
 
 Agent memory, summaries, guesses, and generated content are candidate material.
-Check a source against the original, version, time, and applicable scope. Keep
-the command, target, exit status, and decisive output with the producing task;
+Check a source against the original, version, time, and applicable scope, and
+check whether the inputs are complete enough for the decision. Keep the command,
+target, exit status, and decisive output with the producing task;
 inspect them before relying on the result. Test or review code, analysis, and
 documents in proportion to risk. A person must not
 rely solely on an Agent's prose summary: compare changed paths and content
 with the reported scope; inspect missing counterexamples, the current
 environment, uncovered cases, and high-risk authorization.
+Even checked Agent output becomes a durable team fact only when its underlying
+source and limits are recorded in the relevant authoritative carrier.
 
 Use multiple Agents in parallel only when independent questions, paths, or
 review angles can be separated. Default parallel work to independent read-only
@@ -82,9 +96,10 @@ Stopping is not failure. Continuing with a guess presented as fact is loss of
 control.
 
 A completion report states the outcome (complete, partial, blocked, or
-deferred), target and version, actual changes, current verification method and
-result, and where the evidence can be inspected. Name risks, limits,
-assumptions, unresolved questions, and any acceptance still needed. End with
+deferred), target and version, actual changes, verification method, result,
+execution time and environment, and where the evidence can be inspected. Name
+risks, limits, assumptions, unresolved questions, and any acceptance still
+needed. End with
 the next responsible person, action, and due time; do not write only “follow
 up.” On interruption, preserve state, uncommitted work, attempts and failures,
 the recovery entry, and retries known to be ineffective. Repository Agents also

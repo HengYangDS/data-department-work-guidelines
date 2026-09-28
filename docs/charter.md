@@ -8,14 +8,15 @@ relations:
 
 # Data Department Work Guidelines: Charter
 
-> **Guideline edition:** v5.0.2
+> **Guideline edition:** v5.0.3
 >
 > **Applies to:** Data Department members and Agents acting under their
 > delegation.
 >
 > **Accountability:** The department head owns these guidelines and may appoint
-> maintainers to organize revisions. The authorized owner of each task still
-> decides and accepts that task.
+> maintainers to organize revisions. A task lead, authorized decision owner,
+> and acceptor may be the same person when policy permits; do not infer one
+> role's authority from another.
 
 ## Purpose
 
@@ -50,7 +51,7 @@ documents, and sunk costs do not outrank new facts.
 
 **Authority to act** answers who may decide what to do. Law, regulation,
 security requirements, and mandatory company policy come first. Within those
-boundaries, the authorized owner of the matter decides, subject to effective
+boundaries, the authorized decision owner chooses, subject to effective
 policies, contracts, and project agreements. Work plans, provisional
 agreements, and personal preferences guide execution but cannot override an
 authorized decision or an effective obligation. An Agent, tool, or repository
@@ -62,6 +63,9 @@ scope. Analysis and formal records must trace back to their original basis.
 Secondhand accounts, caches, generated views, Agent output, and memory are
 leads, not verified facts. Authority to act cannot make a false fact true;
 factual evidence does not itself grant permission to act.
+If an authorized request conflicts with verified facts, report the conflict
+and its impact. Do not alter the record or silently act as if either authority
+had resolved the other.
 
 Project rules may refine sources of truth, permissions, and acceptance. If they
 materially conflict with these guidelines or a higher constraint, expose the
@@ -96,8 +100,9 @@ exists.
 
 Do not call a task L0 merely to avoid a necessary record. Within every level,
 facts, scope, ownership, and evidence must remain clear. For a cross-domain
-task, the lead and professional interfaces may be shared; end-to-end
-responsibility may not be dissolved into “everyone.”
+task, name accountable ownership and the professional interfaces. Interfaces
+may be shared; end-to-end responsibility may not dissolve into “everyone.”
+[Data work](data.md) requires one lead across domains.
 
 To judge whether a requirement is worth keeping, ask what real error it
 prevents, why existing interfaces are insufficient, what cognitive and

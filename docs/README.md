@@ -24,6 +24,12 @@ stop when authority, target, or critical facts are missing. Before reporting a
 result, follow its verification and acceptance link. The map is a route, not a
 second checklist of the seven topics.
 
+Members and Agents use these same topics. For a concrete path from research to
+permitted use, follow the
+[revised-market-history example](data.md#worked-decision-revised-market-history).
+An Agent must also stay within the delegation in
+[human–AI collaboration](human-agent.md).
+
 Each page owns the current requirements for one topic. Temporary methods,
 project-specific facts, and records of actual work stay in the system that
 produced them. Link to those sources; do not copy them into a second set of

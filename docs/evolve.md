@@ -80,10 +80,11 @@ If a five-level review is used, keep its meaning stable:
 
 Watch for rework from unclear goals or definitions, quality failures found
 downstream, repeated incidents, late exposure of risk, reopened completion
-claims, reasons decisions wait, handoff continuity, Agent misuse, growth
-from guided execution toward independent judgment, and whether a new mechanism
-lowers total cost. For every metric, first name the decision it supports, its
-fact source, period, boundary, and how it could be gamed.
+claims, reasons decisions wait, handoff continuity, why Agent output was
+returned, corrected, or out of bounds, growth from guided execution toward
+independent judgment, and whether a new mechanism lowers total cost. For every
+metric, first name the decision it supports, its fact source, period, boundary,
+and how it could be gamed.
 Investigate anomalies through cases and mechanisms; do not equate them directly
 with individual performance.
 
@@ -93,10 +94,11 @@ verify at the end, and preserve a handoff when interrupted. Escalate high-risk
 signals when observed; a calendar must not delay containment or a decision.
 
 At least monthly, the manager examines a real work sample and accumulated weak
-signals: recurring failures, escaped quality issues, Agent misuse, and needless
-coordination. Decide whether a small correction is needed. At least quarterly,
-the guideline maintainer reviews the net benefit of current rules, templates,
-tools, and Agent practices with their users; keep, revise, or retire them. L2
+signals: recurring failures, escaped quality issues, Agent output corrections
+or misuse, and needless coordination. Decide whether a small correction is
+needed. At least quarterly, the guideline maintainer reviews the net benefit
+of current rules, templates, tools, and Agent practices with their users; keep,
+revise, or retire them. L2
 work may set a shorter task-specific interval at authorization. Use existing
 meetings, tickets, and reviews; record a material decision and its owner in
 that carrier. No separate meeting, universal weekly 30-minute session, or
