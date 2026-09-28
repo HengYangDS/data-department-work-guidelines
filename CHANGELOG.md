@@ -15,6 +15,8 @@ being relabeled as formal SemVer releases.
 
 - Bound the direct OpenSpec command to the installed locked package instead of
   a POSIX-only shim path or a global executable.
+- Switched new GitLab jobs to the canonical Linux ARM64 container capability;
+  immutable historical tags retain their original Runner selector.
 
 ## [5.0.5] - 2026-09-29
 
