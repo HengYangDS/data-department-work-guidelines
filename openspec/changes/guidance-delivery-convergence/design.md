@@ -133,10 +133,10 @@ relaxation must preserve immutable Actions, read-only token scope, exact tag
 checkout, the host matrix, offline acquisition before installation, and the
 full verifier afterward. External link health remains a separately bounded
 online observation; it must not make the offline verifier depend on a network
-or be reported as checked when it was not run. A live check of the prepared
-`v5.0.7` source returned two 404s, both at comparison links for the unpublished
-tag. That is a release-stage dependency, not a reason to accept 404: the
-existing `links` command gains an explicit `--online` mode for use after both
+or be reported as checked when it was not run. A live check of the initially
+prepared `v5.0.7` source returned two 404s, both at comparison links for the
+unpublished tag. That is a release-stage dependency, not a reason to accept
+404: the existing `links` command gains an explicit `--online` mode after both
 tags exist, while its default and `verify` remain offline. Both modes use the
 same pinned lychee and current Markdown inventory. No numeric coverage target
 is invented from a single coverage value.
@@ -153,8 +153,13 @@ is more honest than admitting arbitrary extra commands as “equivalent.”
 
 ### Qualify the exact final source and each publication plane
 
-Provisional compatibility is a patch correction after `v5.0.6`; reassess the
-final diff before preparing `VERSION` and Keep a Changelog. Keep the Change
+The [accepted SemVer contract](../../specs/repository-governance/spec.md#requirement-version-identity-follows-semver-compatibility)
+includes documented contributor commands in the public surface. The explicit
+`links --online` mode is a compatible addition, not merely an internal bug fix;
+the prepared edition therefore moves from the provisional `5.0.7` patch to
+`5.1.0` minor. The communication correction and release guidance remain
+compatible fixes. Reassess the final diff if the ETHOS metadata integration
+changes another public boundary. Keep the Change
 active while its source and metadata-integration tasks lack evidence. Use native
 candidate and accepted-root transitions, then archive only after all declared
 Change tasks are complete. Archive creates a new HEAD that needs fresh proof;

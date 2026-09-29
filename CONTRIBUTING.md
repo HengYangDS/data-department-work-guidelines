@@ -79,6 +79,13 @@ only an admitted, signed annotated tag and observed Forge release objects can
 establish versioned publication. Previous untagged branch editions are not
 retroactively presented as tagged releases.
 
+For SemVer, the public surface includes normative duties, stable member and
+Agent routes, and documented contributor commands, as defined by the
+[repository-governance specification](openspec/specs/repository-governance/spec.md#requirement-version-identity-follows-semver-compatibility).
+An incompatible change increments major; a compatible addition or deprecation
+increments minor; a compatible fix increments patch. Judge the actual interface
+change, not the commit label or the reason a new command was needed.
+
 The changelog check accepts the official `[YANKED]` heading marker and the six
 standard categories in any order, without duplicates. The oldest tagged
 release may link directly to its exact tag; later releases use comparisons.

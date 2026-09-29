@@ -11,7 +11,12 @@ being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
-## [5.0.7] - 2026-09-29
+## [5.1.0] - 2026-09-29
+
+### Added
+
+- Added explicit post-tag live link qualification with pinned lychee while
+  keeping source verification offline and broken comparison links fatal.
 
 ### Fixed
 
@@ -20,8 +25,6 @@ being relabeled as formal SemVer releases.
   bytes go to both Forges; independent rebuilds are not claimed byte-identical.
 - Restored the follow-up rule: keep the subject, definitions, and evaluation
   criteria stable, or disclose and justify a changed frame.
-- Restored post-tag live link qualification without weakening offline source
-  verification or accepting a future comparison URL's 404.
 
 ## [5.0.6] - 2026-09-29
 
@@ -184,8 +187,8 @@ being relabeled as formal SemVer releases.
   verification sequence while keeping local, GitLab, and GitHub results separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.7...main
-[5.0.7]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.6...v5.0.7
+[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.1.0...main
+[5.1.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.6...v5.1.0
 [5.0.6]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.5...v5.0.6
 [5.0.5]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.4...v5.0.5
 [5.0.4]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.3...v5.0.4
