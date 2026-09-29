@@ -121,8 +121,11 @@ grant Change authority.
    The build prints the actual bundle record. Put that exact reviewed JSON in
    [the committed bundle record](.config/tools/offline-bundle.json); never
    invent its digest or reuse one after its version, lockfile, lychee manifest,
-   or runtime majors change. Re-run `npm run verify`. From a fresh checkout of
-   the committed source with no `node_modules/` or application tool cache, use
+   or runtime majors change. A second build may have a different archive SHA
+   even with the same declared inputs: freeze one inspected file, commit its
+   actual digest, and send those exact bytes to both Forges. Re-run
+   `npm run verify`. From a fresh checkout of the committed source with no
+   `node_modules/` or application tool cache, use
    `node tools/ci/offline-bundle.mjs install --bundle BUNDLE_PATH` and
    `npm run verify` without remote supply. The source and bundle must match.
 

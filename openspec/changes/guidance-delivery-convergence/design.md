@@ -97,10 +97,14 @@ or host matrix.
 
 The bundle record binds `VERSION`, `package-lock.json`, the lychee manifest,
 and declared runtime majors, not an arbitrary chat or cache. Refresh its actual
-SHA-256 whenever those inputs change. A final official archive commit changes
-HEAD; refresh proof and remote observations for that object, but reuse bundle
-bytes only if their declared inputs still match. The alternative, a new release
-orchestrator, duplicates existing native operations without an observed gap.
+SHA-256 whenever those inputs change. A fresh build with the same declared
+inputs produced a valid archive with a different digest from the published
+`v5.0.6` file. This is not a bit-reproducible archive claim: freeze one inspected
+artifact and distribute its exact bytes on both Forges. A final official
+archive commit changes HEAD; refresh proof and remote observations for that
+object, but reuse bundle bytes only if their declared inputs still match. The
+alternative, a new release orchestrator, duplicates existing native operations
+without an observed gap.
 
 ### Keep metadata authority upstream and delivery independent
 
