@@ -18,6 +18,8 @@ being relabeled as formal SemVer releases.
 - Documented the source-bound offline bundle build, signed dual-Forge release
   order, and separate retrieved-asset and host checks. The same frozen bundle
   bytes go to both Forges; independent rebuilds are not claimed byte-identical.
+- Restored the follow-up rule: keep the subject, definitions, and evaluation
+  criteria stable, or disclose and justify a changed frame.
 
 ## [5.0.6] - 2026-09-29
 

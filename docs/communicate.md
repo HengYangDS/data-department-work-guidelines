@@ -33,6 +33,9 @@ action, its owner and due time, and the condition that will show it is done.
 Say “I don't know” when that is true. Revise a position when new evidence
 overturns it; do not hide the point behind jargon or background.
 
+In a follow-up, keep the subject, definitions, and evaluation criteria unchanged.
+If a change is necessary, identify it and explain why before answering.
+
 > **Illustrative escalation:** “Do not promote the revised price history yet.
 > The vendor changed earlier values, but we have not verified when those values
 > became knowable. A historical simulation with today's file may answer a
@@ -54,8 +57,7 @@ the problem advanced.
 
 Challenge propositions, evidence, and costs, not personalities or motives.
 Distinguish disagreement about a fact from disagreement about an inference, and
-both from a different risk preference despite shared reasoning. Explain any
-change in evaluation criteria.
+both from a different risk preference despite shared reasoning.
 
 ## Write for Fidelity, Clarity, and Elegance
 

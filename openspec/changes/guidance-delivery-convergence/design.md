@@ -6,10 +6,9 @@ See [the proposal](proposal.md) for the gaps. `v5.0.6` is a signed release. The
 accepted semantic review of the original 1,240-line `guidelines.md` blob
 `ce3d090be258e65534781769e3e2fd5ab7439ef8` recorded 34 source ranges in
 the archived `guidance-fidelity-repair` Change. A later adverse-case review
-repaired ten discrepancies in `v5.0.3`. From `v5.0.3` to the current source,
-the seven normative topics are byte-for-byte unchanged; only the charter's
-edition number changed. That preserves the earlier review's applicability, but
-does not turn editorial judgment into mechanical proof.
+repaired ten discrepancies in `v5.0.3`. This Change rechecks that accepted
+source against concrete tasks and records the newly found communication loss
+below; editorial judgment is not mechanical proof.
 
 The current verifier already checks formatting, Markdown lint, spelling,
 offline links, English text, OpenSpec, decisions, and CI declarations. Its green
@@ -47,10 +46,11 @@ Change. Do not add another tracked mapping table or copy obligations into the
 task map. The alternative, treating shorter text as loss or the old checklist
 as authority, would confuse form with retained duties.
 
-The current recheck read the 34-range disposition and ten later adverse cases.
-`git diff v5.0.3..HEAD` changes none of the seven normative topic bodies; it
-changes only the charter's edition label. No additional unique duty or
-contradiction emerged from these four point-of-use probes:
+The initial recheck read the 34-range disposition and ten later adverse cases.
+Before this Change's communication correction, the seven normative topic bodies
+still matched `v5.0.3` byte-for-byte; only the charter's edition label differed.
+No additional unique duty or contradiction emerged from these four point-of-use
+probes:
 
 - **Anomaly requiring a choice:** The task map leads to `docs/decide.md`, where
   an unknown subject or decision owner stops the affected action. Facts and
@@ -65,6 +65,14 @@ contradiction emerged from these four point-of-use probes:
   read-only task when appropriate. Missing fact source or permission causes a
   stop; the Agent reports verification time and limits, and a person accepts
   consequential work.
+
+A later challenge against original line 697 found one point-of-use loss:
+`docs/communicate.md` mentioned changed evaluation criteria only in its meeting
+section, not the subject and definitions of a follow-up answer. An Agent could
+silently switch the question or a term's meaning after being challenged, then
+claim its new answer was consistent with the first. The communication owner now
+requires a stable frame or an explicit, justified change for any follow-up;
+the narrower meeting-only sentence was removed rather than duplicated.
 
 This is a bounded editorial review of present text, not a claim that line
 counts or automated checks prove semantic equivalence or team adoption.
