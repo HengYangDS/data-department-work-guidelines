@@ -31,7 +31,7 @@
       refusal of incomplete-mode waivers, and the prepared-tag 404 case.
       Document zero-error live checking as post-publication qualification,
       not as a prerequisite for archiving this source Change.
-- [ ] 2.5 Remove the redundant npm-major owner; bind the bundle only to Node,
+- [x] 2.5 Remove the redundant npm-major owner; bind the bundle only to Node,
       the lockfile, and lychee. Prove clean offline installs with Node-bundled
       npm 11 and standalone npm 12 against one inspected bundle, and state the
       application audit's limit without claiming a clean host toolchain.
