@@ -183,7 +183,7 @@ is more honest than admitting arbitrary extra commands as “equivalent.”
 
 ### Qualify the exact final source and each publication plane
 
-The [accepted SemVer contract](../../specs/repository-governance/spec.md#requirement-version-identity-follows-semver-compatibility)
+The [accepted SemVer contract](../../../specs/repository-governance/spec.md#requirement-version-identity-follows-semver-compatibility)
 includes documented contributor commands in the public surface. The explicit
 `links --online` mode is a compatible addition, not merely an internal bug fix;
 the prepared edition therefore moves from the provisional `5.0.7` patch to
