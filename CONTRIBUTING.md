@@ -89,3 +89,82 @@ Commit the exact source and run ETHOS proof against that HEAD before landing.
 Only `dev`, `main`, and `proposal/*` are publishable refs. Candidate and Work
 Lane branches remain local. Verify local acceptance, each Forge ref and CI run,
 each Forge Release, and actual team use separately; one never proves another.
+
+## Reproduce a release
+
+This route is for a new edition, not for recreating an earlier tag. Replace the
+uppercase placeholders below with paths, a version, and project identities from
+the current checkout. They are not literal filenames or credentials. Follow
+the installed ETHOS verdict at every source transition; these commands do not
+grant Change authority.
+
+1. Prepare the version under the official Change. Review the public rule and
+   contributor-command diff under SemVer, then align `VERSION`, the charter, and
+   the dated `CHANGELOG.md` entry. Run `npm ci --ignore-scripts`,
+   `npm audit --audit-level=moderate`, and `npm run verify` on the intended Work
+   Lane. Do not tag a merely prepared heading.
+2. Supply the bundle builder with the five platform archives named under
+   `assets` and the two license files named under `licenses` in
+   [the pinned lychee manifest](.config/tools/lychee.json). Obtain their exact
+   bytes from the manifest's sources or an already qualified mirror, in two
+   local directories outside Git. The builder checks every name, SHA-256, npm
+   package, and license; it does not silently download missing inputs. Choose a
+   fresh ignored output path whose basename is
+   `data-department-work-guidelines-vX.Y.Z-offline-tools.tar.gz`, where `X.Y.Z`
+   is the new `VERSION`:
+
+   ```text
+   node tools/ci/offline-bundle.mjs build --assets ASSET_DIR --licenses LICENSE_DIR --output BUNDLE_PATH
+   node tools/ci/offline-bundle.mjs inspect --bundle BUNDLE_PATH
+   ```
+
+   The build prints the actual bundle record. Put that exact reviewed JSON in
+   [the committed bundle record](.config/tools/offline-bundle.json); never
+   invent its digest or reuse one after its version, lockfile, lychee manifest,
+   or runtime majors change. Re-run `npm run verify`. From a fresh checkout of
+   the committed source with no `node_modules/` or application tool cache, use
+   `node tools/ci/offline-bundle.mjs install --bundle BUNDLE_PATH` and
+   `npm run verify` without remote supply. The source and bundle must match.
+
+3. Commit with the configured trusted SSH signer. Run
+   `ethos plan --changed --json`. Take the actual OID from
+   `git rev-parse HEAD`, and execute
+   `ethos prove --execute --full --scope repository --expect-head OID --json`.
+   Follow the native candidate, accepted-root, and official archive results;
+   complete the Change's declared source tasks before archive. The archive
+   creates a new commit: inspect its attribution and signature, then prove its
+   new OID. Do not raw-push around an ETHOS refusal.
+4. From the final proved commit, make a signed annotated `vX.Y.Z` tag and run
+   `git tag -v vX.Y.Z`. Use `ethos publish --json` and its current continuation
+   to publish the exact admitted `dev`, `main`, and tag refs to each peer.
+   Re-read both remote refs before creating either Release; GitLab's SSH remote
+   does not by itself identify its HTTP API host or port. Set `GITLAB_HOST` in
+   the caller's environment to the configured API host and port, not the SSH
+   port, and verify `glab repo view GROUP/PROJECT` first.
+   For unattended Forge calls, use the CLIs' no-prompt settings, closed stdin,
+   and a caller-owned deadline; stop on authentication failure.
+5. Use the same reviewed release notes from the prepared Changelog section on
+   both Forges. Only after each remote tag exists at the proved commit, create
+   the Release and attach the same bundle bytes:
+
+   ```text
+   gh release create vX.Y.Z BUNDLE_PATH --verify-tag --notes-file RELEASE_NOTES_FILE --repo OWNER/REPO
+   glab release create vX.Y.Z BUNDLE_PATH --use-package-registry --package-name release-assets --no-update --notes-file RELEASE_NOTES_FILE --repo GROUP/PROJECT
+   ```
+
+   `glab` must target this project's configured API host and port; its
+   `release-assets` generic package is what GitLab's post-publication job
+   obtains. GitHub's Release starts its four-host offline workflow. After the
+   GitLab package and Release exist, start a tag pipeline with
+   `glab ci run --branch vX.Y.Z --repo GROUP/PROJECT` and require the
+   `offline:verify` job, not only the tag-push `docs:verify` job.
+
+6. Download each Forge's asset into a separate directory using
+   `gh release download` and `glab release download`. Run
+   `node tools/ci/offline-bundle.mjs inspect --bundle DOWNLOADED_ASSET` on
+   **each** file; both must match the committed SHA-256. Check each Forge's
+   exact refs, Release object, source CI, and the complete offline runs at the
+   selected tag. One successful host or peer proves nothing about another.
+   Retire only the landed Work Lane and disposable temporary refs through ETHOS;
+   preserve immutable tags, the candidate train, foreign work, and historical
+   Runner bindings still serving earlier releases.
