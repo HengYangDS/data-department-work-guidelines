@@ -140,12 +140,14 @@ grant Change authority.
    Re-read both remote refs before creating either Release; GitLab's SSH remote
    does not by itself identify its HTTP API host or port. Set `GITLAB_HOST` in
    the caller's environment to the configured API host and port, not the SSH
-   port, and verify `glab repo view GROUP/PROJECT` first.
-   For unattended Forge calls, use the CLIs' no-prompt settings, closed stdin,
-   and a caller-owned deadline; stop on authentication failure.
+   port. Check that `glab auth status` shows the administrator-supplied API
+   scheme and port, then verify `glab repo view GROUP/PROJECT`. For unattended
+   calls, set `GH_PROMPT_DISABLED=1` or `GLAB_NO_PROMPT=1` as applicable, close
+   stdin, and enforce a caller-owned deadline; stop on authentication failure.
 5. Use the same reviewed release notes from the prepared Changelog section on
-   both Forges. Only after each remote tag exists at the proved commit, create
-   the Release and attach the same bundle bytes:
+   both Forges. `RELEASE_NOTES_FILE` is a temporary copy of that section, not a
+   new tracked history. Only after each remote tag exists at the proved commit,
+   create the Release and attach the same bundle bytes:
 
    ```text
    gh release create vX.Y.Z BUNDLE_PATH --verify-tag --notes-file RELEASE_NOTES_FILE --repo OWNER/REPO
@@ -159,12 +161,18 @@ grant Change authority.
    `glab ci run --branch vX.Y.Z --repo GROUP/PROJECT` and require the
    `offline:verify` job, not only the tag-push `docs:verify` job.
 
-6. Download each Forge's asset into a separate directory using
-   `gh release download` and `glab release download`. Run
-   `node tools/ci/offline-bundle.mjs inspect --bundle DOWNLOADED_ASSET` on
-   **each** file; both must match the committed SHA-256. Check each Forge's
-   exact refs, Release object, source CI, and the complete offline runs at the
-   selected tag. One successful host or peer proves nothing about another.
-   Retire only the landed Work Lane and disposable temporary refs through ETHOS;
-   preserve immutable tags, the candidate train, foreign work, and historical
-   Runner bindings still serving earlier releases.
+6. Download the asset from each Release into a separate empty directory and
+   inspect both files against the committed record:
+
+   ```text
+   gh release download vX.Y.Z --repo OWNER/REPO --pattern BUNDLE_NAME --dir GITHUB_DIR
+   glab release download vX.Y.Z --repo GROUP/PROJECT --asset-name BUNDLE_NAME --dir GITLAB_DIR
+   node tools/ci/offline-bundle.mjs inspect --bundle GITHUB_ASSET
+   node tools/ci/offline-bundle.mjs inspect --bundle GITLAB_ASSET
+   ```
+
+   Check each Forge's exact refs, Release object, source CI, and complete
+   offline runs at the selected tag. One successful host or peer proves nothing
+   about another. Retire only the landed Work Lane and disposable temporary
+   refs through ETHOS; preserve immutable tags, the candidate train, foreign
+   work, and historical Runner bindings still serving earlier releases.
