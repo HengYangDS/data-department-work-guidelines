@@ -109,9 +109,10 @@ grant Change authority.
 
 1. Prepare the version under the official Change. Review the public rule and
    contributor-command diff under SemVer, then align `VERSION`, the charter, and
-   the dated `CHANGELOG.md` entry. Run `npm ci --ignore-scripts`,
-   `npm audit --audit-level=moderate`, and `npm run verify` on the intended Work
-   Lane. Do not tag a merely prepared heading.
+   the dated `CHANGELOG.md` entry. Run `npm ci --ignore-scripts` and
+   `npm audit --audit-level=moderate` on the intended Work Lane. The full
+   source check follows the new bundle record in Step 2. Do not tag a merely
+   prepared heading.
 2. Supply the bundle builder with the five platform archives named under
    `assets` and the two license files named under `licenses` in
    [the pinned lychee manifest](.config/tools/lychee.json). Obtain their exact
@@ -124,23 +125,27 @@ grant Change authority.
 
    ```text
    node tools/ci/offline-bundle.mjs build --assets ASSET_DIR --licenses LICENSE_DIR --output BUNDLE_PATH
-   node tools/ci/offline-bundle.mjs inspect --bundle BUNDLE_PATH
    ```
 
    The build prints the actual bundle record. Put that exact reviewed JSON in
-   [the committed bundle record](.config/tools/offline-bundle.json); never
+   [the tracked bundle record](.config/tools/offline-bundle.json); never
    invent its digest or reuse one after its version, lockfile, lychee manifest,
-   or runtime majors change. A second build may have a different archive SHA
-   even with the same declared inputs: freeze one inspected file, commit its
-   actual digest, and send those exact bytes to both Forges. Re-run
-   `npm run verify`. From a fresh checkout of the committed source with no
-   `node_modules/` or application tool cache, use
+   or Node major changes. Only then run the command that reads that record:
+
+   ```text
+   node tools/ci/offline-bundle.mjs inspect --bundle BUNDLE_PATH
+   ```
+
+   A second build may have a different archive SHA even with the same declared
+   inputs. Freeze one inspected file and its actual digest for the signed
+   commit and later publication on both Forges. Re-run `npm run verify`.
+
+3. Run `ethos plan --changed --json` and follow its current verdict. Commit
+   with the configured trusted SSH signer. From a fresh checkout of the
+   committed source with no `node_modules/` or application tool cache, use
    `node tools/ci/offline-bundle.mjs install --bundle BUNDLE_PATH` and
    `npm run verify` without remote supply. The source and bundle must match.
-
-3. Commit with the configured trusted SSH signer. Run
-   `ethos plan --changed --json`. Take the actual OID from
-   `git rev-parse HEAD`, and execute
+   Take the actual OID from `git rev-parse HEAD`, and execute
    `ethos prove --execute --full --scope repository --expect-head OID --json`.
    Follow the native candidate, accepted-root, and official archive results;
    complete the Change's declared source tasks before archive. The archive

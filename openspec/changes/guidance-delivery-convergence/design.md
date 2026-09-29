@@ -95,6 +95,15 @@ SSH remote alone selected the wrong API endpoint; setting `GITLAB_HOST` to the
 configured API host and port made a read-only repository query succeed. The
 contributor route therefore names that binding without embedding this host.
 
+A later command-order audit found that the first draft of that route ran the
+full verifier before updating the bundle record, ran `inspect` before its
+record existed, and requested a checkout of committed source before the
+commit. Those are not harmless wording differences: both the verifier and
+`inspect` read the tracked record. The route now builds, records, inspects, and
+verifies before the signed commit, then cold-installs from that commit before
+exact-HEAD proof. Focused tests reject the former ordering without adding a
+release wrapper.
+
 The published `v5.0.6` route was exercised in a disposable fresh checkout:
 GitHub supplied the 47,155,466-byte bundle, its SHA-256 matched the committed
 record, `inspect` and `install` passed without remote tool supply, and the full

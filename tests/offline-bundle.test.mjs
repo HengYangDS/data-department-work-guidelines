@@ -838,3 +838,32 @@ test("npm CLI is a JavaScript entrypoint on POSIX and Windows layouts", () => {
     rmSync(directory, { recursive: true, force: true });
   }
 });
+
+test("release route records the bundle before inspecting it", () => {
+  const guide = readFileSync(path.join(root, "CONTRIBUTING.md"), "utf8");
+  const build = guide.indexOf("node tools/ci/offline-bundle.mjs build");
+  const record = guide.indexOf("Put that exact reviewed JSON");
+  const inspect = guide.indexOf(
+    "node tools/ci/offline-bundle.mjs inspect --bundle BUNDLE_PATH",
+  );
+  assert.ok(build >= 0 && record > build && inspect > record);
+});
+
+test("release route runs the full source check after bundle identity is updated", () => {
+  const guide = readFileSync(path.join(root, "CONTRIBUTING.md"), "utf8");
+  const release = guide.split("## Reproduce a release")[1];
+  assert.ok(release);
+  const record = release.indexOf("Put that exact reviewed JSON");
+  const verify = release.indexOf("`npm run verify`");
+  assert.ok(record >= 0 && verify > record);
+});
+
+test("release route commits source before a clean-checkout install", () => {
+  const guide = readFileSync(
+    path.join(root, "CONTRIBUTING.md"),
+    "utf8",
+  ).replace(/\s+/gu, " ");
+  const commit = guide.indexOf("Commit with the configured trusted SSH signer");
+  const cold = guide.indexOf("From a fresh checkout of the committed source");
+  assert.ok(commit >= 0 && cold > commit);
+});
