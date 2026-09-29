@@ -124,7 +124,11 @@ reject warning output even when the archive tool exits successfully. The
 packages and lychee retain their upstream licenses; the repository MIT grant
 does not relicense them. Both hosted CI planes run
 `npm audit --audit-level=moderate` during online tool supply; local source
-verification does not require network access.
+verification does not require network access. The bundle binds the edition,
+Node major, package lock, and pinned lychee supply, not a second npm-major
+declaration. The installer exercises and records the available npm version
+offline on each claimed host. The application audit does not qualify Node's
+bundled npm; do not turn one into a claim about the other.
 
 GitHub runs Linux, macOS, and Windows hosted jobs; GitLab selects the
 `ci-linux-arm64-container` capability on its project-locked runner. GitLab's

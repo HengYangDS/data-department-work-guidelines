@@ -32,7 +32,6 @@ export function declaredToolRuntime(repository = root) {
   };
   return {
     nodeMajor: major(engines?.node, "Node"),
-    npmMajor: major(engines?.npm, "npm"),
   };
 }
 

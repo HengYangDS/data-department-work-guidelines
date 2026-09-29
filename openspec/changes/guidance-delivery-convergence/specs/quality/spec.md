@@ -47,3 +47,21 @@ failure rather than an accepted status or an unreported exclusion.
 - **THEN** the explicit live link check uses the pinned lychee and current
   Markdown inventory
 - **AND THEN** any broken external link prevents a complete release claim.
+
+### Requirement: Offline tool supply is qualified by use, not an npm-major label
+
+The source-pinned bundle SHALL bind the exact edition, package lock, Node
+major, and lychee supply. It SHALL NOT add a second npm-major declaration as
+an admission substitute for actual portability. A clean offline installation
+and full repository verifier on each claimed host SHALL determine compatibility
+with that host's available npm. The application dependency audit SHALL NOT be
+presented as an audit of the Node distribution's bundled package manager.
+
+#### Scenario: Two compatible npm versions use the same bundle
+
+- **WHEN** a bundle built from one accepted source is installed in clean
+  checkouts with different npm versions supported by the selected Node line
+- **THEN** each installer consumes only the pinned local cache and reports its
+  observed npm version
+- **AND THEN** the complete verifier passes before either host is claimed
+  qualified; a version label alone cannot make that claim.

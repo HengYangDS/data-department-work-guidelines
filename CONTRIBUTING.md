@@ -30,10 +30,12 @@ decision and navigation boundaries, the official OpenSpec workspace, the
 changelog/version contract, CI declarations, and negative tests. `npm run prose`
 runs the locked spelling check alone. Run `npm audit --audit-level=moderate`
 separately when online before source acceptance; both hosted CI planes require
-it. The offline repository verifier does not contact either Forge.
+it. This audit covers the locked repository packages, not the npm executable
+bundled with Node. The offline repository verifier does not contact either
+Forge.
 
 For a release with the matching source-pinned bundle already on the machine,
-start from a fresh checkout with Node 26/npm 11 and Git installed:
+start from a fresh checkout with Node 26, a compatible npm command, and Git:
 
 ```text
 node tools/ci/offline-bundle.mjs inspect --bundle PATH

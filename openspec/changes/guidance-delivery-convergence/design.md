@@ -114,19 +114,21 @@ object, but reuse bundle bytes only if their declared inputs still match. The
 alternative, a new release orchestrator, duplicates existing native operations
 without an observed gap.
 
-The package-manager supply needs a separate decision before this edition is
-frozen. On 2026-09-29, npm's stable `latest` is 12.1.0, while the selected Node
-26.10.0 installation supplies npm 11.20.0. An isolated npm 12 checkout passed
-installation and all 79 repository tests, and its pinned package ran from an
-offline cache. Both npm versions nevertheless bundle the same two moderate
-`ip-address` and `undici` advisories; npm reports that its bundled dependencies
-cannot be repaired by `npm audit fix`. Adding npm 12 to the application lock
-would fail the existing hard audit, while leaving either version outside that
-lock does not make the toolchain vulnerability-free. A green application audit
-must not be described as an audit of Node's bundled npm. Keep the current
-candidate's runtime declaration until Task 2.5 qualifies one current, portable
-toolchain without concealing this distinction; then refresh the bundle and
-host evidence from the selected source.
+On 2026-09-29, npm's standalone stable `latest` is 12.1.0, while the selected
+Node 26.10.0 installation supplies npm 11.20.0. Both npm versions bundle the
+same two moderate `ip-address` and `undici` advisories; npm reports that its
+bundled dependencies cannot be repaired by `npm audit fix`. Adding standalone
+npm to this application's lock would make the hard application audit fail,
+without removing the Node-bundled bootstrap copy. Keeping npm 11 does not make
+that copy safe either. The single runtime owner is therefore the official Node
+distribution, not an extra repository npm-major pin or a second npm
+installation. Bundle schema 2 binds Node, the application lock, and lychee;
+actual clean offline installation decides whether a given npm can consume it.
+An isolated candidate cache built with npm 11 installed and passed all 80
+repository tests under both npm 11.20.0 and 12.1.0 on macOS. This is not the
+later hosted host matrix, nor a zero-vulnerability toolchain claim. The hard
+`npm audit` gate covers application packages; Node toolchain advisories remain
+explicitly outside that claim and with the Node distribution's supply owner.
 
 ### Keep metadata authority upstream and delivery independent
 

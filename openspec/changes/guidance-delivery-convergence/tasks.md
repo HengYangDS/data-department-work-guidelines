@@ -31,10 +31,10 @@
       refusal of incomplete-mode waivers, and the prepared-tag 404 case.
       Document zero-error live checking as post-publication qualification,
       not as a prerequisite for archiving this source Change.
-- [ ] 2.5 Resolve the latest-stable npm toolchain against its bundled moderate
-      advisories and the hard application audit; select one portable supply
-      owner, then prove the exact CI, offline bundle, and host behavior without
-      treating an application-only audit as complete toolchain evidence.
+- [ ] 2.5 Remove the redundant npm-major owner; bind the bundle only to Node,
+      the lockfile, and lychee. Prove clean offline installs with Node-bundled
+      npm 11 and standalone npm 12 against one inspected bundle, and state the
+      application audit's limit without claiming a clean host toolchain.
 
 ## 3. Reconcile machine metadata with the reader
 

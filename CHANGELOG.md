@@ -18,6 +18,12 @@ being relabeled as formal SemVer releases.
 - Added explicit post-tag live link qualification with pinned lychee while
   keeping source verification offline and broken comparison links fatal.
 
+### Changed
+
+- Removed the redundant npm-major pin from the Node toolchain and offline
+  bundle. Release qualification now exercises the available npm against the
+  locked package cache rather than treating a version number as portability.
+
 ### Fixed
 
 - Documented the source-bound offline bundle build, signed dual-Forge release

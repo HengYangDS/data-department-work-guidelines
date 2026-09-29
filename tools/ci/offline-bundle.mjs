@@ -24,7 +24,6 @@ const recordKeys = [
   "lockSha256",
   "lycheeSha256",
   "nodeMajor",
-  "npmMajor",
   "schemaVersion",
   "sha256",
   "version",
@@ -48,9 +47,8 @@ export function validateBundleRecord(record, source) {
     throw new Error("offline bundle record has invalid fields");
   }
   if (
-    record.schemaVersion !== 1 ||
+    record.schemaVersion !== 2 ||
     record.nodeMajor !== source.nodeMajor ||
-    record.npmMajor !== source.npmMajor ||
     !/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/u.test(record.version) ||
     record.version !== source.version ||
     record.fileName !==
@@ -308,7 +306,7 @@ export function assembleBundle({
       licenses[name] = license.sha256;
     }
     const manifest = {
-      schemaVersion: 1,
+      schemaVersion: 2,
       ...source,
       cacheFileCount,
       assets,
@@ -326,7 +324,7 @@ export function assembleBundle({
       rejectStderr: true,
     });
     const record = {
-      schemaVersion: 1,
+      schemaVersion: 2,
       ...source,
       fileName,
       sha256: digestBytes(readFileSync(archive)),
@@ -358,12 +356,11 @@ export function validateExtractedBundle(directory, repository) {
   );
   const source = sourceIdentity(repository);
   if (
-    manifest.schemaVersion !== 1 ||
+    manifest.schemaVersion !== 2 ||
     manifest.version !== source.version ||
     manifest.lockSha256 !== source.lockSha256 ||
     manifest.lycheeSha256 !== source.lycheeSha256 ||
-    manifest.nodeMajor !== source.nodeMajor ||
-    manifest.npmMajor !== source.npmMajor
+    manifest.nodeMajor !== source.nodeMajor
   ) {
     throw new Error("offline bundle manifest does not match source");
   }
@@ -546,11 +543,6 @@ export function installBundle({
       capture: true,
       timeout: 10_000,
     }).trim();
-    if (!npmVersion.startsWith(`${record.npmMajor}.`)) {
-      throw new Error(
-        `offline bundle requires npm ${record.npmMajor}, got ${npmVersion}`,
-      );
-    }
     startedNpmInstall = true;
     commandRunner(
       process.execPath,
@@ -718,11 +710,6 @@ export function buildReleaseBundle({
       env: onlineEnv,
       timeout: 10_000,
     });
-    if (!npmVersion.startsWith(`${source.npmMajor}.`)) {
-      throw new Error(
-        `offline bundle builder requires npm ${source.npmMajor}, got ${npmVersion}`,
-      );
-    }
     boundedNpm(["ci", "--ignore-scripts", "--no-audit", "--no-fund"], {
       cwd: online,
       env: onlineEnv,

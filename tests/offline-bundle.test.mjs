@@ -28,20 +28,23 @@ import {
   validateExtractedBundle,
   validateLockSupply,
 } from "../tools/ci/offline-bundle.mjs";
-import { root, run as runCommand } from "../tools/docs/runtime.mjs";
+import {
+  declaredToolRuntime,
+  root,
+  run as runCommand,
+} from "../tools/docs/runtime.mjs";
 
 const digest = (text) => createHash("sha256").update(text).digest("hex");
 
 function record(overrides = {}) {
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     version: "4.2.0",
     fileName: "data-department-work-guidelines-v4.2.0-offline-tools.tar.gz",
     sha256: digest("archive"),
     lockSha256: digest("lock"),
     lycheeSha256: digest("lychee"),
     nodeMajor: 26,
-    npmMajor: 11,
     ...overrides,
   };
 }
@@ -51,8 +54,20 @@ const source = {
   lockSha256: digest("lock"),
   lycheeSha256: digest("lychee"),
   nodeMajor: 26,
-  npmMajor: 11,
 };
+
+test("Node owns the package-manager bootstrap without a duplicate npm major", () => {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-runtime-"));
+  try {
+    writeFileSync(
+      path.join(directory, "package.json"),
+      JSON.stringify({ engines: { node: "26.x" } }),
+    );
+    assert.deepEqual(declaredToolRuntime(directory), { nodeMajor: 26 });
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
 
 test("bundle identity is bound to the exact source inputs", () => {
   assert.doesNotThrow(() => validateBundleRecord(record(), source));
@@ -63,7 +78,7 @@ test("bundle identity is bound to the exact source inputs", () => {
     { sha256: "0".repeat(64) },
     { fileName: "../offline-tools.tar.gz" },
     { nodeMajor: 22 },
-    { npmMajor: 10 },
+    { npmMajor: 11 },
     { unexpected: "second authority" },
   ]) {
     assert.throws(() => validateBundleRecord(record(changed), source));
@@ -73,9 +88,6 @@ test("bundle identity is bound to the exact source inputs", () => {
   );
   assert.throws(() =>
     validateBundleRecord(record(), { ...source, nodeMajor: 22 }),
-  );
-  assert.throws(() =>
-    validateBundleRecord(record(), { ...source, npmMajor: 10 }),
   );
 });
 
@@ -230,7 +242,7 @@ function buildFixture(run) {
     writeFileSync(path.join(repository, "VERSION"), "4.2.0\n");
     writeFileSync(
       path.join(repository, "package.json"),
-      JSON.stringify({ engines: { node: "26.x", npm: "11.x" } }),
+      JSON.stringify({ engines: { node: "26.x" } }),
     );
     writeFileSync(path.join(repository, "package-lock.json"), "fixture lock\n");
     writeFileSync(
@@ -289,7 +301,6 @@ test("builder admits only pinned, licensed, regular supply", () => {
       lockSha256: built.lockSha256,
       lycheeSha256: built.lycheeSha256,
       nodeMajor: built.nodeMajor,
-      npmMajor: built.npmMajor,
     });
     assert.equal(checked.sha256, built.sha256);
   });
@@ -406,7 +417,7 @@ test("installer invokes only the locked offline supply path", () => {
         path.basename(args[0]) === "npm-cli.js" &&
         args[1] === "--version"
       )
-        return "11.20.0\n";
+        return "12.1.0\n";
       if (
         command === process.execPath &&
         path.basename(args[0]) === "npm-cli.js" &&
@@ -432,6 +443,7 @@ test("installer invokes only the locked offline supply path", () => {
       commandRunner,
     });
     assert.equal(result.version, "4.2.0");
+    assert.equal(result.npmVersion, "12.1.0");
     assert.equal(calls.length, 3);
     assert.equal(calls[0].command, process.execPath);
     assert.equal(path.basename(calls[0].args[0]), "npm-cli.js");
@@ -451,7 +463,7 @@ test("installer invokes only the locked offline supply path", () => {
     const calls = [];
     const commandRunner = (command, args) => {
       calls.push([command, path.basename(args[0]), args[1]]);
-      if (args[1] === "--version") return "11.20.0\n";
+      if (args[1] === "--version") return "12.1.0\n";
       throw new Error("simulated offline cache miss");
     };
     assert.throws(
@@ -808,7 +820,7 @@ test("npm CLI is a JavaScript entrypoint on POSIX and Windows layouts", () => {
     timeout: 10_000,
   });
   assert.equal(version.status, 0, version.stderr);
-  assert.match(version.stdout, /^11\./u);
+  assert.match(version.stdout, /^[1-9]\d*\.\d+\.\d+\s*$/u);
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-npm-layout-"));
   try {
     const cli = path.join(
