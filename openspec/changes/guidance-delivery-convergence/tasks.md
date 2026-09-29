@@ -38,11 +38,11 @@
 
 ## 3. Reconcile machine metadata with the reader
 
-- [ ] 3.1 Obtain the accepted ETHOS docs-registry representation and exact
+- [x] 3.1 Obtain the accepted ETHOS docs-registry representation and exact
       installed runtime from its product owner; verify it rejects absent or
       conflicting metadata without a repository-only schema or second command
       plane.
-- [ ] 3.2 Adapt the current guidance only to that installed contract, with a
+- [x] 3.2 Adapt the current guidance only to that installed contract, with a
       repository-specific positive and negative test; verify ETHOS registry
       health and ordinary GitLab and GitHub rendering show the title before
       machine-only metadata, with no device-specific acceptance criterion.

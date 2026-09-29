@@ -141,13 +141,18 @@ explicitly outside that claim and with the Node distribution's supply owner.
 
 ### Keep metadata authority upstream and delivery independent
 
-Do not strip YAML while the installed ETHOS registry requires it. Ask the ETHOS
-owner for a product-supported representation that preserves `subject`, `role`,
-`state`, and `relations` but lets a current page start visibly with its title
-in ordinary Forge rendering. Integrate only an accepted and installed product
-contract; test both registry failure and rendered reading. The alternative,
-repository-only comments, a sidecar, or a second page, creates competing metadata.
-This dependency can remain open while independent release guidance is improved.
+The accepted ETHOS docs-registry revision at source `97196e96` admits the same
+YAML payload inside a leading HTML comment and requires its H1 to render first.
+An independently installed, content-addressed runtime for that source is bound
+to this repository through native `ethos hook install --runtime`; status reports
+it current. All 12 current pages keep their original metadata and reader body;
+the wrapper alone changes. Repository checks guard the title-first carrier and
+DR shape, while ETHOS retains registry authority. The installed registry
+reports 12 pages and zero gaps; six positive and adverse product fixtures
+exercise missing, duplicate, conflicting, unclosed, and pre-title cases. GitHub
+and GitLab Markdown APIs render each current page with the H1 first and no
+visible metadata. Those API observations are not publication of this edition;
+exact-HEAD proof and hosted acceptance remain separate.
 
 ### Prefer behavioral CI assertions over incidental topology
 
@@ -203,8 +208,8 @@ the other peer or host.
 
 ## Risks / Trade-offs
 
-- **ETHOS metadata support is delayed** → Keep the metadata task and Change
-  open; publish only the source states whose declared obligations are complete.
+- **The installed ETHOS contract drifts** → Bind an exact product source and
+  rerun registry and rendered-page checks before accepting changed guidance.
 - **A release instruction is plausible but wrong** → Exercise its exact public
   command on the selected tag, and reject an omitted or mismatched input.
 - **A CI simplification weakens isolation** → Preserve negative cases before

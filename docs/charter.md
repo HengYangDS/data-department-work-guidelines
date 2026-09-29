@@ -1,3 +1,4 @@
+<!--
 ---
 subject: data-department-work-guidelines:charter
 role: policy
@@ -5,6 +6,7 @@ state: canonical
 relations:
   canonical_for: purpose authority and non-negotiable work boundaries
 ---
+-->
 
 # Data Department Work Guidelines: Charter
 

@@ -31,6 +31,8 @@ being relabeled as formal SemVer releases.
   bytes go to both Forges; independent rebuilds are not claimed byte-identical.
 - Restored the follow-up rule: keep the subject, definitions, and evaluation
   criteria stable, or disclose and justify a changed frame.
+- Kept registry metadata available to ETHOS while making the title the first
+  visible content on GitLab and GitHub guidance pages.
 
 ## [5.0.6] - 2026-09-29
 

@@ -41,6 +41,7 @@ function decision({
   body = "An evidence link can describe the ETHOS lifecycle.",
 } = {}) {
   return [
+    "<!--",
     "---",
     "subject: fixture:DR-0001",
     "role: decision",
@@ -50,6 +51,7 @@ function decision({
     "relations:",
     "  canonical_for: fixture choice",
     "---",
+    "-->",
     "",
     "# DR-0001: Fixture choice",
     "",
@@ -72,13 +74,72 @@ function fixture(run) {
   }
 }
 
+test("document metadata reads the product-supported title-first carrier", () => {
+  const source = [
+    "<!--",
+    "---",
+    "subject: fixture:guide",
+    "role: policy",
+    "state: canonical",
+    "relations:",
+    "  canonical_for: reader guidance",
+    "---",
+    "-->",
+    "",
+    "# Fixture",
+    "",
+    "Reader-facing content.",
+    "",
+  ].join("\n");
+  assert.deepEqual(documentMetadata("docs/fixture.md", source), {
+    subject: "fixture:guide",
+    role: "policy",
+    state: "canonical",
+    relations: { canonical_for: "reader guidance" },
+  });
+});
+
 test("document metadata rejects a duplicate key", () => {
   const source =
-    "---\nsubject: first\nsubject: second\nrole: policy\nstate: canonical\nrelations: {}\n---\n# Fixture\n";
+    "<!--\n---\nsubject: first\nsubject: second\nrole: policy\nstate: canonical\nrelations: {}\n---\n-->\n\n# Fixture\n";
   assert.throws(
     () => documentMetadata("docs/fixture.md", source),
     /invalid document metadata/u,
   );
+});
+
+test("document metadata rejects visible declarations and pre-title prose", () => {
+  const metadata =
+    "subject: fixture:guide\nrole: policy\nstate: canonical\nrelations: {}";
+  assert.throws(
+    () =>
+      documentMetadata(
+        "docs/fixture.md",
+        `---\n${metadata}\n---\n\n# Fixture\n`,
+      ),
+    /title-first/u,
+  );
+  assert.throws(
+    () =>
+      documentMetadata(
+        "docs/fixture.md",
+        `<!--\n---\n${metadata}\n---\n-->\n\nA visible preface.\n\n# Fixture\n`,
+      ),
+    /first visible block/u,
+  );
+});
+
+test("document metadata rejects incomplete or prematurely closed comments", () => {
+  const incomplete =
+    "<!--\n---\nsubject: fixture:guide\nrole: policy\nstate: canonical\nrelations: {}\n---\n# Fixture\n";
+  const premature =
+    '<!--\n---\nsubject: fixture:guide\nrole: policy\nstate: canonical\nrelations:\n  canonical_for: "unsafe --> suffix"\n---\n-->\n\n# Fixture\n';
+  for (const source of [incomplete, premature]) {
+    assert.throws(
+      () => documentMetadata("docs/fixture.md", source),
+      /invalid document metadata/u,
+    );
+  }
 });
 
 test("decision sections and identity remain exact", () => {

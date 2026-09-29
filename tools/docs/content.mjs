@@ -69,11 +69,26 @@ export function checkSpelling(files = currentMarkdown()) {
 }
 
 export function documentMetadata(relative, source) {
-  const match = /^---\r?\n([\s\S]*?)\r?\n---\r?\n/u.exec(source);
-  if (!match) {
-    throw new Error(`missing document metadata: ${relative}`);
+  const lines = source.split(/\r?\n/u);
+  if (lines[0] !== "<!--") {
+    throw new Error(
+      `document metadata requires a title-first carrier: ${relative}`,
+    );
   }
-  const document = YAML.parseDocument(match[1], { uniqueKeys: true });
+  const end = lines.indexOf("---", 2);
+  if (lines[1] !== "---" || end < 0 || lines[end + 1] !== "-->") {
+    throw new Error(`invalid document metadata: ${relative}`);
+  }
+  const payload = lines.slice(2, end).join("\n");
+  if (payload.includes("-->") || payload.includes("--!>")) {
+    throw new Error(`invalid document metadata: ${relative}`);
+  }
+  if (lines[end + 2] !== "" || !/^# \S/u.test(lines[end + 3] ?? "")) {
+    throw new Error(
+      `document title must be the first visible block: ${relative}`,
+    );
+  }
+  const document = YAML.parseDocument(payload, { uniqueKeys: true });
   if (document.errors.length) {
     throw new Error(
       `invalid document metadata: ${relative}: ${document.errors[0].message}`,

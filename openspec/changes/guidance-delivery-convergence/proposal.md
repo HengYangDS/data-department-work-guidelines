@@ -50,6 +50,7 @@ The existing guidance pages and task map are review inputs, not a reason to
 recreate the former monolith. Expected owners are `CONTRIBUTING.md`, a current
 topic if a new semantic gap is proved, `tools/docs/` and tests only for a
 demonstrated verifier defect, release metadata, and this official Change. The
-metadata representation needs an accepted ETHOS product revision. Current page
-metadata and default proof gates remain in force until that contract is
-installed and verified. No team-adoption claim is implied.
+metadata representation uses an accepted ETHOS product revision and a separately
+installed runtime. Current pages retain their metadata and default proof gates;
+only the supported carrier and its repository-specific reading check change. No
+team-adoption claim is implied.

@@ -1,3 +1,4 @@
+<!--
 ---
 subject: data-department-work-guidelines:data
 role: policy
@@ -5,6 +6,7 @@ state: canonical
 relations:
   canonical_for: data qualification production and adoption
 ---
+-->
 
 # Data Quality and Adoption
 

@@ -34,6 +34,11 @@ it. This audit covers the locked repository packages, not the npm executable
 bundled with Node. The offline repository verifier does not contact either
 Forge.
 
+For `docs/` pages, keep ETHOS metadata in the leading HTML comment and put the
+H1 after one blank line as the first visible block. Copy a current page's
+carrier rather than inventing a sidecar. The repository check guards this
+reading order; the installed ETHOS registry owns metadata meaning.
+
 For a release with the matching source-pinned bundle already on the machine,
 start from a fresh checkout with Node 26, a compatible npm command, and Git:
 

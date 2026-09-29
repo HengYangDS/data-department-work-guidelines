@@ -1,3 +1,4 @@
+<!--
 ---
 subject: data-department-work-guidelines:repository-governance
 role: policy
@@ -5,6 +6,7 @@ state: canonical
 relations:
   canonical_for: repository change and delivery boundaries
 ---
+-->
 
 # Repository Change and Release
 
