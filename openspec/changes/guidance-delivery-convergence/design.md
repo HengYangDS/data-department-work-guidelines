@@ -15,9 +15,13 @@ The current verifier already checks formatting, Markdown lint, spelling,
 offline links, English text, OpenSpec, decisions, and CI declarations. Its green
 result proves those declared properties, not the usability of a release
 handoff. `CONTRIBUTING.md` documents offline installation but not complete
-bundle preparation or independent publication. ETHOS currently reads first-line
-YAML from every `docs/*.md` page; normal Forge Markdown exposes those fields
-ahead of the title. The representation belongs to ETHOS, not a local sidecar.
+bundle preparation or independent publication. Read-only GitHub and GitLab
+Markdown render probes exposed plain first-line YAML before the title; a
+leading HTML comment containing the same YAML made the title the first visible
+content in both. The installed ETHOS `front_matter()` parser returned the four
+fields for plain YAML but no fields for the comment. Presentation alone is
+therefore insufficient: the representation belongs to ETHOS, not a local
+sidecar or a repository-only parser.
 
 ## Goals / Non-Goals
 
