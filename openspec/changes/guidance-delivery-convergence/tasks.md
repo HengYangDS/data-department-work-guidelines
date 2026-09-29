@@ -52,7 +52,7 @@
 - [x] 4.1 Review the final diff under SemVer, align `VERSION`, the charter,
       Keep a Changelog, and the bundle record from actual bytes; verify the
       repository's version, link, digest, and bad-input checks before commit.
-- [ ] 4.2 Run formatting, Markdown lint, CSpell, offline lychee, repository negative
+- [x] 4.2 Run formatting, Markdown lint, CSpell, offline lychee, repository negative
       tests, official OpenSpec strict validation, `git diff --check`, ETHOS
       changed-path plan, and signed exact-HEAD full proof; verify each result
       names this Change and the same committed source.
