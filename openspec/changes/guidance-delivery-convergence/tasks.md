@@ -49,7 +49,7 @@
 
 ## 4. Prepare and prove one exact edition
 
-- [ ] 4.1 Review the final diff under SemVer, align `VERSION`, the charter,
+- [x] 4.1 Review the final diff under SemVer, align `VERSION`, the charter,
       Keep a Changelog, and the bundle record from actual bytes; verify the
       repository's version, link, digest, and bad-input checks before commit.
 - [ ] 4.2 Run formatting, Markdown lint, CSpell, offline lychee, repository negative
