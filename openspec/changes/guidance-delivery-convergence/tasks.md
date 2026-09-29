@@ -26,6 +26,11 @@
       workflow while retaining pinned-action, tag, token, host, order, and
       offline negative cases; change `tools/docs/ci.mjs` only if a red test
       proves that defect, then rerun its focused tests and `npm run verify`.
+- [x] 2.4 Expose post-tag live lychee through the existing `links` command
+      without changing offline `verify`; test default and explicit arguments,
+      refusal of incomplete-mode waivers, and the prepared-tag 404 case.
+      Document zero-error live checking as post-publication qualification,
+      not as a prerequisite for archiving this source Change.
 
 ## 3. Reconcile machine metadata with the reader
 
@@ -43,7 +48,7 @@
 - [ ] 4.1 Review the final diff under SemVer, align `VERSION`, the charter,
       Keep a Changelog, and the bundle record from actual bytes; verify the
       repository's version, link, digest, and bad-input checks before commit.
-- [ ] 4.2 Run formatting, Markdown lint, CSpell, lychee, repository negative
+- [ ] 4.2 Run formatting, Markdown lint, CSpell, offline lychee, repository negative
       tests, official OpenSpec strict validation, `git diff --check`, ETHOS
       changed-path plan, and signed exact-HEAD full proof; verify each result
       names this Change and the same committed source.

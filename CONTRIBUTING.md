@@ -174,6 +174,13 @@ grant Change authority.
    node tools/ci/offline-bundle.mjs inspect --bundle GITLAB_ASSET
    ```
 
+   From the final checkout, run `node tools/docs/cli.mjs links --online` after
+   both remote tags exist and require zero broken links. This uses the pinned
+   lychee and current Markdown inventory without changing the offline source
+   verifier. A prepared Changelog's comparison links return 404 before its tag
+   exists; do not waive those errors or count a pre-tag live check as release
+   qualification.
+
    Check each Forge's exact refs, Release object, source CI, and complete
    offline runs at the selected tag. One successful host or peer proves nothing
    about another. Retire only the landed Work Lane and disposable temporary

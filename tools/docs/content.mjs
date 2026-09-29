@@ -141,7 +141,19 @@ export function repositoryFileUri(uri) {
   }
 }
 
-export function checkLinks() {
+export function linkCheckArguments(list, { online = false } = {}) {
+  return [
+    ...(online ? [] : ["--offline"]),
+    "--include-fragments=anchor-only",
+    "--no-progress",
+    "--max-retries",
+    "0",
+    "--files-from",
+    list,
+  ];
+}
+
+export function checkLinks({ online = false } = {}) {
   const files = currentMarkdown();
   const directory = mkdtempSync(temporaryRoot());
   try {
@@ -154,20 +166,10 @@ export function checkLinks() {
     });
     for (const uri of links.split(/\r?\n/u).filter(Boolean))
       repositoryFileUri(uri.trim());
-    run(
-      lychee,
-      [
-        "--offline",
-        "--include-fragments=anchor-only",
-        "--no-progress",
-        "--max-retries",
-        "0",
-        "--files-from",
-        list,
-      ],
-      { timeout: 90_000 },
+    run(lychee, linkCheckArguments(list, { online }), { timeout: 90_000 });
+    console.log(
+      `PASS ${online ? "online" : "offline"} links and repository confinement`,
     );
-    console.log("PASS offline links and repository confinement");
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }

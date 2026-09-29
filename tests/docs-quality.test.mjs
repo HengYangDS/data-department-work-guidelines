@@ -293,6 +293,31 @@ test("pinned lychee rejects a broken local fragment", () => {
   }
 });
 
+test("live link checking is explicit and retains the offline source boundary", async () => {
+  const content = await import("../tools/docs/content.mjs");
+  assert.equal(typeof content.linkCheckArguments, "function");
+  const offline = content.linkCheckArguments("files.txt");
+  const online = content.linkCheckArguments("files.txt", { online: true });
+  assert.ok(offline.includes("--offline"));
+  assert.ok(!online.includes("--offline"));
+  assert.deepEqual(
+    offline.filter((arg) => arg !== "--offline"),
+    online,
+  );
+  assert.ok(!online.includes("--accept"));
+  assert.equal(online.at(-1), "files.txt");
+});
+
+test("link checking rejects an incomplete-mode waiver", () => {
+  const result = spawnSync(
+    process.execPath,
+    ["tools/docs/cli.mjs", "links", "--allow-incomplete"],
+    { cwd: root, encoding: "utf8", timeout: 10_000 },
+  );
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /links accepts only --online/u);
+});
+
 test("locked prose spelling rejects a real typo without changing source", () => {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-spelling-test-"));
   try {

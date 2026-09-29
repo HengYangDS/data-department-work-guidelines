@@ -133,8 +133,13 @@ relaxation must preserve immutable Actions, read-only token scope, exact tag
 checkout, the host matrix, offline acquisition before installation, and the
 full verifier afterward. External link health remains a separately bounded
 online observation; it must not make the offline verifier depend on a network
-or be reported as checked when it was not run. No numeric coverage target is
-invented from a single coverage value.
+or be reported as checked when it was not run. A live check of the prepared
+`v5.0.7` source returned two 404s, both at comparison links for the unpublished
+tag. That is a release-stage dependency, not a reason to accept 404: the
+existing `links` command gains an explicit `--online` mode for use after both
+tags exist, while its default and `verify` remain offline. Both modes use the
+same pinned lychee and current Markdown inventory. No numeric coverage target
+is invented from a single coverage value.
 
 The focused check accepted a label-only step change and rejected a sixth
 executable `node --version` step with the declared exact-topology error. An

@@ -25,3 +25,25 @@ command to achieve this presentation.
 - **THEN** installed-product registry validation or repository admission rejects
   the edit
 - **AND THEN** a local rendering improvement alone cannot authorize the change.
+
+### Requirement: Live links qualify the published edition
+
+Source verification SHALL keep pinned lychee's local link and fragment checks
+offline. The release route SHALL expose a separate, explicit live check of the
+same current Markdown inventory after the version tag exists on both Forges.
+Broken external links, including a 404 for a comparison URL, SHALL remain a
+failure rather than an accepted status or an unreported exclusion.
+
+#### Scenario: A version is prepared but not tagged
+
+- **WHEN** the source has a prepared Changelog entry for an unpublished tag
+- **THEN** offline source verification can pass without network access
+- **AND THEN** a live 404 for a future comparison URL cannot be called a
+  successful release-link check.
+
+#### Scenario: The version tag is published
+
+- **WHEN** both remote tags exist and release qualification runs
+- **THEN** the explicit live link check uses the pinned lychee and current
+  Markdown inventory
+- **AND THEN** any broken external link prevents a complete release claim.

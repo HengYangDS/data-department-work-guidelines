@@ -20,6 +20,8 @@ being relabeled as formal SemVer releases.
   bytes go to both Forges; independent rebuilds are not claimed byte-identical.
 - Restored the follow-up rule: keep the subject, definitions, and evaluation
   criteria stable, or disclose and justify a changed frame.
+- Restored post-tag live link qualification without weakening offline source
+  verification or accepting a future comparison URL's 404.
 
 ## [5.0.6] - 2026-09-29
 

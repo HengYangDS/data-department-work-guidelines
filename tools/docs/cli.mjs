@@ -98,8 +98,13 @@ try {
       checkSpelling();
       break;
     case "links":
-      if (arguments_.length) throw new Error("links accepts no arguments");
-      checkLinks();
+      if (
+        arguments_.length > 1 ||
+        (arguments_.length === 1 && arguments_[0] !== "--online")
+      ) {
+        throw new Error("links accepts only --online");
+      }
+      checkLinks({ online: arguments_[0] === "--online" });
       break;
     case "changelog":
       if (arguments_.length) throw new Error("changelog accepts no arguments");
@@ -120,7 +125,7 @@ try {
       break;
     default:
       throw new Error(
-        "usage: node tools/docs/cli.mjs verify|check|format|lint|prose|links|changelog|boundary|navigation|test",
+        "usage: node tools/docs/cli.mjs verify|check|format|lint|prose|links [--online]|changelog|boundary|navigation|test",
       );
   }
 } catch (error) {
