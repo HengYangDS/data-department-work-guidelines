@@ -11,6 +11,14 @@ being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [5.0.7] - 2026-09-29
+
+### Fixed
+
+- Documented the source-bound offline bundle build, signed dual-Forge release
+  order, and separate retrieved-asset and host checks. The same frozen bundle
+  bytes go to both Forges; independent rebuilds are not claimed byte-identical.
+
 ## [5.0.6] - 2026-09-29
 
 ### Fixed
@@ -172,7 +180,8 @@ being relabeled as formal SemVer releases.
   verification sequence while keeping local, GitLab, and GitHub results separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.6...main
+[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.7...main
+[5.0.7]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.6...v5.0.7
 [5.0.6]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.5...v5.0.6
 [5.0.5]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.4...v5.0.5
 [5.0.4]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.3...v5.0.4
