@@ -114,6 +114,20 @@ object, but reuse bundle bytes only if their declared inputs still match. The
 alternative, a new release orchestrator, duplicates existing native operations
 without an observed gap.
 
+The package-manager supply needs a separate decision before this edition is
+frozen. On 2026-09-29, npm's stable `latest` is 12.1.0, while the selected Node
+26.10.0 installation supplies npm 11.20.0. An isolated npm 12 checkout passed
+installation and all 79 repository tests, and its pinned package ran from an
+offline cache. Both npm versions nevertheless bundle the same two moderate
+`ip-address` and `undici` advisories; npm reports that its bundled dependencies
+cannot be repaired by `npm audit fix`. Adding npm 12 to the application lock
+would fail the existing hard audit, while leaving either version outside that
+lock does not make the toolchain vulnerability-free. A green application audit
+must not be described as an audit of Node's bundled npm. Keep the current
+candidate's runtime declaration until Task 2.5 qualifies one current, portable
+toolchain without concealing this distinction; then refresh the bundle and
+host evidence from the selected source.
+
 ### Keep metadata authority upstream and delivery independent
 
 Do not strip YAML while the installed ETHOS registry requires it. Ask the ETHOS
