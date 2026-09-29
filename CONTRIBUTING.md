@@ -148,8 +148,8 @@ grant Change authority.
    `git tag -v vX.Y.Z`. Use `ethos publish --json` and its current continuation
    to publish the exact admitted `dev`, `main`, and tag refs to each peer.
    Re-read both remote refs before creating either Release; GitLab's SSH remote
-   does not by itself identify its HTTP API host or port. Set `GITLAB_HOST` in
-   the caller's environment to the configured API host and port, not the SSH
+   does not identify the configured API scheme, host, or port. Set `GITLAB_HOST`
+   in the caller's environment to the configured API host and port, not the SSH
    port. Check that `glab auth status` shows the administrator-supplied API
    scheme and port, then verify `glab repo view GROUP/PROJECT`. For unattended
    calls, set `GH_PROMPT_DISABLED=1` or `GLAB_NO_PROMPT=1` as applicable, close
