@@ -11,6 +11,8 @@ being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [5.0.6] - 2026-09-29
+
 ### Fixed
 
 - Bound the direct OpenSpec command to the installed locked package instead of
@@ -170,7 +172,8 @@ being relabeled as formal SemVer releases.
   verification sequence while keeping local, GitLab, and GitHub results separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.5...main
+[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.6...main
+[5.0.6]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.5...v5.0.6
 [5.0.5]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.4...v5.0.5
 [5.0.4]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.3...v5.0.4
 [5.0.3]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.2...v5.0.3

@@ -18,22 +18,21 @@ Forge job proves another platform's result.
 
 ## Decisions
 
-### Freeze after product and adopter acceptance
+### Keep release proof and product acceptance separate
 
-Run the accepted ETHOS product's installed public commands in this repository,
-AI Gateway CLI, and Codex Responses Proxy under their owners. Check positive
-and adverse cases, including absent or false evidence and duplicate native
-execution. Preserve their independent work lanes; do not install a new
-Git-common runtime into a foreign active lane as a shortcut. Only then freeze
-this repository's release inputs. A local fixture or green ETHOS source proof
-is not an adopter result.
+ETHOS owns the common quality floor and three-adopter positive and adverse
+acceptance in its `proof-throughput` Change. That obligation remains open for
+the overall program, but the other adopters' results are not release evidence
+for this repository. They neither replace its exact-source proof nor
+establish its bundle or Forge effects. This Change verifies the repository
+under its accepted installed ETHOS runtime and its own native behavior and
+static evidence. It does not claim common-floor parity or mutate another
+adopter's Work Lane.
 
-The locked supply and a candidate bundle may be prepared before that product
-acceptance. They are not a final release qualification: after acceptance,
-recheck the committed version, lockfile, lychee manifest, and runtime majors
-against the bundle record; rebuild and rerun affected checks if any input
-changed. Keep the Changelog's changes Unreleased until the release date is
-known and the final source is ready to sign.
+Before final source freeze, recheck the committed version, lockfile, lychee
+manifest, and runtime majors against the prepared bundle record; rebuild and
+rerun affected checks if any input changed. The dated Changelog section is a
+prepared edition, not a release claim until the final signed tag exists.
 
 Keep document checks and native behavior evidence separate:
 `node tools/docs/cli.mjs check` validates repository source properties without
@@ -46,11 +45,11 @@ substitute for those native results.
 
 Compare the complete diff since `v5.0.5` with the normative rules, reader and
 Agent routes, and contributor commands. The known CI selector and OpenSpec
-invocation corrections appear compatible and would form a patch edition,
-tentatively `v5.0.6`; a later incompatible finding changes that decision
-before a tag is finalized. `VERSION` may identify the prepared next edition in
-this Work Lane without making it a release. Keep the Changelog's Unreleased
-section honest until the exact source, asset, and release date are ready.
+invocation corrections are compatible fixes and form patch edition `v5.0.6`.
+A later incompatible finding changes that classification before a tag is
+finalized. `VERSION` and the dated Changelog may identify a prepared edition in
+this Work Lane without making it a release; the signed tag and two Forge
+Release objects remain separate effects to observe.
 
 ### Bind the asset to the final source
 
@@ -93,10 +92,10 @@ not pre-checked task boxes.
 
 ## Migration Plan
 
-Reconcile the post-tag diff and prepare the locked bundle in this leased Work
-Lane while ETHOS adopter acceptance progresses. Revalidate the prepared inputs,
-complete that acceptance, then finalize the dated edition and run local and
-official checks on its final source. Commit and prove that source. Observe
+Reconcile the post-tag diff, revalidate the prepared bundle inputs, and finalize
+the dated edition in this leased Work Lane. Run local and official checks on the
+final source, then commit and prove that source. Keep ETHOS common-floor
+and other-adopter acceptance with their product owner. Observe
 the native land, archive, proof, two-Forge publication, signed tag, release
 assets, full offline matrices, and digest comparison in dependency order.
 Retire only this Change's temporary refs and owned Work Lane after all effects

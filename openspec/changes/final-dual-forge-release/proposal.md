@@ -5,17 +5,18 @@
 The accepted source now contains the canonical GitLab Runner selector and a
 portable, locked OpenSpec command, but the immutable `v5.0.5` tag and offline
 bundle predate both fixes. Reusing that release as evidence for the current
-source would misstate what teams can actually obtain and verify. The remaining
-ETHOS common quality floor must also be consumed by real adopter repositories
-before this source is frozen for a final release.
+source would misstate what teams can actually obtain and verify. The separate
+ETHOS common quality floor remains unfinished. Its product Change owns
+cross-adopter acceptance; this repository's release cannot certify it, and
+waiting for other adopters does not strengthen this source's own proof.
 
 ## What Changes
 
 - Reconcile the exact post-`v5.0.5` diff under SemVer and Keep a Changelog;
   prepare the next compatible edition only after the final source is known.
-- Qualify the common quality floor through the accepted ETHOS product's public
-  commands in this repository, AI Gateway CLI, and Codex Responses Proxy. This
-  Change modifies neither ETHOS nor the other adopters.
+- Prove this repository's exact signed source under its accepted installed
+  ETHOS runtime. Leave common-floor and other-adopter acceptance in ETHOS's
+  product Change; neither this release nor its hosted CI closes that work.
 - Keep the standalone repository verifier complete while leaving Node test
   execution to ETHOS's native behavior provider during proof, not duplicating
   it inside the document gate command.
