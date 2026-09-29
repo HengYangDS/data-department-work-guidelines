@@ -4,13 +4,13 @@
 
 ### Requirement: Release operations are reproducible from the contributor route
 
-The tracked contributor guidance SHALL state the inputs, public commands,
-ordering, and independent observations needed to prepare a signed SemVer
-edition, build and inspect its source-pinned offline bundle, publish the same
-bytes on GitLab and GitHub, and qualify each declared host. It SHALL distinguish
-local source proof, each remote ref and Release object, asset bytes, hosted CI,
-and offline execution. It SHALL not embed an operator credential, private host
-path, cache location, or a second lifecycle command.
+The contributor guide SHALL name the inputs, commands, order, and separate
+checks needed to sign a SemVer edition, build and inspect its source-pinned
+offline bundle, publish identical bytes on GitLab and GitHub, and qualify every
+declared host. It SHALL distinguish local source proof, each remote ref and
+Release, retrieved asset bytes, hosted CI, and offline execution. It SHALL
+embed no operator credential, private host path, cache location, or competing
+lifecycle command.
 
 #### Scenario: A maintainer prepares and publishes a release
 
