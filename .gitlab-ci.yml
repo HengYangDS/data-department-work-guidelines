@@ -17,7 +17,9 @@ docs:verify:
   stage: verify
   timeout: 20m
   tags:
-    - ci-linux-arm64-container
+    - ci-linux-arm64-container-protected
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG'
   interruptible: true
   variables:
     GIT_DEPTH: "0"
@@ -27,6 +29,14 @@ docs:verify:
     - node tools/ci/install-lychee.mjs --gitlab-package
   script:
     - npm run verify
+
+docs:verify:linux:review:
+  extends: docs:verify
+  tags:
+    - ci-linux-arm64-container
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH =~ /^proposal\// && $CI_PIPELINE_SOURCE == "push"'
 
 docs:verify:macos:
   extends: docs:verify
@@ -70,7 +80,7 @@ offline:verify:
   stage: verify
   timeout: 25m
   tags:
-    - ci-linux-arm64-container
+    - ci-linux-arm64-container-protected
   interruptible: true
   rules:
     - if: '$CI_COMMIT_TAG && $CI_PIPELINE_SOURCE == "web"'

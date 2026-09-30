@@ -3,7 +3,8 @@ import { declaredToolRuntime, readText } from "./runtime.mjs";
 
 const verifier = "npm run verify";
 const auditCommand = "npm audit --audit-level=moderate";
-const gitlabLinuxCapability = "ci-linux-arm64-container";
+const gitlabLinuxProtectedCapability = "ci-linux-arm64-container-protected";
+const gitlabLinuxReviewCapability = "ci-linux-arm64-container";
 const gitlabNativeCapabilities = [
   {
     system: "macos",
@@ -167,7 +168,8 @@ function validateGitLabOffline(gitlab, expectedImage) {
   if (
     job.image !== undefined ||
     gitlab.default?.image !== expectedImage ||
-    JSON.stringify(job.tags) !== JSON.stringify([gitlabLinuxCapability]) ||
+    JSON.stringify(job.tags) !==
+      JSON.stringify([gitlabLinuxProtectedCapability]) ||
     job.stage !== "verify" ||
     job.allow_failure !== undefined ||
     job.when !== undefined ||
@@ -231,6 +233,27 @@ function validateGitLabNativeJobs(gitlab, base, kind, lane) {
   });
 }
 
+function validateGitLabLinuxReview(gitlab) {
+  const job = gitlab["docs:verify:linux:review"];
+  if (
+    !job ||
+    typeof job !== "object" ||
+    Array.isArray(job) ||
+    Object.keys(job).sort().join(",") !== "extends,rules,tags" ||
+    job.extends !== "docs:verify" ||
+    !Array.isArray(job.tags) ||
+    job.tags.length !== 1 ||
+    typeof job.tags[0] !== "string" ||
+    job.tags[0] !== gitlabLinuxReviewCapability ||
+    JSON.stringify(job.rules) !== JSON.stringify(reviewRules)
+  ) {
+    throw new Error(
+      "GitLab Linux review runner must inherit the full verifier on a separate review capability",
+    );
+  }
+  return job.tags[0];
+}
+
 export function validateCi(
   githubSource,
   gitlabSource,
@@ -249,6 +272,7 @@ export function validateCi(
     "stages",
     "default",
     "docs:verify",
+    "docs:verify:linux:review",
     "offline:verify",
     ...gitlabNativeCapabilities.flatMap(({ system }) => [
       `docs:verify:${system}`,
@@ -326,14 +350,19 @@ export function validateCi(
     throw new Error("GitLab source timeout must match its 20m peer");
   }
   if (
+    gitlabJob &&
+    JSON.stringify(gitlabJob.rules) !== JSON.stringify(protectedRules)
+  ) {
+    throw new Error("GitLab Linux source job must select only protected refs");
+  }
+  if (
     !gitlabJob ||
     gitlabJob.image !== undefined ||
     !imagePattern.test(gitlabImage ?? "") ||
     JSON.stringify(gitlabJob.tags) !==
-      JSON.stringify([gitlabLinuxCapability]) ||
+      JSON.stringify([gitlabLinuxProtectedCapability]) ||
     gitlabJob.stage !== "verify" ||
     gitlabJob.interruptible !== true ||
-    gitlabJob.rules !== undefined ||
     gitlabJob.allow_failure !== undefined ||
     gitlabJob.when !== undefined
   ) {
@@ -368,15 +397,13 @@ export function validateCi(
     );
   }
   const gitlabHosts = [
-    gitlabLinuxCapability,
+    gitlabLinuxProtectedCapability,
     ...validateGitLabNativeJobs(gitlab, "docs:verify", "source", "protected"),
   ];
-  const gitlabReviewHosts = validateGitLabNativeJobs(
-    gitlab,
-    "docs:verify",
-    "source",
-    "review",
-  );
+  const gitlabReviewHosts = [
+    validateGitLabLinuxReview(gitlab),
+    ...validateGitLabNativeJobs(gitlab, "docs:verify", "source", "review"),
+  ];
   const gitlabOfflineHosts = [
     validateGitLabOffline(gitlab, gitlabImage),
     ...validateGitLabNativeJobs(gitlab, "offline:verify", "offline", "offline"),
@@ -400,6 +427,6 @@ export function checkCi() {
     readText(".github/workflows/offline-verify.yml"),
   );
   console.log(
-    `PASS CI contract: GitHub ${result.hosts.length} hosted OS; GitLab ${result.gitlabHosts.length} OS with ${result.gitlabReviewHosts.length} separate native review selectors; shared ${result.verifier}; hosted execution unverified`,
+    `PASS CI contract: GitHub ${result.hosts.length} hosted OS; GitLab ${result.gitlabHosts.length} OS with ${result.gitlabReviewHosts.length} separate review selectors; shared ${result.verifier}; hosted execution unverified`,
   );
 }

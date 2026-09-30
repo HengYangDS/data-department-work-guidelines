@@ -139,12 +139,14 @@ bundled npm; do not turn one into a claim about the other.
 
 GitHub declares Linux, macOS, and Windows hosted jobs. GitLab declares
 project-locked Linux ARM64 container, macOS ARM64 shell, and Windows ARM64 shell
-capabilities for both source and post-publication offline verification. Native
-proposal and merge-request jobs use separate review capabilities; protected
-`dev`, `main`, and release jobs use separate trusted capabilities. Their Runner
-accounts, workspaces, and caches must not cross that boundary. An open proposal
-uses its merge-request pipeline instead of a duplicate branch-push pipeline.
-All native Runners require project locking and tagged-only scheduling;
+capabilities for both source and post-publication offline verification. Linux,
+macOS, and Windows proposal and merge-request jobs use review capabilities;
+protected `dev`, `main`, and release jobs use separate trusted capabilities.
+Their Runner identities, accounts, workspaces, caches, and credential reachability
+must not cross that boundary. A Linux container or a different tag on one Runner
+is not an exception. An open proposal uses its merge-request pipeline instead
+of a duplicate branch-push pipeline.
+All GitLab Runners require project locking and tagged-only scheduling;
 protected Runners also require GitLab `ref_protected` access. The `dev`, `main`,
 and `v*` refs must remain protected.
 An untrusted proposal can request a tag in its own YAML, so the Runner's native

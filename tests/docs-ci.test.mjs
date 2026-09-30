@@ -30,7 +30,7 @@ test("both providers invoke one verifier on declared hosts", () => {
     "windows-latest",
   ]);
   assert.deepEqual(result.gitlabHosts, [
-    "ci-linux-arm64-container",
+    "ci-linux-arm64-container-protected",
     "ci-macos-arm64-shell",
     "ci-windows-arm64-shell",
   ]);
@@ -179,7 +179,7 @@ test("GitLab offline CI rejects inherited setup and remote includes", () => {
 
 test("GitLab native review and protected jobs use separate capabilities", () => {
   const result = validateCi(github, gitlab, offline);
-  assert.deepEqual(result.gitlabReviewHosts, [
+  assert.deepEqual(result.gitlabReviewHosts.slice(1), [
     "ci-macos-arm64-review",
     "ci-windows-arm64-review",
   ]);
@@ -200,6 +200,48 @@ test("GitLab native review and protected jobs use separate capabilities", () => 
         if: '$CI_COMMIT_BRANCH =~ /^proposal\\// && $CI_PIPELINE_SOURCE == "push"',
       },
     ]);
+  }
+});
+
+test("GitLab Linux review and protected jobs use separate capabilities", () => {
+  const result = validateCi(github, gitlab, offline);
+  const pipeline = YAML.parse(gitlab);
+  const trusted = pipeline["docs:verify"];
+  const review = pipeline["docs:verify:linux:review"];
+  const offlineJob = pipeline["offline:verify"];
+  assert.ok(review, "Linux review job is missing");
+  assert.equal(result.gitlabReviewHosts.length, 3);
+  assert.deepEqual(trusted.rules, [
+    {
+      if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG',
+    },
+  ]);
+  assert.deepEqual(review.rules, [
+    { if: '$CI_PIPELINE_SOURCE == "merge_request_event"' },
+    {
+      if: '$CI_COMMIT_BRANCH =~ /^proposal\\// && $CI_PIPELINE_SOURCE == "push"',
+    },
+  ]);
+  assert.notDeepEqual(trusted.tags, review.tags);
+  assert.deepEqual(offlineJob.tags, trusted.tags);
+
+  for (const change of [
+    (source) => delete source["docs:verify:linux:review"],
+    (source) => delete source["docs:verify"].rules,
+    (source) =>
+      (source["docs:verify:linux:review"].rules = source["docs:verify"].rules),
+    (source) =>
+      (source["docs:verify:linux:review"].inherit = { default: false }),
+  ]) {
+    assert.throws(
+      () =>
+        validateCi(
+          github,
+          changedGitLab("docs:verify", (source) => change(source)),
+          offline,
+        ),
+      /GitLab .*runner|GitLab Linux/u,
+    );
   }
 });
 
@@ -394,40 +436,34 @@ test("GitLab CI cannot regress to a GitHub-hosted tool download", () => {
   );
 });
 
-test("GitLab jobs require one canonical ARM64 container capability", () => {
-  const canonical = gitlab;
-  const offlineTag =
-    /(offline:verify:[\s\S]*?  tags:\n)    - ci-linux-arm64-container\n/u;
-  assert.doesNotMatch(canonical, /ci-linux-arm64-docker/u);
-  assert.match(canonical, offlineTag);
+test("GitLab Linux capabilities are exact and role-specific", () => {
+  const result = validateCi(github, gitlab, offline);
+  assert.equal(result.gitlabHosts[0], "ci-linux-arm64-container-protected");
+  assert.equal(result.gitlabReviewHosts[0], "ci-linux-arm64-container");
   assert.equal(
-    validateCi(github, canonical, offline).gitlabOfflineHosts[0],
-    "ci-linux-arm64-container",
+    result.gitlabOfflineHosts[0],
+    "ci-linux-arm64-container-protected",
   );
-  for (const changed of [
-    canonical.replaceAll("ci-linux-arm64-container", "ci-linux-arm64-docker"),
-    canonical.replace(
-      "    - ci-linux-arm64-container\n",
-      "    - ci-linux-arm64-docker\n",
-    ),
-    canonical.replace("    - ci-linux-arm64-container\n", ""),
-    canonical.replace(
-      "    - ci-linux-arm64-container\n",
-      "    - ci-linux-arm64-container\n    - ci-linux-arm64-docker\n",
-    ),
-    canonical.replace(offlineTag, "$1"),
-    canonical.replace(
-      offlineTag,
-      "$1    - ci-linux-arm64-container\n    - ci-linux-arm64-docker\n",
-    ),
-    canonical.replace(
-      /(offline:verify:[\s\S]*?    - )ci-linux-arm64-container/u,
-      "$1ci-linux-arm64-docker",
-    ),
+  for (const [jobName, tags] of [
+    ["docs:verify", ["ci-linux-arm64-container"]],
+    ["docs:verify", ["ci-linux-arm64-docker"]],
+    ["docs:verify:linux:review", ["ci-linux-arm64-container-protected"]],
+    ["docs:verify:linux:review", ["ci-linux-arm64-docker"]],
+    ["offline:verify", ["ci-linux-arm64-container"]],
+    [
+      "offline:verify",
+      ["ci-linux-arm64-container-protected", "ci-linux-arm64-container"],
+    ],
   ]) {
     assert.throws(
-      () => validateCi(github, changed, offline),
-      /GitLab.*runner/u,
+      () =>
+        validateCi(
+          github,
+          changedGitLab(jobName, (_pipeline, job) => (job.tags = tags)),
+          offline,
+        ),
+      /GitLab.*(?:runner|capability)/u,
+      jobName,
     );
   }
 });
@@ -488,7 +524,10 @@ test("offline release CI runs the source-pinned bundle on four hosted systems", 
 
 test("GitLab offline release CI runs only after a release asset is available", () => {
   const result = validateCi(github, gitlab, offline);
-  assert.equal(result.gitlabOfflineHosts[0], "ci-linux-arm64-container");
+  assert.equal(
+    result.gitlabOfflineHosts[0],
+    "ci-linux-arm64-container-protected",
+  );
   for (const [changed, reason] of [
     [gitlab.replace(/\noffline:verify:[\s\S]*$/u, ""), /GitLab offline/u],
     [
