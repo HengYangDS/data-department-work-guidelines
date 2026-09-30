@@ -19,6 +19,8 @@ in GitLab's post-publication offline-bundle check.
   proposal-push pipelines once review is open.
 - Supply GitLab's own package registry with the exact pinned macOS and Windows
   lychee archives; do not add a GitHub fallback to make a job green.
+- Refresh the locked documentation toolchain to the latest stable CSpell
+  release before freezing the next edition's offline bundle.
 - Admit each project- and trust-boundary-specific runner and its Node 26
   toolchain before making the new graph required; observe real jobs on both
   Forges before claiming parity or publishing a replacement edition.
@@ -40,6 +42,7 @@ None.
 ## Impact
 
 The existing GitLab workflow, CI contract and negative tests, repository
-governance page, and project-specific runner admission are affected. The
-repository's Node verifier and pinned offline bundle remain the single tool
-and artifact owners; no new validation framework is introduced.
+governance page, locked npm supply, offline bundle record, and project-specific
+runner admission are affected. The repository's Node verifier and pinned
+offline bundle remain the single tool and artifact owners; no new validation
+framework is introduced.

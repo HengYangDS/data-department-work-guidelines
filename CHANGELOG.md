@@ -11,6 +11,18 @@ being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [5.2.0] - 2026-09-30
+
+### Added
+
+- Declared GitLab macOS and Windows source and offline-release jobs alongside
+  Linux, with separate native review and protected runner routes. Actual
+  platform qualification still requires those jobs to run successfully.
+
+### Changed
+
+- Refreshed the locked CSpell release to 10.3.6 for the next offline bundle.
+
 ## [5.1.0] - 2026-09-29
 
 ### Added
@@ -195,7 +207,8 @@ being relabeled as formal SemVer releases.
   verification sequence while keeping local, GitLab, and GitHub results separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.1.0...main
+[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.0...main
+[5.2.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.1.0...v5.2.0
 [5.1.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.6...v5.1.0
 [5.0.6]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.5...v5.0.6
 [5.0.5]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.4...v5.0.5

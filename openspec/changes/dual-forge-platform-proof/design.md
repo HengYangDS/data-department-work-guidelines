@@ -65,6 +65,17 @@ execution. Final evidence requires real source jobs on each Forge at the same
 signed commit, then each Forge's post-publication offline jobs using the same
 digest-verified release bundle. No synthetic human-use trial is added.
 
+### Prepare a compatible edition from frozen supply
+
+The public guideline duties, reader routes, and contributor commands remain
+available. GitLab gains additional platform qualification rather than losing
+an existing route, so the next edition is a compatible minor increment to
+5.2.0 under the repository's SemVer contract. The current stable CSpell
+release is 10.3.6; refresh the exact npm pin and lock before building the
+version-bound offline bundle. Record the builder's actual digest, not a guessed
+value. The dated Changelog heading is a prepared edition, not a signed tag or
+Forge Release; update its date if publication occurs later.
+
 ## Risks and Trade-offs
 
 - **Native runner unavailable or untrusted:** Hold source integration and
