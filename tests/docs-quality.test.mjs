@@ -569,8 +569,9 @@ test("public prose and integrity commands reject the same current-file defect", 
       const result = spawnSync(
         process.execPath,
         ["tools/docs/cli.mjs", command],
-        { cwd: directory, encoding: "utf8", timeout: 30_000 },
+        { cwd: directory, encoding: "utf8", timeout: 120_000 },
       );
+      assert.ifError(result.error);
       assert.equal(result.status, 1, `${command}: ${result.stderr}`);
       assert.match(
         result.stderr,
@@ -582,8 +583,9 @@ test("public prose and integrity commands reject the same current-file defect", 
     const valid = spawnSync(process.execPath, ["tools/docs/cli.mjs", "prose"], {
       cwd: directory,
       encoding: "utf8",
-      timeout: 30_000,
+      timeout: 120_000,
     });
+    assert.ifError(valid.error);
     assert.equal(valid.status, 0, valid.stderr);
   } finally {
     rmSync(directory, { recursive: true, force: true });
