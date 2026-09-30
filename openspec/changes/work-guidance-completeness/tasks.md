@@ -24,7 +24,7 @@
 
 ## 3. Publish and clean up
 
-- [ ] 3.1 Prepare the patch version, Changelog, charter, and source-pinned
+- [x] 3.1 Prepare the patch version, Changelog, charter, and source-pinned
       offline bundle; verify a clean checkout and the release cut.
 - [ ] 3.2 Verify both Forge source matrices for the release cut, publish the
       signed tag and identical release assets, and run every declared offline
