@@ -12,6 +12,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [5.2.2] - 2026-09-30
+
 ### Changed
 
 - Refreshed compatible transitive packages in the locked documentation
@@ -229,7 +231,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   verification sequence while keeping local, GitLab, and GitHub results separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.1...main
+[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.2...main
+[5.2.2]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.1...v5.2.2
 [5.2.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.0...v5.2.1
 [5.2.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.1.0...v5.2.0
 [5.1.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.6...v5.1.0
