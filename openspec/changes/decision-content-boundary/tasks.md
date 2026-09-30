@@ -11,7 +11,7 @@
 
 ## 2. Qualify and Deliver
 
-- [ ] 2.1 Pass format, lint, prose, spelling, links, boundary tests, the full
+- [x] 2.1 Pass format, lint, prose, spelling, links, boundary tests, the full
       suite, official OpenSpec, plan and installed exact-HEAD proof.
 - [ ] 2.2 Prepare and accept v6.1.1 under SemVer with one inspected offline
       bundle; pass both Forge source matrices at the exact release cut.

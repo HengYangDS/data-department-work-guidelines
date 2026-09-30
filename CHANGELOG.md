@@ -12,6 +12,14 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+### Fixed
+
+- Decision records now reject quoted or list-nested terminal commands, task
+  checkboxes, and code that imitates required section headings. The existing
+  Markdown parser preserves meaningful rationale and evidence links.
+- Raw HTML cannot hide execution or progress content in decision records; use
+  ordinary Markdown for those records. Department duties remain unchanged.
+
 ## [6.1.0] - 2026-10-01
 
 ### Added
