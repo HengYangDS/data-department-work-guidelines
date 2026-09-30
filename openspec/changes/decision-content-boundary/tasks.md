@@ -13,11 +13,11 @@
 
 - [x] 2.1 Pass format, lint, prose, spelling, links, boundary tests, the full
       suite, official OpenSpec, plan and installed exact-HEAD proof.
-- [ ] 2.2 Prepare and accept v6.1.1 under SemVer with one inspected offline
+- [x] 2.2 Prepare and accept v6.1.1 under SemVer with one inspected offline
       bundle; pass both Forge source matrices at the exact release cut.
-- [ ] 2.3 Publish the same signed tag and release notes on both Forges; download
+- [x] 2.3 Publish the same signed tag and release notes on both Forges; download
       both assets, compare actual hashes and pass every declared offline host.
-- [ ] 2.4 Inspect the published reader route and live links; keep source,
+- [x] 2.4 Inspect the published reader route and live links; keep source,
       installation, publication and operational-use claims separate.
 
 ## Post-archive Closeout
