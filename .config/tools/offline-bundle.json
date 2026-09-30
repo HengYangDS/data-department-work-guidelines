@@ -1,9 +1,9 @@
 {
   "schemaVersion": 2,
-  "version": "5.2.0",
+  "version": "5.2.1",
   "lockSha256": "4dc866ec1555743894473196f53024c995f6b049227dfd4e1589915b2b30ede9",
   "lycheeSha256": "2f5ae263b86dd668b682428a3cd0303d4ef9779f17ad757f9d1b384e5ce84d75",
   "nodeMajor": 26,
-  "fileName": "data-department-work-guidelines-v5.2.0-offline-tools.tar.gz",
-  "sha256": "7da07385f1d05a41a6cd4d5527e11af55f61bc1e513aef6f99acb66eef494682"
+  "fileName": "data-department-work-guidelines-v5.2.1-offline-tools.tar.gz",
+  "sha256": "99980979e88f0ce5db238ebee70a5ac5abcc575d04c9d1fdc1ceaeb3813dfdcb"
 }
