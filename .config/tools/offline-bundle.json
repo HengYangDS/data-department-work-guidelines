@@ -1,10 +1,10 @@
 {
   "schemaVersion": 3,
-  "version": "6.0.0",
-  "packageJsonSha256": "671c3306756f68ebc918adaf70c02ed39fd5e621c06ff7e2dacea77b1d53782c",
+  "version": "6.0.1",
+  "packageJsonSha256": "9bc172efc9c3e6ceece7002243bfae14b86f90b13c62d7a880702d600247a055",
   "lockSha256": "25d6b431458340e233ec25b848fadb6133184947811e36b29d9a58cab9f78248",
   "lycheeSha256": "2f5ae263b86dd668b682428a3cd0303d4ef9779f17ad757f9d1b384e5ce84d75",
   "nodeMajor": 26,
-  "fileName": "data-department-work-guidelines-v6.0.0-offline-tools.tar.gz",
-  "sha256": "ddf7d0617819250ada2bbd342cbf56290096ee6f47338d1f0fa76eef8cc20a91"
+  "fileName": "data-department-work-guidelines-v6.0.1-offline-tools.tar.gz",
+  "sha256": "5cb31fc49e23ca8aff5a593fea0b3acaca974488848b04a554f7b3a05b33bf78"
 }

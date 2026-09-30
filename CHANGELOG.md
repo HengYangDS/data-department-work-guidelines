@@ -12,6 +12,14 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [6.0.1] - 2026-10-01
+
+### Changed
+
+- Updated the native package-manager requirement to stable npm 12.2.0 and
+  rebuilt source-bound offline supply. Department rules and tool dependencies
+  remain unchanged.
+
 ## [6.0.0] - 2026-10-01
 
 ### Changed
@@ -270,7 +278,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   verification sequence while keeping local, GitLab, and GitHub results separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.0.0...main
+[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.0.1...main
+[6.0.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.0.0...v6.0.1
 [6.0.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.4...v6.0.0
 [5.2.4]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.3...v5.2.4
 [5.2.3]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.2...v5.2.3

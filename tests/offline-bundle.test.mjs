@@ -1025,7 +1025,7 @@ test("npm owns exact package-manager admission without duplicate fields", () => 
   );
   assert.deepEqual(manifest.devEngines?.packageManager, {
     name: "npm",
-    version: "12.1.0",
+    version: "12.2.0",
     onFail: "error",
   });
   assert.equal(manifest.packageManager, undefined);
