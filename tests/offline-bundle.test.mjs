@@ -560,6 +560,15 @@ test("an empty npm cache cannot satisfy the actual offline install", () => {
     const globalConfig = path.join(directory, "empty-global.npmrc");
     writeFileSync(userConfig, "");
     writeFileSync(globalConfig, "");
+    // Windows environment keys are case-insensitive; an inherited
+    // NPM_CONFIG_CACHE can otherwise override this test's empty cache.
+    const inheritedEnvironment = Object.fromEntries(
+      Object.entries(process.env).filter(
+        ([key]) =>
+          !/^npm_config_/iu.test(key) &&
+          !["NPM_TOKEN", "NODE_AUTH_TOKEN"].includes(key),
+      ),
+    );
     const result = spawnSync(
       process.execPath,
       [
@@ -575,13 +584,14 @@ test("an empty npm cache cannot satisfy the actual offline install", () => {
         encoding: "utf8",
         timeout: 30_000,
         env: {
-          ...process.env,
+          ...inheritedEnvironment,
           npm_config_cache: cache,
           npm_config_userconfig: userConfig,
           npm_config_globalconfig: globalConfig,
           npm_config_offline: "true",
           npm_config_audit: "false",
           npm_config_fund: "false",
+          npm_config_update_notifier: "false",
         },
       },
     );
