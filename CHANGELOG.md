@@ -26,6 +26,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 - Rejected GitHub source workflows that omit an accepted or proposal trigger
   while retaining an otherwise valid three-system job.
+- Rejected hidden job and step skips, tolerated failures, and matrix exclusions
+  in hosted checks, plus hidden GitLab global setup or includes.
 
 ## [5.1.0] - 2026-09-29
 

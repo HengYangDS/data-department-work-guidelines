@@ -73,10 +73,12 @@ protected path as proof that the other two are protected.
 
 Extend the existing YAML-parsing CI contract to reject a missing native job,
 wrong capability, trust-route overlap, Docker inheritance, script override,
-`allow_failure`, manual-only bypass, or a missing workflow boundary. Keep the
-current GitHub hosted and
-offline matrices as
-independent peers. GitLab lint confirms only that the submitted YAML resolves
+`allow_failure`, manual-only bypass, or a missing workflow boundary. Reject
+GitHub job and step conditions, tolerated failures, and matrix exclusions that
+can hide a declared host. Reject extra GitLab defaults, global setup, or
+includes that can silently alter offline supply.
+GitHub source and offline hosted matrices remain independent peers. GitLab lint
+confirms only that the submitted YAML resolves
 into the intended jobs; it cannot prove runner scheduling, toolchain, or
 execution. Final evidence requires real source jobs on each Forge at the same
 signed commit, then each Forge's post-publication offline jobs using the same

@@ -63,6 +63,120 @@ test("GitHub source CI rejects missing or extra branch routes", () => {
   );
 });
 
+test("GitHub source verification cannot be skipped or lose a host", () => {
+  for (const [name, change, reason] of [
+    [
+      "job condition",
+      (job) => (job.if = false),
+      /GitHub source job cannot skip/u,
+    ],
+    [
+      "allowed failure",
+      (job) => (job["continue-on-error"] = true),
+      /GitHub source job cannot skip/u,
+    ],
+    [
+      "excluded host",
+      (job) => (job.strategy.matrix.exclude = [{ os: "windows-latest" }]),
+      /GitHub source host matrix/u,
+    ],
+    [
+      "skipped verifier",
+      (job) => (job.steps.at(-1).if = false),
+      /GitHub source job cannot skip/u,
+    ],
+    [
+      "ignored verifier failure",
+      (job) => (job.steps.at(-1)["continue-on-error"] = true),
+      /GitHub source job cannot skip/u,
+    ],
+  ]) {
+    const workflow = YAML.parse(github);
+    change(workflow.jobs.verify);
+    assert.throws(
+      () => validateCi(YAML.stringify(workflow), gitlab, offline),
+      reason,
+      name,
+    );
+  }
+});
+
+test("GitHub offline verification cannot be skipped or lose a host", () => {
+  for (const [name, change, reason] of [
+    [
+      "job condition",
+      (job) => (job.if = false),
+      /GitHub offline job cannot skip/u,
+    ],
+    [
+      "allowed failure",
+      (job) => (job["continue-on-error"] = true),
+      /GitHub offline job cannot skip/u,
+    ],
+    [
+      "excluded host",
+      (job) => (job.strategy.matrix.exclude = [{ os: "windows-latest" }]),
+      /GitHub offline host matrix/u,
+    ],
+    [
+      "skipped verifier",
+      (job) => (job.steps.at(-1).if = false),
+      /GitHub offline job cannot skip/u,
+    ],
+    [
+      "ignored verifier failure",
+      (job) => (job.steps.at(-1)["continue-on-error"] = true),
+      /GitHub offline job cannot skip/u,
+    ],
+  ]) {
+    const workflow = YAML.parse(offline);
+    change(workflow.jobs.verify);
+    assert.throws(
+      () => validateCi(github, gitlab, YAML.stringify(workflow)),
+      reason,
+      name,
+    );
+  }
+});
+
+test("GitLab offline CI rejects inherited setup and remote includes", () => {
+  assert.throws(
+    () =>
+      validateCi(
+        github,
+        changedGitLab("default", (pipeline) => {
+          pipeline.default.before_script = ["npm ci"];
+        }),
+        offline,
+      ),
+    /GitLab default must contain only the pinned image/u,
+  );
+  assert.throws(
+    () =>
+      validateCi(
+        github,
+        changedGitLab("workflow", (pipeline) => {
+          pipeline.include = [{ project: "foreign/ci", file: "pipeline.yml" }];
+        }),
+        offline,
+      ),
+    /GitLab pipeline cannot import external CI configuration/u,
+  );
+  for (const [name, change] of [
+    ["global pre-script", (pipeline) => (pipeline.before_script = ["npm ci"])],
+    [
+      "global variables",
+      (pipeline) => (pipeline.variables = { NPM_CONFIG_OFFLINE: "false" }),
+    ],
+  ]) {
+    assert.throws(
+      () => validateCi(github, changedGitLab("workflow", change), offline),
+      /GitLab pipeline cannot add unchecked global setup/u,
+      name,
+    );
+  }
+});
+
 test("GitLab native review and protected jobs use separate capabilities", () => {
   const result = validateCi(github, gitlab, offline);
   assert.deepEqual(result.gitlabReviewHosts, [

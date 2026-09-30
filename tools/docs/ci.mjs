@@ -61,6 +61,33 @@ function requireStep(steps, prefix) {
   return { index, step: steps[index] };
 }
 
+function requireHostedJobExecution(job, kind, hosts) {
+  const strategy = job.strategy ?? {};
+  const matrix = strategy.matrix ?? {};
+  if (
+    strategy["fail-fast"] !== false ||
+    Object.keys(strategy).sort().join(",") !== "fail-fast,matrix" ||
+    Object.keys(matrix).join(",") !== "os" ||
+    JSON.stringify(matrix.os) !== JSON.stringify(hosts) ||
+    job["runs-on"] !== "${{ matrix.os }}"
+  ) {
+    throw new Error(
+      `GitHub ${kind} host matrix must be exact on hosted runners`,
+    );
+  }
+  if (
+    job.if !== undefined ||
+    job["continue-on-error"] !== undefined ||
+    (Array.isArray(job.steps) &&
+      job.steps.some(
+        (step) =>
+          step.if !== undefined || step["continue-on-error"] !== undefined,
+      ))
+  ) {
+    throw new Error(`GitHub ${kind} job cannot skip or ignore verification`);
+  }
+}
+
 function validateOfflineWorkflow(source, nodeMajor) {
   const workflow = parseYaml(source, "GitHub offline workflow");
   if (
@@ -74,16 +101,10 @@ function validateOfflineWorkflow(source, nodeMajor) {
     );
   }
   const job = workflow.jobs?.verify;
-  if (
-    workflow.permissions?.contents !== "read" ||
-    !job ||
-    job.container ||
-    JSON.stringify(job.strategy?.matrix?.os) !==
-      JSON.stringify(offlineHostMatrix) ||
-    job["runs-on"] !== "${{ matrix.os }}"
-  ) {
+  if (workflow.permissions?.contents !== "read" || !job || job.container) {
     throw new Error("offline verification must use read-only hosted runners");
   }
+  requireHostedJobExecution(job, "offline", offlineHostMatrix);
   const expectedRef = "${{ github.event.release.tag_name || inputs.tag }}";
   if (job.env?.DDWG_RELEASE_TAG !== expectedRef || job.env?.GH_TOKEN) {
     throw new Error("offline verification must bind the exact release tag");
@@ -217,6 +238,27 @@ export function validateCi(
 ) {
   const github = parseYaml(githubSource, "GitHub workflow");
   const gitlab = parseYaml(gitlabSource, "GitLab pipeline");
+  if (gitlab.include !== undefined) {
+    throw new Error("GitLab pipeline cannot import external CI configuration");
+  }
+  if (Object.keys(gitlab.default ?? {}).join(",") !== "image") {
+    throw new Error("GitLab default must contain only the pinned image");
+  }
+  const admittedGitLabKeys = new Set([
+    "workflow",
+    "stages",
+    "default",
+    "docs:verify",
+    "offline:verify",
+    ...gitlabNativeCapabilities.flatMap(({ system }) => [
+      `docs:verify:${system}`,
+      `docs:verify:${system}:review`,
+      `offline:verify:${system}`,
+    ]),
+  ]);
+  if (Object.keys(gitlab).some((key) => !admittedGitLabKeys.has(key))) {
+    throw new Error("GitLab pipeline cannot add unchecked global setup");
+  }
   if (
     JSON.stringify(gitlab.workflow?.rules) !== JSON.stringify(workflowRules)
   ) {
@@ -246,14 +288,7 @@ export function validateCi(
       "GitHub verification must use a read-only hosted job without a container",
     );
   }
-  if (
-    JSON.stringify(job.strategy?.matrix?.os) !== JSON.stringify(hostMatrix) ||
-    job["runs-on"] !== "${{ matrix.os }}"
-  ) {
-    throw new Error(
-      "GitHub verification must run on Linux, macOS, and Windows hosted runners",
-    );
-  }
+  requireHostedJobExecution(job, "source", hostMatrix);
   const steps = job.steps;
   if (!Array.isArray(steps))
     throw new Error("GitHub verification steps are missing");

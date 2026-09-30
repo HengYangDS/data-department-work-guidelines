@@ -64,6 +64,19 @@ registration or convert ARM64 execution into a native x86_64 claim.
 - **AND THEN** GitLab selects review or protected project capabilities according
   to the source trust boundary, and every job invokes the same full verifier.
 
+#### Scenario: A declared hosted check is skipped
+
+- **WHEN** a GitHub source or offline job excludes a matrix host, skips a job or
+  step, or tolerates a required failure
+- **THEN** the repository CI contract rejects the workflow before claiming
+  that its declared host matrix ran.
+
+#### Scenario: Global setup alters GitLab offline supply
+
+- **WHEN** GitLab adds global setup, an extra default, or a remote CI include
+- **THEN** the repository CI contract rejects it rather than treating the
+  offline job's local script as proof of isolated supply.
+
 #### Scenario: Native source routes are trust-separated
 
 - **WHEN** GitLab evaluates a proposal push or merge request
