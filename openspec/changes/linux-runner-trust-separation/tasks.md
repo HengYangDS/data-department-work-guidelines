@@ -18,10 +18,10 @@
 - [x] Observe protected `dev` pipeline 8948 at accepted source `fe8171d1`:
       Linux job 46262 passed the full verifier on Runner #110, with separate
       Fleet-owned account, daemon, workspace, and cache boundaries.
-- [ ] Land through ETHOS, verify both Forge source matrices at the release-cut
-      commit, publish one signed SemVer tag and matching offline asset on each
-      Forge, and observe each declared post-publication matrix and asset digest.
-- [ ] Recheck both Forge refs, source and offline jobs, Release objects, and
-      asset digests at the final edition. Retire the absorbed proposal ref before
-      requesting official archive; perform post-archive proof and Work Lane
-      cleanup through ETHOS rather than making them archive prerequisites.
+- [x] Land through ETHOS and verify both Forges' `dev` and `main` matrices at
+      release cut `0743a10e`. Publish signed tag `v5.2.1`; GitLab offline pipeline
+      8959 and GitHub offline run 36691464690 passed their declared hosts.
+- [x] Recheck both peer refs and Release objects. Independently downloaded
+      assets matched SHA-256 `99980979e88f0ce5db238ebee70a5ac5abcc575d04c9d1fdc1ceaeb3813dfdcb`;
+      the absorbed proposal ref is absent on both peers. Post-archive proof and
+      Work Lane cleanup remain native continuations, not archive prerequisites.
