@@ -12,6 +12,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [6.0.0] - 2026-10-01
+
 ### Changed
 
 - **Breaking:** Contributor and CI commands now require the exact npm version
@@ -19,6 +21,16 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   Offline installation retains that prerequisite and never updates the host.
 - Bound offline supply to the complete package manifest so a changed native
   tool policy cannot reuse a formerly qualified bundle.
+
+### Fixed
+
+- Install the declared npm before hosted runtime caching, and resolve the
+  actually selected npm on Windows rather than Node's older bundled copy.
+
+### Removed
+
+- The implicit GitHub CLI and credential requirement for public bundle
+  downloads. The existing Node runtime retrieves the exact pinned asset.
 
 ## [5.2.4] - 2026-09-30
 
@@ -258,7 +270,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   verification sequence while keeping local, GitLab, and GitHub results separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.4...main
+[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.0.0...main
+[6.0.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.4...v6.0.0
 [5.2.4]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.3...v5.2.4
 [5.2.3]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.2...v5.2.3
 [5.2.2]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.1...v5.2.2

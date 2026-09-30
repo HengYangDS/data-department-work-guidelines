@@ -10,8 +10,12 @@
       dependency-policy drift, and positive native effects have regression tests.
 - [x] 1.2 Declare exact npm through native `devEngines`; update the existing
       ephemeral CI supply, maintained-host guidance, and offline build copies.
-- [ ] 1.3 Verify native source format, lint, prose, links, negative cases,
+- [x] 1.3 Verify native source format, lint, prose, links, negative cases,
       official OpenSpec, dependency signature/audit, and full ETHOS proof.
+      Implementation source `e553ecb8` passes 104 tests, 241 registry signatures,
+      110 attestations, zero vulnerabilities, 91 live links, and both installed
+      ETHOS gates. Its GitHub source matrix `36746037514` passes all three hosts;
+      fresh offline installation has 246 equal tracked-file hashes.
 
 ## 2. Destination and delivery
 
