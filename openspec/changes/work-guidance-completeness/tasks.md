@@ -18,9 +18,9 @@
 
 - [x] 2.1 Run format, lint, prose, links, negative tests, strict official
       OpenSpec validation, and diff checks; inspect all results.
-- [ ] 2.2 Run ETHOS changed-path planning, commit the source with the required
+- [x] 2.2 Run ETHOS changed-path planning, commit the source with the required
       identity and signature, and obtain full proof for that commit.
-- [ ] 2.3 Accept the source through the native ETHOS transitions.
+- [x] 2.3 Accept the source through the native ETHOS transitions.
 
 ## 3. Publish and clean up
 

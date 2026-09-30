@@ -12,6 +12,15 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+### Fixed
+
+- Restored omitted qualifiers for professional judgment, recorded scope
+  decisions, incomplete Agent work, and management responsibility after a
+  complete comparison with the former unified guideline.
+- Clarified that meeting acceptance criteria does not grant an executor
+  authority to accept the work, and that a blocked dependency leaves
+  independent authorized work available.
+
 ## [5.2.2] - 2026-09-30
 
 ### Changed
