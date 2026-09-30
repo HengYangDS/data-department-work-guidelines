@@ -445,7 +445,18 @@ function pathExists(target) {
 export function npmCliPath({
   platform = process.platform,
   pathValue = process.env.PATH ?? "",
+  npmExecPath = process.env.npm_execpath,
 } = {}) {
+  if (npmExecPath) {
+    if (
+      path.basename(npmExecPath) !== "npm-cli.js" ||
+      !pathExists(npmExecPath) ||
+      !lstatSync(npmExecPath).isFile()
+    ) {
+      throw new Error("native npm execution entrypoint is unavailable");
+    }
+    return realpathSync(npmExecPath);
+  }
   const directories = [
     ...new Set([
       ...pathValue.split(path.delimiter),
@@ -479,6 +490,33 @@ export function npmCliPath({
       ),
     ]) {
       if (pathExists(candidate) && lstatSync(candidate).isFile()) {
+        if (platform === "win32") {
+          const prefixCli = path.join(path.dirname(candidate), "npm-prefix.js");
+          if (pathExists(prefixCli)) {
+            let prefix;
+            try {
+              prefix = run(process.execPath, [prefixCli], {
+                capture: true,
+                timeout: 10_000,
+              }).trim();
+            } catch {
+              throw new Error("native Windows npm prefix resolution failed");
+            }
+            if (!path.isAbsolute(prefix) || /[\r\n]/u.test(prefix)) {
+              throw new Error("native Windows npm prefix is invalid");
+            }
+            const selected = path.join(
+              prefix,
+              "node_modules",
+              "npm",
+              "bin",
+              "npm-cli.js",
+            );
+            if (pathExists(selected) && lstatSync(selected).isFile()) {
+              return realpathSync(selected);
+            }
+          }
+        }
         return path.resolve(candidate);
       }
     }
@@ -815,7 +853,7 @@ async function cli(argv) {
     !parsed.licenses &&
     !parsed.output
   ) {
-    const result = acquireGitHubBundle();
+    const result = await acquireGitHubBundle();
     console.log(`PASS offline acquisition: ${result.version} ${result.sha256}`);
     return;
   }
@@ -862,42 +900,39 @@ if (
   });
 }
 
-function downloadGitHubRelease({ tag, repository, fileName, directory, env }) {
-  const result = spawnSync(
-    "gh",
-    [
-      "release",
-      "download",
-      tag,
-      "--repo",
-      repository,
-      "--pattern",
-      fileName,
-      "--dir",
-      directory,
-    ],
-    {
-      env,
-      input: "",
-      encoding: "utf8",
-      timeout: 90_000,
-      maxBuffer: 1024 * 1024,
-    },
-  );
-  if (result.error) {
+async function downloadBundle(request, target, fetcher, provider) {
+  let response;
+  try {
+    response = await fetcher(request.url, {
+      headers: request.headers,
+      redirect: request.redirect,
+      signal: AbortSignal.timeout(90_000),
+    });
+  } catch {
+    throw new Error(`${provider} release bundle download failed`);
+  }
+  if (!response.ok || !response.body) {
     throw new Error(
-      `GitHub release download failed: ${result.error.code ?? "unknown"}`,
+      `${provider} release bundle download failed: HTTP ${response.status}`,
     );
   }
-  if (result.status !== 0) {
-    throw new Error(`GitHub release download failed: exit ${result.status}`);
+  const limit = 128 * 1024 * 1024;
+  const chunks = [];
+  let size = 0;
+  for await (const chunk of response.body) {
+    size += chunk.length;
+    if (size > limit) {
+      throw new Error(`${provider} release bundle exceeds the size limit`);
+    }
+    chunks.push(chunk);
   }
+  writeFileSync(target, Buffer.concat(chunks));
 }
 
-export function acquireGitHubBundle({
+export async function acquireGitHubBundle({
   repository = root,
   environment = process.env,
-  download = downloadGitHubRelease,
+  fetcher = fetch,
 } = {}) {
   const record = readBundleRecord(repository);
   const tag = environment.DDWG_RELEASE_TAG;
@@ -908,8 +943,11 @@ export function acquireGitHubBundle({
   if (!/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/u.test(githubRepository ?? "")) {
     throw new Error("GitHub repository identity is missing or invalid");
   }
-  if (!environment.GH_TOKEN || /[\r\n]/u.test(environment.GH_TOKEN)) {
-    throw new Error("GitHub release identity is missing or invalid");
+  if (
+    environment.GITHUB_SERVER_URL !== undefined &&
+    environment.GITHUB_SERVER_URL !== "https://github.com"
+  ) {
+    throw new Error("public GitHub release origin is unsupported");
   }
   const directory = path.join(
     repository,
@@ -923,13 +961,16 @@ export function acquireGitHubBundle({
   }
   mkdirSync(directory, { recursive: true });
   try {
-    download({
-      tag,
-      repository: githubRepository,
-      fileName: record.fileName,
-      directory,
-      env: { ...environment, GH_PROMPT_DISABLED: "1" },
-    });
+    await downloadBundle(
+      {
+        url: `https://github.com/${githubRepository}/releases/download/${encodeURIComponent(tag)}/${encodeURIComponent(record.fileName)}`,
+        headers: {},
+        redirect: "follow",
+      },
+      target,
+      fetcher,
+      "GitHub",
+    );
     return verifyBundle({ bundlePath: target, record, repository });
   } catch (error) {
     rmSync(target, { force: true });
@@ -973,32 +1014,7 @@ export async function acquireGitLabBundle({
   }
   mkdirSync(directory, { recursive: true });
   try {
-    let response;
-    try {
-      response = await fetcher(request.url, {
-        headers: request.headers,
-        redirect: request.redirect,
-        signal: AbortSignal.timeout(90_000),
-      });
-    } catch {
-      throw new Error("GitLab release bundle download failed");
-    }
-    if (!response.ok || !response.body) {
-      throw new Error(
-        `GitLab release bundle download failed: HTTP ${response.status}`,
-      );
-    }
-    const limit = 128 * 1024 * 1024;
-    const chunks = [];
-    let size = 0;
-    for await (const chunk of response.body) {
-      size += chunk.length;
-      if (size > limit) {
-        throw new Error("GitLab release bundle exceeds the size limit");
-      }
-      chunks.push(chunk);
-    }
-    writeFileSync(target, Buffer.concat(chunks));
+    await downloadBundle(request, target, fetcher, "GitLab");
     return verifyBundle({ bundlePath: target, record, repository });
   } catch (error) {
     rmSync(target, { force: true });

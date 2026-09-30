@@ -181,12 +181,8 @@ function validateOfflineWorkflow(source, nodeMajor) {
   ) {
     throw new Error("offline acquisition must follow runtime setup");
   }
-  if (
-    commands[0].env?.GH_TOKEN !== "${{ github.token }}" ||
-    commands[0].env?.GH_PROMPT_DISABLED !== "1" ||
-    commands.slice(1).some((step) => step.env?.GH_TOKEN)
-  ) {
-    throw new Error("offline acquisition needs a step-scoped read-only token");
+  if (commands.some((step) => step.env !== undefined)) {
+    throw new Error("public offline acquisition needs no credentials");
   }
   if (commands[1]?.run !== "node tools/ci/offline-bundle.mjs install") {
     throw new Error("offline installation must use the pinned bundle");

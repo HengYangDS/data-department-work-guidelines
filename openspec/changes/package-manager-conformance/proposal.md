@@ -16,6 +16,8 @@ Host installation and a compatible offline run do not establish CI freshness.
   maintained native accounts use their existing installation owner.
 - Keep local and offline verification free of automatic downloads. Rebuild
   source-bound release supply and verify actual supported host execution.
+- Remove the ambient GitHub CLI from public bundle acquisition; use the existing
+  Node runtime and exact asset identity, without another installation owner.
 - Publish a SemVer major edition because the contributor prerequisite changes;
   the department's normative rules and reader routes remain unchanged.
 

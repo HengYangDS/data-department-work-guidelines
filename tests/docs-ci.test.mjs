@@ -507,8 +507,11 @@ test("offline release CI runs the source-pinned bundle on four hosted systems", 
       /offline verifier/u,
     ],
     [
-      offline.replace("GH_TOKEN: ${{ github.token }}", "GH_TOKEN: fixture"),
-      /read-only token/u,
+      offline.replace(
+        "        run: node tools/ci/offline-bundle.mjs acquire-github",
+        "        run: node tools/ci/offline-bundle.mjs acquire-github\n        env: { GH_TOKEN: fixture }",
+      ),
+      /public offline acquisition needs no credentials/u,
     ],
     [
       offline.replace(

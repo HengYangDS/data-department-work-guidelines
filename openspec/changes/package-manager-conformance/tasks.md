@@ -6,8 +6,8 @@
       run without effects; add positive tests with the declared npm.
       Actual bundled npm 11.19.1 rejects the new source declaration before
       install, `ci`, and run effects; npm 12.1.0 passes native admission.
-      The 46 focused CI/offline contracts pass, including dependency-policy
-      drift rejection and positive native install and run effects.
+      Split-prefix Windows selection, early Node-cache access, public acquisition,
+      dependency-policy drift, and positive native effects have regression tests.
 - [x] 1.2 Declare exact npm through native `devEngines`; update the existing
       ephemeral CI supply, maintained-host guidance, and offline build copies.
 - [ ] 1.3 Verify native source format, lint, prose, links, negative cases,

@@ -67,7 +67,9 @@ been observed. Git's native `.gitattributes` rule checks out tracked text with
 LF even on Windows; do not replace it with a host-specific Git setting.
 Keep `node_modules/` and generated output out of Git.
 
-GitHub's published Release starts its offline host matrix. GitLab's Linux,
+GitHub's published Release starts its offline host matrix. Its public bundle
+download uses Node directly; it needs neither a Forge CLI nor a credential.
+GitLab's Linux,
 macOS, and Windows `offline:verify` jobs run in an explicitly started tag
 pipeline **after** its own package and Release are available; tag-push
 `docs:verify` jobs are not offline qualification. Each job obtains the same

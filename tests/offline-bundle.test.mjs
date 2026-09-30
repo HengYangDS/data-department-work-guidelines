@@ -8,6 +8,7 @@ import {
   mkdirSync,
   mkdtempSync,
   readFileSync,
+  realpathSync,
   rmSync,
   symlinkSync,
   writeFileSync,
@@ -607,8 +608,8 @@ test("an empty npm cache cannot satisfy the actual offline install", () => {
   }
 });
 
-test("GitHub acquisition selects one exact release asset and verifies it", () => {
-  buildFixture((inputs) => {
+test("GitHub acquisition uses the exact public asset without a CLI or credential", async () => {
+  await buildFixture(async (inputs) => {
     const built = assembleBundle(inputs);
     const recordPath = path.join(
       inputs.repository,
@@ -620,49 +621,54 @@ test("GitHub acquisition selects one exact release asset and verifies it", () =>
     const environment = {
       GITHUB_REPOSITORY: "Example/Repository",
       DDWG_RELEASE_TAG: "v4.2.0",
-      GH_TOKEN: "fixture-only",
+      GH_TOKEN: "must-not-forward",
     };
     let calls = 0;
-    const download = ({ tag, repository, fileName, directory, env }) => {
+    const fetcher = async (url, options) => {
       calls += 1;
-      assert.equal(tag, "v4.2.0");
-      assert.equal(repository, "Example/Repository");
-      assert.equal(fileName, built.fileName);
-      assert.equal(env.GH_PROMPT_DISABLED, "1");
-      copyFileSync(inputs.outputPath, path.join(directory, fileName));
+      assert.equal(
+        url,
+        `https://github.com/Example/Repository/releases/download/v4.2.0/${built.fileName}`,
+      );
+      assert.equal(options.redirect, "follow");
+      assert.deepEqual(options.headers, {});
+      assert.ok(options.signal instanceof AbortSignal);
+      return new Response(readFileSync(inputs.outputPath), { status: 200 });
     };
-    const result = acquireGitHubBundle({
+    const result = await acquireGitHubBundle({
       repository: inputs.repository,
       environment,
-      download,
+      fetcher,
     });
     assert.equal(result.sha256, built.sha256);
     assert.equal(calls, 1);
     assert.equal(
-      acquireGitHubBundle({
-        repository: inputs.repository,
-        environment,
-        download: () => {
-          throw new Error("must not download twice");
-        },
-      }).sha256,
+      (
+        await acquireGitHubBundle({
+          repository: inputs.repository,
+          environment,
+          fetcher: () => {
+            throw new Error("must not download twice");
+          },
+        })
+      ).sha256,
       built.sha256,
     );
     for (const changed of [
       { DDWG_RELEASE_TAG: "v4.1.1" },
       { GITHUB_REPOSITORY: "invalid" },
-      { GH_TOKEN: "" },
+      { GITHUB_SERVER_URL: "http://github.example.test" },
     ]) {
-      assert.throws(() =>
+      await assert.rejects(() =>
         acquireGitHubBundle({
           repository: inputs.repository,
           environment: { ...environment, ...changed },
-          download,
+          fetcher,
         }),
       );
     }
   });
-  buildFixture((inputs) => {
+  await buildFixture(async (inputs) => {
     const built = assembleBundle(inputs);
     writeFileSync(
       path.join(inputs.repository, ".config", "tools", "offline-bundle.json"),
@@ -675,20 +681,68 @@ test("GitHub acquisition selects one exact release asset and verifies it", () =>
       "offline-bundle",
       built.fileName,
     );
-    assert.throws(() =>
+    await assert.rejects(() =>
       acquireGitHubBundle({
         repository: inputs.repository,
         environment: {
           GITHUB_REPOSITORY: "Example/Repository",
           DDWG_RELEASE_TAG: "v4.2.0",
-          GH_TOKEN: "fixture-only",
         },
-        download: ({ directory, fileName }) =>
-          writeFileSync(path.join(directory, fileName), "altered"),
+        fetcher: async () => new Response("altered", { status: 200 }),
       }),
     );
     assert.equal(pathExistsForTest(target), false);
   });
+});
+
+test("public GitHub acquisition fails closed and removes only its failed output", async () => {
+  for (const fetcher of [
+    async () => new Response("missing", { status: 404 }),
+    async () => new Response(null, { status: 200 }),
+    async () => {
+      throw new Error("network failed");
+    },
+    async () =>
+      new Response(
+        new ReadableStream({
+          pull(controller) {
+            controller.enqueue(new Uint8Array(129 * 1024 * 1024));
+            controller.close();
+          },
+        }),
+      ),
+  ]) {
+    await buildFixture(async (inputs) => {
+      const built = assembleBundle(inputs);
+      writeFileSync(
+        path.join(inputs.repository, ".config", "tools", "offline-bundle.json"),
+        JSON.stringify(built),
+      );
+      await assert.rejects(() =>
+        acquireGitHubBundle({
+          repository: inputs.repository,
+          environment: {
+            GITHUB_REPOSITORY: "Example/Repository",
+            DDWG_RELEASE_TAG: "v4.2.0",
+          },
+          fetcher,
+        }),
+      );
+      assert.equal(
+        existsSync(
+          path.join(
+            inputs.repository,
+            "build",
+            "artifacts",
+            "offline-bundle",
+            built.fileName,
+          ),
+        ),
+        false,
+      );
+      assert.equal(existsSync(inputs.outputPath), true);
+    });
+  }
 });
 
 test("GitLab acquisition uses only the same project's pinned release package", async () => {
@@ -848,7 +902,79 @@ test("npm CLI is a JavaScript entrypoint on POSIX and Windows layouts", () => {
     mkdirSync(path.dirname(cli), { recursive: true });
     writeFileSync(path.join(directory, "npm.cmd"), "fixture");
     writeFileSync(cli, "fixture");
-    assert.equal(npmCliPath({ platform: "win32", pathValue: directory }), cli);
+    assert.equal(
+      npmCliPath({
+        platform: "win32",
+        pathValue: directory,
+        npmExecPath: null,
+      }),
+      cli,
+    );
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test("npm entrypoint follows its native execution and Windows prefix authority", () => {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-npm-authority-"));
+  try {
+    const adjacent = path.join(
+      directory,
+      "node_modules",
+      "npm",
+      "bin",
+      "npm-cli.js",
+    );
+    const prefix = path.join(directory, "global-prefix");
+    const selected = path.join(
+      prefix,
+      "node_modules",
+      "npm",
+      "bin",
+      "npm-cli.js",
+    );
+    for (const file of [adjacent, selected]) {
+      mkdirSync(path.dirname(file), { recursive: true });
+      writeFileSync(file, "fixture");
+    }
+    writeFileSync(path.join(directory, "npm.cmd"), "fixture");
+    writeFileSync(
+      path.join(path.dirname(adjacent), "npm-prefix.js"),
+      `process.stdout.write(${JSON.stringify(prefix)})`,
+    );
+    assert.equal(
+      npmCliPath({
+        platform: "win32",
+        pathValue: directory,
+        npmExecPath: null,
+      }),
+      realpathSync(selected),
+    );
+    assert.equal(
+      npmCliPath({ pathValue: directory, npmExecPath: selected }),
+      realpathSync(selected),
+    );
+    assert.throws(
+      () =>
+        npmCliPath({
+          pathValue: directory,
+          npmExecPath: path.join(directory, "missing.js"),
+        }),
+      /native npm execution entrypoint/u,
+    );
+    writeFileSync(
+      path.join(path.dirname(adjacent), "npm-prefix.js"),
+      "process.exit(1)",
+    );
+    assert.throws(
+      () =>
+        npmCliPath({
+          platform: "win32",
+          pathValue: directory,
+          npmExecPath: null,
+        }),
+      /native Windows npm prefix/u,
+    );
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }

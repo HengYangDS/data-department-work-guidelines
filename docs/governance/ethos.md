@@ -134,6 +134,11 @@ archives; its release identity lives in
 A bundle file on disk is not offline qualification: the actual install and full
 verifier must run with no remote supply on each claimed host, and both Forge
 assets must be retrieved and compared by SHA-256. The
+public GitHub asset is acquired by Node's native HTTP client at its exact
+repository, tag, and filename, without an ambient `gh` executable or token.
+GitLab acquisition retains its project-scoped job identity and refuses redirects
+before forwarding that identity. Both downloads share bounded size and time
+checks and verify the source-pinned archive digest before extraction. The
 archive excludes host extended attributes; archive inspection and extraction
 reject warning output even when the archive tool exits successfully. The
 [contributor route](../../CONTRIBUTING.md) owns the commands. Bundled npm

@@ -38,6 +38,12 @@ owner; source must not mutate those services or choose a private prefix.
 Every claimed host must report the actual selected npm, not a name or lock
 entry. A native version mismatch remains fatal after acquisition.
 
+Programmatic npm calls use npm's native execution-path environment when launched
+by npm. Direct Windows calls use its shipped `npm-prefix.js`, just as its official
+launcher does. They must not assume the Node-adjacent bundled CLI is the selected
+globally upgraded CLI. A split-prefix regression proves both paths select the
+same destination-owned package manager and fail closed if native resolution fails.
+
 Node setup resolves the latest stable release in the declared major and disables
 automatic package-manager caching. That action otherwise invokes bundled npm
 before the explicit upgrade, causing native admission to reject the setup step.
@@ -50,6 +56,15 @@ installation owner. The offline source image includes the same native
 `package.json`, so npm enforces that prerequisite before install effects.
 The bundle builder retains the complete declared native manifest in its
 online and offline validation copies.
+
+### Public acquisition needs no extra executable
+
+GitHub is a public distribution plane. Node fetches the exact release-tag asset
+without an ambient Forge CLI or token; following the public download redirect
+does not forward credentials, and the pinned digest establishes byte identity.
+GitLab retains its project-scoped job token and refuses redirects. Both use one
+bounded downloader for size, time, and failed-output cleanup. Local offline
+installation never calls either acquisition path.
 
 ### Release compatibility follows the real public contract
 

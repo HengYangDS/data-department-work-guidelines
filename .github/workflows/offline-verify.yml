@@ -44,9 +44,6 @@ jobs:
         run: npm install --global --ignore-scripts npm@${{ steps.npm-version.outputs.version }}
 
       - name: Acquire exact release bundle
-        env:
-          GH_TOKEN: ${{ github.token }}
-          GH_PROMPT_DISABLED: "1"
         run: node tools/ci/offline-bundle.mjs acquire-github
 
       - name: Install without remote supply
