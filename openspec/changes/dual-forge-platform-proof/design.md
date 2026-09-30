@@ -114,8 +114,10 @@ misstate the release history.
    cannot execute until the new YAML reaches `dev`.
 3. Prove the exact Change HEAD through installed ETHOS, publish its proposal
    through the governed route, and observe real review jobs. After governed
-   closeout, observe new protected GitLab jobs and GitHub source jobs at the
-   accepted SHA. Prepare a SemVer-compatible release, publish one signed tag
-   and identical offline bytes, then run each Forge's post-publication jobs.
+   source acceptance, observe new protected GitLab jobs and GitHub source jobs
+   at the accepted SHA. At release cut, repeat source proof and both Forge source
+   matrices on the final Changelog commit before signing its tag. Publish one
+   signed tag and identical offline bytes, then run each Forge's
+   post-publication jobs.
 4. Keep the Change open until all declared jobs and assets are observed;
    archive, refresh proof for the archive commit, and retire the Work Lane.

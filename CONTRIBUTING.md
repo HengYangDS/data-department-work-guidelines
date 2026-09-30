@@ -171,10 +171,14 @@ grant Change authority.
    Changelog section using the actual date, leave `Unreleased` empty, and
    update both comparison links. Commit that exact source, repeat the required
    local checks and ETHOS proof, and follow the native acceptance continuation.
-   From the final proved commit, make a signed annotated `vX.Y.Z` tag and run
-   `git tag -v vX.Y.Z`. Use `ethos publish --json` and its current continuation
-   to publish the exact admitted `dev`, `main`, and tag refs to each peer.
-   Re-read both remote refs before creating either Release; GitLab's SSH remote
+   Use `ethos publish --json` and its current continuation to publish the
+   admitted `dev` and `main` source before creating a tag. Re-read both remote
+   refs and require every declared source job to pass on each Forge at this
+   release-cut commit; an earlier proposal or accepted SHA does not qualify it.
+   If either matrix is missing or fails, stop and correct the source under the
+   active Change. Only then sign an annotated `vX.Y.Z` tag on that same proved
+   commit, run `git tag -v vX.Y.Z`, and publish the tag through ETHOS. Re-read
+   both remote tags before creating either Release; GitLab's SSH remote
    does not identify the configured API scheme, host, or port. Set `GITLAB_HOST`
    in the caller's environment to the configured API host and port, not the SSH
    port. Check that `glab auth status` shows the administrator-supplied API

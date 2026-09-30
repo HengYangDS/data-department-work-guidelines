@@ -115,6 +115,13 @@ registration or convert ARM64 execution into a native x86_64 claim.
 - **AND THEN** each Forge requires a fresh run at the published revision for
   its own success claim.
 
+#### Scenario: Release-cut source differs from an earlier accepted source
+
+- **WHEN** a release-cut commit is selected as the version tag's source
+- **THEN** both Forges' declared source jobs run and pass at that exact commit
+  before its signed version tag is created
+- **AND THEN** an earlier green job or a peer's result cannot qualify the tag.
+
 ### Requirement: Offline verification supply is a separately observed release asset
 
 An offline-capable release SHALL publish source-bound bundle bytes with the

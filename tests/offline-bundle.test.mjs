@@ -867,3 +867,13 @@ test("release route commits source before a clean-checkout install", () => {
   const cold = guide.indexOf("From a fresh checkout of the committed source");
   assert.ok(commit >= 0 && cold > commit);
 });
+
+test("release route requires both Forge source matrices before tagging", () => {
+  const guide = readFileSync(
+    path.join(root, "CONTRIBUTING.md"),
+    "utf8",
+  ).replace(/\s+/gu, " ");
+  const source = guide.indexOf("require every declared source job to pass");
+  const tag = guide.indexOf("Only then sign an annotated");
+  assert.ok(source >= 0 && tag > source);
+});

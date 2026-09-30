@@ -32,7 +32,8 @@
 ## 3. Release and Retirement
 
 - [ ] 3.1 Prepare the appropriate SemVer edition and changelog entry; verify
-      source identity and release links before signing the tag.
+      source identity, release links, and both Forges' full source matrices at
+      the final release-cut SHA before signing the tag.
 - [ ] 3.2 Publish one signed tag and digest-matched offline bundle on both
       Forges; check each Forge's Linux, macOS, and Windows post-publication jobs
       against that tag and retrieved asset.

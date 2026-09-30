@@ -86,7 +86,9 @@ exists. A heading, branch, or CI result is not a versioned release. ETHOS
 admits only an exact, signed annotated `vX.Y.Z` tag
 matching the committed `VERSION`; each Forge Release and asset must then be
 observed separately. Older untagged branch editions stay in Git history, not a
-fabricated release sequence.
+fabricated release sequence. Before signing a release tag, both Forges must
+pass their declared source jobs at the exact release-cut commit. A green
+proposal or earlier accepted SHA does not qualify a later Changelog commit.
 
 New commits and official archive commits require trusted SSH signatures. Each
 clone supplies its own local identity, public signing-key path, and protected
