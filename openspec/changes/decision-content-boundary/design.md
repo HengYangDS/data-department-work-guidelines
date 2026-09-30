@@ -55,6 +55,16 @@ command. Keep v6.1.0 immutable. Rebuild one source-pinned bundle for the new
 edition from the unchanged native supply, prove the exact release cut, and
 observe each source and offline platform matrix independently.
 
+### Keep the canonical requirement concise
+
+State identity, carrier and syntax restrictions in one compact requirement;
+keep positive-content and authority boundaries in its acceptance scenarios.
+Official OpenSpec emits an advisory for a rebuilt requirement over 500
+characters, and installed ETHOS treats canonical-spec advisories as gaps.
+Check the merged result with the official builder and validator before archival;
+do not waive its issue or add a second schema or validator. This editorial
+reorganization preserves all obligations and the immutable v6.1.1 release.
+
 ## Risks / Trade-offs
 
 - A blanket syntax ban rejects useful rationale: keep explicit positive cases
