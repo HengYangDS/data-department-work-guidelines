@@ -18,9 +18,10 @@
 - [x] 2.2 Validate official OpenSpec and the complete repository check;
       exercise an empty-cache offline install and full verification, then
       commit and run exact-HEAD ETHOS proof.
-- [ ] 2.3 Follow ETHOS candidate, accepted-root, and publication decisions.
+- [x] 2.3 Follow ETHOS candidate, accepted-root, and publication decisions.
       At the release cut, verify the same source CI on GitLab and GitHub,
       sign and publish `v5.2.2`, then verify both releases, downloaded asset
       hashes, and every declared offline host job.
-- [ ] 2.4 Complete official Change archive and exact-HEAD aftercare, then
-      retire only this landed Work Lane and verify no owned residue remains.
+- [x] 2.4 Compare both downloaded release assets with the source record, run
+      the post-tag online link check, and identify the owned proposal and Work
+      Lane resources for governed retirement after Change archive.
