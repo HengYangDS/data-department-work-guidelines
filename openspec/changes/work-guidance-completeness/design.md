@@ -110,6 +110,25 @@ their own current verification. Keep delivery tasks open until observed.
 
 ## Migration Plan
 
+The accepted correction and release cut is
+`569ddff41aafcc9f6752838d79fb1824a4c7157c`. Full local verification passed
+97 tests, official OpenSpec validation passed, and the installed ETHOS runtime
+returned full proof for that commit. A clean committed checkout installed the
+version-bound bundle and ran the verifier offline; its temporary checkout was
+removed afterward. Published GitHub previews of the changed topics and map
+were visually inspected at a desktop viewport.
+
+GitLab source pipeline `8989` and GitHub source run `36725623576` passed all
+three declared operating systems for that release cut. The signed annotated
+tag `v5.2.3` was observed on both Forges at that commit. Both retrieved release
+assets passed inspection with SHA-256
+`0e3410302b97ad1ef4166f7a0f173141143e84e36783f4be53b02e63450dd285`.
+GitHub offline run `36726479394` passed all four hosts. GitLab offline pipeline
+`8994` passed Linux, macOS, and Windows, including final Windows job `46408`.
+Live lychee checked
+88 links with zero errors. These observations qualify this source and release;
+they do not establish team adoption or shared ETHOS product acceptance.
+
 Amend the current owners under exact-path prewrite admission. Review every row
 against the resulting source and inspect rendered task pages. Run the full
 repository verifier, official OpenSpec strict validation, planning, and proof
