@@ -1,6 +1,8 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
 import { parse as parseToml } from "smol-toml";
+import markdown from "@textlint/textlint-plugin-markdown";
+import { StringSource } from "textlint-util-to-string";
 import { documentMetadata } from "./content.mjs";
 import { readText, root } from "./runtime.mjs";
 
@@ -20,6 +22,13 @@ const shellLanguages = new Set([
   "shell-session",
   "terminal",
   "zsh",
+  "powershell",
+  "ps1",
+  "pwsh",
+  "cmd",
+  "bat",
+  "batch",
+  "dos",
 ]);
 const subcommands = {
   ethos: new Set([
@@ -114,49 +123,53 @@ export function commandInvocation(source, { shellContext = false } = {}) {
   );
 }
 
-export function executionViolation(source) {
-  const lines = source.split(/\r?\n/u);
-  const fencedBody = new Set();
-  let opening = null;
-  for (let index = 0; index < lines.length; index += 1) {
-    const line = lines[index];
-    if (!opening) {
-      const match = /^ {0,3}(`{3,}|~{3,})(.*)$/u.exec(line);
-      if (match)
-        opening = {
-          char: match[1][0],
-          length: match[1].length,
-          language: match[2].trim().split(/\s+/u)[0].toLowerCase(),
-        };
-      continue;
+const markdownProcessor = new markdown.default.Processor().processor(".md");
+
+function markdownTree(source) {
+  return markdownProcessor.preProcess(source, "decision.md");
+}
+
+function* contentNodes(node) {
+  yield node;
+  for (const child of node.children ?? []) yield* contentNodes(child);
+}
+
+function rationaleText(node) {
+  if (["Code", "Link", "Image"].includes(node.type)) return " ";
+  if (typeof node.value === "string") return node.value;
+  return (node.children ?? []).map(rationaleText).join("");
+}
+
+export function executionViolation(source, tree = markdownTree(source)) {
+  for (const node of contentNodes(tree)) {
+    const line = node.loc.start.line;
+    if (node.type === "Html") {
+      const registry =
+        node.range[0] === 0 &&
+        node.raw.startsWith("<!--\n---\n") &&
+        node.raw.endsWith("\n---\n-->");
+      if (!registry) return `unsupported HTML at line ${line}`;
     }
-    const closing = new RegExp(
-      `^ {0,3}${opening.char}{${opening.length},}\\s*$`,
-      "u",
-    );
-    if (closing.test(line)) {
-      opening = null;
-      continue;
+    if (node.type === "ListItem" && typeof node.checked === "boolean")
+      return `task progress at line ${line}`;
+    if (node.type === "CodeBlock") {
+      const shell = shellLanguages.has((node.lang ?? "").toLowerCase());
+      if (
+        node.value
+          .split(/\r?\n/u)
+          .some((value) => commandInvocation(value, { shellContext: shell }))
+      )
+        return `${shell ? "fenced" : "code"} execution content at line ${line}`;
     }
-    fencedBody.add(index);
+    if (node.type === "Code" && commandInvocation(node.value))
+      return `inline command invocation at line ${line}`;
     if (
-      commandInvocation(line, {
-        shellContext: shellLanguages.has(opening.language),
-      })
-    ) {
-      return `fenced execution content at line ${index + 1}`;
-    }
-  }
-  for (let index = 0; index < lines.length; index += 1) {
-    if (fencedBody.has(index)) continue;
-    let visible = lines[index];
-    for (const match of lines[index].matchAll(/`([^`\n]+)`/gu)) {
-      if (commandInvocation(match[1]))
-        return `inline command invocation at line ${index + 1}`;
-      visible = visible.replace(match[0], "");
-    }
-    if (commandInvocation(visible))
-      return `shell prompt or command invocation at line ${index + 1}`;
+      ["Paragraph", "Header", "TableCell"].includes(node.type) &&
+      rationaleText(node)
+        .split(/\r?\n/u)
+        .some((value) => commandInvocation(value))
+    )
+      return `shell prompt or command invocation at line ${line}`;
   }
   return "";
 }
@@ -174,15 +187,31 @@ export function validateDecision(relative, source) {
   ) {
     throw new Error(`DR identity or status mismatch: ${relative}`);
   }
-  const headings = [...source.matchAll(/^## ([^\n]+)$/gmu)].map((item) =>
-    item[1].trim(),
+  const tree = markdownTree(source);
+  const titles = tree.children.filter(
+    (node) => node.type === "Header" && node.depth === 1,
   );
-  if (JSON.stringify(headings) !== JSON.stringify(requiredSections)) {
+  if (
+    titles.length !== 1 ||
+    !new StringSource(titles[0]).toString().startsWith(`${expected}: `)
+  )
+    throw new Error(`DR title must match ${expected}: ${relative}`);
+  const sections = tree.children.filter(
+    (node) => node.type === "Header" && node.depth === 2,
+  );
+  const headings = sections.map((node) => new StringSource(node).toString());
+  const allSections = [...contentNodes(tree)].filter(
+    (node) => node.type === "Header" && node.depth === 2,
+  );
+  if (
+    sections.length !== allSections.length ||
+    JSON.stringify(headings) !== JSON.stringify(requiredSections)
+  ) {
     throw new Error(
       `DR sections must be exactly ${requiredSections.join(", ")}: ${relative}`,
     );
   }
-  const violation = executionViolation(source);
+  const violation = executionViolation(source, tree);
   if (violation) throw new Error(`DR contains ${violation}: ${relative}`);
 }
 

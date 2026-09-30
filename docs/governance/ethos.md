@@ -113,6 +113,15 @@ its document command and product-owned verifier both pass for the committed
 tree. Command output and repository-authored report files cannot supply that
 native evidence. This is code-quality proof, not another lifecycle.
 
+The decision boundary uses the locked native Markdown parser to inspect actual
+headings, task markers and code nodes, including quote and list nesting.
+Terminal code, task progress and mismatched titles fail; natural-language
+rationale, ordinary decision tables and evidence links remain valid. Raw HTML
+other than the leading registry comment is unsupported in DRs because it could
+hide content from this Markdown check. This validator does not decide whether
+every prose sentence is durable; reviewers still move task and acceptance
+narratives to their producing Change or native record.
+
 The native `devEngines.packageManager` field in
 [`package.json`](../../package.json) is the only exact npm version declaration.
 npm rejects a mismatch before dependency installation and repository scripts;

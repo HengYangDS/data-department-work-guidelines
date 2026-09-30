@@ -202,6 +202,146 @@ test("shell syntax is rejected without rejecting concept prose or evidence links
   );
 });
 
+test("parsed decision content rejects wrapped execution and task progress", async (t) => {
+  const cases = [
+    ["quoted Bash fence", "> ```bash\n> git status\n> ```"],
+    [
+      "list-nested shell fence",
+      "- Evidence:\n\n  ```sh\n  ethos prove --execute\n  ```",
+    ],
+    ["PowerShell fence", '```powershell\nWrite-Output "Task complete"\n```'],
+    ["PowerShell short label", '```ps1\nWrite-Output "Task complete"\n```'],
+    ["Windows command fence", "```cmd\ndir /b\n```"],
+    ["indented command", "    ethos prove --execute"],
+    ["checked task", "- [x] Implement the Change."],
+    ["unchecked task", "- [ ] Run the checks."],
+    ["quoted task", "> - [x] Publish the result."],
+    ["nested task", "- Work:\n  - [ ] Verify the current source."],
+    ["long fenced command", "````text\nethos prove --execute\n```\n````"],
+    ["inline command under emphasis", "**`ethos status --json`**"],
+    ["opaque HTML command", "<pre>ethos prove --execute</pre>"],
+    [
+      "HTML task carrier",
+      '<ul><li><input type="checkbox" checked>Done</li></ul>',
+    ],
+  ];
+  for (const [name, body] of cases) {
+    await t.test(name, () => {
+      assert.throws(
+        () =>
+          validateDecision(
+            "docs/decisions/dr-0001-fixture.md",
+            decision({ body }),
+          ),
+        /execution|command invocation|task progress|unsupported HTML/u,
+      );
+    });
+  }
+});
+
+test("parsed decision headings cannot be forged by a code block or quote", () => {
+  const missing = decision({ headings: sections.slice(0, -1) });
+  for (const wrapper of [
+    "```text\n## Evidence and Revisit\n\nDurable rationale.\n```",
+    "> ## Evidence and Revisit\n> Durable rationale.",
+  ]) {
+    assert.throws(
+      () =>
+        validateDecision(
+          "docs/decisions/dr-0001-fixture.md",
+          `${missing}\n${wrapper}\n`,
+        ),
+      /sections/u,
+    );
+  }
+  assert.throws(
+    () =>
+      validateDecision(
+        "docs/decisions/dr-0001-fixture.md",
+        decision().replace("# DR-0001:", "# DR-0002:"),
+      ),
+    /title/u,
+  );
+  assert.throws(
+    () =>
+      validateDecision(
+        "docs/decisions/dr-0001-fixture.md",
+        `${decision()}\n# Second title\n`,
+      ),
+    /title/u,
+  );
+});
+
+test("parsed decision content retains meaningful rationale and evidence links", () => {
+  const bodies = [
+    "ETHOS lifecycle describes current work.",
+    "[Implementation](../../tools/docs/cli.mjs) and [OpenSpec](../../openspec/README.md) explain the boundary.",
+    "The old `./scripts/validate-docs.sh` path names a retired implementation, not an execution record.",
+    "- Keep one authority.\n- Reject duplicated lifecycle state.",
+    "| Alternative | Consequence |\n| --- | --- |\n| One native owner | Less duplicate state. |",
+    "> A method pack does not grant authority.",
+    "```text\nA decision records a choice and its boundary.\n```",
+    "**Evidence:** <https://example.com/decision>.",
+  ];
+  for (const body of bodies) {
+    assert.doesNotThrow(() =>
+      validateDecision("docs/decisions/dr-0001-fixture.md", decision({ body })),
+    );
+  }
+});
+
+test("public boundary command rejects parsed progress and preserves evidence prose", () => {
+  const directory = mkdtempSync(
+    path.join(os.tmpdir(), "ddwg-decision-command-"),
+  );
+  const sourceRoot = path.join(directory, "repository");
+  const record = "docs/decisions/dr-0001-fixture.md";
+  try {
+    cpSync(path.join(root, "tools"), path.join(sourceRoot, "tools"), {
+      recursive: true,
+    });
+    cpSync(
+      path.join(root, "package.json"),
+      path.join(sourceRoot, "package.json"),
+    );
+    symlinkSync(
+      path.join(root, "node_modules"),
+      path.join(sourceRoot, "node_modules"),
+      "junction",
+    );
+    mkdirSync(path.join(sourceRoot, "docs", "decisions"), { recursive: true });
+    const runBoundary = () =>
+      spawnSync(process.execPath, ["tools/docs/cli.mjs", "boundary"], {
+        cwd: sourceRoot,
+        encoding: "utf8",
+        timeout: 15_000,
+      });
+    for (const body of [
+      '> ```powershell\n> Write-Output "Task complete"\n> ```',
+      "- [x] Complete the release tasks.",
+    ]) {
+      const source = decision({ body });
+      writeFileSync(path.join(sourceRoot, record), source);
+      const result = runBoundary();
+      assert.ifError(result.error);
+      assert.equal(result.status, 1, result.stderr);
+      assert.match(result.stderr, /execution|task progress/u);
+      assert.equal(readFileSync(path.join(sourceRoot, record), "utf8"), source);
+    }
+    const source = decision({
+      body: "[Evidence](../../openspec/README.md) explains the choice.",
+    });
+    writeFileSync(path.join(sourceRoot, record), source);
+    const result = runBoundary();
+    assert.ifError(result.error);
+    assert.equal(result.status, 0, result.stderr);
+    assert.match(result.stdout, /PASS decision boundary/u);
+    assert.equal(readFileSync(path.join(sourceRoot, record), "utf8"), source);
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
 test("current decision tree rejects date names, superseded records, and method carriers", () => {
   fixture((directory) => {
     checkDecisions(directory);
