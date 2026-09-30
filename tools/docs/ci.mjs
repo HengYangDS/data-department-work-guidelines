@@ -55,6 +55,16 @@ const nativeSourceSupply = [
 ];
 
 function requirePackageManagerSetup(steps, setupNode) {
+  const setup = steps[setupNode]?.with;
+  if (
+    setup?.["package-manager-cache"] !== false ||
+    setup?.["check-latest"] !== true ||
+    setup?.cache !== undefined
+  ) {
+    throw new Error(
+      "Node setup must resolve the latest declared runtime without invoking npm",
+    );
+  }
   const read = steps.findIndex((step) => step.id === "npm-version");
   const install = steps.findIndex(
     (step) =>

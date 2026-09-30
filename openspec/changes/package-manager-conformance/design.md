@@ -38,6 +38,12 @@ owner; source must not mutate those services or choose a private prefix.
 Every claimed host must report the actual selected npm, not a name or lock
 entry. A native version mismatch remains fatal after acquisition.
 
+Node setup resolves the latest stable release in the declared major and disables
+automatic package-manager caching. That action otherwise invokes bundled npm
+before the explicit upgrade, causing native admission to reject the setup step.
+Explicit npm caching is also rejected at that point; source and offline workflows
+share this regression boundary rather than bypassing `devEngines`.
+
 Local checks and offline installation never acquire a package manager. The
 contributor route states the exact npm prerequisite and points to its existing
 installation owner. The offline source image includes the same native

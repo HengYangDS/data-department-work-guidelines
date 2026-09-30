@@ -557,6 +557,38 @@ test("GitLab offline release CI runs only after a release asset is available", (
   }
 });
 
+test("Node setup avoids npm before native package-manager supply", () => {
+  for (const source of [github, offline]) {
+    const workflow = YAML.parse(source);
+    const setup = workflow.jobs.verify.steps.find((step) =>
+      step.uses?.startsWith("actions/setup-node@"),
+    );
+    assert.equal(setup.with["package-manager-cache"], false);
+    assert.equal(setup.with["check-latest"], true);
+    for (const mutation of [
+      () => delete setup.with["package-manager-cache"],
+      () => (setup.with["package-manager-cache"] = true),
+      () => (setup.with.cache = "npm"),
+      () => (setup.with["check-latest"] = false),
+    ]) {
+      setup.with = {
+        "node-version": 26,
+        "package-manager-cache": false,
+        "check-latest": true,
+      };
+      mutation();
+      const changed = YAML.stringify(workflow);
+      assert.throws(
+        () =>
+          source === github
+            ? validateCi(changed, gitlab, offline)
+            : validateCi(github, gitlab, changed),
+        /Node setup must resolve the latest declared runtime without invoking npm/u,
+      );
+    }
+  }
+});
+
 test("package-manager supply cannot bypass native admission or become a second version owner", () => {
   const workflow = YAML.parse(github);
   const install = workflow.jobs.verify.steps.find(
