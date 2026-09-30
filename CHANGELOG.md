@@ -12,6 +12,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [6.1.1] - 2026-10-01
+
 ### Fixed
 
 - Decision records now reject quoted or list-nested terminal commands, task
@@ -305,7 +307,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   verification sequence while keeping local, GitLab, and GitHub results separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.1.0...main
+[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.1.1...main
+[6.1.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.1.0...v6.1.1
 [6.1.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.0.1...v6.1.0
 [6.0.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.0.0...v6.0.1
 [6.0.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.4...v6.0.0
