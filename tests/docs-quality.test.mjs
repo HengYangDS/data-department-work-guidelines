@@ -189,7 +189,7 @@ test("shell syntax is rejected without rejecting concept prose or evidence links
   );
   assert.match(
     executionViolation("```bash\nethos status --json\n```"),
-    /fenced execution/u,
+    /code block/u,
   );
   assert.match(
     executionViolation("Run `openspec validate --all --strict`."),
@@ -280,7 +280,7 @@ test("parsed decision content retains meaningful rationale and evidence links", 
     "- Keep one authority.\n- Reject duplicated lifecycle state.",
     "| Alternative | Consequence |\n| --- | --- |\n| One native owner | Less duplicate state. |",
     "> A method pack does not grant authority.",
-    "```text\nA decision records a choice and its boundary.\n```",
+    "A decision records a choice and its boundary.",
     "**Evidence:** <https://example.com/decision>.",
   ];
   for (const body of bodies) {
@@ -288,6 +288,33 @@ test("parsed decision content retains meaningful rationale and evidence links", 
       validateDecision("docs/decisions/dr-0001-fixture.md", decision({ body })),
     );
   }
+});
+
+test("decision rationale links to code instead of carrying opaque executable blocks", () => {
+  for (const body of [
+    "```\nrm -rf ./temporary\n```",
+    '```python\nprint("Task complete")\n```',
+    '```text\nWrite-Output "Task complete"\n```',
+    "```text\nA choice has a boundary and a revisit trigger.\n```",
+    "    A choice has a boundary and a revisit trigger.",
+  ]) {
+    assert.throws(
+      () =>
+        validateDecision(
+          "docs/decisions/dr-0001-fixture.md",
+          decision({ body }),
+        ),
+      /unsupported code block/u,
+    );
+  }
+  assert.throws(
+    () =>
+      validateDecision(
+        "docs/decisions/dr-0001-fixture.md",
+        `${decision()}\n> # Another decision\n`,
+      ),
+    /title/u,
+  );
 });
 
 test("public boundary command rejects parsed progress and preserves evidence prose", () => {

@@ -13,23 +13,6 @@ const requiredSections = [
   "Consequences and Boundary",
   "Evidence and Revisit",
 ];
-const shellLanguages = new Set([
-  "bash",
-  "console",
-  "fish",
-  "sh",
-  "shell",
-  "shell-session",
-  "terminal",
-  "zsh",
-  "powershell",
-  "ps1",
-  "pwsh",
-  "cmd",
-  "bat",
-  "batch",
-  "dos",
-]);
 const subcommands = {
   ethos: new Set([
     "adopt",
@@ -82,7 +65,7 @@ function shellTokens(source) {
   return source.match(/(?:[^\s"']+|"[^"]*"|'[^']*')+/gu) ?? [];
 }
 
-export function commandInvocation(source, { shellContext = false } = {}) {
+export function commandInvocation(source) {
   let candidate = source
     .trim()
     .replace(/^(?:[-*+] |\d+[.)] )/u, "")
@@ -90,7 +73,6 @@ export function commandInvocation(source, { shellContext = false } = {}) {
   if (!candidate || candidate.startsWith("#")) return false;
   if (/^(?:\$\s+|[\w.-]+@[\w.-]+(?::[^$#\s]+)?\$\s+)/u.test(candidate))
     return true;
-  if (shellContext) return true;
   const tokens = shellTokens(candidate);
   while (tokens.length && /^[A-Za-z_][A-Za-z0-9_]*=/u.test(tokens[0]))
     tokens.shift();
@@ -152,15 +134,8 @@ export function executionViolation(source, tree = markdownTree(source)) {
     }
     if (node.type === "ListItem" && typeof node.checked === "boolean")
       return `task progress at line ${line}`;
-    if (node.type === "CodeBlock") {
-      const shell = shellLanguages.has((node.lang ?? "").toLowerCase());
-      if (
-        node.value
-          .split(/\r?\n/u)
-          .some((value) => commandInvocation(value, { shellContext: shell }))
-      )
-        return `${shell ? "fenced" : "code"} execution content at line ${line}`;
-    }
+    if (node.type === "CodeBlock")
+      return `unsupported code block; execution content belongs outside a DR at line ${line}`;
     if (node.type === "Code" && commandInvocation(node.value))
       return `inline command invocation at line ${line}`;
     if (
@@ -188,7 +163,7 @@ export function validateDecision(relative, source) {
     throw new Error(`DR identity or status mismatch: ${relative}`);
   }
   const tree = markdownTree(source);
-  const titles = tree.children.filter(
+  const titles = [...contentNodes(tree)].filter(
     (node) => node.type === "Header" && node.depth === 1,
   );
   if (

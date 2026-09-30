@@ -115,8 +115,9 @@ native evidence. This is code-quality proof, not another lifecycle.
 
 The decision boundary uses the locked native Markdown parser to inspect actual
 headings, task markers and code nodes, including quote and list nesting.
-Terminal code, task progress and mismatched titles fail; natural-language
-rationale, ordinary decision tables and evidence links remain valid. Raw HTML
+Code blocks, task progress and mismatched titles fail; natural-language
+rationale, ordinary decision tables, inline terms and evidence links remain
+valid. Link to executable examples rather than placing them in a DR. Raw HTML
 other than the leading registry comment is unsupported in DRs because it could
 hide content from this Markdown check. This validator does not decide whether
 every prose sentence is durable; reviewers still move task and acceptance

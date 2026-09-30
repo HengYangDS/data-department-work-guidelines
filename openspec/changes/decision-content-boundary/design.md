@@ -29,10 +29,12 @@ nodes instead of reconstructing Markdown with regular expressions.
 
 Require one matching top-level decision title and the five ordered top-level
 level-two sections. Heading-like text inside a code block cannot supply a
-section. Task markers are progress, not alternatives. Recognized terminal code
-blocks and command invocations remain execution content, even under wrappers.
-The existing bounded invocation classifier applies to parsed content, not link
-targets. It is not a complete shell interpreter or semantic prose judge.
+section. Task markers are progress, not alternatives. A code block is not a
+decision rationale carrier: link to the producing code or execution record
+instead. Reject code blocks regardless of language labels or wrappers, avoiding
+a second shell interpreter and incomplete command-name lists. The existing
+bounded invocation classifier applies only to parsed inline code and prose, not
+link targets. It is not a semantic prose judge.
 
 Opaque HTML nodes cannot be reliably inspected by this Markdown boundary. Reject
 those nodes except the validated initial registry comment. Markdown links,
@@ -56,7 +58,7 @@ observe each source and offline platform matrix independently.
 ## Risks / Trade-offs
 
 - A blanket syntax ban rejects useful rationale: keep explicit positive cases
-  for links, terminology, decision lists/tables, and non-executable examples.
+  for links, terminology, ordinary decision lists/tables and quoted rationale.
 - A parser wrapper hides an invalid node: test quote/list combinations,
   longer fences, indentation, inline code and HTML at the actual public entry.
 - A validator appears to judge prose: retain that editorial responsibility and

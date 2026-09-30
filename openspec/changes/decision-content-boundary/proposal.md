@@ -11,8 +11,8 @@ command log or task report return as a decision record.
 
 - Inspect actual Markdown headings, task lists, code blocks, and inline code
   through the already locked native Markdown parser.
-- Reject nested execution and task progress without rejecting concept prose,
-  decision alternatives, or meaningful evidence links.
+- Reject code blocks, nested execution and task progress without rejecting
+  concept prose, inline technical terms, alternatives or evidence links.
 - Keep exactly the five decision sections, stable identity, and clear errors.
 - Treat opaque raw HTML as unsupported DR content; keep the required leading
   registry comment. Do not let a wrapper hide material the parser cannot check.
