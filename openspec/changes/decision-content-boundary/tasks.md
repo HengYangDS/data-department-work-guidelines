@@ -13,7 +13,7 @@
 
 - [x] 2.1 Pass format, lint, prose, spelling, links, boundary tests, the full
       suite, official OpenSpec and plan.
-- [ ] 2.5 Pass installed proof for the exact committed source before archival.
+- [x] 2.5 Pass installed proof for the exact committed source before archival.
 - [x] 2.2 Prepare and accept v6.1.1 under SemVer with one inspected offline
       bundle; pass both Forge source matrices at the exact release cut.
 - [x] 2.3 Publish the same signed tag and release notes on both Forges; download
