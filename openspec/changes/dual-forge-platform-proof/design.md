@@ -88,11 +88,13 @@ digest-verified release bundle. No synthetic human-use trial is added.
    guidance in this Work Lane; run local quality and GitLab lint.
 2. Verify the missing lychee archives in GitLab's project registry, then
    obtain fleet-side project- and trust-specific runner and Node admission,
-   including transport and credential proof. Exercise both review and
-   protected source routes before integration.
-3. After exact-HEAD ETHOS proof and governed closeout, observe GitLab and
-   GitHub source jobs independently. Prepare a SemVer-compatible release,
-   publish one signed tag and identical offline bytes, then run each Forge's
-   post-publication platform jobs.
+   including transport and credential proof. A bounded canary on an existing
+   protected ref may prove its Runner route; the new protected source job
+   cannot execute until the new YAML reaches `dev`.
+3. Prove the exact Change HEAD through installed ETHOS, publish its proposal
+   through the governed route, and observe real review jobs. After governed
+   closeout, observe new protected GitLab jobs and GitHub source jobs at the
+   accepted SHA. Prepare a SemVer-compatible release, publish one signed tag
+   and identical offline bytes, then run each Forge's post-publication jobs.
 4. Keep the Change open until all declared jobs and assets are observed;
    archive, refresh proof for the archive commit, and retire the Work Lane.

@@ -22,10 +22,11 @@
 - [ ] 2.2 Admit project-specific review and protected native runners with
       separate accounts, roots, and caches, the declared Node line, and bounded
       credential transport; verify ARM64 hosts, Windows x64 compatibility, and
-      real jobs on both source routes.
-- [ ] 2.3 Commit and prove the exact Change HEAD with official OpenSpec and
-      installed ETHOS, then close out through governance; verify both Forges'
-      source jobs at the accepted SHA and protected-check refusal on omissions.
+      protected-runner readiness with a bounded existing-ref canary.
+- [ ] 2.3 Prove the exact Change HEAD with official OpenSpec and installed
+      ETHOS, publish a governed proposal, and verify review jobs; then close
+      out and verify both Forges' source jobs at the accepted SHA, including
+      protected-check refusal on omissions.
 
 ## 3. Release and Retirement
 
