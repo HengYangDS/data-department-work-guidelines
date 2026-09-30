@@ -12,6 +12,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [5.2.4] - 2026-09-30
+
 ### Changed
 
 - Refreshed the compatible documentation-tool dependency closure and rebuilt
@@ -248,7 +250,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   verification sequence while keeping local, GitLab, and GitHub results separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.3...main
+[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.4...main
+[5.2.4]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.3...v5.2.4
 [5.2.3]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.2...v5.2.3
 [5.2.2]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.1...v5.2.2
 [5.2.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.0...v5.2.1

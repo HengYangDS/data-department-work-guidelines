@@ -16,8 +16,14 @@
       `05fac29149d4accbbfc073f07072dfca43b8f1d4789c984274bcf8d6bc27abb2`.
       Native npm 12.1.0 verifies 241 registry signatures and 110 attestations;
       its audit reports zero vulnerabilities.
-- [ ] 1.4 Run signature and vulnerability audits, the full source verifier,
+- [x] 1.4 Run signature and vulnerability audits, the full source verifier,
       official OpenSpec, fresh offline installation, and exact-HEAD ETHOS proof.
+      Signed source `6e2d0838f764bba7904dd7c54c4cca0b7b615d72` passes all 97
+      tests, offline links, format, lint, spelling, and four official OpenSpec items.
+      A fresh detached checkout matches all 241 tracked files by SHA-256, installs
+      the new bundle offline, and passes the same full verifier. Its exact temporary
+      checkout is removed. Installed ETHOS full proof passes at that HEAD; later
+      release-cut and archive commits still require their own current proof.
 
 ## 2. Delivery and closeout
 
