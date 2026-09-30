@@ -274,6 +274,33 @@ test("only the current version may be a prepared untagged release", () => {
   });
 });
 
+test("the next edition can keep its notes in Unreleased until the release cut", () => {
+  fixture((directory, base) => {
+    const changelog = path.join(directory, "CHANGELOG.md");
+    const release =
+      "## [4.0.0] - 2026-09-25\n\n### Changed\n\n- Released change.\n\n";
+    writeFileSync(changelog, preparedSource(base, release));
+    commit(directory, "cut released edition");
+    git(directory, "tag", "-a", "v4.0.0", "-m", "fixture release");
+
+    writeFileSync(path.join(directory, "VERSION"), "4.1.0\n");
+    writeFileSync(
+      path.join(directory, "docs", "charter.md"),
+      "> **Guideline edition:** v4.1.0\n",
+    );
+    writeFileSync(changelog, source(base, release, "v4.0.0", "v4.0.0"));
+    commit(directory, "prepare next edition without a release date");
+
+    const result = validateChangelog({
+      repository: directory,
+      selectedTag: "",
+    });
+    assert.equal(result.version, "4.1.0");
+    assert.equal(result.pending, "");
+    assert.equal(result.tagCount, 1);
+  });
+});
+
 test("a prepared release has one comparison source before and after tagging", () => {
   fixture((directory, base) => {
     const changelog = path.join(directory, "CHANGELOG.md");

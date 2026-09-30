@@ -70,11 +70,14 @@ digest-verified release bundle. No synthetic human-use trial is added.
 The public guideline duties, reader routes, and contributor commands remain
 available. GitLab gains additional platform qualification rather than losing
 an existing route, so the next edition is a compatible minor increment to
-5.2.0 under the repository's SemVer contract. The current stable CSpell
-release is 10.3.6; refresh the exact npm pin and lock before building the
+5.2.0 under the repository's SemVer contract. On 2026-09-30 the latest stable
+CSpell release was 10.3.6; refresh the exact npm pin and lock before building the
 version-bound offline bundle. Record the builder's actual digest, not a guessed
-value. The dated Changelog heading is a prepared edition, not a signed tag or
-Forge Release; update its date if publication occurs later.
+value. Keep the edition notes under `Unreleased` while runner and hosted proof
+remain pending. At the actual release cut, move those notes to a dated version
+section, refresh its comparison links, sign and prove that new source commit,
+then create the tag. A date chosen for a long-lived prepared branch would
+misstate the release history.
 
 ## Risks and Trade-offs
 

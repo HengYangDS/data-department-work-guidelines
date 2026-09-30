@@ -4,14 +4,13 @@ All notable changes to the Data Department work guidelines are recorded here.
 This file follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/),
 and editions follow [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html).
 
-`VERSION` names the next edition. A changelog heading, accepted branch, or CI
-result is not a signed tag or a Forge Release. Earlier branch editions had no
-versioned release tags; their original records remain in Git history rather than
-being relabeled as formal SemVer releases.
+`VERSION` names the next edition. Keep upcoming notes under `Unreleased` until
+the release is cut; only then give the edition its actual date. A changelog
+heading, accepted branch, or CI result is not a signed tag or a Forge Release.
+Earlier branch editions had no versioned release tags; their original records
+remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
-
-## [5.2.0] - 2026-09-30
 
 ### Added
 
@@ -207,8 +206,7 @@ being relabeled as formal SemVer releases.
   verification sequence while keeping local, GitLab, and GitHub results separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.0...main
-[5.2.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.1.0...v5.2.0
+[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.1.0...main
 [5.1.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.6...v5.1.0
 [5.0.6]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.5...v5.0.6
 [5.0.5]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.4...v5.0.5

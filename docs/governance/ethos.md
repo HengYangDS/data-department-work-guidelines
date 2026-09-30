@@ -78,9 +78,12 @@ from a diff alone.
 [`CHANGELOG.md`](../../CHANGELOG.md) follows
 [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/). The default
 `docs-integrity` proof gate and both CI jobs reject malformed headings,
-categories, dates, links, version drift, and tag mismatch. At most one current
-version may be prepared without a tag. A heading, branch, or CI result is not a
-versioned release. ETHOS admits only an exact, signed annotated `vX.Y.Z` tag
+categories, dates, links, version drift, and tag mismatch. The next edition's
+notes stay under `Unreleased` until the release cut; its dated section uses the
+actual release date. The validator permits one untagged dated heading only for
+the release cut, when that source must be committed and proved before its tag
+exists. A heading, branch, or CI result is not a versioned release. ETHOS
+admits only an exact, signed annotated `vX.Y.Z` tag
 matching the committed `VERSION`; each Forge Release and asset must then be
 observed separately. Older untagged branch editions stay in Git history, not a
 fabricated release sequence.

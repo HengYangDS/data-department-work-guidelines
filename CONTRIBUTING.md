@@ -118,11 +118,12 @@ the installed ETHOS verdict at every source transition; these commands do not
 grant Change authority.
 
 1. Prepare the version under the official Change. Review the public rule and
-   contributor-command diff under SemVer, then align `VERSION`, the charter, and
-   the dated `CHANGELOG.md` entry. Run `npm ci --ignore-scripts` and
+   contributor-command diff under SemVer, then align `VERSION` and the charter.
+   Record upcoming changes under `Unreleased` in `CHANGELOG.md`; do not assign
+   a release date before the release cut. Run `npm ci --ignore-scripts` and
    `npm audit --audit-level=moderate` on the intended Work Lane. The full
    source check follows the new bundle record in Step 2. Do not tag a merely
-   prepared heading.
+   prepared edition.
 2. Supply the bundle builder with the five platform archives named under
    `assets` and the two license files named under `licenses` in
    [the pinned lychee manifest](.config/tools/lychee.json). Obtain their exact
@@ -157,11 +158,17 @@ grant Change authority.
    `npm run verify` without remote supply. The source and bundle must match.
    Take the actual OID from `git rev-parse HEAD`, and execute
    `ethos prove --execute --full --scope repository --expect-head OID --json`.
-   Follow the native candidate, accepted-root, and official archive results;
-   complete the Change's declared source tasks before archive. The archive
-   creates a new commit: inspect its attribution and signature, then prove its
-   new OID. Do not raw-push around an ETHOS refusal.
-4. From the final proved commit, make a signed annotated `vX.Y.Z` tag and run
+   Follow the native candidate and accepted-root results. A Change with remote
+   delivery obligations stays active while those tasks are open; archive only
+   after every declared obligation has evidence. Source-only Changes may
+   archive earlier when their obligations are complete. Archive creates a new
+   commit: inspect its attribution and signature, then prove its new OID. Do
+   not raw-push around an ETHOS refusal.
+4. At the release cut, move the `Unreleased` items into a dated `[X.Y.Z]`
+   Changelog section using the actual date, leave `Unreleased` empty, and
+   update both comparison links. Commit that exact source, repeat the required
+   local checks and ETHOS proof, and follow the native acceptance continuation.
+   From the final proved commit, make a signed annotated `vX.Y.Z` tag and run
    `git tag -v vX.Y.Z`. Use `ethos publish --json` and its current continuation
    to publish the exact admitted `dev`, `main`, and tag refs to each peer.
    Re-read both remote refs before creating either Release; GitLab's SSH remote
