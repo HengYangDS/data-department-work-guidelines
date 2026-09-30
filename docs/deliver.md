@@ -36,6 +36,8 @@ Check the actual target location, current state, concurrent work, and recovery
 path before making a change. Surface critical-path blockers promptly; activity
 volume and “active progress” are not state changes. If scope or risk materially
 changes, return to the authorized decision owner.
+Record the changed scope or risk and the decision that resolves it in the
+existing work carrier, so collaborators work from the same commitment.
 
 ## Name the State, Not the Effort
 
@@ -53,6 +55,7 @@ changes, return to the authorized decision owner.
 Do not rename “executing” as “almost done,” or infer publication from
 verification. A blocked task can contain useful work; the blocked claim remains
 blocked until its prerequisite changes.
+Continue independent, authorized work that does not depend on that prerequisite.
 
 ## Evidence Sets the Limit of the Claim
 

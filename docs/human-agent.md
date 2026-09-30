@@ -101,7 +101,8 @@ A completion report states the outcome (complete, partial, blocked, or
 deferred), target and version, actual changes, verification method, result,
 execution time and environment, and where the evidence can be inspected. Name
 risks, limits, assumptions, unresolved questions, and any acceptance still
-needed. End with
+needed. State what remains incomplete and why; distinguish a missing dependency
+from work that has not been attempted. End with
 the next responsible person, action, and due time; do not write only “follow
 up.” On interruption, preserve state, uncommitted work, attempts and failures,
 the recovery entry, and retries known to be ineffective. Repository Agents also

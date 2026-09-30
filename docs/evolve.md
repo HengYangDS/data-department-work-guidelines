@@ -60,7 +60,8 @@ acceptance, oral and written communication, and delegation and verification of
 Agents. Hard risks include fabricated or selectively hidden facts; uncertainty
 presented as certainty; completion without current verification; Agent output
 treated as fact or authorization; high-risk action beyond authority; concealed
-blockers or scope changes; and repeated manual rescue without prevention.
+blockers, delays, failures, or scope changes; rhetoric or activity counts in
+place of reasoning and results; and repeated manual rescue without prevention.
 Fluent presentation, effort, or tool speed does not cancel them. If scoring is
 used, define its levels, observable behavior, and purpose; do not treat a score
 as a person's overall worth.
@@ -70,13 +71,13 @@ performed independently and reliably. Call a result exceptional only when it
 also transfers a method, reduces recurring cost, or improves others' capacity.
 If a five-level review is used, keep its meaning stable:
 
-| Level             | Observable delivery risk                                                                          |
-| ----------------- | ------------------------------------------------------------------------------------------------- |
-| 1: unacceptable   | The subject, facts, or responsibility are confused enough to invite a wrong action.               |
-| 2: below standard | Useful fragments exist, but reasoning, evidence, or delivery has a material gap.                  |
-| 3: borderline     | The work is usable with guidance, not yet reliable independently.                                 |
-| 4: meets standard | The person can independently make bounded judgments, executable choices, and reliable acceptance. |
-| 5: strong         | The result also leaves a transferable method or system improvement.                               |
+| Level             | Observable delivery risk                                                                                                           |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| 1: unacceptable   | The subject, facts, or responsibility are confused enough to invite a wrong action.                                                |
+| 2: below standard | Useful fragments exist, but reasoning, evidence, or delivery has a material gap.                                                   |
+| 3: borderline     | The work is usable with guidance, not yet reliable independently.                                                                  |
+| 4: meets standard | The person can independently make bounded judgments, executable choices, and deliver results that meet agreed acceptance criteria. |
+| 5: strong         | The result also leaves a transferable method or system improvement.                                                                |
 
 ## Observe the System Without Worshipping Numbers
 
@@ -107,7 +108,9 @@ that carrier. No separate meeting, universal weekly 30-minute session, or
 “nothing happened” activity report is required.
 
 Managers clarify direction, priorities, resources, and cross-domain decisions,
-and protect honest disclosure of uncertainty. They must not use these
+resolve long-standing open decisions in time for the work to proceed, and show
+their reasoning with concrete work examples. They protect honest disclosure of
+uncertainty. They must not use these
 guidelines for retrospective fault-finding, ceremonial review, or
 micromanagement. When goals conflict, priorities drift, resources are short,
 decisions stall, or interfaces mislead, repair the management system before

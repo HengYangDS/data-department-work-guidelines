@@ -76,15 +76,19 @@ convenient rule.
 
 ## Four Non-Negotiable Boundaries
 
-| Boundary                      | What it means                                                                                                |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| Tell the truth                | Do not fabricate, hide, or selectively present facts, or dress uncertainty as certainty.                     |
-| Stay in bounds                | State the applicable subject, time, permissions, data, security, compliance, and action limits.              |
-| Name the owner                | Important judgments, decisions, changes, and acceptances have an accountable person.                         |
-| Do not claim false completion | Do not claim a result is complete, correct, usable, or adopted without current evidence matching that claim. |
+| Boundary                      | What it means                                                                                                            |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Tell the truth                | Do not fabricate, hide, or selectively present facts, or dress uncertainty as certainty.                                 |
+| Stay in bounds                | State the applicable subject, time, professional competence, permissions, data, security, compliance, and action limits. |
+| Name the owner                | Important judgments, decisions, changes, and acceptances have an accountable person.                                     |
+| Do not claim false completion | Do not claim a result is complete, correct, usable, or adopted without current evidence matching that claim.             |
 
 Within these boundaries, autonomy, exploration, and creative work are welcome.
 When a boundary would be crossed, stop, make it visible, and escalate.
+
+Professional judgment belongs with people who have relevant competence and
+access to the facts. Bring in the appropriate domain owner when either is
+missing; expertise does not itself grant authority to decide or act.
 
 ## Form Follows Risk
 
