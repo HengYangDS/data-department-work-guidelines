@@ -5,14 +5,12 @@
 ### Requirement: Per-project dual-Forge runner isolation
 
 Both Forges SHALL run the full verifier on Linux, macOS, and Windows. GitHub
-SHALL use managed runners; GitLab SHALL use project-locked ARM64 capabilities.
-Every GitLab operating-system route, including Linux containers, SHALL
-separate review and protected Runner identities, accounts, execution roots,
-caches, and credential reachability. All Runners SHALL be tagged-only; review
-Runners SHALL be `not_protected` and protected Runners SHALL be
-`ref_protected`. A container or different tag on a shared Runner is not this
-separation. GitLab SHALL protect `dev`, `main`, and `v*`. YAML SHALL
-NOT prove execution; emulation SHALL NOT prove native x86_64 behavior.
+SHALL use hosted runners; GitLab SHALL use project-locked ARM64 Runners. On
+every GitLab OS route, including Linux containers, review and protected jobs
+SHALL have distinct Runner identities, accounts, execution roots, caches, and
+credential reachability. Runners SHALL be tagged-only: review
+`not_protected`, protected `ref_protected`. GitLab SHALL protect `dev`,
+`main`, and `v*`.
 
 #### Scenario: Repository workflow bindings are statically valid
 
@@ -112,6 +110,12 @@ NOT prove execution; emulation SHALL NOT prove native x86_64 behavior.
 - **AND THEN** each Forge requires a fresh run at the published revision for
   its own success claim
 - **AND THEN** provider credentials and job observations remain independent.
+
+#### Scenario: Emulation is not native architecture proof
+
+- **WHEN** a declared host runs x86_64 tools under emulation
+- **THEN** a passing job MAY establish functional execution on that host
+- **AND THEN** it SHALL NOT be represented as native x86_64 behavior.
 
 #### Scenario: Release-cut source differs from an earlier accepted source
 
