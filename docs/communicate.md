@@ -17,13 +17,13 @@ test whether an independent reader can identify the basis, limits, and request.
 
 ## Know What the Exchange Must Accomplish
 
-| Purpose     | Desired result                                                        |
-| ----------- | --------------------------------------------------------------------- |
-| Synchronize | A shared understanding of the same subject and facts.                 |
-| Discuss     | A better model, counterexamples, and feasible options.                |
-| Decide      | An authorized choice among options against explicit criteria.         |
-| Escalate    | Timely help with an authority, resource, or risk gap.                 |
-| Review      | An explanation of the mechanism and what to keep, change, or discard. |
+| Purpose     | Desired result                                                                  |
+| ----------- | ------------------------------------------------------------------------------- |
+| Synchronize | A shared understanding of the same subject and facts.                           |
+| Discuss     | A better model, counterexamples, and feasible options.                          |
+| Decide      | An authorized choice among options against explicit criteria.                   |
+| Escalate    | Help with an authority, resource, or risk gap before work stalls or harm grows. |
+| Review      | An explanation of the mechanism and what to keep, change, or discard.           |
 
 For an important update, lead with the **conclusion or present state**. Then
 give two or three decisive facts, the impact, a recommendation, and the decision

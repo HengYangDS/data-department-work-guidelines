@@ -101,8 +101,9 @@ branch and tag boundaries; they contain no operator key or host path.
 
 `npm run verify` invokes one [portable quality entry](../../tools/docs/cli.mjs).
 It checks formatting for Markdown, code, JSON, and YAML; TOML syntax; Markdown
-lint; CSpell spelling; offline, version-checked lychee links and fragments;
-metadata; English and spacing; repository boundaries; official OpenSpec; version
+lint; CSpell spelling; native textlint prose and terminology; offline,
+version-checked lychee links and fragments; metadata; English and spacing;
+repository boundaries; official OpenSpec; version
 identity; CI topology; and negative tests. The two default ETHOS gates retain
 their repository-relative document commands. `docs-integrity` omits Node test
 execution; the standalone verifier runs those tests once, while ETHOS obtains
@@ -142,7 +143,7 @@ checks and verify the source-pinned archive digest before extraction. The
 archive excludes host extended attributes; archive inspection and extraction
 reject warning output even when the archive tool exits successfully. The
 [contributor route](../../CONTRIBUTING.md) owns the commands. Bundled npm
-packages and lychee retain their upstream licenses; the repository MIT grant
+packages and lychee retain their upstream license notices; the repository MIT grant
 does not relicense them. Both hosted CI planes run
 `npm audit --audit-level=moderate` during online tool supply; local source
 verification does not require network access. The bundle binds the edition,
@@ -190,4 +191,4 @@ Evidence remains with its producer and specific claim; it needs no root folder.
 This page makes no present-tense claim about remote state, team adoption, or
 ETHOS product parity. Observe the exact revision in its actual environment
 before reporting any of them. Do not stage a team task or recruit a reviewer
-solely to certify adoption of these guidelines.
+only to certify adoption of these guidelines.

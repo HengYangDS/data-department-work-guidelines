@@ -1,6 +1,14 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
+import {
+  cpSync,
+  mkdtempSync,
+  mkdirSync,
+  readFileSync,
+  rmSync,
+  symlinkSync,
+  writeFileSync,
+} from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
@@ -8,6 +16,8 @@ import { pathToFileURL } from "node:url";
 import {
   blankLineError,
   checkSpelling,
+  proseFindings,
+  checkProse,
   documentMetadata,
   formatTargets,
   repositoryFileUri,
@@ -22,6 +32,7 @@ import {
 } from "../tools/docs/governance.mjs";
 import {
   currentMarkdown,
+  gitFiles,
   lycheeBinary,
   nodeTool,
   root,
@@ -423,6 +434,157 @@ test("locked prose spelling checks an explicit file despite ignorePaths", () => 
     );
     assert.equal(result.status, 1, result.stderr);
     assert.match(`${result.stdout}\n${result.stderr}`, /veriified/u);
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test("native prose rules reject repeated words, filler and term variants", async () => {
+  const findings = await proseFindings(
+    "Use the the report in order to decide on Github.\n",
+  );
+  assert.ok(
+    findings.some(
+      ({ ruleId, message }) =>
+        ruleId === "write-good" && message.includes("repeated"),
+    ),
+  );
+  assert.ok(
+    findings.some(
+      ({ ruleId, message }) =>
+        ruleId === "stop-words" && message.includes("in order to"),
+    ),
+  );
+  assert.ok(findings.some(({ ruleId }) => ruleId === "terminology"));
+  assert.ok(findings.every(({ line, column }) => line === 1 && column > 0));
+});
+
+test("native prose preserves syntax, quoted examples and honest uncertainty", async () => {
+  assert.deepEqual(
+    await proseFindings(
+      "The request may be rejected when evidence is incomplete.\n\n" +
+        "Use `Github in order to` only as a literal token.\n\n" +
+        "```text\nGithub in order to use the the API\n```\n\n" +
+        "Read [the source](https://example.com/Github/in-order-to).\n",
+    ),
+    [],
+  );
+  assert.ok(
+    (await proseFindings("> Utilize Github for a rich tapestry of insights.\n"))
+      .length,
+  );
+  assert.ok(
+    (await proseFindings("<!-- textlint-disable -->\nUse the the report.\n"))
+      .length,
+  );
+});
+
+test("the repository prose owner fails on a real current file", async () => {
+  const temporary = mkdtempSync(path.join(os.tmpdir(), "ddwg-prose-"));
+  try {
+    const file = path.join(temporary, "current.md");
+    writeFileSync(file, "# Current\n\nUse the the report.\n");
+    await assert.rejects(checkProse([file]), /write-good.*repeated/u);
+    writeFileSync(file, "# Current\n\nUse the report.\n");
+    await assert.doesNotReject(checkProse([file]));
+  } finally {
+    rmSync(temporary, { recursive: true, force: true });
+  }
+});
+
+test("native prose preserves domain authority and standard Markdown terms", async () => {
+  assert.deepEqual(
+    await proseFindings(
+      "Authority to act remains subject to explicit permission.\n\n" +
+        "Compare feasible options. Use one blank line between paragraphs.\n",
+    ),
+    [],
+  );
+});
+
+test("native repeated-word checks cover headings, emphasis and reader quotes", async () => {
+  for (const source of [
+    "# Use the the report\n",
+    "Use **the the** report.\n",
+    "> Use the the report.\n",
+    "Use the **the** report.\n",
+  ]) {
+    assert.ok(
+      (await proseFindings(source)).some(
+        ({ ruleId, message }) =>
+          ruleId === "write-good" && message.includes("repeated"),
+      ),
+      source,
+    );
+  }
+});
+
+test("native prose checks table cells without joining distinct columns", async () => {
+  const source = "| Duty |\n| --- |\n| Use **the the** report on Github. |\n";
+  const findings = await proseFindings(source);
+  assert.ok(
+    findings.some(({ ruleId, line }) => ruleId === "write-good" && line === 3),
+  );
+  assert.ok(findings.some(({ ruleId }) => ruleId === "terminology"));
+  assert.deepEqual(
+    await proseFindings(
+      "| First | Second |\n| --- | --- |\n| the | the |\n| `the the` | Correct |\n",
+    ),
+    [],
+  );
+});
+
+test("public prose and integrity commands reject the same current-file defect", () => {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-prose-entry-"));
+  try {
+    const clone = spawnSync(
+      "git",
+      [
+        "clone",
+        "--quiet",
+        "--local",
+        "--shared",
+        "--no-checkout",
+        root,
+        directory,
+      ],
+      { encoding: "utf8", timeout: 30_000 },
+    );
+    assert.equal(clone.status, 0, clone.stderr);
+    for (const relative of gitFiles()) {
+      const target = path.join(directory, relative);
+      mkdirSync(path.dirname(target), { recursive: true });
+      cpSync(path.join(root, relative), target);
+    }
+    symlinkSync(
+      path.join(root, "node_modules"),
+      path.join(directory, "node_modules"),
+      "junction",
+    );
+    const target = path.join(directory, "README.md");
+    const original = readFileSync(target, "utf8");
+    const defective = `${original}\nUse the the report.\n`;
+    writeFileSync(target, defective);
+    for (const command of ["prose", "check"]) {
+      const result = spawnSync(
+        process.execPath,
+        ["tools/docs/cli.mjs", command],
+        { cwd: directory, encoding: "utf8", timeout: 30_000 },
+      );
+      assert.equal(result.status, 1, `${command}: ${result.stderr}`);
+      assert.match(
+        result.stderr,
+        /README\.md:\d+:\d+ \[write-good\].*repeated/u,
+      );
+      assert.equal(readFileSync(target, "utf8"), defective);
+    }
+    writeFileSync(target, original);
+    const valid = spawnSync(process.execPath, ["tools/docs/cli.mjs", "prose"], {
+      cwd: directory,
+      encoding: "utf8",
+      timeout: 30_000,
+    });
+    assert.equal(valid.status, 0, valid.stderr);
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }

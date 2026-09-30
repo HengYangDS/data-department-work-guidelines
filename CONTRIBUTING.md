@@ -20,9 +20,8 @@ Node installation owner before running repository commands. npm checks its
 native declaration before `install`, `ci`, and `run`; do not disable it with
 `--force` or a policy override. Version matching is a prerequisite, not proof
 of correct source. Install the locked dependencies with `npm ci --ignore-scripts`.
-Use lychee
-0.24.2 from your platform's native installation owner or install a previously
-supplied, SHA-256-pinned asset with
+Use lychee 0.24.2 from your platform's native installation owner or install a
+previously supplied, SHA-256-pinned asset with
 `node tools/ci/install-lychee.mjs --asset PATH`. Then run:
 
 ```text
@@ -31,14 +30,27 @@ ethos plan --changed --json
 ```
 
 `npm run verify` checks Markdown, code, JSON, and YAML formatting, TOML syntax,
-Markdown lint, metadata, offline links and fragments, English text and spelling,
-decision and navigation boundaries, the official OpenSpec workspace, the
-changelog/version contract, CI declarations, and negative tests. `npm run prose`
-runs the locked spelling check alone. Run `npm audit --audit-level=moderate`
+Markdown lint, metadata, offline links and fragments, English text, spelling,
+native prose and terminology, decision and navigation boundaries, the official
+OpenSpec workspace, the changelog/version contract, CI declarations, and negative
+tests. `npm run prose`
+runs the same locked spelling, prose, and terminology checks without the rest
+of the verification graph. Run `npm audit --audit-level=moderate`
 separately when online before source acceptance; both hosted CI planes require
 it. This audit covers the locked repository packages, not the npm executable
 bundled with Node. The offline repository verifier does not contact either
 Forge.
+
+Native textlint rules check repeated words, wordy phrases, clichés, and technical
+term spelling against [the selected rule options](.config/tools/textlint.json).
+Paragraphs, headings, lists, quotes, link labels, and table cells are prose;
+raw HTML and image attributes remain native parser syntax, not checked prose.
+Code spans, fenced commands, URLs, and metadata keep their syntax; the checker
+does not rewrite files. Intentional uncertainty and passive constructions may
+carry exact meaning and are not blanket errors. A passing style check does not
+prove factual accuracy, semantic fidelity, or reader understanding. Review those
+at the [communication](docs/communicate.md) and task owners. No global or parent
+configuration, cache, or inline suppression changes this check.
 
 For `docs/` pages, keep ETHOS metadata in the leading HTML comment and put the
 H1 after one blank line as the first visible block. Copy a current page's
@@ -60,7 +72,7 @@ the existing pinned lychee asset path, and never downloads a missing tool.
 Obtain the bundle from either Forge while online or transfer it separately;
 acquisition and offline execution are different claims. ETHOS is a separate
 installed product prerequisite for Change admission and proof. The bundle's
-third-party packages retain their own license texts; the repository MIT grant
+third-party packages retain their own license notices; the repository MIT grant
 covers repository source and documentation, not those packages. Do not claim
 portable offline distribution before the exact asset and full host matrix have
 been observed. Git's native `.gitattributes` rule checks out tracked text with
@@ -69,9 +81,8 @@ Keep `node_modules/` and generated output out of Git.
 
 GitHub's published Release starts its offline host matrix. Its public bundle
 download uses Node directly; it needs neither a Forge CLI nor a credential.
-GitLab's Linux,
-macOS, and Windows `offline:verify` jobs run in an explicitly started tag
-pipeline **after** its own package and Release are available; tag-push
+GitLab's Linux, macOS, and Windows `offline:verify` jobs run in an explicitly
+started tag pipeline **after** its own package and Release are available; tag-push
 `docs:verify` jobs are not offline qualification. Each job obtains the same
 package through the current project's CI identity, not through GitHub or an
 operator's credentials. Native GitLab runners also need the manifest-pinned
@@ -141,7 +152,10 @@ grant Change authority.
    [the pinned lychee manifest](.config/tools/lychee.json). Obtain their exact
    bytes from the manifest's sources or an already qualified mirror, in two
    local directories outside Git. The builder checks every name, SHA-256, npm
-   package, and license; it does not silently download missing inputs. Choose a
+   package, and license notice; it does not silently download missing inputs.
+   npm package notices may be dedicated license files or an explicit readme
+   License section agreeing with the package's native license declaration;
+   code examples and incidental mentions do not qualify. Choose a
    fresh ignored output path whose basename is
    `data-department-work-guidelines-vX.Y.Z-offline-tools.tar.gz`, where `X.Y.Z`
    is the new `VERSION`:

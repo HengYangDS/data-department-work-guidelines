@@ -13,6 +13,7 @@ import {
   writeFileSync,
 } from "node:fs";
 import os from "node:os";
+import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
@@ -703,7 +704,50 @@ function boundedNpm(args, { cwd, env, timeout = 150_000 }) {
   return result.stdout.trim();
 }
 
-function checkPackageLicenses(installation, lock) {
+function readmeLicenseNotice(directory, declarations) {
+  const name = readdirSync(directory).find((file) =>
+    /^readme(?:\.md)?$/iu.test(file),
+  );
+  if (!name) return false;
+  // Resolve the native parser only during an online build. Cold installation
+  // must remain executable before any npm package is installed.
+  const require = createRequire(import.meta.url);
+  const { Processor } = require("@textlint/textlint-plugin-markdown").default;
+  const { StringSource } = require("textlint-util-to-string");
+  const ast = new Processor()
+    .processor(".md")
+    .preProcess(readFileSync(path.join(directory, name), "utf8"), name);
+  const start = ast.children.findIndex(
+    (node) =>
+      node.type === "Header" &&
+      /^licen[cs]e$/iu.test(new StringSource(node).toString().trim()),
+  );
+  if (start < 0) return false;
+  const notice = [];
+  for (const node of ast.children.slice(start + 1)) {
+    if (node.type === "Header" && node.depth <= ast.children[start].depth)
+      break;
+    if (node.type === "Paragraph") {
+      notice.push(
+        new StringSource(node, {
+          replacer({ node: child, maskValue }) {
+            if (child.type === "Code") return maskValue("_");
+          },
+        }).toString(),
+      );
+    }
+  }
+  return declarations.some((identifier) => {
+    if (!/^[a-z0-9][a-z0-9.+-]*$/iu.test(identifier)) return false;
+    const escaped = RegExp.escape(identifier);
+    return new RegExp(
+      `(?:^|[^a-z0-9.+-])${escaped}(?=$|[^a-z0-9.+-])`,
+      "iu",
+    ).test(notice.join("\n"));
+  });
+}
+
+export function checkPackageLicenses(installation, lock) {
   let count = 0;
   for (const location of Object.keys(lock.packages)) {
     if (!location) continue;
@@ -711,10 +755,26 @@ function checkPackageLicenses(installation, lock) {
     const manifest = JSON.parse(
       readFileSync(path.join(packageDirectory, "package.json"), "utf8"),
     );
-    const licenseFiles = readdirSync(packageDirectory).filter((name) =>
-      /^(?:LICENSE|LICENCE|COPYING|NOTICE)(?:[.-]|$)/iu.test(name),
-    );
-    if (!manifest.license || !licenseFiles.length) {
+    const declarations =
+      typeof manifest.license === "string"
+        ? [manifest.license]
+        : (manifest.licenses ?? []).map((license) => license.type);
+    const declared =
+      declarations.length > 0 &&
+      declarations.every(
+        (identifier) =>
+          typeof identifier === "string" && identifier.trim().length > 0,
+      );
+    const namedNotice = readdirSync(packageDirectory).some((name) => {
+      if (!/^(?:LICENSE|LICENCE|COPYING|NOTICE)(?:[.-]|$)/iu.test(name))
+        return false;
+      const stat = lstatSync(path.join(packageDirectory, name));
+      return stat.isFile() && !stat.isSymbolicLink() && stat.size > 0;
+    });
+    if (
+      !declared ||
+      (!namedNotice && !readmeLicenseNotice(packageDirectory, declarations))
+    ) {
       throw new Error(`offline package lacks its license: ${location}`);
     }
     count += 1;

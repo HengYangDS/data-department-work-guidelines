@@ -5,6 +5,7 @@ import {
   checkDocumentMetadata,
   checkLinks,
   checkSpelling,
+  checkProse,
   checkTextLayout,
   formatSource,
   lintMarkdown,
@@ -45,7 +46,7 @@ function runTests() {
   run(process.execPath, ["--test", ...files], { timeout: 180_000 });
 }
 
-function checkRepository() {
+async function checkRepository() {
   checkProfile();
   checkLineEndingAttributes();
   checkLicense();
@@ -56,6 +57,7 @@ function checkRepository() {
   validateOpenSpec();
   lintMarkdown();
   checkSpelling();
+  await checkProse();
   checkDocumentMetadata();
   checkLinks();
   checkTextLayout();
@@ -71,12 +73,12 @@ try {
   switch (command) {
     case "check":
       if (arguments_.length) throw new Error("check accepts no arguments");
-      checkRepository();
+      await checkRepository();
       break;
     case "verify":
       if (arguments_.length) throw new Error("verify accepts no arguments");
       formatSource();
-      checkRepository();
+      await checkRepository();
       runTests();
       console.log("PASS repository documentation verification");
       break;
@@ -96,6 +98,7 @@ try {
     case "prose":
       if (arguments_.length) throw new Error("prose accepts no arguments");
       checkSpelling();
+      await checkProse();
       break;
     case "links":
       if (

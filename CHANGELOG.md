@@ -12,6 +12,17 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+### Added
+
+- Native prose and terminology checks for repeated words, filler, and technical
+  terms in current Markdown, including headings and quoted reader examples.
+  Code, deliberate uncertainty, and department obligations keep their meaning.
+
+### Changed
+
+- Extended source-bound offline tools with the same locked prose rules used by
+  local verification and both CI planes.
+
 ## [6.0.1] - 2026-10-01
 
 ### Changed

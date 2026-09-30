@@ -21,6 +21,7 @@
     "scandir",
     "SemVer",
     "smol",
+    "textlint",
     "xattrs"
   ]
 }

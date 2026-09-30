@@ -357,6 +357,67 @@ test("builder admits only pinned, licensed, regular supply", () => {
   }
 });
 
+test("package licensing accepts explicit native README declarations, not casual mentions", () => {
+  const directory = mkdtempSync(
+    path.join(os.tmpdir(), "ddwg-package-license-"),
+  );
+  try {
+    const location = "node_modules/fixture";
+    const packageDirectory = path.join(directory, location);
+    mkdirSync(packageDirectory, { recursive: true });
+    const lock = { packages: { [location]: {} } };
+    const check = (manifest, readme) => {
+      writeFileSync(
+        path.join(packageDirectory, "package.json"),
+        JSON.stringify(manifest),
+      );
+      writeFileSync(path.join(packageDirectory, "Readme.md"), readme);
+      return offline.checkPackageLicenses(directory, lock);
+    };
+    assert.equal(
+      check({ license: "MIT" }, "# Fixture\n\n## License\n\nMIT\n"),
+      1,
+    );
+    assert.equal(
+      check(
+        { licenses: [{ type: "MIT", url: "https://example.test/mit" }] },
+        "Fixture\n=======\n\nLicense\n=======\n\n[MIT license](https://example.test/mit)\n",
+      ),
+      1,
+    );
+    assert.equal(
+      check(
+        { license: "BSD-3-Clause" },
+        "# Fixture\n\n## License\n\nBSD-3-Clause\n",
+      ),
+      1,
+    );
+    for (const readme of [
+      "# Fixture\n\nMIT is mentioned in usage.\n",
+      "# Fixture\n\n```text\n## License\nMIT\n```\n",
+      "# Fixture\n\n## License\n\n## Usage\n\nMIT\n",
+      "# Fixture\n\n## License\n\nNo permission is granted.\n",
+      "# Fixture\n\n## License\n\nBSD-3-Clause\n",
+    ]) {
+      assert.throws(
+        () => check({ license: "MIT" }, readme),
+        /lacks its license/u,
+      );
+    }
+    assert.throws(
+      () => check({}, "# Fixture\n\n## License\n\nMIT\n"),
+      /lacks its license/u,
+    );
+    assert.throws(
+      () =>
+        check({ licenses: [{ type: "" }] }, "# Fixture\n\n## License\n\nMIT\n"),
+      /lacks its license/u,
+    );
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
 test(
   "macOS builder omits extended attributes from the archive",
   { skip: process.platform !== "darwin" },

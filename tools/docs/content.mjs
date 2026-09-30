@@ -11,6 +11,12 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { parse as parseToml } from "smol-toml";
 import YAML from "yaml";
+import { TextlintKernel } from "@textlint/kernel";
+import markdown from "@textlint/textlint-plugin-markdown";
+import terminology from "textlint-rule-terminology";
+import stopWords from "textlint-rule-stop-words";
+import writeGood from "write-good";
+import { StringSource } from "textlint-util-to-string";
 import {
   currentMarkdown,
   filePath,
@@ -66,6 +72,71 @@ export function checkSpelling(files = currentMarkdown()) {
     ...files,
   ]);
   console.log(`PASS prose spelling: ${files.length} Markdown files`);
+}
+
+function repeatedWords(context, options) {
+  const { Syntax, report, RuleError } = context;
+  const inspect = (node) => {
+    const source = new StringSource(node, {
+      replacer({ node: child, maskValue }) {
+        if (child.type === Syntax.Code) return maskValue("_");
+      },
+    });
+    for (const { index, reason } of writeGood(source.toString(), options)) {
+      const original = source.originalIndexFromIndex(index);
+      if (typeof original !== "number")
+        throw new Error("native prose source mapping is unavailable");
+      report(node, new RuleError(reason, { index: original }));
+    }
+  };
+  return {
+    [Syntax.Paragraph]: inspect,
+    [Syntax.Header]: inspect,
+    [Syntax.TableCell]: inspect,
+  };
+}
+
+export async function proseFindings(source, relative = "docs/sample.md") {
+  const { rules } = JSON.parse(readText(".config/tools/textlint.json"));
+  const kernel = new TextlintKernel();
+  const result = await kernel.lintText(source, {
+    filePath: relative,
+    ext: ".md",
+    plugins: [{ pluginId: "markdown", plugin: markdown.default }],
+    rules: [
+      {
+        ruleId: "write-good",
+        rule: repeatedWords,
+        options: rules["write-good"],
+      },
+      { ruleId: "stop-words", rule: stopWords, options: rules["stop-words"] },
+      { ruleId: "terminology", rule: terminology, options: rules.terminology },
+    ],
+  });
+  return result.messages;
+}
+
+export async function checkProse(files = currentMarkdown()) {
+  if (!files.length)
+    throw new Error("no current Markdown files to check for prose");
+  const findings = [];
+  for (const relative of files) {
+    const absolute = path.isAbsolute(relative) ? relative : filePath(relative);
+    const messages = await proseFindings(
+      readFileSync(absolute, "utf8"),
+      relative,
+    );
+    findings.push(
+      ...messages.map(
+        ({ line, column, ruleId, message }) =>
+          `${relative}:${line}:${column} [${ruleId}] ${message}`,
+      ),
+    );
+  }
+  if (findings.length) throw new Error(findings.join("\n"));
+  console.log(
+    `PASS native English prose and terminology: ${files.length} current Markdown files`,
+  );
 }
 
 export function documentMetadata(relative, source) {

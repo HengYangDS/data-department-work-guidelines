@@ -33,9 +33,10 @@ recovery path, independent review, and human acceptance.
 | What if it goes wrong?           | Triggers to pause, degrade, roll back, or hand control to a person.           |
 
 Check the actual target location, current state, concurrent work, and recovery
-path before making a change. Surface critical-path blockers promptly; activity
-volume and “active progress” are not state changes. If scope or risk materially
-changes, return to the authorized decision owner.
+path before making a change. Expose critical-path blockers when observed; do
+not wait for dependent work to fail. Activity volume and “active progress” are
+not state changes. If scope or risk materially changes, return to the authorized
+decision owner.
 Record the changed scope or risk and the decision that resolves it in the
 existing work carrier, so collaborators work from the same commitment.
 

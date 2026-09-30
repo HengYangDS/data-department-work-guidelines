@@ -115,7 +115,7 @@ guidelines for retrospective fault-finding, ceremonial review, or
 micromanagement. When goals conflict, priorities drift, resources are short,
 decisions stall, or interfaces mislead, repair the management system before
 blaming a member's capability. Within those boundaries, the person closest
-to the facts chooses the method; management should not prescribe every step.
+to the facts chooses the method; management should not dictate every step.
 
 Members own end-to-end results in their remit and disclose unknowns, risks,
 dependencies, and failures without waiting to be asked. Guideline maintainers
