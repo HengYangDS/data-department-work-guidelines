@@ -12,6 +12,12 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+### Changed
+
+- Refreshed compatible transitive packages in the locked documentation
+  toolchain and rebuilt its source-bound offline supply. Direct tool versions
+  and the team's working rules remain unchanged.
+
 ## [5.2.1] - 2026-09-30
 
 ### Fixed

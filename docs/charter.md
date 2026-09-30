@@ -10,7 +10,7 @@ relations:
 
 # Data Department Work Guidelines: Charter
 
-> **Guideline edition:** v5.2.1
+> **Guideline edition:** v5.2.2
 >
 > **Applies to:** Data Department members and Agents acting under their
 > delegation.
