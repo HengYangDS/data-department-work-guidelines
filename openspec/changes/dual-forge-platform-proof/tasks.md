@@ -32,14 +32,11 @@
       out and verify both Forges' source jobs at the accepted SHA, including
       protected-check refusal on omissions.
 
-## 3. Release and Retirement
+## 3. Release
 
-- [ ] 3.1 Prepare the appropriate SemVer edition and changelog entry; verify
+- [x] 3.1 Prepare the appropriate SemVer edition and changelog entry; verify
       source identity, release links, and both Forges' full source matrices at
       the final release-cut SHA before signing the tag.
-- [ ] 3.2 Publish one signed tag and digest-matched offline bundle on both
+- [x] 3.2 Publish one signed tag and digest-matched offline bundle on both
       Forges; check each Forge's Linux, macOS, and Windows post-publication jobs
       against that tag and retrieved asset.
-- [ ] 3.3 Archive the Change officially, refresh exact-archive-HEAD proof and
-      remote observations, then retire the Work Lane and verify owned residue is
-      absent.
