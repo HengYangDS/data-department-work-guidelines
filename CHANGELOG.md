@@ -25,6 +25,11 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 - Extended source-bound offline tools with the same locked prose rules used by
   local verification and both CI planes.
 
+### Fixed
+
+- Bound native temporary-stage cleanup retries after the Windows tool
+  installer reported a removal failure; persistent errors still fail.
+
 ## [6.0.1] - 2026-10-01
 
 ### Changed

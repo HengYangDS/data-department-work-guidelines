@@ -55,3 +55,9 @@ new service, or second governance plane SHALL influence this check.
 - **AND** incidental prose, fenced examples, empty sections, missing declarations,
   and mismatched identifiers cannot substitute for the notice
 - **AND** cold installation still requires only the declared Node and npm.
+
+#### Scenario: Native removal encounters a temporary platform lock
+
+- **WHEN** the pinned tool installer removes its own fresh extraction stage
+- **THEN** native removal retries are bounded and confined to that stage
+- **AND** a persistent removal error fails rather than silently leaving residue.

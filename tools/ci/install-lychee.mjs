@@ -174,7 +174,12 @@ export async function install({ assetFile = "", downloadSource = "" } = {}) {
       throw new Error("installed lychee failed verification");
     return target;
   } finally {
-    rmSync(temporary, { recursive: true, force: true });
+    rmSync(temporary, {
+      recursive: true,
+      force: true,
+      maxRetries: 3,
+      retryDelay: 100,
+    });
   }
 }
 

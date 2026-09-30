@@ -1,11 +1,15 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
+import fs from "node:fs";
+import path from "node:path";
+import { syncBuiltinESMExports } from "node:module";
 import { test } from "node:test";
 import {
   assertAssetDigest,
   downloadAsset,
   gitlabPackageRequest,
+  install,
   manifest,
   safeArchiveEntries,
   selectedAsset,
@@ -156,4 +160,46 @@ test("GitLab CLI mode fails closed without CI identity", () => {
   assert.equal(result.status, 1);
   assert.match(result.stderr, /GitLab CI API URL/u);
   assert.doesNotMatch(result.stderr, /github\.com/u);
+});
+
+test("installer cleanup uses bounded native retries on its own temporary stage", async (context) => {
+  const remove = fs.rmSync;
+  const calls = [];
+  const mock = context.mock.method(fs, "rmSync", (target, options) => {
+    calls.push({ target, options });
+    return remove(target, options);
+  });
+  syncBuiltinESMExports();
+  context.mock.method(
+    globalThis,
+    "fetch",
+    async () => new Response(null, { status: 503 }),
+  );
+  try {
+    await assert.rejects(install({ downloadSource: "github" }), /HTTP 503/u);
+    assert.equal(calls.length, 1);
+    assert.equal(
+      path.dirname(calls[0].target),
+      path.join(
+        root,
+        "build",
+        "runtime",
+        "tool-cache",
+        "lychee",
+        manifest.version,
+        selectedAsset().key,
+      ),
+    );
+    assert.match(path.basename(calls[0].target), /^\.install-/u);
+    assert.deepEqual(calls[0].options, {
+      recursive: true,
+      force: true,
+      maxRetries: 3,
+      retryDelay: 100,
+    });
+    assert.equal(fs.existsSync(calls[0].target), false);
+  } finally {
+    mock.mock.restore();
+    syncBuiltinESMExports();
+  }
 });

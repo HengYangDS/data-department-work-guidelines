@@ -90,6 +90,17 @@ source-bound bundle, and run a cold offline install with tracked-file hash
 equality. Publish v6.1.0 only after exact source checks pass on both Forges.
 Then compare real release downloads and require every declared offline host job.
 
+The first GitLab source matrix passed Linux and macOS but the Windows review
+job failed at temporary-stage removal. Its exact `EPERM, Permission denied`
+message matches Node 26's native recursive removal, not directory creation;
+the pinned archive is writable and the path is below the classic Windows
+limit. GitHub's Windows run passed on the same source. Use native `rmSync`
+bounded retries on only the freshly owned stage; do not ignore persistent
+errors, change permissions, or rerun the entire pipeline without a changed
+cause. A regression proves the actual cleanup options and target confinement.
+Fresh Windows execution must establish the repair; a local mock cannot prove
+an operating-system lock has cleared.
+
 ## Risks / Trade-offs
 
 - Native language rules can produce a false positive: test the reported syntax
