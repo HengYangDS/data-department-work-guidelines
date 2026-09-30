@@ -243,7 +243,7 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 - Normalized tracked text checkout to LF across supported hosts.
 
 [Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.3...main
-[5.2.3]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.2...main
+[5.2.3]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.2...v5.2.3
 [5.2.2]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.1...v5.2.2
 [5.2.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.0...v5.2.1
 [5.2.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.1.0...v5.2.0
