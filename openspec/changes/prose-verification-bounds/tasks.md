@@ -2,7 +2,7 @@
 
 - [x] 1. Correct the existing public-command test's bounded deadline and error
       diagnostics without losing negative, positive, or no-rewrite assertions.
-- [ ] 2. Pass focused and full source checks, official OpenSpec, and installed
+- [x] 2. Pass focused and full source checks, official OpenSpec, and installed
       exact-HEAD proof without changing published package or release bytes.
 
 ## Post-archive Closeout
