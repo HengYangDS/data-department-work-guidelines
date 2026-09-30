@@ -19,12 +19,23 @@
 
 ## 2. Destination and delivery
 
-- [ ] 2.1 Qualify actual npm selection on maintained macOS and Windows accounts
+- [x] 2.1 Qualify actual npm selection on maintained macOS and Windows accounts
       through the existing fleet owner; run both full source host matrices.
-- [ ] 2.2 Prepare v6.0.0, its Changelog, and a matching offline bundle; verify
+      Destination service identities select npm 12.1.0. Release-cut source
+      `fbe42fa3` passes GitLab `9013` and `9014` and GitHub `36746872318`
+      and `36746872963` on all declared source hosts.
+- [x] 2.2 Prepare v6.0.0, its Changelog, and a matching offline bundle; verify
       a fresh offline install and exact release-cut source before signing.
-- [ ] 2.3 Publish identical signed tags and assets on both Forges, compare real
+      Its fresh offline install verifies 246 equal tracked-file hashes and
+      104 tests; installed ETHOS proof passes before native tag admission.
+- [x] 2.3 Publish identical signed tags and assets on both Forges, compare real
       downloads, and execute all declared offline host jobs.
+      Both Forges expose signed tag object `38076837` at release-cut source
+      `fbe42fa3`. Actual downloaded assets are 47,446,683 bytes with SHA-256
+      `ddf7d0617819250ada2bbd342cbf56290096ee6f47338d1f0fa76eef8cc20a91`.
+      GitHub four-host offline run `36747569420` and GitLab three-OS pipeline
+      `9016` pass. These results qualify the declared tools, not unrestricted
+      upgrades of upstream-constrained transitive dependencies.
 
 Official archive, current proof and publication of the archive commit, and
 exact proposal and Work Lane retirement remain required lifecycle closeout.
