@@ -15,7 +15,8 @@ in GitLab's post-publication offline-bundle check.
 - Run the existing GitLab offline-bundle acquisition, installation, and full
   verification on every declared GitLab operating system after publication.
 - Make the repository CI contract reject missing, skipped, weak, or falsely
-  labeled platform jobs, and correct the governance page's coverage claim.
+  labeled platform jobs; admit only publishable refs and avoid duplicate
+  proposal-push pipelines once review is open.
 - Supply GitLab's own package registry with the exact pinned macOS and Windows
   lychee archives; do not add a GitHub fallback to make a job green.
 - Admit each project- and trust-boundary-specific runner and its Node 26

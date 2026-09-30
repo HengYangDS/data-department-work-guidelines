@@ -67,6 +67,15 @@ registration or convert ARM64 execution into a native x86_64 claim.
 - **THEN** only protected native source jobs are eligible
 - **AND THEN** release offline jobs use protected runners after publication.
 
+#### Scenario: An open proposal has one review pipeline
+
+- **WHEN** a `proposal/*` branch has an open merge request
+- **THEN** its branch-push pipeline is suppressed and its merge-request
+  pipeline remains eligible for the review runners
+- **AND WHEN** the proposal has no open merge request
+- **THEN** its branch push may run the review jobs without admitting an
+  arbitrary work branch or a protected Runner.
+
 #### Scenario: Runner labels hide a shared native account
 
 - **WHEN** review and protected selectors resolve to the same persistent

@@ -63,6 +63,29 @@ test("GitLab native review and protected jobs use separate capabilities", () => 
   }
 });
 
+test("GitLab suppresses duplicate proposal pushes after an MR opens", () => {
+  const pipeline = YAML.parse(gitlab);
+  assert.deepEqual(pipeline.workflow?.rules, [
+    { if: "$CI_COMMIT_TAG" },
+    { if: '$CI_PIPELINE_SOURCE == "merge_request_event"' },
+    { if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main"' },
+    {
+      if: "$CI_COMMIT_BRANCH =~ /^proposal\\// && $CI_OPEN_MERGE_REQUESTS",
+      when: "never",
+    },
+    { if: "$CI_COMMIT_BRANCH =~ /^proposal\\//" },
+  ]);
+  assert.throws(
+    () =>
+      validateCi(
+        github,
+        changedGitLab("workflow", (source) => delete source.workflow),
+        offline,
+      ),
+    /GitLab workflow/u,
+  );
+});
+
 test("GitLab native jobs cannot disappear or bypass the shared proof", () => {
   for (const jobName of [
     "docs:verify:macos",

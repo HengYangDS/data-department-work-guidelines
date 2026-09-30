@@ -27,6 +27,16 @@ const reviewRules = [
     if: '$CI_COMMIT_BRANCH =~ /^proposal\\// && $CI_PIPELINE_SOURCE == "push"',
   },
 ];
+const workflowRules = [
+  { if: "$CI_COMMIT_TAG" },
+  { if: '$CI_PIPELINE_SOURCE == "merge_request_event"' },
+  { if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main"' },
+  {
+    if: "$CI_COMMIT_BRANCH =~ /^proposal\\// && $CI_OPEN_MERGE_REQUESTS",
+    when: "never",
+  },
+  { if: "$CI_COMMIT_BRANCH =~ /^proposal\\//" },
+];
 const hostMatrix = ["ubuntu-latest", "macos-latest", "windows-latest"];
 const offlineHostMatrix = [
   "ubuntu-latest",
@@ -207,6 +217,13 @@ export function validateCi(
 ) {
   const github = parseYaml(githubSource, "GitHub workflow");
   const gitlab = parseYaml(gitlabSource, "GitLab pipeline");
+  if (
+    JSON.stringify(gitlab.workflow?.rules) !== JSON.stringify(workflowRules)
+  ) {
+    throw new Error(
+      "GitLab workflow must admit release, accepted, and proposal events without duplicate open-MR pushes",
+    );
+  }
   const { nodeMajor } = declaredToolRuntime();
   const imagePattern = new RegExp(
     `^public\\.ecr\\.aws/docker/library/node:${nodeMajor}-bookworm@sha256:[0-9a-f]{64}$`,

@@ -6,8 +6,8 @@
       overlapping review/protected routes, Docker defaults, script overrides,
       and bypassed failures; run the Node suite against both old and new graphs.
 - [x] 1.2 Add separate native review and protected source jobs that reuse the
-      Linux command without its image; check the resolved three-system graph
-      through GitLab lint and `npm run verify`.
+      Linux command without its image; suppress duplicate proposal pushes and
+      check the allowed graph through GitLab lint and `npm run verify`.
 - [x] 1.3 Add native post-publication offline jobs using the same bundle and
       script; cover missing hosts and supply fallback with negative tests, tag
       lint, and the full local verifier.

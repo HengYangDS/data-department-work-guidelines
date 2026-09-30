@@ -32,6 +32,9 @@ Docker defaults. This keeps the full verifier as the sole quality owner
 without allowing untrusted proposal code and release code to share a persistent
 Shell account, workspace, or cache. A single matrix was rejected because its
 container, native-shell, and trust setup would vary by row.
+The top-level GitLab workflow admits only `dev`, `main`, version tags, merge
+requests, and proposal pushes. Once a proposal has an open merge request, it
+suppresses the duplicate branch-push pipeline and keeps the review route.
 
 ### Treat runtime selection as runner admission
 
@@ -53,7 +56,8 @@ that two selectors are operationally isolated.
 
 Extend the existing YAML-parsing CI contract to reject a missing native job,
 wrong capability, trust-route overlap, Docker inheritance, script override,
-`allow_failure`, or manual-only bypass. Keep the current GitHub hosted and
+`allow_failure`, manual-only bypass, or a missing workflow boundary. Keep the
+current GitHub hosted and
 offline matrices as
 independent peers. GitLab lint confirms only that the submitted YAML resolves
 into the intended jobs; it cannot prove runner scheduling, toolchain, or
