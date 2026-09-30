@@ -41,18 +41,13 @@ as hosted execution.
 
 ### Requirement: Per-project dual-Forge runner isolation
 
-GitHub SHALL run the full verifier on hosted Linux, macOS, and Windows with
-pinned Actions and the declared Node line, never a local runner or host path.
-GitLab SHALL run the same full verifier on its project-locked Linux ARM64
-container, macOS ARM64, and Windows ARM64 capabilities. Native review jobs
-SHALL use Runner identities, accounts, roots, and caches separate from
-protected-source and release jobs. All native Runners SHALL be project-locked
-and tagged-only. Protected Runners SHALL be `ref_protected`; review Runners
-SHALL use unprivileged `not_protected` access. The project SHALL protect
-`dev`, `main`, and `v*` tags. Real runners SHALL expose those capabilities
-before success is claimed. Provider services, credentials, workspaces, caches,
-and job observations SHALL remain independent. YAML SHALL NOT claim runner
-registration or convert ARM64 execution into a native x86_64 claim.
+Both Forges SHALL run the full verifier on Linux, macOS, and Windows. GitHub
+SHALL use managed runners; GitLab SHALL use project-locked ARM64 capabilities.
+Native review and protected jobs SHALL have separate Runner identities,
+accounts, roots, and caches. Native Runners SHALL be tagged-only, with
+`not_protected` review and `ref_protected` release access. GitLab SHALL protect
+`dev`, `main`, and `v*`. YAML SHALL NOT prove execution; emulation SHALL NOT
+prove native x86_64 behavior.
 
 #### Scenario: Repository workflow bindings are statically valid
 
@@ -140,7 +135,8 @@ registration or convert ARM64 execution into a native x86_64 claim.
 - **THEN** the repository does not assert that GitHub Actions or GitLab CI
   executed
 - **AND THEN** each Forge requires a fresh run at the published revision for
-  its own success claim.
+  its own success claim
+- **AND THEN** provider credentials and job observations remain independent.
 
 #### Scenario: Release-cut source differs from an earlier accepted source
 
@@ -151,14 +147,13 @@ registration or convert ARM64 execution into a native x86_64 claim.
 
 ### Requirement: Offline verification supply is a separately observed release asset
 
-An offline-capable release SHALL publish source-bound bundle bytes with the
-same verified SHA-256 on GitLab and GitHub. Build inputs SHALL be the locked
-package and lychee manifests; the bundle SHALL contain no credentials, host
-paths, `node_modules/`, or ETHOS state. Each selected Forge SHALL acquire its
-own published asset and run the full offline install and verifier on Linux,
-macOS, and Windows at the exact release. Source, bundle, refs, jobs, and Release
-objects SHALL be observed separately. Acquisition MAY use either Forge; use
-after acquisition SHALL not require one.
+An offline release SHALL publish one source-bound bundle with the same verified
+SHA-256 on both Forges. The bundle SHALL derive from locked package and lychee
+manifests and exclude credentials, host paths, `node_modules/`, and ETHOS state.
+Each Forge SHALL acquire its own asset and run the full offline install and
+verifier on Linux, macOS, and Windows at the exact tag. Source, assets, refs,
+jobs, and Releases SHALL be observed separately. After acquisition, use SHALL
+NOT require either Forge.
 
 #### Scenario: Both Forges publish the release bundle
 
