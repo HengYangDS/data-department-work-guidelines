@@ -112,6 +112,15 @@ its document command and product-owned verifier both pass for the committed
 tree. Command output and repository-authored report files cannot supply that
 native evidence. This is code-quality proof, not another lifecycle.
 
+The native `devEngines.packageManager` field in
+[`package.json`](../../package.json) is the only exact npm version declaration.
+npm rejects a mismatch before dependency installation and repository scripts;
+source adds no second parser or package-manager wrapper. Ephemeral CI explicitly
+acquires that declared npm before source installation. Maintained macOS and
+Windows accounts use their existing Node installation owner; local and offline
+checks never update it. `--force` and package-manager admission overrides are
+not a supported execution path.
+
 Git's native `.gitattributes` rule keeps tracked text at LF on every
 host. The [supply manifest](../../.config/tools/lychee.json) pins lychee assets
 by platform and SHA-256. GitLab CI fetches that asset from this project's
@@ -132,8 +141,9 @@ packages and lychee retain their upstream licenses; the repository MIT grant
 does not relicense them. Both hosted CI planes run
 `npm audit --audit-level=moderate` during online tool supply; local source
 verification does not require network access. The bundle binds the edition,
-Node major, package lock, and pinned lychee supply, not a second npm-major
-declaration. The installer exercises and records the available npm version
+Node major, complete native package manifest, package lock, and pinned lychee
+supply, not a second npm version declaration. The installer exercises and
+records the available npm version
 offline on each claimed host. The application audit does not qualify Node's
 bundled npm; do not turn one into a claim about the other.
 

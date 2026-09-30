@@ -4,6 +4,7 @@ import { spawnSync } from "node:child_process";
 import {
   appendFileSync,
   copyFileSync,
+  existsSync,
   mkdirSync,
   mkdtempSync,
   readFileSync,
@@ -38,11 +39,12 @@ const digest = (text) => createHash("sha256").update(text).digest("hex");
 
 function record(overrides = {}) {
   return {
-    schemaVersion: 2,
+    schemaVersion: 3,
     version: "4.2.0",
     fileName: "data-department-work-guidelines-v4.2.0-offline-tools.tar.gz",
     sha256: digest("archive"),
     lockSha256: digest("lock"),
+    packageJsonSha256: digest("package"),
     lycheeSha256: digest("lychee"),
     nodeMajor: 26,
     ...overrides,
@@ -52,6 +54,7 @@ function record(overrides = {}) {
 const source = {
   version: "4.2.0",
   lockSha256: digest("lock"),
+  packageJsonSha256: digest("package"),
   lycheeSha256: digest("lychee"),
   nodeMajor: 26,
 };
@@ -299,6 +302,7 @@ test("builder admits only pinned, licensed, regular supply", () => {
     const checked = inspectBundle(inputs.outputPath, built, {
       version: built.version,
       lockSha256: built.lockSha256,
+      packageJsonSha256: built.packageJsonSha256,
       lycheeSha256: built.lycheeSha256,
       nodeMajor: built.nodeMajor,
     });
@@ -429,6 +433,7 @@ test("installer invokes only the locked offline supply path", () => {
         assert.ok(!args.includes("--dry-run"));
         mkdirSync(path.join(inputs.repository, "node_modules"));
         assert.equal(options.env.npm_config_offline, "true");
+        assert.equal(options.env.npm_config_force, "false");
         assert.notEqual(
           options.env.npm_config_userconfig,
           options.env.npm_config_globalconfig,
@@ -886,4 +891,126 @@ test("release route requires both Forge source matrices before tagging", () => {
   const source = guide.indexOf("require every declared source job to pass");
   const tag = guide.indexOf("Only then sign an annotated");
   assert.ok(source >= 0 && tag > source);
+});
+
+test("npm owns exact package-manager admission without duplicate fields", () => {
+  const manifest = JSON.parse(
+    readFileSync(path.join(root, "package.json"), "utf8"),
+  );
+  assert.deepEqual(manifest.devEngines?.packageManager, {
+    name: "npm",
+    version: "12.1.0",
+    onFail: "error",
+  });
+  assert.equal(manifest.packageManager, undefined);
+  assert.equal(manifest.engines?.npm, undefined);
+});
+
+test("native npm rejects mismatched install, ci, and run before effects", () => {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-npm-admission-"));
+  try {
+    const marker = path.join(directory, "effect");
+    const manifest = {
+      name: "native-admission-fixture",
+      version: "1.0.0",
+      private: true,
+      scripts: {
+        effect:
+          "node -e \"require('node:fs').writeFileSync('effect', 'unexpected')\"",
+      },
+      devEngines: {
+        packageManager: { name: "npm", version: "0.0.0", onFail: "error" },
+      },
+    };
+    writeFileSync(
+      path.join(directory, "package.json"),
+      JSON.stringify(manifest),
+    );
+    writeFileSync(
+      path.join(directory, "package-lock.json"),
+      JSON.stringify({
+        name: manifest.name,
+        version: manifest.version,
+        lockfileVersion: 3,
+        packages: { "": { name: manifest.name, version: manifest.version } },
+      }),
+    );
+    const env = {
+      ...process.env,
+      npm_config_cache: path.join(directory, "cache"),
+      npm_config_offline: "true",
+      npm_config_audit: "false",
+      npm_config_fund: "false",
+    };
+    for (const args of [
+      ["install", "--ignore-scripts"],
+      ["ci", "--ignore-scripts"],
+      ["run", "effect"],
+    ]) {
+      const result = spawnSync(process.execPath, [npmCliPath(), ...args], {
+        cwd: directory,
+        env,
+        encoding: "utf8",
+        timeout: 15_000,
+        input: "",
+      });
+      assert.equal(result.status, 1);
+      assert.match(result.stderr, /EBADDEVENGINES/u);
+      assert.equal(existsSync(marker), false);
+      assert.equal(existsSync(path.join(directory, "node_modules")), false);
+    }
+    const actual = spawnSync(process.execPath, [npmCliPath(), "--version"], {
+      env,
+      encoding: "utf8",
+      timeout: 10_000,
+      input: "",
+    }).stdout.trim();
+    manifest.devEngines.packageManager.version = actual;
+    writeFileSync(
+      path.join(directory, "package.json"),
+      JSON.stringify(manifest),
+    );
+    for (const args of [
+      ["install", "--ignore-scripts"],
+      ["ci", "--ignore-scripts"],
+    ]) {
+      const result = spawnSync(process.execPath, [npmCliPath(), ...args], {
+        cwd: directory,
+        env,
+        encoding: "utf8",
+        timeout: 15_000,
+        input: "",
+      });
+      assert.equal(result.status, 0, result.stderr);
+    }
+    const allowed = spawnSync(
+      process.execPath,
+      [npmCliPath(), "run", "effect"],
+      { cwd: directory, env, encoding: "utf8", timeout: 15_000, input: "" },
+    );
+    assert.equal(allowed.status, 0, allowed.stderr);
+    assert.equal(readFileSync(marker, "utf8"), "unexpected");
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test("offline supply binds the native package-manager policy bytes", () => {
+  buildFixture((inputs) => {
+    const built = assembleBundle(inputs);
+    writeFileSync(
+      path.join(inputs.repository, "package.json"),
+      JSON.stringify({
+        engines: { node: "26.x" },
+        devEngines: {
+          packageManager: { name: "npm", version: "0.0.0", onFail: "error" },
+        },
+      }),
+    );
+    assert.throws(
+      () =>
+        validateBundleRecord(built, offline.sourceIdentity(inputs.repository)),
+      /source/u,
+    );
+  });
 });

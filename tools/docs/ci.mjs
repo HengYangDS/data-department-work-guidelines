@@ -46,6 +46,31 @@ const offlineHostMatrix = [
   "windows-latest",
 ];
 
+const npmBootstrap =
+  'npm install --global --ignore-scripts "npm@$(node -p \'require("./package.json").devEngines.packageManager.version\')"';
+const nativeSourceSupply = [
+  "npm ci --ignore-scripts",
+  auditCommand,
+  "node tools/ci/install-lychee.mjs --gitlab-package",
+];
+
+function requirePackageManagerSetup(steps, setupNode) {
+  const read = steps.findIndex((step) => step.id === "npm-version");
+  const install = steps.findIndex(
+    (step) =>
+      step.run ===
+      "npm install --global --ignore-scripts npm@${{ steps.npm-version.outputs.version }}",
+  );
+  const expected =
+    "node -e \"require('node:fs').appendFileSync(process.env.GITHUB_OUTPUT, 'version=' + require('./package.json').devEngines.packageManager.version + '\\n')\"";
+  if (read <= setupNode || install <= read || steps[read]?.run !== expected) {
+    throw new Error(
+      "package-manager supply must derive the native declaration after Node setup",
+    );
+  }
+  return install;
+}
+
 function parseYaml(source, name) {
   const document = YAML.parseDocument(source, { uniqueKeys: true });
   if (document.errors.length)
@@ -111,8 +136,8 @@ function validateOfflineWorkflow(source, nodeMajor) {
     throw new Error("offline verification must bind the exact release tag");
   }
   const steps = job.steps;
-  if (!Array.isArray(steps) || steps.length !== 5)
-    throw new Error("offline verification requires exact five steps");
+  if (!Array.isArray(steps) || steps.length !== 7)
+    throw new Error("offline verification requires exact seven steps");
   for (const step of steps) {
     if (step.uses && !/^[^@]+@[0-9a-f]{40}$/u.test(step.uses)) {
       throw new Error(`offline action is not pinned by commit: ${step.uses}`);
@@ -136,7 +161,10 @@ function validateOfflineWorkflow(source, nodeMajor) {
       `offline release must configure Node ${nodeMajor} after checkout`,
     );
   }
-  const commands = steps.filter((step) => typeof step.run === "string");
+  const packageManager = requirePackageManagerSetup(steps, setupNode.index);
+  const commands = steps
+    .slice(packageManager + 1)
+    .filter((step) => typeof step.run === "string");
   if (
     commands[0]?.run !== "node tools/ci/offline-bundle.mjs acquire-github" ||
     setupNode.index >= steps.indexOf(commands[0])
@@ -184,8 +212,10 @@ function validateGitLabOffline(gitlab, expectedImage) {
   if (JSON.stringify(job.rules) !== JSON.stringify(expectedRules)) {
     throw new Error("GitLab offline job requires a post-publication pipeline");
   }
-  if (job.before_script) {
-    throw new Error("GitLab offline job cannot install online supply");
+  if (JSON.stringify(job.before_script) !== JSON.stringify([npmBootstrap])) {
+    throw new Error(
+      "GitLab offline job must explicitly acquire the declared package manager before offline work",
+    );
   }
   const commands = job.script;
   if (commands?.[0] !== "node tools/ci/offline-bundle.mjs acquire-gitlab") {
@@ -218,8 +248,12 @@ function validateGitLabNativeJobs(gitlab, base, kind, lane) {
       typeof job !== "object" ||
       Array.isArray(job) ||
       Object.keys(job).sort().join(",") !==
-        (rules ? "extends,inherit,rules,tags" : "extends,inherit,tags") ||
+        (rules
+          ? "before_script,extends,inherit,rules,tags"
+          : "before_script,extends,inherit,tags") ||
       job.extends !== base ||
+      JSON.stringify(job.before_script) !==
+        JSON.stringify(kind === "source" ? nativeSourceSupply : []) ||
       Object.keys(job.inherit ?? {}).join(",") !== "default" ||
       job.inherit.default !== false ||
       JSON.stringify(job.tags) !== JSON.stringify([capability]) ||
@@ -332,6 +366,7 @@ export function validateCi(
   if (String(setupNode.step.with?.["node-version"]) !== String(nodeMajor)) {
     throw new Error(`GitHub Node ${nodeMajor} is missing`);
   }
+  const packageManager = requirePackageManagerSetup(steps, setupNode.index);
   const commands = steps.map((step) => step.run?.trim()).filter(Boolean);
   const install = commands.indexOf("npm ci --ignore-scripts");
   const audit = commands.indexOf(auditCommand);
@@ -339,7 +374,14 @@ export function validateCi(
     "node tools/ci/install-lychee.mjs --download",
   );
   const verify = commands.indexOf(verifier);
-  if (!(install >= 0 && install < audit && audit < supply && supply < verify)) {
+  if (!(
+    install >= 0 &&
+    packageManager <
+      steps.findIndex((step) => step.run === "npm ci --ignore-scripts") &&
+    install < audit &&
+    audit < supply &&
+    supply < verify
+  )) {
     throw new Error(
       "GitHub dependency audit, supply, and common verification are out of order",
     );
@@ -383,11 +425,7 @@ export function validateCi(
   }
   if (
     JSON.stringify(before) !==
-    JSON.stringify([
-      "npm ci --ignore-scripts",
-      auditCommand,
-      "node tools/ci/install-lychee.mjs --gitlab-package",
-    ])
+    JSON.stringify([npmBootstrap, ...nativeSourceSupply])
   ) {
     throw new Error("GitLab tool supply must use its own package registry");
   }

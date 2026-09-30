@@ -515,7 +515,7 @@ test("offline release CI runs the source-pinned bundle on four hosted systems", 
         "      - name: Install without remote supply",
         `      - uses: actions/cache@${"0".repeat(40)}\n      - name: Install without remote supply`,
       ),
-      /exact five steps/u,
+      /exact seven steps/u,
     ],
   ]) {
     assert.throws(() => validateCi(github, gitlab, changed), reason);
@@ -555,4 +555,29 @@ test("GitLab offline release CI runs only after a release asset is available", (
   ]) {
     assert.throws(() => validateCi(github, changed, offline), reason);
   }
+});
+
+test("package-manager supply cannot bypass native admission or become a second version owner", () => {
+  const workflow = YAML.parse(github);
+  const install = workflow.jobs.verify.steps.find(
+    (step) => step.name === "Install the declared package manager",
+  );
+  for (const command of [
+    "npm install --global npm@11",
+    "npm install --global --force npm@12.1.0",
+  ]) {
+    install.run = command;
+    assert.throws(
+      () => validateCi(YAML.stringify(workflow), gitlab, offline),
+      /package-manager supply/u,
+    );
+  }
+  const native = YAML.parse(gitlab);
+  native["docs:verify:macos"].before_script.unshift(
+    "npm install --global npm@12.1.0",
+  );
+  assert.throws(
+    () => validateCi(github, YAML.stringify(native), offline),
+    /platform job/u,
+  );
 });

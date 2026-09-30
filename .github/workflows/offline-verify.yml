@@ -34,6 +34,13 @@ jobs:
         with:
           node-version: 26
 
+      - name: Read the native package-manager declaration
+        id: npm-version
+        run: node -e "require('node:fs').appendFileSync(process.env.GITHUB_OUTPUT, 'version=' + require('./package.json').devEngines.packageManager.version + '\n')"
+
+      - name: Install the declared package manager
+        run: npm install --global --ignore-scripts npm@${{ steps.npm-version.outputs.version }}
+
       - name: Acquire exact release bundle
         env:
           GH_TOKEN: ${{ github.token }}

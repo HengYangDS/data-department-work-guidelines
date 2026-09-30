@@ -12,6 +12,14 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+### Changed
+
+- **Breaking:** Contributor and CI commands now require the exact npm version
+  in the native package manifest, rather than accepting Node's bundled npm.
+  Offline installation retains that prerequisite and never updates the host.
+- Bound offline supply to the complete package manifest so a changed native
+  tool policy cannot reuse a formerly qualified bundle.
+
 ## [5.2.4] - 2026-09-30
 
 ### Changed

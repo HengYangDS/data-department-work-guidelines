@@ -24,6 +24,7 @@ const recordKeys = [
   "lockSha256",
   "lycheeSha256",
   "nodeMajor",
+  "packageJsonSha256",
   "schemaVersion",
   "sha256",
   "version",
@@ -47,7 +48,7 @@ export function validateBundleRecord(record, source) {
     throw new Error("offline bundle record has invalid fields");
   }
   if (
-    record.schemaVersion !== 2 ||
+    record.schemaVersion !== 3 ||
     record.nodeMajor !== source.nodeMajor ||
     !/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/u.test(record.version) ||
     record.version !== source.version ||
@@ -56,6 +57,8 @@ export function validateBundleRecord(record, source) {
     !sha256(record.sha256) ||
     !sha256(record.lockSha256) ||
     !sha256(record.lycheeSha256) ||
+    !sha256(record.packageJsonSha256) ||
+    record.packageJsonSha256 !== source.packageJsonSha256 ||
     record.lockSha256 !== source.lockSha256 ||
     record.lycheeSha256 !== source.lycheeSha256
   ) {
@@ -232,6 +235,9 @@ function pinnedFile(directory, name, expectedDigest, kind) {
 
 export function sourceIdentity(repository) {
   const version = readFileSync(path.join(repository, "VERSION"), "utf8").trim();
+  const packageJsonSha256 = digestBytes(
+    readFileSync(path.join(repository, "package.json")),
+  );
   const lockSha256 = digestBytes(
     readFileSync(path.join(repository, "package-lock.json")),
   );
@@ -239,7 +245,7 @@ export function sourceIdentity(repository) {
     readFileSync(path.join(repository, ".config", "tools", "lychee.json")),
   );
   const runtime = declaredToolRuntime(repository);
-  return { version, lockSha256, lycheeSha256, ...runtime };
+  return { version, packageJsonSha256, lockSha256, lycheeSha256, ...runtime };
 }
 
 export function assembleBundle({
@@ -306,7 +312,7 @@ export function assembleBundle({
       licenses[name] = license.sha256;
     }
     const manifest = {
-      schemaVersion: 2,
+      schemaVersion: 3,
       ...source,
       cacheFileCount,
       assets,
@@ -324,7 +330,7 @@ export function assembleBundle({
       rejectStderr: true,
     });
     const record = {
-      schemaVersion: 2,
+      schemaVersion: 3,
       ...source,
       fileName,
       sha256: digestBytes(readFileSync(archive)),
@@ -356,8 +362,9 @@ export function validateExtractedBundle(directory, repository) {
   );
   const source = sourceIdentity(repository);
   if (
-    manifest.schemaVersion !== 2 ||
+    manifest.schemaVersion !== 3 ||
     manifest.version !== source.version ||
+    manifest.packageJsonSha256 !== source.packageJsonSha256 ||
     manifest.lockSha256 !== source.lockSha256 ||
     manifest.lycheeSha256 !== source.lycheeSha256 ||
     manifest.nodeMajor !== source.nodeMajor
@@ -497,6 +504,7 @@ function isolatedNpmEnvironment(
   );
   return {
     ...environment,
+    npm_config_force: "false",
     npm_config_userconfig: userConfig,
     npm_config_globalconfig: globalConfig,
     npm_config_cache: cacheDirectory,

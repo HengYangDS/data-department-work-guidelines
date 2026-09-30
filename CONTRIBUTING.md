@@ -14,7 +14,13 @@ repository does not maintain a competing hook implementation.
 
 ## Verify the source
 
-Install the locked Node dependencies with `npm ci --ignore-scripts`. Use lychee
+Use Node 26 and the npm version declared by `devEngines.packageManager` in
+[`package.json`](package.json). Install npm through the destination's existing
+Node installation owner before running repository commands. npm checks its
+native declaration before `install`, `ci`, and `run`; do not disable it with
+`--force` or a policy override. Version matching is a prerequisite, not proof
+of correct source. Install the locked dependencies with `npm ci --ignore-scripts`.
+Use lychee
 0.24.2 from your platform's native installation owner or install a previously
 supplied, SHA-256-pinned asset with
 `node tools/ci/install-lychee.mjs --asset PATH`. Then run:
@@ -40,7 +46,8 @@ carrier rather than inventing a sidecar. The repository check guards this
 reading order; the installed ETHOS registry owns metadata meaning.
 
 For a release with the matching source-pinned bundle already on the machine,
-start from a fresh checkout with Node 26, a compatible npm command, and Git:
+start from a fresh checkout with Node 26, the declared npm, and Git. The offline
+installer never downloads or upgrades a package manager:
 
 ```text
 node tools/ci/offline-bundle.mjs inspect --bundle PATH
@@ -195,7 +202,9 @@ grant Change authority.
    glab release create vX.Y.Z BUNDLE_PATH --use-package-registry --package-name release-assets --no-update --notes-file RELEASE_NOTES_FILE --repo GROUP/PROJECT
    ```
 
-   `glab` must target this project's configured API host and port; its
+   `glab` must target this project's configured API host and port; use the full
+   configured repository URL when a short repository name loses that endpoint.
+   Its
    `release-assets` generic package is what GitLab's post-publication job
    obtains. GitHub's Release starts its four-host offline workflow. After the
    GitLab package and Release exist, start a tag pipeline with

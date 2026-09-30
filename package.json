@@ -25,5 +25,12 @@
   "license": "MIT",
   "engines": {
     "node": "26.x"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "npm",
+      "version": "12.1.0",
+      "onFail": "error"
+    }
   }
 }

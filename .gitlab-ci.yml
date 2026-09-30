@@ -24,6 +24,7 @@ docs:verify:
   variables:
     GIT_DEPTH: "0"
   before_script:
+    - npm install --global --ignore-scripts "npm@$(node -p 'require("./package.json").devEngines.packageManager.version')"
     - npm ci --ignore-scripts
     - npm audit --audit-level=moderate
     - node tools/ci/install-lychee.mjs --gitlab-package
@@ -42,6 +43,10 @@ docs:verify:macos:
   extends: docs:verify
   inherit:
     default: false
+  before_script:
+    - npm ci --ignore-scripts
+    - npm audit --audit-level=moderate
+    - node tools/ci/install-lychee.mjs --gitlab-package
   tags:
     - ci-macos-arm64-shell
   rules:
@@ -51,6 +56,10 @@ docs:verify:macos:review:
   extends: docs:verify
   inherit:
     default: false
+  before_script:
+    - npm ci --ignore-scripts
+    - npm audit --audit-level=moderate
+    - node tools/ci/install-lychee.mjs --gitlab-package
   tags:
     - ci-macos-arm64-review
   rules:
@@ -61,6 +70,10 @@ docs:verify:windows:
   extends: docs:verify
   inherit:
     default: false
+  before_script:
+    - npm ci --ignore-scripts
+    - npm audit --audit-level=moderate
+    - node tools/ci/install-lychee.mjs --gitlab-package
   tags:
     - ci-windows-arm64-shell
   rules:
@@ -70,6 +83,10 @@ docs:verify:windows:review:
   extends: docs:verify
   inherit:
     default: false
+  before_script:
+    - npm ci --ignore-scripts
+    - npm audit --audit-level=moderate
+    - node tools/ci/install-lychee.mjs --gitlab-package
   tags:
     - ci-windows-arm64-review
   rules:
@@ -87,6 +104,8 @@ offline:verify:
     - if: '$CI_COMMIT_TAG && $CI_PIPELINE_SOURCE == "api"'
   variables:
     GIT_DEPTH: "0"
+  before_script:
+    - npm install --global --ignore-scripts "npm@$(node -p 'require("./package.json").devEngines.packageManager.version')"
   script:
     - node tools/ci/offline-bundle.mjs acquire-gitlab
     - node tools/ci/offline-bundle.mjs install
@@ -96,6 +115,7 @@ offline:verify:macos:
   extends: offline:verify
   inherit:
     default: false
+  before_script: []
   tags:
     - ci-macos-arm64-shell
 
@@ -103,5 +123,6 @@ offline:verify:windows:
   extends: offline:verify
   inherit:
     default: false
+  before_script: []
   tags:
     - ci-windows-arm64-shell
