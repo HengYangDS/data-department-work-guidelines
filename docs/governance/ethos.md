@@ -134,8 +134,11 @@ bundled npm; do not turn one into a claim about the other.
 
 GitHub declares Linux, macOS, and Windows hosted jobs. GitLab declares
 project-locked Linux ARM64 container, macOS ARM64 shell, and Windows ARM64 shell
-capabilities for both source and post-publication offline verification. A tag
-in YAML does not prove that a runner is registered. The native jobs require
+capabilities for both source and post-publication offline verification. Native
+proposal and merge-request jobs use separate review capabilities; protected
+`dev`, `main`, and release jobs use separate trusted capabilities. Their Runner
+accounts, workspaces, and caches must not cross that boundary. A tag in YAML
+does not prove that a runner is registered or isolated. The native jobs require
 runner-installed Node 26 and exact macOS and Windows lychee assets in this
 project's package registry; they must not fall back to GitHub. On an ARM64
 Windows host, an x64 Node and lychee process under emulation is functional

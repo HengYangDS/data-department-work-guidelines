@@ -5,8 +5,27 @@ const verifier = "npm run verify";
 const auditCommand = "npm audit --audit-level=moderate";
 const gitlabLinuxCapability = "ci-linux-arm64-container";
 const gitlabNativeCapabilities = [
-  ["macos", "ci-macos-arm64-shell"],
-  ["windows", "ci-windows-arm64-shell"],
+  {
+    system: "macos",
+    protected: "ci-macos-arm64-shell",
+    review: "ci-macos-arm64-review",
+  },
+  {
+    system: "windows",
+    protected: "ci-windows-arm64-shell",
+    review: "ci-windows-arm64-review",
+  },
+];
+const protectedRules = [
+  {
+    if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG',
+  },
+];
+const reviewRules = [
+  { if: '$CI_PIPELINE_SOURCE == "merge_request_event"' },
+  {
+    if: '$CI_COMMIT_BRANCH =~ /^proposal\\// && $CI_PIPELINE_SOURCE == "push"',
+  },
 ];
 const hostMatrix = ["ubuntu-latest", "macos-latest", "windows-latest"];
 const offlineHostMatrix = [
@@ -150,19 +169,28 @@ function validateGitLabOffline(gitlab, expectedImage) {
   return job.tags[0];
 }
 
-function validateGitLabNativeJobs(gitlab, base, kind) {
-  return gitlabNativeCapabilities.map(([system, capability]) => {
-    const name = `${base}:${system}`;
+function validateGitLabNativeJobs(gitlab, base, kind, lane) {
+  return gitlabNativeCapabilities.map((capabilities) => {
+    const name = `${base}:${capabilities.system}${lane === "review" ? ":review" : ""}`;
+    const capability = capabilities[lane === "review" ? "review" : "protected"];
+    const rules =
+      lane === "review"
+        ? reviewRules
+        : lane === "protected"
+          ? protectedRules
+          : undefined;
     const job = gitlab[name];
     if (
       !job ||
       typeof job !== "object" ||
       Array.isArray(job) ||
-      Object.keys(job).sort().join(",") !== "extends,inherit,tags" ||
+      Object.keys(job).sort().join(",") !==
+        (rules ? "extends,inherit,rules,tags" : "extends,inherit,tags") ||
       job.extends !== base ||
       Object.keys(job.inherit ?? {}).join(",") !== "default" ||
       job.inherit.default !== false ||
-      JSON.stringify(job.tags) !== JSON.stringify([capability])
+      JSON.stringify(job.tags) !== JSON.stringify([capability]) ||
+      JSON.stringify(job.rules) !== JSON.stringify(rules)
     ) {
       throw new Error(
         `GitLab ${kind} platform job ${name} must inherit its full proof on ${capability}`,
@@ -281,16 +309,23 @@ export function validateCi(
   }
   const gitlabHosts = [
     gitlabLinuxCapability,
-    ...validateGitLabNativeJobs(gitlab, "docs:verify", "source"),
+    ...validateGitLabNativeJobs(gitlab, "docs:verify", "source", "protected"),
   ];
+  const gitlabReviewHosts = validateGitLabNativeJobs(
+    gitlab,
+    "docs:verify",
+    "source",
+    "review",
+  );
   const gitlabOfflineHosts = [
     validateGitLabOffline(gitlab, gitlabImage),
-    ...validateGitLabNativeJobs(gitlab, "offline:verify", "offline"),
+    ...validateGitLabNativeJobs(gitlab, "offline:verify", "offline", "offline"),
   ];
   return {
     hosts: hostMatrix,
     offlineHosts: validateOfflineWorkflow(offlineSource, nodeMajor),
     gitlabHosts,
+    gitlabReviewHosts,
     gitlabOfflineHosts,
     nodeMajor,
     verifier,
@@ -305,6 +340,6 @@ export function checkCi() {
     readText(".github/workflows/offline-verify.yml"),
   );
   console.log(
-    `PASS CI contract: GitHub ${result.hosts.join(", ")} and GitLab ${result.gitlabHosts.join(", ")} share ${result.verifier}; hosted runs remain separate evidence`,
+    `PASS CI contract: GitHub ${result.hosts.length} hosted OS; GitLab ${result.gitlabHosts.length} OS with ${result.gitlabReviewHosts.length} separate native review selectors; shared ${result.verifier}; hosted execution unverified`,
   );
 }

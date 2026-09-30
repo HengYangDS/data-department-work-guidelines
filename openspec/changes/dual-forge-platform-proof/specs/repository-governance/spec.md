@@ -44,19 +44,35 @@ as hosted execution.
 GitHub SHALL run the full verifier on hosted Linux, macOS, and Windows with
 pinned Actions and the declared Node line, never a local runner or host path.
 GitLab SHALL run the same full verifier on its project-locked Linux ARM64
-container, macOS ARM64, and Windows ARM64 capabilities. Real runners SHALL
-expose those capabilities before success is claimed. Provider services,
-credentials, workspaces, caches, and job observations SHALL remain independent.
-YAML SHALL NOT claim runner registration or convert ARM64 execution into a
-native x86_64 claim.
+container, macOS ARM64, and Windows ARM64 capabilities. Native review jobs
+SHALL use Runner identities, accounts, roots, and caches separate from
+protected-source and release jobs. Real runners SHALL expose those capabilities
+before success is claimed. Provider services, credentials, workspaces, caches,
+and job observations SHALL remain independent. YAML SHALL NOT claim runner
+registration or convert ARM64 execution into a native x86_64 claim.
 
 #### Scenario: Repository workflow bindings are statically valid
 
 - **WHEN** the repository validates its GitHub and GitLab documentation jobs
 - **THEN** GitHub selects its three-OS hosted matrix, checks out first, and
   configures the declared Node line
-- **AND THEN** GitLab selects one project-locked capability for each declared
-  operating system and every job invokes the same full verifier.
+- **AND THEN** GitLab selects review or protected project capabilities according
+  to the source trust boundary, and every job invokes the same full verifier.
+
+#### Scenario: Native source routes are trust-separated
+
+- **WHEN** GitLab evaluates a proposal push or merge request
+- **THEN** only the native review jobs are eligible, not protected-source jobs
+- **AND WHEN** GitLab evaluates `dev`, `main`, or a version tag
+- **THEN** only protected native source jobs are eligible
+- **AND THEN** release offline jobs use protected runners after publication.
+
+#### Scenario: Runner labels hide a shared native account
+
+- **WHEN** review and protected selectors resolve to the same persistent
+  account, workspace, cache, or Runner identity
+- **THEN** fleet admission refuses the setup even if CI lint and local tests pass
+- **AND THEN** GitLab platform proof remains incomplete.
 
 #### Scenario: Fork-origin code cannot run on the GitHub local host
 

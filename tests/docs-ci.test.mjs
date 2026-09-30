@@ -37,10 +37,38 @@ test("both providers invoke one verifier on declared hosts", () => {
   assert.deepEqual(result.gitlabOfflineHosts, result.gitlabHosts);
 });
 
+test("GitLab native review and protected jobs use separate capabilities", () => {
+  const result = validateCi(github, gitlab, offline);
+  assert.deepEqual(result.gitlabReviewHosts, [
+    "ci-macos-arm64-review",
+    "ci-windows-arm64-review",
+  ]);
+  const pipeline = YAML.parse(gitlab);
+  for (const system of ["macos", "windows"]) {
+    const trusted = pipeline[`docs:verify:${system}`];
+    const review = pipeline[`docs:verify:${system}:review`];
+    assert.ok(review, `${system} review job is missing`);
+    assert.notDeepEqual(trusted.tags, review.tags);
+    assert.deepEqual(trusted.rules, [
+      {
+        if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG',
+      },
+    ]);
+    assert.deepEqual(review.rules, [
+      { if: '$CI_PIPELINE_SOURCE == "merge_request_event"' },
+      {
+        if: '$CI_COMMIT_BRANCH =~ /^proposal\\// && $CI_PIPELINE_SOURCE == "push"',
+      },
+    ]);
+  }
+});
+
 test("GitLab native jobs cannot disappear or bypass the shared proof", () => {
   for (const jobName of [
     "docs:verify:macos",
+    "docs:verify:macos:review",
     "docs:verify:windows",
+    "docs:verify:windows:review",
     "offline:verify:macos",
     "offline:verify:windows",
   ]) {
@@ -51,6 +79,7 @@ test("GitLab native jobs cannot disappear or bypass the shared proof", () => {
       (_pipeline, job) => (job.script = ["echo passed"]),
       (_pipeline, job) => (job.allow_failure = true),
       (_pipeline, job) => (job.when = "manual"),
+      (_pipeline, job) => (job.rules = [{ if: "$CI_COMMIT_TAG" }]),
     ]) {
       assert.throws(
         () => validateCi(github, changedGitLab(jobName, change), offline),

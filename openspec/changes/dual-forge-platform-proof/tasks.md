@@ -2,12 +2,12 @@
 
 ## 1. Source Contract
 
-- [x] 1.1 Add negative tests for missing GitLab macOS or Windows jobs, wrong
-      capabilities, Docker-default inheritance, script overrides, and bypassed
-      failures; run the focused Node suite and confirm the old graph fails.
-- [x] 1.2 Add GitLab native documentation jobs that reuse the Linux command
-      owner without its image; check the resolved three-system graph through the
-      GitLab `dev` lint API and `npm run verify`.
+- [x] 1.1 Add negative tests for missing GitLab native jobs, wrong capabilities,
+      overlapping review/protected routes, Docker defaults, script overrides,
+      and bypassed failures; run the Node suite against both old and new graphs.
+- [x] 1.2 Add separate native review and protected source jobs that reuse the
+      Linux command without its image; check the resolved three-system graph
+      through GitLab lint and `npm run verify`.
 - [x] 1.3 Add native post-publication offline jobs using the same bundle and
       script; cover missing hosts and supply fallback with negative tests, tag
       lint, and the full local verifier.
@@ -19,9 +19,10 @@
 - [x] 2.1 Mirror the pinned macOS ARM64 and Windows x64 lychee archives into
       this GitLab project's registry; retrieve and hash each against the manifest
       without a GitHub fallback.
-- [ ] 2.2 Admit project-specific native runners with the declared Node line
-      and bounded credential transport; verify their project and ARM64 host
-      identity, Windows x64 process compatibility, and candidate-SHA jobs.
+- [ ] 2.2 Admit project-specific review and protected native runners with
+      separate accounts, roots, and caches, the declared Node line, and bounded
+      credential transport; verify ARM64 hosts, Windows x64 compatibility, and
+      real jobs on both source routes.
 - [ ] 2.3 Commit and prove the exact Change HEAD with official OpenSpec and
       installed ETHOS, then close out through governance; verify both Forges'
       source jobs at the accepted SHA and protected-check refusal on omissions.

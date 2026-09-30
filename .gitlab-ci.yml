@@ -25,6 +25,18 @@ docs:verify:macos:
     default: false
   tags:
     - ci-macos-arm64-shell
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG'
+
+docs:verify:macos:review:
+  extends: docs:verify
+  inherit:
+    default: false
+  tags:
+    - ci-macos-arm64-review
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH =~ /^proposal\// && $CI_PIPELINE_SOURCE == "push"'
 
 docs:verify:windows:
   extends: docs:verify
@@ -32,6 +44,18 @@ docs:verify:windows:
     default: false
   tags:
     - ci-windows-arm64-shell
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG'
+
+docs:verify:windows:review:
+  extends: docs:verify
+  inherit:
+    default: false
+  tags:
+    - ci-windows-arm64-review
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH =~ /^proposal\// && $CI_PIPELINE_SOURCE == "push"'
 
 offline:verify:
   stage: verify

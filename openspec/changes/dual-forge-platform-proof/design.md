@@ -22,13 +22,16 @@ ARM64 guest.
 
 ### Extend the existing GitLab jobs, not the verifier
 
-Keep `docs:verify` and `offline:verify` as the Linux command owners. Add one
-macOS and one Windows child for each through GitLab `extends`. Each child
-inherits the same scripts and release trigger, replaces only the runner
-capability, and disables inherited Docker defaults. This avoids six copied
-command sequences and keeps the full verifier as the sole document-quality
-implementation. A single matrix job was rejected because its container and
-native-shell setup would have to vary by row, hiding the execution boundary.
+Keep `docs:verify` and `offline:verify` as the Linux command owners. For each
+native operating system, add a source-review child, a protected-source child,
+and a post-publication child through GitLab `extends`. The source children
+inherit the same scripts but use mutually exclusive rules: merge requests and
+proposal pushes select review runners; `dev`, `main`, and tags select protected
+runners. Post-publication jobs use only protected runners. Every child disables
+Docker defaults. This keeps the full verifier as the sole quality owner
+without allowing untrusted proposal code and release code to share a persistent
+Shell account, workspace, or cache. A single matrix was rejected because its
+container, native-shell, and trust setup would vary by row.
 
 ### Treat runtime selection as runner admission
 
@@ -41,15 +44,17 @@ x64 lychee archives with their exact manifest hashes before those jobs run;
 the source does not fall back to GitHub. On the current Windows ARM64 fleet,
 the declared Windows asset requires an x64 Node process under emulation.
 Fleet evidence must distinguish that process architecture from the ARM64 host.
-The runner fleet owner must prove the project binding and transport before
-the jobs become required. A tag in YAML is a selector, not evidence that a
-runner exists.
+The runner fleet owner must prove project binding, distinct review/protected
+accounts and working roots, and credential transport before the jobs become
+required. A tag in YAML is a selector, not evidence that a runner exists or
+that two selectors are operationally isolated.
 
 ### Check the semantic graph, then observe actual jobs
 
 Extend the existing YAML-parsing CI contract to reject a missing native job,
-wrong capability, Docker inheritance, script override, `allow_failure`, or
-manual-only bypass. Keep the current GitHub hosted and offline matrices as
+wrong capability, trust-route overlap, Docker inheritance, script override,
+`allow_failure`, or manual-only bypass. Keep the current GitHub hosted and
+offline matrices as
 independent peers. GitLab lint confirms only that the submitted YAML resolves
 into the intended jobs; it cannot prove runner scheduling, toolchain, or
 execution. Final evidence requires real source jobs on each Forge at the same
@@ -60,6 +65,9 @@ digest-verified release bundle. No synthetic human-use trial is added.
 
 - **Native runner unavailable or untrusted:** Hold source integration and
   release; do not drop the operating-system job or borrow GitHub's result.
+- **Review code reaches a release account:** Require separate project-locked
+  native Runner identities, accounts, roots, and caches for review and
+  protected/release jobs; static rules alone do not prove that separation.
 - **Windows ARM64 runs x64 tools under emulation:** Report host and process
   architecture separately; do not claim a native x86_64 ABI.
 - **Linux and native runners have different supply paths:** Require the same
@@ -75,9 +83,9 @@ digest-verified release bundle. No synthetic human-use trial is added.
 1. Add negative CI-contract tests, native GitLab job projections, and reader
    guidance in this Work Lane; run local quality and GitLab lint.
 2. Verify the missing lychee archives in GitLab's project registry, then
-   obtain fleet-side project-specific runner and Node admission, including
-   transport and credential proof. Execute each native job on the candidate
-   revision before integration.
+   obtain fleet-side project- and trust-specific runner and Node admission,
+   including transport and credential proof. Exercise both review and
+   protected source routes before integration.
 3. After exact-HEAD ETHOS proof and governed closeout, observe GitLab and
    GitHub source jobs independently. Prepare a SemVer-compatible release,
    publish one signed tag and identical offline bytes, then run each Forge's

@@ -67,7 +67,9 @@ pipeline **after** its own package and Release are available; tag-push
 package through the current project's CI identity, not through GitHub or an
 operator's credentials. Native GitLab runners also need the manifest-pinned
 lychee archive in this project's registry before their online source jobs can
-run; a missing archive is not permission to add a GitHub fallback.
+run; a missing archive is not permission to add a GitHub fallback. Proposal and
+merge-request jobs must use project-locked review runners, while protected
+branches and release jobs use separate trusted runners and workspaces.
 
 ## Commit and release
 
