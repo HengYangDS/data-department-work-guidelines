@@ -131,12 +131,12 @@ as hosted execution.
 ### Requirement: Per-project dual-Forge runner isolation
 
 Both Forges SHALL run the full verifier on Linux, macOS, and Windows. GitHub
-SHALL use managed runners; GitLab SHALL use project-locked ARM64 capabilities.
-Native review and protected jobs SHALL have separate Runner identities,
-accounts, roots, and caches. Native Runners SHALL be tagged-only, with
-`not_protected` review and `ref_protected` release access. GitLab SHALL protect
-`dev`, `main`, and `v*`. YAML SHALL NOT prove execution; emulation SHALL NOT
-prove native x86_64 behavior.
+SHALL use hosted runners; GitLab SHALL use project-locked ARM64 Runners. On
+every GitLab OS route, including Linux containers, review and protected jobs
+SHALL have distinct Runner identities, accounts, execution roots, caches, and
+credential reachability. Runners SHALL be tagged-only: review
+`not_protected`, protected `ref_protected`. GitLab SHALL protect `dev`,
+`main`, and `v*`.
 
 #### Scenario: Repository workflow bindings are statically valid
 
@@ -164,10 +164,19 @@ prove native x86_64 behavior.
 #### Scenario: Native source routes are trust-separated
 
 - **WHEN** GitLab evaluates a proposal push or merge request
-- **THEN** only the native review jobs are eligible, not protected-source jobs
+- **THEN** only the Linux, macOS, and Windows review jobs are eligible
 - **AND WHEN** GitLab evaluates `dev`, `main`, or a version tag
-- **THEN** only protected native source jobs are eligible
+- **THEN** only the Linux, macOS, and Windows protected source jobs are eligible
 - **AND THEN** release offline jobs use protected runners after publication.
+
+#### Scenario: Linux selectors cannot cross the trust boundary
+
+- **WHEN** the repository validates its GitLab Linux source and offline jobs
+- **THEN** proposal and merge-request source jobs select the review capability
+- **AND THEN** protected branch and tag source jobs and tag offline jobs select
+  a distinct protected capability
+- **AND THEN** a missing job, shared tag, or review-tagged offline job fails the
+  repository CI contract before hosted execution is claimed.
 
 #### Scenario: An open proposal has one review pipeline
 
@@ -180,8 +189,9 @@ prove native x86_64 behavior.
 
 #### Scenario: Runner labels hide a shared native account
 
-- **WHEN** review and protected selectors resolve to the same persistent
-  account, workspace, cache, or Runner identity
+- **WHEN** review and protected selectors resolve to the same Runner identity,
+  account, container daemon or socket, workspace, cache, or credential
+  reachability
 - **THEN** fleet admission refuses the setup even if CI lint and local tests pass
 - **AND THEN** GitLab platform proof remains incomplete.
 
@@ -226,6 +236,12 @@ prove native x86_64 behavior.
 - **AND THEN** each Forge requires a fresh run at the published revision for
   its own success claim
 - **AND THEN** provider credentials and job observations remain independent.
+
+#### Scenario: Emulation is not native architecture proof
+
+- **WHEN** a declared host runs x86_64 tools under emulation
+- **THEN** a passing job MAY establish functional execution on that host
+- **AND THEN** it SHALL NOT be represented as native x86_64 behavior.
 
 #### Scenario: Release-cut source differs from an earlier accepted source
 
