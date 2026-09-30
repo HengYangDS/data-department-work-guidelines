@@ -2,9 +2,10 @@
 
 ## 1. Source Contract
 
-- [x] 1.1 Add negative tests for missing GitLab native jobs, wrong capabilities,
-      overlapping review/protected routes, Docker defaults, script overrides,
-      and bypassed failures; run the Node suite against both old and new graphs.
+- [x] 1.1 Add negative tests for missing GitHub source routes and GitLab
+      native jobs, wrong capabilities, overlapping review/protected routes,
+      Docker defaults, script overrides, and bypassed failures; run the Node
+      suite against both old and new graphs.
 - [x] 1.2 Add separate native review and protected source jobs that reuse the
       Linux command without its image; suppress duplicate proposal pushes and
       check the allowed graph through GitLab lint and `npm run verify`.

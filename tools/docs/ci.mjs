@@ -230,8 +230,16 @@ export function validateCi(
     "u",
   );
   const job = github.jobs?.verify;
-  if (!github.on?.push?.tags?.includes("v*")) {
-    throw new Error("GitHub must verify version tags as well as branches");
+  if (
+    JSON.stringify(github.on?.push?.branches) !==
+      JSON.stringify(["dev", "main", "proposal/**"]) ||
+    JSON.stringify(github.on?.push?.tags) !== JSON.stringify(["v*"]) ||
+    JSON.stringify(github.on?.pull_request?.branches) !==
+      JSON.stringify(["dev", "main"])
+  ) {
+    throw new Error(
+      "GitHub source triggers must cover accepted and proposal branches, pull requests, and version tags",
+    );
   }
   if (!job || job.container || github.permissions?.contents !== "read") {
     throw new Error(

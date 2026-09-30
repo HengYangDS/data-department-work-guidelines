@@ -35,6 +35,9 @@ container, native-shell, and trust setup would vary by row.
 The top-level GitLab workflow admits only `dev`, `main`, version tags, merge
 requests, and proposal pushes. Once a proposal has an open merge request, it
 suppresses the duplicate branch-push pipeline and keeps the review route.
+GitHub source admission requires pushes on `dev`, `main`, `proposal/**`, and
+`v*` tags, plus pull requests targeting `dev` or `main`; a three-system matrix
+without one of those event routes is not source coverage.
 
 ### Treat runtime selection as runner admission
 

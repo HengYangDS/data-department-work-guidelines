@@ -37,6 +37,32 @@ test("both providers invoke one verifier on declared hosts", () => {
   assert.deepEqual(result.gitlabOfflineHosts, result.gitlabHosts);
 });
 
+test("GitHub source CI rejects missing or extra branch routes", () => {
+  for (const [event, branch] of [
+    ["push", "dev"],
+    ["push", "main"],
+    ["push", "proposal/**"],
+    ["pull_request", "dev"],
+    ["pull_request", "main"],
+  ]) {
+    const workflow = YAML.parse(github);
+    workflow.on[event].branches = workflow.on[event].branches.filter(
+      (candidate) => candidate !== branch,
+    );
+    assert.throws(
+      () => validateCi(YAML.stringify(workflow), gitlab, offline),
+      /GitHub source triggers/u,
+      `${event}:${branch}`,
+    );
+  }
+  const broader = YAML.parse(github);
+  broader.on.push.branches.push("work/**");
+  assert.throws(
+    () => validateCi(YAML.stringify(broader), gitlab, offline),
+    /GitHub source triggers/u,
+  );
+});
+
 test("GitLab native review and protected jobs use separate capabilities", () => {
   const result = validateCi(github, gitlab, offline);
   assert.deepEqual(result.gitlabReviewHosts, [

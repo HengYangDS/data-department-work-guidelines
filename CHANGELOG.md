@@ -22,6 +22,11 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 - Refreshed the locked CSpell release to 10.3.6 for the next offline bundle.
 
+### Fixed
+
+- Rejected GitHub source workflows that omit an accepted or proposal trigger
+  while retaining an otherwise valid three-system job.
+
 ## [5.1.0] - 2026-09-29
 
 ### Added

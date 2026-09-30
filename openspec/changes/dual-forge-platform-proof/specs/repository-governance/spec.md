@@ -59,6 +59,8 @@ registration or convert ARM64 execution into a native x86_64 claim.
 - **WHEN** the repository validates its GitHub and GitLab documentation jobs
 - **THEN** GitHub selects its three-OS hosted matrix, checks out first, and
   configures the declared Node line
+- **AND THEN** GitHub admits `dev`, `main`, `proposal/**`, and `v*` push events
+  and pull requests targeting `dev` or `main`
 - **AND THEN** GitLab selects review or protected project capabilities according
   to the source trust boundary, and every job invokes the same full verifier.
 
