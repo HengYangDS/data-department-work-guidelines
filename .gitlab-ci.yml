@@ -6,6 +6,7 @@ default:
 
 docs:verify:
   stage: verify
+  timeout: 20m
   tags:
     - ci-linux-arm64-container
   interruptible: true
@@ -18,8 +19,23 @@ docs:verify:
   script:
     - npm run verify
 
+docs:verify:macos:
+  extends: docs:verify
+  inherit:
+    default: false
+  tags:
+    - ci-macos-arm64-shell
+
+docs:verify:windows:
+  extends: docs:verify
+  inherit:
+    default: false
+  tags:
+    - ci-windows-arm64-shell
+
 offline:verify:
   stage: verify
+  timeout: 25m
   tags:
     - ci-linux-arm64-container
   interruptible: true
@@ -32,3 +48,17 @@ offline:verify:
     - node tools/ci/offline-bundle.mjs acquire-gitlab
     - node tools/ci/offline-bundle.mjs install
     - npm run verify
+
+offline:verify:macos:
+  extends: offline:verify
+  inherit:
+    default: false
+  tags:
+    - ci-macos-arm64-shell
+
+offline:verify:windows:
+  extends: offline:verify
+  inherit:
+    default: false
+  tags:
+    - ci-windows-arm64-shell

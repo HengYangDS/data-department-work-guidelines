@@ -60,11 +60,14 @@ been observed. Git's native `.gitattributes` rule checks out tracked text with
 LF even on Windows; do not replace it with a host-specific Git setting.
 Keep `node_modules/` and generated output out of Git.
 
-GitHub's published Release starts its offline host matrix. GitLab's
-`offline:verify` runs in an explicitly started tag pipeline **after** its own
-package and Release are available; a tag-push `docs:verify` result is not
-offline qualification. The job obtains the package through the current
-project's CI identity, not through GitHub or an operator's credentials.
+GitHub's published Release starts its offline host matrix. GitLab's Linux,
+macOS, and Windows `offline:verify` jobs run in an explicitly started tag
+pipeline **after** its own package and Release are available; tag-push
+`docs:verify` jobs are not offline qualification. Each job obtains the same
+package through the current project's CI identity, not through GitHub or an
+operator's credentials. Native GitLab runners also need the manifest-pinned
+lychee archive in this project's registry before their online source jobs can
+run; a missing archive is not permission to add a GitHub fallback.
 
 ## Commit and release
 
@@ -181,7 +184,10 @@ grant Change authority.
    obtains. GitHub's Release starts its four-host offline workflow. After the
    GitLab package and Release exist, start a tag pipeline with
    `glab ci run --branch vX.Y.Z --repo GROUP/PROJECT` and require the
-   `offline:verify` job, not only the tag-push `docs:verify` job.
+   Linux, macOS, and Windows `offline:verify` jobs, not only the tag-push
+   `docs:verify` jobs. The Windows ARM64 runner may use x64 Node and lychee
+   under emulation; record host and process architecture separately rather
+   than calling it native x86_64 verification.
 
 6. Download the asset from each Release into a separate empty directory and
    inspect both files against the committed record:

@@ -3,7 +3,11 @@ import { declaredToolRuntime, readText } from "./runtime.mjs";
 
 const verifier = "npm run verify";
 const auditCommand = "npm audit --audit-level=moderate";
-const gitlabCapability = "ci-linux-arm64-container";
+const gitlabLinuxCapability = "ci-linux-arm64-container";
+const gitlabNativeCapabilities = [
+  ["macos", "ci-macos-arm64-shell"],
+  ["windows", "ci-windows-arm64-shell"],
+];
 const hostMatrix = ["ubuntu-latest", "macos-latest", "windows-latest"];
 const offlineHostMatrix = [
   "ubuntu-latest",
@@ -107,10 +111,16 @@ function validateOfflineWorkflow(source, nodeMajor) {
 function validateGitLabOffline(gitlab, expectedImage) {
   const job = gitlab["offline:verify"];
   if (!job) throw new Error("GitLab offline verification job is missing");
+  if (job.timeout !== "25m") {
+    throw new Error("GitLab offline timeout must match its 25m peer");
+  }
   if (
     job.image !== undefined ||
     gitlab.default?.image !== expectedImage ||
-    JSON.stringify(job.tags) !== JSON.stringify([gitlabCapability]) ||
+    JSON.stringify(job.tags) !== JSON.stringify([gitlabLinuxCapability]) ||
+    job.stage !== "verify" ||
+    job.allow_failure !== undefined ||
+    job.when !== undefined ||
     String(job.variables?.GIT_DEPTH) !== "0"
   ) {
     throw new Error("GitLab offline verification needs the declared runner");
@@ -138,6 +148,28 @@ function validateGitLabOffline(gitlab, expectedImage) {
     );
   }
   return job.tags[0];
+}
+
+function validateGitLabNativeJobs(gitlab, base, kind) {
+  return gitlabNativeCapabilities.map(([system, capability]) => {
+    const name = `${base}:${system}`;
+    const job = gitlab[name];
+    if (
+      !job ||
+      typeof job !== "object" ||
+      Array.isArray(job) ||
+      Object.keys(job).sort().join(",") !== "extends,inherit,tags" ||
+      job.extends !== base ||
+      Object.keys(job.inherit ?? {}).join(",") !== "default" ||
+      job.inherit.default !== false ||
+      JSON.stringify(job.tags) !== JSON.stringify([capability])
+    ) {
+      throw new Error(
+        `GitLab ${kind} platform job ${name} must inherit its full proof on ${capability}`,
+      );
+    }
+    return capability;
+  });
 }
 
 export function validateCi(
@@ -202,11 +234,20 @@ export function validateCi(
   }
   const gitlabJob = gitlab["docs:verify"];
   const gitlabImage = gitlab.default?.image;
+  if (gitlabJob && gitlabJob.timeout !== "20m") {
+    throw new Error("GitLab source timeout must match its 20m peer");
+  }
   if (
     !gitlabJob ||
     gitlabJob.image !== undefined ||
     !imagePattern.test(gitlabImage ?? "") ||
-    JSON.stringify(gitlabJob.tags) !== JSON.stringify([gitlabCapability])
+    JSON.stringify(gitlabJob.tags) !==
+      JSON.stringify([gitlabLinuxCapability]) ||
+    gitlabJob.stage !== "verify" ||
+    gitlabJob.interruptible !== true ||
+    gitlabJob.rules !== undefined ||
+    gitlabJob.allow_failure !== undefined ||
+    gitlabJob.when !== undefined
   ) {
     throw new Error(
       `GitLab verification must use a digest-pinned Node ${nodeMajor} image and declared container runner capability`,
@@ -238,10 +279,19 @@ export function validateCi(
       "GitLab must invoke the same repository verifier as GitHub",
     );
   }
+  const gitlabHosts = [
+    gitlabLinuxCapability,
+    ...validateGitLabNativeJobs(gitlab, "docs:verify", "source"),
+  ];
+  const gitlabOfflineHosts = [
+    validateGitLabOffline(gitlab, gitlabImage),
+    ...validateGitLabNativeJobs(gitlab, "offline:verify", "offline"),
+  ];
   return {
     hosts: hostMatrix,
     offlineHosts: validateOfflineWorkflow(offlineSource, nodeMajor),
-    gitlabOfflineHost: validateGitLabOffline(gitlab, gitlabImage),
+    gitlabHosts,
+    gitlabOfflineHosts,
     nodeMajor,
     verifier,
     audit: auditCommand,
@@ -255,6 +305,6 @@ export function checkCi() {
     readText(".github/workflows/offline-verify.yml"),
   );
   console.log(
-    `PASS CI contract: ${result.hosts.join(", ")} and GitLab share ${result.verifier}; hosted runs remain separate evidence`,
+    `PASS CI contract: GitHub ${result.hosts.join(", ")} and GitLab ${result.gitlabHosts.join(", ")} share ${result.verifier}; hosted runs remain separate evidence`,
   );
 }

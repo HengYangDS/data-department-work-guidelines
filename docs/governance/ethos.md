@@ -132,14 +132,19 @@ declaration. The installer exercises and records the available npm version
 offline on each claimed host. The application audit does not qualify Node's
 bundled npm; do not turn one into a claim about the other.
 
-GitHub runs Linux, macOS, and Windows hosted jobs; GitLab selects the
-`ci-linux-arm64-container` capability on its project-locked runner. GitLab's
-offline job is started on the exact tag only after its release package exists;
-an earlier tag-push documentation job cannot qualify that asset. Before
-admitting the GitLab runner, its deployment owner must verify that the exact
-OCI image digest in `.gitlab-ci.yml` is allowed and cached locally. Neither a
-tag-only image nor an older successful job satisfies that check. Workflow
-declarations alone are not hosted success.
+GitHub declares Linux, macOS, and Windows hosted jobs. GitLab declares
+project-locked Linux ARM64 container, macOS ARM64 shell, and Windows ARM64 shell
+capabilities for both source and post-publication offline verification. A tag
+in YAML does not prove that a runner is registered. The native jobs require
+runner-installed Node 26 and exact macOS and Windows lychee assets in this
+project's package registry; they must not fall back to GitHub. On an ARM64
+Windows host, an x64 Node and lychee process under emulation is functional
+evidence, not a native x86_64 ABI claim. GitLab's offline jobs start at the
+exact tag only after its release package exists; earlier tag-push document
+jobs cannot qualify that asset. Before admitting the Linux runner, its owner
+must verify that the exact OCI image digest in `.gitlab-ci.yml` is allowed and
+cached locally. Neither a tag-only image nor an older green job satisfies any
+of these checks. Workflow declarations alone are not hosted success.
 
 Markdown and configuration use one blank line between blocks. Prettier and the
 repository check enforce their supported parts. `build/`, `node_modules/`,

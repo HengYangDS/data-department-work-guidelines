@@ -1,11 +1,18 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import YAML from "yaml";
 import { validateCi } from "../tools/docs/ci.mjs";
 import { assertNodeRuntime, readText } from "../tools/docs/runtime.mjs";
 
 const github = readText(".github/workflows/docs-verify.yml");
 const gitlab = readText(".gitlab-ci.yml");
 const offline = readText(".github/workflows/offline-verify.yml");
+
+function changedGitLab(jobName, change) {
+  const pipeline = YAML.parse(gitlab);
+  change(pipeline, pipeline[jobName]);
+  return YAML.stringify(pipeline);
+}
 
 test("the repository check rejects an undeclared Node major", () => {
   assert.doesNotThrow(() => assertNodeRuntime("26.10.0"));
@@ -22,6 +29,54 @@ test("both providers invoke one verifier on declared hosts", () => {
     "macos-latest",
     "windows-latest",
   ]);
+  assert.deepEqual(result.gitlabHosts, [
+    "ci-linux-arm64-container",
+    "ci-macos-arm64-shell",
+    "ci-windows-arm64-shell",
+  ]);
+  assert.deepEqual(result.gitlabOfflineHosts, result.gitlabHosts);
+});
+
+test("GitLab native jobs cannot disappear or bypass the shared proof", () => {
+  for (const jobName of [
+    "docs:verify:macos",
+    "docs:verify:windows",
+    "offline:verify:macos",
+    "offline:verify:windows",
+  ]) {
+    for (const change of [
+      (pipeline) => delete pipeline[jobName],
+      (_pipeline, job) => (job.tags = ["ci-linux-arm64-container"]),
+      (_pipeline, job) => (job.inherit.default = true),
+      (_pipeline, job) => (job.script = ["echo passed"]),
+      (_pipeline, job) => (job.allow_failure = true),
+      (_pipeline, job) => (job.when = "manual"),
+    ]) {
+      assert.throws(
+        () => validateCi(github, changedGitLab(jobName, change), offline),
+        /GitLab .* platform job/u,
+        jobName,
+      );
+    }
+  }
+});
+
+test("GitLab source and offline jobs use bounded peer-equivalent deadlines", () => {
+  for (const [jobName, minutes] of [
+    ["docs:verify", "20m"],
+    ["offline:verify", "25m"],
+  ]) {
+    const pipeline = YAML.parse(gitlab);
+    pipeline[jobName].timeout = minutes;
+    assert.doesNotThrow(() =>
+      validateCi(github, YAML.stringify(pipeline), offline),
+    );
+    pipeline[jobName].timeout = "1h";
+    assert.throws(
+      () => validateCi(github, YAML.stringify(pipeline), offline),
+      /GitLab .* timeout/u,
+    );
+  }
 });
 
 test("both providers refuse to skip the dependency audit", () => {
@@ -154,7 +209,7 @@ test("GitLab jobs require one canonical ARM64 container capability", () => {
   assert.doesNotMatch(canonical, /ci-linux-arm64-docker/u);
   assert.match(canonical, offlineTag);
   assert.equal(
-    validateCi(github, canonical, offline).gitlabOfflineHost,
+    validateCi(github, canonical, offline).gitlabOfflineHosts[0],
     "ci-linux-arm64-container",
   );
   for (const changed of [
@@ -241,7 +296,7 @@ test("offline release CI runs the source-pinned bundle on four hosted systems", 
 
 test("GitLab offline release CI runs only after a release asset is available", () => {
   const result = validateCi(github, gitlab, offline);
-  assert.equal(result.gitlabOfflineHost, "ci-linux-arm64-container");
+  assert.equal(result.gitlabOfflineHosts[0], "ci-linux-arm64-container");
   for (const [changed, reason] of [
     [gitlab.replace(/\noffline:verify:[\s\S]*$/u, ""), /GitLab offline/u],
     [
