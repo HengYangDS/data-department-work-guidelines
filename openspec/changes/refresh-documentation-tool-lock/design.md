@@ -9,6 +9,12 @@ their tracked declarations. An isolated `npm update --package-lock-only`
 probe changes compatible transitive packages. The current offline bundle is
 bound to the old lock hash and cannot be reused for new source.
 
+Node v26.10.0 supplies npm 11.20.0, while the standalone npm registry's
+stable tag is 12.1.0. This repository does not pin or install a second npm:
+Node owns the bootstrap, and the offline installer tests the available npm on
+each host. The bundled npm is therefore not represented as the newest
+standalone npm release.
+
 ## Decision
 
 Use npm as the sole package-graph resolver. Update the lock within the

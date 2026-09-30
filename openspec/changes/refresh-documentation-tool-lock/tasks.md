@@ -15,7 +15,7 @@
 
 - [x] 2.1 Align `VERSION`, charter edition, Changelog, and the source-bound
       offline bundle record; build and inspect one frozen bundle.
-- [ ] 2.2 Validate official OpenSpec and the complete repository check;
+- [x] 2.2 Validate official OpenSpec and the complete repository check;
       exercise an empty-cache offline install and full verification, then
       commit and run exact-HEAD ETHOS proof.
 - [ ] 2.3 Follow ETHOS candidate, accepted-root, and publication decisions.
