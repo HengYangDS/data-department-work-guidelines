@@ -21,8 +21,9 @@
       without a GitHub fallback.
 - [ ] 2.2 Admit project-specific review and protected native runners with
       separate accounts, roots, and caches, the declared Node line, and bounded
-      credential transport; verify ARM64 hosts, Windows x64 compatibility, and
-      protected-runner readiness with a bounded existing-ref canary.
+      credential transport for Runner API, clone, and job-token package requests;
+      verify ARM64 hosts, Windows x64 compatibility, and protected-runner
+      readiness with a bounded existing-ref canary.
 - [ ] 2.3 Prove the exact Change HEAD with official OpenSpec and installed
       ETHOS, publish a governed proposal, and verify review jobs; then close
       out and verify both Forges' source jobs at the accepted SHA, including

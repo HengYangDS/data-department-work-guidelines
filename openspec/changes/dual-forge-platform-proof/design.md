@@ -51,6 +51,13 @@ The runner fleet owner must prove project binding, distinct review/protected
 accounts and working roots, and credential transport before the jobs become
 required. A tag in YAML is a selector, not evidence that a runner exists or
 that two selectors are operationally isolated.
+Transport admission covers three separate paths: Runner registration and
+polling, repository clone, and package downloads carrying `CI_JOB_TOKEN`.
+The package helper uses GitLab's `CI_API_V4_URL`; a tunnel for registration
+alone does not protect an HTTP clone or package request. Prove the actual job
+endpoints and an encrypted path for credential-bearing traffic, or record an
+authorized, bounded host-only-network risk decision. Never present one
+protected path as proof that the other two are protected.
 
 ### Check the semantic graph, then observe actual jobs
 

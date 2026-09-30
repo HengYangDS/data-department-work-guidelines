@@ -83,6 +83,15 @@ registration or convert ARM64 execution into a native x86_64 claim.
 - **THEN** fleet admission refuses the setup even if CI lint and local tests pass
 - **AND THEN** GitLab platform proof remains incomplete.
 
+#### Scenario: Registration tunneling leaves other credential paths exposed
+
+- **WHEN** a GitLab Runner registers or polls through an encrypted tunnel
+  while its source clone or job-token package request still uses HTTP
+- **THEN** fleet admission separately observes the effective endpoint of each
+  credential-bearing path in an actual job
+- **AND THEN** transport is not called complete without encryption for those
+  paths or an authorized, scoped host-only-network risk decision.
+
 #### Scenario: Fork-origin code cannot run on the GitHub local host
 
 - **WHEN** a pull request head repository differs from the GitHub repository
