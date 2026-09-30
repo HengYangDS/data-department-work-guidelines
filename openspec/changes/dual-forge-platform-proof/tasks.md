@@ -20,14 +20,14 @@
 - [x] 2.1 Mirror the pinned macOS ARM64 and Windows x64 lychee archives into
       this GitLab project's registry; retrieve and hash each against the manifest
       without a GitHub fallback.
-- [ ] 2.2 Admit project-specific review and protected native runners with
+- [x] 2.2 Admit project-specific review and protected native runners with
       separate accounts, roots, caches, tagged-only project binding, and
       GitLab `ref_protected` access for protected runners; verify `dev`, `main`,
       and `v*` protection, the declared Node line, and bounded credential
       transport for Runner API, clone, and job-token package requests. Verify
       ARM64 hosts, Windows x64 compatibility, and both an unprotected-ref
       refusal and protected-ref success with bounded canaries.
-- [ ] 2.3 Prove the exact Change HEAD with official OpenSpec and installed
+- [x] 2.3 Prove the exact Change HEAD with official OpenSpec and installed
       ETHOS, publish a governed proposal, and verify review jobs; then close
       out and verify both Forges' source jobs at the accepted SHA, including
       protected-check refusal on omissions.
