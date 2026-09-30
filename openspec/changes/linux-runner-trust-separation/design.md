@@ -65,3 +65,9 @@ route fails, hold the release and use a signed, governed correction to restore
 the previous source selector while Fleet restores its preserved configuration.
 An earlier green `v5.2.0` matrix remains execution evidence, not retroactive
 evidence of isolation.
+
+The negative scheduling probe is deliberately outside the accepted CI contract.
+It uses one separately signed, disposable GitLab-only proposal ref with a
+harmless command and no source checkout. It is not a Change carrier or a
+release candidate. Observe a pending job with no Runner or start time, cancel
+it, delete the exact ref, and verify absence before treating the probe as done.
