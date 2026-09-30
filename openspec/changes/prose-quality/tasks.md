@@ -4,7 +4,7 @@
       verify latest stable tool contracts and install the locked packages.
 - [x] 2. Integrate the same prose owner into `prose` and repository checks;
       correct confirmed findings without loss of duty or uncertainty.
-- [ ] 3. Update contributor and verification guidance; pass full source quality,
+- [x] 3. Update contributor and verification guidance; pass full source quality,
       signatures, audit, official OpenSpec, and installed exact-HEAD ETHOS proof.
 - [ ] 4. Build source-bound v6.1.0 offline supply, qualify a cold offline install
       and exact release-cut source on every declared host on both Forges.

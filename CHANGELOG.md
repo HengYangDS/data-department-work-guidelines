@@ -12,6 +12,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [6.1.0] - 2026-10-01
+
 ### Added
 
 - Native prose and terminology checks for repeated words, filler, and technical
@@ -289,7 +291,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   verification sequence while keeping local, GitLab, and GitHub results separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.0.1...main
+[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.1.0...main
+[6.1.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.0.1...v6.1.0
 [6.0.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.0.0...v6.0.1
 [6.0.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.4...v6.0.0
 [5.2.4]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.3...v5.2.4
