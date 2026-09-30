@@ -355,17 +355,22 @@ SHALL NOT substitute for observing the actual consuming npm command.
 #### Scenario: A contributor selects Node's older bundled npm
 
 - **WHEN** a contributor invokes install, `ci`, or run with npm 11.19.1 while
-  the native repository declaration requires npm 12.1.0
+  the native repository declaration requires npm 12.2.0
 - **THEN** native npm admission rejects the command before dependency or
   script effects occur
 - **AND THEN** no repository-specific waiver or parser makes it green.
 
+#### Scenario: A previous npm release is selected
+
+- **WHEN** the destination selects npm 12.1.0 while source declares 12.2.0
+- **THEN** native admission rejects installation or run effects
+- **AND THEN** no waiver or private parser makes it green.
+
 #### Scenario: The declared npm is selected
 
-- **WHEN** the destination's actual npm matches the exact native declaration
-- **THEN** installation and repository commands can execute their ordinary
-  checks under that package manager
-- **AND THEN** passing its version check does not replace those checks.
+- **WHEN** the actual selected npm matches the exact native declaration
+- **THEN** ordinary installation and repository checks run under that version
+- **AND THEN** the version observation does not replace those checks.
 
 #### Scenario: Windows has a separate global npm prefix
 
