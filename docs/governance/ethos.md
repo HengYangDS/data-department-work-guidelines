@@ -142,8 +142,12 @@ proposal and merge-request jobs use separate review capabilities; protected
 `dev`, `main`, and release jobs use separate trusted capabilities. Their Runner
 accounts, workspaces, and caches must not cross that boundary. An open proposal
 uses its merge-request pipeline instead of a duplicate branch-push pipeline.
-A tag in YAML
-does not prove that a runner is registered or isolated. The native jobs require
+Runner admission observes registration and polling, repository clone, and
+`CI_JOB_TOKEN` package requests as separate credential-bearing paths. On an
+HTTP-only GitLab, a tunnel for registration alone does not protect clone or
+package traffic; each unencrypted path needs an authorized, bounded risk
+decision for the isolated network. A tag in YAML does not prove that a runner
+is registered or isolated. The native jobs require
 runner-installed Node 26 and exact macOS and Windows lychee assets in this
 project's package registry; they must not fall back to GitHub. On an ARM64
 Windows host, an x64 Node and lychee process under emulation is functional

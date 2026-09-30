@@ -70,6 +70,9 @@ lychee archive in this project's registry before their online source jobs can
 run; a missing archive is not permission to add a GitHub fallback. Proposal and
 merge-request jobs must use project-locked review runners, while protected
 branches and release jobs use separate trusted runners and workspaces.
+For credential transport admission, follow
+[repository governance](docs/governance/ethos.md#quality-and-local-state),
+not a Runner tag or a registration-only tunnel.
 
 ## Commit and release
 
