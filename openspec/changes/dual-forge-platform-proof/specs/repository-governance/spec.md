@@ -46,7 +46,10 @@ pinned Actions and the declared Node line, never a local runner or host path.
 GitLab SHALL run the same full verifier on its project-locked Linux ARM64
 container, macOS ARM64, and Windows ARM64 capabilities. Native review jobs
 SHALL use Runner identities, accounts, roots, and caches separate from
-protected-source and release jobs. Real runners SHALL expose those capabilities
+protected-source and release jobs. All native Runners SHALL be project-locked
+and tagged-only. Protected Runners SHALL be `ref_protected`; review Runners
+SHALL use unprivileged `not_protected` access. The project SHALL protect
+`dev`, `main`, and `v*` tags. Real runners SHALL expose those capabilities
 before success is claimed. Provider services, credentials, workspaces, caches,
 and job observations SHALL remain independent. YAML SHALL NOT claim runner
 registration or convert ARM64 execution into a native x86_64 claim.
@@ -82,6 +85,15 @@ registration or convert ARM64 execution into a native x86_64 claim.
   account, workspace, cache, or Runner identity
 - **THEN** fleet admission refuses the setup even if CI lint and local tests pass
 - **AND THEN** GitLab platform proof remains incomplete.
+
+#### Scenario: Untrusted YAML requests a protected native Runner
+
+- **WHEN** a safe job on an unprotected proposal ref asks for a protected
+  Runner's tag, regardless of the repository's normal job rules
+- **THEN** GitLab's `ref_protected` Runner refuses to schedule that job
+- **AND WHEN** a job at a protected `dev`, `main`, or `v*` ref asks for the same
+  Runner after its project binding and account isolation are verified
+- **THEN** the job can be scheduled and execute the declared verifier.
 
 #### Scenario: Registration tunneling leaves other credential paths exposed
 

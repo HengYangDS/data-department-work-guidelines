@@ -51,6 +51,13 @@ The runner fleet owner must prove project binding, distinct review/protected
 accounts and working roots, and credential transport before the jobs become
 required. A tag in YAML is a selector, not evidence that a runner exists or
 that two selectors are operationally isolated.
+Each native Runner must be project-locked and tagged-only. Protected Runners
+also require GitLab's `ref_protected` access level; review Runners use
+`not_protected` access with separate unprivileged accounts. The project protects
+`dev`, `main`, and `v*` tags; fleet admission must verify those rules still hold.
+An untrusted merge request can request any tag in its own YAML, so a safe
+unprotected-ref canary must fail to schedule a protected Runner even when it
+asks for that tag; a protected-ref canary must schedule it successfully.
 Transport admission covers three separate paths: Runner registration and
 polling, repository clone, and package downloads carrying `CI_JOB_TOKEN`.
 The package helper uses GitLab's `CI_API_V4_URL`; a tunnel for registration

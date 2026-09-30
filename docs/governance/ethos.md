@@ -144,6 +144,11 @@ proposal and merge-request jobs use separate review capabilities; protected
 `dev`, `main`, and release jobs use separate trusted capabilities. Their Runner
 accounts, workspaces, and caches must not cross that boundary. An open proposal
 uses its merge-request pipeline instead of a duplicate branch-push pipeline.
+All native Runners require project locking and tagged-only scheduling;
+protected Runners also require GitLab `ref_protected` access. The `dev`, `main`,
+and `v*` refs must remain protected.
+An untrusted proposal can request a tag in its own YAML, so the Runner's native
+ref restriction—not the YAML selector alone—must refuse that request.
 Runner admission observes registration and polling, repository clone, and
 `CI_JOB_TOKEN` package requests as separate credential-bearing paths. On an
 HTTP-only GitLab, a tunnel for registration alone does not protect clone or
