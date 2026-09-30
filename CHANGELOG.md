@@ -12,6 +12,12 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+### Changed
+
+- Refreshed the compatible documentation-tool dependency closure and rebuilt
+  its source-bound offline bundle. Direct tool versions, working rules, and
+  reader routes remain unchanged.
+
 ## [5.2.3] - 2026-09-30
 
 ### Fixed

@@ -3,18 +3,24 @@
   "language": "en",
   "words": [
     "backtest",
+    "commonmark",
     "COPYFILE",
     "ETHOS",
-    "GitLab",
     "GitHub",
+    "GitLab",
     "glab",
+    "isexe",
+    "katex",
     "lychee",
     "missingness",
+    "nodelib",
     "OpenSpec",
     "prewrite",
     "replayable",
     "sandboxed",
+    "scandir",
     "SemVer",
+    "smol",
     "xattrs"
   ]
 }
