@@ -12,6 +12,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [7.0.3] - 2026-10-01
+
 ### Fixed
 
 - Separated check policy, native tool supply, and release identity by
@@ -370,7 +372,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   verification sequence while keeping local, GitLab, and GitHub results separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.2...main
+[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.3...main
+[7.0.3]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.2...v7.0.3
 [7.0.2]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.1...v7.0.2
 [7.0.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.0...v7.0.1
 [7.0.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.1.1...v7.0.0
