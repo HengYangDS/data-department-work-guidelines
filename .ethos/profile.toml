@@ -13,7 +13,9 @@ normative_sources = [
 ]
 
 # The two default commands check repository documents. ETHOS independently
-# verifies tracked JavaScript behavior and static syntax for the mapped axes.
+# obtains JavaScript test evidence and checks syntax for the mapped axes.
+# Syntax checks do not establish semantic correctness; the shared ETHOS
+# quality contract remains a separate acceptance obligation.
 [openspec]
 # ETHOS owns this repository-relative admission contract. Changed paths matching
 # these patterns must be attributed to one selected active official Change.

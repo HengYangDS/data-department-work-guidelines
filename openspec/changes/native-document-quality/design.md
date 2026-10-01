@@ -488,6 +488,17 @@ exact-HEAD installed proof, and publish through each Forge independently.
 Observe source and offline jobs on every declared platform. Archive and retire
 the lane only after its own required work is complete.
 
+The current installed static provider runs Node syntax checks. A committed
+function with a reachable undefined identifier passes that provider but fails
+when invoked; invalid syntax is rejected. Keep that distinguishing observation
+in the producing verification evidence, not in a new tracked report or DR.
+Current governance prose and profile comments must name syntax checking
+accurately without lowering the required product quality floor. Semantic
+diagnostics, adverse and warning settlement, and conjunctive subject
+applicability remain shared ETHOS work. No repository-private checker or third
+proof gate supplies the missing result. Qualify those distinctions after the
+formal installed successor is accepted.
+
 Shared ETHOS fixes are accepted only through their actual formal product
 contract. Repository-native tests cannot certify that product. If that
 dependency is unavailable, complete independent local work and leave dependent

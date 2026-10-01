@@ -127,8 +127,10 @@ headings, categories, dates, links, version drift, and tag mismatch.
 The profile has exactly two default gates: `docs-integrity` and
 `markdown-format`. Their repository-relative commands retain separate behavior
 and formatting responsibilities. ETHOS independently obtains native Node test
-evidence through its behavior provider and runs static verification of tracked
-JavaScript. A gate passes only when both its document command and product-owned
+evidence through its behavior provider. The currently installed static provider
+checks JavaScript syntax; it can miss a reachable undefined identifier whose
+syntax is valid. A passing syntax check therefore does not establish semantic
+correctness. A gate passes only when both its document command and product-owned
 verifier pass for the committed tree. Repository-authored reports or command
 output cannot supply that native evidence. Proof does not create a second
 lifecycle.

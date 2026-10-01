@@ -78,6 +78,10 @@
       prerequisites. Verify the documented local CLI fails without its package
       and runs the locked version when installed; preserve official sync and
       archive admission without adding an adapter.
+- [x] 2.16 Correct governance and profile descriptions of installed JavaScript
+      proof against the executable semantic-defect control; retain exactly two
+      default gates, no private quality substitute, and the shared acceptance
+      obligation. Reconcile all current references and rerun affected checks.
 
 ## 3. Qualification and publication
 

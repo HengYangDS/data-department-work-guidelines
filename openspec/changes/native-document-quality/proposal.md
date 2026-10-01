@@ -71,6 +71,10 @@ linter beside the current stack would leave the duplication intact.
 - Remove retired tools from every current consumer, direct and transitive
   dependency, command, test interface, and guidance. No alternate parser,
   fallback, or optional retired checker remains after the replacement.
+- Clarify the installed JavaScript proof boundary: native tests provide
+  behavior evidence, while the current static provider checks syntax only.
+  Semantic diagnostics, warning settlement, and shared subject applicability
+  remain ETHOS product obligations; no local checker replaces them.
 - Review the seven work topics with the installed English editorial skills;
   retain every actor, obligation, condition, permission, and evidence limit.
 - Restore remaining original duties at their topic owners: stable concepts,

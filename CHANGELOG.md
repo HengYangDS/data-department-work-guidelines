@@ -13,6 +13,13 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+### Fixed
+
+- Governance and profile descriptions distinguish JavaScript syntax checking
+  from semantic correctness. The installed static provider can miss a reachable
+  undefined identifier; this documentation correction does not claim the shared
+  ETHOS code-quality mechanism is repaired or cross-adopter acceptance is done.
+
 ## [7.0.4] - 2026-10-01
 
 ### Fixed
