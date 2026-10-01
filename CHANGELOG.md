@@ -1,8 +1,9 @@
 # Changelog
 
 All notable changes to the Data Department work guidelines are recorded here.
-This file follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/),
-and editions follow [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html).
+This file follows
+[Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/), and editions
+follow [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html).
 
 `VERSION` names the next edition. Keep upcoming notes under `Unreleased` until
 the release is cut; only then give the edition its actual date. A changelog
@@ -11,6 +12,29 @@ Earlier branch editions had no versioned release tags; their original records
 remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
+
+## [7.0.4] - 2026-10-01
+
+### Fixed
+
+- Historical analysis explicitly checks sample-selection bias and explains how
+  missingness, delay, conflict, and anomalies affect conclusions. Agents should
+  continue with stated assumptions when missing context is not blocking;
+  uncertain facts or authority still stop the affected action.
+- Local links cannot rely on an ignored cache file, Git metadata, or an
+  undelivered alias that happens to exist on the validating host. Valid source
+  files, directory routes, and internal aliases remain available; native lychee
+  still checks target existence and fragments.
+- GitLab source and offline verification jobs name their platform consistently.
+  Shared steps use hidden native templates; runner capabilities and checks
+  remain unchanged.
+- Governance routes contributors to the boundary they need, with separate
+  authority, quality, supply, and runner sections. Existing decision records
+  give clearer alternatives and evidence; their accepted choices are unchanged.
+  OpenSpec supply requirements name the single Vale and lychee manifest.
+- Remote download retention keeps the latest qualified edition, one rollback,
+  and required tool packages. Superseded attachments retire with an explicit
+  notice while signed tags, original notes, and source history remain.
 
 ## [7.0.3] - 2026-10-01
 
@@ -28,11 +52,11 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 ### Fixed
 
 - Decision validation rejects reused stable IDs and empty sections. Meaningful
-  links, lists, quotes, and tables remain valid; ordinary prose beginning with
-  a JavaScript property name no longer crashes command classification.
-- Replaced hand-written shell token parsing with a locked, non-evaluating
-  lexer. Quoted, compound, glob, and selected literal-operand commands are
-  rejected while bare paths and ordinary interpreter prose remain valid.
+  links, lists, quotes, and tables remain valid; ordinary prose beginning with a
+  JavaScript property name no longer crashes command classification.
+- Replaced hand-written shell token parsing with a locked, non-evaluating lexer.
+  Quoted, compound, glob, and selected literal-operand commands are rejected
+  while bare paths and ordinary interpreter prose remain valid.
 - Native-tool installation awaits bounded asynchronous cleanup before reporting
   success; persistent errors still fail instead of leaving temporary state
   unnoticed.
@@ -41,9 +65,10 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ### Fixed
 
-- Restored original duties lost during compression: explicit decision constraints
-  and stable concepts; execution costs and milestones; professional data
-  judgments, durable production, and working governance review and controls.
+- Restored original duties lost during compression: explicit decision
+  constraints and stable concepts; execution costs and milestones; professional
+  data judgments, durable production, and working governance review and
+  controls.
 - Restored delivery priorities and unresolved decisions without borrowed
   authority, declared communication purpose, meeting focus and deadline
   escalation, measured expression, and precise Agent deliverables. Coaching
@@ -56,8 +81,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ### Changed
 
-- **Breaking:** The contributor installer now selects Vale or lychee through
-  one native-tool entry. Offline supply uses a new source-bound bundle schema
+- **Breaking:** The contributor installer now selects Vale or lychee through one
+  native-tool entry. Offline supply uses a new source-bound bundle schema
   containing both tools and their upstream notices; earlier bundles do not
   qualify this edition.
 - Consolidated spelling, repeated-word, concise-expression, and terminology
@@ -68,7 +93,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 - Decision records reject additional and nested sections while preserving
   technical terms and evidence links. The native Markdown parser also recognizes
-  explicit package license sections without treating examples as license notices.
+  explicit package license sections without treating examples as license
+  notices.
 - Actual document control comments cannot disable prose rules, including nested
   and entity-encoded comments; literal examples remain valid.
 
@@ -84,9 +110,9 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 - Decision records now reject quoted or list-nested terminal commands, task
   checkboxes, and code that imitates required section headings. The existing
   Markdown parser preserves meaningful rationale and evidence links.
-- Decision records link to code and execution evidence instead of embedding
-  code blocks or raw HTML that could hide task progress. Ordinary Markdown,
-  inline terms and evidence links remain valid. Department duties are unchanged.
+- Decision records link to code and execution evidence instead of embedding code
+  blocks or raw HTML that could hide task progress. Ordinary Markdown, inline
+  terms and evidence links remain valid. Department duties are unchanged.
 
 ## [6.1.0] - 2026-10-01
 
@@ -103,8 +129,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ### Fixed
 
-- Bound native temporary-stage cleanup retries after the Windows tool
-  installer reported a removal failure; persistent errors still fail.
+- Bound native temporary-stage cleanup retries after the Windows tool installer
+  reported a removal failure; persistent errors still fail.
 
 ## [6.0.1] - 2026-10-01
 
@@ -118,11 +144,11 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ### Changed
 
-- **Breaking:** Contributor and CI commands now require the exact npm version
-  in the native package manifest, rather than accepting Node's bundled npm.
-  Offline installation retains that prerequisite and never updates the host.
-- Bound offline supply to the complete package manifest so a changed native
-  tool policy cannot reuse a formerly qualified bundle.
+- **Breaking:** Contributor and CI commands now require the exact npm version in
+  the native package manifest, rather than accepting Node's bundled npm. Offline
+  installation retains that prerequisite and never updates the host.
+- Bound offline supply to the complete package manifest so a changed native tool
+  policy cannot reuse a formerly qualified bundle.
 
 ### Fixed
 
@@ -138,9 +164,9 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ### Changed
 
-- Refreshed the compatible documentation-tool dependency closure and rebuilt
-  its source-bound offline bundle. Direct tool versions, working rules, and
-  reader routes remain unchanged.
+- Refreshed the compatible documentation-tool dependency closure and rebuilt its
+  source-bound offline bundle. Direct tool versions, working rules, and reader
+  routes remain unchanged.
 
 ## [5.2.3] - 2026-09-30
 
@@ -150,16 +176,16 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   decisions, incomplete Agent work, and management responsibility after a
   complete comparison with the former unified guideline.
 - Clarified that meeting acceptance criteria does not grant an executor
-  authority to accept the work, and that a blocked dependency leaves
-  independent authorized work available.
+  authority to accept the work, and that a blocked dependency leaves independent
+  authorized work available.
 
 ## [5.2.2] - 2026-09-30
 
 ### Changed
 
-- Refreshed compatible transitive packages in the locked documentation
-  toolchain and rebuilt its source-bound offline supply. Direct tool versions
-  and the team's working rules remain unchanged.
+- Refreshed compatible transitive packages in the locked documentation toolchain
+  and rebuilt its source-bound offline supply. Direct tool versions and the
+  team's working rules remain unchanged.
 
 ## [5.2.1] - 2026-09-30
 
@@ -215,8 +241,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ### Fixed
 
-- Bound the direct OpenSpec command to the installed locked package instead of
-  a POSIX-only shim path or a global executable.
+- Bound the direct OpenSpec command to the installed locked package instead of a
+  POSIX-only shim path or a global executable.
 - Switched new GitLab jobs to the canonical Linux ARM64 container capability;
   immutable historical tags retain their original Runner selector.
 - Removed the second Node test run from ETHOS's document gate while keeping the
@@ -226,16 +252,16 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ### Fixed
 
-- Applied the existing format and lint checks to retained OpenSpec Markdown,
-  and the one-blank-line rule to every repository text candidate, including
-  archives and files without filename extensions.
+- Applied the existing format and lint checks to retained OpenSpec Markdown, and
+  the one-blank-line rule to every repository text candidate, including archives
+  and files without filename extensions.
 
 ## [5.0.4] - 2026-09-28
 
 ### Fixed
 
-- Kept explicitly selected files in the spelling check even when a CSpell
-  ignore rule matches them; refreshed the locked CSpell tool and offline supply.
+- Kept explicitly selected files in the spelling check even when a CSpell ignore
+  rule matches them; refreshed the locked CSpell tool and offline supply.
 
 ## [5.0.3] - 2026-09-28
 
@@ -248,8 +274,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 ### Fixed
 
 - Clarified task lead, decision owner, reviewer, and acceptor roles without
-  imposing a form on light work; separated data admission from observed
-  adoption and exposed fact-versus-action authority conflicts.
+  imposing a form on light work; separated data admission from observed adoption
+  and exposed fact-versus-action authority conflicts.
 - Restored distinct data projections and production permission checks, Agent
   delegation constraints and verification time, correction signals, actionable
   status updates, and the boundary for making Agent output a durable fact.
@@ -266,8 +292,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 ### Fixed
 
 - Aligned the changelog gate with Keep a Changelog's valid `[YANKED]` marker,
-  category ordering, and first-release tag link while retaining release
-  identity and comparison-ancestry checks.
+  category ordering, and first-release tag link while retaining release identity
+  and comparison-ancestry checks.
 
 ## [5.0.0] - 2026-09-27
 
@@ -279,12 +305,12 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ### Fixed
 
-- Restored the three outcomes of a task; clarified who may decide versus
-  what counts as evidence, how to divide a problem completely, and when
-  exploratory data or code is ready for shared use.
-- Reinstated monthly review of real work and weak signals and quarterly
-  review of whether rules and tools earn their cost, without a mandatory
-  weekly meeting or a new reporting form.
+- Restored the three outcomes of a task; clarified who may decide versus what
+  counts as evidence, how to divide a problem completely, and when exploratory
+  data or code is ready for shared use.
+- Reinstated monthly review of real work and weak signals and quarterly review
+  of whether rules and tools earn their cost, without a mandatory weekly meeting
+  or a new reporting form.
 - Pinned GitLab CI to a digest-addressed Node 26 image admitted by the Linux
   ARM64 Runner's local-only image policy, removing a floating-tag pull from its
   declared job path.
@@ -296,8 +322,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 ### Fixed
 
 - Closed a release-validation gap with a post-publication GitLab job that
-  obtains the source-pinned bundle from the same project's package registry.
-  It refuses redirects, altered bytes, and mismatched tags before installation;
+  obtains the source-pinned bundle from the same project's package registry. It
+  refuses redirects, altered bytes, and mismatched tags before installation;
   hosted success remains a separate release acceptance requirement.
 
 ## [4.2.0] - 2026-09-26
@@ -324,9 +350,9 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ### Fixed
 
-- Restored explicit evidence contrasts, diagnostic and solution criteria,
-  Agent stop and scope checks, and accountable management boundaries in the
-  existing English topic pages. The rejected fixed meeting cadence remains out.
+- Restored explicit evidence contrasts, diagnostic and solution criteria, Agent
+  stop and scope checks, and accountable management boundaries in the existing
+  English topic pages. The rejected fixed meeting cadence remains out.
 
 ## [4.0.1] - 2026-09-26
 
@@ -339,7 +365,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ### Added
 
-- A task-oriented reading map with a short human entry and a bounded Agent entry.
+- A task-oriented reading map with a short human entry and a bounded Agent
+  entry.
 - An independent GitHub repository and CI/CD plane alongside the organization’s
   GitLab publication plane.
 - Locked spelling and dependency-audit checks in the shared documentation
@@ -369,10 +396,12 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 ### Fixed
 
 - Bound both hosted documentation checks to real Git checkouts and a common
-  verification sequence while keeping local, GitLab, and GitHub results separate.
+  verification sequence while keeping local, GitLab, and GitHub results
+  separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.3...main
+[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.4...main
+[7.0.4]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.3...v7.0.4
 [7.0.3]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.2...v7.0.3
 [7.0.2]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.1...v7.0.2
 [7.0.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.0...v7.0.1

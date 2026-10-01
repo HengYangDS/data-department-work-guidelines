@@ -614,6 +614,77 @@ test("repository file links cannot escape the checkout", () => {
   assert.throws(() => repositoryFileUri(outside), /escapes repository root/u);
   const inside = pathToFileURL(path.join(root, "README.md")).href;
   assert.doesNotThrow(() => repositoryFileUri(inside));
+  const directory = pathToFileURL(path.join(root, "docs")).href;
+  assert.doesNotThrow(() => repositoryFileUri(directory));
+});
+
+test("an ignored local file cannot satisfy a repository source link", () => {
+  const directory = mkdtempSync(path.join(root, "build", "ddwg-source-link-"));
+  try {
+    const target = path.join(directory, "local evidence.md");
+    writeFileSync(target, "# Local Evidence\n\nThis file is not source.\n");
+    const relative = path.relative(root, target).split(path.sep).join("/");
+    assert.equal(gitFiles().includes(relative), false);
+    assert.throws(
+      () => repositoryFileUri(pathToFileURL(target).href),
+      /not repository source/u,
+    );
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+    assert.equal(existsSync(directory), false);
+  }
+});
+
+test("a delivered directory alias must also resolve to repository source", () => {
+  const directory = mkdtempSync(path.join(root, "build", "ddwg-source-alias-"));
+  try {
+    const delivered = path.join(directory, "delivered");
+    symlinkSync(path.join(root, "docs"), delivered, "junction");
+    const relativeAlias = path
+      .relative(root, delivered)
+      .split(path.sep)
+      .join("/");
+    const sources = [...gitFiles(), relativeAlias];
+    assert.doesNotThrow(() =>
+      repositoryFileUri(pathToFileURL(delivered).href, sources),
+    );
+    assert.throws(
+      () => repositoryFileUri(pathToFileURL(delivered).href),
+      /not repository source/u,
+    );
+
+    const local = path.join(directory, "local");
+    mkdirSync(local);
+    writeFileSync(path.join(local, "README.md"), "# Local State\n");
+    const localAlias = path.join(directory, "local-alias");
+    symlinkSync(local, localAlias, "junction");
+    const candidate = path.relative(root, localAlias).split(path.sep).join("/");
+    assert.throws(
+      () =>
+        repositoryFileUri(pathToFileURL(localAlias).href, [
+          ...sources,
+          candidate,
+        ]),
+      /not repository source/u,
+    );
+    const outsideAlias = path.join(directory, "outside-alias");
+    symlinkSync(os.tmpdir(), outsideAlias, "junction");
+    const outsideCandidate = path
+      .relative(root, outsideAlias)
+      .split(path.sep)
+      .join("/");
+    assert.throws(
+      () =>
+        repositoryFileUri(pathToFileURL(outsideAlias).href, [
+          ...sources,
+          outsideCandidate,
+        ]),
+      /escapes repository root/u,
+    );
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+    assert.equal(existsSync(directory), false);
+  }
 });
 
 test("one blank line is allowed; visual padding is not", () => {
@@ -898,6 +969,63 @@ test("link checking rejects an incomplete-mode waiver", () => {
   );
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /links accepts only --online/u);
+});
+
+test("the public link check rejects cache and Git state but accepts candidate source", () => {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-source-links-"));
+  try {
+    const clone = spawnSync(
+      "git",
+      ["clone", "--quiet", "--no-hardlinks", root, directory],
+      { encoding: "utf8", timeout: 30_000 },
+    );
+    assert.equal(clone.status, 0, clone.stderr);
+    cpSync(
+      path.join(root, "tools/docs/content.mjs"),
+      path.join(directory, "tools/docs/content.mjs"),
+    );
+    symlinkSync(
+      path.join(root, "node_modules"),
+      path.join(directory, "node_modules"),
+      "junction",
+    );
+    const entry = path.join(directory, "README.md");
+    const original = readFileSync(entry, "utf8");
+    const check = (target) => {
+      writeFileSync(entry, `${original}\n[Source reference](${target})\n`);
+      return spawnSync(process.execPath, ["tools/docs/cli.mjs", "links"], {
+        cwd: directory,
+        encoding: "utf8",
+        timeout: 15_000,
+        env: { ...process.env, DDWG_LYCHEE_BIN: nativeToolBinary("lychee") },
+      });
+    };
+    const tracked = check("docs/README.md");
+    assert.ifError(tracked.error);
+    assert.equal(tracked.status, 0, tracked.stderr);
+    const candidate = "docs/source link candidate.md";
+    writeFileSync(path.join(directory, candidate), "# Candidate Source\n");
+    const valid = check(encodeURI(candidate));
+    assert.ifError(valid.error);
+    assert.equal(valid.status, 0, valid.stderr);
+
+    for (const target of [
+      "build/local-only.md",
+      ".cache/local-only.md",
+      ".git/local-only.md",
+    ]) {
+      const file = path.join(directory, target);
+      mkdirSync(path.dirname(file), { recursive: true });
+      writeFileSync(file, "# Local State\n");
+      const invalid = check(target);
+      assert.ifError(invalid.error);
+      assert.notEqual(invalid.status, 0, `${target}: ${invalid.stdout}`);
+      assert.match(invalid.stderr, /not repository source/u, target);
+    }
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+    assert.equal(existsSync(directory), false);
+  }
 });
 
 function proseFindings(source) {

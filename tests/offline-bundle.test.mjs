@@ -1130,7 +1130,7 @@ test("release route records the bundle before inspecting it", () => {
 
 test("release route runs the full source check after bundle identity is updated", () => {
   const guide = readFileSync(path.join(root, "CONTRIBUTING.md"), "utf8");
-  const release = guide.split("## Reproduce a release")[1];
+  const release = guide.split("## Publish a release")[1];
   assert.ok(release);
   const record = release.indexOf("Put that exact reviewed JSON");
   const verify = release.indexOf("`npm run verify`");

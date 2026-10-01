@@ -10,208 +10,253 @@ relations:
 
 # Repository Change and Release
 
-This page governs **this repository**, not the department's data work. Start at
-the [task map](../README.md) for the working rules. A
-[decision record](../decisions/README.md) keeps only durable rationale; it
-cannot authorize a change.
+Use one official OpenSpec Change and an owned ETHOS Work Lane to change this
+repository. Verify the committed source, then verify each publication
+separately. For department work, start at the [task map](../README.md).
 
-## One Change, one authority
+| Your task                                  | Read next                                                               |
+| ------------------------------------------ | ----------------------------------------------------------------------- |
+| Edit or accept a change                    | [Change authority](#change-authority)                                   |
+| Publish an edition                         | [Versioned releases](#versioned-releases)                               |
+| Check source or investigate a failed check | [Quality and local state](#quality-and-local-state)                     |
+| Install tools without remote supply        | [Tool supply and offline execution](#tool-supply-and-offline-execution) |
+| Admit or operate a CI runner               | [Runner and transport boundaries](#runner-and-transport-boundaries)     |
 
-A selected official OpenSpec Change owns material intent, deltas, design, and
-`tasks.md`. ETHOS binds changed paths to that Change and governs the leased Work
-Lane, write admission, proof, acceptance, and publication. The compiled
-Commitment is transient; this repository adds no private `scope.toml`, tracked
-claim ledger, or second lifecycle.
+The [contributor route](../../CONTRIBUTING.md) owns executable setup and release
+procedures. This page defines their authority and acceptance boundaries.
 
-Run the installed `ethos` command in the intended worktree:
+## Change Authority
 
-```text
-ethos status --json
-ethos lane prewrite --paths docs/decide.md --editor-root . --require-editor-root --json
-ethos plan --changed --json
-npm run verify
-```
+| Owner                    | Responsibility                                                                                  | Limit                                                                   |
+| ------------------------ | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| Official OpenSpec Change | Material intent, specifications, design, and progress in `tasks.md`.                            | Does not grant write or publication permission.                         |
+| Installed ETHOS          | Changed-path attribution, Work Lane lease, write admission, proof, acceptance, and publication. | Acts on current source, ownership, and policy, not a remembered result. |
+| Repository checks        | Document quality, decision shape, reader routes, and declared configuration.                    | Cannot replace OpenSpec lifecycle or ETHOS admission.                   |
+| Decision record          | Durable rationale and rejected alternatives.                                                    | Cannot hold task progress, command output, or acceptance logs.          |
 
-Use the current result, not this sequence as blanket permission. A passing
-`lane prewrite` admits only the exact paths and state it observed. Commit the
-source, take its OID from `git rev-parse HEAD`, and pass that exact OID to
-`ethos prove --execute --full --scope repository --expect-head OID --json`.
-The installed Git-common hooks, not tracked copies, enforce commit and push
-admission. The [repository check](../../tools/docs/cli.mjs) guards DR shape,
-reader routes, and document quality; it cannot replace OpenSpec or ETHOS.
+The compiled Commitment is transient. No private `scope.toml`, tracked claim
+ledger, method-pack plan, or local script supplies a second lifecycle.
 
-## Source, two Forges, and actual use
+1. **Before writing:** Run the installed ETHOS status command in the intended
+   worktree. Follow its verdict, gaps, next action, and continuation. Obtain
+   passing prewrite admission for the exact paths and current state.
+2. **Before acceptance:** Run the repository checks and changed-source plan.
+   Commit with the trusted signer, then execute full proof against that exact
+   commit's OID. Installed Git-common hooks enforce commit and push admission;
+   tracked copies or raw Git operations cannot substitute for them.
+3. **Before closure:** Complete every declared task and observe each required
+   delivery. A Change may reach `dev` with delivery still outstanding. Archive
+   officially only when its obligations are met.
+4. **After archive:** Inspect the new commit's attribution and signature,
+   refresh proof, and verify its publication and CI. Earlier-HEAD evidence does
+   not prove the archive commit. Retire the owned lane through ETHOS after its
+   work is absorbed.
 
-| Plane           | It can establish                                              | It cannot establish alone        |
-| --------------- | ------------------------------------------------------------- | -------------------------------- |
-| Local source    | Change attribution, checks, exact-HEAD proof, and acceptance. | Delivery to either Forge.        |
-| GitLab          | Its exact ref, hosted CI, and release object.                 | GitHub delivery or team use.     |
-| GitHub          | Its independent ref, hosted CI, and release object.           | GitLab delivery or team use.     |
-| Operational use | Naturally observed use in ordinary work, if available.        | Source or publication integrity. |
+## Source, Two Forges, and Actual Use
 
-Local verification does not contact either Forge. Only `dev`, `main`, and
-`proposal/*` may publish; `candidate/dev` and `work/*` are local resources.
-GitLab is the organization's primary publication plane. GitHub is a complete
-independent repository and CI/CD plane, intended as a distribution alternative
-when GitLab is unavailable. A configured peer or older green job does not prove
-that fallback. Claim it only after ETHOS actually publishes the selected object
-to GitHub while GitLab is unavailable, then verify the exact remote ref.
-Never use a raw push to disguise a native refusal.
+| Plane         | Required observation                                          | It does not establish alone          |
+| ------------- | ------------------------------------------------------------- | ------------------------------------ |
+| Local source  | Change attribution, checks, exact-HEAD proof, and acceptance. | Delivery to either Forge.            |
+| GitLab        | Its exact ref, hosted jobs, Release, and asset.               | GitHub delivery or team use.         |
+| GitHub        | Its independent ref, hosted jobs, Release, and asset.         | GitLab delivery or team use.         |
+| Ordinary work | Observed use with subject, source, time, and limits.          | Repository or publication integrity. |
 
-A Change may reach `dev` while a declared delivery task remains open. Observe
-each peer independently, complete the tasks, and only then archive officially.
-Archive creates a new commit: refresh proof and final remote observations for
-that identity. Do not reuse CI from an earlier SHA as archive-HEAD evidence.
+Local verification contacts neither Forge. GitLab is the organization's primary
+publication plane; GitHub is a complete independent repository and CI/CD plane,
+including alternative distribution when GitLab is unavailable. To claim that
+fallback, observe ETHOS publishing the selected object to GitHub during the
+unavailability and verify the exact remote ref. Configuration or an older green
+run does not establish it. Do not raw-push around a native refusal.
 
-## Versioned releases
+Only `dev`, `main`, and `proposal/*` may publish. `candidate/dev` and `work/*`
+remain local. The [workspace policy](../../.ethos/workspace.toml) and
+[release declaration](../../.ethos/release.toml) define branch and tag admission
+without embedding a host path or operator key.
 
-[`VERSION`](../../VERSION) is the single intended release identity. The
-[charter](../charter.md) shows that edition; the private npm manifest does not
-repeat it. The public compatibility surface is the normative rules, stable
-member and Agent routes, and documented contributor commands. Under
-[SemVer 2.0.0](https://semver.org/spec/v2.0.0.html), incompatible changes to
-that surface require a major increment, compatible additions or deprecations a
-minor increment, and compatible fixes a patch increment. A reviewer must assess
-meaning and migration in the official Change; no parser can infer compatibility
-from a diff alone.
+## Versioned Releases
 
-[`CHANGELOG.md`](../../CHANGELOG.md) follows
-[Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/). The default
-`docs-integrity` proof gate and both CI jobs reject malformed headings,
-categories, dates, links, version drift, and tag mismatch. The next edition's
-notes stay under `Unreleased` until the release cut; its dated section uses the
-actual release date. The validator permits one untagged dated heading only for
-the release cut, when that source must be committed and proved before its tag
-exists. A heading, branch, or CI result is not a versioned release. ETHOS
-admits only an exact, signed annotated `vX.Y.Z` tag
-matching the committed `VERSION`; each Forge Release and asset must then be
-observed separately. Older untagged branch editions stay in Git history, not a
-fabricated release sequence. Before signing a release tag, both Forges must
-pass their declared source jobs at the exact release-cut commit. A green
-proposal or earlier accepted SHA does not qualify a later Changelog commit.
+[`VERSION`](../../VERSION) owns the intended edition; the
+[charter](../charter.md) displays it. The private npm manifest carries no second
+release version. Compatibility covers normative duties, stable member and Agent
+routes, and documented contributor commands.
 
-New commits and official archive commits require trusted SSH signatures. Each
-clone supplies its own local identity, public signing-key path, and protected
-trust anchor outside this repository. Inspect attribution and signature before
-acceptance. The [workspace policy](../../.ethos/workspace.toml) and
-[release declaration](../../.ethos/release.toml) state the enforceable local
-branch and tag boundaries; they contain no operator key or host path.
+| Change to that public surface      | SemVer increment |
+| ---------------------------------- | ---------------- |
+| Incompatible behavior or route     | Major            |
+| Compatible addition or deprecation | Minor            |
+| Compatible correction              | Patch            |
 
-## Quality and local state
+Apply [SemVer 2.0.0](https://semver.org/spec/v2.0.0.html) to meaning and
+migration in the official Change. A parser or commit label cannot decide
+compatibility. [`CHANGELOG.md`](../../CHANGELOG.md) follows
+[Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/).
 
-`npm run verify` invokes one [portable quality entry](../../tools/docs/cli.mjs).
-It checks formatting for Markdown, code, JSON, and YAML; TOML syntax; Markdown
-lint; native Vale spelling, prose, and terminology; offline,
-version-checked lychee links and fragments; metadata; English and spacing;
-repository boundaries; official OpenSpec; version
-identity; CI topology; and negative tests. The two default ETHOS gates retain
-their repository-relative document commands. `docs-integrity` omits Node test
-execution; the standalone verifier runs those tests once, while ETHOS obtains
-their native evidence through its behavior provider. ETHOS also runs its own
-static verifier for the tracked JavaScript tooling; each gate passes only when
-its document command and product-owned verifier both pass for the committed
-tree. Command output and repository-authored report files cannot supply that
-native evidence. This is code-quality proof, not another lifecycle.
+- Keep upcoming notes under `Unreleased`; assign their actual date at the
+  release cut. One untagged dated heading is allowed only while that release-cut
+  source is committed and proved before its tag exists. Older untagged editions
+  remain in Git history, not a fabricated release sequence.
+- Require both Forges' declared source jobs to pass at the exact release-cut
+  commit before signing its tag. An earlier proposal or a later Changelog edit
+  has a different identity and needs its own checks.
+- ETHOS admits a signed annotated `vX.Y.Z` tag matching committed `VERSION`.
+  Observe the tag, Release, and asset on each Forge. A heading, branch, or CI
+  result alone is not a versioned release.
+- New commits, including archive commits, require trusted SSH signatures. Each
+  clone supplies its own author, committer, public signing-key path, and
+  protected external trust anchor. Inspect attribution and signature before
+  acceptance; keep these host-specific values outside source.
+
+The default integrity gate and both CI planes reject malformed changelog
+headings, categories, dates, links, version drift, and tag mismatch.
+
+## Quality and Local State
+
+`npm run verify` uses one [portable source entry](../../tools/docs/cli.mjs).
+
+| Concern               | Check                                                                                                     |
+| --------------------- | --------------------------------------------------------------------------------------------------------- |
+| Format and layout     | Prettier for Markdown, code, JSON, and YAML; TOML syntax; English text and one blank line between blocks. |
+| Reader text           | Markdown lint and native Vale spelling, prose, and terminology.                                           |
+| References            | Version-checked offline lychee links and fragments, plus source ownership and confinement.                |
+| Repository boundaries | Metadata, decision shape, navigation, configuration, version identity, and CI topology.                   |
+| Change artifacts      | Strict official OpenSpec validation.                                                                      |
+| Failure behavior      | Negative tests, run once by the standalone verifier.                                                      |
+
+### Proof and Configuration
+
+The profile has exactly two default gates: `docs-integrity` and
+`markdown-format`. Their repository-relative commands retain separate behavior
+and formatting responsibilities. ETHOS independently obtains native Node test
+evidence through its behavior provider and runs static verification of tracked
+JavaScript. A gate passes only when both its document command and product-owned
+verifier pass for the committed tree. Repository-authored reports or command
+output cannot supply that native evidence. Proof does not create a second
+lifecycle.
 
 The [configuration map](../../.config/README.md) separates check policy, native
-tool supply, and release identity. Native consumers read their own configuration;
-the repository check guards only this repository's declared placement and
-selection. It does not copy ETHOS's product configuration or claim universal
-configuration enforcement. Shared ETHOS quality integration must be accepted
-and verified through the installed product before it supplies such a claim.
+supply, and artifact identity. Consumers read their native formats; the
+repository check enforces only this repository's placement and selection. It
+does not copy ETHOS product configuration or prove universal enforcement. A
+shared-quality claim requires the formally accepted installed product and actual
+adopter verification.
 
-The decision boundary uses the locked native Markdown parser to inspect actual
-headings, task markers and code nodes, including quote and list nesting.
-Code blocks, task progress and mismatched titles fail; natural-language
-rationale, ordinary decision tables, inline terms and evidence links remain
-valid. Stable IDs must be unique, and every section must contain readable
-content. An empty heading, thematic break, or reference definition alone is not
-a decision section. A locked shell lexer inspects quoted and compound
-invocations without executing text or reading ambient variables. Bare paths
-and ordinary interpreter prose remain valid. This is a syntax boundary, not
-a claim to recognize every command dialect. Link to executable examples rather
-than placing them in a DR. Raw HTML
-other than the leading registry comment is unsupported in DRs because it could
-hide content from this Markdown check. This validator does not decide whether
-every prose sentence is durable; reviewers still move task and acceptance
-narratives to their producing Change or native record.
+### Source Links and Decision Records
 
-The native `devEngines.packageManager` field in
-[`package.json`](../../package.json) is the only exact npm version declaration.
-npm rejects a mismatch before dependency installation and repository scripts;
-source adds no second parser or package-manager wrapper. Ephemeral CI explicitly
-acquires that declared npm before source installation. Maintained macOS and
-Windows accounts use their existing Node installation owner; local and offline
-checks never update it. `--force` and package-manager admission overrides are
-not a supported execution path.
+Local links must name tracked or non-ignored candidate source. Directory routes
+must contain source; delivered aliases must also resolve to source inside the
+repository. Ignored caches, Git metadata, and undelivered aliases cannot satisfy
+the boundary. Native lychee still checks target existence and fragments.
 
-Git's native `.gitattributes` rule keeps tracked text at LF on every
-host. The [supply manifest](../../.config/supply/native.json) pins Vale and
-lychee assets by platform and SHA-256. GitLab CI fetches that asset from this project's
-package registry with its own job token; GitHub CI uses the pinned upstream
-GitHub release. Both verify the digest before extraction. Local validation
-checks the executable version and never downloads an asset. Explicit
-CI supply and an offline `--asset` path are different operations. The
-source-pinned offline bundle adds a complete npm cache, every declared Vale and
-lychee archive, and their upstream license notices; its release identity lives in
-[`.config/release/offline-bundle.json`](../../.config/release/offline-bundle.json).
-A bundle file on disk is not offline qualification: the actual install and full
-verifier must run with no remote supply on each claimed host, and both Forge
-assets must be retrieved and compared by SHA-256. The
-public GitHub asset is acquired by Node's native HTTP client at its exact
-repository, tag, and filename, without an ambient `gh` executable or token.
-GitLab acquisition retains its project-scoped job identity and refuses redirects
-before forwarding that identity. Both downloads share bounded size and time
-checks and verify the source-pinned archive digest before extraction. The
-archive excludes host extended attributes; archive inspection and extraction
-reject warning output even when the archive tool exits successfully. The
-[contributor route](../../CONTRIBUTING.md) owns the commands. Bundled npm
-packages, Vale, and lychee retain their upstream license notices; the
-repository MIT grant does not relicense them. Both hosted CI planes run
-`npm audit --audit-level=moderate` during online tool supply; local source
-verification does not require network access. The bundle binds the edition,
-Node major, complete native package manifest, package lock, and complete
-pinned native supply, not a second npm version declaration. The installer
-exercises and records the available npm version
-offline on each claimed host. The application audit does not qualify Node's
-bundled npm; do not turn one into a claim about the other.
+The [decision register](../decisions/README.md) owns the record format. The
+locked Markdown parser checks actual headings, unique stable IDs, and readable
+sections, including quote and list nesting. Code blocks, task markers, extra
+headings, mismatched titles, and raw HTML beyond the leading registry comment
+fail. Empty headings, thematic breaks, and reference definitions alone do not
+constitute a section. A non-evaluating shell lexer checks quoted and compound
+invocations without reading ambient variables. Ordinary rationale, tables,
+inline terms, bare paths, and evidence links remain valid.
 
-GitHub declares Linux, macOS, and Windows hosted jobs. GitLab declares
+This syntax check cannot recognize every command dialect or judge whether prose
+is durable. Reviewers move task and acceptance narratives to their producing
+Change or native record; executable examples are linked there, not embedded in a
+DR.
+
+## Tool Supply and Offline Execution
+
+[`package.json`](../../package.json) declares the Node line and the sole exact
+npm version through native `devEngines.packageManager`. npm rejects a mismatch
+before installation and repository scripts. Ephemeral CI acquires that declared
+npm first; maintained host accounts use their existing installation owner. Local
+and offline checks never update it. `--force` and admission overrides are
+unsupported. Git's native `.gitattributes` keeps tracked text at LF on every OS.
+
+| Operation            | Supply boundary                                                  |
+| -------------------- | ---------------------------------------------------------------- |
+| Local verification   | Uses version-checked installed tools; downloads nothing.         |
+| GitLab source CI     | Uses this project's pinned package assets and its own job token. |
+| GitHub source CI     | Uses pinned official upstream assets.                            |
+| Offline installation | Uses the source-bound bundle and no replacement download.        |
+
+The [supply manifest](../../.config/supply/native.json) pins Vale and lychee
+archives by platform and SHA-256. Explicit CI download and a supplied `--asset`
+archive are different operations. Verify digests before extraction.
+
+The [bundle record](../../.config/release/offline-bundle.json) binds edition,
+Node major, complete package manifest, lockfile, and native supply. The bundle
+contains the complete npm cache, every declared native archive, and upstream
+notices. It does not duplicate npm's version policy or impersonate ETHOS.
+
+For offline qualification, install and run the full graph without remote supply
+on every claimed host; exercise and record its actual npm version. Download each
+Forge's asset independently and compare its SHA-256. A bundle on disk, an
+install dry-run, or another platform's success is insufficient.
+
+GitHub release acquisition uses Node's native HTTP client at the exact
+repository, tag, and filename, without `gh` or a token. GitLab uses its
+project-scoped CI identity and refuses redirects before forwarding it. Both
+paths bound time and size and check the source-pinned digest before extraction.
+Archives exclude host extended attributes; inspection and extraction reject
+warning output even on a zero exit status.
+
+Bundled packages, Vale, and lychee keep their upstream notices; this
+repository's MIT license does not relicense them. Both hosted planes audit
+locked repository dependencies for moderate-or-higher advisories during online
+supply. That audit does not qualify the npm executable bundled with Node. Local
+source verification remains independent of the network.
+
+## Runner and Transport Boundaries
+
+GitHub declares Linux, macOS, and Windows hosted execution. GitLab declares
 project-locked Linux ARM64 container, macOS ARM64 shell, and Windows ARM64 shell
-capabilities for both source and post-publication offline verification. Linux,
-macOS, and Windows proposal and merge-request jobs use review capabilities;
-protected `dev`, `main`, and release jobs use separate trusted capabilities.
-Their Runner identities, accounts, workspaces, caches, and credential reachability
-must not cross that boundary. A Linux container or a different tag on one Runner
-is not an exception. An open proposal uses its merge-request pipeline instead
-of a duplicate branch-push pipeline.
-All GitLab Runners require project locking and tagged-only scheduling;
-protected Runners also require GitLab `ref_protected` access. The `dev`, `main`,
-and `v*` refs must remain protected.
-An untrusted proposal can request a tag in its own YAML, so the Runner's native
-ref restriction—not the YAML selector alone—must refuse that request.
-Runner admission observes registration and polling, repository clone, and
-`CI_JOB_TOKEN` package requests as separate credential-bearing paths. On an
-HTTP-only GitLab, a tunnel for registration alone does not protect clone or
-package traffic; each unencrypted path needs an authorized, bounded risk
-decision for the isolated network. A tag in YAML does not prove that a runner
-is registered or isolated. The native jobs require
-runner-installed Node 26 and exact macOS and Windows native-tool assets in this
-project's package registry; they must not fall back to GitHub. On an ARM64
-Windows host, an x64 Node and lychee process under emulation is functional
-evidence, not a native x86_64 ABI claim. GitLab's offline jobs start at the
-exact tag only after its release package exists; earlier tag-push document
-jobs cannot qualify that asset. Before admitting the Linux runner, its owner
-must verify that the exact OCI image digest in `.gitlab-ci.yml` is allowed and
-cached locally. Neither a tag-only image nor an older green job satisfies any
-of these checks. Workflow declarations alone are not hosted success.
+capabilities for source and post-publication offline verification. Every
+runnable job names its phase and platform; review adds `:review`. Common steps
+stay in hidden native templates.
 
-Markdown and configuration use one blank line between blocks. Prettier and the
-repository check enforce their supported parts. `build/`, `node_modules/`,
-leases, and caches are local resources, not repository facts.
-Evidence remains with its producer and specific claim; it needs no root folder.
+### Review and Protected Execution
 
-This page makes no present-tense claim about remote state, team adoption, or
-ETHOS product parity. Observe the exact revision in its actual environment
-before reporting any of them. Do not stage a team task or recruit a reviewer
-only to certify adoption of these guidelines.
+- Proposal and merge-request jobs use review runners. Protected `dev`, `main`,
+  and release jobs use separate trusted runners. Identities, accounts,
+  workspaces, caches, and credential reachability must not cross that boundary.
+  A container or a different tag on the same runner does not provide separation.
+- Require project locking and tagged-only scheduling on every GitLab runner;
+  trusted runners also require native `ref_protected` access. Keep `dev`,
+  `main`, and `v*` protected. A proposal can request any YAML tag, so native ref
+  restrictions must refuse its access to trusted runners.
+- Once a proposal has an open merge request, use the merge-request pipeline
+  instead of a duplicate branch-push pipeline.
+- Before Linux runner admission, verify the exact OCI digest declared by CI is
+  allowed and cached. Native hosts require the declared Node line and exact
+  macOS or Windows tool archives in this project's registry; no GitHub fallback
+  is admitted. On Windows ARM64, x64 emulation is functional evidence, not proof
+  of a native x86_64 host.
+- Offline jobs begin at the exact signed tag only after the package and Release
+  exist. Tag-push source checks cannot qualify an asset published afterward.
+
+### Credential-Bearing Paths
+
+Observe registration and polling, repository clone, and `CI_JOB_TOKEN` package
+requests separately. On HTTP-only GitLab, a registration tunnel does not protect
+clone or package traffic. Each unencrypted path needs an authorized, bounded
+risk decision for the isolated network. A YAML tag does not prove registration
+or isolation; an image tag, workflow declaration, or older green run does not
+prove current hosted execution.
+
+## Evidence and Retirement
+
+Keep remote distribution assets for the latest qualified release and one
+qualified rollback, plus tool packages still required by their source or CI.
+Retire superseded downloads only after checking exact identities and consumers.
+Preserve signed tags, source, original release notes, and historical evidence;
+remove withdrawn download links and add a dated notice. Recheck retained hashes
+and each Forge's inventory. Report reclaimed space only after the provider
+confirms it. The [contributor route](../../CONTRIBUTING.md) owns this aftercare.
+
+`build/`, `node_modules/`, leases, and caches are local state, not repository
+truth. Evidence stays with its producer and claim; no root evidence folder is
+required. Classify active state, durable evidence, foreign work, and disposable
+residue before cleanup. Remove only proved-disposable owned resources, then
+verify their absence and the preservation of what must remain.
+
+Observe each selected revision in its actual environment before reporting remote
+delivery, ETHOS parity, or team use. Do not stage a team task or recruit a
+reviewer merely to certify guideline adoption.

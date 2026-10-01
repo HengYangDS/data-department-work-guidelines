@@ -11,7 +11,7 @@ relations:
 # Analysis and Decisions
 
 **When to use:** The task is unclear, an anomaly needs explanation, or a choice
-must be made. Decide which decision the analysis must support before choosing
+must be made. Identify the decision the analysis must support before choosing
 its depth. Do not begin by filling a template or collecting material. If the
 decision owner or subject is unknown, pause the affected action; test a proposed
 answer against shared criteria, counterexamples, and stated limits.
@@ -58,11 +58,11 @@ so explicitly.
 ## Use the Smallest Sufficient Model
 
 1. Define the central concepts and subjects. Keep one meaning for each concept
-   within the same discussion, then identify causal, dependency, constraint,
-   and feedback relationships. Divide along one consistent axis so
-   the parts do not overlap, together cover the problem, and each return to the
-   decision the analysis must support. A long list or polished prose cannot
-   substitute for that model.
+   within the same discussion, then identify causal, dependency, constraint, and
+   feedback relationships. Divide along one consistent axis so the parts do not
+   overlap, together cover the problem, and each return to the decision the
+   analysis must support. A long list or polished prose cannot substitute for
+   that model.
 2. Attach source and time to important facts; state how each unknown affects the
    decision. Separate observation from explanation.
 3. Offer falsifiable hypotheses. Check counterexamples, the baseline, and the
@@ -88,9 +88,9 @@ that failed, and explain why; a fix without changed judgment invites recurrence.
 
 Watch for correlation presented as causation, a case presented as a population,
 a necessary condition treated as sufficient, a later outcome used to infer a
-unique earlier cause, selective search for supporting evidence, criteria
-changed midstream, and an appeal to “best practice” without checking its
-applicable boundary.
+unique earlier cause, selective search for supporting evidence, criteria changed
+midstream, and an appeal to “best practice” without checking its applicable
+boundary.
 
 ## Make the Choice Comparable and Actionable
 

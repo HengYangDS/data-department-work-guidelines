@@ -38,14 +38,16 @@ under any wrapper or language label.
 - **WHEN** any code block or task marker appears inside a quote, list, long
   fence or indented structure, regardless of a code language label
 - **THEN** the existing boundary fails with the source location
-- **AND THEN** ordinary decision lists, tables and meaningful links remain valid.
+- **AND THEN** ordinary decision lists, tables and meaningful links remain
+  valid.
 
 #### Scenario: Parsed headings define the actual decision sections
 
 - **WHEN** heading-like code or a quoted heading stands in for a required
   top-level DR section, or the title contradicts the stable identity
 - **THEN** the validator rejects the malformed record
-- **AND THEN** command content and task status stay outside the decision carrier.
+- **AND THEN** command content and task status stay outside the decision
+  carrier.
 
 #### Scenario: A decision has additional or nested sections
 
@@ -57,13 +59,11 @@ under any wrapper or language label.
 
 ### Requirement: One portable documentation verifier measures source properties
 
-One shell-independent locked verifier SHALL check Prettier formatting of
-Markdown, code, JSON, and YAML; TOML syntax; Markdown lint; native Vale spelling,
-prose, and terminology;
-offline, version-checked lychee links and fragments; metadata; English,
-spacing, decision records, and navigation. The same entrypoint SHALL run
-locally and on both CI planes with repository-relative inputs. Diagram, card,
-topic, and tracked evidence counts SHALL NOT determine validity.
+One locked, shell-independent verifier SHALL check formatting of Markdown, code,
+JSON and YAML; TOML syntax; Markdown lint; native Vale prose; pinned offline
+lychee links and fragments; metadata, English, spacing, decisions and navigation.
+The same repository-relative entry SHALL run locally and on both CI planes.
+Diagram, card, topic and evidence counts SHALL NOT determine validity.
 
 #### Scenario: A diagram is removed without losing meaning
 
@@ -78,22 +78,49 @@ topic, and tracked evidence counts SHALL NOT determine validity.
 - **THEN** the check uses the same repository-relative Node entrypoint
 - **AND THEN** no repository-authored shell wrapper or browser is needed.
 
+#### Scenario: A link points to local state that is absent from a clean checkout
+
+- **WHEN** a current source document links to an existing ignored cache file or
+  Git metadata
+- **THEN** the public link check rejects that reference as outside repository
+  source even when the native existence check would pass
+- **AND** tracked and non-ignored candidate references remain valid.
+
+#### Scenario: A directory or alias links to source
+
+- **WHEN** a local link names a source directory or a delivered internal alias
+- **THEN** the boundary accepts it only when both requested and resolved paths
+  belong to the source inventory
+- **AND** an ignored alias to source, or a delivered alias to local or outside
+  state, cannot borrow source ownership.
+
 ### Requirement: Tool supply and portability require executed checks
 
-CI SHALL verify the pinned lychee and Vale digests and audit locked dependencies
-online,
-separately from offline source verification. Public checks SHALL not require a
-POSIX shell or host-specific absolute paths. Banning `.sh` files alone SHALL
-not prove portability: each claimed OS must execute the complete graph.
-Current command examples SHALL be reviewed against the installed public CLI
-before release; parsed prose alone is not proof.
+CI SHALL verify pinned Vale and lychee digests and audit locked dependencies
+online, separately from offline source checks. Public checks SHALL avoid POSIX
+shells and host paths; each claimed OS SHALL execute the full graph. Current
+command examples SHALL be checked against the installed CLI. GitLab jobs SHALL
+name purpose and platform; hidden phase templates SHALL own common steps.
+
+#### Scenario: Verification job names omit the platform
+
+- **WHEN** a GitLab source or offline verification job has a platform-less name,
+  a duplicated old alias, or an incorrect shared parent
+- **THEN** the existing CI validator rejects the configuration
+- **AND** all declared jobs inherit their hidden phase owner without changing
+  runner capabilities, rules, or verification commands.
+- **AND** jobs use `docs:verify:<os>` or `offline:verify:<os>` for `linux`,
+  `macos`, and `windows`, with `:review` for source review; no runnable shared
+  owner or platform-specific parent substitutes for the hidden phase template.
 
 #### Scenario: A command was retired by its product
 
 - **WHEN** a current instruction names a command absent from the installed
   public CLI
-- **THEN** release review against the installed CLI reports the stale instruction
+- **THEN** release review against the installed CLI reports the stale
+  instruction
 - **AND THEN** a valid link or formatted code block does not hide it.
+- **AND** parsed prose alone cannot establish command validity.
 
 #### Scenario: Prose or dependency supply fails
 
@@ -106,10 +133,11 @@ before release; parsed prose alone is not proof.
 
 - **WHEN** a maintainer installs the declared locked dependencies on a claimed
   host OS and invokes the single repository check
-- **THEN** format, lint, links, and repository-specific validations
-  run without a POSIX shell or a host-specific absolute path
+- **THEN** format, lint, links, and repository-specific validations run without
+  a POSIX shell or a host-specific absolute path
 - **AND THEN** missing tools fail visibly rather than being downloaded or
   silently skipped.
+- **AND** banning `.sh` files alone does not establish portability.
 
 #### Scenario: Windows checks out the same text bytes
 
@@ -140,9 +168,8 @@ separate; the bundle SHALL NOT impersonate its authority.
 #### Scenario: Offline supply is incomplete or altered
 
 - **WHEN** a bundle is missing a required npm entry, native asset, or license
-  notice, contains an
-  unsafe member, or disagrees with the checked-out lockfile, tool manifest,
-  version, or trusted bundle digest
+  notice, contains an unsafe member, or disagrees with the checked-out lockfile,
+  tool manifest, version, or trusted bundle digest
 - **THEN** the installer fails before accepting the toolchain or running the
   verifier
 - **AND THEN** it does not silently fetch a replacement or mark the release
@@ -168,13 +195,13 @@ separate; the bundle SHALL NOT impersonate its authority.
 
 ### Requirement: Native English prose and terminology checks
 
-The verifier SHALL use pinned Vale for spelling, repeated words, diagnosed
-wordy or stock phrases, and selected technical terms in current authored
-Markdown. One native configuration SHALL govern prose and full checks; replaced
-pipelines SHALL retire. Native Markdown parsing SHALL reject actual Vale
-control comments and preserve literal code. Host configuration, inline
-suppression, network supply during verification, new services, and a second
-governance plane SHALL NOT influence this check.
+The verifier SHALL use pinned Vale for spelling, repeated words, diagnosed wordy
+or stock phrases, and selected technical terms in current authored Markdown. One
+native configuration SHALL govern prose and full checks; replaced pipelines
+SHALL retire. Native Markdown parsing SHALL reject actual Vale control comments
+and preserve literal code. Host configuration, inline suppression, network
+supply during verification, new services, and a second governance plane SHALL
+NOT influence this check.
 
 #### Scenario: Objective prose defects appear
 
@@ -220,8 +247,8 @@ governance plane SHALL NOT influence this check.
 
 #### Scenario: A supported host installs offline supply
 
-- **WHEN** the source-bound release bundle is installed without remote supply
-  on any declared verification host
+- **WHEN** the source-bound release bundle is installed without remote supply on
+  any declared verification host
 - **THEN** the actual full verifier executes its native prose and terminology
   rules from the pinned tools and locked configuration
 - **AND** a missing package or rule fails rather than falling back or skipping.
@@ -231,8 +258,8 @@ governance plane SHALL NOT influence this check.
 - **WHEN** the native npm package declares its license and includes an explicit
   matching License section instead of a separately named license file
 - **THEN** the builder preserves that original package and accepts its notice
-- **AND** incidental prose, fenced examples, empty sections, missing declarations,
-  and mismatched identifiers cannot substitute for the notice
+- **AND** incidental prose, fenced examples, empty sections, missing
+  declarations, and mismatched identifiers cannot substitute for the notice
 - **AND** cold installation still requires only the declared Node and npm.
 
 #### Scenario: Native removal encounters a temporary platform lock
@@ -240,23 +267,24 @@ governance plane SHALL NOT influence this check.
 - **WHEN** the pinned tool installer removes its own fresh extraction stage
 - **THEN** native removal retries are bounded and confined to that stage
 - **AND** the installer awaits one asynchronous native removal with at most ten
-  retries with linearly increasing 200-millisecond waits before reporting success
+  retries with linearly increasing 200-millisecond waits before reporting
+  success
 - **AND** a persistent removal error fails rather than silently leaving residue.
 
 ### Requirement: The actual package manager conforms before execution
 
-The repository SHALL declare one exact npm version through
-`package.json`'s native `devEngines.packageManager` contract with
-`onFail: error`. npm SHALL reject a version mismatch before installation,
-`ci`, or run effects. An installed executable, host version, or Node major
-SHALL NOT substitute for observing the actual consuming npm command.
+The repository SHALL declare one exact npm version through `package.json`'s
+native `devEngines.packageManager` contract with `onFail: error`. npm SHALL
+reject a version mismatch before installation, `ci`, or run effects. An
+installed executable, host version, or Node major SHALL NOT substitute for
+observing the actual consuming npm command.
 
 #### Scenario: A contributor selects Node's older bundled npm
 
 - **WHEN** a contributor invokes install, `ci`, or run with npm 11.19.1 while
   the native repository declaration requires npm 12.2.0
-- **THEN** native npm admission rejects the command before dependency or
-  script effects occur
+- **THEN** native npm admission rejects the command before dependency or script
+  effects occur
 - **AND THEN** no repository-specific waiver or parser makes it green.
 
 #### Scenario: A previous npm release is selected
@@ -273,8 +301,8 @@ SHALL NOT substitute for observing the actual consuming npm command.
 
 #### Scenario: Windows has a separate global npm prefix
 
-- **WHEN** npm's native launcher selects an upgraded global CLI rather than
-  the Node-adjacent bundled CLI
+- **WHEN** npm's native launcher selects an upgraded global CLI rather than the
+  Node-adjacent bundled CLI
 - **THEN** programmatic calls resolve that same CLI through npm's native
   execution-path or prefix authority
 - **AND THEN** failed native resolution stops execution instead of silently
@@ -284,11 +312,27 @@ SHALL NOT substitute for observing the actual consuming npm command.
 
 - **WHEN** the source-bound bundle is installed on a declared host
 - **THEN** native npm admission requires the single exact source declaration
-- **AND** the installer reports the actual npm version and runs full verification;
-  a label or second npm-major field cannot qualify the host
+- **AND** the installer reports the actual npm version and runs full
+  verification; a label or second npm-major field cannot qualify the host
 - **AND** the package audit does not certify Node's bundled npm executable.
 
 ## ADDED Requirements
+
+### Requirement: Local references resolve to delivered source
+
+Local file links SHALL remain inside the repository and resolve to tracked or
+non-ignored candidate source. Ignored state and undelivered aliases SHALL NOT
+establish validity. A source directory SHALL contain source; both requested and
+resolved alias paths SHALL belong to the source inventory. Native lychee retains
+target existence and fragment checks.
+
+#### Scenario: Existing local state would hide a broken source link
+
+- **WHEN** a local link names ignored state, Git metadata, or an alias whose
+  requested or resolved path is not source
+- **THEN** the public link check rejects it even when the local target exists
+- **AND** ordinary tracked and non-ignored candidate files, source directories,
+  and delivered internal aliases remain valid.
 
 ### Requirement: Decision identity and section completeness remain explicit
 

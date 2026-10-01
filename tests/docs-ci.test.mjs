@@ -14,6 +14,50 @@ function changedGitLab(jobName, change) {
   return YAML.stringify(pipeline);
 }
 
+test("GitLab runnable verification jobs name their phase and platform", () => {
+  const pipeline = YAML.parse(gitlab);
+  const jobs = Object.keys(pipeline).filter((name) =>
+    /^(?:docs|offline):verify(?:$|:)/u.test(name),
+  );
+  const expected = ["linux", "macos", "windows"].flatMap((system) => [
+    `docs:verify:${system}`,
+    `docs:verify:${system}:review`,
+    `offline:verify:${system}`,
+  ]);
+  assert.deepEqual(jobs.sort(), expected.sort());
+  for (const phase of ["docs", "offline"]) {
+    const owner = `.${phase}:verify`;
+    assert.ok(pipeline[owner], `${phase} shared verification owner is missing`);
+    for (const name of jobs.filter((job) => job.startsWith(`${phase}:`))) {
+      assert.equal(pipeline[name].extends, owner, name);
+    }
+  }
+  assert.doesNotThrow(() => validateCi(github, gitlab, offline));
+});
+
+test("GitLab verification rejects platform-less aliases and runnable shared owners", () => {
+  for (const phase of ["docs", "offline"]) {
+    const owner = `.${phase}:verify`;
+    const platform = `${phase}:verify:linux`;
+    for (const change of [
+      (pipeline) => (pipeline[`${phase}:verify`] = pipeline[platform]),
+      (pipeline) => {
+        pipeline[`${phase}:verify`] = pipeline[owner];
+        delete pipeline[owner];
+      },
+      (pipeline) => (pipeline[platform].extends = "docs:verify:linux"),
+    ]) {
+      const pipeline = YAML.parse(gitlab);
+      change(pipeline);
+      assert.throws(
+        () => validateCi(github, YAML.stringify(pipeline), offline),
+        /GitLab/u,
+        phase,
+      );
+    }
+  }
+});
+
 test("the repository check rejects an undeclared Node major", () => {
   assert.doesNotThrow(() => assertNodeRuntime("26.10.0"));
   assert.throws(() => assertNodeRuntime("22.23.3"), /Node 26/u);
@@ -206,9 +250,9 @@ test("GitLab native review and protected jobs use separate capabilities", () => 
 test("GitLab Linux review and protected jobs use separate capabilities", () => {
   const result = validateCi(github, gitlab, offline);
   const pipeline = YAML.parse(gitlab);
-  const trusted = pipeline["docs:verify"];
+  const trusted = pipeline["docs:verify:linux"];
   const review = pipeline["docs:verify:linux:review"];
-  const offlineJob = pipeline["offline:verify"];
+  const offlineJob = pipeline["offline:verify:linux"];
   assert.ok(review, "Linux review job is missing");
   assert.equal(result.gitlabReviewHosts.length, 3);
   assert.deepEqual(trusted.rules, [
@@ -227,9 +271,10 @@ test("GitLab Linux review and protected jobs use separate capabilities", () => {
 
   for (const change of [
     (source) => delete source["docs:verify:linux:review"],
-    (source) => delete source["docs:verify"].rules,
+    (source) => delete source["docs:verify:linux"].rules,
     (source) =>
-      (source["docs:verify:linux:review"].rules = source["docs:verify"].rules),
+      (source["docs:verify:linux:review"].rules =
+        source["docs:verify:linux"].rules),
     (source) =>
       (source["docs:verify:linux:review"].inherit = { default: false }),
   ]) {
@@ -237,7 +282,7 @@ test("GitLab Linux review and protected jobs use separate capabilities", () => {
       () =>
         validateCi(
           github,
-          changedGitLab("docs:verify", (source) => change(source)),
+          changedGitLab("docs:verify:linux", (source) => change(source)),
           offline,
         ),
       /GitLab .*runner|GitLab Linux/u,
@@ -297,8 +342,8 @@ test("GitLab native jobs cannot disappear or bypass the shared proof", () => {
 
 test("GitLab source and offline jobs use bounded peer-equivalent deadlines", () => {
   for (const [jobName, minutes] of [
-    ["docs:verify", "20m"],
-    ["offline:verify", "25m"],
+    [".docs:verify", "20m"],
+    [".offline:verify", "25m"],
   ]) {
     const pipeline = YAML.parse(gitlab);
     pipeline[jobName].timeout = minutes;
@@ -331,7 +376,7 @@ test("both providers refuse to skip the dependency audit", () => {
         github,
         gitlab.replace("- npm audit --audit-level=moderate", "- echo skipped"),
       ),
-    /dependency audit/u,
+    /dependency audit|native source supply/u,
   );
 });
 
@@ -445,13 +490,13 @@ test("GitLab Linux capabilities are exact and role-specific", () => {
     "ci-linux-arm64-container-protected",
   );
   for (const [jobName, tags] of [
-    ["docs:verify", ["ci-linux-arm64-container"]],
-    ["docs:verify", ["ci-linux-arm64-docker"]],
+    ["docs:verify:linux", ["ci-linux-arm64-container"]],
+    ["docs:verify:linux", ["ci-linux-arm64-docker"]],
     ["docs:verify:linux:review", ["ci-linux-arm64-container-protected"]],
     ["docs:verify:linux:review", ["ci-linux-arm64-docker"]],
-    ["offline:verify", ["ci-linux-arm64-container"]],
+    ["offline:verify:linux", ["ci-linux-arm64-container"]],
     [
-      "offline:verify",
+      "offline:verify:linux",
       ["ci-linux-arm64-container-protected", "ci-linux-arm64-container"],
     ],
   ]) {
@@ -532,7 +577,7 @@ test("GitLab offline release CI runs only after a release asset is available", (
     "ci-linux-arm64-container-protected",
   );
   for (const [changed, reason] of [
-    [gitlab.replace(/\noffline:verify:[\s\S]*$/u, ""), /GitLab offline/u],
+    [gitlab.replace(/\n\.offline:verify:[\s\S]*$/u, ""), /GitLab offline/u],
     [
       gitlab.replace(
         'CI_PIPELINE_SOURCE == "api"',
@@ -550,7 +595,7 @@ test("GitLab offline release CI runs only after a release asset is available", (
     ],
     [
       gitlab.replace(
-        /(offline:verify:[\s\S]*?    - )npm run verify/u,
+        /(\.offline:verify:[\s\S]*?    - )npm run verify/u,
         "$1npm run partial",
       ),
       /GitLab offline verifier/u,
@@ -608,9 +653,10 @@ test("package-manager supply cannot bypass native admission or become a second v
     );
   }
   const native = YAML.parse(gitlab);
-  native["docs:verify:macos"].before_script.unshift(
+  native["docs:verify:macos"].before_script = [
     "npm install --global npm@12.1.0",
-  );
+    ...native["docs:verify:macos"].before_script,
+  ];
   assert.throws(
     () => validateCi(github, YAML.stringify(native), offline),
     /platform job/u,
@@ -627,7 +673,8 @@ test("both source planes must supply native Vale before verification", () => {
     /supply/u,
   );
   for (const name of [
-    "docs:verify",
+    ".docs:source-supply",
+    ".docs:verify",
     "docs:verify:macos",
     "docs:verify:windows",
   ]) {
@@ -636,15 +683,46 @@ test("both source planes must supply native Vale before verification", () => {
         validateCi(
           github,
           changedGitLab(name, (_, job) => {
-            job.before_script = job.before_script.filter(
-              (command) =>
-                command !==
-                "node tools/ci/install-native.mjs vale --gitlab-package",
-            );
+            job.before_script = job.before_script
+              .flat(10)
+              .filter(
+                (command) =>
+                  command !==
+                  "node tools/ci/install-native.mjs vale --gitlab-package",
+              );
           }),
           offline,
         ),
       /supply|native|setup|full proof/u,
+    );
+  }
+});
+
+test("native YAML aliases preserve one source-supply list and reject omissions", () => {
+  const pipeline = YAML.parse(gitlab);
+  const supply = pipeline[".docs:source-supply"].before_script;
+  assert.strictEqual(pipeline[".docs:verify"].before_script[1], supply);
+  for (const system of ["macos", "windows"]) {
+    for (const suffix of ["", ":review"]) {
+      assert.strictEqual(
+        pipeline[`docs:verify:${system}${suffix}`].before_script,
+        supply,
+      );
+    }
+  }
+  assert.doesNotThrow(() => validateCi(github, gitlab, offline));
+  for (const change of [
+    (owner) => owner.before_script.splice(2, 1),
+    (owner) => (owner.script = ["npm run verify"]),
+  ]) {
+    assert.throws(
+      () =>
+        validateCi(
+          github,
+          changedGitLab(".docs:source-supply", (_, owner) => change(owner)),
+          offline,
+        ),
+      /native source supply/u,
     );
   }
 });

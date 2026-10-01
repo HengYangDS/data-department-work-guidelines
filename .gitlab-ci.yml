@@ -13,27 +13,34 @@ stages:
 default:
   image: public.ecr.aws/docker/library/node:26-bookworm@sha256:2aaae6d91f99fee84cfc92da9b52c22a185752d247746052bbc3f961e44478c6
 
-docs:verify:
+.docs:source-supply:
+  before_script: &docs-source-supply
+    - npm ci --ignore-scripts
+    - npm audit --audit-level=moderate
+    - node tools/ci/install-native.mjs lychee --gitlab-package
+    - node tools/ci/install-native.mjs vale --gitlab-package
+
+.docs:verify:
   stage: verify
   timeout: 20m
-  tags:
-    - ci-linux-arm64-container-protected
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG'
   interruptible: true
   variables:
     GIT_DEPTH: "0"
   before_script:
     - npm install --global --ignore-scripts "npm@$(node -p 'require("./package.json").devEngines.packageManager.version')"
-    - npm ci --ignore-scripts
-    - npm audit --audit-level=moderate
-    - node tools/ci/install-native.mjs lychee --gitlab-package
-    - node tools/ci/install-native.mjs vale --gitlab-package
+    - *docs-source-supply
   script:
     - npm run verify
 
+docs:verify:linux:
+  extends: .docs:verify
+  tags:
+    - ci-linux-arm64-container-protected
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG'
+
 docs:verify:linux:review:
-  extends: docs:verify
+  extends: .docs:verify
   tags:
     - ci-linux-arm64-container
   rules:
@@ -41,28 +48,20 @@ docs:verify:linux:review:
     - if: '$CI_COMMIT_BRANCH =~ /^proposal\// && $CI_PIPELINE_SOURCE == "push"'
 
 docs:verify:macos:
-  extends: docs:verify
+  extends: .docs:verify
   inherit:
     default: false
-  before_script:
-    - npm ci --ignore-scripts
-    - npm audit --audit-level=moderate
-    - node tools/ci/install-native.mjs lychee --gitlab-package
-    - node tools/ci/install-native.mjs vale --gitlab-package
+  before_script: *docs-source-supply
   tags:
     - ci-macos-arm64-shell
   rules:
     - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG'
 
 docs:verify:macos:review:
-  extends: docs:verify
+  extends: .docs:verify
   inherit:
     default: false
-  before_script:
-    - npm ci --ignore-scripts
-    - npm audit --audit-level=moderate
-    - node tools/ci/install-native.mjs lychee --gitlab-package
-    - node tools/ci/install-native.mjs vale --gitlab-package
+  before_script: *docs-source-supply
   tags:
     - ci-macos-arm64-review
   rules:
@@ -70,39 +69,29 @@ docs:verify:macos:review:
     - if: '$CI_COMMIT_BRANCH =~ /^proposal\// && $CI_PIPELINE_SOURCE == "push"'
 
 docs:verify:windows:
-  extends: docs:verify
+  extends: .docs:verify
   inherit:
     default: false
-  before_script:
-    - npm ci --ignore-scripts
-    - npm audit --audit-level=moderate
-    - node tools/ci/install-native.mjs lychee --gitlab-package
-    - node tools/ci/install-native.mjs vale --gitlab-package
+  before_script: *docs-source-supply
   tags:
     - ci-windows-arm64-shell
   rules:
     - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG'
 
 docs:verify:windows:review:
-  extends: docs:verify
+  extends: .docs:verify
   inherit:
     default: false
-  before_script:
-    - npm ci --ignore-scripts
-    - npm audit --audit-level=moderate
-    - node tools/ci/install-native.mjs lychee --gitlab-package
-    - node tools/ci/install-native.mjs vale --gitlab-package
+  before_script: *docs-source-supply
   tags:
     - ci-windows-arm64-review
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     - if: '$CI_COMMIT_BRANCH =~ /^proposal\// && $CI_PIPELINE_SOURCE == "push"'
 
-offline:verify:
+.offline:verify:
   stage: verify
   timeout: 25m
-  tags:
-    - ci-linux-arm64-container-protected
   interruptible: true
   rules:
     - if: '$CI_COMMIT_TAG && $CI_PIPELINE_SOURCE == "web"'
@@ -116,8 +105,13 @@ offline:verify:
     - node tools/ci/offline-bundle.mjs install
     - npm run verify
 
+offline:verify:linux:
+  extends: .offline:verify
+  tags:
+    - ci-linux-arm64-container-protected
+
 offline:verify:macos:
-  extends: offline:verify
+  extends: .offline:verify
   inherit:
     default: false
   before_script: []
@@ -125,7 +119,7 @@ offline:verify:macos:
     - ci-macos-arm64-shell
 
 offline:verify:windows:
-  extends: offline:verify
+  extends: .offline:verify
   inherit:
     default: false
   before_script: []

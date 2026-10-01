@@ -7,7 +7,8 @@ context: |
 rules:
   proposal:
     - Explain the problem, intended change, and explicit out-of-scope boundary.
-    - Name affected capabilities and include routing metadata.
+    - Name affected capabilities and repository-relative source boundaries;
+      use official artifact fields without private routing metadata.
   specs:
     - Use ADDED, MODIFIED, REMOVED, or RENAMED Requirements in Change deltas;
       main specs keep one Requirements section.

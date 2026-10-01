@@ -178,7 +178,7 @@ export function checkDocumentMetadata() {
   console.log(`PASS document metadata: ${subjects.size} current pages`);
 }
 
-export function repositoryFileUri(uri) {
+export function repositoryFileUri(uri, files) {
   const url = new URL(uri);
   if (url.protocol !== "file:") return;
   if (url.hostname && url.hostname !== "localhost") {
@@ -188,13 +188,31 @@ export function repositoryFileUri(uri) {
   const resolved = existsSync(target)
     ? realpathSync(target)
     : path.resolve(target);
-  const relative = path.relative(realpathSync(root), resolved);
+  const relatives = [
+    path.relative(root, target),
+    path.relative(realpathSync(root), resolved),
+  ];
   if (
-    relative === ".." ||
-    relative.startsWith(`..${path.sep}`) ||
-    path.isAbsolute(relative)
+    relatives.some(
+      (relative) =>
+        relative === ".." ||
+        relative.startsWith(`..${path.sep}`) ||
+        path.isAbsolute(relative),
+    )
   ) {
     throw new Error(`local link escapes repository root: ${uri}`);
+  }
+  const sources = files ?? gitFiles();
+  const directory = existsSync(resolved) && lstatSync(resolved).isDirectory();
+  for (const item of relatives) {
+    const relative = item.split(path.sep).join("/");
+    const prefix = relative ? `${relative}/` : "";
+    if (
+      !sources.includes(relative) &&
+      !(directory && sources.some((source) => source.startsWith(prefix)))
+    ) {
+      throw new Error(`local link is not repository source: ${uri}`);
+    }
   }
 }
 
@@ -209,7 +227,8 @@ export function linkCheckArguments(list, { online = false } = {}) {
 }
 
 export function checkLinks({ online = false } = {}) {
-  const files = currentMarkdown();
+  const source = gitFiles();
+  const files = currentMarkdown(source);
   const directory = mkdtempSync(temporaryRoot());
   try {
     const list = path.join(directory, "files.txt");
@@ -220,7 +239,7 @@ export function checkLinks({ online = false } = {}) {
       timeout: 60_000,
     });
     for (const uri of links.split(/\r?\n/u).filter(Boolean))
-      repositoryFileUri(uri.trim());
+      repositoryFileUri(uri.trim(), source);
     run(lychee, linkCheckArguments(list, { online }), { timeout: 90_000 });
     console.log(
       `PASS ${online ? "online" : "offline"} links and repository confinement`,

@@ -15,45 +15,51 @@ relations:
 
 ## Context
 
-Document checks and manual branch operations see only parts of a result. They
-cannot by themselves connect change ownership, authorization, proof, and
-publication into a trustworthy lifecycle. Treating a method pack, dated report,
-or local script as a governance carrier creates competing authority.
+Document checks and manual branch operations establish separate facts. They
+cannot alone bind material intent, change ownership, authorization, proof, and
+publication. Giving a method pack, dated report, or local script lifecycle
+authority leaves competing answers to who may change what and when it is done.
 
 ## Decision
 
-One selected official OpenSpec Change carries the intent, specifications, and
-task progress of one material change. ETHOS governs Work Lanes, write admission,
-proof, acceptance, and publication boundaries. Repository checks add document
-and decision-topology constraints; they do not replace the official lifecycle.
-Team working rules and repository governance remain distinct.
+Use one selected official OpenSpec Change for material intent, specifications,
+and task progress. ETHOS governs Work Lanes, write admission, proof, acceptance,
+and publication. Repository checks guard document quality and decision shape
+within that boundary. Department working rules retain their own authority.
 
 ## Alternatives Rejected
 
-- Document scripts and manual branch operations alone cannot reliably bind
-  subject, change, and proof.
-- Superpowers documents, date-named DRs, claims, or private scope lists standing
-  in for a Change would create a second lifecycle.
-- Remote reachability, mirror configuration, or local validation cannot
-  establish remote delivery or team adoption.
+- A repository-private lifecycle could combine local checks and Git operations,
+  but would duplicate the product's ownership, proof, and transition contracts.
+- A method-pack plan, dated DR, claim, or private scope list can describe work;
+  treating it as the Change would give that description competing authority.
+- A mirror-only publication model would simplify delivery, but could not
+  establish each Forge's independent source, CI, Release, and distribution.
 
 ## Consequences and Boundary
 
-Source acceptance, the GitLab organization release plane, and GitHub's
-independent complete repository and CI/CD plane are different effects and
-require separate verification. Candidate and work branches remain local; the
-current repository governance contract controls publishable refs. Specific
-commands, runner selection, and profile fields belong in the
-[current governance contract](../governance/ethos.md) and relevant Changes, not
-in a DR.
+The repository depends on the installed product for admission and must repair
+product or adopter defects at their actual owner. Local check success cannot
+substitute for a missing authorization or lifecycle result.
+
+Source acceptance and delivery to the two Forges require separate observations.
+GitLab remains the organization release plane; GitHub has an independent
+complete repository and CI/CD plane. Candidate and work branches remain local.
+The [current governance contract](../governance/ethos.md) owns publishable refs;
+contributor procedures and relevant Changes own commands, runner selection, and
+profile fields.
 
 ## Evidence and Revisit
 
-The current rule is in [repository governance](../governance/ethos.md) and the
-[official OpenSpec workspace](../../openspec/README.md); earlier decisions and
-revisions remain in Git. The official lifecycle boundary of this record was
-reaffirmed on 2026-09-25. It neither claims that the original ETHOS adoption
-followed a lifecycle established later nor proves current remote delivery or
-team use. If the official mechanism fails to bind material changes or completion
-claims, revisit the product and adopter authority boundary rather than creating
-a private process.
+The
+[adoption repair](../../openspec/changes/archive/2026-07-18-adoption-lifecycle-repair/design.md)
+records the separation of decision rationale, methods, and Change authority. The
+[English and release-truth correction](../../openspec/changes/archive/2026-09-25-ddwg-english-release-truth/design.md)
+reaffirms that boundary without claiming the original adoption followed a later
+lifecycle. These records explain the choice, not current product behavior or
+remote delivery. [Repository governance](../governance/ethos.md) and the
+[official OpenSpec workspace](../../openspec/README.md) own the current rules.
+
+Revisit the product and adopter boundary if the official mechanism cannot bind
+material changes or completion claims. A defect needs an explicit authorized
+repair, not a permanent private lifecycle.

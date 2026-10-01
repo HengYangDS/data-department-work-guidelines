@@ -32,10 +32,10 @@ Watch small changes without treating one anomaly as a trend: drifting
 definitions, recurring questions, temporary human rescue, expired evidence,
 ambiguous ownership, intermittent failures, and slight delays can be early
 signals of a system defect. Check their pattern, impact, and direction before
-building a remedy. A problem that recurs, crosses people or projects, depends
-on one person's tacit knowledge, could cause material loss if forgotten, or
-will be repeated by Agents needs a reusable prevention mechanism. Choose its
-lightest effective owner rather than another report.
+building a remedy. A problem that recurs, crosses people or projects, depends on
+one person's tacit knowledge, could cause material loss if forgotten, or will be
+repeated by Agents needs a reusable prevention mechanism. Choose its lightest
+effective owner rather than another report.
 
 A reusable asset may be a test, monitor, checklist, decision record, example,
 rule, platform capability, or clearer ownership interface. Choose the lightest
@@ -89,9 +89,8 @@ claims, reasons decisions wait, handoff continuity, why Agent output was
 returned, corrected, or out of bounds, growth from guided execution toward
 independent judgment, and whether a new mechanism lowers total cost. For every
 metric, first name the decision it supports, its fact source, period, boundary,
-and how it could be gamed.
-Investigate anomalies through cases and mechanisms; do not equate them directly
-with individual performance.
+and how it could be gamed. Investigate anomalies through cases and mechanisms;
+do not equate them directly with individual performance.
 
 For every L1 or L2 task, align the subject and success condition at the start,
 recheck facts, options, and authority at material decisions or changed risk,
@@ -99,26 +98,25 @@ verify at the end, and preserve a handoff when interrupted. Escalate high-risk
 signals when observed; a calendar must not delay containment or a decision.
 
 At least monthly, the manager examines a real work sample and accumulated weak
-signals: recurring failures, escaped quality issues, Agent output corrections
-or misuse, and needless coordination. Decide whether a small correction is
-needed. At least quarterly, the guideline maintainer reviews the net benefit
-of current rules, templates, tools, and Agent practices with their users; keep,
-revise, or retire them. L2 work may set a shorter task-specific interval at
-authorization. Use existing
-meetings, tickets, and reviews; record a material decision and its owner in
-that carrier. No separate meeting, universal weekly 30-minute session, or
-“nothing happened” activity report is required.
+signals: recurring failures, escaped quality issues, Agent output corrections or
+misuse, and needless coordination. Decide whether a small correction is needed.
+At least quarterly, the guideline maintainer reviews the net benefit of current
+rules, templates, tools, and Agent practices with their users; keep, revise, or
+retire them. L2 work may set a shorter task-specific interval at authorization.
+Use existing meetings, tickets, and reviews; record a material decision and its
+owner in that carrier. No separate meeting, universal weekly 30-minute session,
+or “nothing happened” activity report is required.
 
 Managers clarify direction, priorities, resources, and cross-domain decisions,
 resolve long-standing open decisions in time for the work to proceed, and show
 their reasoning with concrete work examples. They protect honest disclosure of
 uncertainty and must not make one person's repeated rescue the department's
-normal way of operating. They must not use these guidelines for retrospective fault-finding,
-ceremonial review, or
-micromanagement. When goals conflict, priorities drift, resources are short,
-decisions stall, or interfaces mislead, repair the management system before
-blaming a member's capability. Within those boundaries, the person closest
-to the facts chooses the method; management should not dictate every step.
+normal way of operating. They must not use these guidelines for retrospective
+fault-finding, ceremonial review, or micromanagement. When goals conflict,
+priorities drift, resources are short, decisions stall, or interfaces mislead,
+repair the management system before blaming a member's capability. Within those
+boundaries, the person closest to the facts chooses the method; management
+should not dictate every step.
 
 Members own end-to-end results in their remit and disclose unknowns, risks,
 dependencies, and failures without waiting to be asked. Guideline maintainers

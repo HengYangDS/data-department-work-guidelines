@@ -10,12 +10,11 @@ relations:
 
 # Data Quality and Adoption
 
-**When to use:** Acquiring data, defining a metric, studying history,
-deploying a production pipeline, or allowing a business use. A readable file,
-attractive chart, or promising model signal does not by itself establish that
-the data may be admitted for a specific use. Keep a proposed use exploratory
-until evidence of its meaning, quality, permission, and reproducibility supports
-that decision.
+**When to use:** Acquiring data, defining a metric, studying history, deploying
+a production pipeline, or allowing a business use. A readable file, attractive
+chart, or promising model signal does not by itself establish that the data may
+be admitted for a specific use. Keep a proposed use exploratory until evidence
+of its meaning, quality, permission, and reproducibility supports that decision.
 
 ## Answer Six Questions First
 
@@ -30,25 +29,26 @@ that decision.
 
 Data with unanswered questions may support exploration, but must not be
 presented as a durable trusted asset. Exploratory code and temporary data may
-move quickly inside that boundary. Before either enters a shared, production,
-or decision path, qualify its meaning, quality, permissions, and reproducibility
+move quickly inside that boundary. Before either enters a shared, production, or
+decision path, qualify its meaning, quality, permissions, and reproducibility
 for that specific use; otherwise keep it marked as exploratory. Distinguish
 source data, production data, experimental results, service views,
 platform-derived views, and reporting views. Catalogs, caches, and Agent
-summaries are projections; none may quietly become the source of truth.
-Preserve the source and history of revisions and backfills so the current value
-can be explained.
+summaries are projections; none may quietly become the source of truth. Preserve
+the source and history of revisions and backfills so the current value can be
+explained.
 
 ## Preserve the Historical Point of View
 
-For event analysis, model validation, or cross-source comparison, distinguish
-what could have been observed then from what can be seen in hindsight. Check
-historical revisions, backfills, restatements, survivor bias, entity changes,
-market calendars, missingness, delay, and conflict. If point-in-time consistency
-cannot be proved, do not automatically call the data wrong; lower the strength
-of the conclusion and stop research or business commitments that exceed the
-evidence. State confidence, alternative explanations, and conclusions the data
-cannot support.
+For historical research, event analysis, model validation, or cross-source
+comparison, distinguish what could have been observed then from what can be seen
+in hindsight. Check historical revisions, backfills, and restatements; identify
+bias from sample selection, entity changes, market calendars, and survival
+status. Explain how missingness, delay, conflict, and anomalies affect the
+conclusion. If point-in-time consistency cannot be proved, do not automatically
+call the data wrong; lower the strength of the conclusion and stop research or
+business commitments that exceed the evidence. State confidence, alternative
+explanations, and conclusions the data cannot support.
 
 ## Move from a Signal to Controlled Use
 
@@ -85,10 +85,10 @@ time.
 | Production feed | Replayable inputs and outputs, tests, monitoring, access review, and recovery. | Keep the file exploratory.                    |
 | Use admission   | Domain meaning, rights and veto, authorized decision, and acceptance.          | Do not infer permission from deployment.      |
 
-An Agent may locate snapshots, compare revisions, or run replay checks within its
-delegation. It cannot decide that the dataset is admitted. The task lead brings
-the evidence and open risks to the decision owner and acceptor; later observed
-use, not this table, establishes adoption.
+An Agent may locate snapshots, compare revisions, or run replay checks within
+its delegation. It cannot decide that the dataset is admitted. The task lead
+brings the evidence and open risks to the decision owner and acceptor; later
+observed use, not this table, establishes adoption.
 
 ## Ownership and Change Boundaries
 
@@ -101,9 +101,8 @@ use, not this table, establishes adoption.
 | Delivery   | Make priorities, resources, dependencies, risks, and open decisions visible.                                         |
 
 Coordination does not grant authority over the other owners' judgments.
-Cross-domain data work has one
-accountable task lead and clear professional interfaces, not an
-undifferentiated “everyone is responsible.”
+Cross-domain data work has one accountable task lead and clear professional
+interfaces, not an undifferentiated “everyone is responsible.”
 
 Changes to production, shared assets, or critical management chains require:
 
@@ -116,8 +115,8 @@ Changes to production, shared assets, or critical management chains require:
 - Evidence bound to the current version and environment.
 
 The authorized decision owner approves admission for high-risk use, permission
-changes, production releases, destructive changes, and irreversible actions.
-An Agent may assist but cannot approve them.
+changes, production releases, destructive changes, and irreversible actions. An
+Agent may assist but cannot approve them.
 
 Before data enters a lasting work system, its **meaning must be explainable,
 source traceable, time identifiable, process reproducible, quality verifiable,

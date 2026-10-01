@@ -89,6 +89,12 @@ function parseYaml(source, name) {
   return document.toJS();
 }
 
+function sourceSupply(job) {
+  return Array.isArray(job?.before_script)
+    ? job.before_script.flat(10)
+    : job?.before_script;
+}
+
 function requireStep(steps, prefix) {
   const index = steps.findIndex(
     (step) =>
@@ -195,17 +201,18 @@ function validateOfflineWorkflow(source, nodeMajor) {
 }
 
 function validateGitLabOffline(gitlab, expectedImage) {
-  const job = gitlab["offline:verify"];
-  if (!job) throw new Error("GitLab offline verification job is missing");
+  const job = gitlab[".offline:verify"];
+  if (!job) throw new Error("GitLab offline verification owner is missing");
   if (job.timeout !== "25m") {
     throw new Error("GitLab offline timeout must match its 25m peer");
   }
   if (
     job.image !== undefined ||
     gitlab.default?.image !== expectedImage ||
-    JSON.stringify(job.tags) !==
-      JSON.stringify([gitlabLinuxProtectedCapability]) ||
+    Object.keys(job).sort().join(",") !==
+      "before_script,interruptible,rules,script,stage,timeout,variables" ||
     job.stage !== "verify" ||
+    job.interruptible !== true ||
     job.allow_failure !== undefined ||
     job.when !== undefined ||
     String(job.variables?.GIT_DEPTH) !== "0"
@@ -236,7 +243,7 @@ function validateGitLabOffline(gitlab, expectedImage) {
       "GitLab offline verifier must run the full repository check",
     );
   }
-  return job.tags[0];
+  return validateGitLabLinuxJob(gitlab, "offline", "offline");
 }
 
 function validateGitLabNativeJobs(gitlab, base, kind, lane) {
@@ -258,8 +265,8 @@ function validateGitLabNativeJobs(gitlab, base, kind, lane) {
         (rules
           ? "before_script,extends,inherit,rules,tags"
           : "before_script,extends,inherit,tags") ||
-      job.extends !== base ||
-      JSON.stringify(job.before_script) !==
+      job.extends !== `.${base}` ||
+      JSON.stringify(sourceSupply(job)) !==
         JSON.stringify(kind === "source" ? nativeSourceSupply : []) ||
       Object.keys(job.inherit ?? {}).join(",") !== "default" ||
       job.inherit.default !== false ||
@@ -274,22 +281,31 @@ function validateGitLabNativeJobs(gitlab, base, kind, lane) {
   });
 }
 
-function validateGitLabLinuxReview(gitlab) {
-  const job = gitlab["docs:verify:linux:review"];
+function validateGitLabLinuxJob(gitlab, phase, lane) {
+  const name = `${phase}:verify:linux${lane === "review" ? ":review" : ""}`;
+  const job = gitlab[name];
+  const rules =
+    lane === "review"
+      ? reviewRules
+      : lane === "protected"
+        ? protectedRules
+        : undefined;
+  const capability =
+    lane === "review"
+      ? gitlabLinuxReviewCapability
+      : gitlabLinuxProtectedCapability;
   if (
     !job ||
     typeof job !== "object" ||
     Array.isArray(job) ||
-    Object.keys(job).sort().join(",") !== "extends,rules,tags" ||
-    job.extends !== "docs:verify" ||
-    !Array.isArray(job.tags) ||
-    job.tags.length !== 1 ||
-    typeof job.tags[0] !== "string" ||
-    job.tags[0] !== gitlabLinuxReviewCapability ||
-    JSON.stringify(job.rules) !== JSON.stringify(reviewRules)
+    Object.keys(job).sort().join(",") !==
+      (rules ? "extends,rules,tags" : "extends,tags") ||
+    job.extends !== `.${phase}:verify` ||
+    JSON.stringify(job.tags) !== JSON.stringify([capability]) ||
+    JSON.stringify(job.rules) !== JSON.stringify(rules)
   ) {
     throw new Error(
-      "GitLab Linux review runner must inherit the full verifier on a separate review capability",
+      `GitLab ${phase} Linux runner ${name} must inherit its hidden verification owner on ${capability}`,
     );
   }
   return job.tags[0];
@@ -312,9 +328,12 @@ export function validateCi(
     "workflow",
     "stages",
     "default",
-    "docs:verify",
+    ".docs:source-supply",
+    ".docs:verify",
+    "docs:verify:linux",
     "docs:verify:linux:review",
-    "offline:verify",
+    ".offline:verify",
+    "offline:verify:linux",
     ...gitlabNativeCapabilities.flatMap(({ system }) => [
       `docs:verify:${system}`,
       `docs:verify:${system}:review`,
@@ -323,6 +342,14 @@ export function validateCi(
   ]);
   if (Object.keys(gitlab).some((key) => !admittedGitLabKeys.has(key))) {
     throw new Error("GitLab pipeline cannot add unchecked global setup");
+  }
+  const supplyOwner = gitlab[".docs:source-supply"];
+  if (
+    Object.keys(supplyOwner ?? {}).join(",") !== "before_script" ||
+    JSON.stringify(sourceSupply(supplyOwner)) !==
+      JSON.stringify(nativeSourceSupply)
+  ) {
+    throw new Error("GitLab native source supply must have one complete owner");
   }
   if (
     JSON.stringify(gitlab.workflow?.rules) !== JSON.stringify(workflowRules)
@@ -397,23 +424,17 @@ export function validateCi(
       "GitHub dependency audit, supply, and common verification are out of order",
     );
   }
-  const gitlabJob = gitlab["docs:verify"];
+  const gitlabJob = gitlab[".docs:verify"];
   const gitlabImage = gitlab.default?.image;
   if (gitlabJob && gitlabJob.timeout !== "20m") {
     throw new Error("GitLab source timeout must match its 20m peer");
   }
   if (
-    gitlabJob &&
-    JSON.stringify(gitlabJob.rules) !== JSON.stringify(protectedRules)
-  ) {
-    throw new Error("GitLab Linux source job must select only protected refs");
-  }
-  if (
     !gitlabJob ||
     gitlabJob.image !== undefined ||
     !imagePattern.test(gitlabImage ?? "") ||
-    JSON.stringify(gitlabJob.tags) !==
-      JSON.stringify([gitlabLinuxProtectedCapability]) ||
+    Object.keys(gitlabJob).sort().join(",") !==
+      "before_script,interruptible,script,stage,timeout,variables" ||
     gitlabJob.stage !== "verify" ||
     gitlabJob.interruptible !== true ||
     gitlabJob.allow_failure !== undefined ||
@@ -426,7 +447,7 @@ export function validateCi(
   if (String(gitlabJob.variables?.GIT_DEPTH) !== "0") {
     throw new Error("GitLab must fetch full history and release tags");
   }
-  const before = gitlabJob.before_script;
+  const before = sourceSupply(gitlabJob);
   if (
     !Array.isArray(before) ||
     before.indexOf("npm ci --ignore-scripts") < 0 ||
@@ -446,11 +467,11 @@ export function validateCi(
     );
   }
   const gitlabHosts = [
-    gitlabLinuxProtectedCapability,
+    validateGitLabLinuxJob(gitlab, "docs", "protected"),
     ...validateGitLabNativeJobs(gitlab, "docs:verify", "source", "protected"),
   ];
   const gitlabReviewHosts = [
-    validateGitLabLinuxReview(gitlab),
+    validateGitLabLinuxJob(gitlab, "docs", "review"),
     ...validateGitLabNativeJobs(gitlab, "docs:verify", "source", "review"),
   ];
   const gitlabOfflineHosts = [

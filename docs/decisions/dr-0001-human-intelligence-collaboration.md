@@ -15,41 +15,40 @@ relations:
 
 ## Context
 
-“Human–Agent collaboration” elevates a specific technical entity into the name
-of the overall relationship. “Human–machine collaboration” reduces callable
-intelligence to a mechanical object. Neither makes human intent, authorization,
-judgment, and accountability for consequences sufficiently clear.
+The name must cover the working relationship without making a technical entity a
+peer in organizational authority. “Human–Agent collaboration” names one
+executing or reasoning entity; “human–machine collaboration” emphasizes the
+mechanical carrier. The broader relationship must keep human intent,
+authorization, judgment, and accountability for consequences clear.
 
 ## Decision
 
-Call the overall relationship **human–AI collaboration**: **people set
-direction; intelligence extends capacity; we collaborate on the work, and
-accountability stays with people.** Use Agent for a specific executing or
-reasoning entity in technical contexts. The working principle is **use
-intelligence to accomplish the task, judge against reality, and keep
-accountability human**. The name does not change human authority or verification
-duties.
+Use **human–AI collaboration** for the overall relationship and Agent for a
+specific executing or reasoning entity. People set direction; intelligence
+extends capacity; accountability stays with people. Use intelligence to
+accomplish the task, judge against reality, and keep accountability human. The
+name does not change authorization or verification duties.
 
 ## Alternatives Rejected
 
-- “Human–Agent collaboration” gives the particular entity the name of the whole
-  relationship.
-- “Human–machine collaboration” does not adequately distinguish intelligent
-  capability from the responsible person.
+- “Human–Agent collaboration” is useful for a specific technical interaction,
+  but gives a particular entity the name of the wider relationship.
+- “Human–machine collaboration” identifies the carrier without sufficiently
+  distinguishing callable intelligence from the accountable person.
 
 ## Consequences and Boundary
 
-The general [human–AI collaboration](../human-agent.md) rule uses this term and
-defines the behavior. An Agent can take on work, but cannot become the
-organizational authorizer, fact source, or person accountable for the
-consequences. Consistent naming does not prove that members have delegated or
-accepted work correctly.
+The [human–AI collaboration](../human-agent.md) rule defines permitted behavior.
+An Agent can take on work, but cannot become the organizational authorizer, fact
+authority, or person accountable for consequences. The broader name still needs
+an explicit delegation boundary; consistent terminology does not prove correct
+delegation or acceptance.
 
 ## Evidence and Revisit
 
-The original decision and its normalization remain in Git history. The present
-definition is in the [charter](../charter.md) and
-[human–AI collaboration](../human-agent.md). Revisit the name if actual use
-weakens human accountability or projects cannot apply it accurately. This record
-does not retroactively certify the original decision under the later OpenSpec
-lifecycle.
+The original choice is recorded in Git commit
+`fad08e7379fd8454d9f92775477e0dc98edcb6c0`. The current definition is in the
+[charter](../charter.md) and [human–AI collaboration](../human-agent.md); later
+normalization preserves its scope without certifying the original work under the
+later OpenSpec lifecycle. Revisit the name if actual use weakens human
+accountability or projects cannot apply it accurately.
