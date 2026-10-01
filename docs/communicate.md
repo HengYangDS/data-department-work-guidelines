@@ -17,6 +17,8 @@ test whether an independent reader can identify the basis, limits, and request.
 
 ## Know What the Exchange Must Accomplish
 
+State the purpose of the exchange before presenting the detail.
+
 | Purpose     | Desired result                                                                  |
 | ----------- | ------------------------------------------------------------------------------- |
 | Synchronize | A shared understanding of the same subject and facts.                           |
@@ -51,7 +53,8 @@ Before a meeting, name the question, necessary participants, and inputs; do not
 meet for work that can be resolved asynchronously. Do not invite someone only
 out of courtesy if they supply no necessary fact, hold no decision authority,
 and own no action. In the meeting, align facts and definitions before comparing
-options. Locate disagreement in facts,
+options. When the discussion drifts, return to the question that needs a
+decision. Locate disagreement in facts,
 inference, values, resources, or authority. Afterward, keep only the conclusion,
 basis, decision, actions, open points, and risks. Each action has an owner,
 deadline, and completion criterion. Without a decision or action, do not call
@@ -71,7 +74,8 @@ both from a different risk preference despite shared reasoning.
    first screen. Make one main point per paragraph, define important terms at
    first use, and leave reasoning and next steps actionable.
 3. **Elegance:** Remove formulaic filler, repetition, and decoration that add no
-   information. Choose precise verbs and concrete nouns. Let structure serve
+   information. Choose precise verbs and concrete nouns. Keep the tone
+   objective and measured, without slogans or pretended depth. Let structure serve
    judgment; do not let a diagram stand in for an argument.
 
 A complex analysis may unfold as “summary and request → subject and boundary →
@@ -90,6 +94,9 @@ containment already attempted and its result; and the options, costs,
 recommendation, and person who must decide by when. Replace “soon,” “basically
 agreed,” and “probably fine” with owners, times, verified facts, and remaining
 risks.
+
+If a deadline may be missed, name the escalation owner and the condition for
+involving them before the delay causes harm.
 
 For a completion report, also follow the evidence boundary in
 [execution and delivery](deliver.md). If the problem itself is still undefined,

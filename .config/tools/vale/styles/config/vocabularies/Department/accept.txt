@@ -27,6 +27,7 @@ CSpell
 (?i:backfills?)
 (?i:basename)
 (?i:decodable)
+(?i:deliverable(?:s|'s)?)
 (?i:else's)
 (?i:lockfiles?)
 (?i:reachability)

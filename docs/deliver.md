@@ -17,20 +17,22 @@ The form may shrink with risk; the chain of trust may not skip a link.
 > Authorized person and subject → commitment and boundary → bounded action →
 > current evidence → bounded claim → acceptance and learning.
 
-This is a chain of judgment, not six mandatory documents. Low-risk, local,
-reversible work may close in one exchange. Cross-role or uncertain work uses an
+These duties can share one work record; each step does not need its own
+document. Low-risk, local, reversible work may close in one exchange.
+Cross-role or uncertain work uses an
 existing work carrier. Production, sensitive data, destructive changes, security
 or compliance, and external commitments require explicit authorization, a
 recovery path, independent review, and human acceptance.
 
 ## Before Acting
 
-| Question                         | Minimum answer                                                                |
-| -------------------------------- | ----------------------------------------------------------------------------- |
-| What is being done, and why now? | Target, success criteria, scope, and non-goals.                               |
-| Who is responsible?              | Task lead, collaborators, authorized decision owner, and acceptor.            |
-| How will it proceed?             | Critical path, dependencies, resources, deadline, and observable checkpoints. |
-| What if it goes wrong?           | Triggers to pause, degrade, roll back, or hand control to a person.           |
+| Question                         | Minimum answer                                                                 |
+| -------------------------------- | ------------------------------------------------------------------------------ |
+| What is being done, and why now? | Deliverable, purpose, target, success criteria, scope, and non-goals.          |
+| Who is responsible?              | Task lead, collaborators, authorized decision owner, and acceptor.             |
+| How will it proceed?             | Critical path, dependencies, milestones, deadline, and observable checkpoints. |
+| What will it take?               | Resources, costs, and constraints.                                             |
+| What if it goes wrong?           | Triggers to pause, degrade, roll back, or hand control to a person.            |
 
 Check the actual target location, current state, concurrent work, and recovery
 path before making a change. Expose critical-path blockers when observed; do

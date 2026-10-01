@@ -92,12 +92,16 @@ use, not this table, establishes adoption.
 
 ## Ownership and Change Boundaries
 
-Domain owners define meaning, quality, and permitted use. Production owners
-ensure deployability, backfill, monitoring, and recovery. Platform owners
-abstract repeated, cross-domain capabilities needed for durable operation
-without replacing domain judgment. Governance owners define admission,
-permissions, lineage, veto, and exit. Delivery owners
-make resources, dependencies, and risks visible. Cross-domain data work has one
+| Owner      | Responsibility                                                                                                       |
+| ---------- | -------------------------------------------------------------------------------------------------------------------- |
+| Domain     | Define meaning, quality, permitted use, and professional judgments.                                                  |
+| Production | Ensure deployability, backfill, monitoring, recovery, and reliable long-term operation.                              |
+| Platform   | Abstract repeated, cross-domain capabilities needed for durable operation without replacing domain judgment.         |
+| Governance | Define admission, permissions, lineage, review, veto, and exit, and make those controls work in the actual workflow. |
+| Delivery   | Make priorities, resources, dependencies, risks, and open decisions visible.                                         |
+
+Coordination does not grant authority over the other owners' judgments.
+Cross-domain data work has one
 accountable task lead and clear professional interfaces, not an
 undifferentiated “everyone is responsible.”
 

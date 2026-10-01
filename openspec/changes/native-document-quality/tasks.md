@@ -36,3 +36,6 @@
       declared source and offline platform jobs.
 - [ ] 3.5 Complete this Change, archive officially, verify the archive identity,
       and retire the owned lane and proved-disposable state.
+- [ ] 3.6 Publish the compatible original-duty correction with fresh local,
+      installed ETHOS, signed patch, asset, and both Forge platform evidence;
+      preserve the already qualified major release.

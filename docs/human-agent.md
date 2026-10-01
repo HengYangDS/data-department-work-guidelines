@@ -21,8 +21,9 @@ accepting an Agent's result.
 ## Delegate a Boundary, Not a Pile of Context
 
 A consequential delegation states the goal and decision it supports, current
-authorities and fact sources, subject and scope, non-goals, deliverable and
-audience, time, security, compatibility, and cost constraints, permissions and
+authorities and fact sources, subject and scope, non-goals, the deliverable's
+format, destination, audience, and level of detail, time, security,
+compatibility, and cost constraints, permissions and
 forbidden actions, acceptance method, checkpoints, stop conditions, and
 interruption handoff. A low-risk task can be stated briefly. A high-risk one
 names the owner, recovery path, and who approves

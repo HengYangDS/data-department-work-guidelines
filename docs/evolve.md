@@ -54,6 +54,8 @@ judgment, method-building, and coaching. Feedback names a proposition, evidence,
 behavior, and consequence; a label such as “weak logic” gives no actionable
 direction.
 
+Coaching tests the member's reasoning without making the judgment for them.
+
 Review evidence before judging delivery risk. At minimum, inspect problem
 framing, the logical model, evidence and uncertainty, trade-offs, execution and
 acceptance, oral and written communication, and delegation and verification of
@@ -110,7 +112,8 @@ that carrier. No separate meeting, universal weekly 30-minute session, or
 Managers clarify direction, priorities, resources, and cross-domain decisions,
 resolve long-standing open decisions in time for the work to proceed, and show
 their reasoning with concrete work examples. They protect honest disclosure of
-uncertainty. They must not use these guidelines for retrospective fault-finding,
+uncertainty and must not make one person's repeated rescue the department's
+normal way of operating. They must not use these guidelines for retrospective fault-finding,
 ceremonial review, or
 micromanagement. When goals conflict, priorities drift, resources are short,
 decisions stall, or interfaces mislead, repair the management system before

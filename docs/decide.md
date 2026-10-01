@@ -25,6 +25,9 @@ unknowns matter? Who owns the work, who has authority to decide, and who accepts
 it? A low-risk matter may need one conversation; cross-person or high-risk work
 needs a reviewable record.
 
+Name the time, cost, compliance, technical, and resource constraints. A target
+without those limits is not an executable commitment.
+
 If the subject, authority, or irreversible consequences are unclear, stop the
 affected action and ask an authorized person to decide. **Collecting information
 is not the goal; explain which judgment it could change.**
@@ -54,8 +57,9 @@ so explicitly.
 
 ## Use the Smallest Sufficient Model
 
-1. Define the central concepts and subjects, then their causal, dependency,
-   constraint, and feedback relationships. Divide along one consistent axis so
+1. Define the central concepts and subjects. Keep one meaning for each concept
+   within the same discussion, then identify causal, dependency, constraint,
+   and feedback relationships. Divide along one consistent axis so
    the parts do not overlap, together cover the problem, and each return to the
    decision the analysis must support. A long list or polished prose cannot
    substitute for that model.

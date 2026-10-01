@@ -12,6 +12,21 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [7.0.1] - 2026-10-01
+
+### Fixed
+
+- Restored original duties lost during compression: explicit decision constraints
+  and stable concepts; execution costs and milestones; professional data
+  judgments, durable production, and working governance review and controls.
+- Restored delivery priorities and unresolved decisions without borrowed
+  authority, declared communication purpose, meeting focus and deadline
+  escalation, measured expression, and precise Agent deliverables. Coaching
+  preserves member judgment; managers must not make recurring individual rescue
+  the operating model.
+- Presented data ownership in a compact responsibility table without adding
+  roles, forms, meetings, or a competing rule source.
+
 ## [7.0.0] - 2026-10-01
 
 ### Changed
@@ -332,7 +347,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   verification sequence while keeping local, GitLab, and GitHub results separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.0...main
+[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.1...main
+[7.0.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.0...v7.0.1
 [7.0.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.1.1...v7.0.0
 [6.1.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.1.0...v6.1.1
 [6.1.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.0.1...v6.1.0

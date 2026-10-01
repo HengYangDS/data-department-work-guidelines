@@ -48,7 +48,8 @@ if it drops a qualification.
 
 The baseline comparison remains at
 [the original-content review](../archive/2026-09-30-work-guidance-completeness/design.md).
-This batch rereads all seven topics and changes presentation only. Charter
+The initial native-tool release rereads all seven topics and changes
+presentation only. Charter
 wording makes the same problem-resolution and judgment duties more direct;
 the other changes remove repeated entry words or reflow clauses. The delivery
 sentence still records both a material scope or risk change and its resolving
@@ -56,6 +57,44 @@ decision. Actor, obligation strength, permission, condition, evidence limit,
 and escalation boundary remain unchanged. Monthly case calibration and
 quarterly net-benefit review retain their minimum frequency and owners. The
 edition identifier changes separately for the incompatible tool contract.
+
+### Restore omitted obligations without recreating the monolith
+
+A final reread of original blob `ce3d090be258e65534781769e3e2fd5ab7439ef8`,
+including the opening cards and sections 0 through 13, found that the earlier
+comparison was too coarse in several places. Against released source
+`d5cf3fa70f63f8674df1ea0a563dc6a35fcbb82b`, the following adverse cases still
+needed explicit protection. The current editorial comparison is not an
+independent review or an automated proof of equivalence.
+
+| Original duty                                                                                                  | Current owner          | Counterexample the restoration must exclude                                                                    |
+| -------------------------------------------------------------------------------------------------------------- | ---------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Sections 3.1 and 3.2: explicit decision constraints and stable central concepts                                | Analysis model         | A model silently changes a concept, or the proposal hides cost, compliance, technical, or resource limits.     |
+| Section 3.4: execution resources, costs, milestones, and checkpoints                                           | Delivery plan          | A plan names people and dependencies but hides its cost or intermediate commitments.                           |
+| Section 5.5: professional judgment and durable production                                                      | Data ownership         | Deployability alone is treated as the production owner's long-term responsibility.                             |
+| Section 5.5: governance review and actual process controls                                                     | Data ownership         | A written admission policy substitutes for review and working permission or veto controls.                     |
+| Section 5.5: delivery priorities and open decisions without borrowed authority                                 | Data ownership         | Coordination hides unresolved choices or overrules a professional owner.                                       |
+| Sections 6.1, 6.4, 6.5, and 7.1: declared purpose, meeting focus, deadline escalation, and measured expression | Communication          | An unstated request, off-topic meeting, unowned delay, or slogan replaces a bounded decision and action.       |
+| Sections 11.3 and 11.7: coaching preserves member judgment and managers must not normalize individual rescue   | Evolution management   | A supervisor supplies the conclusion, or repeated personal intervention becomes the permanent operating model. |
+| Section 8.4: precise Agent deliverable                                                                         | Human–AI collaboration | A delegation leaves its output format, destination, audience, or detail to guesswork.                          |
+
+Restore these duties in the existing paragraphs and execution table. Retain
+every surrounding permission, qualification, evidence limit, and owner. Do not
+restore redundant cards, fixed forms, or a universal weekly meeting. The monthly
+case review and quarterly net-benefit floor remain unchanged. Topic wording
+still follows the department's task and professional context, not a tool's
+preferred vocabulary.
+
+The native dictionary initially rejected the valid plural and possessive of
+`deliverable`. Accept only that real term and its two normal inflections;
+retain a misspelled near-match regression. Do not rewrite the obligation or
+disable spelling to make the source pass.
+
+This is a compatible correction of omitted original duties. Publish a patch
+successor with its own source-bound bundle, exact-HEAD proof, and declared
+platform acceptance. Preserve signed `v7.0.0`, its notes, and its asset bytes.
+Update only the existing task ledger; keep shared ETHOS integration and final
+archive open until their actual prerequisites are satisfied.
 
 ### Separate English and Markdown responsibilities
 

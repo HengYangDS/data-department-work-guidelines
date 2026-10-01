@@ -103,6 +103,41 @@ card inventory.
   the lightest effective prevention mechanism
 - **AND THEN** the periodic floor does not postpone risk escalation.
 
+#### Scenario: A delivery plan omits cost or intermediate commitments
+
+- **WHEN** a plan identifies dependencies and people but omits costs,
+  milestones, constraints, or observable checkpoints
+- **THEN** the delivery topic identifies those missing execution commitments
+- **AND** adding a longer plan or more people does not satisfy that duty.
+
+#### Scenario: Written data policy does not operate in the workflow
+
+- **WHEN** admission, permission, review, veto, or exit controls exist only as
+  written policy
+- **THEN** the data topic requires the governance owner to make them operate
+  in the actual workflow
+- **AND** delivery coordination neither hides unresolved decisions nor grants
+  authority over professional judgments.
+
+#### Scenario: Repeated personal intervention becomes routine
+
+- **WHEN** recurring work depends on one person's rescue
+- **THEN** the evolution topic assigns managers responsibility to prevent that
+  dependency from becoming the normal operating model
+- **AND** monthly and quarterly review do not delay a necessary correction.
+- **AND WHEN** a supervisor coaches a member through a consequential task
+- **THEN** the coaching examines the member's reasoning rather than deciding
+  the conclusion for them.
+
+#### Scenario: Meaning or purpose changes without disclosure
+
+- **WHEN** a central concept changes meaning within an analysis or an exchange
+  hides whether it seeks information, discussion, or a decision
+- **THEN** the analysis and communication topics require stable meanings and
+  an explicit exchange purpose
+- **AND** objective, measured language carries the reasoning without slogans
+  or pretended depth.
+
 ### Requirement: Semantic coverage requires editorial review
 
 Editorial review SHALL compare each unique duty and important counterexample
@@ -180,3 +215,50 @@ new meeting, fixed duration, or department-wide activity report.
   an existing carrier and decide whether a mechanism needs correction
 - **AND THEN** a quarterly review tests whether current rules and tools still
   return more value than they cost, without staging a ceremonial new meeting.
+
+### Requirement: Decision framing preserves operational constraints
+
+Problem framing SHALL name time, cost, compliance, technical, and resource
+constraints. A central concept SHALL retain one meaning within a discussion.
+Execution plans SHALL expose resources, costs, milestones, and checkpoints.
+
+#### Scenario: A proposed plan hides a limiting constraint
+
+- **WHEN** a proposal omits a cost, compliance, technical, or resource limit
+  that could change the decision
+- **THEN** the analysis topic requires that limit in the problem frame
+- **AND** the delivery plan makes its cost and intermediate commitments visible.
+
+### Requirement: Data roles retain operational responsibility
+
+Domain owners SHALL make professional judgments. Production owners SHALL
+ensure reliable long-term operation. Governance owners SHALL make admission,
+permission, lineage, review, veto, and exit controls operate in the workflow.
+Delivery owners SHALL expose priorities and unresolved decisions without
+assuming authority over the other owners' judgments.
+
+#### Scenario: Coordination substitutes for a domain or governance decision
+
+- **WHEN** delivery coordination proposes a use without domain judgment or
+  operative governance review and controls
+- **THEN** the data topic identifies the responsible owners and missing decision
+- **AND** a coordination role cannot grant itself the missing authority.
+
+### Requirement: Communication and coaching preserve judgment
+
+Communication SHALL state its purpose and keep an objective, measured tone.
+Meetings SHALL return to the decision question when discussion drifts. Deadline
+risks SHALL name the escalation owner and trigger before harm grows.
+Coaching SHALL examine a member's reasoning without making the judgment for
+them. Managers SHALL NOT normalize recurring individual rescue. Agent
+delegation SHALL name the deliverable's format, destination, audience, and
+level of detail.
+
+#### Scenario: Fluent delivery hides the purpose or the judgment owner
+
+- **WHEN** an exchange leaves its purpose unstated, uses slogans instead of
+  reasoning, substitutes the supervisor's conclusion for the member's, or
+  leaves an Agent's deliverable ambiguous
+- **THEN** the communication and evolution topics require a clear purpose,
+  measured expression, and preserved member judgment
+- **AND** recurring intervention requires a management-system correction.

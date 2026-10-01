@@ -734,10 +734,12 @@ test("native prose preserves domain authority and standard Markdown terms", () =
   assert.deepEqual(
     proseFindings(
       "Authority to act remains subject to explicit permission.\n\n" +
-        "Compare feasible options. Use one blank line between paragraphs.\n",
+        "Compare feasible options. Use one blank line between paragraphs.\n\n" +
+        "Name the deliverable's format. Inspect the deliverables.\n",
     ),
     [],
   );
+  assert.ok(proseFindings("Inspect the delivrables.\n").length > 0);
 });
 
 test("native repeated-word checks cover headings, emphasis and reader quotes", () => {
