@@ -153,11 +153,27 @@ enforce admission without a tracked adapter or optional gate.
 
 ### Requirement: One portable documentation verifier measures source properties
 
-One locked, shell-independent verifier SHALL check formatting of Markdown, code,
-JSON and YAML; TOML syntax; Markdown lint; native Vale prose; pinned offline
-lychee links and fragments; metadata, English, spacing, decisions and navigation.
+One locked, shell-independent verifier SHALL check all Git-selected source
+formats supported by pinned native Prettier, including Markdown, code, JSON and
+YAML; TOML syntax; Markdown lint; native Vale prose; pinned offline lychee links
+and fragments; metadata, English, spacing, decisions and navigation.
 The same repository-relative entry SHALL run locally and on both CI planes.
 Diagram, card, topic and evidence counts SHALL NOT determine validity.
+
+#### Scenario: Native formatting is not narrowed by source location
+
+- **WHEN** Git selects a supported code or document file outside the usual code
+  directories or beneath a normally ignored local-state path
+- **THEN** the public formatter checks and writes that file through native
+  Prettier parser detection, without a private language or directory list
+- **AND** ambient ignore files cannot exempt already selected source.
+
+#### Scenario: Ignored local state is not formatting input
+
+- **WHEN** a defective supported file is untracked and ignored by Git
+- **THEN** both public formatting modes leave it outside their source inventory
+- **AND** unsupported native formats retain their separate validation rather
+  than acquiring a second formatter.
 
 #### Scenario: A diagram is removed without losing meaning
 
@@ -554,6 +570,15 @@ NOT influence this check.
   needless phrase, or inconsistent selected term
 - **THEN** the native rule reports the source location and reason
 - **AND** standalone prose and full verification fail on that finding.
+
+#### Scenario: A native style rule stops matching its examples
+
+- **WHEN** a configured style rule loads but no longer diagnoses its declared
+  defect
+- **THEN** the official Vale rule-test runner rejects its embedded cases and
+  uncovered rule through the existing test suite
+- **AND** project-level positive and negative prose checks still verify real
+  documents and configuration; rule cases do not replace them.
 
 #### Scenario: Reader syntax carries prose
 

@@ -58,6 +58,11 @@ feasibility, uncertainty, and meaningful passive constructions retain their
 meaning. A technical vocabulary entry must name a real term, not suppress a
 finding wholesale.
 
+The two native style rules carry their own test cases. The existing test suite
+runs Vale's official rule-test coverage as well as real-document checks; loading
+a rule without exercising a defect is insufficient. Keep the cases beside the
+rule rather than introducing another prose-test pipeline.
+
 The [configuration map](.config/README.md) identifies the single policy owner
 for each check. Prettier, Markdownlint, and lychee read native TOML directly;
 Vale uses its required native INI, YAML, and vocabulary files. Repository
@@ -100,10 +105,12 @@ been observed. Git's native `.gitattributes` rule checks out tracked text with
 LF even on Windows; do not replace it with a host-specific Git setting. Keep
 `node_modules/` and generated output out of Git.
 
-Git discovery selects tracked and non-ignored candidate source. A current
-Markdown file already selected by Git still receives prose and link checks under
-a normally ignored directory name. Official archived Changes keep their
-historical scope; untracked ignored caches are not source.
+Git discovery selects tracked and non-ignored candidate source. Native Prettier
+parser detection selects every supported format from that inventory, without
+restricting code to a directory or letting ambient ignore files exempt source.
+A current Markdown file still receives prose and link checks under a normally
+ignored directory name. Official archived Changes keep their historical scope;
+untracked ignored caches are not source.
 
 GitHub's published Release starts its offline host matrix. Its public bundle
 download uses Node directly; it needs neither a Forge CLI nor a credential.

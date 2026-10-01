@@ -77,7 +77,7 @@ try {
       break;
     case "verify":
       if (arguments_.length) throw new Error("verify accepts no arguments");
-      formatSource();
+      await formatSource();
       await checkRepository();
       runTests();
       console.log("PASS repository documentation verification");
@@ -89,7 +89,7 @@ try {
       ) {
         throw new Error("format accepts only --check");
       }
-      formatSource({ check: arguments_[0] === "--check" });
+      await formatSource({ check: arguments_[0] === "--check" });
       break;
     case "lint":
       if (arguments_.length) throw new Error("lint accepts no arguments");

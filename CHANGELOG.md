@@ -13,8 +13,21 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [7.0.5] - 2026-10-02
+
+### Changed
+
+- Updated pinned native Vale to stable 3.24.0 and refreshed source-bound offline
+  supply. The two existing prose rules carry native test cases; official rule
+  coverage rejects a rule that loads but matches none of its examples. Real
+  document and configuration tests remain in the same verification graph.
+
 ### Fixed
 
+- Formatting checks every Git-selected format supported by native Prettier,
+  including code outside the usual directories and tracked files under normally
+  ignored paths. Ambient ignore files no longer exempt source; ignored
+  untracked files remain untouched.
 - Prose and link checks no longer silently omit tracked current Markdown under
   normally ignored directory names. Native Git selection still excludes ignored
   untracked state; official archives retain their historical boundary.
@@ -419,7 +432,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.4...main
+[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.5...main
+[7.0.5]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.4...v7.0.5
 [7.0.4]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.3...v7.0.4
 [7.0.3]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.2...v7.0.3
 [7.0.2]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.1...v7.0.2

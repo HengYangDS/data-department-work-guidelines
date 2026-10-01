@@ -42,42 +42,42 @@
       "versionOutput": "lychee 0.24.2"
     },
     "vale": {
-      "version": "3.23.0",
-      "source": "https://github.com/vale-cli/vale/releases/tag/v3.23.0",
-      "github_download_base": "https://github.com/vale-cli/vale/releases/download/v3.23.0",
+      "version": "3.24.0",
+      "source": "https://github.com/vale-cli/vale/releases/tag/v3.24.0",
+      "github_download_base": "https://github.com/vale-cli/vale/releases/download/v3.24.0",
       "gitlab_package_name": "vale",
       "binary": "vale",
-      "versionOutput": "vale version 3.23.0",
+      "versionOutput": "vale version 3.24.0",
       "assets": {
         "darwin-arm64": {
-          "name": "vale_3.23.0_macOS_arm64.tar.gz",
-          "sha256": "b913574b2c83b541d8bc2d8938e53a58a2fb06bab15135efcc755afb074f4430"
+          "name": "vale_3.24.0_macOS_arm64.tar.gz",
+          "sha256": "87b513f26499f6657c15cf7175ba5b058a7c1ff2bb2d4e07265db2dd43451e44"
         },
         "darwin-x64": {
-          "name": "vale_3.23.0_macOS_64-bit.tar.gz",
-          "sha256": "416fdd3ba32e32dc71c87b479cb86757bb6437bcebc7a3e4a095e863b7ce583d"
+          "name": "vale_3.24.0_macOS_64-bit.tar.gz",
+          "sha256": "eeb39e86f1daac27cc2a77fef3af1824d50559bdc22329fb25fb921c80c79472"
         },
         "linux-arm64": {
-          "name": "vale_3.23.0_Linux_arm64.tar.gz",
-          "sha256": "45720aadcb01401ac394641287a2c74e094045a89a450f5edcf98c8969df0884"
+          "name": "vale_3.24.0_Linux_arm64.tar.gz",
+          "sha256": "104cbd349279e50c4cb40adb70adf345d93cc4a3a0191f9e68bdccb97086b582"
         },
         "linux-x64": {
-          "name": "vale_3.23.0_Linux_64-bit.tar.gz",
-          "sha256": "cc35445a45186b8f0b01e11c01359694cf941e72cf6ab0fc44774f0e54c9d5fc"
+          "name": "vale_3.24.0_Linux_64-bit.tar.gz",
+          "sha256": "867534ddb678abca7f214bc4706ead0922bd5252ffe8035fc227013f66c8b214"
         },
         "win32-arm64": {
-          "name": "vale_3.23.0_Windows_arm64.zip",
-          "sha256": "e6e1dc8eacd288df66bea63358c934114ab08621c146a38777a655484eef14b6"
+          "name": "vale_3.24.0_Windows_arm64.zip",
+          "sha256": "3ec62981d49558d89c2ee2e9836f10db86ca335fdfaa2b701a9fbeca1496a5c7"
         },
         "win32-x64": {
-          "name": "vale_3.23.0_Windows_64-bit.zip",
-          "sha256": "ea9a8048498b869be8475a01488cd056f60b769f2d450311b9c24f07d11edd57"
+          "name": "vale_3.24.0_Windows_64-bit.zip",
+          "sha256": "3a8884774973b6f2826877e1c6388a5feae4704ef88a9a9c912c77ce186990f3"
         }
       },
       "licenses": {
         "LICENSE": {
           "sha256": "29a16197c8d01cafcacbd9c1774b66b28d7c0f15a6aceed88e4e8068ea398470",
-          "source": "https://github.com/vale-cli/vale/blob/v3.23.0/LICENSE"
+          "source": "https://github.com/vale-cli/vale/blob/v3.24.0/LICENSE"
         }
       }
     }

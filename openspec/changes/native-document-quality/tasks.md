@@ -88,6 +88,15 @@
       selection. Prove ignored local state stays excluded, while tracked current
       Markdown under normally ignored paths receives prose and link checks.
       Preserve the official archive boundary and reconcile current guidance.
+- [x] 2.18 Use the pinned native Prettier file-information contract for every
+      Git-selected supported source file. Reject format defects outside usual
+      code directories and under normally ignored tracked paths despite ambient
+      ignore files; preserve ignored untracked state, native TOML validation,
+      and the separate two-gate proof responsibilities.
+- [x] 2.19 Refresh native Vale supply to the verified latest stable release;
+      bind every archive and notice to official digests, embed native tests in
+      the two existing rules, reject a silently ineffective rule through native
+      coverage, and retain project-level prose tests without a second pipeline.
 
 ## 3. Qualification and publication
 
@@ -123,6 +132,10 @@
       post-tag online link check. Exact aftercare retained current and rollback
       downloads while retiring superseded assets; aggregate storage statistics
       may lag those verified resource removals.
+- [ ] 3.11 Qualify and publish the compatible formatter and native-tool refresh
+      with a source-bound bundle, cold install, trusted signature, exact-HEAD
+      installed proof, both Forge source and offline matrices, and bounded
+      retirement of superseded downloads and owned working state.
 - [x] 3.10 Retire superseded download assets independently on both Forges;
       retain the latest qualified release, one qualified rollback, and tool
       packages consumed by retained source. Preserve tags, original notes, and

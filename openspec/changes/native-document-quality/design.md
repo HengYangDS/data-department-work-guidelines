@@ -105,12 +105,33 @@ stock phrases. Native configuration and vocabulary contain the selected policy;
 the wrapper only chooses explicit current files, a verified executable, and
 fixed native arguments. There is no custom NLP or source-mapping engine.
 
+Refresh the native tool after observing a newer official stable release, not
+from a remembered version or a moving archive URL. The six platform archives
+must match official asset digests and release checksums; preserve the verified
+upstream license. Vale's native rule-test cases belong in the two existing YAML
+rules. Run the official coverage check through the current native test suite so
+a rule that loads but matches no example fails. Retain the project-level tests
+that exercise real Markdown, configuration, and command behavior. This adds no
+style-test directory, dependency, or second prose pipeline. A new source-bound
+bundle and each Forge's full platform qualification establish the new edition;
+prior signed tags and rollback assets keep their separate identity.
+
 Native Git discovery owns the distinction between source and ignored local
 state. Current Markdown selection excludes only official archived Changes;
 local-state directory names do not erase checks on files already selected by
 Git. Prove both cases through the public commands: ignored untracked material
 stays outside source, while force-added Markdown beneath a normally ignored
 path receives prose and link checks. Do not add another inventory or waiver.
+
+Formatting uses the same Git inventory and the pinned Prettier file-information
+API to identify supported source. It must not maintain a second language list,
+restrict code to `tools/` or `tests/`, or let ambient ignore files erase files
+already selected by Git. Explicit native invocation includes tracked source
+under normally ignored directories; ignored untracked material stays outside
+the inventory. Unsupported formats retain their separate native validation.
+Prove both checking and writing through the existing public formatter, with
+defective code outside the usual directories and force-added source under local
+state paths. Do not create another formatter, dependency, or configuration.
 
 Markdown lint owns syntax and parsed comment controls. Its supported parser
 identifies actual comments before checking Vale's control grammar. Literal code,

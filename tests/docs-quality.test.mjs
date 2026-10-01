@@ -717,8 +717,8 @@ test("changelog categories may recur under different releases, not one release",
   assert.match(duplicate.stderr, /MD024/u);
 });
 
-test("formatting selects supported source while TOML syntax is checked separately", () => {
-  const targets = formatTargets([
+test("formatting selects supported source while TOML syntax is checked separately", async () => {
+  const targets = await formatTargets([
     "docs/README.md",
     "openspec/changes/archive/2026-09-28-spelling-supply-refresh/design.md",
     ".config/supply/native.json",
@@ -804,6 +804,66 @@ test("native formatting policy preserves prose and ignores ambient editor settin
       path.join(directory, "sample.json"),
       '{"result":{"ready":true}}\n',
     );
+    const sources = new Map([
+      ["sample.mjs", "export const result={ready:true}\n"],
+      ["nested/sample.cjs", "module.exports={ready:true}\n"],
+      [
+        "nested/sample.ts",
+        "export const result:{ready:boolean}={ready:true}\n",
+      ],
+      ["build/tracked.mjs", "export const result={ready:true}\n"],
+      ["build/tracked.json", '{"result":{"ready":true}}\n'],
+      ["build/tracked.yml", "ready:    true\n"],
+      [".worktrees/tracked.md", "# Source\n\nUse   the report.\n"],
+      [
+        ".worktrees/node_modules/tracked.mjs",
+        "export const result={ready:true}\n",
+      ],
+    ]);
+    writeFileSync(
+      path.join(directory, ".gitignore"),
+      "node_modules/\nbuild/\n.worktrees/\n",
+    );
+    writeFileSync(
+      path.join(directory, ".prettierignore"),
+      `${[...sources.keys()].join("\n")}\n`,
+    );
+    for (const [relative, source] of sources) {
+      const target = path.join(directory, relative);
+      mkdirSync(path.dirname(target), { recursive: true });
+      writeFileSync(target, source);
+    }
+    const added = spawnSync(
+      "git",
+      [
+        "add",
+        "--force",
+        "--",
+        ...[...sources.keys()].filter(
+          (relative) =>
+            relative.startsWith("build/") || relative.startsWith(".worktrees/"),
+        ),
+      ],
+      { cwd: directory, encoding: "utf8", timeout: 10_000 },
+    );
+    assert.ifError(added.error);
+    assert.equal(added.status, 0, added.stderr);
+    const ignored = path.join(directory, "build", "ignored.mjs");
+    const ignoredSource = "export const result={ready:true}\n";
+    writeFileSync(ignored, ignoredSource);
+    const checked = spawnSync(
+      process.execPath,
+      ["tools/docs/cli.mjs", "format", "--check"],
+      { cwd: directory, encoding: "utf8", timeout: 30_000 },
+    );
+    assert.ifError(checked.error);
+    assert.equal(checked.status, 1, checked.stderr);
+    for (const relative of sources.keys()) {
+      assert.ok(
+        checked.stderr.replaceAll("\\", "/").includes(relative),
+        `format check omitted ${relative}: ${checked.stderr}`,
+      );
+    }
     const result = spawnSync(
       process.execPath,
       ["tools/docs/cli.mjs", "format"],
@@ -823,6 +883,21 @@ test("native formatting policy preserves prose and ignores ambient editor settin
       readFileSync(path.join(directory, "sample.json"), "utf8"),
       '{ "result": { "ready": true } }\n',
     );
+    for (const [relative, source] of sources) {
+      assert.notEqual(
+        readFileSync(path.join(directory, relative), "utf8"),
+        source,
+        relative,
+      );
+    }
+    assert.equal(readFileSync(ignored, "utf8"), ignoredSource);
+    const repaired = spawnSync(
+      process.execPath,
+      ["tools/docs/cli.mjs", "format", "--check"],
+      { cwd: directory, encoding: "utf8", timeout: 30_000 },
+    );
+    assert.ifError(repaired.error);
+    assert.equal(repaired.status, 0, repaired.stderr);
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }
@@ -1136,6 +1211,55 @@ test("native prose reports diagnosed stock phrases without requiring a rewrite",
     ),
     [],
   );
+  const verifyRules = (directory) =>
+    spawnSync(
+      nativeToolBinary("vale"),
+      [
+        "--no-global",
+        `--config=${path.join(root, ".config/checks/prose/vale.ini")}`,
+        "--no-color",
+        "--output=JSON",
+        "test",
+        "--coverage",
+        directory,
+      ],
+      { cwd: root, encoding: "utf8", timeout: 30_000 },
+    );
+  const style = path.join(root, ".config/checks/prose/styles/Plain");
+  const valid = verifyRules(style);
+  assert.ifError(valid.error);
+  assert.equal(valid.status, 0, valid.stderr);
+  const report = JSON.parse(valid.stdout);
+  assert.equal(report.failed, 0);
+  assert.equal(report.passed, 5);
+  assert.ok(report.results.every(({ passed }) => passed));
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-rule-coverage-"));
+  try {
+    const rules = path.join(directory, "Plain");
+    cpSync(style, rules, { recursive: true });
+    const defective = path.join(rules, "StockPhrases.yml");
+    writeFileSync(
+      defective,
+      readFileSync(defective, "utf8").replace(
+        "  - rich tapestry of insights",
+        "  - a phrase absent from every case",
+      ),
+    );
+    const invalid = verifyRules(rules);
+    assert.ifError(invalid.error);
+    assert.equal(invalid.status, 1, invalid.stderr);
+    const findings = JSON.parse(invalid.stdout);
+    assert.ok(findings.failed > 0);
+    assert.ok(
+      findings.results.some(
+        ({ name, passed }) =>
+          name === "diagnosed stock phrase fires" && !passed,
+      ),
+    );
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+    assert.equal(existsSync(directory), false);
+  }
 });
 
 test("native prose preserves syntax, quoted examples and honest uncertainty", () => {

@@ -20,6 +20,10 @@ and generated release record remain JSON so the offline installer can validate
 them before npm dependencies exist. Do not add converters, duplicate records,
 or old-path fallbacks.
 
+Git selects formatting input; pinned Prettier identifies its supported formats.
+Ambient editor and formatter ignore files cannot remove selected source from
+that check. Unsupported native formats keep their own validation.
+
 The [contributor route](../CONTRIBUTING.md) owns setup and release commands.
 [OpenSpec and ETHOS](../docs/governance/ethos.md) own change and proof admission;
 this directory is not another governance registry.

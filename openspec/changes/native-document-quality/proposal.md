@@ -38,6 +38,10 @@ linter beside the current stack would leave the duplication intact.
   every selected current Markdown file for prose and links, even beneath a
   normally ignored local-state path. Keep ignored untracked state excluded and
   official archived Changes under their historical boundary.
+- Let the pinned native Prettier parser select supported Git source rather than
+  narrowing code by directory or extension. Prevent ambient ignore files from
+  exempting already selected source, while leaving ignored untracked state and
+  unsupported native formats outside formatting.
 - Name every runnable GitLab verification job by purpose and platform, with
   `:review` for source review. Keep shared steps in hidden native templates, not
   a platform-less runnable job or a Linux job inherited by other hosts. Preserve
@@ -84,6 +88,10 @@ linter beside the current stack would leave the duplication intact.
   provider to cover every language.
 - Review the seven work topics with the installed English editorial skills;
   retain every actor, obligation, condition, permission, and evidence limit.
+- Refresh Vale to the verified latest stable release through the existing
+  native supply and bundle owners. Put native test cases in the two existing
+  style rules and use official rule coverage to reject rules that load but
+  match nothing; retain project-level prose tests and both Forge qualification.
 - Restore remaining original duties at their topic owners: stable concepts,
   execution costs and milestones, operational data-governance review, visible
   priorities and open decisions, explicit communication purpose, meeting focus,

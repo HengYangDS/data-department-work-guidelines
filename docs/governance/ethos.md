@@ -144,6 +144,11 @@ contract permits it; not every provider must cover every language.
 Repository-authored reports or command output cannot supply the missing native
 evidence. Proof does not create a second lifecycle.
 
+The existing test suite runs Vale's official coverage for cases embedded in the
+two native style rules. A rule that loads but no longer matches its diagnosed
+defect fails; real-document tests still check configuration, reader syntax, and
+the public commands. This does not establish factual or semantic accuracy.
+
 The [configuration map](../../.config/README.md) separates check policy, native
 supply, and artifact identity. Consumers read their native formats; the
 repository check enforces only this repository's placement and selection. It
@@ -162,6 +167,10 @@ Git source selection precedes current Markdown checks. A normally ignored
 directory cannot exempt an already tracked file from prose or links. Ignored
 untracked state stays excluded; official archived Changes retain their
 historical scope.
+
+Formatting uses the same Git inventory and native Prettier parser detection,
+without narrowing code by directory or extension. Ambient ignore files cannot
+exempt selected source; unsupported native formats retain their own checks.
 
 The [decision register](../decisions/README.md) owns the record format. The
 locked Markdown parser checks actual headings, unique stable IDs, and readable

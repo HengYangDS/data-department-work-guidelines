@@ -8,7 +8,9 @@ import {
   writeFileSync,
 } from "node:fs";
 import path from "node:path";
+import os from "node:os";
 import { fileURLToPath } from "node:url";
+import { getFileInfo } from "prettier";
 import { parse as parseToml } from "smol-toml";
 import YAML from "yaml";
 import { lint } from "markdownlint/sync";
@@ -28,23 +30,30 @@ import {
 
 const requiredMetadata = ["subject", "role", "state", "relations"];
 const cjk = /[\u2e80-\u9fff\uac00-\ud7af\uf900-\ufaff\uff00-\uffef]/u;
-export function formatTargets(files = gitFiles()) {
-  return [
-    ...sourceMarkdown(files),
-    ...files.filter(
-      (relative) =>
-        /^(?:tools|tests)\/.*\.mjs$/u.test(relative) ||
-        /\.(?:json|ya?ml)$/u.test(relative),
-    ),
-  ].filter((relative) => existsSync(filePath(relative)));
+export async function formatTargets(files = gitFiles()) {
+  const targets = [];
+  for (const relative of files) {
+    const absolute = filePath(relative);
+    if (!existsSync(absolute) || !lstatSync(absolute).isFile()) continue;
+    const { inferredParser } = await getFileInfo(absolute, {
+      ignorePath: [],
+      withNodeModules: true,
+      resolveConfig: false,
+    });
+    if (inferredParser) targets.push(relative);
+  }
+  return targets;
 }
 
-export function formatSource({ check = true } = {}) {
-  const targets = formatTargets();
+export async function formatSource({ check = true } = {}) {
+  const targets = await formatTargets();
   runNodeTool("prettier", "prettier", [
     "--config",
     ".config/checks/format/prettier.toml",
     "--no-editorconfig",
+    "--ignore-path",
+    os.devNull,
+    "--with-node-modules",
     check ? "--check" : "--write",
     ...targets,
   ]);
