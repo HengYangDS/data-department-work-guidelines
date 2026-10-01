@@ -21,6 +21,7 @@
     "markdownlint-cli2": "0.23.3",
     "prettier": "3.9.9",
     "semver": "7.8.5",
+    "shell-quote": "1.11.0",
     "smol-toml": "1.9.0",
     "yaml": "2.9.1"
   },

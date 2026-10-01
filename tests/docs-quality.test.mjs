@@ -202,6 +202,112 @@ test("shell syntax is rejected without rejecting concept prose or evidence links
   );
 });
 
+test("command classification does not inherit object properties", () => {
+  for (const source of [
+    "constructor selection preserves the domain boundary.",
+    "toString defines the reader representation.",
+    "hasOwnProperty checks one declared property.",
+    "__proto__ is a literal key, not an execution request.",
+  ]) {
+    assert.equal(commandInvocation(source), false);
+    assert.doesNotThrow(() =>
+      validateDecision(
+        "docs/decisions/dr-0001-fixture.md",
+        decision({ body: source }),
+      ),
+    );
+  }
+  assert.equal(commandInvocation("ethos status --json"), true);
+});
+
+test("native shell tokens preserve quoting and compound invocation boundaries", () => {
+  for (const source of [
+    '"ethos" status --json',
+    "'openspec' validate --all --strict",
+    "true && ethos status --json",
+    "printf value | node tools/docs/cli.mjs check",
+    "env X=1 'ethos' plan --changed",
+    "env X=1 ./tools/docs/cli.mjs verify",
+    "sudo ./tools/docs/cli.mjs check",
+    "sudo -u root ethos status --json",
+    "/usr/local/bin/ethos status --json",
+    "git reset --hard",
+    "rm -rf ./temporary",
+    "curl --fail https://example.test/source",
+  ]) {
+    assert.equal(commandInvocation(source), true, source);
+    assert.throws(
+      () =>
+        validateDecision(
+          "docs/decisions/dr-0001-fixture.md",
+          decision({
+            body: `The record links execution instead of embedding \`${source}\`.`,
+          }),
+        ),
+      /command invocation/u,
+      source,
+    );
+  }
+  for (const source of [
+    "node represents an executable host.",
+    "python describes the example language.",
+    "a < b is a comparison, not an execution request.",
+    "ETHOS lifecycle describes current work.",
+    "./tools/docs/cli.mjs",
+  ]) {
+    assert.equal(commandInvocation(source), false, source);
+  }
+});
+
+test("decision command inspection never evaluates shell input or ambient variables", () => {
+  const directory = mkdtempSync(
+    path.join(os.tmpdir(), "ddwg-command-inspection-"),
+  );
+  const marker = path.join(directory, "unexpected-execution");
+  const previous = process.env.FLAGS;
+  try {
+    process.env.FLAGS = "not a command";
+    assert.equal(commandInvocation("ethos status $FLAGS"), true);
+    process.env.FLAGS = "--json";
+    assert.equal(commandInvocation("ethos status $FLAGS"), true);
+    assert.equal(commandInvocation(`ethos status $(touch '${marker}')`), true);
+    assert.equal(existsSync(marker), false);
+  } finally {
+    if (previous === undefined) delete process.env.FLAGS;
+    else process.env.FLAGS = previous;
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test("each required decision section contains readable content", () => {
+  for (const heading of sections) {
+    for (const empty of [
+      "",
+      "---",
+      "[source]: https://example.test/evidence",
+    ]) {
+      const source = decision().replace(
+        `## ${heading}\n\nAn evidence link can describe the ETHOS lifecycle.\n`,
+        `## ${heading}\n\n${empty}\n`,
+      );
+      assert.throws(
+        () => validateDecision("docs/decisions/dr-0001-fixture.md", source),
+        /section.*readable content/u,
+      );
+    }
+  }
+  for (const body of [
+    "[Evidence](https://example.test/source)",
+    "> One accountable owner keeps the decision reversible.",
+    "- Keep one source of truth.",
+    "| Alternative | Boundary |\n| --- | --- |\n| One owner | One decision |",
+  ]) {
+    assert.doesNotThrow(() =>
+      validateDecision("docs/decisions/dr-0001-fixture.md", decision({ body })),
+    );
+  }
+});
+
 test("parsed decision content rejects wrapped execution and task progress", async (t) => {
   const cases = [
     ["quoted Bash fence", "> ```bash\n> git status\n> ```"],
@@ -383,13 +489,18 @@ test("public boundary command rejects parsed progress and preserves evidence pro
     for (const body of [
       '> ```powershell\n> Write-Output "Task complete"\n> ```',
       "- [x] Complete the release tasks.",
+      'The record excludes `"ethos" status --json`.',
+      "The record excludes `git reset --hard`.",
     ]) {
       const source = decision({ body });
       writeFileSync(path.join(sourceRoot, record), source);
       const result = runBoundary();
       assert.ifError(result.error);
       assert.equal(result.status, 1, result.stderr);
-      assert.match(result.stderr, /execution|task progress/u);
+      assert.match(
+        result.stderr,
+        /execution|task progress|command invocation/u,
+      );
       assert.equal(readFileSync(path.join(sourceRoot, record), "utf8"), source);
     }
     const source = decision({
@@ -423,6 +534,30 @@ test("current decision tree rejects date names, superseded records, and method c
     assert.throws(() => checkDecisions(directory), /status/u);
     mkdirSync(path.join(directory, "docs", "superpowers"));
     assert.throws(() => checkDecisions(directory), /superpowers/u);
+  });
+});
+
+test("the decision tree rejects reused stable identifiers", () => {
+  fixture((directory) => {
+    const records = path.join(directory, "docs", "decisions");
+    const second = decision()
+      .replace("subject: fixture:DR-0001", "subject: fixture:second-choice")
+      .replace(
+        "canonical_for: fixture choice",
+        "canonical_for: another choice",
+      );
+    const duplicate = path.join(records, "dr-0001-second-choice.md");
+    writeFileSync(duplicate, second);
+    assert.throws(
+      () => checkDecisions(directory),
+      /duplicate decision ID DR-0001/u,
+    );
+    rmSync(duplicate);
+    writeFileSync(
+      path.join(records, "dr-0002-second-choice.md"),
+      second.replaceAll("DR-0001", "DR-0002"),
+    );
+    assert.doesNotThrow(() => checkDecisions(directory));
   });
 });
 

@@ -22,6 +22,10 @@
 - [x] 2.4 Reconcile package, current OpenSpec, contribution, governance, CI,
       version, and changelog contracts. Audit current consumers and the resolved
       dependency graph for retired residue; retain archived bytes unchanged.
+- [x] 2.5 Repair inherited-property command classification, repeated stable
+      decision IDs, and empty sections at the existing parser and tree owners;
+      replace old shell token parsing with a pinned non-evaluating native lexer,
+      verify real negative cases, and preserve readable decision content.
 
 ## 3. Qualification and publication
 
@@ -39,3 +43,6 @@
 - [x] 3.6 Publish the compatible original-duty correction with fresh local,
       installed ETHOS, signed patch, asset, and both Forge platform evidence;
       preserve the already qualified major release.
+- [ ] 3.7 Qualify and publish the final compatible decision-boundary correction
+      with exact-source proof, a signed patch, a source-bound offline bundle,
+      and both Forge platform matrices; preserve prior release objects.

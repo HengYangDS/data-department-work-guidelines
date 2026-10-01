@@ -117,7 +117,13 @@ The decision boundary uses the locked native Markdown parser to inspect actual
 headings, task markers and code nodes, including quote and list nesting.
 Code blocks, task progress and mismatched titles fail; natural-language
 rationale, ordinary decision tables, inline terms and evidence links remain
-valid. Link to executable examples rather than placing them in a DR. Raw HTML
+valid. Stable IDs must be unique, and every section must contain readable
+content. An empty heading, thematic break, or reference definition alone is not
+a decision section. A locked shell lexer inspects quoted and compound
+invocations without executing text or reading ambient variables. Bare paths
+and ordinary interpreter prose remain valid. This is a syntax boundary, not
+a claim to recognize every command dialect. Link to executable examples rather
+than placing them in a DR. Raw HTML
 other than the leading registry comment is unsupported in DRs because it could
 hide content from this Markdown check. This validator does not decide whether
 every prose sentence is durable; reviewers still move task and acceptance

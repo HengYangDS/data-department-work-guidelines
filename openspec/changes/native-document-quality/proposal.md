@@ -15,6 +15,12 @@ linter beside the current stack would leave the duplication intact.
 - Replace textlint parsing in both DR boundaries and the offline bundle's
   README license reader with the existing native Markdown parser. Reject actual
   disabling comments without rejecting code or meaningful evidence links.
+- Close the remaining decision boundary gaps: reject reused stable IDs and
+  empty sections, and preserve ordinary prose whose first word is an inherited
+  JavaScript object property.
+- Replace hand-written shell token parsing with one audited native lexer;
+  recognize quoted and compound invocations without evaluating text or reading
+  ambient variables, and retain bare paths and interpreter prose.
 - Extend the existing native-tool installation and offline bundle owners to
   supply both Vale and lychee through one manifest. Remove the replaced entry,
   configurations, packages, and adapters.

@@ -114,6 +114,59 @@ prose, fenced examples, empty sections, or a mismatched declaration. It preserve
 upstream notice bytes and resolves the npm parser only during bundle building;
 cold installation must work before npm dependencies are installed.
 
+### Complete the existing decision boundary
+
+Adversarial review of source `d8b6853f069ae1a414ee32f483a1fd4785bf8e91`
+found three gaps in the migrated owner. A sentence beginning with `constructor`,
+`toString`, or another inherited property crashes command classification.
+Separate current DRs can reuse one stable ID even when their document subjects
+differ. Five empty headings also pass despite carrying no decision rationale.
+
+Use only own command-table properties. Return the already validated stable ID
+to the existing tree check, which rejects duplicates without parsing the
+document again. Inspect the existing native paragraph and table-cell tokens between
+each required pair of headings for readable content. Links, lists, quoted
+rationale, and decision tables remain valid; whitespace, thematic breaks, and
+reference definitions alone do not supply a section's content. No word count,
+NLP classifier, second Markdown parser, or lifecycle gate is introduced. This structural
+check cannot judge whether a nonempty argument is sound.
+
+The old shell-token regex also misses quoted executable names and compound
+commands, and treats every sentence beginning with an interpreter name as an
+invocation. Replace it, rather than adding another parser, with pinned
+`shell-quote` 1.11.0. Its native token stream distinguishes operators, comments,
+quoted words, and escapes. Repository logic recognizes executable names and
+argument syntax; it does not attempt general natural-language understanding.
+Preserve variables with an explicit callback instead of reading the host
+environment, and never execute the inspected text. Bare paths and meaningful
+interpreter prose remain valid. Unsupported command dialects still require
+editorial review; portable execution of the checker is a separate property.
+
+Native registry and upstream metadata establish the package identity and MIT
+notice. An isolated lock-only resolution adds one package, no transitive
+packages, no platform requirement, and no installation lifecycle script. The
+exact-version advisory query and complete resolved audit report no findings.
+Replace the old token function completely and include the new package and its
+license in the next source-bound offline bundle. Do not preserve a fallback
+regex or add a host shell dependency.
+
+Each defect must fail against the previous source and pass after the repair.
+Retain execution-content counterexamples and ordinary prose positives, then
+run the complete verifier. Record upcoming fixes under `Unreleased` and qualify
+the final patch separately; do not move an existing release tag or replace its
+bundle.
+
+The compatible checker correction is prepared as v7.0.2. Department duties,
+member routes, and contributor commands do not change; the dependency and
+offline bundle do. Keep its notes under `Unreleased` until the release cut,
+then qualify its exact signed source and immutable package independently.
+
+Keep identity and section completeness separate from the execution-content
+requirement. Appending both responsibilities to one long requirement produced
+an official INFO finding that the current ETHOS runtime blocks before proof.
+Separate the obligations and retain all scenarios; do not drop a qualification,
+disable native validation, or misreport that product behavior as repaired.
+
 The former stop-word dictionary includes ordinary domain words that already
 needed exclusions. Native rule selection must preserve the promised defect
 categories and real negative cases without imposing a large inherited blacklist

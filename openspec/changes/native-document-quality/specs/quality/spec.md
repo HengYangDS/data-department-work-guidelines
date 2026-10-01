@@ -288,6 +288,40 @@ SHALL NOT substitute for observing the actual consuming npm command.
 
 ## ADDED Requirements
 
+### Requirement: Decision identity and section completeness remain explicit
+
+Each current DR identifier SHALL be unique. Each of its five sections SHALL
+contain readable Markdown content. Ordinary command-table property names in
+prose SHALL NOT become shell commands or cause a classifier exception.
+Structural validity SHALL NOT claim to establish the quality of the reasoning.
+
+#### Scenario: A current record repeats a stable identity
+
+- **WHEN** two records use the same stable DR ID, even with different subjects
+- **THEN** the existing decision-tree boundary rejects the duplicate identity
+- **AND** distinct correctly identified records remain valid.
+
+#### Scenario: A required section has no readable content
+
+- **WHEN** a section is empty or contains only spacing, thematic breaks, or
+  reference definitions
+- **THEN** native token inspection rejects that section
+- **AND** readable links, lists, quotes, and table cells remain valid.
+
+#### Scenario: Prose begins with a JavaScript property name
+
+- **WHEN** ordinary rationale begins with `constructor`, `toString`,
+  `hasOwnProperty`, or `__proto__`
+- **THEN** command classification returns no invocation without an exception
+- **AND** a real command invocation remains rejected.
+
+#### Scenario: Shell inspection preserves execution and reader boundaries
+
+- **WHEN** quoted, compound, wrapped, or absolute-path invocations appear in a DR
+- **THEN** the native lexer supplies tokens and the existing boundary rejects
+  the invocation without evaluating the text or reading ambient variables
+- **AND** bare paths and ordinary interpreter prose remain valid.
+
 ### Requirement: Complete retirement of replaced quality tools
 
 The replacement SHALL migrate every textlint responsibility: English checks,

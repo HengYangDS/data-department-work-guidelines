@@ -1,5 +1,6 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
+import { parse as parseShell } from "shell-quote";
 import { parse as parseToml } from "smol-toml";
 import { documentMetadata } from "./content.mjs";
 import {
@@ -48,6 +49,7 @@ const subcommands = {
     "log",
     "merge",
     "push",
+    "reset",
     "status",
     "worktree",
   ]),
@@ -66,48 +68,91 @@ function filesUnder(directory) {
   });
 }
 
-function shellTokens(source) {
-  return source.match(/(?:[^\s"']+|"[^"]*"|'[^']*')+/gu) ?? [];
+const interpreters = new Set([
+  "bash",
+  "fish",
+  "sh",
+  "zsh",
+  "node",
+  "python",
+  "python3",
+  "pwsh",
+]);
+const wrappers = new Set(["command", "env", "nice", "nohup", "sudo", "time"]);
+const assignment = /^[A-Za-z_][A-Za-z0-9_]*=/u;
+const argumentSyntax =
+  /^(?:--?[^-\s]|\.{1,2}[\\/]|[\\/]|https?:\/\/)|[\\/]|\.(?:[cm]?js|py|sh)$/u;
+
+function commandName(word) {
+  return path.posix
+    .basename(word.replaceAll("\\", "/"))
+    .replace(/\.exe$/iu, "");
+}
+
+function repositoryCommand(word) {
+  const normalized = word.replaceAll("\\", "/");
+  return (
+    normalized.startsWith("./scripts/") || normalized.startsWith("./tools/")
+  );
+}
+
+function knownCommand(word) {
+  const name = commandName(word);
+  return (
+    Object.hasOwn(subcommands, name) ||
+    interpreters.has(name) ||
+    ["curl", "rm"].includes(name) ||
+    wrappers.has(name) ||
+    repositoryCommand(word)
+  );
+}
+
+function invocationWords(words) {
+  const tokens = [...words];
+  while (tokens.length && assignment.test(tokens[0])) tokens.shift();
+  while (tokens.length && wrappers.has(commandName(tokens[0]))) {
+    tokens.shift();
+    if (
+      !tokens.length ||
+      !(
+        tokens[0].startsWith("-") ||
+        assignment.test(tokens[0]) ||
+        knownCommand(tokens[0])
+      )
+    )
+      return false;
+    while (tokens.length && !knownCommand(tokens[0])) tokens.shift();
+  }
+  if (tokens.length < 2) return false;
+  const [executable, argument] = tokens;
+  const name = commandName(executable);
+  if (interpreters.has(name) || ["curl", "rm"].includes(name))
+    return argumentSyntax.test(argument);
+  if (repositoryCommand(executable)) return true;
+  return (
+    Object.hasOwn(subcommands, name) &&
+    (argument.startsWith("-") || subcommands[name].has(argument))
+  );
 }
 
 export function commandInvocation(source) {
-  let candidate = source
+  const candidate = source
     .trim()
     .replace(/^(?:[-*+] |\d+[.)] )/u, "")
     .trim();
   if (!candidate || candidate.startsWith("#")) return false;
   if (/^(?:\$\s+|[\w.-]+@[\w.-]+(?::[^$#\s]+)?\$\s+)/u.test(candidate))
     return true;
-  const tokens = shellTokens(candidate);
-  while (tokens.length && /^[A-Za-z_][A-Za-z0-9_]*=/u.test(tokens[0]))
-    tokens.shift();
-  while (
-    tokens.length &&
-    ["command", "env", "nice", "nohup", "sudo", "time"].includes(tokens[0])
-  ) {
-    const wrapper = tokens.shift();
-    if (wrapper === "env") {
-      while (
-        tokens.length &&
-        (tokens[0].startsWith("-") ||
-          /^[A-Za-z_][A-Za-z0-9_]*=/u.test(tokens[0]))
-      )
-        tokens.shift();
-    } else if (wrapper === "nice" || wrapper === "sudo") {
-      while (tokens.length && tokens[0].startsWith("-")) tokens.shift();
+  const words = [];
+  for (const token of parseShell(candidate, (name) => `$${name}`)) {
+    if (typeof token === "string") words.push(token);
+    else {
+      if (invocationWords(words)) return true;
+      words.length = 0;
+      if ("comment" in token) break;
     }
   }
-  if (!tokens.length) return false;
-  const [head, argument] = tokens;
-  if (["bash", "fish", "sh", "zsh", "node", "python", "python3"].includes(head))
-    return tokens.length > 1;
-  if (head.startsWith("./scripts/") || head.startsWith("./tools/"))
-    return tokens.length > 1;
-  return (
-    head in subcommands &&
-    Boolean(argument) &&
-    (argument.startsWith("-") || subcommands[head].has(argument))
-  );
+  return invocationWords(words);
 }
 
 export function executionViolation(source, tokens = markdownTokens(source)) {
@@ -185,6 +230,25 @@ export function validateDecision(relative, source) {
   }
   const violation = executionViolation(source, tokens);
   if (violation) throw new Error(`DR contains ${violation}: ${relative}`);
+  const readable = [...walkMarkdown(tokens)].filter((node) =>
+    ["paragraph", "tableContent"].includes(node.type),
+  );
+  for (const [index, section] of sections.entries()) {
+    const nextLine = sections[index + 1]?.startLine ?? Number.POSITIVE_INFINITY;
+    if (
+      !readable.some(
+        (node) =>
+          node.startLine > section.endLine &&
+          node.startLine < nextLine &&
+          markdownText(node, { code: true }).trim(),
+      )
+    ) {
+      throw new Error(
+        `DR section ${headingText(section)} requires readable content: ${relative}`,
+      );
+    }
+  }
+  return expected;
 }
 
 export function checkDecisions(repository = root) {
@@ -195,9 +259,16 @@ export function checkDecisions(repository = root) {
   const files = filesUnder(directory).filter((file) => file.endsWith(".md"));
   const records = files.filter((file) => path.basename(file) !== "README.md");
   if (!records.length) throw new Error("missing current decision records");
+  const identities = new Map();
   for (const file of records) {
     const relative = path.relative(repository, file).split(path.sep).join("/");
-    validateDecision(relative, readFileSync(file, "utf8"));
+    const identity = validateDecision(relative, readFileSync(file, "utf8"));
+    if (identities.has(identity)) {
+      throw new Error(
+        `duplicate decision ID ${identity}: ${identities.get(identity)} and ${relative}`,
+      );
+    }
+    identities.set(identity, relative);
   }
   console.log(`PASS decision boundary: ${records.length} current records`);
 }

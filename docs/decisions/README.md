@@ -24,5 +24,7 @@ Records do not own tasks, command output, or acceptance logs.
 IDs are stable and never reused. Retired records remain recoverable in Git
 history, not in the current decision register. A current record has only
 `Context`, `Decision`, `Alternatives Rejected`, `Consequences and Boundary`, and
-`Evidence and Revisit` sections. Its evidence links explain the basis and
+`Evidence and Revisit` sections, each with readable content. The structural
+check rejects repeated IDs and empty sections; it does not judge the argument.
+Its evidence links explain the basis and
 revisit condition; they do not retrospectively certify earlier work.
