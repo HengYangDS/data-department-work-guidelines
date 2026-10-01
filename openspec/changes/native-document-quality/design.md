@@ -596,14 +596,15 @@ member and Agent routes, and contributor commands remain unchanged. Publish a
 patch with the same source and bundle on each Forge. Shared ETHOS acceptance
 remains an independent open obligation; it does not prevent this correction.
 
-The reusable boundary belongs in ETHOS, not in copied adopter checkers. Product
-validation must consume the declared applicable peers rather than hard-code
-the two providers or addresses in this repository. It must check native Markdown reference
-resolution, including earlier and nested definitions that can shadow a checked
-URL. Audit adopter source separately: missing history links do not prove a
-wrong-repository URL, and notification does not prove a repair. Each actual
-correction remains in its repository's official Change and owned lane; qualify
-the formally accepted installed owner without retaining duplicate mechanisms.
+The reusable boundary belongs in ETHOS, not in copied adopter checkers.
+Product validation must consume the declared applicable peers rather than
+hard-code the two providers or addresses in this repository. It must check
+native Markdown reference resolution, including earlier and nested
+definitions that can shadow a checked URL. Audit adopter source separately:
+missing history links do not prove a wrong-repository URL, and notification
+does not prove a repair. Each actual correction remains in its repository's
+official Change and owned lane; qualify the formally accepted installed
+owner without retaining duplicate mechanisms.
 
 ## Risks / Trade-offs
 
