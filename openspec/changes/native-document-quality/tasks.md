@@ -31,7 +31,7 @@
       caches, host paths, credentials, or remote supply.
 - [ ] 3.3 Obtain exact-HEAD installed ETHOS plan/proof and acceptance. Formal
       shared native evidence integration remains pending until accepted.
-- [ ] 3.4 Publish the major signed SemVer edition independently to GitLab and
+- [x] 3.4 Publish the major signed SemVer edition independently to GitLab and
       GitHub; verify both exact refs, Releases, downloaded asset hashes, and
       declared source and offline platform jobs.
 - [ ] 3.5 Complete this Change, archive officially, verify the archive identity,
