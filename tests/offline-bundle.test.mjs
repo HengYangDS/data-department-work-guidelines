@@ -270,7 +270,8 @@ function buildFixture(run) {
     const cacheDirectory = path.join(directory, "cache");
     const assetDirectory = path.join(directory, "assets");
     const licenseDirectory = path.join(directory, "licenses");
-    mkdirSync(path.join(repository, ".config", "tools"), { recursive: true });
+    mkdirSync(path.join(repository, ".config", "supply"), { recursive: true });
+    mkdirSync(path.join(repository, ".config", "release"));
     mkdirSync(path.join(cacheDirectory, "_cacache", "index-v5"), {
       recursive: true,
     });
@@ -312,7 +313,7 @@ function buildFixture(run) {
       licenses,
     };
     writeFileSync(
-      path.join(repository, ".config", "tools", "native.json"),
+      path.join(repository, ".config", "supply", "native.json"),
       JSON.stringify({
         schemaVersion: 1,
         tools: {
@@ -381,7 +382,7 @@ test("builder admits only pinned, licensed, regular supply", () => {
     const manifestPath = path.join(
       inputs.repository,
       ".config",
-      "tools",
+      "supply",
       "native.json",
     );
     const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
@@ -394,7 +395,7 @@ test("builder admits only pinned, licensed, regular supply", () => {
     const manifestPath = path.join(
       inputs.repository,
       ".config",
-      "tools",
+      "supply",
       "native.json",
     );
     const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
@@ -676,7 +677,7 @@ test("tracked bundle identity rejects source drift", () => {
     const recordPath = path.join(
       inputs.repository,
       ".config",
-      "tools",
+      "release",
       "offline-bundle.json",
     );
     writeFileSync(recordPath, JSON.stringify(built));
@@ -746,7 +747,7 @@ test("GitHub acquisition uses the exact public asset without a CLI or credential
     const recordPath = path.join(
       inputs.repository,
       ".config",
-      "tools",
+      "release",
       "offline-bundle.json",
     );
     writeFileSync(recordPath, JSON.stringify(built));
@@ -803,7 +804,7 @@ test("GitHub acquisition uses the exact public asset without a CLI or credential
   await buildFixture(async (inputs) => {
     const built = assembleBundle(inputs);
     writeFileSync(
-      path.join(inputs.repository, ".config", "tools", "offline-bundle.json"),
+      path.join(inputs.repository, ".config", "release", "offline-bundle.json"),
       JSON.stringify(built),
     );
     const target = path.join(
@@ -847,7 +848,12 @@ test("public GitHub acquisition fails closed and removes only its failed output"
     await buildFixture(async (inputs) => {
       const built = assembleBundle(inputs);
       writeFileSync(
-        path.join(inputs.repository, ".config", "tools", "offline-bundle.json"),
+        path.join(
+          inputs.repository,
+          ".config",
+          "release",
+          "offline-bundle.json",
+        ),
         JSON.stringify(built),
       );
       await assert.rejects(() =>
@@ -883,7 +889,7 @@ test("GitLab acquisition uses only the same project's pinned release package", a
   await buildFixture(async (inputs) => {
     const built = assembleBundle(inputs);
     writeFileSync(
-      path.join(inputs.repository, ".config", "tools", "offline-bundle.json"),
+      path.join(inputs.repository, ".config", "release", "offline-bundle.json"),
       JSON.stringify(built),
     );
     const environment = {
@@ -952,7 +958,7 @@ test("GitLab acquisition uses only the same project's pinned release package", a
   await buildFixture(async (inputs) => {
     const built = assembleBundle(inputs);
     writeFileSync(
-      path.join(inputs.repository, ".config", "tools", "offline-bundle.json"),
+      path.join(inputs.repository, ".config", "release", "offline-bundle.json"),
       JSON.stringify(built),
     );
     const target = path.join(
@@ -1283,7 +1289,7 @@ test("a bundle covers both native owners and their notices", () => {
       validateExtractedBundle(stage, inputs.repository),
     );
     const supply = JSON.parse(
-      readFileSync(path.join(inputs.repository, ".config/tools/native.json")),
+      readFileSync(path.join(inputs.repository, ".config/supply/native.json")),
     );
     const valeAsset = path.join(
       stage,

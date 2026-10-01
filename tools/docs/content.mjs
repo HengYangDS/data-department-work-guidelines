@@ -12,7 +12,7 @@ import { fileURLToPath } from "node:url";
 import { parse as parseToml } from "smol-toml";
 import YAML from "yaml";
 import { lint } from "markdownlint/sync";
-import markdownConfiguration from "../../.config/tools/markdownlint-cli2.mjs";
+import { noProseControl } from "./markdown.mjs";
 import {
   currentMarkdown,
   filePath,
@@ -33,7 +33,7 @@ export function formatTargets(files = gitFiles()) {
     ...sourceMarkdown(files),
     ...files.filter(
       (relative) =>
-        /^(?:tools|tests|\.config)\/.*\.mjs$/u.test(relative) ||
+        /^(?:tools|tests)\/.*\.mjs$/u.test(relative) ||
         /\.(?:json|ya?ml)$/u.test(relative),
     ),
   ].filter((relative) => existsSync(filePath(relative)));
@@ -42,6 +42,9 @@ export function formatTargets(files = gitFiles()) {
 export function formatSource({ check = true } = {}) {
   const targets = formatTargets();
   runNodeTool("prettier", "prettier", [
+    "--config",
+    ".config/checks/format/prettier.toml",
+    "--no-editorconfig",
     check ? "--check" : "--write",
     ...targets,
   ]);
@@ -50,7 +53,7 @@ export function formatSource({ check = true } = {}) {
 export function lintMarkdown() {
   runNodeTool("markdownlint-cli2", "markdownlint-cli2", [
     "--config",
-    ".config/tools/markdownlint-cli2.mjs",
+    ".config/checks/markdown/markdownlint-cli2.toml",
     ...sourceMarkdown().map((relative) => `:${relative}`),
   ]);
 }
@@ -66,7 +69,7 @@ export function proseAlerts(files = currentMarkdown()) {
     frontMatter: null,
     noInlineConfig: true,
     config: { default: false, "no-prose-control": true },
-    customRules: markdownConfiguration.customRules,
+    customRules: [noProseControl],
   });
   const violations = Object.entries(controls).flatMap(([file, errors]) =>
     errors.map(
@@ -79,7 +82,7 @@ export function proseAlerts(files = currentMarkdown()) {
     nativeToolBinary("vale"),
     [
       "--no-global",
-      `--config=${filePath(".config/tools/vale.ini")}`,
+      `--config=${filePath(".config/checks/prose/vale.ini")}`,
       "--output=JSON",
       "--no-exit",
       "--no-color",
@@ -197,11 +200,9 @@ export function repositoryFileUri(uri) {
 
 export function linkCheckArguments(list, { online = false } = {}) {
   return [
-    ...(online ? [] : ["--offline"]),
-    "--include-fragments=anchor-only",
-    "--no-progress",
-    "--max-retries",
-    "0",
+    "--config",
+    filePath(".config/checks/links/lychee.toml"),
+    ...(online ? ["--offline=false"] : []),
     "--files-from",
     list,
   ];
@@ -214,7 +215,7 @@ export function checkLinks({ online = false } = {}) {
     const list = path.join(directory, "files.txt");
     writeFileSync(list, `${files.map(filePath).join("\n")}\n`, "utf8");
     const lychee = nativeToolBinary("lychee");
-    const links = run(lychee, ["--dump", "--files-from", list], {
+    const links = run(lychee, [...linkCheckArguments(list), "--dump"], {
       capture: true,
       timeout: 60_000,
     });

@@ -24,6 +24,12 @@ linter beside the current stack would leave the duplication intact.
 - Extend the existing native-tool installation and offline bundle owners to
   supply both Vale and lychee through one manifest. Remove the replaced entry,
   configurations, packages, and adapters.
+- Correct configuration ownership: separate check policy, native tool supply,
+  and release identity. Use native TOML for Prettier, Markdownlint, and lychee;
+  remove package-embedded formatting policy and hard-coded link policy, move
+  executable rules to their existing implementation owner, and retire every
+  previous path without fallback. Preserve formats required by native consumers
+  and the dependency-free offline bootstrap.
 - Remove retired tools from every current consumer, direct and transitive
   dependency, command, test interface, and guidance. No alternate parser,
   fallback, or optional retired checker remains after the replacement.

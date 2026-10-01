@@ -10,6 +10,7 @@ import {
   lintMarkdown,
 } from "./content.mjs";
 import {
+  checkConfigurationLayout,
   checkDecisions,
   checkLineEndingAttributes,
   checkLicense,
@@ -46,6 +47,7 @@ function runTests() {
 }
 
 async function checkRepository() {
+  checkConfigurationLayout();
   checkProfile();
   checkLineEndingAttributes();
   checkLicense();

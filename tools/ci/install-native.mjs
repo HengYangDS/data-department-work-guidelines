@@ -15,11 +15,9 @@ import { rm } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { projectPackageRequest } from "./gitlab-package.mjs";
-import { filePath, root, run } from "../docs/runtime.mjs";
+import { filePath, readNativeSupply, root, run } from "../docs/runtime.mjs";
 
-export const manifest = JSON.parse(
-  readFileSync(filePath(".config/tools/native.json"), "utf8"),
-);
+export const manifest = readNativeSupply();
 
 export function selectedAsset(
   tool,

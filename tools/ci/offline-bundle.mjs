@@ -18,7 +18,14 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
 import { projectPackageRequest } from "./gitlab-package.mjs";
-import { declaredToolRuntime, root, run } from "../docs/runtime.mjs";
+import {
+  declaredToolRuntime,
+  nativeSupplyPath,
+  offlineBundleRecordPath,
+  readNativeSupply,
+  root,
+  run,
+} from "../docs/runtime.mjs";
 
 const recordKeys = [
   "fileName",
@@ -254,7 +261,7 @@ export function sourceIdentity(repository) {
     readFileSync(path.join(repository, "package-lock.json")),
   );
   const nativeToolsSha256 = digestBytes(
-    readFileSync(path.join(repository, ".config", "tools", "native.json")),
+    readFileSync(path.join(repository, nativeSupplyPath)),
   );
   const runtime = declaredToolRuntime(repository);
   return {
@@ -288,12 +295,7 @@ export function assembleBundle({
   if (Number.parseInt(process.versions.node, 10) !== source.nodeMajor) {
     throw new Error(`offline bundle builder requires Node ${source.nodeMajor}`);
   }
-  const native = JSON.parse(
-    readFileSync(
-      path.join(repository, ".config", "tools", "native.json"),
-      "utf8",
-    ),
-  );
+  const native = readNativeSupply(repository);
   const cache = path.join(cacheDirectory, "_cacache");
   const cacheFileCount = assertRegularTree(cache);
   if (!cacheFileCount) throw new Error("offline bundle cache is empty");
@@ -400,12 +402,7 @@ export function validateExtractedBundle(directory, repository) {
   if (!cacheFileCount || cacheFileCount !== manifest.cacheFileCount) {
     throw new Error("offline bundle cache file count mismatch");
   }
-  const native = JSON.parse(
-    readFileSync(
-      path.join(repository, ".config", "tools", "native.json"),
-      "utf8",
-    ),
-  );
+  const native = readNativeSupply(repository);
   const toolNames = Object.keys(native.tools);
   if (
     !sameNames(path.join(directory, "native"), toolNames) ||
@@ -631,12 +628,7 @@ export function installBundle({
     if (!pathExists(nodeModules)) {
       throw new Error("offline npm install returned without node_modules");
     }
-    const native = JSON.parse(
-      readFileSync(
-        path.join(repository, ".config", "tools", "native.json"),
-        "utf8",
-      ),
-    );
+    const native = readNativeSupply(repository);
     const platform = `${process.platform}-${process.arch}`;
     for (const [tool, descriptor] of Object.entries(native.tools)) {
       const asset = descriptor.assets[platform];
@@ -883,10 +875,7 @@ export function buildReleaseBundle({
 
 export function readBundleRecord(repository = root) {
   const record = JSON.parse(
-    readFileSync(
-      path.join(repository, ".config", "tools", "offline-bundle.json"),
-      "utf8",
-    ),
+    readFileSync(path.join(repository, offlineBundleRecordPath), "utf8"),
   );
   return validateBundleRecord(record, sourceIdentity(repository));
 }

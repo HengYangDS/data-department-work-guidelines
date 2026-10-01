@@ -385,6 +385,43 @@ The old manifest and installer SHALL retire when their consumers are replaced.
   borrowing another Forge's identity, or reusing an earlier bundle
 - **AND** only the exact operation's disposable temporary stage is removed.
 
+### Requirement: Configuration placement follows native ownership
+
+Configuration SHALL separate check policy, native tool supply, and release
+identity under their semantic homes. Executable rules SHALL remain with their
+implementation owner. A supported native TOML format SHALL be preferred for
+hand-authored policy. Required native formats and dependency-free bootstrap
+records SHALL NOT gain converters, duplicate copies, or old-path fallback.
+
+#### Scenario: Native Markdown policy is selected
+
+- **WHEN** source verification selects Markdownlint policy
+- **THEN** the native CLI reads the concern-local TOML configuration and invokes
+  the existing Markdown rule implementation
+- **AND** actual disabling comments fail while literal examples remain valid.
+
+#### Scenario: Formatting and links consume native policy
+
+- **WHEN** source verification formats files or checks links
+- **THEN** Prettier and lychee read their concern-local TOML through native
+  configuration arguments instead of duplicated package or command policy
+- **AND** formatting ignores ambient editor policy; offline links remain the
+  default, with online mode requiring the existing explicit operation.
+
+#### Scenario: Configuration is mixed or duplicated
+
+- **WHEN** a candidate restores the old mixed directory, places supply under
+  checks, adds executable configuration, or leaves local state in `.config/`
+- **THEN** the existing repository source check rejects the invalid topology
+- **AND** adding another proof gate or a compatibility path cannot satisfy it.
+
+#### Scenario: Native formats differ
+
+- **WHEN** Vale requires INI and YAML or the offline installer reads machine
+  records before npm dependencies exist
+- **THEN** each consumer uses its single required native record directly
+- **AND** no TOML converter, duplicate manifest, or bootstrap parser is added.
+
 ## REMOVED Requirements
 
 ### Requirement: Offline tool supply is qualified by use, not an npm-major label

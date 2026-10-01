@@ -21,7 +21,7 @@ native declaration before `install`, `ci`, and `run`; do not disable it with
 `--force` or a policy override. Version matching is a prerequisite, not proof
 of correct source. Install the locked dependencies with `npm ci --ignore-scripts`.
 Use the Vale and lychee versions pinned in the
-[native supply manifest](.config/tools/native.json), through your platform's
+[native supply manifest](.config/supply/native.json), through your platform's
 existing installation owner or the repository-local installer. To install
 previously supplied archives, run each tool through the same entry:
 
@@ -50,14 +50,20 @@ bundled with Node. The offline repository verifier does not contact either
 Forge.
 
 Vale checks spelling, repeated words, selected technical terms, and diagnosed
-wordy phrases using [native configuration](.config/tools/vale.ini),
-[concise-expression rules](.config/tools/vale/styles/Plain/Concise.yml), and
-[reviewed vocabulary](.config/tools/vale/styles/config/vocabularies/Department/accept.txt).
+wordy phrases using [native configuration](.config/checks/prose/vale.ini),
+[concise-expression rules](.config/checks/prose/styles/Plain/Concise.yml), and
+[reviewed vocabulary](.config/checks/prose/styles/config/vocabularies/Department/accept.txt).
 The selected substitutions target demonstrated needless phrases; this edition
 does not inherit the old broad stop-word blacklist. In particular, authority,
 feasibility, uncertainty, and meaningful passive constructions retain their
 meaning. A technical vocabulary entry must name a real term, not suppress a
 finding wholesale.
+
+The [configuration map](.config/README.md) identifies the single policy owner
+for each check. Prettier, Markdownlint, and lychee read native TOML directly;
+Vale uses its required native INI, YAML, and vocabulary files. Repository
+commands select those owners explicitly, without ambient editor configuration,
+format conversion, or duplicated package policy.
 
 Paragraphs, headings, lists, quotes, link labels, and table cells are reader
 text. Code spans, fenced commands, and URL destinations retain their syntax.
@@ -164,7 +170,7 @@ grant Change authority.
    source check follows the new bundle record in Step 2. Do not tag a merely
    prepared edition.
 2. Supply every platform archive and upstream license notice under `tools` in
-   [the native supply manifest](.config/tools/native.json). Obtain their exact
+   [the native supply manifest](.config/supply/native.json). Obtain their exact
    bytes from the declared sources or an already qualified mirror. Use two
    local directories outside Git: `ASSET_DIR/vale/`, `ASSET_DIR/lychee/`,
    `LICENSE_DIR/vale/`, and `LICENSE_DIR/lychee/`. The builder checks every
@@ -182,7 +188,7 @@ grant Change authority.
    ```
 
    The build prints the actual bundle record. Put that exact reviewed JSON in
-   [the tracked bundle record](.config/tools/offline-bundle.json); never
+   [the tracked bundle record](.config/release/offline-bundle.json); never
    invent its digest or reuse one after the version, complete package manifest,
    lockfile, native supply manifest, or Node major changes. Only then run
    the command that reads that record:

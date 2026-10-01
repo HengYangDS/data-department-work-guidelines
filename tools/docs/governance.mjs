@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, lstatSync, readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
 import { parse as parseShell } from "shell-quote";
 import { parse as parseToml } from "smol-toml";
@@ -10,7 +10,14 @@ import {
   markdownTokens,
   walkMarkdown,
 } from "./markdown.mjs";
-import { readText, root } from "./runtime.mjs";
+import {
+  nativeSupplyPath,
+  nativeToolBinary,
+  offlineBundleRecordPath,
+  readText,
+  root,
+  run,
+} from "./runtime.mjs";
 
 const requiredSections = [
   "Context",
@@ -326,6 +333,99 @@ export function checkNavigation(repository = root) {
       throw new Error(`missing reader entry in ${relative}`);
   }
   console.log("PASS task-oriented navigation; this is not adoption evidence");
+}
+
+export function checkConfigurationLayout(repository = root) {
+  const expectedFiles = new Set([
+    ".config/README.md",
+    ".config/checks/format/prettier.toml",
+    ".config/checks/links/lychee.toml",
+    ".config/checks/markdown/markdownlint-cli2.toml",
+    ".config/checks/prose/vale.ini",
+    ".config/checks/prose/styles/Plain/Concise.yml",
+    ".config/checks/prose/styles/Plain/StockPhrases.yml",
+    ".config/checks/prose/styles/config/vocabularies/Department/accept.txt",
+    nativeSupplyPath,
+    offlineBundleRecordPath,
+  ]);
+  const expectedDirectories = new Set([".config"]);
+  for (const file of expectedFiles) {
+    let directory = path.posix.dirname(file);
+    while (directory !== ".") {
+      expectedDirectories.add(directory);
+      directory = path.posix.dirname(directory);
+    }
+  }
+  const observed = new Set();
+  const inspect = (relative) => {
+    const absolute = path.join(repository, relative);
+    const stat = lstatSync(absolute);
+    if (stat.isSymbolicLink())
+      throw new Error(
+        `configuration ownership cannot follow a link: ${relative}`,
+      );
+    if (stat.isDirectory()) {
+      if (!expectedDirectories.has(relative))
+        throw new Error(`configuration layout has no owner: ${relative}`);
+      for (const name of readdirSync(absolute)) inspect(`${relative}/${name}`);
+    } else if (stat.isFile() && expectedFiles.has(relative)) {
+      observed.add(relative);
+    } else {
+      throw new Error(`configuration ownership is not declared: ${relative}`);
+    }
+  };
+  if (!existsSync(path.join(repository, ".config")))
+    throw new Error("configuration layout is missing");
+  inspect(".config");
+  const missing = [...expectedFiles].filter((file) => !observed.has(file));
+  if (missing.length)
+    throw new Error(
+      `configuration layout is missing owners: ${missing.join(", ")}`,
+    );
+  const packagePath = path.join(repository, "package.json");
+  if (
+    existsSync(packagePath) &&
+    Object.hasOwn(JSON.parse(readFileSync(packagePath, "utf8")), "prettier")
+  )
+    throw new Error(
+      "configuration ownership cannot duplicate policy in package.json",
+    );
+  const markdown = parseToml(
+    readFileSync(
+      path.join(repository, ".config/checks/markdown/markdownlint-cli2.toml"),
+      "utf8",
+    ),
+  );
+  if (
+    markdown.noInlineConfig !== true ||
+    JSON.stringify(markdown.customRules) !==
+      '["../../../tools/docs/markdown.mjs"]'
+  ) {
+    throw new Error(
+      "configuration ownership must select the native Markdown rule",
+    );
+  }
+  const vale = JSON.parse(
+    run(
+      nativeToolBinary("vale"),
+      [
+        "--no-global",
+        `--config=${path.join(repository, ".config/checks/prose/vale.ini")}`,
+        "ls-config",
+      ],
+      { cwd: repository, capture: true, rejectStderr: true, timeout: 10_000 },
+    ),
+  );
+  if (
+    !Array.isArray(vale.Paths) ||
+    vale.Paths.length !== 1 ||
+    path.resolve(vale.Paths[0]) !==
+      path.resolve(repository, ".config/checks/prose/styles")
+  )
+    throw new Error(
+      "configuration ownership must keep Vale styles concern-local",
+    );
+  console.log("PASS configuration ownership: checks, supply and release");
 }
 
 export function checkProfile(repository = root) {

@@ -631,7 +631,7 @@ test("changelog categories may recur under different releases, not one release",
       [
         nodeTool("markdownlint-cli2", "markdownlint-cli2"),
         "--config",
-        ".config/tools/markdownlint-cli2.mjs",
+        ".config/checks/markdown/markdownlint-cli2.toml",
         "-",
       ],
       { cwd: root, encoding: "utf8", input: source, timeout: 10_000 },
@@ -646,29 +646,115 @@ test("changelog categories may recur under different releases, not one release",
   assert.match(duplicate.stderr, /MD024/u);
 });
 
-test("formatting selects source configuration and TOML syntax is checked", () => {
+test("formatting selects supported source while TOML syntax is checked separately", () => {
   const targets = formatTargets([
     "docs/README.md",
     "openspec/changes/archive/2026-09-28-spelling-supply-refresh/design.md",
-    ".config/tools/native.json",
-    ".config/tools/markdownlint-cli2.mjs",
+    ".config/supply/native.json",
+    ".config/checks/format/prettier.toml",
+    ".config/checks/links/lychee.toml",
+    ".config/checks/markdown/markdownlint-cli2.toml",
     "openspec/config.yaml",
     ".github/workflows/docs-verify.yml",
     "tools/docs/cli.mjs",
   ]);
   for (const file of [
     "openspec/changes/archive/2026-09-28-spelling-supply-refresh/design.md",
-    ".config/tools/native.json",
-    ".config/tools/markdownlint-cli2.mjs",
+    ".config/supply/native.json",
     "openspec/config.yaml",
     ".github/workflows/docs-verify.yml",
+    "tools/docs/cli.mjs",
   ]) {
     assert.ok(targets.includes(file), file);
   }
-  assert.match(
-    textViolations(".ethos/workspace.toml", "[invalid\n")[0],
-    /invalid TOML/u,
+  const toml = ".config/checks/markdown/markdownlint-cli2.toml";
+  assert.equal(targets.includes(toml), false);
+  assert.deepEqual(textViolations(toml, "noInlineConfig = true\n"), []);
+  assert.match(textViolations(toml, "[invalid\n")[0], /invalid TOML/u);
+});
+
+test("Markdown checks consume the native concern-local TOML policy", () => {
+  const relative = ".config/checks/markdown/markdownlint-cli2.toml";
+  assert.ok(existsSync(path.join(root, relative)), relative);
+  const source = "# Example\n\n<!-- vale off -->\n\nUse the report.\n";
+  const output = spawnSync(
+    process.execPath,
+    [
+      nodeTool("markdownlint-cli2", "markdownlint-cli2"),
+      "--config",
+      relative,
+      "-",
+    ],
+    { cwd: root, encoding: "utf8", input: source, timeout: 10_000 },
   );
+  assert.ifError(output.error);
+  assert.equal(output.status, 1, output.stderr);
+  assert.match(output.stderr, /no-prose-control/u);
+});
+
+test("native formatting policy preserves prose and ignores ambient editor settings", () => {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-format-policy-"));
+  try {
+    cpSync(path.join(root, "tools"), path.join(directory, "tools"), {
+      recursive: true,
+    });
+    cpSync(path.join(root, ".config"), path.join(directory, ".config"), {
+      recursive: true,
+    });
+    const manifest = JSON.parse(
+      readFileSync(path.join(root, "package.json"), "utf8"),
+    );
+    delete manifest.prettier;
+    writeFileSync(
+      path.join(directory, "package.json"),
+      `${JSON.stringify(manifest, null, 2)}\n`,
+    );
+    symlinkSync(
+      path.join(root, "node_modules"),
+      path.join(directory, "node_modules"),
+      "junction",
+    );
+    const initialized = spawnSync("git", ["init", "--quiet", directory], {
+      encoding: "utf8",
+      timeout: 10_000,
+    });
+    assert.ifError(initialized.error);
+    assert.equal(initialized.status, 0, initialized.stderr);
+    writeFileSync(
+      path.join(directory, ".editorconfig"),
+      "root = true\n\n[*]\nindent_size = 8\nmax_line_length = 20\n",
+    );
+    const sentence = "Keep the report readable without changing its meaning.";
+    writeFileSync(
+      path.join(directory, "README.md"),
+      `# Report\n\n${sentence}\n`,
+    );
+    writeFileSync(
+      path.join(directory, "sample.json"),
+      '{"result":{"ready":true}}\n',
+    );
+    const result = spawnSync(
+      process.execPath,
+      ["tools/docs/cli.mjs", "format"],
+      {
+        cwd: directory,
+        encoding: "utf8",
+        timeout: 30_000,
+      },
+    );
+    assert.ifError(result.error);
+    assert.equal(result.status, 0, result.stderr);
+    assert.equal(
+      readFileSync(path.join(directory, "README.md"), "utf8"),
+      `# Report\n\n${sentence}\n`,
+    );
+    assert.equal(
+      readFileSync(path.join(directory, "sample.json"), "utf8"),
+      '{ "result": { "ready": true } }\n',
+    );
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
 });
 
 test("current Markdown inventory excludes official archives, not live topics", () => {
@@ -745,19 +831,63 @@ test("pinned lychee rejects a broken local fragment", () => {
   }
 });
 
-test("live link checking is explicit and retains the offline source boundary", async () => {
+test("live link checking is explicit and retains one native policy owner", async () => {
   const content = await import("../tools/docs/content.mjs");
   assert.equal(typeof content.linkCheckArguments, "function");
   const offline = content.linkCheckArguments("files.txt");
   const online = content.linkCheckArguments("files.txt", { online: true });
-  assert.ok(offline.includes("--offline"));
-  assert.ok(!online.includes("--offline"));
+  assert.equal(offline[0], "--config");
+  assert.equal(offline[1], path.join(root, ".config/checks/links/lychee.toml"));
+  assert.ok(!offline.some((arg) => arg.startsWith("--offline")));
+  assert.ok(online.includes("--offline=false"));
   assert.deepEqual(
-    offline.filter((arg) => arg !== "--offline"),
-    online,
+    online.filter((arg) => arg !== "--offline=false"),
+    offline,
   );
   assert.ok(!online.includes("--accept"));
   assert.equal(online.at(-1), "files.txt");
+});
+
+test("native link policy rejects broken local anchors and makes no network request", async () => {
+  const { createServer } = await import("node:http");
+  const { linkCheckArguments } = await import("../tools/docs/content.mjs");
+  let requests = 0;
+  const server = createServer((_request, response) => {
+    requests += 1;
+    response.writeHead(500).end();
+  });
+  await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-native-links-"));
+  try {
+    const target = path.join(directory, "target.md");
+    const source = path.join(directory, "source.md");
+    const list = path.join(directory, "files.txt");
+    writeFileSync(target, "# Report\n");
+    writeFileSync(list, `${source}\n`);
+    const runLinks = (fragment) => {
+      writeFileSync(
+        source,
+        `# Links\n\n[Report](target.md#${fragment})\n\n[Remote](http://127.0.0.1:${server.address().port}/)\n`,
+      );
+      return spawnSync(nativeToolBinary("lychee"), linkCheckArguments(list), {
+        cwd: root,
+        encoding: "utf8",
+        timeout: 10_000,
+      });
+    };
+    const valid = runLinks("report");
+    assert.ifError(valid.error);
+    assert.equal(valid.status, 0, valid.stderr);
+    const broken = runLinks("missing");
+    assert.ifError(broken.error);
+    assert.notEqual(broken.status, 0);
+    assert.match(`${broken.stdout}${broken.stderr}`, /missing|fragment/iu);
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal(requests, 0);
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+    await new Promise((resolve) => server.close(resolve));
+  }
 });
 
 test("link checking rejects an incomplete-mode waiver", () => {

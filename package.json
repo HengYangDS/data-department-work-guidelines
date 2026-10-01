@@ -8,11 +8,6 @@
     "prose": "node tools/docs/cli.mjs prose",
     "test": "node tools/docs/cli.mjs test"
   },
-  "prettier": {
-    "printWidth": 80,
-    "proseWrap": "preserve",
-    "tabWidth": 2
-  },
   "devDependencies": {
     "@fission-ai/openspec": "1.14.0",
     "entities": "8.1.0",

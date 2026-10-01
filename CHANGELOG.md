@@ -12,6 +12,15 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+### Fixed
+
+- Separated check policy, native tool supply, and release identity by
+  responsibility. Prettier, Markdownlint, and lychee read native TOML directly;
+  executable rules stay with their existing implementation.
+- Removed duplicated package formatting and inline link policy, rejected
+  misplaced or linked configuration, and verified native selection without
+  ambient editor settings. Public commands and department duties are unchanged.
+
 ## [7.0.2] - 2026-10-01
 
 ### Fixed

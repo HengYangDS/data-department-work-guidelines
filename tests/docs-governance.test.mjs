@@ -5,12 +5,14 @@ import {
   mkdirSync,
   readFileSync,
   rmSync,
+  symlinkSync,
   writeFileSync,
 } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 import { parse as parseToml } from "smol-toml";
+import * as governance from "../tools/docs/governance.mjs";
 import {
   checkLineEndingAttributes,
   checkLicense,
@@ -245,4 +247,137 @@ test("Git checkout normalizes text independently of host autocrlf", () => {
     () => checkLineEndingAttributes("* text=auto\n"),
     /LF on every host/u,
   );
+});
+
+test("configuration has separate native concern owners", () => {
+  assert.equal(typeof governance.checkConfigurationLayout, "function");
+  assert.doesNotThrow(() => governance.checkConfigurationLayout());
+});
+
+function configurationFixture(run) {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-config-layout-"));
+  try {
+    cpSync(path.join(root, ".config"), path.join(directory, ".config"), {
+      recursive: true,
+    });
+    assert.doesNotThrow(() => governance.checkConfigurationLayout(directory));
+    run(directory);
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+}
+
+test("configuration rejects mixed ownership, code, duplicates and local state", () => {
+  for (const relative of [
+    ".config/tools/native.json",
+    ".config/checks/markdown/native.json",
+    ".config/checks/markdown/rules.mjs",
+    ".config/checks/format/prettier.json",
+    ".config/checks/links/lychee.ini",
+    ".config/supply/native.toml",
+    ".config/release/cache/entry",
+    ".config/checks/unused/.gitkeep",
+  ]) {
+    configurationFixture((directory) => {
+      const file = path.join(directory, relative);
+      mkdirSync(path.dirname(file), { recursive: true });
+      writeFileSync(file, "Invalid configuration owner.\n");
+      assert.throws(
+        () => governance.checkConfigurationLayout(directory),
+        /configuration (?:ownership|layout)/u,
+        relative,
+      );
+    });
+  }
+});
+
+test("configuration rejects missing native policy owners", () => {
+  for (const relative of [
+    ".config/checks/format/prettier.toml",
+    ".config/checks/links/lychee.toml",
+    ".config/checks/markdown/markdownlint-cli2.toml",
+    ".config/checks/prose/vale.ini",
+    ".config/supply/native.json",
+    ".config/release/offline-bundle.json",
+  ]) {
+    configurationFixture((directory) => {
+      rmSync(path.join(directory, relative));
+      assert.throws(
+        () => governance.checkConfigurationLayout(directory),
+        /configuration layout is missing owners/u,
+        relative,
+      );
+    });
+  }
+});
+
+test("configuration rejects package-embedded policy as a second owner", () => {
+  configurationFixture((directory) => {
+    writeFileSync(
+      path.join(directory, "package.json"),
+      JSON.stringify({ prettier: { printWidth: 80 } }),
+    );
+    assert.throws(
+      () => governance.checkConfigurationLayout(directory),
+      /configuration ownership.*package/u,
+    );
+  });
+});
+
+test("configuration cannot disable the native Markdown rule selection", () => {
+  for (const source of [
+    'noInlineConfig = false\ncustomRules = ["../../../tools/docs/markdown.mjs"]\n',
+    "noInlineConfig = true\ncustomRules = []\n",
+  ]) {
+    configurationFixture((directory) => {
+      writeFileSync(
+        path.join(directory, ".config/checks/markdown/markdownlint-cli2.toml"),
+        source,
+      );
+      assert.throws(
+        () => governance.checkConfigurationLayout(directory),
+        /select the native Markdown rule/u,
+      );
+    });
+  }
+});
+
+test("configuration cannot delegate ownership through a directory link", () => {
+  configurationFixture((directory) => {
+    const supply = path.join(directory, ".config/supply");
+    rmSync(supply, { recursive: true });
+    symlinkSync(path.join(root, ".config/supply"), supply, "junction");
+    assert.throws(
+      () => governance.checkConfigurationLayout(directory),
+      /configuration ownership cannot follow a link/u,
+    );
+  });
+});
+
+test("native Vale resolves equivalent syntax to the single concern-local styles owner", () => {
+  configurationFixture((directory) => {
+    const config = path.join(directory, ".config/checks/prose/vale.ini");
+    const original = readFileSync(config, "utf8");
+    writeFileSync(
+      config,
+      original.replace("StylesPath = styles", "StylesPath=styles"),
+    );
+    assert.doesNotThrow(() => governance.checkConfigurationLayout(directory));
+    cpSync(
+      path.join(directory, ".config/checks/prose/styles"),
+      path.join(directory, "external-styles"),
+      { recursive: true },
+    );
+    writeFileSync(
+      config,
+      original.replace(
+        "StylesPath = styles",
+        "StylesPath = ../../../external-styles",
+      ),
+    );
+    assert.throws(
+      () => governance.checkConfigurationLayout(directory),
+      /configuration ownership.*Vale/u,
+    );
+  });
 });

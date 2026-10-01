@@ -236,6 +236,47 @@ checks it carried. Exact npm admission, observed version, cold execution, source
 binding, and the audit boundary remain at their existing owners. Do not keep
 both compatibility claims or rewrite old archives to hide their sequence.
 
+### Organize configuration by responsibility
+
+The `.config/tools/` directory mixes document policy, executable rule code,
+binary supply, and a release record. Valid syntax does not establish correct
+ownership. Follow the existing ETHOS concern boundary: `.config/checks/` owns
+native check policy, `.config/supply/` owns the single native-tool manifest, and
+`.config/release/` owns the source-bound offline bundle record. A small directory
+README explains those owners and links to them; it is not another policy or
+registry. The repository check rejects misplaced, executable, duplicated, and
+local-state configuration. No additional ETHOS proof gate is introduced.
+
+Use `.config/checks/markdown/markdownlint-cli2.toml`, which the pinned native
+CLI supports through `--config`. The existing Markdown module owns the parsed
+Vale-comment rule and exposes it to the native rule loader. Configuration selects
+that implementation; it does not contain executable code. The prose checker
+uses the same rule, not a copied parser or alternate configuration.
+
+Prettier reads `.config/checks/format/prettier.toml` through its native `--config`
+option. Remove the policy from `package.json`; do not leave discovery or editor
+overrides to select another owner. Lychee reads
+`.config/checks/links/lychee.toml` for the same offline, fragment, progress, and
+retry behavior previously supplied inline. Only the explicit online operation
+overrides offline mode; file selection remains an execution input. Both paths
+use native consumers without a parser facade or additional dependency.
+
+Vale's main configuration remains INI at `.config/checks/prose/vale.ini`; its
+native styles remain YAML and its vocabulary plain text. The official consumer
+requires those formats. A TOML-to-INI converter would create a second owner, so
+it is rejected. The native supply manifest and release record remain JSON:
+the cold installer must validate them before npm dependencies exist, and Node
+does not supply a TOML parser. Their machine-readable identity is not another
+hand-authored policy. Do not introduce a bootstrap dependency or retain JSON
+and TOML copies merely to make every suffix look alike.
+
+Move existing manifest and native-rule bytes, update every source, test,
+contributor, and active-Change reference, then remove `.config/tools/` entirely.
+The public commands and normative duties do not change, so this correction is
+a compatible patch edition. Freeze a new source-bound bundle and qualify its
+cold install, installed proof, and both Forge matrices. Earlier signed tags,
+release assets, and official archives remain immutable.
+
 ### Deliver the complete transition
 
 Contributor commands and the offline bundle contract change incompatibly, so

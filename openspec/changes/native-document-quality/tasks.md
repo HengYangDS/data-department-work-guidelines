@@ -32,6 +32,10 @@
 - [x] 2.7 Await bounded native asynchronous cleanup in the existing installer;
       prove completion ordering and persistent-error propagation, then qualify
       actual Windows tool installation through its existing source CI job.
+- [x] 2.8 Separate configuration by check, supply, and release responsibility;
+      use native Prettier, Markdownlint, and lychee TOML, move rule code to its
+      existing module, reject misplaced or duplicate configuration, and retire
+      package-embedded and inline policy along with all old paths.
 
 ## 3. Qualification and publication
 
@@ -52,3 +56,6 @@
 - [x] 3.7 Qualify and publish the final compatible decision-boundary correction
       with exact-source proof, a signed patch, a source-bound offline bundle,
       and both Forge platform matrices; preserve prior release objects.
+- [ ] 3.8 Qualify and publish the compatible configuration correction with
+      current native tests, a fresh cold-install bundle, exact-HEAD installed
+      proof, and both source and offline platform matrices.

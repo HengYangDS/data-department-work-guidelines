@@ -9,6 +9,15 @@ export const root = path.resolve(
   "../..",
 );
 
+export const nativeSupplyPath = ".config/supply/native.json";
+export const offlineBundleRecordPath = ".config/release/offline-bundle.json";
+
+export function readNativeSupply(repository = root) {
+  return JSON.parse(
+    readFileSync(path.join(repository, nativeSupplyPath), "utf8"),
+  );
+}
+
 export function filePath(relative) {
   const parts = relative.split("/");
   if (!relative || parts.includes("..") || path.isAbsolute(relative)) {
@@ -141,7 +150,7 @@ export function currentMarkdown(files = gitFiles()) {
 }
 
 export function nativeToolBinary(tool) {
-  const manifest = JSON.parse(readText(".config/tools/native.json"));
+  const manifest = readNativeSupply();
   const descriptor = manifest.tools[tool];
   if (!descriptor) throw new Error(`unknown native tool: ${tool}`);
   const expected = descriptor.version;
