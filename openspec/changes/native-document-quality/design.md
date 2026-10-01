@@ -299,12 +299,12 @@ repository retains its own source, lease, exact-HEAD proof, and acceptance.
 The final task audits the evidence and disposition prerequisites before
 archival. The installed official archive transition requires all Change tasks
 to be complete; it cannot require evidence of its own future Git object as an
-earlier checkbox. The Goal still requires all resulting postconditions: official
+earlier checkbox. The Goal still requires all resulting outcomes: official
 archive, trusted signature and proof for its new HEAD, publication and source CI
 on both Forges, and retirement of the owned lane and proved-disposable residue.
 Observe those effects through the existing product commands and their native
 records. Do not tick future effects, reuse earlier-HEAD proof, add a second
-progress ledger, or mark the Goal complete before the postconditions hold.
+progress ledger, or mark the Goal complete before those outcomes are verified.
 
 ## Risks / Trade-offs
 

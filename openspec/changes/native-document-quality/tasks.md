@@ -51,7 +51,7 @@
       declared source and offline platform jobs.
 - [ ] 3.5 Audit every requirement and its evidence, reconcile current
       references, and classify retained evidence, active state, and disposable
-      residue before the official archive and retirement postconditions.
+      residue before the official archive and retirement steps.
 - [x] 3.6 Publish the compatible original-duty correction with fresh local,
       installed ETHOS, signed patch, asset, and both Forge platform evidence;
       preserve the already qualified major release.
