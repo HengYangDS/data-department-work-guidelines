@@ -1,0 +1,7 @@
+extends: existence
+message: "Replace '%s' with the specific claim it is meant to convey."
+level: error
+ignorecase: true
+scope: text
+tokens:
+  - rich tapestry of insights

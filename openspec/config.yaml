@@ -9,7 +9,8 @@ rules:
     - Explain the problem, intended change, and explicit out-of-scope boundary.
     - Name affected capabilities and include routing metadata.
   specs:
-    - Use ADDED, MODIFIED, REMOVED, or RENAMED Requirements sections.
+    - Use ADDED, MODIFIED, REMOVED, or RENAMED Requirements in Change deltas;
+      main specs keep one Requirements section.
     - Include at least one Scenario with WHEN and THEN clauses for each
       requirement.
   tasks:

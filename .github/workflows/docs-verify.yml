@@ -50,7 +50,10 @@ jobs:
         run: npm audit --audit-level=moderate
 
       - name: Install pinned lychee
-        run: node tools/ci/install-lychee.mjs --download
+        run: node tools/ci/install-native.mjs lychee --download
+
+      - name: Supply pinned Vale
+        run: node tools/ci/install-native.mjs vale --download
 
       - name: Verify documentation and governance boundaries
         run: npm run verify

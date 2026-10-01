@@ -616,3 +616,35 @@ test("package-manager supply cannot bypass native admission or become a second v
     /platform job/u,
   );
 });
+
+test("both source planes must supply native Vale before verification", () => {
+  const workflow = YAML.parse(github);
+  workflow.jobs.verify.steps = workflow.jobs.verify.steps.filter(
+    (step) => step.run !== "node tools/ci/install-native.mjs vale --download",
+  );
+  assert.throws(
+    () => validateCi(YAML.stringify(workflow), gitlab, offline),
+    /supply/u,
+  );
+  for (const name of [
+    "docs:verify",
+    "docs:verify:macos",
+    "docs:verify:windows",
+  ]) {
+    assert.throws(
+      () =>
+        validateCi(
+          github,
+          changedGitLab(name, (_, job) => {
+            job.before_script = job.before_script.filter(
+              (command) =>
+                command !==
+                "node tools/ci/install-native.mjs vale --gitlab-package",
+            );
+          }),
+          offline,
+        ),
+      /supply|native|setup|full proof/u,
+    );
+  }
+});

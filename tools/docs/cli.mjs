@@ -4,7 +4,6 @@ import { checkCi } from "./ci.mjs";
 import {
   checkDocumentMetadata,
   checkLinks,
-  checkSpelling,
   checkProse,
   checkTextLayout,
   formatSource,
@@ -56,7 +55,6 @@ async function checkRepository() {
   checkChangelog();
   validateOpenSpec();
   lintMarkdown();
-  checkSpelling();
   await checkProse();
   checkDocumentMetadata();
   checkLinks();
@@ -97,7 +95,6 @@ try {
       break;
     case "prose":
       if (arguments_.length) throw new Error("prose accepts no arguments");
-      checkSpelling();
       await checkProse();
       break;
     case "links":

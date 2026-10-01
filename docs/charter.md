@@ -10,7 +10,7 @@ relations:
 
 # Data Department Work Guidelines: Charter
 
-> **Guideline edition:** v6.1.1
+> **Guideline edition:** v7.0.0
 >
 > **Applies to:** Data Department members and Agents acting under their
 > delegation.
@@ -33,7 +33,7 @@ fixes that leave the underlying mechanism untouched; communication that leaves
 no one able to decide or act; and AI that produces more material without making
 judgment or outcomes more reliable.
 
-A task should resolve the matter, test the judgment and its limits, and leave
+A task should resolve the problem, test the judgment and its limits, and leave
 the system better able to recognize or handle the next occurrence. These are
 three distinct outcomes, not three required reports. Data work converts
 real-world signals into reliable judgments, data assets, and actions. A result
@@ -41,8 +41,8 @@ belongs in a lasting work system only when its source and time can be
 identified, its meaning explained, its conditions checked, its use bounded, and
 its accountable owner found.
 
-**Keep the essential without losing the real; read the situation and reason from
-evidence.** A task is a vehicle for testing judgment and improving the system.
+Keep the essential without losing the real: understand the situation and reason
+from evidence. A task tests judgment and improves the system.
 First understand what is happening; then use only the structure needed for a
 sound decision and a reliable result. Revise that structure when the evidence
 changes. This is the practical force of the underlying philosophy, not a reason

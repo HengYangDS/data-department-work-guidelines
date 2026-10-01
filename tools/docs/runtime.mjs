@@ -140,23 +140,25 @@ export function currentMarkdown(files = gitFiles()) {
   );
 }
 
-export function lycheeBinary() {
-  const { version: expected } = JSON.parse(
-    readText(".config/tools/lychee.json"),
-  );
+export function nativeToolBinary(tool) {
+  const manifest = JSON.parse(readText(".config/tools/native.json"));
+  const descriptor = manifest.tools[tool];
+  if (!descriptor) throw new Error(`unknown native tool: ${tool}`);
+  const expected = descriptor.version;
   const suffix = process.platform === "win32" ? ".exe" : "";
   const cached = filePath(
-    `build/runtime/tool-cache/lychee/${expected}/${process.platform}-${process.arch}/lychee${suffix}`,
+    `build/runtime/tool-cache/${tool}/${expected}/${process.platform}-${process.arch}/${descriptor.binary}${suffix}`,
   );
   const selected =
-    process.env.DDWG_LYCHEE_BIN || (existsSync(cached) ? cached : "lychee");
+    process.env[`DDWG_${tool.toUpperCase()}_BIN`] ||
+    (existsSync(cached) ? cached : descriptor.binary + suffix);
   const version = run(selected, ["--version"], {
     capture: true,
     timeout: 10_000,
   }).trim();
-  if (version !== `lychee ${expected}`) {
+  if (version !== descriptor.versionOutput) {
     throw new Error(
-      `lychee version mismatch: expected ${expected}, got ${version}`,
+      `${tool} version mismatch: expected ${expected}, got ${version}`,
     );
   }
   return selected;

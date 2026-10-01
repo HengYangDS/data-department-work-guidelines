@@ -23,7 +23,7 @@ import { declaredToolRuntime, root, run } from "../docs/runtime.mjs";
 const recordKeys = [
   "fileName",
   "lockSha256",
-  "lycheeSha256",
+  "nativeToolsSha256",
   "nodeMajor",
   "packageJsonSha256",
   "schemaVersion",
@@ -49,7 +49,7 @@ export function validateBundleRecord(record, source) {
     throw new Error("offline bundle record has invalid fields");
   }
   if (
-    record.schemaVersion !== 3 ||
+    record.schemaVersion !== 4 ||
     record.nodeMajor !== source.nodeMajor ||
     !/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/u.test(record.version) ||
     record.version !== source.version ||
@@ -57,11 +57,11 @@ export function validateBundleRecord(record, source) {
       `data-department-work-guidelines-v${record.version}-offline-tools.tar.gz` ||
     !sha256(record.sha256) ||
     !sha256(record.lockSha256) ||
-    !sha256(record.lycheeSha256) ||
+    !sha256(record.nativeToolsSha256) ||
     !sha256(record.packageJsonSha256) ||
     record.packageJsonSha256 !== source.packageJsonSha256 ||
     record.lockSha256 !== source.lockSha256 ||
-    record.lycheeSha256 !== source.lycheeSha256
+    record.nativeToolsSha256 !== source.nativeToolsSha256
   ) {
     throw new Error("offline bundle identity does not match source");
   }
@@ -80,8 +80,8 @@ export function assertSafeBundleListing(namesSource, verboseSource) {
   }
   const seen = new Set();
   let cacheFile = false;
-  let lycheeFile = false;
-  let licenseFile = false;
+  const nativeFiles = new Set();
+  const licenseFiles = new Set();
   for (const [index, name] of names.entries()) {
     if (
       !name.startsWith("./") ||
@@ -121,25 +121,36 @@ export function assertSafeBundleListing(namesSource, verboseSource) {
       if (!directory) cacheFile = true;
       continue;
     }
-    if (
-      relative === "lychee/" ||
-      (!directory &&
-        /^lychee\/lychee-[a-z0-9_.-]+\.(?:tar\.gz|zip)$/u.test(relative))
-    ) {
-      if (!directory) lycheeFile = true;
+    if (relative === "native/") continue;
+    const native =
+      /^native\/(lychee|vale)\/(?:([A-Za-z0-9][A-Za-z0-9_.-]*\.(?:tar\.gz|zip)))?$/u.exec(
+        relative,
+      );
+    if (native) {
+      if (!directory && native[2]) nativeFiles.add(native[1]);
+      else if (!directory || native[2])
+        throw new Error(`unexpected offline bundle member: ${name}`);
       continue;
     }
-    if (
-      relative === "licenses/" ||
-      relative === "licenses/lychee/" ||
-      (!directory && /^licenses\/lychee\/LICENSE-[A-Z0-9-]+$/u.test(relative))
-    ) {
-      if (!directory) licenseFile = true;
+    if (relative === "licenses/") continue;
+    const license =
+      /^licenses\/(lychee|vale)\/(?:((?:LICENSE|LICENCE|COPYING|NOTICE)(?:-[A-Z0-9-]+)?))?$/u.exec(
+        relative,
+      );
+    if (license) {
+      if (!directory && license[2]) licenseFiles.add(license[1]);
+      else if (!directory || license[2])
+        throw new Error(`unexpected offline bundle member: ${name}`);
       continue;
     }
     throw new Error(`unexpected offline bundle member: ${name}`);
   }
-  if (!seen.has("manifest.json") || !cacheFile || !lycheeFile || !licenseFile) {
+  if (
+    !seen.has("manifest.json") ||
+    !cacheFile ||
+    nativeFiles.size !== 2 ||
+    licenseFiles.size !== 2
+  ) {
     throw new Error("offline bundle is missing required members");
   }
   return names;
@@ -210,8 +221,8 @@ function pinnedFile(directory, name, expectedDigest, kind) {
   }
   const safeName =
     kind === "asset"
-      ? /^lychee-[a-z0-9_.-]+\.(?:tar\.gz|zip)$/u
-      : /^LICENSE-(?:APACHE|MIT)$/u;
+      ? /^[A-Za-z0-9][A-Za-z0-9_.-]*\.(?:tar\.gz|zip)$/u
+      : /^(?:LICENSE|LICENCE|COPYING|NOTICE)(?:-[A-Z0-9-]+)?$/u;
   if (typeof name !== "string" || !safeName.test(name)) {
     throw new Error(`unsafe offline bundle ${kind} name`);
   }
@@ -242,11 +253,17 @@ export function sourceIdentity(repository) {
   const lockSha256 = digestBytes(
     readFileSync(path.join(repository, "package-lock.json")),
   );
-  const lycheeSha256 = digestBytes(
-    readFileSync(path.join(repository, ".config", "tools", "lychee.json")),
+  const nativeToolsSha256 = digestBytes(
+    readFileSync(path.join(repository, ".config", "tools", "native.json")),
   );
   const runtime = declaredToolRuntime(repository);
-  return { version, packageJsonSha256, lockSha256, lycheeSha256, ...runtime };
+  return {
+    version,
+    packageJsonSha256,
+    lockSha256,
+    nativeToolsSha256,
+    ...runtime,
+  };
 }
 
 export function assembleBundle({
@@ -271,9 +288,9 @@ export function assembleBundle({
   if (Number.parseInt(process.versions.node, 10) !== source.nodeMajor) {
     throw new Error(`offline bundle builder requires Node ${source.nodeMajor}`);
   }
-  const lychee = JSON.parse(
+  const native = JSON.parse(
     readFileSync(
-      path.join(repository, ".config", "tools", "lychee.json"),
+      path.join(repository, ".config", "tools", "native.json"),
       "utf8",
     ),
   );
@@ -286,38 +303,41 @@ export function assembleBundle({
     const stagedCache = path.join(stage, "npm-cache", "_cacache");
     mkdirSync(path.dirname(stagedCache), { recursive: true });
     cpSync(cache, stagedCache, { recursive: true, force: false });
-    const stagedAssets = path.join(stage, "lychee");
-    const stagedLicenses = path.join(stage, "licenses", "lychee");
-    mkdirSync(stagedAssets, { recursive: true });
-    mkdirSync(stagedLicenses, { recursive: true });
-    const assets = {};
-    for (const [platform, asset] of Object.entries(lychee.assets)) {
-      const input = pinnedFile(
-        assetDirectory,
-        asset.name,
-        asset.sha256,
-        "asset",
-      );
-      copyFileSync(input, path.join(stagedAssets, asset.name));
-      assets[platform] = { name: asset.name, sha256: asset.sha256 };
-    }
-    const licenses = {};
-    for (const [name, license] of Object.entries(lychee.licenses)) {
-      const input = pinnedFile(
-        licenseDirectory,
-        name,
-        license.sha256,
-        "license",
-      );
-      copyFileSync(input, path.join(stagedLicenses, name));
-      licenses[name] = license.sha256;
+    const tools = {};
+    for (const [tool, descriptor] of Object.entries(native.tools)) {
+      const stagedAssets = path.join(stage, "native", tool);
+      const stagedLicenses = path.join(stage, "licenses", tool);
+      mkdirSync(stagedAssets, { recursive: true });
+      mkdirSync(stagedLicenses, { recursive: true });
+      const assets = {};
+      for (const [platform, asset] of Object.entries(descriptor.assets)) {
+        const input = pinnedFile(
+          path.join(assetDirectory, tool),
+          asset.name,
+          asset.sha256,
+          "asset",
+        );
+        copyFileSync(input, path.join(stagedAssets, asset.name));
+        assets[platform] = { name: asset.name, sha256: asset.sha256 };
+      }
+      const licenses = {};
+      for (const [name, license] of Object.entries(descriptor.licenses)) {
+        const input = pinnedFile(
+          path.join(licenseDirectory, tool),
+          name,
+          license.sha256,
+          "license",
+        );
+        copyFileSync(input, path.join(stagedLicenses, name));
+        licenses[name] = license.sha256;
+      }
+      tools[tool] = { assets, licenses };
     }
     const manifest = {
-      schemaVersion: 3,
+      schemaVersion: 4,
       ...source,
       cacheFileCount,
-      assets,
-      licenses,
+      tools,
     };
     writeFileSync(
       path.join(stage, "manifest.json"),
@@ -331,7 +351,7 @@ export function assembleBundle({
       rejectStderr: true,
     });
     const record = {
-      schemaVersion: 3,
+      schemaVersion: 4,
       ...source,
       fileName,
       sha256: digestBytes(readFileSync(archive)),
@@ -354,7 +374,7 @@ function sameNames(directory, expected) {
 export function validateExtractedBundle(directory, repository) {
   assertRegularTree(directory);
   if (
-    !sameNames(directory, ["manifest.json", "npm-cache", "lychee", "licenses"])
+    !sameNames(directory, ["manifest.json", "npm-cache", "native", "licenses"])
   ) {
     throw new Error("unexpected offline bundle root member");
   }
@@ -363,11 +383,11 @@ export function validateExtractedBundle(directory, repository) {
   );
   const source = sourceIdentity(repository);
   if (
-    manifest.schemaVersion !== 3 ||
+    manifest.schemaVersion !== 4 ||
     manifest.version !== source.version ||
     manifest.packageJsonSha256 !== source.packageJsonSha256 ||
     manifest.lockSha256 !== source.lockSha256 ||
-    manifest.lycheeSha256 !== source.lycheeSha256 ||
+    manifest.nativeToolsSha256 !== source.nativeToolsSha256 ||
     manifest.nodeMajor !== source.nodeMajor
   ) {
     throw new Error("offline bundle manifest does not match source");
@@ -380,55 +400,58 @@ export function validateExtractedBundle(directory, repository) {
   if (!cacheFileCount || cacheFileCount !== manifest.cacheFileCount) {
     throw new Error("offline bundle cache file count mismatch");
   }
-  const lychee = JSON.parse(
+  const native = JSON.parse(
     readFileSync(
-      path.join(repository, ".config", "tools", "lychee.json"),
+      path.join(repository, ".config", "tools", "native.json"),
       "utf8",
     ),
   );
-  const expectedAssets = Object.fromEntries(
-    Object.entries(lychee.assets).map(([key, asset]) => [
-      key,
-      {
-        name: asset.name,
-        sha256: asset.sha256,
-      },
-    ]),
-  );
-  if (JSON.stringify(manifest.assets) !== JSON.stringify(expectedAssets)) {
-    throw new Error("offline bundle asset manifest differs from source");
-  }
-  const assetDirectory = path.join(directory, "lychee");
+  const toolNames = Object.keys(native.tools);
   if (
-    !sameNames(
-      assetDirectory,
-      Object.values(lychee.assets).map((asset) => asset.name),
+    !sameNames(path.join(directory, "native"), toolNames) ||
+    !sameNames(path.join(directory, "licenses"), toolNames) ||
+    JSON.stringify(Object.keys(manifest.tools ?? {}).sort()) !==
+      JSON.stringify([...toolNames].sort())
+  )
+    throw new Error("offline bundle native inventory differs from source");
+  for (const [tool, descriptor] of Object.entries(native.tools)) {
+    const expectedAssets = Object.fromEntries(
+      Object.entries(descriptor.assets).map(([key, asset]) => [
+        key,
+        { name: asset.name, sha256: asset.sha256 },
+      ]),
+    );
+    if (
+      JSON.stringify(manifest.tools[tool].assets) !==
+      JSON.stringify(expectedAssets)
     )
-  ) {
-    throw new Error("offline bundle asset inventory differs from source");
-  }
-  for (const asset of Object.values(lychee.assets)) {
-    pinnedFile(assetDirectory, asset.name, asset.sha256, "asset");
-  }
-  const licenseRoot = path.join(directory, "licenses");
-  if (!sameNames(licenseRoot, ["lychee"])) {
-    throw new Error("unexpected offline bundle license member");
-  }
-  const licenseDirectory = path.join(licenseRoot, "lychee");
-  if (!sameNames(licenseDirectory, Object.keys(lychee.licenses))) {
-    throw new Error("offline bundle license inventory differs from source");
-  }
-  const expectedLicenses = Object.fromEntries(
-    Object.entries(lychee.licenses).map(([name, value]) => [
-      name,
-      value.sha256,
-    ]),
-  );
-  if (JSON.stringify(manifest.licenses) !== JSON.stringify(expectedLicenses)) {
-    throw new Error("offline bundle license manifest differs from source");
-  }
-  for (const [name, value] of Object.entries(lychee.licenses)) {
-    pinnedFile(licenseDirectory, name, value.sha256, "license");
+      throw new Error("offline bundle asset manifest differs from source");
+    const assetDirectory = path.join(directory, "native", tool);
+    if (
+      !sameNames(
+        assetDirectory,
+        Object.values(descriptor.assets).map((asset) => asset.name),
+      )
+    )
+      throw new Error("offline bundle asset inventory differs from source");
+    for (const asset of Object.values(descriptor.assets))
+      pinnedFile(assetDirectory, asset.name, asset.sha256, "asset");
+    const licenseDirectory = path.join(directory, "licenses", tool);
+    if (!sameNames(licenseDirectory, Object.keys(descriptor.licenses)))
+      throw new Error("offline bundle license inventory differs from source");
+    const expectedLicenses = Object.fromEntries(
+      Object.entries(descriptor.licenses).map(([name, value]) => [
+        name,
+        value.sha256,
+      ]),
+    );
+    if (
+      JSON.stringify(manifest.tools[tool].licenses) !==
+      JSON.stringify(expectedLicenses)
+    )
+      throw new Error("offline bundle license manifest differs from source");
+    for (const [name, value] of Object.entries(descriptor.licenses))
+      pinnedFile(licenseDirectory, name, value.sha256, "license");
   }
   return { source, cacheFileCount };
 }
@@ -608,25 +631,31 @@ export function installBundle({
     if (!pathExists(nodeModules)) {
       throw new Error("offline npm install returned without node_modules");
     }
-    const lychee = JSON.parse(
+    const native = JSON.parse(
       readFileSync(
-        path.join(repository, ".config", "tools", "lychee.json"),
+        path.join(repository, ".config", "tools", "native.json"),
         "utf8",
       ),
     );
     const platform = `${process.platform}-${process.arch}`;
-    const asset = lychee.assets[platform];
-    if (!asset) throw new Error(`offline bundle does not support ${platform}`);
-    const assetPath = path.join(temporary, "lychee", asset.name);
-    commandRunner(
-      process.execPath,
-      [
-        path.join(repository, "tools", "ci", "install-lychee.mjs"),
-        "--asset",
-        assetPath,
-      ],
-      { cwd: repository, timeout: 90_000 },
-    );
+    for (const [tool, descriptor] of Object.entries(native.tools)) {
+      const asset = descriptor.assets[platform];
+      if (!asset)
+        throw new Error(
+          `offline bundle does not support ${tool} on ${platform}`,
+        );
+      const assetPath = path.join(temporary, "native", tool, asset.name);
+      commandRunner(
+        process.execPath,
+        [
+          path.join(repository, "tools", "ci", "install-native.mjs"),
+          tool,
+          "--asset",
+          assetPath,
+        ],
+        { cwd: repository, timeout: 90_000 },
+      );
+    }
     return { version: source.version, sha256: record.sha256, npmVersion };
   } catch (error) {
     if (startedNpmInstall) {
@@ -712,28 +741,30 @@ function readmeLicenseNotice(directory, declarations) {
   // Resolve the native parser only during an online build. Cold installation
   // must remain executable before any npm package is installed.
   const require = createRequire(import.meta.url);
-  const { Processor } = require("@textlint/textlint-plugin-markdown").default;
-  const { StringSource } = require("textlint-util-to-string");
-  const ast = new Processor()
-    .processor(".md")
-    .preProcess(readFileSync(path.join(directory, name), "utf8"), name);
-  const start = ast.children.findIndex(
+  const {
+    headingLevel,
+    headingText,
+    markdownText,
+    markdownTokens,
+  } = require("../docs/markdown.mjs");
+  const tokens = markdownTokens(
+    readFileSync(path.join(directory, name), "utf8"),
+    name,
+  );
+  const start = tokens.findIndex(
     (node) =>
-      node.type === "Header" &&
-      /^licen[cs]e$/iu.test(new StringSource(node).toString().trim()),
+      headingLevel(node) > 0 && /^licen[cs]e$/iu.test(headingText(node).trim()),
   );
   if (start < 0) return false;
   const notice = [];
-  for (const node of ast.children.slice(start + 1)) {
-    if (node.type === "Header" && node.depth <= ast.children[start].depth)
-      break;
-    if (node.type === "Paragraph") {
+  for (const node of tokens.slice(start + 1)) {
+    const level = headingLevel(node);
+    if (level > 0 && level <= headingLevel(tokens[start])) break;
+    if (node.type === "content") {
       notice.push(
-        new StringSource(node, {
-          replacer({ node: child, maskValue }) {
-            if (child.type === "Code") return maskValue("_");
-          },
-        }).toString(),
+        ...node.children
+          .filter((child) => child.type === "paragraph")
+          .map((child) => markdownText(child)),
       );
     }
   }

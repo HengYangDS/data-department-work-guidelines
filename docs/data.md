@@ -10,7 +10,7 @@ relations:
 
 # Data Quality and Adoption
 
-**When to use:** When acquiring data, defining a metric, studying history,
+**When to use:** Acquiring data, defining a metric, studying history,
 deploying a production pipeline, or allowing a business use. A readable file,
 attractive chart, or promising model signal does not by itself establish that
 the data may be admitted for a specific use. Keep a proposed use exploratory

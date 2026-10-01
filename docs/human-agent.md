@@ -24,8 +24,8 @@ A consequential delegation states the goal and decision it supports, current
 authorities and fact sources, subject and scope, non-goals, deliverable and
 audience, time, security, compatibility, and cost constraints, permissions and
 forbidden actions, acceptance method, checkpoints, stop conditions, and
-interruption handoff. A low-risk task can be stated
-briefly. A high-risk one names the owner, recovery path, and who approves
+interruption handoff. A low-risk task can be stated briefly. A high-risk one
+names the owner, recovery path, and who approves
 irreversible actions.
 
 If missing context does not affect direction or safety, the Agent may continue
@@ -102,9 +102,9 @@ deferred), target and version, actual changes, verification method, result,
 execution time and environment, and where the evidence can be inspected. Name
 risks, limits, assumptions, unresolved questions, and any acceptance still
 needed. State what remains incomplete and why; distinguish a missing dependency
-from work that has not been attempted. End with
-the next responsible person, action, and due time; do not write only “follow
-up.” On interruption, preserve state, uncommitted work, attempts and failures,
+from work that has not been attempted. End with the next responsible person,
+action, and due time; do not write only “follow up.” On interruption, preserve
+state, uncommitted work, attempts and failures,
 the recovery entry, and retries known to be ineffective. Repository Agents also
 start at the
 [Agent entry](../AGENTS.md); a method pack is not governance authority.

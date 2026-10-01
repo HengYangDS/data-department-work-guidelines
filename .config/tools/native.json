@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "tools": {
+    "lychee": {
+      "version": "0.24.2",
+      "source": "https://github.com/lycheeverse/lychee/releases/tag/lychee-v0.24.2",
+      "github_download_base": "https://github.com/lycheeverse/lychee/releases/download/lychee-v0.24.2",
+      "gitlab_package_name": "lychee",
+      "assets": {
+        "darwin-arm64": {
+          "name": "lychee-aarch64-apple-darwin.tar.gz",
+          "sha256": "c9d3740ea2d891854d37116c9fba840f37b6e7c89d330e7db84ac333631c4977"
+        },
+        "darwin-x64": {
+          "name": "lychee-x86_64-apple-darwin.tar.gz",
+          "sha256": "887503a9cff667d322b8d0892b40bf49976eb9507af8483220a3706cdad55978"
+        },
+        "linux-arm64": {
+          "name": "lychee-aarch64-unknown-linux-gnu.tar.gz",
+          "sha256": "91a7bd65685da41b90ccb9bc867a3d649a7818042dae04ff405e55a25bddee4c"
+        },
+        "linux-x64": {
+          "name": "lychee-x86_64-unknown-linux-gnu.tar.gz",
+          "sha256": "1f4e0ef7f6554a6ed33dd7ac144fb2e1bbed98598e7af973042fc5cd43951c9a"
+        },
+        "win32-x64": {
+          "name": "lychee-x86_64-pc-windows-msvc.zip",
+          "sha256": "32975d1493ee1a975d6bb41e4fb56fe419cb442ded628bb772ba2e614acfacad"
+        }
+      },
+      "licenses": {
+        "LICENSE-APACHE": {
+          "sha256": "992df51ac0d6b07c1d7cb310dbeb60ed72b03a6a937779b273f82bdb6a757f6f",
+          "source": "https://github.com/lycheeverse/lychee/blob/lychee-v0.24.2/LICENSE-APACHE"
+        },
+        "LICENSE-MIT": {
+          "sha256": "7175e5dd1db3111bbab4e5bafcab2544780452bb6ca8f347b0187446498630d1",
+          "source": "https://github.com/lycheeverse/lychee/blob/lychee-v0.24.2/LICENSE-MIT"
+        }
+      },
+      "binary": "lychee",
+      "versionOutput": "lychee 0.24.2"
+    },
+    "vale": {
+      "version": "3.23.0",
+      "source": "https://github.com/vale-cli/vale/releases/tag/v3.23.0",
+      "github_download_base": "https://github.com/vale-cli/vale/releases/download/v3.23.0",
+      "gitlab_package_name": "vale",
+      "binary": "vale",
+      "versionOutput": "vale version 3.23.0",
+      "assets": {
+        "darwin-arm64": {
+          "name": "vale_3.23.0_macOS_arm64.tar.gz",
+          "sha256": "b913574b2c83b541d8bc2d8938e53a58a2fb06bab15135efcc755afb074f4430"
+        },
+        "darwin-x64": {
+          "name": "vale_3.23.0_macOS_64-bit.tar.gz",
+          "sha256": "416fdd3ba32e32dc71c87b479cb86757bb6437bcebc7a3e4a095e863b7ce583d"
+        },
+        "linux-arm64": {
+          "name": "vale_3.23.0_Linux_arm64.tar.gz",
+          "sha256": "45720aadcb01401ac394641287a2c74e094045a89a450f5edcf98c8969df0884"
+        },
+        "linux-x64": {
+          "name": "vale_3.23.0_Linux_64-bit.tar.gz",
+          "sha256": "cc35445a45186b8f0b01e11c01359694cf941e72cf6ab0fc44774f0e54c9d5fc"
+        },
+        "win32-arm64": {
+          "name": "vale_3.23.0_Windows_arm64.zip",
+          "sha256": "e6e1dc8eacd288df66bea63358c934114ab08621c146a38777a655484eef14b6"
+        },
+        "win32-x64": {
+          "name": "vale_3.23.0_Windows_64-bit.zip",
+          "sha256": "ea9a8048498b869be8475a01488cd056f60b769f2d450311b9c24f07d11edd57"
+        }
+      },
+      "licenses": {
+        "LICENSE": {
+          "sha256": "29a16197c8d01cafcacbd9c1774b66b28d7c0f15a6aceed88e4e8068ea398470",
+          "source": "https://github.com/vale-cli/vale/blob/v3.23.0/LICENSE"
+        }
+      }
+    }
+  }
+}

@@ -40,13 +40,13 @@ const digest = (text) => createHash("sha256").update(text).digest("hex");
 
 function record(overrides = {}) {
   return {
-    schemaVersion: 3,
+    schemaVersion: 4,
     version: "4.2.0",
     fileName: "data-department-work-guidelines-v4.2.0-offline-tools.tar.gz",
     sha256: digest("archive"),
     lockSha256: digest("lock"),
     packageJsonSha256: digest("package"),
-    lycheeSha256: digest("lychee"),
+    nativeToolsSha256: digest("native tools"),
     nodeMajor: 26,
     ...overrides,
   };
@@ -56,7 +56,7 @@ const source = {
   version: "4.2.0",
   lockSha256: digest("lock"),
   packageJsonSha256: digest("package"),
-  lycheeSha256: digest("lychee"),
+  nativeToolsSha256: digest("native tools"),
   nodeMajor: 26,
 };
 
@@ -78,7 +78,7 @@ test("bundle identity is bound to the exact source inputs", () => {
   for (const changed of [
     { version: "4.1.1" },
     { lockSha256: digest("other lock") },
-    { lycheeSha256: digest("other lychee") },
+    { nativeToolsSha256: digest("other native tools") },
     { sha256: "0".repeat(64) },
     { fileName: "../offline-tools.tar.gz" },
     { nodeMajor: 22 },
@@ -102,11 +102,16 @@ test("bundle archive admits only regular files in its declared roots", () => {
     "./npm-cache/",
     "./npm-cache/_cacache/",
     "./npm-cache/_cacache/index-v5/one",
-    "./lychee/",
-    "./lychee/lychee-aarch64-apple-darwin.tar.gz",
+    "./native/",
+    "./native/lychee/",
+    "./native/vale/",
+    "./native/vale/vale-fixture.tar.gz",
+    "./native/lychee/lychee-aarch64-apple-darwin.tar.gz",
     "./licenses/",
     "./licenses/lychee/",
     "./licenses/lychee/LICENSE-MIT",
+    "./licenses/vale/",
+    "./licenses/vale/LICENSE",
   ].join("\n");
   const verbose = [
     "drwxr-xr-x 0/0 0 Jan 1 00:00 ./",
@@ -114,11 +119,16 @@ test("bundle archive admits only regular files in its declared roots", () => {
     "drwxr-xr-x 0/0 0 Jan 1 00:00 ./npm-cache/",
     "drwxr-xr-x 0/0 0 Jan 1 00:00 ./npm-cache/_cacache/",
     "-rw-r--r-- 0/0 10 Jan 1 00:00 ./npm-cache/_cacache/index-v5/one",
-    "drwxr-xr-x 0/0 0 Jan 1 00:00 ./lychee/",
-    "-rw-r--r-- 0/0 10 Jan 1 00:00 ./lychee/lychee-aarch64-apple-darwin.tar.gz",
+    "drwxr-xr-x 0/0 0 Jan 1 00:00 ./native/",
+    "drwxr-xr-x 0/0 0 Jan 1 00:00 ./native/lychee/",
+    "drwxr-xr-x 0/0 0 Jan 1 00:00 ./native/vale/",
+    "-rw-r--r-- 0/0 10 Jan 1 00:00 ./native/vale/vale-fixture.tar.gz",
+    "-rw-r--r-- 0/0 10 Jan 1 00:00 ./native/lychee/lychee-aarch64-apple-darwin.tar.gz",
     "drwxr-xr-x 0/0 0 Jan 1 00:00 ./licenses/",
     "drwxr-xr-x 0/0 0 Jan 1 00:00 ./licenses/lychee/",
     "-rw-r--r-- 0/0 10 Jan 1 00:00 ./licenses/lychee/LICENSE-MIT",
+    "drwxr-xr-x 0/0 0 Jan 1 00:00 ./licenses/vale/",
+    "-rw-r--r-- 0/0 10 Jan 1 00:00 ./licenses/vale/LICENSE",
   ].join("\n");
   assert.doesNotThrow(() => assertSafeBundleListing(names, verbose));
   for (const unsafe of [
@@ -144,8 +154,8 @@ test("bundle archive admits only regular files in its declared roots", () => {
   );
   assert.throws(() =>
     assertSafeBundleListing(
-      `${names}\n./lychee/link`,
-      `${verbose}\nlrwxr-xr-x 0/0 0 Jan 1 00:00 ./lychee/link -> /tmp/outside`,
+      `${names}\n./native/lychee/link`,
+      `${verbose}\nlrwxr-xr-x 0/0 0 Jan 1 00:00 ./native/lychee/link -> /tmp/outside`,
     ),
   );
   assert.throws(() =>
@@ -171,14 +181,28 @@ test("archive command warnings cannot establish clean verification", () => {
   );
 });
 
-async function bundleFixture(run, { cache = true, lychee = true } = {}) {
+async function bundleFixture(
+  run,
+  { cache = true, lychee = true, vale = true } = {},
+) {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-bundle-test-"));
   try {
     const stage = path.join(directory, "stage");
     mkdirSync(path.join(stage, "npm-cache", "_cacache"), {
       recursive: true,
     });
-    mkdirSync(path.join(stage, "lychee"));
+    mkdirSync(path.join(stage, "native", "lychee"), { recursive: true });
+    mkdirSync(path.join(stage, "native", "vale"));
+    mkdirSync(path.join(stage, "licenses", "vale"), { recursive: true });
+    writeFileSync(
+      path.join(stage, "licenses", "vale", "LICENSE"),
+      "Vale fixture license",
+    );
+    if (vale)
+      writeFileSync(
+        path.join(stage, "native", "vale", "vale-fixture.tar.gz"),
+        "pinned Vale archive",
+      );
     mkdirSync(path.join(stage, "licenses", "lychee"), { recursive: true });
     writeFileSync(
       path.join(stage, "licenses", "lychee", "LICENSE-MIT"),
@@ -193,7 +217,12 @@ async function bundleFixture(run, { cache = true, lychee = true } = {}) {
     }
     if (lychee) {
       writeFileSync(
-        path.join(stage, "lychee", "lychee-aarch64-apple-darwin.tar.gz"),
+        path.join(
+          stage,
+          "native",
+          "lychee",
+          "lychee-aarch64-apple-darwin.tar.gz",
+        ),
         "pinned archive",
       );
     }
@@ -222,7 +251,11 @@ test("bundle digest is verified before archive inspection", async () => {
 });
 
 test("bundle inspection rejects incomplete supply", async () => {
-  for (const missing of [{ cache: false }, { lychee: false }]) {
+  for (const missing of [
+    { cache: false },
+    { lychee: false },
+    { vale: false },
+  ]) {
     await bundleFixture(async (bundle, expected) => {
       assert.throws(() => inspectBundle(bundle, expected, source), /missing/u);
     }, missing);
@@ -241,8 +274,10 @@ function buildFixture(run) {
     mkdirSync(path.join(cacheDirectory, "_cacache", "index-v5"), {
       recursive: true,
     });
-    mkdirSync(assetDirectory);
-    mkdirSync(licenseDirectory);
+    mkdirSync(path.join(assetDirectory, "lychee"), { recursive: true });
+    mkdirSync(path.join(assetDirectory, "vale"));
+    mkdirSync(path.join(licenseDirectory, "lychee"), { recursive: true });
+    mkdirSync(path.join(licenseDirectory, "vale"));
     writeFileSync(path.join(repository, "VERSION"), "4.2.0\n");
     writeFileSync(
       path.join(repository, "package.json"),
@@ -256,24 +291,46 @@ function buildFixture(run) {
     const platform = `${process.platform}-${process.arch}`;
     const assetName = `lychee-${platform}.tar.gz`;
     const asset = Buffer.from("pinned lychee asset");
-    writeFileSync(path.join(assetDirectory, assetName), asset);
+    writeFileSync(path.join(assetDirectory, "lychee", assetName), asset);
     const licenses = {};
     for (const name of ["LICENSE-APACHE", "LICENSE-MIT"]) {
       const bytes = Buffer.from(`${name} fixture`);
-      writeFileSync(path.join(licenseDirectory, name), bytes);
+      writeFileSync(path.join(licenseDirectory, "lychee", name), bytes);
       licenses[name] = {
         sha256: digest(bytes),
         source: `https://example.test/${name}`,
       };
     }
+    const valeAssetName = `vale-${platform}.tar.gz`;
+    const valeAsset = Buffer.from("pinned Vale asset");
+    const valeLicense = Buffer.from("Vale license fixture");
+    writeFileSync(path.join(assetDirectory, "vale", valeAssetName), valeAsset);
+    writeFileSync(path.join(licenseDirectory, "vale", "LICENSE"), valeLicense);
     const lychee = {
       version: "0.24.2",
       assets: { [platform]: { name: assetName, sha256: digest(asset) } },
       licenses,
     };
     writeFileSync(
-      path.join(repository, ".config", "tools", "lychee.json"),
-      JSON.stringify(lychee),
+      path.join(repository, ".config", "tools", "native.json"),
+      JSON.stringify({
+        schemaVersion: 1,
+        tools: {
+          lychee,
+          vale: {
+            version: "3.23.0",
+            assets: {
+              [platform]: { name: valeAssetName, sha256: digest(valeAsset) },
+            },
+            licenses: {
+              LICENSE: {
+                sha256: digest(valeLicense),
+                source: "https://example.test/vale/LICENSE",
+              },
+            },
+          },
+        },
+      }),
     );
     const outputPath = path.join(directory, record().fileName);
     const result = run({
@@ -304,20 +361,20 @@ test("builder admits only pinned, licensed, regular supply", () => {
       version: built.version,
       lockSha256: built.lockSha256,
       packageJsonSha256: built.packageJsonSha256,
-      lycheeSha256: built.lycheeSha256,
+      nativeToolsSha256: built.nativeToolsSha256,
       nodeMajor: built.nodeMajor,
     });
     assert.equal(checked.sha256, built.sha256);
   });
   buildFixture((inputs) => {
     writeFileSync(
-      path.join(inputs.assetDirectory, inputs.assetName),
+      path.join(inputs.assetDirectory, "lychee", inputs.assetName),
       "altered",
     );
     assert.throws(() => assembleBundle(inputs), /digest/u);
   });
   buildFixture((inputs) => {
-    rmSync(path.join(inputs.licenseDirectory, "LICENSE-MIT"));
+    rmSync(path.join(inputs.licenseDirectory, "lychee", "LICENSE-MIT"));
     assert.throws(() => assembleBundle(inputs), /license/u);
   });
   buildFixture((inputs) => {
@@ -325,10 +382,10 @@ test("builder admits only pinned, licensed, regular supply", () => {
       inputs.repository,
       ".config",
       "tools",
-      "lychee.json",
+      "native.json",
     );
     const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
-    manifest.assets[`${process.platform}-${process.arch}`].name =
+    manifest.tools.lychee.assets[`${process.platform}-${process.arch}`].name =
       "../outside.tar.gz";
     writeFileSync(manifestPath, JSON.stringify(manifest));
     assert.throws(() => assembleBundle(inputs), /unsafe.*asset/u);
@@ -338,10 +395,11 @@ test("builder admits only pinned, licensed, regular supply", () => {
       inputs.repository,
       ".config",
       "tools",
-      "lychee.json",
+      "native.json",
     );
     const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
-    manifest.licenses["../outside"] = manifest.licenses["LICENSE-MIT"];
+    manifest.tools.lychee.licenses["../outside"] =
+      manifest.tools.lychee.licenses["LICENSE-MIT"];
     writeFileSync(manifestPath, JSON.stringify(manifest));
     assert.throws(() => assembleBundle(inputs), /unsafe.*license/u);
   });
@@ -349,7 +407,7 @@ test("builder admits only pinned, licensed, regular supply", () => {
   if (process.platform !== "win32") {
     buildFixture((inputs) => {
       symlinkSync(
-        path.join(inputs.assetDirectory, inputs.assetName),
+        path.join(inputs.assetDirectory, "lychee", inputs.assetName),
         path.join(inputs.cacheDirectory, "_cacache", "index-v5", "link"),
       );
       assert.throws(() => assembleBundle(inputs), /symlink|regular/u);
@@ -392,12 +450,24 @@ test("package licensing accepts explicit native README declarations, not casual 
       ),
       1,
     );
+    const readerNotice =
+      "# Fixture\n\n## **Lic&#101;nse**\n\n[MIT License](https://example.test/mit)\n";
+    assert.equal(check({ license: "MIT" }, readerNotice), 1);
+    assert.equal(
+      readFileSync(path.join(packageDirectory, "Readme.md"), "utf8"),
+      readerNotice,
+    );
     for (const readme of [
       "# Fixture\n\nMIT is mentioned in usage.\n",
       "# Fixture\n\n```text\n## License\nMIT\n```\n",
       "# Fixture\n\n## License\n\n## Usage\n\nMIT\n",
       "# Fixture\n\n## License\n\nNo permission is granted.\n",
       "# Fixture\n\n## License\n\nBSD-3-Clause\n",
+      "# Fixture\n\n> ## License\n> MIT\n",
+      "# Fixture\n\n## License\n\n`MIT` is only an example.\n",
+      "# Fixture\n\n## License\n\n[Read the notice](https://example.test/MIT)\n",
+      "# Fixture\n\n## License\n\n<!-- MIT -->\n",
+      "# Fixture\n\n## License\n\n```text\nMIT\n```\n",
     ]) {
       assert.throws(
         () => check({ license: "MIT" }, readme),
@@ -448,7 +518,7 @@ test("extracted bundle contents agree with source and pinned supply", () => {
     assert.doesNotThrow(() =>
       validateExtractedBundle(extracted, inputs.repository),
     );
-    const asset = path.join(extracted, "lychee", inputs.assetName);
+    const asset = path.join(extracted, "native", "lychee", inputs.assetName);
     const originalAsset = readFileSync(asset);
     writeFileSync(asset, "altered");
     assert.throws(
@@ -511,7 +581,7 @@ test("installer invokes only the locked offline supply path", () => {
     });
     assert.equal(result.version, "4.2.0");
     assert.equal(result.npmVersion, "12.1.0");
-    assert.equal(calls.length, 3);
+    assert.equal(calls.length, 4);
     assert.equal(calls[0].command, process.execPath);
     assert.equal(path.basename(calls[0].args[0]), "npm-cli.js");
     assert.equal(calls[0].args[1], "--version");
@@ -521,9 +591,10 @@ test("installer invokes only the locked offline supply path", () => {
     assert.equal(calls[2].command, process.execPath);
     assert.equal(
       calls[2].args[0],
-      path.join(inputs.repository, "tools", "ci", "install-lychee.mjs"),
+      path.join(inputs.repository, "tools", "ci", "install-native.mjs"),
     );
-    assert.deepEqual(calls[2].args.slice(1, 2), ["--asset"]);
+    assert.deepEqual(calls[2].args.slice(1, 3), ["lychee", "--asset"]);
+    assert.deepEqual(calls[3].args.slice(1, 3), ["vale", "--asset"]);
   });
   buildFixture((inputs) => {
     const built = assembleBundle(inputs);
@@ -1199,5 +1270,40 @@ test("offline supply binds the native package-manager policy bytes", () => {
         validateBundleRecord(built, offline.sourceIdentity(inputs.repository)),
       /source/u,
     );
+  });
+});
+
+test("a bundle covers both native owners and their notices", () => {
+  buildFixture((inputs) => {
+    const built = assembleBundle(inputs);
+    const stage = path.join(path.dirname(inputs.outputPath), "qualified");
+    mkdirSync(stage);
+    runCommand("tar", ["-xf", inputs.outputPath, "-C", stage]);
+    assert.doesNotThrow(() =>
+      validateExtractedBundle(stage, inputs.repository),
+    );
+    const supply = JSON.parse(
+      readFileSync(path.join(inputs.repository, ".config/tools/native.json")),
+    );
+    const valeAsset = path.join(
+      stage,
+      "native",
+      "vale",
+      Object.values(supply.tools.vale.assets)[0].name,
+    );
+    const original = readFileSync(valeAsset);
+    writeFileSync(valeAsset, "changed");
+    assert.throws(
+      () => validateExtractedBundle(stage, inputs.repository),
+      /asset.*digest/u,
+    );
+    writeFileSync(valeAsset, original);
+    rmSync(path.join(stage, "licenses", "vale", "LICENSE"));
+    assert.throws(
+      () => validateExtractedBundle(stage, inputs.repository),
+      /license/u,
+    );
+    assert.equal(built.schemaVersion, 4);
+    assert.equal("lycheeSha256" in built, false);
   });
 });

@@ -11,17 +11,13 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { parse as parseToml } from "smol-toml";
 import YAML from "yaml";
-import { TextlintKernel } from "@textlint/kernel";
-import markdown from "@textlint/textlint-plugin-markdown";
-import terminology from "textlint-rule-terminology";
-import stopWords from "textlint-rule-stop-words";
-import writeGood from "write-good";
-import { StringSource } from "textlint-util-to-string";
+import { lint } from "markdownlint/sync";
+import markdownConfiguration from "../../.config/tools/markdownlint-cli2.mjs";
 import {
   currentMarkdown,
   filePath,
   gitFiles,
-  lycheeBinary,
+  nativeToolBinary,
   readText,
   root,
   run,
@@ -37,7 +33,7 @@ export function formatTargets(files = gitFiles()) {
     ...sourceMarkdown(files),
     ...files.filter(
       (relative) =>
-        /^(?:tools|tests)\/.*\.mjs$/u.test(relative) ||
+        /^(?:tools|tests|\.config)\/.*\.mjs$/u.test(relative) ||
         /\.(?:json|ya?ml)$/u.test(relative),
     ),
   ].filter((relative) => existsSync(filePath(relative)));
@@ -54,88 +50,60 @@ export function formatSource({ check = true } = {}) {
 export function lintMarkdown() {
   runNodeTool("markdownlint-cli2", "markdownlint-cli2", [
     "--config",
-    ".config/tools/markdownlint-cli2.yaml",
+    ".config/tools/markdownlint-cli2.mjs",
     ...sourceMarkdown().map((relative) => `:${relative}`),
   ]);
 }
 
-export function checkSpelling(files = currentMarkdown()) {
-  if (!files.length)
-    throw new Error("no current Markdown files to spell-check");
-  runNodeTool("cspell", "cspell", [
-    "lint",
-    "--config",
-    ".config/tools/cspell.json",
-    "--no-progress",
-    "--force-check",
-    "--file",
-    ...files,
-  ]);
-  console.log(`PASS prose spelling: ${files.length} Markdown files`);
-}
-
-function repeatedWords(context, options) {
-  const { Syntax, report, RuleError } = context;
-  const inspect = (node) => {
-    const source = new StringSource(node, {
-      replacer({ node: child, maskValue }) {
-        if (child.type === Syntax.Code) return maskValue("_");
-      },
-    });
-    for (const { index, reason } of writeGood(source.toString(), options)) {
-      const original = source.originalIndexFromIndex(index);
-      if (typeof original !== "number")
-        throw new Error("native prose source mapping is unavailable");
-      report(node, new RuleError(reason, { index: original }));
-    }
-  };
-  return {
-    [Syntax.Paragraph]: inspect,
-    [Syntax.Header]: inspect,
-    [Syntax.TableCell]: inspect,
-  };
-}
-
-export async function proseFindings(source, relative = "docs/sample.md") {
-  const { rules } = JSON.parse(readText(".config/tools/textlint.json"));
-  const kernel = new TextlintKernel();
-  const result = await kernel.lintText(source, {
-    filePath: relative,
-    ext: ".md",
-    plugins: [{ pluginId: "markdown", plugin: markdown.default }],
-    rules: [
-      {
-        ruleId: "write-good",
-        rule: repeatedWords,
-        options: rules["write-good"],
-      },
-      { ruleId: "stop-words", rule: stopWords, options: rules["stop-words"] },
-      { ruleId: "terminology", rule: terminology, options: rules.terminology },
-    ],
-  });
-  return result.messages;
-}
-
-export async function checkProse(files = currentMarkdown()) {
+export function proseAlerts(files = currentMarkdown()) {
   if (!files.length)
     throw new Error("no current Markdown files to check for prose");
-  const findings = [];
-  for (const relative of files) {
-    const absolute = path.isAbsolute(relative) ? relative : filePath(relative);
-    const messages = await proseFindings(
-      readFileSync(absolute, "utf8"),
-      relative,
-    );
-    findings.push(
-      ...messages.map(
-        ({ line, column, ruleId, message }) =>
-          `${relative}:${line}:${column} [${ruleId}] ${message}`,
+  const absoluteFiles = files.map((relative) =>
+    path.isAbsolute(relative) ? relative : filePath(relative),
+  );
+  const controls = lint({
+    files: absoluteFiles,
+    frontMatter: null,
+    noInlineConfig: true,
+    config: { default: false, "no-prose-control": true },
+    customRules: markdownConfiguration.customRules,
+  });
+  const violations = Object.entries(controls).flatMap(([file, errors]) =>
+    errors.map(
+      ({ lineNumber, errorDetail }) =>
+        `${file}:${lineNumber} [no-prose-control] ${errorDetail}`,
+    ),
+  );
+  if (violations.length) throw new Error(violations.join("\n"));
+  const output = run(
+    nativeToolBinary("vale"),
+    [
+      "--no-global",
+      `--config=${filePath(".config/tools/vale.ini")}`,
+      "--output=JSON",
+      "--no-exit",
+      "--no-color",
+      ...absoluteFiles,
+    ],
+    { capture: true },
+  );
+  const alerts = JSON.parse(output);
+  if (!alerts || typeof alerts !== "object" || Array.isArray(alerts))
+    throw new Error("native Vale returned an invalid report");
+  return alerts;
+}
+
+export function checkProse(files = currentMarkdown()) {
+  const findings = Object.entries(proseAlerts(files)).flatMap(
+    ([file, alerts]) =>
+      alerts.map(
+        ({ Line, Span, Check, Message }) =>
+          `${file}:${Line}:${Span[0]} [${Check}] ${Message}`,
       ),
-    );
-  }
+  );
   if (findings.length) throw new Error(findings.join("\n"));
   console.log(
-    `PASS native English prose and terminology: ${files.length} current Markdown files`,
+    `PASS native Vale spelling, prose and terminology: ${files.length} current Markdown files`,
   );
 }
 
@@ -245,7 +213,7 @@ export function checkLinks({ online = false } = {}) {
   try {
     const list = path.join(directory, "files.txt");
     writeFileSync(list, `${files.map(filePath).join("\n")}\n`, "utf8");
-    const lychee = lycheeBinary();
+    const lychee = nativeToolBinary("lychee");
     const links = run(lychee, ["--dump", "--files-from", list], {
       capture: true,
       timeout: 60_000,

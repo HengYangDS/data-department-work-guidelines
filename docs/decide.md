@@ -96,8 +96,8 @@ cost. Prefer an option that removes the main failure mode, can operate with
 actual resources, is observable and recoverable, reduces long-term maintenance
 and manual rescue, and has a clear replacement condition. A recommendation
 states its premises, strongest objection, first step if chosen, and revisit
-trigger. The authorized person decides; a long analysis
-cannot stand in for authorization.
+trigger. The authorized person decides; a long analysis cannot stand in for
+authorization.
 
 | State    | Say and do                                                           |
 | -------- | -------------------------------------------------------------------- |

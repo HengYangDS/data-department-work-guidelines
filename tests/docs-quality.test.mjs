@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import {
   cpSync,
+  existsSync,
   mkdtempSync,
   mkdirSync,
   readFileSync,
@@ -15,8 +16,7 @@ import { test } from "node:test";
 import { pathToFileURL } from "node:url";
 import {
   blankLineError,
-  checkSpelling,
-  proseFindings,
+  proseAlerts,
   checkProse,
   documentMetadata,
   formatTargets,
@@ -33,7 +33,7 @@ import {
 import {
   currentMarkdown,
   gitFiles,
-  lycheeBinary,
+  nativeToolBinary,
   nodeTool,
   root,
   sourceMarkdown,
@@ -272,6 +272,40 @@ test("parsed decision headings cannot be forged by a code block or quote", () =>
   );
 });
 
+test("decision records have no additional or nested sections", () => {
+  for (const body of [
+    "### Task summary\n\nA task narrative does not belong in a decision.",
+    "> ### Evidence detail\n> A nested heading is still a section.",
+    "- Rationale:\n\n  ## Context\n\n  This is not a root decision section.",
+  ]) {
+    assert.throws(
+      () =>
+        validateDecision(
+          "docs/decisions/dr-0001-fixture.md",
+          decision({ body }),
+        ),
+      /sections/u,
+    );
+  }
+});
+
+test("native decision headings retain their reader identity", () => {
+  const source = decision()
+    .replace("## Context", "## **Context**")
+    .replace("## Decision", "## &#68;ecision");
+  assert.doesNotThrow(() =>
+    validateDecision("docs/decisions/dr-0001-fixture.md", source),
+  );
+  for (const body of [
+    "- \\[x] This is a literal marker, not task progress.",
+    "A link may name [ethos status](https://example.test/rationale).",
+  ]) {
+    assert.doesNotThrow(() =>
+      validateDecision("docs/decisions/dr-0001-fixture.md", decision({ body })),
+    );
+  }
+});
+
 test("parsed decision content retains meaningful rationale and evidence links", () => {
   const bodies = [
     "ETHOS lifecycle describes current work.",
@@ -325,6 +359,9 @@ test("public boundary command rejects parsed progress and preserves evidence pro
   const record = "docs/decisions/dr-0001-fixture.md";
   try {
     cpSync(path.join(root, "tools"), path.join(sourceRoot, "tools"), {
+      recursive: true,
+    });
+    cpSync(path.join(root, ".config"), path.join(sourceRoot, ".config"), {
       recursive: true,
     });
     cpSync(
@@ -420,7 +457,7 @@ test("changelog categories may recur under different releases, not one release",
       [
         nodeTool("markdownlint-cli2", "markdownlint-cli2"),
         "--config",
-        ".config/tools/markdownlint-cli2.yaml",
+        ".config/tools/markdownlint-cli2.mjs",
         "-",
       ],
       { cwd: root, encoding: "utf8", input: source, timeout: 10_000 },
@@ -439,14 +476,16 @@ test("formatting selects source configuration and TOML syntax is checked", () =>
   const targets = formatTargets([
     "docs/README.md",
     "openspec/changes/archive/2026-09-28-spelling-supply-refresh/design.md",
-    ".config/tools/lychee.json",
+    ".config/tools/native.json",
+    ".config/tools/markdownlint-cli2.mjs",
     "openspec/config.yaml",
     ".github/workflows/docs-verify.yml",
     "tools/docs/cli.mjs",
   ]);
   for (const file of [
     "openspec/changes/archive/2026-09-28-spelling-supply-refresh/design.md",
-    ".config/tools/lychee.json",
+    ".config/tools/native.json",
+    ".config/tools/markdownlint-cli2.mjs",
     "openspec/config.yaml",
     ".github/workflows/docs-verify.yml",
   ]) {
@@ -512,7 +551,7 @@ test("pinned lychee rejects a broken local fragment", () => {
       "[Missing](target.md#absent)\n",
     );
     const result = spawnSync(
-      lycheeBinary(),
+      nativeToolBinary("lychee"),
       [
         "--offline",
         "--include-fragments=anchor-only",
@@ -557,78 +596,115 @@ test("link checking rejects an incomplete-mode waiver", () => {
   assert.match(result.stderr, /links accepts only --online/u);
 });
 
-test("locked prose spelling rejects a real typo without changing source", () => {
-  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-spelling-test-"));
+function proseFindings(source) {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-native-prose-"));
+  const file = path.join(directory, "sample.md");
   try {
-    const file = path.join(directory, "sample.md");
-    writeFileSync(file, "The result is verified.\n", "utf8");
-    assert.doesNotThrow(() => checkSpelling([file]));
-    writeFileSync(file, "The result is veriified.\n", "utf8");
-    assert.throws(() => checkSpelling([file]), /exited 1/u);
+    writeFileSync(file, source, "utf8");
+    const findings = Object.values(proseAlerts([file])).flat();
+    assert.equal(readFileSync(file, "utf8"), source);
+    return findings;
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }
+}
+
+test("native prose spelling rejects a real typo without changing source", () => {
+  assert.deepEqual(proseFindings("The result is verified.\n"), []);
+  const findings = proseFindings("The result is veriified.\n");
+  assert.ok(findings.some(({ Check }) => Check === "Vale.Spelling"));
 });
 
-test("locked prose spelling checks an explicit file despite ignorePaths", () => {
-  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-spelling-force-"));
+test("native prose ignores ambient global configuration", () => {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-vale-global-"));
+  const previousHome = process.env.HOME;
   try {
-    const file = path.join(directory, "misspelled.md");
-    const config = path.join(directory, "cspell.json");
-    writeFileSync(file, "The result is veriified.\n", "utf8");
     writeFileSync(
-      config,
-      JSON.stringify({
-        version: "0.2",
-        language: "en",
-        ignorePaths: ["**/misspelled.md"],
-      }),
-      "utf8",
+      path.join(directory, ".vale.ini"),
+      "[*.md]\nVale.Spelling = NO\nVale.Repetition = NO\n",
     );
-    const result = spawnSync(
-      process.execPath,
-      [
-        nodeTool("cspell", "cspell"),
-        "lint",
-        "--config",
-        config,
-        "--no-progress",
-        "--force-check",
-        "--file",
-        file,
-      ],
-      { encoding: "utf8", timeout: 15_000 },
+    process.env.HOME = directory;
+    const findings = proseFindings(
+      "The result is veriified. Use the the report.\n",
     );
-    assert.equal(result.status, 1, result.stderr);
-    assert.match(`${result.stdout}\n${result.stderr}`, /veriified/u);
+    assert.ok(findings.some(({ Check }) => Check === "Vale.Spelling"));
+    assert.ok(findings.some(({ Check }) => Check === "Vale.Repetition"));
   } finally {
+    if (previousHome === undefined) delete process.env.HOME;
+    else process.env.HOME = previousHome;
     rmSync(directory, { recursive: true, force: true });
   }
 });
 
-test("native prose rules reject repeated words, filler and term variants", async () => {
-  const findings = await proseFindings(
+test("native prose ignores inherited Vale configuration and styles paths", () => {
+  const directory = mkdtempSync(
+    path.join(os.tmpdir(), "ddwg-vale-environment-"),
+  );
+  const config = process.env.VALE_CONFIG_PATH;
+  const styles = process.env.VALE_STYLES_PATH;
+  try {
+    const disabled = path.join(directory, "disabled.ini");
+    writeFileSync(
+      disabled,
+      "[*.md]\nVale.Spelling = NO\nVale.Repetition = NO\n",
+    );
+    process.env.VALE_CONFIG_PATH = disabled;
+    process.env.VALE_STYLES_PATH = path.join(directory, "empty-styles");
+    mkdirSync(process.env.VALE_STYLES_PATH);
+    const findings = proseFindings(
+      "The result is veriified. Use the the report in order to decide.\n",
+    );
+    assert.ok(findings.some(({ Check }) => Check === "Vale.Spelling"));
+    assert.ok(findings.some(({ Check }) => Check === "Vale.Repetition"));
+    assert.ok(findings.some(({ Check }) => Check === "Plain.Concise"));
+  } finally {
+    if (config === undefined) delete process.env.VALE_CONFIG_PATH;
+    else process.env.VALE_CONFIG_PATH = config;
+    if (styles === undefined) delete process.env.VALE_STYLES_PATH;
+    else process.env.VALE_STYLES_PATH = styles;
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test("native prose rules reject repeated words, filler and term variants", () => {
+  const findings = proseFindings(
     "Use the the report in order to decide on Github.\n",
   );
   assert.ok(
     findings.some(
-      ({ ruleId, message }) =>
-        ruleId === "write-good" && message.includes("repeated"),
+      ({ Check, Message }) =>
+        Check === "Vale.Repetition" && Message.includes("repeated"),
     ),
   );
   assert.ok(
     findings.some(
-      ({ ruleId, message }) =>
-        ruleId === "stop-words" && message.includes("in order to"),
+      ({ Check, Match }) =>
+        Check === "Plain.Concise" && Match === "in order to",
     ),
   );
-  assert.ok(findings.some(({ ruleId }) => ruleId === "terminology"));
-  assert.ok(findings.every(({ line, column }) => line === 1 && column > 0));
+  assert.ok(findings.some(({ Check }) => Check === "Vale.Terms"));
+  assert.ok(findings.every(({ Line, Span }) => Line === 1 && Span[0] > 0));
 });
 
-test("native prose preserves syntax, quoted examples and honest uncertainty", async () => {
+test("native prose reports diagnosed stock phrases without requiring a rewrite", () => {
+  const findings = proseFindings("This offers a rich tapestry of insights.\n");
+  assert.ok(
+    findings.some(
+      ({ Check, Match }) =>
+        Check === "Plain.StockPhrases" && Match === "rich tapestry of insights",
+    ),
+  );
   assert.deepEqual(
-    await proseFindings(
+    proseFindings(
+      "This comparison identifies the changed values and their limits.\n",
+    ),
+    [],
+  );
+});
+
+test("native prose preserves syntax, quoted examples and honest uncertainty", () => {
+  assert.deepEqual(
+    proseFindings(
       "The request may be rejected when evidence is incomplete.\n\n" +
         "Use `Github in order to` only as a literal token.\n\n" +
         "```text\nGithub in order to use the the API\n```\n\n" +
@@ -637,31 +713,26 @@ test("native prose preserves syntax, quoted examples and honest uncertainty", as
     [],
   );
   assert.ok(
-    (await proseFindings("> Utilize Github for a rich tapestry of insights.\n"))
-      .length,
-  );
-  assert.ok(
-    (await proseFindings("<!-- textlint-disable -->\nUse the the report.\n"))
-      .length,
+    proseFindings("> Utilize Github for a rich tapestry of insights.\n").length,
   );
 });
 
-test("the repository prose owner fails on a real current file", async () => {
-  const temporary = mkdtempSync(path.join(os.tmpdir(), "ddwg-prose-"));
+test("the repository prose owner fails on a real current file", () => {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-prose-"));
   try {
-    const file = path.join(temporary, "current.md");
+    const file = path.join(directory, "current.md");
     writeFileSync(file, "# Current\n\nUse the the report.\n");
-    await assert.rejects(checkProse([file]), /write-good.*repeated/u);
+    assert.throws(() => checkProse([file]), /Vale\.Repetition.*repeated/u);
     writeFileSync(file, "# Current\n\nUse the report.\n");
-    await assert.doesNotReject(checkProse([file]));
+    assert.doesNotThrow(() => checkProse([file]));
   } finally {
-    rmSync(temporary, { recursive: true, force: true });
+    rmSync(directory, { recursive: true, force: true });
   }
 });
 
-test("native prose preserves domain authority and standard Markdown terms", async () => {
+test("native prose preserves domain authority and standard Markdown terms", () => {
   assert.deepEqual(
-    await proseFindings(
+    proseFindings(
       "Authority to act remains subject to explicit permission.\n\n" +
         "Compare feasible options. Use one blank line between paragraphs.\n",
     ),
@@ -669,7 +740,7 @@ test("native prose preserves domain authority and standard Markdown terms", asyn
   );
 });
 
-test("native repeated-word checks cover headings, emphasis and reader quotes", async () => {
+test("native repeated-word checks cover headings, emphasis and reader quotes", () => {
   for (const source of [
     "# Use the the report\n",
     "Use **the the** report.\n",
@@ -677,28 +748,66 @@ test("native repeated-word checks cover headings, emphasis and reader quotes", a
     "Use the **the** report.\n",
   ]) {
     assert.ok(
-      (await proseFindings(source)).some(
-        ({ ruleId, message }) =>
-          ruleId === "write-good" && message.includes("repeated"),
-      ),
+      proseFindings(source).some(({ Check }) => Check === "Vale.Repetition"),
       source,
     );
   }
 });
 
-test("native prose checks table cells without joining distinct columns", async () => {
-  const source = "| Duty |\n| --- |\n| Use **the the** report on Github. |\n";
-  const findings = await proseFindings(source);
-  assert.ok(
-    findings.some(({ ruleId, line }) => ruleId === "write-good" && line === 3),
+test("native prose checks table cells without joining distinct columns", () => {
+  const findings = proseFindings(
+    "| Duty |\n| --- |\n| Use **the the** report on Github. |\n",
   );
-  assert.ok(findings.some(({ ruleId }) => ruleId === "terminology"));
+  assert.ok(
+    findings.some(
+      ({ Check, Line }) => Check === "Vale.Repetition" && Line === 3,
+    ),
+  );
+  assert.ok(findings.some(({ Check }) => Check === "Vale.Terms"));
   assert.deepEqual(
-    await proseFindings(
+    proseFindings(
       "| First | Second |\n| --- | --- |\n| the | the |\n| `the the` | Correct |\n",
     ),
     [],
   );
+});
+
+test("real Vale control comments cannot disable prose checks", () => {
+  for (const control of [
+    "<!-- vale off -->",
+    "<!-- vale on -->",
+    "<!-- vale style = NO -->",
+    "<!-- vale styles = YES -->",
+    "<!-- vale Vale.Spelling = NO -->",
+    "<!-- vale Vale.Repetition = off -->",
+    "<!-- v&#97;le off -->",
+    "<!-- vale&#32;off -->",
+  ]) {
+    for (const source of [
+      `${control}\n\nUse the the report.\n`,
+      `Use ${control} the the report.\n`,
+      `> ${control}\n> Use the the report.\n`,
+      `- ${control}\n  Use the the report.\n`,
+      `| Duty |\n| --- |\n| ${control} Use the the report. |\n`,
+    ])
+      assert.throws(() => proseFindings(source), /no-prose-control/u);
+  }
+  for (const source of [
+    "<!-- Vale explains configured prose rules. -->\n\nThe result is verified.\n",
+    "<!-- vale output was discussed during review -->\n\nThe result is verified.\n",
+    "`<!-- vale off -->` is a literal example.\n",
+    "```text\n<!-- vale off -->\n```\n",
+    "&lt;!-- vale off --&gt;\n",
+    '<span title="<!-- vale off -->">The result is verified.</span>\n',
+  ]) {
+    const findings = proseFindings(source);
+    // Escaped directive examples are prose, not controls; Vale may still
+    // enforce the visible tool-name spelling.
+    assert.ok(
+      findings.every(({ Check }) => Check === "Vale.Terms"),
+      source,
+    );
+  }
 });
 
 test("public prose and integrity commands reject the same current-file defect", () => {
@@ -719,6 +828,7 @@ test("public prose and integrity commands reject the same current-file defect", 
     );
     assert.equal(clone.status, 0, clone.stderr);
     for (const relative of gitFiles()) {
+      if (!existsSync(path.join(root, relative))) continue;
       const target = path.join(directory, relative);
       mkdirSync(path.dirname(target), { recursive: true });
       cpSync(path.join(root, relative), target);
@@ -731,24 +841,35 @@ test("public prose and integrity commands reject the same current-file defect", 
     const target = path.join(directory, "README.md");
     const original = readFileSync(target, "utf8");
     const defective = `${original}\nUse the the report.\n`;
+    const environment = {
+      ...process.env,
+      DDWG_VALE_BIN: nativeToolBinary("vale"),
+      DDWG_LYCHEE_BIN: nativeToolBinary("lychee"),
+    };
     writeFileSync(target, defective);
     for (const command of ["prose", "check"]) {
       const result = spawnSync(
         process.execPath,
         ["tools/docs/cli.mjs", command],
-        { cwd: directory, encoding: "utf8", timeout: 120_000 },
+        {
+          cwd: directory,
+          env: environment,
+          encoding: "utf8",
+          timeout: 120_000,
+        },
       );
       assert.ifError(result.error);
       assert.equal(result.status, 1, `${command}: ${result.stderr}`);
       assert.match(
         result.stderr,
-        /README\.md:\d+:\d+ \[write-good\].*repeated/u,
+        /README\.md:\d+:\d+ \[Vale\.Repetition\].*repeated/u,
       );
       assert.equal(readFileSync(target, "utf8"), defective);
     }
     writeFileSync(target, original);
     const valid = spawnSync(process.execPath, ["tools/docs/cli.mjs", "prose"], {
       cwd: directory,
+      env: environment,
       encoding: "utf8",
       timeout: 120_000,
     });
@@ -756,5 +877,48 @@ test("public prose and integrity commands reject the same current-file defect", 
     assert.equal(valid.status, 0, valid.stderr);
   } finally {
     rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test("retired quality owners are absent from current source and dependencies", () => {
+  const retiredPackage =
+    /(?:^|\/)(?:@textlint|@cspell|cspell[^/]*|textlint[^/]*|write-good)(?:\/|$)/u;
+  const lock = JSON.parse(
+    readFileSync(path.join(root, "package-lock.json"), "utf8"),
+  );
+  assert.deepEqual(
+    Object.keys(lock.packages).filter((name) => retiredPackage.test(name)),
+    [],
+  );
+  const currentCode = gitFiles().filter((name) =>
+    /^(?:tools|tests)\/.*\.mjs$/u.test(name),
+  );
+  for (const name of currentCode) {
+    if (!existsSync(path.join(root, name))) continue;
+    const source = readFileSync(path.join(root, name), "utf8");
+    assert.doesNotMatch(
+      source,
+      /(?:from\s+["']|require\(["'])(?:@textlint\/|@cspell\/|cspell|write-good|textlint-)/u,
+      name,
+    );
+  }
+  for (const name of [
+    "@textlint",
+    "@cspell",
+    "cspell",
+    "write-good",
+    "textlint-util-to-string",
+  ]) {
+    assert.equal(
+      existsSync(path.join(root, "node_modules", name)),
+      false,
+      name,
+    );
+  }
+  for (const name of [
+    ".config/tools/textlint.json",
+    ".config/tools/cspell.json",
+  ]) {
+    assert.equal(existsSync(path.join(root, name)), false, name);
   }
 });

@@ -101,8 +101,8 @@ signals: recurring failures, escaped quality issues, Agent output corrections
 or misuse, and needless coordination. Decide whether a small correction is
 needed. At least quarterly, the guideline maintainer reviews the net benefit
 of current rules, templates, tools, and Agent practices with their users; keep,
-revise, or retire them. L2
-work may set a shorter task-specific interval at authorization. Use existing
+revise, or retire them. L2 work may set a shorter task-specific interval at
+authorization. Use existing
 meetings, tickets, and reviews; record a material decision and its owner in
 that carrier. No separate meeting, universal weekly 30-minute session, or
 “nothing happened” activity report is required.
@@ -110,8 +110,8 @@ that carrier. No separate meeting, universal weekly 30-minute session, or
 Managers clarify direction, priorities, resources, and cross-domain decisions,
 resolve long-standing open decisions in time for the work to proceed, and show
 their reasoning with concrete work examples. They protect honest disclosure of
-uncertainty. They must not use these
-guidelines for retrospective fault-finding, ceremonial review, or
+uncertainty. They must not use these guidelines for retrospective fault-finding,
+ceremonial review, or
 micromanagement. When goals conflict, priorities drift, resources are short,
 decisions stall, or interfaces mislead, repair the management system before
 blaming a member's capability. Within those boundaries, the person closest

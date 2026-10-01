@@ -20,9 +20,17 @@ Node installation owner before running repository commands. npm checks its
 native declaration before `install`, `ci`, and `run`; do not disable it with
 `--force` or a policy override. Version matching is a prerequisite, not proof
 of correct source. Install the locked dependencies with `npm ci --ignore-scripts`.
-Use lychee 0.24.2 from your platform's native installation owner or install a
-previously supplied, SHA-256-pinned asset with
-`node tools/ci/install-lychee.mjs --asset PATH`. Then run:
+Use the Vale and lychee versions pinned in the
+[native supply manifest](.config/tools/native.json), through your platform's
+existing installation owner or the repository-local installer. To install
+previously supplied archives, run each tool through the same entry:
+
+```text
+node tools/ci/install-native.mjs vale --asset VALE_ARCHIVE
+node tools/ci/install-native.mjs lychee --asset LYCHEE_ARCHIVE
+```
+
+Then run:
 
 ```text
 npm run verify
@@ -41,16 +49,24 @@ it. This audit covers the locked repository packages, not the npm executable
 bundled with Node. The offline repository verifier does not contact either
 Forge.
 
-Native textlint rules check repeated words, wordy phrases, clichés, and technical
-term spelling against [the selected rule options](.config/tools/textlint.json).
-Paragraphs, headings, lists, quotes, link labels, and table cells are prose;
-raw HTML and image attributes remain native parser syntax, not checked prose.
-Code spans, fenced commands, URLs, and metadata keep their syntax; the checker
-does not rewrite files. Intentional uncertainty and passive constructions may
-carry exact meaning and are not blanket errors. A passing style check does not
-prove factual accuracy, semantic fidelity, or reader understanding. Review those
-at the [communication](docs/communicate.md) and task owners. No global or parent
-configuration, cache, or inline suppression changes this check.
+Vale checks spelling, repeated words, selected technical terms, and diagnosed
+wordy phrases using [native configuration](.config/tools/vale.ini),
+[concise-expression rules](.config/tools/vale/styles/Plain/Concise.yml), and
+[reviewed vocabulary](.config/tools/vale/styles/config/vocabularies/Department/accept.txt).
+The selected substitutions target demonstrated needless phrases; this edition
+does not inherit the old broad stop-word blacklist. In particular, authority,
+feasibility, uncertainty, and meaningful passive constructions retain their
+meaning. A technical vocabulary entry must name a real term, not suppress a
+finding wholesale.
+
+Paragraphs, headings, lists, quotes, link labels, and table cells are reader
+text. Code spans, fenced commands, and URL destinations retain their syntax.
+The checker never rewrites a file. Repository configuration controls the rules;
+actual Vale control comments fail native Markdown lint, including controls in
+nested content. Literal code, escaped examples, and ordinary comments remain
+valid. A passing style check does not prove factual accuracy, semantic fidelity,
+or reader understanding. Review those at the
+[communication](docs/communicate.md) and task owners.
 
 For `docs/` pages, keep ETHOS metadata in the leading HTML comment and put the
 H1 after one blank line as the first visible block. Copy a current page's
@@ -68,7 +84,7 @@ npm run verify
 ```
 
 The installer verifies the bundle before extraction, uses `npm ci --offline` and
-the existing pinned lychee asset path, and never downloads a missing tool.
+the same pinned Vale and lychee asset paths, and never downloads a missing tool.
 Obtain the bundle from either Forge while online or transfer it separately;
 acquisition and offline execution are different claims. ETHOS is a separate
 installed product prerequisite for Change admission and proof. The bundle's
@@ -147,12 +163,13 @@ grant Change authority.
    `npm audit --audit-level=moderate` on the intended Work Lane. The full
    source check follows the new bundle record in Step 2. Do not tag a merely
    prepared edition.
-2. Supply the bundle builder with the five platform archives named under
-   `assets` and the two license files named under `licenses` in
-   [the pinned lychee manifest](.config/tools/lychee.json). Obtain their exact
-   bytes from the manifest's sources or an already qualified mirror, in two
-   local directories outside Git. The builder checks every name, SHA-256, npm
-   package, and license notice; it does not silently download missing inputs.
+2. Supply every platform archive and upstream license notice under `tools` in
+   [the native supply manifest](.config/tools/native.json). Obtain their exact
+   bytes from the declared sources or an already qualified mirror. Use two
+   local directories outside Git: `ASSET_DIR/vale/`, `ASSET_DIR/lychee/`,
+   `LICENSE_DIR/vale/`, and `LICENSE_DIR/lychee/`. The builder checks every
+   name, SHA-256, npm package, and license notice; it does not silently
+   download missing inputs.
    npm package notices may be dedicated license files or an explicit readme
    License section agreeing with the package's native license declaration;
    code examples and incidental mentions do not qualify. Choose a
@@ -166,8 +183,9 @@ grant Change authority.
 
    The build prints the actual bundle record. Put that exact reviewed JSON in
    [the tracked bundle record](.config/tools/offline-bundle.json); never
-   invent its digest or reuse one after its version, lockfile, lychee manifest,
-   or Node major changes. Only then run the command that reads that record:
+   invent its digest or reuse one after the version, complete package manifest,
+   lockfile, native supply manifest, or Node major changes. Only then run
+   the command that reads that record:
 
    ```text
    node tools/ci/offline-bundle.mjs inspect --bundle BUNDLE_PATH

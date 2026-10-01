@@ -18,51 +18,71 @@ import { projectPackageRequest } from "./gitlab-package.mjs";
 import { filePath, root, run } from "../docs/runtime.mjs";
 
 export const manifest = JSON.parse(
-  readFileSync(filePath(".config/tools/lychee.json"), "utf8"),
+  readFileSync(filePath(".config/tools/native.json"), "utf8"),
 );
 
 export function selectedAsset(
+  tool,
   platform = process.platform,
   architecture = process.arch,
 ) {
   const key = `${platform}-${architecture}`;
-  const asset = manifest.assets[key];
+  const descriptor = manifest.tools[tool];
+  if (!descriptor) throw new Error(`unknown native tool: ${tool}`);
+  const asset = descriptor.assets[key];
   if (!asset || !/^[0-9a-f]{64}$/u.test(asset.sha256)) {
-    throw new Error(`unsupported or unpinned lychee platform: ${key}`);
+    throw new Error(`unsupported or unpinned ${tool} platform: ${key}`);
   }
   return {
     ...asset,
     key,
-    version: manifest.version,
-    url: `${manifest.github_download_base}/${asset.name}`,
+    tool,
+    version: descriptor.version,
+    versionOutput: descriptor.versionOutput,
+    binaryName: descriptor.binary + (platform === "win32" ? ".exe" : ""),
+    url: `${descriptor.github_download_base}/${asset.name}`,
   };
 }
 
 export function gitlabPackageRequest(
-  asset = selectedAsset(),
+  tool,
+  asset = selectedAsset(tool),
   environment = process.env,
 ) {
   return projectPackageRequest(
     {
-      packageName: manifest.gitlab_package_name,
-      version: manifest.version,
+      packageName: manifest.tools[tool].gitlab_package_name,
+      version: manifest.tools[tool].version,
       fileName: asset.name,
     },
     environment,
   );
 }
 
-export function safeArchiveEntries(listing) {
+export function safeArchiveEntries(listing, verbose) {
   const entries = listing.split(/\r?\n/u).filter(Boolean);
-  for (const entry of entries) {
-    const parts = entry.replaceAll("\\", "/").split("/");
+  const details = verbose?.split(/\r?\n/u).filter(Boolean) ?? [];
+  if (!entries.length || entries.length !== details.length)
+    throw new Error("native archive listing is incomplete");
+  const seen = new Set();
+  for (const [index, entry] of entries.entries()) {
+    const normalized = entry.replace(/^\.\//u, "").replace(/\/$/u, "");
+    const parts = normalized.split("/");
     if (
       entry.startsWith("/") ||
-      /^[A-Za-z]:/u.test(entry) ||
-      parts.includes("..")
-    ) {
-      throw new Error(`unsafe lychee archive member: ${entry}`);
-    }
+      entry.includes("\\") ||
+      entry.includes("\0") ||
+      entry.includes(":") ||
+      parts.includes("..") ||
+      (normalized !== "." && parts.includes(".")) ||
+      (normalized && parts.includes("")) ||
+      seen.has(normalized)
+    )
+      throw new Error(`unsafe native archive member: ${entry}`);
+    seen.add(normalized);
+    const directory = entry.endsWith("/") || entry === ".";
+    if (details[index][0] !== (directory ? "d" : "-"))
+      throw new Error(`non-regular native archive member: ${entry}`);
   }
   return entries;
 }
@@ -79,14 +99,16 @@ function binaryFiles(directory, name) {
   });
 }
 
-function verifiedCached(target) {
+function verifiedCached(target, selected) {
   if (!existsSync(target)) return false;
   const version = run(target, ["--version"], {
     capture: true,
     timeout: 10_000,
   }).trim();
-  if (version !== `lychee ${manifest.version}`) {
-    throw new Error(`existing lychee cache entry is invalid: ${target}`);
+  if (version !== selected.versionOutput) {
+    throw new Error(
+      `existing ${selected.tool} cache entry is invalid: ${target}`,
+    );
   }
   return true;
 }
@@ -98,14 +120,15 @@ export async function downloadAsset(request) {
     signal: AbortSignal.timeout(90_000),
   });
   if (!response.ok)
-    throw new Error(`lychee download failed: HTTP ${response.status}`);
-  if (!response.body) throw new Error("lychee download returned no body");
+    throw new Error(`native tool download failed: HTTP ${response.status}`);
+  if (!response.body) throw new Error("native tool download returned no body");
   const limit = 32 * 1024 * 1024;
   const chunks = [];
   let size = 0;
   for await (const chunk of response.body) {
     size += chunk.length;
-    if (size > limit) throw new Error("lychee download exceeds the size limit");
+    if (size > limit)
+      throw new Error("native tool download exceeds the size limit");
     chunks.push(chunk);
   }
   return Buffer.concat(chunks);
@@ -114,29 +137,35 @@ export async function downloadAsset(request) {
 export function assertAssetDigest(bytes, asset) {
   const digest = createHash("sha256").update(bytes).digest("hex");
   if (digest !== asset.sha256)
-    throw new Error(`lychee asset digest mismatch: ${asset.name}`);
+    throw new Error(`native asset digest mismatch: ${asset.name}`);
 }
 
-export async function install({ assetFile = "", downloadSource = "" } = {}) {
+export async function install({
+  tool,
+  assetFile = "",
+  downloadSource = "",
+} = {}) {
+  if (!["", "github", "gitlab"].includes(downloadSource))
+    throw new Error("invalid native tool supply source");
   if (assetFile && downloadSource)
-    throw new Error("choose one lychee supply path");
-  const selected = selectedAsset();
+    throw new Error("choose one native tool supply path");
+  const selected = selectedAsset(tool);
   const request = assetFile
     ? null
     : downloadSource === "github"
       ? { url: selected.url }
       : downloadSource === "gitlab"
-        ? gitlabPackageRequest(selected)
+        ? gitlabPackageRequest(tool, selected)
         : null;
-  const binaryName = process.platform === "win32" ? "lychee.exe" : "lychee";
+  const binaryName = selected.binaryName;
   const directory = filePath(
-    `build/runtime/tool-cache/lychee/${selected.version}/${selected.key}`,
+    `build/runtime/tool-cache/${tool}/${selected.version}/${selected.key}`,
   );
   const target = path.join(directory, binaryName);
   if (!assetFile && !request) {
-    if (verifiedCached(target)) return target;
+    if (verifiedCached(target, selected)) return target;
     throw new Error(
-      "lychee is not cached; provide --asset PATH, --download, or --gitlab-package",
+      `${tool} is not cached; provide --asset PATH, --download, or --gitlab-package`,
     );
   }
   mkdirSync(directory, { recursive: true });
@@ -149,29 +178,42 @@ export async function install({ assetFile = "", downloadSource = "" } = {}) {
     assertAssetDigest(bytes, selected);
     writeFileSync(archive, bytes);
     safeArchiveEntries(
-      run("tar", ["-tf", archive], { capture: true, timeout: 30_000 }),
+      run("tar", ["-tf", archive], {
+        capture: true,
+        rejectStderr: true,
+        timeout: 30_000,
+      }),
+      run("tar", ["-tvf", archive], {
+        capture: true,
+        rejectStderr: true,
+        timeout: 30_000,
+      }),
     );
     const extracted = path.join(temporary, "extracted");
     mkdirSync(extracted);
-    run("tar", ["-xf", archive, "-C", extracted], { timeout: 30_000 });
+    run("tar", ["-xf", archive, "-C", extracted], {
+      rejectStderr: true,
+      timeout: 30_000,
+    });
     const candidates = binaryFiles(extracted, binaryName);
     if (candidates.length !== 1)
-      throw new Error(`lychee archive has ${candidates.length} binaries`);
+      throw new Error(`${tool} archive has ${candidates.length} binaries`);
     if (process.platform !== "win32") chmodSync(candidates[0], 0o755);
     const version = run(candidates[0], ["--version"], {
       capture: true,
       timeout: 10_000,
     }).trim();
-    if (version !== `lychee ${manifest.version}`)
-      throw new Error(`lychee binary version mismatch: ${version}`);
+    if (version !== selected.versionOutput)
+      throw new Error(`${tool} binary version mismatch: ${version}`);
     try {
       copyFileSync(candidates[0], target, constants.COPYFILE_EXCL);
     } catch (error) {
-      if (error.code !== "EEXIST" || !verifiedCached(target)) throw error;
+      if (error.code !== "EEXIST" || !verifiedCached(target, selected))
+        throw error;
     }
     if (process.platform !== "win32") chmodSync(target, 0o755);
-    if (!verifiedCached(target))
-      throw new Error("installed lychee failed verification");
+    if (!verifiedCached(target, selected))
+      throw new Error(`installed ${tool} failed verification`);
     return target;
   } finally {
     rmSync(temporary, {
@@ -187,15 +229,16 @@ if (
   process.argv[1] &&
   path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
 ) {
-  const args = process.argv.slice(2);
+  const [tool, ...args] = process.argv.slice(2);
   const print = args.length === 1 && args[0] === "--print-spec";
   const downloadRequested = args.length === 1 && args[0] === "--download";
   const gitlabRequested = args.length === 1 && args[0] === "--gitlab-package";
   const localAsset = args.length === 2 && args[0] === "--asset" ? args[1] : "";
   if (print) {
-    console.log(JSON.stringify(selectedAsset(), null, 2));
+    console.log(JSON.stringify(selectedAsset(tool), null, 2));
   } else if (downloadRequested || gitlabRequested || localAsset) {
     install({
+      tool,
       assetFile: localAsset,
       downloadSource: gitlabRequested
         ? "gitlab"
@@ -205,7 +248,7 @@ if (
     })
       .then((target) =>
         console.log(
-          `PASS pinned lychee installed: ${path.relative(root, target)}`,
+          `PASS pinned ${tool} installed: ${path.relative(root, target)}`,
         ),
       )
       .catch((error) => {
@@ -214,7 +257,7 @@ if (
       });
   } else {
     console.error(
-      "usage: node tools/ci/install-lychee.mjs --print-spec|--asset PATH|--download|--gitlab-package",
+      "usage: node tools/ci/install-native.mjs TOOL --print-spec|--asset PATH|--download|--gitlab-package",
     );
     process.exitCode = 2;
   }

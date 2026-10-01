@@ -29,8 +29,8 @@ For an important update, lead with the **conclusion or present state**. Then
 give two or three decisive facts, the impact, a recommendation, and the decision
 needed from whom and by when. A status update names what changed since the
 previous report, not how much activity occurred. If there is no conclusion,
-state which evidence is missing and when it can be obtained. Answer the
-question first, then explain. If no decision is requested, give the next
+state which evidence is missing and when it can be obtained. Answer the question
+first, then explain. If no decision is requested, give the next
 action, its owner and due time, and the condition that will show it is done.
 Say “I don't know” when that is true. Revise a position when new evidence
 overturns it; do not hide the point behind jargon or background.
@@ -50,8 +50,8 @@ If a change is necessary, identify it and explain why before answering.
 Before a meeting, name the question, necessary participants, and inputs; do not
 meet for work that can be resolved asynchronously. Do not invite someone only
 out of courtesy if they supply no necessary fact, hold no decision authority,
-and own no action. In the meeting, align facts
-and definitions before comparing options. Locate disagreement in facts,
+and own no action. In the meeting, align facts and definitions before comparing
+options. Locate disagreement in facts,
 inference, values, resources, or authority. Afterward, keep only the conclusion,
 basis, decision, actions, open points, and risks. Each action has an owner,
 deadline, and completion criterion. Without a decision or action, do not call

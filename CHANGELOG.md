@@ -12,6 +12,29 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+### Changed
+
+- **Breaking:** The contributor installer now selects Vale or lychee through
+  one native-tool entry. Offline supply uses a new source-bound bundle schema
+  containing both tools and their upstream notices; earlier bundles do not
+  qualify this edition.
+- Consolidated spelling, repeated-word, concise-expression, and terminology
+  checks in native Vale. Reviewed substitutions replace the broad stop-word
+  blacklist without treating authority, uncertainty, or passive voice as errors.
+
+### Fixed
+
+- Decision records reject additional and nested sections while preserving
+  technical terms and evidence links. The native Markdown parser also recognizes
+  explicit package license sections without treating examples as license notices.
+- Actual document control comments cannot disable prose rules, including nested
+  and entity-encoded comments; literal examples remain valid.
+
+### Removed
+
+- The textlint, CSpell, and write-good pipelines, their packages, configuration,
+  and parser adapters. No alternate or optional retired checker remains.
+
 ## [6.1.1] - 2026-10-01
 
 ### Fixed

@@ -101,7 +101,7 @@ branch and tag boundaries; they contain no operator key or host path.
 
 `npm run verify` invokes one [portable quality entry](../../tools/docs/cli.mjs).
 It checks formatting for Markdown, code, JSON, and YAML; TOML syntax; Markdown
-lint; CSpell spelling; native textlint prose and terminology; offline,
+lint; native Vale spelling, prose, and terminology; offline,
 version-checked lychee links and fragments; metadata; English and spacing;
 repository boundaries; official OpenSpec; version
 identity; CI topology; and negative tests. The two default ETHOS gates retain
@@ -133,14 +133,14 @@ checks never update it. `--force` and package-manager admission overrides are
 not a supported execution path.
 
 Git's native `.gitattributes` rule keeps tracked text at LF on every
-host. The [supply manifest](../../.config/tools/lychee.json) pins lychee assets
-by platform and SHA-256. GitLab CI fetches that asset from this project's
+host. The [supply manifest](../../.config/tools/native.json) pins Vale and
+lychee assets by platform and SHA-256. GitLab CI fetches that asset from this project's
 package registry with its own job token; GitHub CI uses the pinned upstream
 GitHub release. Both verify the digest before extraction. Local validation
 checks the executable version and never downloads an asset. Explicit
 CI supply and an offline `--asset` path are different operations. The
-source-pinned offline bundle adds a complete npm cache and all declared lychee
-archives; its release identity lives in
+source-pinned offline bundle adds a complete npm cache, every declared Vale and
+lychee archive, and their upstream license notices; its release identity lives in
 [`.config/tools/offline-bundle.json`](../../.config/tools/offline-bundle.json).
 A bundle file on disk is not offline qualification: the actual install and full
 verifier must run with no remote supply on each claimed host, and both Forge
@@ -153,13 +153,13 @@ checks and verify the source-pinned archive digest before extraction. The
 archive excludes host extended attributes; archive inspection and extraction
 reject warning output even when the archive tool exits successfully. The
 [contributor route](../../CONTRIBUTING.md) owns the commands. Bundled npm
-packages and lychee retain their upstream license notices; the repository MIT grant
-does not relicense them. Both hosted CI planes run
+packages, Vale, and lychee retain their upstream license notices; the
+repository MIT grant does not relicense them. Both hosted CI planes run
 `npm audit --audit-level=moderate` during online tool supply; local source
 verification does not require network access. The bundle binds the edition,
-Node major, complete native package manifest, package lock, and pinned lychee
-supply, not a second npm version declaration. The installer exercises and
-records the available npm version
+Node major, complete native package manifest, package lock, and complete
+pinned native supply, not a second npm version declaration. The installer
+exercises and records the available npm version
 offline on each claimed host. The application audit does not qualify Node's
 bundled npm; do not turn one into a claim about the other.
 
@@ -183,7 +183,7 @@ HTTP-only GitLab, a tunnel for registration alone does not protect clone or
 package traffic; each unencrypted path needs an authorized, bounded risk
 decision for the isolated network. A tag in YAML does not prove that a runner
 is registered or isolated. The native jobs require
-runner-installed Node 26 and exact macOS and Windows lychee assets in this
+runner-installed Node 26 and exact macOS and Windows native-tool assets in this
 project's package registry; they must not fall back to GitHub. On an ARM64
 Windows host, an x64 Node and lychee process under emulation is functional
 evidence, not a native x86_64 ABI claim. GitLab's offline jobs start at the

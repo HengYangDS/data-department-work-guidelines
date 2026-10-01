@@ -1,9 +1,14 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
 import { parse as parseToml } from "smol-toml";
-import markdown from "@textlint/textlint-plugin-markdown";
-import { StringSource } from "textlint-util-to-string";
 import { documentMetadata } from "./content.mjs";
+import {
+  headingLevel,
+  headingText,
+  markdownText,
+  markdownTokens,
+  walkMarkdown,
+} from "./markdown.mjs";
 import { readText, root } from "./runtime.mjs";
 
 const requiredSections = [
@@ -105,42 +110,37 @@ export function commandInvocation(source) {
   );
 }
 
-const markdownProcessor = new markdown.default.Processor().processor(".md");
-
-function markdownTree(source) {
-  return markdownProcessor.preProcess(source, "decision.md");
-}
-
-function* contentNodes(node) {
-  yield node;
-  for (const child of node.children ?? []) yield* contentNodes(child);
-}
-
-function rationaleText(node) {
-  if (["Code", "Link", "Image"].includes(node.type)) return " ";
-  if (typeof node.value === "string") return node.value;
-  return (node.children ?? []).map(rationaleText).join("");
-}
-
-export function executionViolation(source, tree = markdownTree(source)) {
-  for (const node of contentNodes(tree)) {
-    const line = node.loc.start.line;
-    if (node.type === "Html") {
+export function executionViolation(source, tokens = markdownTokens(source)) {
+  for (const node of walkMarkdown(tokens)) {
+    const line = node.startLine;
+    if (node.type === "htmlFlow" || node.type === "htmlText") {
       const registry =
-        node.range[0] === 0 &&
-        node.raw.startsWith("<!--\n---\n") &&
-        node.raw.endsWith("\n---\n-->");
+        node.startLine === 1 &&
+        node.startColumn === 1 &&
+        !node.parent &&
+        node.text.startsWith("<!--\n---\n") &&
+        node.text.endsWith("\n---\n-->");
       if (!registry) return `unsupported HTML at line ${line}`;
     }
-    if (node.type === "ListItem" && typeof node.checked === "boolean")
-      return `task progress at line ${line}`;
-    if (node.type === "CodeBlock")
+    if (node.type === "paragraph" && /^\[[ xX]\](?:\s|$)/u.test(node.text)) {
+      let parent = node.parent;
+      while (parent) {
+        if (parent.type === "listOrdered" || parent.type === "listUnordered")
+          return `task progress at line ${line}`;
+        parent = parent.parent;
+      }
+    }
+    if (node.type === "codeFenced" || node.type === "codeIndented")
       return `unsupported code block; execution content belongs outside a DR at line ${line}`;
-    if (node.type === "Code" && commandInvocation(node.value))
+    if (
+      node.type === "codeText" &&
+      commandInvocation(markdownText(node, { code: true }))
+    )
       return `inline command invocation at line ${line}`;
     if (
-      ["Paragraph", "Header", "TableCell"].includes(node.type) &&
-      rationaleText(node)
+      (["paragraph", "tableContent"].includes(node.type) ||
+        headingLevel(node) > 0) &&
+      markdownText(node, { links: false })
         .split(/\r?\n/u)
         .some((value) => commandInvocation(value))
     )
@@ -162,31 +162,28 @@ export function validateDecision(relative, source) {
   ) {
     throw new Error(`DR identity or status mismatch: ${relative}`);
   }
-  const tree = markdownTree(source);
-  const titles = [...contentNodes(tree)].filter(
-    (node) => node.type === "Header" && node.depth === 1,
+  const tokens = markdownTokens(source, relative);
+  const headings = [...walkMarkdown(tokens)].filter(
+    (node) => headingLevel(node) > 0,
   );
+  const titles = headings.filter((node) => headingLevel(node) === 1);
   if (
     titles.length !== 1 ||
-    !new StringSource(titles[0]).toString().startsWith(`${expected}: `)
+    titles[0].parent ||
+    !headingText(titles[0]).startsWith(`${expected}: `)
   )
     throw new Error(`DR title must match ${expected}: ${relative}`);
-  const sections = tree.children.filter(
-    (node) => node.type === "Header" && node.depth === 2,
-  );
-  const headings = sections.map((node) => new StringSource(node).toString());
-  const allSections = [...contentNodes(tree)].filter(
-    (node) => node.type === "Header" && node.depth === 2,
-  );
+  const sections = headings.filter((node) => node !== titles[0]);
   if (
-    sections.length !== allSections.length ||
-    JSON.stringify(headings) !== JSON.stringify(requiredSections)
+    sections.some((node) => headingLevel(node) !== 2 || node.parent) ||
+    JSON.stringify(sections.map(headingText)) !==
+      JSON.stringify(requiredSections)
   ) {
     throw new Error(
       `DR sections must be exactly ${requiredSections.join(", ")}: ${relative}`,
     );
   }
-  const violation = executionViolation(source, tree);
+  const violation = executionViolation(source, tokens);
   if (violation) throw new Error(`DR contains ${violation}: ${relative}`);
 }
 

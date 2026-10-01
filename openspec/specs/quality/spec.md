@@ -24,13 +24,13 @@ status SHALL come from record metadata rather than status directories.
 
 ### Requirement: Decision records exclude execution logs
 
-A DR SHALL use stable `DR-####`, lowercase `dr-####-*.md`, one matching title and
-five ordered top-level sections: Context, Decision, Alternatives Rejected,
-Consequences and Boundary, Evidence and Revisit. It SHALL retain rationale, not
-tasks, readiness, execution or acceptance reports. The locked Markdown AST SHALL
-require that title at top level and reject code blocks, commands, task markers
-and HTML except the validated leading registry comment under any wrapper or
-language label.
+A DR SHALL use stable `DR-####`, lowercase `dr-####-*.md`, one matching root
+title, and only five ordered root sections: Context, Decision, Alternatives
+Rejected, Consequences and Boundary, Evidence and Revisit. It SHALL keep
+rationale, not tasks, readiness, execution, or acceptance reports. Native
+Markdown parsing SHALL reject additional or nested headings, code blocks,
+commands, task markers, and HTML except the validated leading registry comment,
+under any wrapper or language label.
 
 #### Scenario: Prose mentions an evidence asset
 
@@ -67,6 +67,14 @@ language label.
 - **THEN** the validator rejects the malformed record
 - **AND THEN** command content and task status stay outside the decision carrier.
 
+#### Scenario: A decision has additional or nested sections
+
+- **WHEN** a record includes a heading beyond its matching title and five
+  ordered root sections, including a deeper or nested heading
+- **THEN** the native structural boundary rejects the record
+- **AND** emphasized or entity-encoded headings with the correct reader text,
+  ordinary rationale lists, and meaningful evidence links remain valid.
+
 ### Requirement: Default proof and root binding are distinct
 
 The profile SHALL list exactly `docs-integrity` and `markdown-format` as
@@ -101,7 +109,8 @@ enforce admission without a tracked adapter or optional gate.
 ### Requirement: One portable documentation verifier measures source properties
 
 One shell-independent locked verifier SHALL check Prettier formatting of
-Markdown, code, JSON, and YAML; TOML syntax; Markdown lint; CSpell spelling;
+Markdown, code, JSON, and YAML; TOML syntax; Markdown lint; native Vale spelling,
+prose, and terminology;
 offline, version-checked lychee links and fragments; metadata; English,
 spacing, decision records, and navigation. The same entrypoint SHALL run
 locally and on both CI planes with repository-relative inputs. Diagram, card,
@@ -122,7 +131,8 @@ topic, and tracked evidence counts SHALL NOT determine validity.
 
 ### Requirement: Tool supply and portability require executed checks
 
-CI SHALL verify the pinned lychee digest and audit locked dependencies online,
+CI SHALL verify the pinned lychee and Vale digests and audit locked dependencies
+online,
 separately from offline source verification. Public checks SHALL not require a
 POSIX shell or host-specific absolute paths. Banning `.sh` files alone SHALL
 not prove portability: each claimed OS must execute the complete graph.
@@ -228,20 +238,19 @@ third gate.
 
 ### Requirement: A supplied offline bundle can install the complete verification toolchain
 
-On each declared platform, a release-bound bundle SHALL supply every
-package needed by `npm ci --offline --ignore-scripts` and the pinned lychee
-asset. Supported Node/npm and Git SHALL complete actual installation and full
-verification from an empty application cache without network. Before
-extraction, the installer SHALL match committed source identities and an
-external or source-pinned digest. ETHOS remains separate; the bundle SHALL NOT
-impersonate its authority.
+Each declared platform's release-bound bundle SHALL supply every locked npm
+package, pinned Vale and lychee asset, and upstream notice. Supported Node/npm
+and Git SHALL install and run the full verifier from empty application caches
+without network access. Before extraction, the installer SHALL match committed
+source identities and a trusted external or source-pinned digest. ETHOS remains
+separate; the bundle SHALL NOT impersonate its authority.
 
 #### Scenario: Cold local verification succeeds without network access
 
 - **WHEN** a user supplies a complete bundle for the checked-out release on a
   declared host with supported Node/npm and Git
 - **AND** the application has no pre-existing npm cache, `node_modules/`, or
-  lychee cache
+  native-tool cache
 - **THEN** the actual offline install and full repository verifier pass while
   outbound network access is unavailable
 - **AND THEN** a successful `npm ci --offline --dry-run` alone is not accepted
@@ -249,7 +258,8 @@ impersonate its authority.
 
 #### Scenario: Offline supply is incomplete or altered
 
-- **WHEN** a bundle is missing a required npm entry or lychee asset, contains an
+- **WHEN** a bundle is missing a required npm entry, native asset, or license
+  notice, contains an
   unsafe member, or disagrees with the checked-out lockfile, tool manifest,
   version, or trusted bundle digest
 - **THEN** the installer fails before accepting the toolchain or running the
@@ -345,24 +355,6 @@ failure rather than an accepted status or an unreported exclusion.
   Markdown inventory
 - **AND THEN** any broken external link prevents a complete release claim.
 
-### Requirement: Offline tool supply is qualified by use, not an npm-major label
-
-The source-pinned bundle SHALL bind the exact edition, package lock, Node
-major, and lychee supply. It SHALL NOT add a second npm-major declaration as
-an admission substitute for actual portability. A clean offline installation
-and full repository verifier on each claimed host SHALL determine compatibility
-with that host's available npm. The application dependency audit SHALL NOT be
-presented as an audit of the Node distribution's bundled package manager.
-
-#### Scenario: Two compatible npm versions use the same bundle
-
-- **WHEN** a bundle built from one accepted source is installed in clean
-  checkouts with different npm versions supported by the selected Node line
-- **THEN** each installer consumes only the pinned local cache and reports its
-  observed npm version
-- **AND THEN** the complete verifier passes before either host is claimed
-  qualified; a version label alone cannot make that claim.
-
 ### Requirement: The actual package manager conforms before execution
 
 The repository SHALL declare one exact npm version through
@@ -399,6 +391,14 @@ SHALL NOT substitute for observing the actual consuming npm command.
   execution-path or prefix authority
 - **AND THEN** failed native resolution stops execution instead of silently
   choosing a different package manager.
+
+#### Scenario: Offline execution reports the selected package manager
+
+- **WHEN** the source-bound bundle is installed on a declared host
+- **THEN** native npm admission requires the single exact source declaration
+- **AND** the installer reports the actual npm version and runs full verification;
+  a label or second npm-major field cannot qualify the host
+- **AND** the package audit does not certify Node's bundled npm executable.
 
 ### Requirement: Package-manager acquisition stays outside offline verification
 
@@ -444,33 +444,48 @@ extraction; failed acquisition SHALL remove only its own failed output.
 
 ### Requirement: Native English prose and terminology checks
 
-The existing portable verifier SHALL use locked upstream textlint kernel and
-Markdown rules to reject repeated words, wordy phrases, clichés, and inconsistent
-selected technical terms in current authored Markdown. One rule configuration
-SHALL govern standalone prose and full verification. Spelling and formatting
-SHALL retain their existing owners. No host configuration, inline suppression,
-new service, or second governance plane SHALL influence this check.
+The verifier SHALL use pinned Vale for spelling, repeated words, diagnosed
+wordy or stock phrases, and selected technical terms in current authored
+Markdown. One native configuration SHALL govern prose and full checks; replaced
+pipelines SHALL retire. Native Markdown parsing SHALL reject actual Vale
+control comments and preserve literal code. Host configuration, inline
+suppression, network supply during verification, new services, and a second
+governance plane SHALL NOT influence this check.
 
 #### Scenario: Objective prose defects appear
 
-- **WHEN** current authored Markdown repeats a word, uses a diagnosed wordy
-  expression or cliché, or spells a selected technical term inconsistently
-- **THEN** the actual upstream rule reports the source location and reason
-- **AND** standalone prose and full verification fail on that same finding.
+- **WHEN** current Markdown contains a misspelling, repeated word, diagnosed
+  needless phrase, or inconsistent selected term
+- **THEN** the native rule reports the source location and reason
+- **AND** standalone prose and full verification fail on that finding.
+
+#### Scenario: Reader syntax carries prose
+
+- **WHEN** a heading, quote, list, emphasized phrase, link label, or table cell
+  contains a governed prose defect
+- **THEN** the native owner checks the actual reader text
+- **AND** distinct table cells are not joined into an artificial sentence.
+
+#### Scenario: Syntax and meaningful uncertainty remain intact
+
+- **WHEN** Markdown contains code spans, fenced commands, URL targets, explicit
+  uncertainty, a meaningful passive construction, or a domain authority term
+- **THEN** the selected rules preserve syntax, confidence, responsibility, and
+  permission limits
+- **AND** verification does not rewrite prose or require a semantic waiver.
+
+#### Scenario: A document tries to disable quality
+
+- **WHEN** a real HTML comment contains a native Vale control in a block,
+  paragraph, quote, list, or table, including an entity-encoded control
+- **THEN** the existing native Markdown linter rejects it
+- **AND** code examples, explanatory comments, and evidence links remain valid.
 
 #### Scenario: A table separates prose into cells
 
 - **WHEN** a Markdown cell contains repeated words or an inconsistent term
 - **THEN** the verifier checks that cell, including nested emphasis
 - **AND** separate cells are not joined into one artificial sentence.
-
-#### Scenario: Syntax and meaningful uncertainty remain intact
-
-- **WHEN** Markdown contains code spans, fenced commands, URL targets, or an
-  explicit statement of uncertainty or a meaningful passive construction
-- **THEN** the native parser preserves syntax and the selected rule policy does
-  not require changing confidence, responsibility, or command bytes
-- **AND** no automated prose rewrite is a required verification step.
 
 #### Scenario: Current and historical scopes differ
 
@@ -484,7 +499,7 @@ new service, or second governance plane SHALL influence this check.
 - **WHEN** the source-bound release bundle is installed without remote supply
   on any declared verification host
 - **THEN** the actual full verifier executes its native prose and terminology
-  rules from the locked packages
+  rules from the pinned tools and locked configuration
 - **AND** a missing package or rule fails rather than falling back or skipping.
 
 #### Scenario: An upstream package keeps its license notice in a readme
@@ -523,3 +538,55 @@ status assertion; a timeout SHALL NOT be mistaken for a rejected source defect.
 - **WHEN** the child reaches its finite timeout or has an execution error
 - **THEN** the test fails with that actual error before comparing its exit code
 - **AND** it does not skip, retry, or count the timeout as defect rejection.
+
+### Requirement: Complete retirement of replaced quality tools
+
+The replacement SHALL migrate every textlint responsibility: English checks,
+DR boundary parsing, and offline README license recognition. It SHALL remove
+retired direct and unused transitive dependencies, configurations, adapters,
+imports, command entries, test interfaces, and current operational guidance.
+No alternate parser, compatibility facade, fallback, or optional retired checker
+SHALL remain. Immutable historical source SHALL NOT become an executable
+dependency or current authority.
+
+#### Scenario: A replacement leaves a retired consumer
+
+- **WHEN** an active consumer, declared or resolved dependency, configuration,
+  command, or guidance still requires a replaced tool
+- **THEN** transition acceptance fails even if the new prose command passes
+- **AND** a complete current-consumer and dependency-graph audit is required
+  before retirement can be claimed.
+
+#### Scenario: All former responsibilities use their native owners
+
+- **WHEN** all three consumers pass their retained positive and negative cases
+  through the selected native English and Markdown owners
+- **THEN** source verification and clean offline installation succeed without
+  any retired package or fallback
+- **AND** DR constraints, explicit matching license notices, upstream bytes,
+  source locations, and meaningful uncertainty remain intact.
+
+### Requirement: One source-bound native quality supply
+
+One repository-native tool manifest SHALL bind the lychee and Vale versions,
+platform assets, archive digests, and license notices. The existing native
+installer and source-bound offline bundle SHALL consume that manifest without
+duplicated tool supply. Local verification SHALL never download a missing tool.
+GitLab and GitHub SHALL supply and qualify the frozen release independently.
+The old manifest and installer SHALL retire when their consumers are replaced.
+
+#### Scenario: A native tool is supplied offline
+
+- **WHEN** a supported host receives the exact source-bound bundle or a pinned
+  local archive
+- **THEN** the installer verifies its digest, safe archive members, executable
+  version, and source binding before admitting the tool
+- **AND** it preserves the destination's host installation and credentials.
+
+#### Scenario: Native supply is incomplete or changed
+
+- **WHEN** the requested ABI, archive, digest, or source-bound manifest is missing
+  or changed
+- **THEN** installation and verification fail without fetching a substitute,
+  borrowing another Forge's identity, or reusing an earlier bundle
+- **AND** only the exact operation's disposable temporary stage is removed.

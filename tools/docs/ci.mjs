@@ -51,7 +51,8 @@ const npmBootstrap =
 const nativeSourceSupply = [
   "npm ci --ignore-scripts",
   auditCommand,
-  "node tools/ci/install-lychee.mjs --gitlab-package",
+  "node tools/ci/install-native.mjs lychee --gitlab-package",
+  "node tools/ci/install-native.mjs vale --gitlab-package",
 ];
 
 function requirePackageManagerSetup(steps, setupNode) {
@@ -377,7 +378,10 @@ export function validateCi(
   const install = commands.indexOf("npm ci --ignore-scripts");
   const audit = commands.indexOf(auditCommand);
   const supply = commands.indexOf(
-    "node tools/ci/install-lychee.mjs --download",
+    "node tools/ci/install-native.mjs lychee --download",
+  );
+  const proseSupply = commands.indexOf(
+    "node tools/ci/install-native.mjs vale --download",
   );
   const verify = commands.indexOf(verifier);
   if (!(
@@ -386,7 +390,8 @@ export function validateCi(
       steps.findIndex((step) => step.run === "npm ci --ignore-scripts") &&
     install < audit &&
     audit < supply &&
-    supply < verify
+    supply < proseSupply &&
+    proseSupply < verify
   )) {
     throw new Error(
       "GitHub dependency audit, supply, and common verification are out of order",
