@@ -34,6 +34,10 @@ linter beside the current stack would leave the duplication intact.
   repository boundary. A file in a cache or Git metadata must not make a broken
   source reference pass; delivered internal aliases and directory routes remain
   valid only when their resolved targets are also source.
+- Remove directory-name exclusions after native Git source discovery. Check
+  every selected current Markdown file for prose and links, even beneath a
+  normally ignored local-state path. Keep ignored untracked state excluded and
+  official archived Changes under their historical boundary.
 - Name every runnable GitLab verification job by purpose and platform, with
   `:review` for source review. Keep shared steps in hidden native templates, not
   a platform-less runnable job or a Linux job inherited by other hosts. Preserve

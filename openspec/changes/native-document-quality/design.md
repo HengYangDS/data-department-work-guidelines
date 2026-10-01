@@ -105,6 +105,13 @@ stock phrases. Native configuration and vocabulary contain the selected policy;
 the wrapper only chooses explicit current files, a verified executable, and
 fixed native arguments. There is no custom NLP or source-mapping engine.
 
+Native Git discovery owns the distinction between source and ignored local
+state. Current Markdown selection excludes only official archived Changes;
+local-state directory names do not erase checks on files already selected by
+Git. Prove both cases through the public commands: ignored untracked material
+stays outside source, while force-added Markdown beneath a normally ignored
+path receives prose and link checks. Do not add another inventory or waiver.
+
 Markdown lint owns syntax and parsed comment controls. Its supported parser
 identifies actual comments before checking Vale's control grammar. Literal code,
 escaped examples, normal comments, and evidence links remain valid. The same

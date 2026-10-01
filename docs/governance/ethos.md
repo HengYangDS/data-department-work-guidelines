@@ -158,6 +158,11 @@ must contain source; delivered aliases must also resolve to source inside the
 repository. Ignored caches, Git metadata, and undelivered aliases cannot satisfy
 the boundary. Native lychee still checks target existence and fragments.
 
+Git source selection precedes current Markdown checks. A normally ignored
+directory cannot exempt an already tracked file from prose or links. Ignored
+untracked state stays excluded; official archived Changes retain their
+historical scope.
+
 The [decision register](../decisions/README.md) owns the record format. The
 locked Markdown parser checks actual headings, unique stable IDs, and readable
 sections, including quote and list nesting. Code blocks, task markers, extra

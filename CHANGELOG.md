@@ -15,6 +15,9 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ### Fixed
 
+- Prose and link checks no longer silently omit tracked current Markdown under
+  normally ignored directory names. Native Git selection still excludes ignored
+  untracked state; official archives retain their historical boundary.
 - Governance and profile descriptions distinguish JavaScript syntax checking
   from semantic correctness and identify native test reports that omit runtime
   warnings. Passing those reports does not establish the shared semantic,

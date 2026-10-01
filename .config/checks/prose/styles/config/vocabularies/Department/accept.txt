@@ -44,5 +44,6 @@ CSpell
 (?i:unignored)
 (?i:unpausing)
 (?i:unscoped)
+(?i:untracked)
 (?i:untrusted)
 (?i:validators?)

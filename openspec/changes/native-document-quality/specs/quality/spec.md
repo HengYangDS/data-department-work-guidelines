@@ -245,6 +245,15 @@ NOT influence this check.
 - **AND** official archived Changes remain historical inputs, not a second
   current style authority or an excuse to hide current files.
 
+#### Scenario: Tracked source uses a local-state directory name
+
+- **WHEN** native Git discovery selects a current Markdown file beneath a
+  normally ignored local-state directory
+- **THEN** prose and links check that file rather than silently excluding its
+  directory name
+- **AND** ignored untracked state remains outside source; only official archived
+  Changes receive the historical prose and link scope.
+
 #### Scenario: A supported host installs offline supply
 
 - **WHEN** the source-bound release bundle is installed without remote supply on

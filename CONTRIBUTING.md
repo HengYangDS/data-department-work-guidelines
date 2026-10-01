@@ -100,6 +100,11 @@ been observed. Git's native `.gitattributes` rule checks out tracked text with
 LF even on Windows; do not replace it with a host-specific Git setting. Keep
 `node_modules/` and generated output out of Git.
 
+Git discovery selects tracked and non-ignored candidate source. A current
+Markdown file already selected by Git still receives prose and link checks under
+a normally ignored directory name. Official archived Changes keep their
+historical scope; untracked ignored caches are not source.
+
 GitHub's published Release starts its offline host matrix. Its public bundle
 download uses Node directly; it needs neither a Forge CLI nor a credential.
 GitLab's `offline:verify:linux`, `offline:verify:macos`, and

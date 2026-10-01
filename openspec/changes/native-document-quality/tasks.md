@@ -84,6 +84,11 @@
       scopes. Retain exactly two default gates and no private substitute.
       Reconcile current references and rerun affected checks.
 
+- [x] 2.17 Remove duplicate directory-name exclusions after native Git source
+      selection. Prove ignored local state stays excluded, while tracked current
+      Markdown under normally ignored paths receives prose and link checks.
+      Preserve the official archive boundary and reconcile current guidance.
+
 ## 3. Qualification and publication
 
 - [x] 3.1 Freeze source and a source-bound offline bundle; run format, lint,

@@ -832,10 +832,14 @@ test("current Markdown inventory excludes official archives, not live topics", (
   const files = [
     "README.md",
     "docs/decide.md",
+    ".superpowers/source.md",
+    ".worktrees/source.md",
+    "build/source.md",
+    "node_modules/source.md",
     "openspec/changes/archive/old/spec.md",
   ];
   assert.deepEqual(sourceMarkdown(files), files);
-  assert.deepEqual(currentMarkdown(files), ["README.md", "docs/decide.md"]);
+  assert.deepEqual(currentMarkdown(files), files.slice(0, -1));
 });
 
 test("the public check command rejects incomplete-mode waivers", () => {
@@ -1167,11 +1171,13 @@ test("native prose preserves domain authority and standard Markdown terms", () =
     proseFindings(
       "Authority to act remains subject to explicit permission.\n\n" +
         "Compare feasible options. Use one blank line between paragraphs.\n\n" +
-        "Name the deliverable's format. Inspect the deliverables.\n",
+        "Name the deliverable's format. Inspect the deliverables.\n\n" +
+        "Ignored untracked caches remain outside source.\n",
     ),
     [],
   );
   assert.ok(proseFindings("Inspect the delivrables.\n").length > 0);
+  assert.ok(proseFindings("Inspect the untraked source.\n").length > 0);
 });
 
 test("native repeated-word checks cover headings, emphasis and reader quotes", () => {
@@ -1309,8 +1315,56 @@ test("public prose and integrity commands reject the same current-file defect", 
     });
     assert.ifError(valid.error);
     assert.equal(valid.status, 0, valid.stderr);
+    const sources = [".superpowers", ".worktrees", "build"].map((prefix) => ({
+      relative: `${prefix}/source.md`,
+      anchor: `missing-${prefix.replace(/^\./u, "")}-anchor`,
+    }));
+    const writeSources = (content) => {
+      for (const source of sources) {
+        const file = path.join(directory, source.relative);
+        mkdirSync(path.dirname(file), { recursive: true });
+        writeFileSync(file, content(source));
+      }
+    };
+    const runCheck = (command) =>
+      spawnSync(process.execPath, ["tools/docs/cli.mjs", command], {
+        cwd: directory,
+        env: environment,
+        encoding: "utf8",
+        timeout: 120_000,
+      });
+    writeSources(() => "# Source\n\nUse the the report.\n");
+    const ignored = runCheck("prose");
+    assert.ifError(ignored.error);
+    assert.equal(ignored.status, 0, ignored.stderr);
+    const added = spawnSync(
+      "git",
+      ["add", "--force", "--", ...sources.map(({ relative }) => relative)],
+      { cwd: directory, encoding: "utf8", timeout: 30_000 },
+    );
+    assert.ifError(added.error);
+    assert.equal(added.status, 0, added.stderr);
+    const invalidProse = runCheck("prose");
+    assert.ifError(invalidProse.error);
+    assert.equal(invalidProse.status, 1, invalidProse.stdout);
+    assert.match(invalidProse.stderr, /\[Vale\.Repetition\].*repeated/u);
+    for (const { relative } of sources)
+      assert.ok(invalidProse.stderr.replaceAll("\\", "/").includes(relative));
+    writeSources(
+      ({ anchor }) => `# Source\n\n[Entry](../README.md#${anchor})\n`,
+    );
+    const invalidLink = runCheck("links");
+    assert.ifError(invalidLink.error);
+    assert.equal(invalidLink.status, 1, invalidLink.stdout);
+    for (const { anchor } of sources)
+      assert.ok(invalidLink.stdout.includes(anchor), invalidLink.stdout);
+    writeSources(() => "# Source\n\nThe result is verified.\n");
+    const repaired = runCheck("prose");
+    assert.ifError(repaired.error);
+    assert.equal(repaired.status, 0, repaired.stderr);
   } finally {
     rmSync(directory, { recursive: true, force: true });
+    assert.equal(existsSync(directory), false);
   }
 });
 

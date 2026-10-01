@@ -141,11 +141,7 @@ export function sourceMarkdown(files = gitFiles()) {
 
 export function currentMarkdown(files = gitFiles()) {
   return sourceMarkdown(files).filter(
-    (relative) =>
-      !relative.startsWith("openspec/changes/archive/") &&
-      ![".superpowers/", ".worktrees/", "build/", "node_modules/"].some(
-        (prefix) => relative.startsWith(prefix),
-      ),
+    (relative) => !relative.startsWith("openspec/changes/archive/"),
   );
 }
 
