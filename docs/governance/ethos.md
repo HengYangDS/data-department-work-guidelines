@@ -210,7 +210,10 @@ GitHub declares Linux, macOS, and Windows hosted execution. GitLab declares
 project-locked Linux ARM64 container, macOS ARM64 shell, and Windows ARM64 shell
 capabilities for source and post-publication offline verification. Every
 runnable job names its phase and platform; review adds `:review`. Common steps
-stay in hidden native templates.
+stay in hidden native templates. Both source-event routes accept only `v*`
+release tags. GitLab applies that boundary to workflow, source, and offline
+rules before tool supply; native release checks still require a valid signed
+SemVer identity.
 
 ### Review and Protected Execution
 

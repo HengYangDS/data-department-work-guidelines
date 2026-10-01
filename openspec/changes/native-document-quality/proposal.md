@@ -38,6 +38,10 @@ linter beside the current stack would leave the duplication intact.
   `:review` for source review. Keep shared steps in hidden native templates, not
   a platform-less runnable job or a Linux job inherited by other hosts. Preserve
   runner capabilities, inputs, and verification behavior.
+- Restrict GitLab workflow, source, and offline tag routes to the same `v*`
+  family declared by GitHub source events and native release policy, excluding
+  `/`. Reject broader rules at the existing CI contract; preserve signature,
+  SemVer, protected-runner, and GitHub offline-acquisition checks.
 - Reorganize repository governance around contributor tasks and readable
   authority, proof, supply, and runner boundaries. Keep command procedures at
   their existing contributor owner. Sharpen the two durable decision records,
@@ -52,6 +56,10 @@ linter beside the current stack would leave the duplication intact.
   independent expert committee on one fixed snapshot. Resolve concrete findings
   at existing owners while preserving original duties, accepted decisions,
   historical truth, and native product contracts.
+- Correct OpenSpec entry claims against the installed official contract: use
+  the local Node entry without npm cache resolution, distinguish new and
+  modified capability paths, and permit Change-bound official sync as well as
+  archive. Name both Vale and lychee in GitLab source prerequisites.
 - Restore explicit sample-selection and anomaly-impact duties in historical
   analysis, and the Agent's default continuation with reasonable assumptions
   when context is not blocking. Preserve stops for unknown facts, authority,

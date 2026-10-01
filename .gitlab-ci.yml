@@ -1,6 +1,6 @@
 workflow:
   rules:
-    - if: "$CI_COMMIT_TAG"
+    - if: '$CI_COMMIT_TAG =~ /^v[^\/]*$/'
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main"'
     - if: '$CI_COMMIT_BRANCH =~ /^proposal\// && $CI_OPEN_MERGE_REQUESTS'
@@ -37,7 +37,7 @@ docs:verify:linux:
   tags:
     - ci-linux-arm64-container-protected
   rules:
-    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG'
+    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG =~ /^v[^\/]*$/'
 
 docs:verify:linux:review:
   extends: .docs:verify
@@ -55,7 +55,7 @@ docs:verify:macos:
   tags:
     - ci-macos-arm64-shell
   rules:
-    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG'
+    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG =~ /^v[^\/]*$/'
 
 docs:verify:macos:review:
   extends: .docs:verify
@@ -76,7 +76,7 @@ docs:verify:windows:
   tags:
     - ci-windows-arm64-shell
   rules:
-    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG'
+    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG =~ /^v[^\/]*$/'
 
 docs:verify:windows:review:
   extends: .docs:verify
@@ -94,8 +94,8 @@ docs:verify:windows:review:
   timeout: 25m
   interruptible: true
   rules:
-    - if: '$CI_COMMIT_TAG && $CI_PIPELINE_SOURCE == "web"'
-    - if: '$CI_COMMIT_TAG && $CI_PIPELINE_SOURCE == "api"'
+    - if: '$CI_COMMIT_TAG =~ /^v[^\/]*$/ && $CI_PIPELINE_SOURCE == "web"'
+    - if: '$CI_COMMIT_TAG =~ /^v[^\/]*$/ && $CI_PIPELINE_SOURCE == "api"'
   variables:
     GIT_DEPTH: "0"
   before_script:

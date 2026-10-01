@@ -333,6 +333,16 @@ Validate the resolved native GitLab configuration before publishing, then
 observe the new names on the next exact-source hosted jobs. Earlier pipelines,
 tags, and release assets keep their original identity.
 
+The configuration audit found that GitLab admitted every nonempty tag while
+GitHub and native release policy declared `v*`. Restrict GitLab workflow,
+protected-source, and offline rules to the same tag family before tool supply.
+Exclude slash-containing tags because GitHub's `*` does not match `/`. Keep
+native SemVer, signature, and protected-runner checks; a matching tag is
+not a valid release identity. The existing CI contract and negative tests reject
+broader rules. This correction does not change branch routes, tools, or Runner
+ownership. Qualify the final untagged patch source again rather than adding an
+intermediate release.
+
 ### Make governance and decisions usable by their readers
 
 Before this correction, governance combined authority, contributor commands,
@@ -429,6 +439,30 @@ Record actual expert coverage and any failed review in the existing task ledger.
 The primary owner's audit cannot stand in for an independent lens, and a failed
 provider call supplies no review evidence. The prior comparison remains dated
 evidence, not a certification of equivalence.
+
+The current-entry audit found three OpenSpec descriptions that contradicted the
+installed contract. npm execution can reuse its execution cache even with
+`--offline --no`; call the local package's JavaScript entry with Node instead.
+The official proposal template permits new capabilities and requires exact live
+paths only for modified capabilities. The official sync workflow can apply
+Change deltas without archiving; both sync and archive still require ETHOS
+admission. Correct these descriptions without adding a wrapper, private
+capability restriction, or archive-only lifecycle. GitLab source prerequisites
+must name both native tool archives, as the existing manifest and CI already do.
+
+The archive review compares historical commitments, not their claimed
+execution. Several records require a bounded disposition when cited: the
+rollout-forwarding repair describes wrapper changes in its proposal and a
+shared-verifier forwarding edge in its design; lifecycle records disagree about
+archive and land order; identity normalization promises preserved evidence
+digests while
+its design refreshes digests for path-edited Chronicle representations; and
+older Node/npm notes do not consistently distinguish upstream bundled npm from
+the destination-selected executable. None establishes current delivery,
+corruption, or a past lifecycle violation. Preserve the original records and
+digests; if a claim depends on an edited representation, identify its separate
+bytes and producer evidence. Do not infer historical execution or restore
+retired scope, browser, shell, or package-manager policy from these records.
 
 ### Deliver the complete transition
 

@@ -26,12 +26,19 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   files, directory routes, and internal aliases remain available; native lychee
   still checks target existence and fragments.
 - GitLab source and offline verification jobs name their platform consistently.
-  Shared steps use hidden native templates; runner capabilities and checks
-  remain unchanged.
+  Shared steps use hidden native templates. Both source-event routes admit only
+  `v*` tags without `/`; GitLab offline rules use the same family. GitHub offline
+  acquisition retains its source and version checks. Runner capabilities and
+  full verification remain unchanged.
 - Governance routes contributors to the boundary they need, with separate
   authority, quality, supply, and runner sections. Existing decision records
   give clearer alternatives and evidence; their accepted choices are unchanged.
   OpenSpec supply requirements name the single Vale and lychee manifest.
+- The OpenSpec entry runs the local official Node CLI directly rather than
+  claiming npm execution cannot use a cached package. Its capability guide
+  distinguishes new and modified paths, and its lifecycle guidance permits
+  official Change-bound sync as well as archive. GitLab source prerequisites
+  name both required native tools.
 - Remote download retention keeps the latest qualified edition, one rollback,
   and required tool packages. Superseded attachments retire with an explicit
   notice while signed tags, original notes, and source history remain.

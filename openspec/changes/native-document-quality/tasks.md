@@ -62,11 +62,25 @@
       A no-tool native advisor passed a minimal probe, but its complete fixed-source
       review reached the bounded 540-second deadline without a result. That
       attempt supplies no independent review or completion evidence.
+      The successful reviewer read all 213 archive files across 39 Changes,
+      then all 20 requested current configuration/interface files. The tag-route
+      discrepancy is repaired; historical wording conflicts receive a
+      prospective disposition without archive edits. Other independent lenses
+      remain unproved.
 - [x] 2.13 Restore explicit sample-selection and anomaly-impact duties and the
       default continuation when Agent context is not blocking; compare both with
       the original clauses, challenge them with adverse cases, and rerun
       affected quality checks. Correct the earlier comparison's unqualified
       conclusion without rewriting its dated evidence.
+- [x] 2.14 Restrict GitLab workflow, protected-source, and offline tag rules to
+      the GitHub `v*` tag family before tool supply. Prove old broad routes fail,
+      valid version routes pass, and native GitLab dry-runs reject unrelated
+      tags without changing Runner or strict release admission.
+- [x] 2.15 Correct the OpenSpec entry's cache, capability, and sync descriptions
+      against the installed official contract, and name both GitLab native-tool
+      prerequisites. Verify the documented local CLI fails without its package
+      and runs the locked version when installed; preserve official sync and
+      archive admission without adding an adapter.
 
 ## 3. Qualification and publication
 

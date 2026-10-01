@@ -318,6 +318,27 @@ observing the actual consuming npm command.
 
 ## ADDED Requirements
 
+### Requirement: Source-event tag routes match the release family
+
+Both source-event routes SHALL admit only `v*` tags without `/`; GitLab offline
+rules SHALL use the same family. The CI contract SHALL reject broader tag rules.
+Native release checks SHALL retain strict SemVer and signature admission;
+GitHub offline acquisition retains source/version checks.
+
+#### Scenario: An unrelated tag would enter source supply
+
+- **WHEN** a GitLab workflow, protected-source rule, or offline rule admits any
+  nonempty tag without the declared family constraint
+- **THEN** the existing CI contract rejects that broader route
+- **AND** unrelated and slash-containing tags are excluded before GitLab tool
+  supply, while branch and review routes remain unchanged.
+
+#### Scenario: A matching prefix does not establish a release
+
+- **WHEN** a tag begins with `v` but is not a signed strict SemVer edition
+- **THEN** native release checks still reject that identity
+- **AND** an eligible source-event route does not prove a Release or asset.
+
 ### Requirement: Local references resolve to delivered source
 
 Local file links SHALL remain inside the repository and resolve to tracked or

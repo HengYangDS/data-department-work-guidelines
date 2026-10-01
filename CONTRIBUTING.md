@@ -108,7 +108,7 @@ GitLab's `offline:verify:linux`, `offline:verify:macos`, and
 jobs check source; they do not qualify the offline asset. Each job obtains the
 same package through the current project's CI identity, not through GitHub or an
 operator's credentials. Native GitLab runners also need the manifest-pinned
-lychee archive in this project's registry before their online source jobs can
+Vale and lychee archives in this project's registry before online source jobs can
 run; a missing archive is not permission to add a GitHub fallback. Proposal and
 merge-request jobs must use project-locked review runners, while protected
 branches and release jobs use separate trusted runners and workspaces. For

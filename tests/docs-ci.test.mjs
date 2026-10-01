@@ -14,6 +14,59 @@ function changedGitLab(jobName, change) {
   return YAML.stringify(pipeline);
 }
 
+test("GitLab version-tag admission matches the GitHub namespace", () => {
+  const pipeline = YAML.parse(gitlab);
+  const tagRule = "$CI_COMMIT_TAG =~ /^v[^\\/]*$/";
+  assert.deepEqual(YAML.parse(github).on.push.tags, ["v*"]);
+  assert.equal(pipeline.workflow.rules[0].if, tagRule);
+  for (const system of ["linux", "macos", "windows"]) {
+    assert.equal(
+      pipeline[`docs:verify:${system}`].rules[0].if,
+      `$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || ${tagRule}`,
+    );
+  }
+  assert.deepEqual(pipeline[".offline:verify"].rules, [
+    { if: `${tagRule} && $CI_PIPELINE_SOURCE == "web"` },
+    { if: `${tagRule} && $CI_PIPELINE_SOURCE == "api"` },
+  ]);
+  for (const [tag, admitted] of [
+    ["v7.0.4", true],
+    ["v7.1.0-rc.1", true],
+    ["v", true],
+    ["vfoo", true],
+    ["v7.0.4/topic", false],
+    ["v7/review", false],
+    ["v/7.0.4", false],
+    ["release-7.0.4", false],
+    ["candidate/dev", false],
+    ["", false],
+  ]) {
+    assert.equal(/^v[^/]*$/u.test(tag), admitted, tag);
+  }
+  assert.doesNotThrow(() => validateCi(github, gitlab, offline));
+});
+
+test("the CI contract rejects broader GitLab tag routes", () => {
+  for (const [owner, ruleIndex] of [
+    ["workflow", 0],
+    ["docs:verify:linux", 0],
+    ["docs:verify:macos", 0],
+    ["docs:verify:windows", 0],
+    [".offline:verify", 0],
+    [".offline:verify", 1],
+  ]) {
+    const pipeline = YAML.parse(gitlab);
+    pipeline[owner].rules[ruleIndex].if = pipeline[owner].rules[
+      ruleIndex
+    ].if.replace("$CI_COMMIT_TAG =~ /^v[^\\/]*$/", "$CI_COMMIT_TAG");
+    assert.throws(
+      () => validateCi(github, YAML.stringify(pipeline), offline),
+      /GitLab/u,
+      `${owner}:${ruleIndex}`,
+    );
+  }
+});
+
 test("GitLab runnable verification jobs name their phase and platform", () => {
   const pipeline = YAML.parse(gitlab);
   const jobs = Object.keys(pipeline).filter((name) =>
@@ -235,7 +288,7 @@ test("GitLab native review and protected jobs use separate capabilities", () => 
     assert.notDeepEqual(trusted.tags, review.tags);
     assert.deepEqual(trusted.rules, [
       {
-        if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG',
+        if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG =~ /^v[^\\/]*$/',
       },
     ]);
     assert.deepEqual(review.rules, [
@@ -257,7 +310,7 @@ test("GitLab Linux review and protected jobs use separate capabilities", () => {
   assert.equal(result.gitlabReviewHosts.length, 3);
   assert.deepEqual(trusted.rules, [
     {
-      if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG',
+      if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG =~ /^v[^\\/]*$/',
     },
   ]);
   assert.deepEqual(review.rules, [
@@ -293,7 +346,7 @@ test("GitLab Linux review and protected jobs use separate capabilities", () => {
 test("GitLab suppresses duplicate proposal pushes after an MR opens", () => {
   const pipeline = YAML.parse(gitlab);
   assert.deepEqual(pipeline.workflow?.rules, [
-    { if: "$CI_COMMIT_TAG" },
+    { if: "$CI_COMMIT_TAG =~ /^v[^\\/]*$/" },
     { if: '$CI_PIPELINE_SOURCE == "merge_request_event"' },
     { if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main"' },
     {

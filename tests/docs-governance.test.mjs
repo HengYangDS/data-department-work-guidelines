@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
 import {
   cpSync,
+  existsSync,
   mkdtempSync,
   mkdirSync,
   readFileSync,
@@ -111,13 +113,11 @@ test("profile admits every tracked candidate without an enumerated path list", (
 test("OpenSpec entry selects only the locked portable CLI", () => {
   const source = readFileSync(path.join(root, "openspec", "README.md"), "utf8");
   const expected =
-    "npm exec --offline --no --package=@fission-ai/openspec -- openspec validate --all --strict --json";
+    "node node_modules/@fission-ai/openspec/bin/openspec.js validate --all --strict --json";
   const requirePortableCommand = (text) => {
     const commands = text
       .split(/\r?\n/u)
-      .filter((line) =>
-        line.includes("openspec validate --all --strict --json"),
-      );
+      .filter((line) => line.endsWith("validate --all --strict --json"));
     assert.deepEqual(commands, [expected], "locked portable OpenSpec CLI");
   };
   requirePortableCommand(source);
@@ -127,11 +127,55 @@ test("OpenSpec entry selects only the locked portable CLI", () => {
     "npm exec --offline -- openspec validate --all --strict --json",
     "npm exec --no --package=@fission-ai/openspec -- openspec validate --all --strict --json",
     "npm exec --offline --no -- openspec validate --all --strict --json",
+    "npm exec --offline --no --package=@fission-ai/openspec -- openspec validate --all --strict --json",
   ]) {
     assert.throws(
       () => requirePortableCommand(source.replace(expected, invalid)),
       /locked portable OpenSpec CLI/u,
     );
+  }
+});
+
+test("the documented official CLI cannot borrow an npm cache", () => {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-openspec-entry-"));
+  try {
+    const cache = path.join(directory, "npm-cache", "_npx", "unrelated");
+    mkdirSync(path.join(cache, "node_modules", ".bin"), { recursive: true });
+    const marker = path.join(directory, "ambient-cli-ran");
+    writeFileSync(
+      path.join(cache, "node_modules", ".bin", "openspec"),
+      `require('node:fs').writeFileSync(${JSON.stringify(marker)}, 'ran');`,
+    );
+    const result = spawnSync(
+      process.execPath,
+      ["node_modules/@fission-ai/openspec/bin/openspec.js", "--version"],
+      {
+        cwd: directory,
+        env: { ...process.env, npm_config_cache: path.dirname(cache) },
+        encoding: "utf8",
+        timeout: 10_000,
+      },
+    );
+    assert.ifError(result.error);
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /MODULE_NOT_FOUND/u);
+    assert.equal(existsSync(marker), false);
+    const installed = spawnSync(
+      process.execPath,
+      [
+        path.join(root, "node_modules/@fission-ai/openspec/bin/openspec.js"),
+        "--version",
+      ],
+      { cwd: root, encoding: "utf8", timeout: 10_000 },
+    );
+    assert.ifError(installed.error);
+    assert.equal(installed.status, 0);
+    const locked = JSON.parse(
+      readFileSync(path.join(root, "package.json"), "utf8"),
+    ).devDependencies["@fission-ai/openspec"];
+    assert.equal(installed.stdout.trim(), locked);
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
   }
 });
 

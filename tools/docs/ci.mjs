@@ -19,7 +19,7 @@ const gitlabNativeCapabilities = [
 ];
 const protectedRules = [
   {
-    if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG',
+    if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG =~ /^v[^\\/]*$/',
   },
 ];
 const reviewRules = [
@@ -29,7 +29,7 @@ const reviewRules = [
   },
 ];
 const workflowRules = [
-  { if: "$CI_COMMIT_TAG" },
+  { if: "$CI_COMMIT_TAG =~ /^v[^\\/]*$/" },
   { if: '$CI_PIPELINE_SOURCE == "merge_request_event"' },
   { if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main"' },
   {
@@ -220,8 +220,8 @@ function validateGitLabOffline(gitlab, expectedImage) {
     throw new Error("GitLab offline verification needs the declared runner");
   }
   const expectedRules = [
-    { if: '$CI_COMMIT_TAG && $CI_PIPELINE_SOURCE == "web"' },
-    { if: '$CI_COMMIT_TAG && $CI_PIPELINE_SOURCE == "api"' },
+    { if: '$CI_COMMIT_TAG =~ /^v[^\\/]*$/ && $CI_PIPELINE_SOURCE == "web"' },
+    { if: '$CI_COMMIT_TAG =~ /^v[^\\/]*$/ && $CI_PIPELINE_SOURCE == "api"' },
   ];
   if (JSON.stringify(job.rules) !== JSON.stringify(expectedRules)) {
     throw new Error("GitLab offline job requires a post-publication pipeline");
