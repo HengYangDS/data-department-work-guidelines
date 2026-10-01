@@ -103,10 +103,15 @@
 - [x] 3.8 Qualify and publish the compatible configuration correction with
       current native tests, a fresh cold-install bundle, exact-HEAD installed
       proof, and both source and offline platform matrices.
-- [ ] 3.9 Qualify and publish the compatible source-link, CI-naming, and reader
+- [x] 3.9 Qualify and publish the compatible source-link, CI-naming, and reader
       corrections after the final source audit, with fresh local checks, a
       cold-install bundle, exact-HEAD installed proof, a signed patch, and both
-      Forge platform matrices; preserve the earlier release objects.
+      Forge platform matrices; preserve the earlier release objects. The signed
+      `v7.0.4` source and independent Releases passed the declared source and
+      offline jobs on both Forges, matching downloaded bundle hashes, and the
+      post-tag online link check. Exact aftercare retained current and rollback
+      downloads while retiring superseded assets; aggregate storage statistics
+      may lag those verified resource removals.
 - [x] 3.10 Retire superseded download assets independently on both Forges;
       retain the latest qualified release, one qualified rollback, and tool
       packages consumed by retained source. Preserve tags, original notes, and
