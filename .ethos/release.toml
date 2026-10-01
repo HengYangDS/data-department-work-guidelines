@@ -10,6 +10,7 @@ id = "gitlab"
 provider = "gitlab"
 role = "organization_collaboration"
 git_remote = "origin"
+forge_repository = "http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines"
 capabilities = ["repository", "ci_cd", "publication"]
 ci_surface = ".gitlab-ci.yml"
 
@@ -18,5 +19,6 @@ id = "github"
 provider = "github"
 role = "independent_distribution"
 git_remote = "github"
+forge_repository = "https://github.com/HengYangDS/data-department-work-guidelines"
 capabilities = ["repository", "ci_cd", "publication"]
 ci_surface = ".github/workflows/docs-verify.yml"

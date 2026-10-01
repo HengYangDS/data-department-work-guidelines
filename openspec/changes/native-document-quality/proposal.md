@@ -97,6 +97,18 @@ linter beside the current stack would leave the duplication intact.
   priorities and open decisions, explicit communication purpose, meeting focus,
   deadline escalation, objective expression, a precise Agent deliverable, member
   judgment, and management responsibility for recurring rescue.
+- Keep one identical Changelog on both Forges. Use neutral, locally linkable
+  version headings and explicitly labeled GitLab and GitHub history links for
+  every section. Bind each link to the corresponding official publication
+  peer's `forge_repository` and require both peers to identify the same refs.
+  Preserve SemVer, dates, annotations, prepared releases, and ancestry checks;
+  retain intentional HTTP GitLab deployment without guessing its web address
+  from SSH transport. No source rewrite, redirect, or second Changelog is added.
+- Report the reusable wrong-repository and peer-navigation boundary to the
+  ETHOS product owner. Audit actual adopter links and coordinate corrections
+  through each repository's owned Change and lane; distinguish missing history
+  links from wrong targets and keep shared installed acceptance open until
+  observed. No copied adopter checker supplies product acceptance.
 - Release the changed contributor and offline-supply contract as a major edition
   only after local, installed ETHOS, and both Forge platform acceptance.
 

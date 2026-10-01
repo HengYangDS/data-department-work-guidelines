@@ -2,6 +2,33 @@
 
 ## MODIFIED Requirements
 
+### Requirement: Changelog structure follows Keep a Changelog
+
+`CHANGELOG.md` SHALL follow Keep a Changelog 1.1.0: `Unreleased` first;
+only applicable Added, Changed, Deprecated, Removed, Fixed, and Security
+categories, once per section in any order; strict SemVer headings with
+optional `[YANKED]`; real ISO dates; newest-first versions; and history
+links. The gate SHALL reject uncategorized prose, malformed headings,
+duplicate versions, version drift, missing local tag coverage, and invalid
+links.
+
+#### Scenario: Version, changelog, or tag identities diverge
+
+- **WHEN** a heading has a nonstandard or repeated category, invalid date or
+  SemVer, duplicates another version, lacks a real history link, omits a local
+  tag, or disagrees with `VERSION` or the selected tag's exact source
+- **THEN** the repository quality gate rejects the release candidate
+- **AND THEN** native ETHOS publication cannot substitute a different version
+  or silently treat an untagged earlier edition as a release.
+
+#### Scenario: Official changelog forms are accepted
+
+- **WHEN** a valid dated release heading ends with `[YANKED]`, or standard
+  categories appear once each in an order other than their explanatory list
+- **THEN** the repository quality gate accepts that structure
+- **AND THEN** human review still judges whether the change descriptions are
+  useful and whether a yanked release is explained.
+
 ### Requirement: Each Forge supplies its pinned documentation tool independently
 
 GitLab SHALL fetch pinned Vale and lychee from its own project package registry
@@ -90,6 +117,33 @@ exact tag. After acquisition, use SHALL require neither Forge.
   that the old offline download remains available.
 
 ## ADDED Requirements
+
+### Requirement: Changelog navigation offers both declared Forges
+
+Version headings SHALL stay neutral and locally linkable. One unchanged
+Changelog SHALL show explicit GitLab and GitHub history links per section.
+Both SHALL identify the same refs at their official
+`publication.peers[].forge_repository` coordinates with native provider routes.
+Credential-free HTTP or HTTPS SHALL match the deployment. Missing, duplicate,
+unused, mislabeled, wrong-repository, or divergent-ref links SHALL fail offline
+validation; no redirect or per-Forge rewrite is allowed.
+
+#### Scenario: A reader chooses either Forge
+
+- **WHEN** the same Changelog source is rendered on GitLab, GitHub, or locally
+- **THEN** version headings locate sections in that document without choosing
+  an external Forge
+- **AND** each section exposes clearly labeled native history links to both
+  declared repository identities with identical refs.
+
+#### Scenario: A peer link misdirects the reader
+
+- **WHEN** a peer link is missing, duplicated, mislabeled, unused, points to
+  another repository or provider route, includes credentials, or disagrees
+  with the other peer's refs
+- **THEN** the offline repository check rejects the source
+- **AND** an accessible login page or a successful other-peer link does not
+  establish that the intended private comparison exists.
 
 ### Requirement: Remote download retention is bounded and truthful
 

@@ -557,6 +557,54 @@ Observe those effects through the existing product commands and their native
 records. Do not tick future effects, reuse earlier-HEAD proof, add a second
 progress ledger, or mark the Goal complete before those outcomes are verified.
 
+## Changelog Navigation Across Independent Forges
+
+One source file must serve readers on either Forge and in a local checkout.
+Making every version heading point to GitHub quietly displaces GitLab readers;
+switching that default to GitLab reverses the defect. Forge-specific source
+rewrites would give the same edition different bytes. Relative comparison URLs
+also have different native routes on the two providers.
+
+Use plain version headings, retaining native local heading anchors,
+and one compact history row per section: explicitly labeled GitLab and GitHub
+links. Reference definitions keep repository URLs out of the reading flow.
+Both links identify the same comparison or the oldest release's exact tag.
+Keep a Changelog requires linkable versions and sections, not a prescribed
+bracketed-heading grammar. This presentation preserves its human reading path
+and all historical version notes, dates, and signed release objects.
+
+Declare web repository identities only in the existing official ETHOS
+`publication.peers[].forge_repository` field in `.ethos/release.toml`. The
+selected installed runtime accepts credential-free HTTP and HTTPS coordinates.
+The changelog consumer reads that native declaration; it does not infer a web
+port from Git transport or add its own schema. GitLab uses `/-/compare/` and
+`/-/tags/`; GitHub uses `/compare/` and `/releases/tag/`. Explicit HTTP is retained
+where it is the actual deployment contract.
+
+At the existing changelog owner, reject missing, duplicated, unused, mislabeled,
+cross-peer, wrong-repository, credential-bearing, or mismatched-ref links.
+Preserve strict version, date, category, annotation, tag, prospective-release,
+and ancestry controls. Resolve identical peer refs once for local Git checks;
+the repository check remains offline. Authenticated provider comparison
+responses qualify private GitLab destinations; a login redirect alone is not
+evidence that a comparison exists. Verify both presentations and published
+source independently rather than introducing host detection or a redirect
+service.
+
+This is a compatible navigation and validation correction: normative duties,
+member and Agent routes, and contributor commands remain unchanged. Publish a
+patch with the same source and bundle on each Forge. Shared ETHOS acceptance
+remains an independent open obligation; it does not prevent this correction.
+
+The reusable boundary belongs in ETHOS, not in copied adopter checkers. Product
+validation must consume the declared applicable peers rather than hard-code
+the two providers or addresses in this repository. It must check native Markdown reference
+resolution, including earlier and nested definitions that can shadow a checked
+URL. Audit adopter source separately: missing history links do not prove a
+wrong-repository URL, and notification does not prove a repair. Each actual
+correction remains in its repository's official Change and owned lane; qualify
+the formally accepted installed owner without retaining duplicate mechanisms.
+
 ## Risks / Trade-offs
 
 - A parser migration can lose nested decision constraints. Keep every existing

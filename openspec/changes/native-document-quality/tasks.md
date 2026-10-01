@@ -97,6 +97,14 @@
       bind every archive and notice to official digests, embed native tests in
       the two existing rules, reject a silently ineffective rule through native
       coverage, and retain project-level prose tests without a second pipeline.
+- [x] 2.20 Replace implicit single-Forge Changelog navigation with neutral
+      version headings and explicit GitLab and GitHub history links. Consume
+      the installed product's official `forge_repository` declaration, enforce
+      both peer identities and identical refs, preserve every existing release
+      counterexample, and add missing-peer, wrong-route, credential, and
+      divergent-range controls. Verify native Markdown presentation and
+      authenticated private comparison destinations without a second file or
+      redirect service.
 
 ## 3. Qualification and publication
 
@@ -108,6 +116,12 @@
       AIGW, and Proxy with the same installed runtime. Exercise static semantics,
       unapproved-warning handling, and each subject's applicable obligations;
       obtain exact-HEAD plan, proof, and acceptance without private substitutes.
+- [ ] 3.13 Qualify the accepted product's reusable release-history identity
+      boundary and reconcile every audited affected adopter. Bind links to
+      applicable declared peers and native reference resolution; distinguish
+      missing links, wrong repository targets, and unqualified repairs. Select
+      exact source and installed-runtime evidence from each owner, then retire
+      any product-superseded local identity implementation.
 - [x] 3.4 Publish the major signed SemVer edition independently to GitLab and
       GitHub; verify both exact refs, Releases, downloaded asset hashes, and
       declared source and offline platform jobs.
@@ -132,10 +146,15 @@
       post-tag online link check. Exact aftercare retained current and rollback
       downloads while retiring superseded assets; aggregate storage statistics
       may lag those verified resource removals.
-- [ ] 3.11 Qualify and publish the compatible formatter and native-tool refresh
+- [x] 3.11 Qualify and publish the compatible formatter and native-tool refresh
       with a source-bound bundle, cold install, trusted signature, exact-HEAD
       installed proof, both Forge source and offline matrices, and bounded
       retirement of superseded downloads and owned working state.
+- [ ] 3.12 Qualify and publish the compatible dual-Forge Changelog correction
+      with full local checks, current-source rendering, cold offline install,
+      exact-HEAD installed proof, a signed patch, both declared source and
+      offline platform matrices, independent source and asset hashes, and
+      retirement of its owned lane and superseded downloads.
 - [x] 3.10 Retire superseded download assets independently on both Forges;
       retain the latest qualified release, one qualified rollback, and tool
       packages consumed by retained source. Preserve tags, original notes, and

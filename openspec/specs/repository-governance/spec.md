@@ -672,3 +672,30 @@ asset cleanup.
   identities and digests unchanged on each Forge
 - **AND** storage reclamation is reported only when provider statistics confirm
   it; deletion acceptance alone does not prove released physical space.
+
+### Requirement: Changelog navigation offers both declared Forges
+
+Version headings SHALL stay neutral and locally linkable. One unchanged
+Changelog SHALL show explicit GitLab and GitHub history links per section.
+Both SHALL identify the same refs at their official
+`publication.peers[].forge_repository` coordinates with native provider routes.
+Credential-free HTTP or HTTPS SHALL match the deployment. Missing, duplicate,
+unused, mislabeled, wrong-repository, or divergent-ref links SHALL fail offline
+validation; no redirect or per-Forge rewrite is allowed.
+
+#### Scenario: A reader chooses either Forge
+
+- **WHEN** the same Changelog source is rendered on GitLab, GitHub, or locally
+- **THEN** version headings locate sections in that document without choosing
+  an external Forge
+- **AND** each section exposes clearly labeled native history links to both
+  declared repository identities with identical refs.
+
+#### Scenario: A peer link misdirects the reader
+
+- **WHEN** a peer link is missing, duplicated, mislabeled, unused, points to
+  another repository or provider route, includes credentials, or disagrees
+  with the other peer's refs
+- **THEN** the offline repository check rejects the source
+- **AND** an accessible login page or a successful other-peer link does not
+  establish that the intended private comparison exists.

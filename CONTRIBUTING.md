@@ -158,9 +158,15 @@ change, not the commit label or the reason a new command was needed.
 
 The changelog check accepts the official `[YANKED]` heading marker and the six
 standard categories in any order, without duplicates. The oldest tagged release
-may link directly to its exact tag; later releases use comparisons. These checks
-establish structure and local identity, not whether the prose is useful to
-readers.
+may link directly to its exact tag; later releases use comparisons. Keep version
+headings neutral and include one `History: GitLab · GitHub` row per section,
+with each platform name linked through a version-and-provider reference.
+Both links must identify the same refs at the corresponding `forge_repository`
+in [the official release declaration](.ethos/release.toml). Use GitLab's
+`/-/compare/` or `/-/tags/` route and GitHub's `/compare/` or `/releases/tag/`
+route. Do not infer a web URL from an SSH remote or rewrite the Changelog for
+one Forge. These checks establish structure and local identity, not whether
+the prose is useful to readers.
 
 Commit the exact source and run ETHOS proof against that HEAD before landing.
 Only `dev`, `main`, and `proposal/*` are publishable refs. Candidate and Work
@@ -226,7 +232,7 @@ Change authority.
    earlier when their obligations are complete. Archive creates a new commit:
    inspect its attribution and signature, then prove its new OID. Do not
    raw-push around an ETHOS refusal.
-4. At the release cut, move the `Unreleased` items into a dated `[X.Y.Z]`
+4. At the release cut, move the `Unreleased` items into a dated `X.Y.Z`
    Changelog section using the actual date, leave `Unreleased` empty, and update
    both comparison links. Commit that exact source, repeat the required local
    checks and ETHOS proof, and follow the native acceptance continuation. Use

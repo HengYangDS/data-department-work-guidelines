@@ -11,9 +11,24 @@ heading, accepted branch, or CI result is not a signed tag or a Forge Release.
 Earlier branch editions had no versioned release tags; their original records
 remain in Git history rather than being relabeled as formal SemVer releases.
 
-## [Unreleased]
+## Unreleased
 
-## [7.0.5] - 2026-10-02
+History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
+
+## 7.0.6 - 2026-10-02
+
+History: [GitLab][7.0.6-gitlab] · [GitHub][7.0.6-github]
+
+### Fixed
+
+- Changelog versions no longer send readers implicitly to one Forge. Every
+  section offers clearly labeled GitLab and GitHub history with matching refs
+  at the declared repositories. Version headings remain local; one unchanged
+  source serves both platforms and offline readers.
+
+## 7.0.5 - 2026-10-02
+
+History: [GitLab][7.0.5-gitlab] · [GitHub][7.0.5-github]
 
 ### Changed
 
@@ -37,7 +52,9 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   diagnostic, or subject-applicability contract. This documentation correction
   does not claim an ETHOS product repair or cross-adopter acceptance.
 
-## [7.0.4] - 2026-10-01
+## 7.0.4 - 2026-10-01
+
+History: [GitLab][7.0.4-gitlab] · [GitHub][7.0.4-github]
 
 ### Fixed
 
@@ -68,7 +85,9 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   and required tool packages. Superseded attachments retire with an explicit
   notice while signed tags, original notes, and source history remain.
 
-## [7.0.3] - 2026-10-01
+## 7.0.3 - 2026-10-01
+
+History: [GitLab][7.0.3-gitlab] · [GitHub][7.0.3-github]
 
 ### Fixed
 
@@ -79,7 +98,9 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   misplaced or linked configuration, and verified native selection without
   ambient editor settings. Public commands and department duties are unchanged.
 
-## [7.0.2] - 2026-10-01
+## 7.0.2 - 2026-10-01
+
+History: [GitLab][7.0.2-gitlab] · [GitHub][7.0.2-github]
 
 ### Fixed
 
@@ -93,7 +114,9 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   success; persistent errors still fail instead of leaving temporary state
   unnoticed.
 
-## [7.0.1] - 2026-10-01
+## 7.0.1 - 2026-10-01
+
+History: [GitLab][7.0.1-gitlab] · [GitHub][7.0.1-github]
 
 ### Fixed
 
@@ -109,7 +132,9 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 - Presented data ownership in a compact responsibility table without adding
   roles, forms, meetings, or a competing rule source.
 
-## [7.0.0] - 2026-10-01
+## 7.0.0 - 2026-10-01
+
+History: [GitLab][7.0.0-gitlab] · [GitHub][7.0.0-github]
 
 ### Changed
 
@@ -135,7 +160,9 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 - The textlint, CSpell, and write-good pipelines, their packages, configuration,
   and parser adapters. No alternate or optional retired checker remains.
 
-## [6.1.1] - 2026-10-01
+## 6.1.1 - 2026-10-01
+
+History: [GitLab][6.1.1-gitlab] · [GitHub][6.1.1-github]
 
 ### Fixed
 
@@ -146,7 +173,9 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   blocks or raw HTML that could hide task progress. Ordinary Markdown, inline
   terms and evidence links remain valid. Department duties are unchanged.
 
-## [6.1.0] - 2026-10-01
+## 6.1.0 - 2026-10-01
+
+History: [GitLab][6.1.0-gitlab] · [GitHub][6.1.0-github]
 
 ### Added
 
@@ -164,7 +193,9 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 - Bound native temporary-stage cleanup retries after the Windows tool installer
   reported a removal failure; persistent errors still fail.
 
-## [6.0.1] - 2026-10-01
+## 6.0.1 - 2026-10-01
+
+History: [GitLab][6.0.1-gitlab] · [GitHub][6.0.1-github]
 
 ### Changed
 
@@ -172,7 +203,9 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   rebuilt source-bound offline supply. Department rules and tool dependencies
   remain unchanged.
 
-## [6.0.0] - 2026-10-01
+## 6.0.0 - 2026-10-01
+
+History: [GitLab][6.0.0-gitlab] · [GitHub][6.0.0-github]
 
 ### Changed
 
@@ -192,7 +225,9 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 - The implicit GitHub CLI and credential requirement for public bundle
   downloads. The existing Node runtime retrieves the exact pinned asset.
 
-## [5.2.4] - 2026-09-30
+## 5.2.4 - 2026-09-30
+
+History: [GitLab][5.2.4-gitlab] · [GitHub][5.2.4-github]
 
 ### Changed
 
@@ -200,7 +235,9 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   source-bound offline bundle. Direct tool versions, working rules, and reader
   routes remain unchanged.
 
-## [5.2.3] - 2026-09-30
+## 5.2.3 - 2026-09-30
+
+History: [GitLab][5.2.3-gitlab] · [GitHub][5.2.3-github]
 
 ### Fixed
 
@@ -211,7 +248,9 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   authority to accept the work, and that a blocked dependency leaves independent
   authorized work available.
 
-## [5.2.2] - 2026-09-30
+## 5.2.2 - 2026-09-30
+
+History: [GitLab][5.2.2-gitlab] · [GitHub][5.2.2-github]
 
 ### Changed
 
@@ -219,14 +258,18 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   and rebuilt its source-bound offline supply. Direct tool versions and the
   team's working rules remain unchanged.
 
-## [5.2.1] - 2026-09-30
+## 5.2.1 - 2026-09-30
+
+History: [GitLab][5.2.1-gitlab] · [GitHub][5.2.1-github]
 
 ### Fixed
 
 - Split GitLab Linux review from protected source and offline jobs, with
   separate Runner capabilities and regression checks for cross-boundary routes.
 
-## [5.2.0] - 2026-09-30
+## 5.2.0 - 2026-09-30
+
+History: [GitLab][5.2.0-gitlab] · [GitHub][5.2.0-github]
 
 ### Added
 
@@ -246,7 +289,9 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 - Isolated the empty-cache offline test from inherited Windows npm configuration
   so a warm CI cache cannot mask a missing offline package.
 
-## [5.1.0] - 2026-09-29
+## 5.1.0 - 2026-09-29
+
+History: [GitLab][5.1.0-gitlab] · [GitHub][5.1.0-github]
 
 ### Added
 
@@ -269,7 +314,9 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 - Kept registry metadata available to ETHOS while making the title the first
   visible content on GitLab and GitHub guidance pages.
 
-## [5.0.6] - 2026-09-29
+## 5.0.6 - 2026-09-29
+
+History: [GitLab][5.0.6-gitlab] · [GitHub][5.0.6-github]
 
 ### Fixed
 
@@ -280,7 +327,9 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 - Removed the second Node test run from ETHOS's document gate while keeping the
   standalone verifier's full test coverage.
 
-## [5.0.5] - 2026-09-29
+## 5.0.5 - 2026-09-29
+
+History: [GitLab][5.0.5-gitlab] · [GitHub][5.0.5-github]
 
 ### Fixed
 
@@ -288,14 +337,18 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   the one-blank-line rule to every repository text candidate, including archives
   and files without filename extensions.
 
-## [5.0.4] - 2026-09-28
+## 5.0.4 - 2026-09-28
+
+History: [GitLab][5.0.4-gitlab] · [GitHub][5.0.4-github]
 
 ### Fixed
 
 - Kept explicitly selected files in the spelling check even when a CSpell ignore
   rule matches them; refreshed the locked CSpell tool and offline supply.
 
-## [5.0.3] - 2026-09-28
+## 5.0.3 - 2026-09-28
+
+History: [GitLab][5.0.3-gitlab] · [GitHub][5.0.3-github]
 
 ### Added
 
@@ -312,14 +365,18 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   delegation constraints and verification time, correction signals, actionable
   status updates, and the boundary for making Agent output a durable fact.
 
-## [5.0.2] - 2026-09-27
+## 5.0.2 - 2026-09-27
+
+History: [GitLab][5.0.2-gitlab] · [GitHub][5.0.2-github]
 
 ### Fixed
 
 - Removed host-specific extended attributes from the offline bundle and made
   archive warnings fail verification instead of silently passing on Linux.
 
-## [5.0.1] - 2026-09-27
+## 5.0.1 - 2026-09-27
+
+History: [GitLab][5.0.1-gitlab] · [GitHub][5.0.1-github]
 
 ### Fixed
 
@@ -327,7 +384,9 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   category ordering, and first-release tag link while retaining release identity
   and comparison-ancestry checks.
 
-## [5.0.0] - 2026-09-27
+## 5.0.0 - 2026-09-27
+
+History: [GitLab][5.0.0-gitlab] · [GitHub][5.0.0-github]
 
 ### Changed
 
@@ -349,7 +408,9 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 - Reorganized canonical OpenSpec requirement prose to satisfy native strict
   validation without changing department work obligations.
 
-## [4.2.1] - 2026-09-26
+## 4.2.1 - 2026-09-26
+
+History: [GitLab][4.2.1-gitlab] · [GitHub][4.2.1-github]
 
 ### Fixed
 
@@ -358,7 +419,9 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   refuses redirects, altered bytes, and mismatched tags before installation;
   hosted success remains a separate release acceptance requirement.
 
-## [4.2.0] - 2026-09-26
+## 4.2.0 - 2026-09-26
+
+History: [GitLab][4.2.0-gitlab] · [GitHub][4.2.0-github]
 
 ### Added
 
@@ -367,14 +430,18 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   either Forge during installation. Bundled third-party tools retain their own
   licenses; the repository's MIT grant remains for its source and documentation.
 
-## [4.1.1] - 2026-09-26
+## 4.1.1 - 2026-09-26
+
+History: [GitLab][4.1.1-gitlab] · [GitHub][4.1.1-github]
 
 ### Fixed
 
 - Made GitLab CI obtain its SHA-256-pinned lychee archive from the same
   project's package registry instead of depending on GitHub Releases.
 
-## [4.1.0] - 2026-09-26
+## 4.1.0 - 2026-09-26
+
+History: [GitLab][4.1.0-gitlab] · [GitHub][4.1.0-github]
 
 ### Added
 
@@ -386,14 +453,18 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   stop and scope checks, and accountable management boundaries in the existing
   English topic pages. The rejected fixed meeting cadence remains out.
 
-## [4.0.1] - 2026-09-26
+## 4.0.1 - 2026-09-26
+
+History: [GitLab][4.0.1-gitlab] · [GitHub][4.0.1-github]
 
 ### Fixed
 
 - Reject history comparisons outside a release's ancestry and repair the
   `v4.0.0` comparison after the signed history rewrite.
 
-## [4.0.0] - 2026-09-26
+## 4.0.0 - 2026-09-26
+
+History: [GitLab][4.0.0-gitlab] · [GitHub][4.0.0-github]
 
 ### Added
 
@@ -432,33 +503,65 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.5...main
-[7.0.5]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.4...v7.0.5
-[7.0.4]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.3...v7.0.4
-[7.0.3]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.2...v7.0.3
-[7.0.2]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.1...v7.0.2
-[7.0.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.0...v7.0.1
-[7.0.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.1.1...v7.0.0
-[6.1.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.1.0...v6.1.1
-[6.1.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.0.1...v6.1.0
-[6.0.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.0.0...v6.0.1
-[6.0.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.4...v6.0.0
-[5.2.4]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.3...v5.2.4
-[5.2.3]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.2...v5.2.3
-[5.2.2]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.1...v5.2.2
-[5.2.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.0...v5.2.1
-[5.2.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.1.0...v5.2.0
-[5.1.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.6...v5.1.0
-[5.0.6]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.5...v5.0.6
-[5.0.5]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.4...v5.0.5
-[5.0.4]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.3...v5.0.4
-[5.0.3]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.2...v5.0.3
-[5.0.2]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.1...v5.0.2
-[5.0.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.0...v5.0.1
-[5.0.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.2.1...v5.0.0
-[4.2.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.2.0...v4.2.1
-[4.2.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.1.1...v4.2.0
-[4.1.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.1.0...v4.1.1
-[4.1.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.0.1...v4.1.0
-[4.0.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.0.0...v4.0.1
-[4.0.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/b72b5e813ead5f5d5203ac7672eb72c8f32ecd1e...v4.0.0
+[Unreleased-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.6...main
+[Unreleased-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.6...main
+[7.0.6-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.5...v7.0.6
+[7.0.6-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.5...v7.0.6
+[7.0.5-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.4...v7.0.5
+[7.0.5-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.4...v7.0.5
+[7.0.4-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.3...v7.0.4
+[7.0.4-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.3...v7.0.4
+[7.0.3-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.2...v7.0.3
+[7.0.3-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.2...v7.0.3
+[7.0.2-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.1...v7.0.2
+[7.0.2-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.1...v7.0.2
+[7.0.1-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.0...v7.0.1
+[7.0.1-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.0...v7.0.1
+[7.0.0-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v6.1.1...v7.0.0
+[7.0.0-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.1.1...v7.0.0
+[6.1.1-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v6.1.0...v6.1.1
+[6.1.1-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.1.0...v6.1.1
+[6.1.0-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v6.0.1...v6.1.0
+[6.1.0-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.0.1...v6.1.0
+[6.0.1-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v6.0.0...v6.0.1
+[6.0.1-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.0.0...v6.0.1
+[6.0.0-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v5.2.4...v6.0.0
+[6.0.0-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.4...v6.0.0
+[5.2.4-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v5.2.3...v5.2.4
+[5.2.4-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.3...v5.2.4
+[5.2.3-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v5.2.2...v5.2.3
+[5.2.3-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.2...v5.2.3
+[5.2.2-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v5.2.1...v5.2.2
+[5.2.2-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.1...v5.2.2
+[5.2.1-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v5.2.0...v5.2.1
+[5.2.1-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.0...v5.2.1
+[5.2.0-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v5.1.0...v5.2.0
+[5.2.0-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.1.0...v5.2.0
+[5.1.0-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v5.0.6...v5.1.0
+[5.1.0-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.6...v5.1.0
+[5.0.6-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v5.0.5...v5.0.6
+[5.0.6-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.5...v5.0.6
+[5.0.5-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v5.0.4...v5.0.5
+[5.0.5-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.4...v5.0.5
+[5.0.4-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v5.0.3...v5.0.4
+[5.0.4-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.3...v5.0.4
+[5.0.3-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v5.0.2...v5.0.3
+[5.0.3-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.2...v5.0.3
+[5.0.2-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v5.0.1...v5.0.2
+[5.0.2-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.1...v5.0.2
+[5.0.1-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v5.0.0...v5.0.1
+[5.0.1-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.0...v5.0.1
+[5.0.0-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v4.2.1...v5.0.0
+[5.0.0-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.2.1...v5.0.0
+[4.2.1-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v4.2.0...v4.2.1
+[4.2.1-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.2.0...v4.2.1
+[4.2.0-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v4.1.1...v4.2.0
+[4.2.0-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.1.1...v4.2.0
+[4.1.1-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v4.1.0...v4.1.1
+[4.1.1-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.1.0...v4.1.1
+[4.1.0-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v4.0.1...v4.1.0
+[4.1.0-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.0.1...v4.1.0
+[4.0.1-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v4.0.0...v4.0.1
+[4.0.1-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.0.0...v4.0.1
+[4.0.0-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/b72b5e813ead5f5d5203ac7672eb72c8f32ecd1e...v4.0.0
+[4.0.0-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/b72b5e813ead5f5d5203ac7672eb72c8f32ecd1e...v4.0.0

@@ -108,6 +108,13 @@ compatibility. [`CHANGELOG.md`](../../CHANGELOG.md) follows
 
 The default integrity gate and both CI planes reject malformed changelog
 headings, categories, dates, links, version drift, and tag mismatch.
+One unchanged Changelog serves both Forges and local readers. Version headings
+stay in the document; each section explicitly offers GitLab and GitHub history.
+Both links must identify the same refs at their declared repository identities.
+The release declaration owns those web coordinates independently of Git
+transport. Offline validation checks identity and ancestry; each provider's
+authenticated comparison response establishes its actual private destination,
+not a login redirect or another Forge's success.
 
 ## Quality and Local State
 
