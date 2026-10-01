@@ -56,6 +56,6 @@
 - [x] 3.7 Qualify and publish the final compatible decision-boundary correction
       with exact-source proof, a signed patch, a source-bound offline bundle,
       and both Forge platform matrices; preserve prior release objects.
-- [ ] 3.8 Qualify and publish the compatible configuration correction with
+- [x] 3.8 Qualify and publish the compatible configuration correction with
       current native tests, a fresh cold-install bundle, exact-HEAD installed
       proof, and both source and offline platform matrices.
