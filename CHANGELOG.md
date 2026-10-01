@@ -16,9 +16,10 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 ### Fixed
 
 - Governance and profile descriptions distinguish JavaScript syntax checking
-  from semantic correctness. The installed static provider can miss a reachable
-  undefined identifier; this documentation correction does not claim the shared
-  ETHOS code-quality mechanism is repaired or cross-adopter acceptance is done.
+  from semantic correctness and identify native test reports that omit runtime
+  warnings. Passing those reports does not establish the shared semantic,
+  diagnostic, or subject-applicability contract. This documentation correction
+  does not claim an ETHOS product repair or cross-adopter acceptance.
 
 ## [7.0.4] - 2026-10-01
 

@@ -12,15 +12,16 @@ normative_sources = [
   "docs/evolve.md",
 ]
 
-# The two default commands check repository documents. ETHOS independently
-# obtains JavaScript test evidence and checks syntax for the mapped axes.
-# Syntax checks do not establish semantic correctness; the shared ETHOS
-# quality contract remains a separate acceptance obligation.
 [openspec]
 # ETHOS owns this repository-relative admission contract. Changed paths matching
 # these patterns must be attributed to one selected active official Change.
 material_paths = ["**"]
 
+# The two default commands check repository documents. ETHOS independently
+# obtains JavaScript test evidence and checks syntax for the mapped axes.
+# Syntax checks do not establish semantic correctness. Native test reports
+# can omit runtime warnings; passing reports do not close the shared ETHOS
+# semantic, diagnostic, and subject-applicability acceptance obligations.
 [proof]
 code_correctness_gates = ["docs-integrity", "markdown-format"]
 

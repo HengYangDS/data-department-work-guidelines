@@ -130,10 +130,19 @@ and formatting responsibilities. ETHOS independently obtains native Node test
 evidence through its behavior provider. The currently installed static provider
 checks JavaScript syntax; it can miss a reachable undefined identifier whose
 syntax is valid. A passing syntax check therefore does not establish semantic
-correctness. A gate passes only when both its document command and product-owned
-verifier pass for the committed tree. Repository-authored reports or command
-output cannot supply that native evidence. Proof does not create a second
-lifecycle.
+correctness. Native Node tests can also emit an unapproved warning that is absent
+from the selected test and coverage reports, allowing the installed provider to
+pass without settling it. These are limits of the current proof mechanism, not
+permission to ignore semantic defects or warnings.
+
+Each of the two gates requires both its document command and product-owned
+verifier to pass for the committed tree. That result alone does not complete the
+shared quality obligation: the accepted installed ETHOS contract must establish
+static semantics, unapproved-warning handling, and each code subject's applicable
+obligations. Different native scopes may jointly cover a property when that
+contract permits it; not every provider must cover every language.
+Repository-authored reports or command output cannot supply the missing native
+evidence. Proof does not create a second lifecycle.
 
 The [configuration map](../../.config/README.md) separates check policy, native
 supply, and artifact identity. Consumers read their native formats; the

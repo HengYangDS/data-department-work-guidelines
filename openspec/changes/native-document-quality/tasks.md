@@ -78,10 +78,11 @@
       prerequisites. Verify the documented local CLI fails without its package
       and runs the locked version when installed; preserve official sync and
       archive admission without adding an adapter.
-- [x] 2.16 Correct governance and profile descriptions of installed JavaScript
-      proof against the executable semantic-defect control; retain exactly two
-      default gates, no private quality substitute, and the shared acceptance
-      obligation. Reconcile all current references and rerun affected checks.
+- [x] 2.16 Correct governance, profile, and specification descriptions against
+      the executable syntax-only and warning-omission controls; distinguish
+      current proof from shared acceptance and product-defined applicable
+      scopes. Retain exactly two default gates and no private substitute.
+      Reconcile current references and rerun affected checks.
 
 ## 3. Qualification and publication
 
@@ -90,8 +91,9 @@
 - [x] 3.2 Prove a clean offline install and full verification without inherited
       caches, host paths, credentials, or remote supply.
 - [ ] 3.3 Qualify the formally accepted shared ETHOS quality contract on DDWG,
-      AIGW, and Proxy with the same installed runtime; obtain exact-HEAD plan,
-      proof, and acceptance without repository-private substitutes.
+      AIGW, and Proxy with the same installed runtime. Exercise static semantics,
+      unapproved-warning handling, and each subject's applicable obligations;
+      obtain exact-HEAD plan, proof, and acceptance without private substitutes.
 - [x] 3.4 Publish the major signed SemVer edition independently to GitLab and
       GitHub; verify both exact refs, Releases, downloaded asset hashes, and
       declared source and offline platform jobs.

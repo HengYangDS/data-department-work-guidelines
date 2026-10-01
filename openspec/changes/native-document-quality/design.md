@@ -492,12 +492,21 @@ The current installed static provider runs Node syntax checks. A committed
 function with a reachable undefined identifier passes that provider but fails
 when invoked; invalid syntax is rejected. Keep that distinguishing observation
 in the producing verification evidence, not in a new tracked report or DR.
-Current governance prose and profile comments must name syntax checking
-accurately without lowering the required product quality floor. Semantic
-diagnostics, adverse and warning settlement, and conjunctive subject
-applicability remain shared ETHOS work. No repository-private checker or third
-proof gate supplies the missing result. Qualify those distinctions after the
-formal installed successor is accepted.
+A native Node test can also emit an unapproved warning that its selected test
+and coverage reports omit. The behavior provider and public host journey pass
+without that diagnostic. Normal and informational controls pass; failed tests
+and unexercised production modules still block. A same-execution native reporter
+can retain the warning alongside measurements, but that demonstration is not an
+accepted product repair.
+
+Current governance prose and profile comments must distinguish these observed
+limits without lowering the required product quality floor. Static semantics,
+unapproved-warning handling, and each code subject's applicable obligations
+remain shared ETHOS work. Product-defined native scopes may jointly cover a
+property; demanding every provider cover every language would contradict that
+boundary. No repository-private checker or third proof gate supplies the missing
+result. Qualify those distinctions after the formal installed successor is
+accepted.
 
 Shared ETHOS fixes are accepted only through their actual formal product
 contract. Repository-native tests cannot certify that product. If that

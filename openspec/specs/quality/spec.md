@@ -278,13 +278,12 @@ lifecycle retroactively.
 
 ### Requirement: Product-owned code evidence accompanies document proof
 
-`docs-integrity` and `markdown-format` SHALL bind ETHOS-owned behavior or
-static-analysis providers to repository-relative Node commands. ETHOS SHALL
-conjoin each command with native Node tests, coverage, and JavaScript syntax
-checks from its accepted runtime on the same committed tree. Neither command
-output nor a repository-authored report SHALL prove code correctness. Profile
-validation SHALL reject missing or misdirected providers without adding a
-third gate.
+`docs-integrity` SHALL conjoin its Node command with ETHOS-owned tests and
+coverage; `markdown-format` SHALL conjoin its command with ETHOS-owned JavaScript
+syntax checks. Both SHALL use the same committed tree. Profile validation SHALL
+reject missing or misdirected providers without a third gate. Command output or
+repository-authored reports SHALL NOT prove code correctness. Runtime success
+SHALL NOT close shared semantic, diagnostic, or subject-applicability acceptance.
 
 #### Scenario: Document command passes but native code fails
 
@@ -304,8 +303,35 @@ third gate.
 
 - **WHEN** both document commands and their ETHOS-owned native verifiers pass
   for the exact committed source
-- **THEN** the two existing gate IDs satisfy their mapped quality obligations
+- **THEN** the two existing gate IDs satisfy their mapped runtime checks
+- **AND** shared semantic, diagnostic, and subject-applicability acceptance
+  remains a separately verified ETHOS product obligation
 - **AND THEN** no additional default gate or private lifecycle is required.
+
+#### Scenario: Native syntax passes without semantic correctness
+
+- **WHEN** a syntax-valid production function refers to an undefined identifier
+  on a reachable but unexercised branch
+- **THEN** source and proof descriptions distinguish syntax success from static
+  semantic correctness
+- **AND** shared acceptance remains open until the formally accepted installed
+  product establishes the required property.
+
+#### Scenario: Native reports omit an unapproved warning
+
+- **WHEN** the native test stream emits an unapproved warning that its selected
+  reports omit
+- **THEN** documentation and completion claims identify the diagnostic gap
+- **AND** the passing report does not close the shared warning-handling
+  obligation or authorize a repository-private replacement.
+
+#### Scenario: Applicable scopes differ by subject
+
+- **WHEN** the formal product contract permits different native scopes to
+  jointly cover a required property
+- **THEN** qualification checks each subject against its actual obligation
+- **AND** it does not require every provider to cover every language or accept
+  uncovered required subjects.
 
 ### Requirement: A supplied offline bundle can install the complete verification toolchain
 

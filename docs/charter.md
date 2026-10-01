@@ -42,7 +42,7 @@ identified, its meaning explained, its conditions checked, its use bounded, and
 its accountable owner found.
 
 Keep the essential without losing the real: understand the situation and reason
-from evidence. A task tests judgment and improves the system.
+from evidence.
 First understand what is happening; then use only the structure needed for a
 sound decision and a reliable result. Revise that structure when the evidence
 changes. This is the practical force of the underlying philosophy, not a reason
