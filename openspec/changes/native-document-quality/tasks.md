@@ -43,13 +43,15 @@
       prose, links, negative tests, strict official OpenSpec, and diff checks.
 - [x] 3.2 Prove a clean offline install and full verification without inherited
       caches, host paths, credentials, or remote supply.
-- [ ] 3.3 Obtain exact-HEAD installed ETHOS plan/proof and acceptance. Formal
-      shared native evidence integration remains pending until accepted.
+- [ ] 3.3 Qualify the formally accepted shared ETHOS quality contract on
+      DDWG, AIGW, and Proxy with the same installed runtime; obtain exact-HEAD
+      plan, proof, and acceptance without repository-private substitutes.
 - [x] 3.4 Publish the major signed SemVer edition independently to GitLab and
       GitHub; verify both exact refs, Releases, downloaded asset hashes, and
       declared source and offline platform jobs.
-- [ ] 3.5 Complete this Change, archive officially, verify the archive identity,
-      and retire the owned lane and proved-disposable state.
+- [ ] 3.5 Audit every requirement and its evidence, reconcile current
+      references, and classify retained evidence, active state, and disposable
+      residue before the official archive and retirement postconditions.
 - [x] 3.6 Publish the compatible original-duty correction with fresh local,
       installed ETHOS, signed patch, asset, and both Forge platform evidence;
       preserve the already qualified major release.

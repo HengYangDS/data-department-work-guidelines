@@ -291,6 +291,21 @@ contract. Repository-native tests cannot certify that product. If that dependenc
 is unavailable, complete independent local work and leave dependent tasks open;
 never mark this Change complete or archive to obtain a green lifecycle.
 
+Qualify that shared contract on DDWG, AIGW, and Proxy with the same formally
+accepted installed runtime. A declaration, a product-source test, or one
+adopter's local report does not establish this cross-adopter result. Each
+repository retains its own source, lease, exact-HEAD proof, and acceptance.
+
+The final task audits the evidence and disposition prerequisites before
+archival. The installed official archive transition requires all Change tasks
+to be complete; it cannot require evidence of its own future Git object as an
+earlier checkbox. The Goal still requires all resulting postconditions: official
+archive, trusted signature and proof for its new HEAD, publication and source CI
+on both Forges, and retirement of the owned lane and proved-disposable residue.
+Observe those effects through the existing product commands and their native
+records. Do not tick future effects, reuse earlier-HEAD proof, add a second
+progress ledger, or mark the Goal complete before the postconditions hold.
+
 ## Risks / Trade-offs
 
 - A parser migration can lose nested decision constraints. Keep every existing
