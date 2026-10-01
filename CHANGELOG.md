@@ -12,6 +12,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [7.0.2] - 2026-10-01
+
 ### Fixed
 
 - Decision validation rejects reused stable IDs and empty sections. Meaningful
@@ -356,7 +358,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   verification sequence while keeping local, GitLab, and GitHub results separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.1...main
+[Unreleased]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.2...main
+[7.0.2]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.1...v7.0.2
 [7.0.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.0...v7.0.1
 [7.0.0]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.1.1...v7.0.0
 [6.1.1]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.1.0...v6.1.1
