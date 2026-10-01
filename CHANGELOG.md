@@ -20,8 +20,11 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   links, lists, quotes, and tables remain valid; ordinary prose beginning with
   a JavaScript property name no longer crashes command classification.
 - Replaced hand-written shell token parsing with a locked, non-evaluating
-  lexer. Quoted and compound commands are rejected while bare paths and ordinary
-  interpreter prose remain valid.
+  lexer. Quoted, compound, glob, and selected literal-operand commands are
+  rejected while bare paths and ordinary interpreter prose remain valid.
+- Native-tool installation awaits bounded asynchronous cleanup before reporting
+  success; persistent errors still fail instead of leaving temporary state
+  unnoticed.
 
 ## [7.0.1] - 2026-10-01
 

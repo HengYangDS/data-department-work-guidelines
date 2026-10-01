@@ -279,6 +279,45 @@ test("decision command inspection never evaluates shell input or ambient variabl
   }
 });
 
+test("native command operands remain words across glob and literal syntax", () => {
+  for (const source of [
+    "rm *",
+    "rm file?.txt",
+    "rm files.txt",
+    "rm notes",
+    "rm $TARGET",
+    "rm -- notes",
+    "true && rm *",
+    "env X=1 rm 'notes'",
+    "curl example.com",
+  ]) {
+    assert.equal(commandInvocation(source), true, source);
+    assert.throws(
+      () =>
+        validateDecision(
+          "docs/decisions/dr-0001-fixture.md",
+          decision({ body: `The producing Change owns \`${source}\`.` }),
+        ),
+      /command invocation/u,
+      source,
+    );
+  }
+  for (const source of [
+    "rm describes a file-removal command.",
+    "curl retrieves a remote resource.",
+    "node represents an executable host.",
+    "./tools/docs/cli.mjs",
+  ]) {
+    assert.equal(commandInvocation(source), false, source);
+    assert.doesNotThrow(() =>
+      validateDecision(
+        "docs/decisions/dr-0001-fixture.md",
+        decision({ body: source }),
+      ),
+    );
+  }
+});
+
 test("each required decision section contains readable content", () => {
   for (const heading of sections) {
     for (const empty of [

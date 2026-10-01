@@ -8,10 +8,10 @@ import {
   mkdtempSync,
   readFileSync,
   readdirSync,
-  rmSync,
   writeFileSync,
   chmodSync,
 } from "node:fs";
+import { rm } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { projectPackageRequest } from "./gitlab-package.mjs";
@@ -216,11 +216,11 @@ export async function install({
       throw new Error(`installed ${tool} failed verification`);
     return target;
   } finally {
-    rmSync(temporary, {
+    await rm(temporary, {
       recursive: true,
       force: true,
-      maxRetries: 3,
-      retryDelay: 100,
+      maxRetries: 10,
+      retryDelay: 200,
     });
   }
 }

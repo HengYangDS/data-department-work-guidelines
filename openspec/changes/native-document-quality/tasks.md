@@ -26,6 +26,12 @@
       decision IDs, and empty sections at the existing parser and tree owners;
       replace old shell token parsing with a pinned non-evaluating native lexer,
       verify real negative cases, and preserve readable decision content.
+- [x] 2.6 Preserve native glob arguments and reject selected literal and variable
+      command operands without treating ordinary command descriptions as
+      execution; prove the retained and added cases through the DR boundary.
+- [ ] 2.7 Await bounded native asynchronous cleanup in the existing installer;
+      prove completion ordering and persistent-error propagation, then qualify
+      actual Windows tool installation through its existing source CI job.
 
 ## 3. Qualification and publication
 

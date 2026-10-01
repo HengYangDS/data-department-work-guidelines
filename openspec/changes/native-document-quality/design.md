@@ -142,6 +142,14 @@ environment, and never execute the inspected text. Bare paths and meaningful
 interpreter prose remain valid. Unsupported command dialects still require
 editorial review; portable execution of the checker is a separate property.
 
+The native lexer represents glob arguments as objects, not operator boundaries.
+Keep their patterns in the current argument group rather than discarding them.
+Recognize a single literal operand, variables, and the end-of-options marker for
+the selected removal and retrieval commands. These cases must fail through the
+public DR boundary, including compound commands. Ordinary sentences describing
+the commands remain valid; this correction does not create a general shell or
+natural-language parser.
+
 Native registry and upstream metadata establish the package identity and MIT
 notice. An isolated lock-only resolution adds one package, no transitive
 packages, no platform requirement, and no installation lifecycle script. The
@@ -160,6 +168,17 @@ The compatible checker correction is prepared as v7.0.2. Department duties,
 member routes, and contributor commands do not change; the dependency and
 offline bundle do. Keep its notes under `Unreleased` until the release cut,
 then qualify its exact signed source and immutable package independently.
+
+GitLab Windows source jobs at the release-cut identity failed during native
+installer cleanup, before documentation verification. The source uses one
+synchronous removal with three 100-millisecond linear retries. Replace it with
+one awaited native asynchronous removal in the already asynchronous installer:
+ten 200-millisecond linear retries, confined to its own fresh extraction stage.
+The installer cannot report success until removal finishes; a persistent error
+still fails. No custom retry loop, platform shell, security override, or second
+cleanup path is added. Focused tests prove awaiting and failure propagation;
+the actual Windows source job must prove platform acceptance. A permission
+error alone does not identify a particular lock owner or security product.
 
 Keep identity and section completeness separate from the execution-content
 requirement. Appending both responsibilities to one long requirement produced

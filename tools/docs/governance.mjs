@@ -81,7 +81,7 @@ const interpreters = new Set([
 const wrappers = new Set(["command", "env", "nice", "nohup", "sudo", "time"]);
 const assignment = /^[A-Za-z_][A-Za-z0-9_]*=/u;
 const argumentSyntax =
-  /^(?:--?[^-\s]|\.{1,2}[\\/]|[\\/]|https?:\/\/)|[\\/]|\.(?:[cm]?js|py|sh)$/u;
+  /^(?:--?[^-\s]|\.{1,2}[\\/]|[\\/]|https?:\/\/|\$)|[\\/]|\.(?:[cm]?js|py|sh)$|[*?]/u;
 
 function commandName(word) {
   return path.posix
@@ -126,8 +126,11 @@ function invocationWords(words) {
   if (tokens.length < 2) return false;
   const [executable, argument] = tokens;
   const name = commandName(executable);
-  if (interpreters.has(name) || ["curl", "rm"].includes(name))
-    return argumentSyntax.test(argument);
+  if (interpreters.has(name)) return argumentSyntax.test(argument);
+  if (["curl", "rm"].includes(name))
+    return (
+      tokens.length === 2 || argumentSyntax.test(argument) || argument === "--"
+    );
   if (repositoryCommand(executable)) return true;
   return (
     Object.hasOwn(subcommands, name) &&
@@ -146,6 +149,7 @@ export function commandInvocation(source) {
   const words = [];
   for (const token of parseShell(candidate, (name) => `$${name}`)) {
     if (typeof token === "string") words.push(token);
+    else if (token.op === "glob") words.push(token.pattern);
     else {
       if (invocationWords(words)) return true;
       words.length = 0;

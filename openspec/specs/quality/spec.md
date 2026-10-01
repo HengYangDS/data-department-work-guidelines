@@ -109,6 +109,15 @@ Structural validity SHALL NOT claim to establish the quality of the reasoning.
   the invocation without evaluating the text or reading ambient variables
 - **AND** bare paths and ordinary interpreter prose remain valid.
 
+#### Scenario: Native shell glob arguments remain command operands
+
+- **WHEN** a selected removal or retrieval invocation contains a glob, one
+  literal operand, a variable, or an end-of-options marker
+- **THEN** native tokens remain in the current command argument group and the
+  DR boundary rejects the invocation, including a compound command
+- **AND** ordinary sentences describing a command and bare evidence paths
+  remain valid; inspected variables are never evaluated.
+
 ### Requirement: Default proof and root binding are distinct
 
 The profile SHALL list exactly `docs-integrity` and `markdown-format` as
@@ -549,6 +558,8 @@ governance plane SHALL NOT influence this check.
 
 - **WHEN** the pinned tool installer removes its own fresh extraction stage
 - **THEN** native removal retries are bounded and confined to that stage
+- **AND** the installer awaits one asynchronous native removal with at most ten
+  retries with linearly increasing 200-millisecond waits before reporting success
 - **AND** a persistent removal error fails rather than silently leaving residue.
 
 ### Requirement: Public-command integration has a bounded native execution budget

@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
+import fsPromises from "node:fs/promises";
 import path from "node:path";
 import { syncBuiltinESMExports } from "node:module";
 import { test } from "node:test";
@@ -177,12 +178,18 @@ test("GitLab CLI mode fails closed without CI identity", () => {
 });
 
 test("installer cleanup uses bounded native retries on its own temporary stage", async (context) => {
-  const remove = fs.rmSync;
+  const remove = fsPromises.rm;
   const calls = [];
-  const mock = context.mock.method(fs, "rmSync", (target, options) => {
-    calls.push({ target, options });
-    return remove(target, options);
-  });
+  let removed = false;
+  const mock = context.mock.method(
+    fsPromises,
+    "rm",
+    async (target, options) => {
+      calls.push({ target, options });
+      await remove(target, options);
+      removed = true;
+    },
+  );
   syncBuiltinESMExports();
   context.mock.method(
     globalThis,
@@ -211,13 +218,47 @@ test("installer cleanup uses bounded native retries on its own temporary stage",
     assert.deepEqual(calls[0].options, {
       recursive: true,
       force: true,
-      maxRetries: 3,
-      retryDelay: 100,
+      maxRetries: 10,
+      retryDelay: 200,
     });
+    assert.equal(removed, true);
     assert.equal(fs.existsSync(calls[0].target), false);
   } finally {
     mock.mock.restore();
     syncBuiltinESMExports();
+  }
+});
+
+test("persistent native installer cleanup errors remain failures", async (context) => {
+  let temporary;
+  const failure = Object.assign(
+    new Error("fixture cleanup permission denied"),
+    {
+      code: "EPERM",
+    },
+  );
+  const mock = context.mock.method(fsPromises, "rm", async (target) => {
+    temporary = target;
+    throw failure;
+  });
+  syncBuiltinESMExports();
+  context.mock.method(
+    globalThis,
+    "fetch",
+    async () => new Response(null, { status: 503 }),
+  );
+  try {
+    await assert.rejects(
+      install({ tool: "lychee", downloadSource: "github" }),
+      (error) => error === failure,
+    );
+    assert.match(path.basename(temporary), /^\.install-/u);
+    assert.equal(fs.existsSync(temporary), true);
+  } finally {
+    mock.mock.restore();
+    syncBuiltinESMExports();
+    if (temporary)
+      await fsPromises.rm(temporary, { recursive: true, force: true });
   }
 });
 
