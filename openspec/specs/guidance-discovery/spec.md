@@ -72,13 +72,12 @@ reviewer; format, link, local proof, or CI success alone SHALL NOT establish it.
 
 ### Requirement: Task routes preserve the work-quality contract
 
-The entry and seven topics SHALL preserve the unified guideline's duties
-without a root monolith. Readers SHALL find hard boundaries, risk-scaled
-minimums, six task boundaries, work states, evidence limits, and learning
-triggers. Resolving the matter, testing judgment within its limits, and
-improving the system for the next occurrence SHALL remain distinct outcomes.
-Each topic SHALL expose start, stop, and verification cues without a second
-card inventory.
+The entry and seven topics SHALL preserve the unified guideline's duties without
+a root monolith. Readers SHALL find hard boundaries, risk-scaled minimums, six
+task boundaries, work states, evidence limits, and learning triggers. Resolving
+the matter, testing judgment within its limits, and improving the system for the
+next occurrence SHALL remain distinct outcomes. Each topic SHALL expose start,
+stop, and verification cues without a second card inventory.
 
 #### Scenario: A high-risk task enters the route
 
@@ -92,8 +91,8 @@ card inventory.
 #### Scenario: A result is called complete
 
 - **WHEN** a member or Agent reports a deliverable
-- **THEN** the delivery topic distinguishes executing, verified, accepted,
-  and published or effective states
+- **THEN** the delivery topic distinguishes executing, verified, accepted, and
+  published or effective states
 - **AND THEN** the claim does not outrun its current subject-bound evidence.
 
 #### Scenario: Repeated weak signals appear
@@ -114,8 +113,8 @@ card inventory.
 
 - **WHEN** admission, permission, review, veto, or exit controls exist only as
   written policy
-- **THEN** the data topic requires the governance owner to make them operate
-  in the actual workflow
+- **THEN** the data topic requires the governance owner to make them operate in
+  the actual workflow
 - **AND** delivery coordination neither hides unresolved decisions nor grants
   authority over professional judgments.
 
@@ -126,17 +125,33 @@ card inventory.
   dependency from becoming the normal operating model
 - **AND** monthly and quarterly review do not delay a necessary correction.
 - **AND WHEN** a supervisor coaches a member through a consequential task
-- **THEN** the coaching examines the member's reasoning rather than deciding
-  the conclusion for them.
+- **THEN** the coaching examines the member's reasoning rather than deciding the
+  conclusion for them.
 
 #### Scenario: Meaning or purpose changes without disclosure
 
 - **WHEN** a central concept changes meaning within an analysis or an exchange
   hides whether it seeks information, discussion, or a decision
-- **THEN** the analysis and communication topics require stable meanings and
-  an explicit exchange purpose
-- **AND** objective, measured language carries the reasoning without slogans
-  or pretended depth.
+- **THEN** the analysis and communication topics require stable meanings and an
+  explicit exchange purpose
+- **AND** objective, measured language carries the reasoning without slogans or
+  pretended depth.
+
+#### Scenario: A time-valid sample hides selection bias
+
+- **WHEN** historical research selects only instruments or periods with complete
+  coverage, even though each selected value was knowable at the decision time
+- **THEN** the data topic requires examining sample-selection bias
+- **AND** it requires explaining how missingness, delay, conflict, and anomalies
+  affect the conclusion, with confidence and unsupported conclusions stated.
+
+#### Scenario: An Agent lacks a nonessential presentation preference
+
+- **WHEN** the task, authoritative facts, permissions, and safe direction are
+  established but a presentation preference is unspecified
+- **THEN** the Agent should continue with reasonable stated assumptions
+- **AND** missing facts or authority, material direction changes, and
+  irreversible risk still stop the affected action for clarification.
 
 ### Requirement: Semantic coverage requires editorial review
 
@@ -262,3 +277,29 @@ level of detail.
 - **THEN** the communication and evolution topics require a clear purpose,
   measured expression, and preserved member judgment
 - **AND** recurring intervention requires a management-system correction.
+
+### Requirement: Governance and decision reading follow the reader's task
+
+Repository governance SHALL route contributors to change authority, publication,
+quality, supply, and runner boundaries without duplicating the executable
+contributor procedure. Its revised presentation SHALL preserve authority,
+obligation strength, permissions, and evidence limits. Decision records SHALL
+retain durable choices and meaningful alternatives, with a reviewable basis and
+revisit condition; transient implementation work SHALL NOT require a DR.
+
+#### Scenario: A contributor needs one governance boundary
+
+- **WHEN** a contributor needs to edit, publish, install offline, or admit a
+  runner
+- **THEN** the governance entry leads to that boundary and its existing
+  procedure
+- **AND** the contributor does not need unrelated implementation detail before
+  identifying the responsible owner and required evidence.
+
+#### Scenario: A review proposes another decision record
+
+- **WHEN** the existing choice or its official Change already explains the
+  rationale, or the proposed record contains a command, task, or release result
+- **THEN** the decision register routes to that owner instead of adding a DR
+- **AND** existing accepted records preserve identity and choice while
+  clarifying their alternatives, consequences, evidence, and revisit conditions.

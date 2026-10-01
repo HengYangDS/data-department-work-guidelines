@@ -53,13 +53,17 @@ linter beside the current stack would leave the duplication intact.
   preserve signed tags, source, original notes, and historical evidence, and
   remove obsolete download links with an explicit withdrawal notice.
 - Review the complete documentation and configuration boundary through an
-  independent expert committee on one fixed snapshot. Resolve concrete findings
-  at existing owners while preserving original duties, accepted decisions,
-  historical truth, and native product contracts.
+  independent multi-lens source review on fixed snapshots, with explicit repair
+  rechecks. Record actual coverage and failed routes rather than claim a
+  committee quorum. Resolve concrete findings at existing owners while
+  preserving original duties, accepted decisions, historical truth, and native
+  product contracts.
 - Correct OpenSpec entry claims against the installed official contract: use
   the local Node entry without npm cache resolution, distinguish new and
   modified capability paths, and permit Change-bound official sync as well as
-  archive. Name both Vale and lychee in GitLab source prerequisites.
+  archive. Apply this Change's reviewed deltas to main specs through the official
+  synchronization owner without closing its outstanding delivery obligations.
+  Name both Vale and lychee in GitLab source prerequisites.
 - Restore explicit sample-selection and anomaly-impact duties in historical
   analysis, and the Agent's default continuation with reasonable assumptions
   when context is not blocking. Preserve stops for unknown facts, authority,

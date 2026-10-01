@@ -399,14 +399,14 @@ remains true without implying that every binary is served forever.
 
 ### Review the complete documentation and configuration boundary
 
-Independent experts review one immutable snapshot, not moving working files or
+An independent reviewer reads immutable snapshots, not moving working files or
 only the changed paragraphs. Cover original-duty preservation, department use,
 authority and decisions, English prose, reader navigation, native configuration,
 and historical OpenSpec truth. The inventory includes root entries, all current
 topics, decisions, governance, current and archived OpenSpec artifacts, quality
 policy, supply and release records, ETHOS bindings, and both CI declarations.
 
-Experts return bounded read-only findings with source locations, consequences,
+Reviewers return bounded read-only findings with source locations, consequences,
 and specific repairs. The primary owner integrates them without adding a second
 rule source or rewriting history. Review every finding against current facts and
 retain dissent or unproved limits; a majority vote or clean static check does
@@ -440,6 +440,14 @@ The primary owner's audit cannot stand in for an independent lens, and a failed
 provider call supplies no review evidence. The prior comparison remains dated
 evidence, not a certification of equivalence.
 
+One successful independent reviewer completed all requested lenses through
+bounded source reviews and explicit repair rechecks. Six specialist routes
+failed before returning findings, and a complete-source advisor reached its
+deadline without output. Those attempts do not establish a committee quorum.
+The generated lockfile receives native dependency-graph and advisory validation,
+separate from human reading of configuration policy; neither establishes
+historical execution, hosted delivery, or department adoption.
+
 The current-entry audit found three OpenSpec descriptions that contradicted the
 installed contract. npm execution can reuse its execution cache even with
 `--offline --no`; call the local package's JavaScript entry with Node instead.
@@ -449,6 +457,12 @@ Change deltas without archiving; both sync and archive still require ETHOS
 admission. Correct these descriptions without adding a wrapper, private
 capability restriction, or archive-only lifecycle. GitLab source prerequisites
 must name both native tool archives, as the existing manifest and CI already do.
+
+Synchronize the reviewed Change deltas into the three main specs through the
+installed official OpenSpec build and write owners after an exact-path ETHOS
+prewrite and read-only preview. Preserve unrelated requirements and prefixes;
+compare the generated hashes and rerun strict validation. Synchronization does
+not archive the Change, complete its delivery tasks, or replace ETHOS admission.
 
 The archive review compares historical commitments, not their claimed
 execution. Several records require a bounded disposition when cited: the

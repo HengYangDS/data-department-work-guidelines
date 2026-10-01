@@ -38,7 +38,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   claiming npm execution cannot use a cached package. Its capability guide
   distinguishes new and modified paths, and its lifecycle guidance permits
   official Change-bound sync as well as archive. GitLab source prerequisites
-  name both required native tools.
+  name both required native tools. Main specs are synchronized with the reviewed
+  Change deltas without closing outstanding delivery obligations.
 - Remote download retention keeps the latest qualified edition, one rollback,
   and required tool packages. Superseded attachments retire with an explicit
   notice while signed tags, original notes, and source history remain.

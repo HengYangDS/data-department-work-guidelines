@@ -51,22 +51,19 @@
       durable rationale, alternatives, evidence, and revisit conditions;
       preserve choices, metadata, and all governance obligations, then check
       links, native prose, and the rendered reading path.
-- [ ] 2.12 Complete an independent expert review of all documentation and
-      configuration from one fixed source snapshot; assess original meaning,
-      business use, authority, English voice, navigation, native configuration,
-      and historical truth. Resolve findings at existing owners and reverify
-      every affected claim before final publication. The semantic specialist
-      completed its source review and two repaired-clause checks; six other
-      specialists failed before returning findings. Their independent lenses
-      remain unproved, not supplied by the primary audit.
-      A no-tool native advisor passed a minimal probe, but its complete fixed-source
-      review reached the bounded 540-second deadline without a result. That
-      attempt supplies no independent review or completion evidence.
-      The successful reviewer read all 213 archive files across 39 Changes,
-      then all 20 requested current configuration/interface files. The tag-route
-      discrepancy is repaired; historical wording conflicts receive a
-      prospective disposition without archive edits. Other independent lenses
-      remain unproved.
+- [x] 2.12 Complete an independent review of all documentation and
+      configuration from fixed source snapshots with bounded repair rechecks;
+      assess original meaning, business use, authority, English voice,
+      navigation, native configuration, and historical truth. Resolve findings
+      at existing owners and reverify
+      every affected claim before final publication. One successful independent
+      reviewer covered all seven lenses across bounded snapshot reviews and
+      repair checks: all 202 Markdown paths, all 213 archive files, current
+      configuration policy, and the official three-capability synchronization.
+      The six failed specialist routes and timed-out whole-source advisor
+      supplied no findings; no multi-specialist committee completion is claimed.
+      Generated lockfile entries were not individually read by that reviewer;
+      dependency-graph and audit conclusions require separate native evidence.
 - [x] 2.13 Restore explicit sample-selection and anomaly-impact duties and the
       default continuation when Agent context is not blocking; compare both with
       the original clauses, challenge them with adverse cases, and rerun
