@@ -29,7 +29,7 @@
 - [x] 2.6 Preserve native glob arguments and reject selected literal and variable
       command operands without treating ordinary command descriptions as
       execution; prove the retained and added cases through the DR boundary.
-- [ ] 2.7 Await bounded native asynchronous cleanup in the existing installer;
+- [x] 2.7 Await bounded native asynchronous cleanup in the existing installer;
       prove completion ordering and persistent-error propagation, then qualify
       actual Windows tool installation through its existing source CI job.
 
@@ -49,6 +49,6 @@
 - [x] 3.6 Publish the compatible original-duty correction with fresh local,
       installed ETHOS, signed patch, asset, and both Forge platform evidence;
       preserve the already qualified major release.
-- [ ] 3.7 Qualify and publish the final compatible decision-boundary correction
+- [x] 3.7 Qualify and publish the final compatible decision-boundary correction
       with exact-source proof, a signed patch, a source-bound offline bundle,
       and both Forge platform matrices; preserve prior release objects.
