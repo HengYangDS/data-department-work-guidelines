@@ -506,6 +506,23 @@ digests; if a claim depends on an edited representation, identify its separate
 bytes and producer evidence. Do not infer historical execution or restore
 retired scope, browser, shell, or package-manager policy from these records.
 
+### Preserve the date of an actual decision
+
+The original guideline's decision template explicitly required the decision
+maker and date. The current analysis topic names who must decide by when, but
+its recorded-decision guidance omits the date. A fact cutoff and a deadline
+cannot establish when approval occurred. Restore that duty at the existing
+analysis owner: record the choice, decision owner, actual date, and basis in the
+same work carrier. Do not add a form, DR, date validator, or second record.
+
+Compare an undated approval, a future deadline, and a fact-observation time with
+a dated decision by its authorized owner. Preserve the separate permission,
+evidence, and execution boundaries. This is a compatible correction to an
+original duty, not a new approval step. Keep its notes under Unreleased until a
+later justified release cut. Prior semantic-review receipts retain their dated
+conclusions; the current comparison must explicitly correct the earlier claim
+that the decision-date obligation was fully retained.
+
 ### Deliver the complete transition
 
 The initial contributor-command and offline-bundle transition is incompatible

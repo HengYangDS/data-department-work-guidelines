@@ -10,6 +10,9 @@ linter beside the current stack would leave the duplication intact.
 
 ## What Changes
 
+- Restore the original requirement to record an actual decision's owner, date,
+  and basis. Keep it in the existing work carrier; a deadline or fact cutoff
+  does not establish when approval occurred.
 - Replace the two English pipelines with one pinned native Vale command, its
   vocabulary, and native style rules.
 - Replace textlint parsing in both DR boundaries and the offline bundle's README

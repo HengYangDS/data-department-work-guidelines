@@ -105,6 +105,12 @@
       divergent-range controls. Verify native Markdown presentation and
       authenticated private comparison destinations without a second file or
       redirect service.
+- [x] 2.21 Restore the original decision-date duty at the existing analysis
+      owner. Distinguish an actual decision's owner, date, and basis from a
+      deadline or fact cutoff; compare the original and current obligations
+      with adverse cases and correct the earlier semantic-coverage conclusion
+      without rewriting its dated evidence. Preserve all other duties and
+      avoid a new record, template, or validator.
 
 ## 3. Qualification and publication
 
@@ -150,7 +156,7 @@
       with a source-bound bundle, cold install, trusted signature, exact-HEAD
       installed proof, both Forge source and offline matrices, and bounded
       retirement of superseded downloads and owned working state.
-- [ ] 3.12 Qualify and publish the compatible dual-Forge Changelog correction
+- [x] 3.12 Qualify and publish the compatible dual-Forge Changelog correction
       with full local checks, current-source rendering, cold offline install,
       exact-HEAD installed proof, a signed patch, both declared source and
       offline platform matrices, independent source and asset hashes, and

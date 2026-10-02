@@ -236,6 +236,8 @@ new meeting, fixed duration, or department-wide activity report.
 Problem framing SHALL name time, cost, compliance, technical, and resource
 constraints. A central concept SHALL retain one meaning within a discussion.
 Execution plans SHALL expose resources, costs, milestones, and checkpoints.
+Once a decision is made, its choice, authorized decision owner, actual date, and
+basis SHALL be recorded in the existing work carrier.
 
 #### Scenario: A proposed plan hides a limiting constraint
 
@@ -243,6 +245,13 @@ Execution plans SHALL expose resources, costs, milestones, and checkpoints.
   that could change the decision
 - **THEN** the analysis topic requires that limit in the problem frame
 - **AND** the delivery plan makes its cost and intermediate commitments visible.
+
+#### Scenario: A deadline is presented as a decision record
+
+- **WHEN** a record names a future decision deadline or a fact cutoff but omits
+  when the authorized person actually made the choice
+- **THEN** the analysis topic requires the actual decision owner, date, and basis
+- **AND** the deadline does not establish approval or authorize execution.
 
 ### Requirement: Data roles retain operational responsibility
 

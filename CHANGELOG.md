@@ -15,6 +15,12 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
+### Fixed
+
+- Decision guidance again requires the actual decision, decision owner, date,
+  and basis in the existing work record. A deadline does not establish when
+  approval occurred.
+
 ## 7.0.6 - 2026-10-02
 
 History: [GitLab][7.0.6-gitlab] · [GitHub][7.0.6-github]

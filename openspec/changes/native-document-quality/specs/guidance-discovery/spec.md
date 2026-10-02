@@ -85,6 +85,28 @@ stop, and verification cues without a second card inventory.
 - **AND** missing facts or authority, material direction changes, and
   irreversible risk still stop the affected action for clarification.
 
+### Requirement: Decision framing preserves operational constraints
+
+Problem framing SHALL name time, cost, compliance, technical, and resource
+constraints. A central concept SHALL retain one meaning within a discussion.
+Execution plans SHALL expose resources, costs, milestones, and checkpoints.
+Once a decision is made, its choice, authorized decision owner, actual date, and
+basis SHALL be recorded in the existing work carrier.
+
+#### Scenario: A proposed plan hides a limiting constraint
+
+- **WHEN** a proposal omits a cost, compliance, technical, or resource limit
+  that could change the decision
+- **THEN** the analysis topic requires that limit in the problem frame
+- **AND** the delivery plan makes its cost and intermediate commitments visible.
+
+#### Scenario: A deadline is presented as a decision record
+
+- **WHEN** a record names a future decision deadline or a fact cutoff but omits
+  when the authorized person actually made the choice
+- **THEN** the analysis topic requires the actual decision owner, date, and basis
+- **AND** the deadline does not establish approval or authorize execution.
+
 ## ADDED Requirements
 
 ### Requirement: Governance and decision reading follow the reader's task
@@ -112,19 +134,6 @@ revisit condition; transient implementation work SHALL NOT require a DR.
 - **THEN** the decision register routes to that owner instead of adding a DR
 - **AND** existing accepted records preserve identity and choice while
   clarifying their alternatives, consequences, evidence, and revisit conditions.
-
-### Requirement: Decision framing preserves operational constraints
-
-Problem framing SHALL name time, cost, compliance, technical, and resource
-constraints. A central concept SHALL retain one meaning within a discussion.
-Execution plans SHALL expose resources, costs, milestones, and checkpoints.
-
-#### Scenario: A proposed plan hides a limiting constraint
-
-- **WHEN** a proposal omits a cost, compliance, technical, or resource limit
-  that could change the decision
-- **THEN** the analysis topic requires that limit in the problem frame
-- **AND** the delivery plan makes its cost and intermediate commitments visible.
 
 ### Requirement: Data roles retain operational responsibility
 
