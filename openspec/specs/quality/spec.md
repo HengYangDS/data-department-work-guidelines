@@ -61,6 +61,16 @@ under any wrapper or language label.
 - **AND THEN** ordinary decision lists, tables and meaningful links remain
   valid.
 
+#### Scenario: Native shell operators do not hide an invocation
+
+- **WHEN** a DR embeds a supported compound command, redirection, or process
+  substitution around a recognized command
+- **THEN** the existing native lexer preserves its operator and argument
+  boundaries, and the public decision validator rejects the invocation
+- **AND** quotation, literal glob operands, ordinary operator descriptions,
+  and meaningful evidence links retain their existing boundaries
+- **AND THEN** inspection evaluates neither the command nor host variables.
+
 #### Scenario: Parsed headings define the actual decision sections
 
 - **WHEN** heading-like code or a quoted heading stands in for a required

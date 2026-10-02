@@ -177,8 +177,10 @@
       Do not alter the published v7.0.10 objects or add a second lexer.
       The official 1.12.0 release expands native operator grouping. The new
       distinguishing regression fails on 1.11.0; the audited native lock adds
-      no dependency or install hook. Full source, offline, installed-product,
-      and hosted qualification remain open.
+      no dependency or install hook. Signed source passed 201 local tests,
+      current installed full proof, and a denied-network clean install with
+      every source hash unchanged. The native operator scenario is synced to
+      the main spec; release-cut and both Forge qualification remain open.
 
 ## 3. Qualification and publication
 
@@ -210,8 +212,9 @@
       residue before the official archive and retirement steps.
       The partial official delta-to-main-spec merge carries the implemented
       cross-cycle prevention, bounded test execution, managed acquisition,
-      offline telemetry, cold fixtures, and readable native navigation. All
-      prior requirements and scenarios are preserved. The two draft proof
+      offline telemetry, cold fixtures, readable native navigation, and native
+      shell-operator boundaries. All prior requirements and scenarios are
+      preserved. The two draft proof
       requirements still await the accepted ETHOS contract and are not synced;
       the removed duplicate npm policy is already absent. Full Change sync and
       archive remain incomplete. The original 84-unit editorial comparison is
