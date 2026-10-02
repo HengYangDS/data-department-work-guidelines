@@ -117,7 +117,7 @@
       owner, decision date, authorization, evidence limits, and acceptance;
       compare changed clauses with the original and rerun affected source
       quality and rendering checks.
-- [ ] 2.23 Repair bundle acquisition and managed-cache ownership at their
+- [x] 2.23 Repair bundle acquisition and managed-cache ownership at their
       existing owners. Preserve a successful concurrent target, reject linked
       binary-cache and bundle-download paths before remote access, staging, or
       execution, preserve reused permissions, and test normal, failed,
@@ -132,16 +132,20 @@
       challenge a single issue spanning cycles under one owner and project,
       preserve the other triggers, and rerun source quality and rendering.
       Existing excerpt hashes do not establish complete semantic coverage.
-- [ ] 2.26 Bound the complete standalone test inventory to two workers and
+- [x] 2.26 Bound the complete standalone test inventory to two workers and
       remove unrelated prerequisite work from the OpenSpec environment
       regression. Preserve all discovered tests, real tool execution, and
       existing deadlines; prove negative controls, local timing and the complete
-      source graph, then qualify the unchanged requirements on Windows. The
-      v7.0.8 review's full test run still timed out on GitLab Windows; reject
+      source graph, then qualify the unchanged requirements on Windows. Reject
       known prose defects before unrelated native prerequisites and reduce
       repeated native fixture launches without dropping any input or assertion.
       Keep one native tag observation without omitting nested invalid release
       refs or weakening strict SemVer and annotated-object checks.
+      Signed v7.0.9 passed all 194 local tests and both Forge source and offline
+      matrices. The complete GitLab Windows test inventory passed on `dev`,
+      `main`, and the post-release source and offline jobs. Original v7.0.8 and
+      peak-load v7.0.9 tag-source timeout evidence remains unchanged; passing
+      later jobs does not prove that shared-host saturation cannot recur.
 
 ## 3. Qualification and publication
 
@@ -192,15 +196,24 @@
       exact-HEAD installed proof, a signed patch, both declared source and
       offline platform matrices, independent source and asset hashes, and
       retirement of its owned lane and superseded downloads.
-- [ ] 3.14 Qualify and publish the compatible plain-language, cross-cycle,
+- [x] 3.14 Qualify and publish the compatible plain-language, cross-cycle,
       and offline-supply corrections with a source-bound bundle, clean offline
       install, exact-HEAD installed proof, trusted signed patch, both Forge
       source and offline matrices, and verified download and lane aftercare.
-- [ ] 3.15 Qualify the compatible bounded-test execution correction with a
+      Signed v7.0.9 carries the unchanged corrected normative duties; both
+      independent Releases, downloaded hashes, and declared platforms passed.
+      Superseded constituent lanes and validation copies are retired; the
+      current owned lane remains active only for shared product integration.
+- [x] 3.15 Qualify the compatible bounded-test execution correction with a
       fresh source-bound bundle, cold offline install, exact-HEAD installed
       proof, signed patch and both Forge source and offline matrices. Preserve
       immutable v7.0.7 and its failed GitLab Windows evidence; retire superseded
       downloads and owned scratch only after current consumers are verified.
+      Signed v7.0.9 passed local checks, denied-network cold installation,
+      installed proof, and both complete source and offline platform matrices.
+      Both Forges retain only v7.0.9 and the qualified v7.0.8 rollback downloads;
+      all original notes, tags, and failed executions remain available. Owned
+      duplicate downloads and completed cold checkouts are absent.
 - [x] 3.10 Retire superseded download assets independently on both Forges;
       retain the latest qualified release, one qualified rollback, and tool
       packages consumed by retained source. Preserve tags, original notes, and
