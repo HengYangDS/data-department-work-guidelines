@@ -18,10 +18,10 @@ The form may shrink with risk; the chain of trust may not skip a link.
 > current evidence → bounded claim → acceptance and learning.
 
 These duties can share one work record; each step does not need its own
-document. Low-risk, local, reversible work may close in one exchange.
-Cross-role or uncertain work uses an
-existing work carrier. Production, sensitive data, destructive changes, security
-or compliance, and external commitments require explicit authorization, a
+document. Low-risk, local, reversible work may close in one exchange. For
+cross-role or uncertain work, use the existing ticket, review, or project
+document. Production, sensitive data, destructive changes, security or
+compliance, and external commitments require explicit authorization, a
 recovery path, independent review, and human acceptance.
 
 ## Before Acting
@@ -39,7 +39,7 @@ path before making a change. Expose critical-path blockers when observed; do
 not wait for dependent work to fail. Activity volume and “active progress” are
 not state changes. If scope or risk materially changes, return to the authorized
 decision owner. Record the change and the decision that resolves it in the
-existing work carrier so collaborators work from the same commitment.
+existing work record so collaborators work from the same commitment.
 
 ## Name the State, Not the Effort
 
@@ -74,7 +74,7 @@ the language.
 | A dry-run succeeds                               | The actual action occurred.                                      |
 | A content digest matches                         | The content is semantically correct or fit for its intended use. |
 | A local environment passes                       | A remote, production, or hosted environment passes.              |
-| A change is merged                               | It reached the target publication plane.                         |
+| A change is merged                               | It was published at the agreed destination.                      |
 | A revision is published                          | It took effect, was adopted, or produced the intended outcome.   |
 | An Agent reports completion                      | A member verified and accepted responsibility for the result.    |
 
@@ -86,9 +86,9 @@ published or effective are distinct states.** Do not call “in progress” “m
 complete,” or promote verification to publication.
 
 For L1 and L2 work, leave the material decision, actual result, limits, and
-remaining owner in the existing ticket, review, or decision carrier. Without a
-reviewable endpoint, do not say the organization has learned from the work. For
-high-impact or repeated work, leave the necessary test, monitor, rule, or
+remaining owner in the existing work record. Without a reviewable record, do
+not say the organization has learned from the work. For high-impact or
+repeated work, leave the necessary test, monitor, rule, or
 recovery path in the existing system of responsibility so the next occurrence
 is found earlier and judged more easily. Do not create an unconsumed evidence
 directory or report to prove effort. For data delivery, see

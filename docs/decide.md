@@ -104,7 +104,7 @@ trigger. The authorized person decides; a long analysis cannot stand in for
 authorization.
 
 Once a choice is made, record what was decided, by whom, on what date, and why
-in the existing work carrier. A deadline says when a decision is needed; it
+in the existing work record. A deadline says when a decision is needed; it
 does not establish when approval occurred.
 
 | State    | Say and do                                                           |

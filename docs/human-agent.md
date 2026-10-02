@@ -76,8 +76,8 @@ proportion to risk. A person must not rely only on an Agent's prose summary:
 compare changed paths and content with the reported scope; inspect missing
 counterexamples, the current environment, uncovered cases, and high-risk
 authorization. Even checked Agent output becomes a durable team fact only when
-its underlying source and limits are recorded in the relevant authoritative
-carrier.
+its underlying source and limits are recorded in the authoritative system for
+that work.
 
 Use multiple Agents in parallel only when independent questions, paths, or
 review angles can be separated. Default parallel work to independent read-only

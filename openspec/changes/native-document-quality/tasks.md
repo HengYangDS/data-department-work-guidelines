@@ -112,6 +112,27 @@
       without rewriting its dated evidence. Preserve all other duties and
       avoid a new record, template, or validator.
 
+- [ ] 2.22 Replace specialist record and publication terminology in member
+      guidance with ordinary work language. Preserve the existing record
+      owner, decision date, authorization, evidence limits, and acceptance;
+      compare changed clauses with the original and rerun affected source
+      quality and rendering checks.
+- [ ] 2.23 Repair bundle acquisition and managed-cache ownership at their
+      existing owners. Preserve a successful concurrent target, reject linked
+      binary-cache and bundle-download paths before remote access, staging, or
+      execution, preserve reused permissions, and test normal, failed,
+      concurrent, and cross-platform paths. Exercise each linked local download
+      parent on both Forges, preserve foreign bytes, and reuse one path guard.
+- [ ] 2.24 Disable OpenSpec outbound requests only for offline verification
+      through its official environment option. Exercise inherited on-values,
+      case-variant keys, acknowledged telemetry, and unchanged global settings;
+      rerun the canonical source graph without another adapter.
+- [ ] 2.25 Restore cross-cycle impact as an independent reusable-prevention
+      trigger in the evolution topic. Compare the original and current clauses,
+      challenge a single issue spanning cycles under one owner and project,
+      preserve the other triggers, and rerun source quality and rendering.
+      Existing excerpt hashes do not establish complete semantic coverage.
+
 ## 3. Qualification and publication
 
 - [x] 3.1 Freeze source and a source-bound offline bundle; run format, lint,

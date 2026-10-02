@@ -1,8 +1,10 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
+import childProcess from "node:child_process";
 import fs from "node:fs";
 import fsPromises from "node:fs/promises";
+import os from "node:os";
 import path from "node:path";
 import { syncBuiltinESMExports } from "node:module";
 import { test } from "node:test";
@@ -15,7 +17,11 @@ import {
   safeArchiveEntries,
   selectedAsset,
 } from "../tools/ci/install-native.mjs";
-import { root } from "../tools/docs/runtime.mjs";
+import {
+  managedFileExists,
+  nativeToolBinary,
+  root,
+} from "../tools/docs/runtime.mjs";
 
 test("official supply declares exactly the qualified host assets", () => {
   assert.deepEqual(Object.keys(manifest.tools.lychee.assets).sort(), [
@@ -327,4 +333,215 @@ test("an invalid supply source cannot reuse a cached native tool", async () => {
     install({ tool: "vale", downloadSource: "unrecognized" }),
     /invalid.*supply/u,
   );
+});
+
+test("managed files stay inside their selected repository boundary", () => {
+  const temporary = fs.mkdtempSync(
+    path.join(os.tmpdir(), "ddwg-managed-file-"),
+  );
+  try {
+    const repository = path.join(temporary, "repository");
+    fs.mkdirSync(repository);
+    const target = path.join(repository, "build/cache/tool.bin");
+    assert.equal(managedFileExists(target, repository), false);
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.writeFileSync(target, "existing pinned bytes");
+    assert.equal(managedFileExists(target, repository), true);
+    if (process.platform === "win32")
+      assert.equal(
+        managedFileExists(target.toUpperCase(), repository.toLowerCase()),
+        true,
+      );
+    for (const outside of [
+      repository,
+      path.join(temporary, "repository-other/tool.bin"),
+      path.join(repository, "../foreign.bin"),
+    ])
+      assert.throws(
+        () => managedFileExists(outside, repository),
+        /inside the repository/u,
+      );
+    assert.throws(
+      () => managedFileExists(path.dirname(target), repository),
+      /regular/u,
+    );
+    assert.throws(
+      () => managedFileExists(path.join(target, "child.bin"), repository),
+      /directory/u,
+    );
+    assert.equal(fs.readFileSync(target, "utf8"), "existing pinned bytes");
+  } finally {
+    fs.rmSync(temporary, { recursive: true, force: true });
+  }
+});
+
+test("managed native caches reject links and non-regular entries before execution", async (context) => {
+  const selected = selectedAsset("vale");
+  const target = path.join(
+    root,
+    "build/runtime/tool-cache/vale",
+    selected.version,
+    selected.key,
+    selected.binaryName,
+  );
+  const actualExists = fs.existsSync;
+  const actualStat = fs.lstatSync;
+  const actualSpawn = childProcess.spawnSync;
+  let executions = 0;
+  for (const [exists, symbolicLink] of [
+    [true, true],
+    [false, true],
+    [true, false],
+  ]) {
+    const mocks = [
+      context.mock.method(fs, "existsSync", (file) =>
+        file === target ? exists : actualExists(file),
+      ),
+      context.mock.method(fs, "lstatSync", (file, options) =>
+        file === target
+          ? { isFile: () => false, isSymbolicLink: () => symbolicLink }
+          : actualStat(file, options),
+      ),
+      context.mock.method(
+        childProcess,
+        "spawnSync",
+        (command, args, options) => {
+          if (command !== target) return actualSpawn(command, args, options);
+          executions += 1;
+          return { status: 0, stdout: selected.versionOutput, stderr: "" };
+        },
+      ),
+    ];
+    syncBuiltinESMExports();
+    try {
+      await assert.rejects(install({ tool: "vale" }), /regular|symbolic/u);
+      assert.throws(() => nativeToolBinary("vale"), /regular|symbolic/u);
+      assert.equal(executions, 0);
+    } finally {
+      for (const mock of mocks) mock.mock.restore();
+      syncBuiltinESMExports();
+    }
+  }
+});
+
+test("managed cache parent aliases fail before staging or execution", async (context) => {
+  const selected = selectedAsset("vale");
+  const directory = path.join(
+    root,
+    "build/runtime/tool-cache/vale",
+    selected.version,
+    selected.key,
+  );
+  const actualStat = fs.lstatSync;
+  let executions = 0;
+  const mocks = [
+    context.mock.method(fs, "lstatSync", (file, options) =>
+      file === directory
+        ? {
+            isDirectory: () => true,
+            isFile: () => false,
+            isSymbolicLink: () => true,
+          }
+        : actualStat(file, options),
+    ),
+    context.mock.method(childProcess, "spawnSync", () => {
+      executions += 1;
+      return { status: 0, stdout: selected.versionOutput, stderr: "" };
+    }),
+  ];
+  syncBuiltinESMExports();
+  try {
+    await assert.rejects(
+      install({ tool: "vale" }),
+      /regular|symbolic|directory/u,
+    );
+    await assert.rejects(
+      install({ tool: "vale", assetFile: "absent-asset" }),
+      /regular|symbolic|directory/u,
+    );
+    assert.throws(
+      () => nativeToolBinary("vale"),
+      /regular|symbolic|directory/u,
+    );
+    assert.equal(executions, 0);
+  } finally {
+    for (const mock of mocks) mock.mock.restore();
+    syncBuiltinESMExports();
+  }
+});
+
+test("a supplied install never changes the mode of an existing cache entry", async (context) => {
+  const selected = selectedAsset("vale");
+  const target = path.join(
+    root,
+    "build/runtime/tool-cache/vale",
+    selected.version,
+    selected.key,
+    selected.binaryName,
+  );
+  const asset = path.resolve("fixture-native-asset");
+  const bytes = Buffer.from("fixture-pinned-asset");
+  const descriptor = manifest.tools.vale.assets[selected.key];
+  const originalDigest = descriptor.sha256;
+  const actualRead = fs.readFileSync;
+  const actualEntries = fs.readdirSync;
+  const actualStat = fs.lstatSync;
+  const actualSpawn = childProcess.spawnSync;
+  const modes = [];
+  const mocks = [
+    context.mock.method(fs, "readFileSync", (file, options) =>
+      file === asset ? bytes : actualRead(file, options),
+    ),
+    context.mock.method(fs, "readdirSync", (directory, options) =>
+      path.basename(directory) === "extracted"
+        ? [
+            {
+              name: selected.binaryName,
+              isDirectory: () => false,
+              isFile: () => true,
+            },
+          ]
+        : actualEntries(directory, options),
+    ),
+    context.mock.method(fs, "lstatSync", (file, options) =>
+      path.basename(path.dirname(file)) === "extracted"
+        ? { isFile: () => true, isSymbolicLink: () => false }
+        : actualStat(file, options),
+    ),
+    context.mock.method(fs, "chmodSync", (file) => modes.push(file)),
+    context.mock.method(fs, "copyFileSync", (_source, destination, flags) => {
+      assert.equal(destination, target);
+      assert.equal(flags, fs.constants.COPYFILE_EXCL);
+      throw Object.assign(new Error("another install completed"), {
+        code: "EEXIST",
+      });
+    }),
+    context.mock.method(childProcess, "spawnSync", (command, args, options) => {
+      if (command === "tar") {
+        const stdout =
+          args[0] === "-tf"
+            ? `${selected.binaryName}\n`
+            : args[0] === "-tvf"
+              ? `-rwxr-xr-x 0/0 10 ${selected.binaryName}\n`
+              : "";
+        return { status: 0, stdout, stderr: "" };
+      }
+      if (
+        command === target ||
+        path.basename(path.dirname(command)) === "extracted"
+      )
+        return { status: 0, stdout: selected.versionOutput, stderr: "" };
+      return actualSpawn(command, args, options);
+    }),
+  ];
+  descriptor.sha256 = createHash("sha256").update(bytes).digest("hex");
+  syncBuiltinESMExports();
+  try {
+    assert.equal(await install({ tool: "vale", assetFile: asset }), target);
+    assert.equal(modes.includes(target), false);
+  } finally {
+    descriptor.sha256 = originalDigest;
+    for (const mock of mocks) mock.mock.restore();
+    syncBuiltinESMExports();
+  }
 });

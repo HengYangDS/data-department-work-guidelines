@@ -34,6 +34,15 @@ stop, and verification cues without a second card inventory.
   the lightest effective prevention mechanism
 - **AND THEN** the periodic floor does not postpone risk escalation.
 
+#### Scenario: One issue spans work cycles
+
+- **WHEN** one unresolved issue affects successive work cycles under the same
+  owner and project, without recurring or meeting another prevention trigger
+- **THEN** the evolution topic still requires reusable prevention through the
+  lightest effective existing owner
+- **AND** a work record alone does not satisfy that duty, and no new report,
+  template, or meeting is required.
+
 #### Scenario: A delivery plan omits cost or intermediate commitments
 
 - **WHEN** a plan identifies dependencies and people but omits costs,

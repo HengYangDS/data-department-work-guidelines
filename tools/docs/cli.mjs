@@ -25,7 +25,17 @@ function validateOpenSpec() {
     "@fission-ai/openspec",
     "openspec",
     ["validate", "--all", "--strict", "--json"],
-    { capture: true },
+    {
+      capture: true,
+      env: {
+        ...Object.fromEntries(
+          Object.entries(process.env).filter(
+            ([key]) => key.toUpperCase() !== "OPENSPEC_TELEMETRY",
+          ),
+        ),
+        OPENSPEC_TELEMETRY: "0",
+      },
+    },
   );
   const result = JSON.parse(output);
   if (result.summary?.totals?.failed !== 0 || !result.summary?.totals?.items) {

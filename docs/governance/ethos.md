@@ -227,6 +227,16 @@ GitHub release acquisition uses Node's native HTTP client at the exact
 repository, tag, and filename, without `gh` or a token. GitLab uses its
 project-scoped CI identity and refuses redirects before forwarding it. Both
 paths bound time and size and check the source-pinned digest before extraction.
+Each download is verified in its own temporary directory before exclusive
+publication. A concurrent call can reuse a verified target but cannot overwrite
+or remove it. Cleanup touches only the calling operation's temporary stage.
+Managed binary caches, bundle downloads, and their repository-local parents
+must be regular files and directories, with no symbolic links. Reject linked
+download parents before contacting either Forge or staging bytes outside the
+repository. Reusing an installed binary does not
+change its permissions. The verifier disables OpenSpec telemetry and update
+requests through the official environment option for that child process; the
+user's global settings remain unchanged.
 Archives exclude host extended attributes; inspection and extraction reject
 warning output even on a zero exit status.
 

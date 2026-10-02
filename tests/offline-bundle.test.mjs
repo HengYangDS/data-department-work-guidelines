@@ -8,9 +8,11 @@ import {
   mkdirSync,
   mkdtempSync,
   readFileSync,
+  readdirSync,
   realpathSync,
   rmSync,
   symlinkSync,
+  unlinkSync,
   writeFileSync,
 } from "node:fs";
 import os from "node:os";
@@ -881,6 +883,169 @@ test("public GitHub acquisition fails closed and removes only its failed output"
       assert.equal(existsSync(inputs.outputPath), true);
     });
   }
+});
+
+test("a failed concurrent acquisition preserves either Forge's verified output", async () => {
+  for (const [acquire, environment] of [
+    [
+      acquireGitHubBundle,
+      { GITHUB_REPOSITORY: "Example/Repository", DDWG_RELEASE_TAG: "v4.2.0" },
+    ],
+    [
+      offline.acquireGitLabBundle,
+      {
+        CI_API_V4_URL: "http://gitlab.example.test/api/v4",
+        CI_PROJECT_ID: "42",
+        CI_JOB_TOKEN: "fixture-only",
+        CI_COMMIT_TAG: "v4.2.0",
+        CI_PIPELINE_SOURCE: "api",
+      },
+    ],
+  ]) {
+    for (const failedResponse of [
+      () => new Response(null, { status: 503 }),
+      () => new Response("changed archive", { status: 200 }),
+    ]) {
+      await buildFixture(async (inputs) => {
+        const built = assembleBundle(inputs);
+        writeFileSync(
+          path.join(inputs.repository, ".config/release/offline-bundle.json"),
+          JSON.stringify(built),
+        );
+        const target = path.join(
+          inputs.repository,
+          "build/artifacts/offline-bundle",
+          built.fileName,
+        );
+        const pending = Promise.withResolvers();
+        const successful = acquire({
+          repository: inputs.repository,
+          environment,
+          fetcher: async () => new Response(readFileSync(inputs.outputPath)),
+        });
+        const failed = assert.rejects(
+          acquire({
+            repository: inputs.repository,
+            environment,
+            fetcher: () => pending.promise,
+          }),
+          /HTTP 503|digest mismatch/u,
+        );
+        assert.equal((await successful).sha256, built.sha256);
+        assert.equal(digest(readFileSync(target)), built.sha256);
+        pending.resolve(failedResponse());
+        await failed;
+        assert.equal(digest(readFileSync(target)), built.sha256);
+        assert.deepEqual(readdirSync(path.dirname(target)), [built.fileName]);
+      });
+    }
+  }
+});
+
+test("bundle acquisition rejects linked managed parents before remote access", async () => {
+  for (const [acquire, environment] of [
+    [
+      acquireGitHubBundle,
+      { GITHUB_REPOSITORY: "Example/Repository", DDWG_RELEASE_TAG: "v4.2.0" },
+    ],
+    [
+      offline.acquireGitLabBundle,
+      {
+        CI_API_V4_URL: "http://gitlab.example.test/api/v4",
+        CI_PROJECT_ID: "42",
+        CI_JOB_TOKEN: "fixture-only",
+        CI_COMMIT_TAG: "v4.2.0",
+        CI_PIPELINE_SOURCE: "api",
+      },
+    ],
+  ]) {
+    for (const relative of [
+      "build",
+      "build/artifacts",
+      "build/artifacts/offline-bundle",
+    ]) {
+      await buildFixture(async (inputs) => {
+        const built = assembleBundle(inputs);
+        writeFileSync(
+          path.join(inputs.repository, ".config/release/offline-bundle.json"),
+          JSON.stringify(built),
+        );
+        const foreign = mkdtempSync(
+          path.join(os.tmpdir(), "ddwg-acquisition-foreign-"),
+        );
+        const marker = path.join(foreign, "preserved.txt");
+        writeFileSync(marker, "existing external content");
+        const alias = path.join(inputs.repository, relative);
+        mkdirSync(path.dirname(alias), { recursive: true });
+        symlinkSync(foreign, alias, "junction");
+        let requests = 0;
+        try {
+          await assert.rejects(
+            acquire({
+              repository: inputs.repository,
+              environment,
+              fetcher: async () => {
+                requests += 1;
+                return new Response(readFileSync(inputs.outputPath));
+              },
+            }),
+            /regular|symbolic|directory/u,
+          );
+          assert.equal(requests, 0);
+          assert.deepEqual(readdirSync(foreign), ["preserved.txt"]);
+          assert.equal(
+            readFileSync(marker, "utf8"),
+            "existing external content",
+          );
+        } finally {
+          unlinkSync(alias);
+          rmSync(foreign, { recursive: true, force: true });
+        }
+      });
+    }
+  }
+});
+
+test("concurrent successful acquisitions converge without replacing a prior target", async () => {
+  await buildFixture(async (inputs) => {
+    const built = assembleBundle(inputs);
+    writeFileSync(
+      path.join(inputs.repository, ".config/release/offline-bundle.json"),
+      JSON.stringify(built),
+    );
+    const options = {
+      repository: inputs.repository,
+      environment: {
+        GITHUB_REPOSITORY: "Example/Repository",
+        DDWG_RELEASE_TAG: "v4.2.0",
+      },
+      fetcher: async () => new Response(readFileSync(inputs.outputPath)),
+    };
+    const results = await Promise.all([
+      acquireGitHubBundle(options),
+      acquireGitHubBundle(options),
+    ]);
+    assert.deepEqual(
+      results.map((result) => result.sha256),
+      [built.sha256, built.sha256],
+    );
+    const target = path.join(
+      inputs.repository,
+      "build/artifacts/offline-bundle",
+      built.fileName,
+    );
+    writeFileSync(target, "unqualified existing output");
+    await assert.rejects(
+      acquireGitHubBundle({
+        ...options,
+        fetcher: () => {
+          throw new Error("an existing target must not be replaced");
+        },
+      }),
+      /digest mismatch/u,
+    );
+    assert.equal(readFileSync(target, "utf8"), "unqualified existing output");
+  });
 });
 
 test("GitLab acquisition uses only the same project's pinned release package", async () => {

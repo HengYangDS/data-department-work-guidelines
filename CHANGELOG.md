@@ -20,6 +20,16 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 - Decision guidance again requires the actual decision, decision owner, date,
   and basis in the existing work record. A deadline does not establish when
   approval occurred.
+- Task guidance uses plain language for existing work records and actual
+  publication. Responsibilities and acceptance requirements are unchanged.
+- Evolution guidance again requires reusable prevention when a problem spans
+  work cycles, even without recurrence or impact across people or projects.
+- Offline bundle acquisition preserves completed downloads when another
+  concurrent call fails.
+- Managed binary caches and bundle-download paths reject linked parents
+  without changing existing binary permissions or external files. Offline
+  source checks suppress OpenSpec's outbound requests for
+  that invocation without changing the user's global settings.
 
 ## 7.0.6 - 2026-10-02
 

@@ -11,8 +11,14 @@ linter beside the current stack would leave the duplication intact.
 ## What Changes
 
 - Restore the original requirement to record an actual decision's owner, date,
-  and basis. Keep it in the existing work carrier; a deadline or fact cutoff
+  and basis. Keep it in the existing work record; a deadline or fact cutoff
   does not establish when approval occurred.
+- Restore cross-cycle impact as an independent trigger for reusable prevention
+  in the existing evolution topic. A problem need not recur or cross people or
+  projects to meet that original condition.
+- Name existing work records and actual publication directly in member
+  guidance, without specialist governance terminology. Preserve the record
+  owner, authorization, evidence, and acceptance duties.
 - Replace the two English pipelines with one pinned native Vale command, its
   vocabulary, and native style rules.
 - Replace textlint parsing in both DR boundaries and the offline bundle's README
@@ -27,6 +33,13 @@ linter beside the current stack would leave the duplication intact.
 - Extend the existing native-tool installation and offline bundle owners to
   supply both Vale and lychee through one manifest. Remove the replaced entry,
   configurations, packages, and adapters.
+- Make bundle acquisition safe for concurrent calls: verify an owned temporary
+  output before exclusive publication and never remove a shared target on
+  failure. Reject linked binary-cache and bundle-download paths before remote
+  access, execution, or staging and
+  preserve existing binary permissions. Suppress OpenSpec's outbound requests
+  for offline validation through its official child-process environment option
+  without altering global settings.
 - Correct configuration ownership: separate check policy, native tool supply,
   and release identity. Use native TOML for Prettier, Markdownlint, and lychee;
   remove package-embedded formatting policy and hard-coded link policy, move

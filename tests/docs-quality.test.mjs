@@ -110,6 +110,137 @@ test("document metadata reads the product-supported title-first carrier", () => 
   });
 });
 
+test("offline verification disables official telemetry only in its OpenSpec child", () => {
+  const script = `
+    import assert from "node:assert/strict";
+    import childProcess from "node:child_process";
+    import { syncBuiltinESMExports } from "node:module";
+    const before = { ...process.env };
+    const original = childProcess.spawnSync;
+    let captured = false;
+    childProcess.spawnSync = (command, args, options) => {
+      if (!args?.[0]?.replaceAll(String.fromCharCode(92), "/").includes("@fission-ai/openspec/"))
+        return original(command, args, options);
+      assert.equal(options.env?.OPENSPEC_TELEMETRY, "0");
+      assert.deepEqual(
+        Object.keys(options.env).filter((key) => key.toUpperCase() === "OPENSPEC_TELEMETRY"),
+        ["OPENSPEC_TELEMETRY"],
+      );
+      assert.equal(options.env.DDWG_ENV_FIXTURE, "preserved");
+      assert.deepEqual(args.slice(1), ["validate", "--all", "--strict", "--json"]);
+      captured = true;
+      throw new Error("offline environment captured before execution");
+    };
+    syncBuiltinESMExports();
+    process.argv = [process.execPath, ${JSON.stringify(path.join(root, "tools/docs/cli.mjs"))}, "check"];
+    await import(${JSON.stringify(pathToFileURL(path.join(root, "tools/docs/cli.mjs")).href)});
+    assert.equal(captured, true);
+    assert.deepEqual({ ...process.env }, before);
+    process.exitCode = 0;
+  `;
+  const environment = Object.fromEntries(
+    Object.entries(process.env).filter(
+      ([key]) => !["OPENSPEC_TELEMETRY", "CI"].includes(key.toUpperCase()),
+    ),
+  );
+  const result = spawnSync(
+    process.execPath,
+    ["--input-type=module", "--eval", script],
+    {
+      cwd: root,
+      encoding: "utf8",
+      input: "",
+      timeout: 20_000,
+      env: {
+        ...environment,
+        OPENSPEC_TELEMETRY: "1",
+        openspec_telemetry: "on",
+        DO_NOT_TRACK: "0",
+        DDWG_ENV_FIXTURE: "preserved",
+      },
+    },
+  );
+  assert.ifError(result.error);
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stderr, /offline environment captured before execution/u);
+});
+
+test("the pinned OpenSpec CLI suppresses requests at exit, with an enabled control", () => {
+  const directory = mkdtempSync(
+    path.join(os.tmpdir(), "ddwg-offline-openspec-"),
+  );
+  try {
+    const config = path.join(directory, "openspec", "config.json");
+    mkdirSync(path.dirname(config));
+    const original = JSON.stringify({
+      telemetry: {
+        enabled: true,
+        noticeSeen: true,
+        anonymousId: "00000000-0000-4000-8000-000000000000",
+      },
+    });
+    writeFileSync(config, original);
+    const script = `
+      import assert from "node:assert/strict";
+      let requests = 0;
+      globalThis.fetch = async () => {
+        requests += 1;
+        throw new Error("outbound request is forbidden in this fixture");
+      };
+      process.once("exit", () => {
+        if (process.env.OPENSPEC_TELEMETRY === "0") assert.equal(requests, 0);
+        else assert.ok(requests > 0, "enabled telemetry must trigger the request trap after settlement");
+        console.error("Settled OpenSpec outbound requests:", requests);
+      });
+      process.argv = [process.execPath, ${JSON.stringify(nodeTool("@fission-ai/openspec", "openspec"))}, "validate", "--all", "--strict", "--json"];
+      await import(${JSON.stringify(pathToFileURL(nodeTool("@fission-ai/openspec", "openspec")).href)});
+    `;
+    const environment = Object.fromEntries(
+      Object.entries(process.env).filter(
+        ([key]) =>
+          ![
+            "CI",
+            "OPENSPEC_TELEMETRY",
+            "XDG_CONFIG_HOME",
+            "DO_NOT_TRACK",
+            "NODE_ENV",
+          ].includes(key.toUpperCase()),
+      ),
+    );
+    for (const telemetry of ["1", "0"]) {
+      const result = spawnSync(
+        process.execPath,
+        ["--input-type=module", "--eval", script],
+        {
+          cwd: root,
+          encoding: "utf8",
+          input: "",
+          timeout: 20_000,
+          env: {
+            ...environment,
+            OPENSPEC_TELEMETRY: telemetry,
+            DO_NOT_TRACK: "0",
+            NODE_ENV: "production",
+            XDG_CONFIG_HOME: directory,
+          },
+        },
+      );
+      assert.ifError(result.error);
+      assert.equal(result.status, 0, result.stderr);
+      assert.equal(JSON.parse(result.stdout).summary.totals.failed, 0);
+      assert.match(
+        result.stderr,
+        telemetry === "0"
+          ? /Settled OpenSpec outbound requests: 0/u
+          : /Settled OpenSpec outbound requests: [1-9]\d*/u,
+      );
+      assert.equal(readFileSync(config, "utf8"), original);
+    }
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
 test("document metadata rejects a duplicate key", () => {
   const source =
     "<!--\n---\nsubject: first\nsubject: second\nrole: policy\nstate: canonical\nrelations: {}\n---\n-->\n\n# Fixture\n";

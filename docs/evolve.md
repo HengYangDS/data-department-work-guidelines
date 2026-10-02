@@ -32,10 +32,10 @@ Watch small changes without treating one anomaly as a trend: drifting
 definitions, recurring questions, temporary human rescue, expired evidence,
 ambiguous ownership, intermittent failures, and slight delays can be early
 signals of a system defect. Check their pattern, impact, and direction before
-building a remedy. A problem that recurs, crosses people or projects, depends on
-one person's tacit knowledge, could cause material loss if forgotten, or will be
-repeated by Agents needs a reusable prevention mechanism. Choose its lightest
-effective owner rather than another report.
+building a remedy. A problem that recurs, crosses people or projects, spans work
+cycles, depends on one person's tacit knowledge, could cause material loss if
+forgotten, or will be repeated by Agents needs a reusable prevention mechanism.
+Choose its lightest effective owner rather than another report.
 
 A reusable asset may be a test, monitor, checklist, decision record, example,
 rule, platform capability, or clearer ownership interface. Choose the lightest
@@ -103,8 +103,8 @@ misuse, and needless coordination. Decide whether a small correction is needed.
 At least quarterly, the guideline maintainer reviews the net benefit of current
 rules, templates, tools, and Agent practices with their users; keep, revise, or
 retire them. L2 work may set a shorter task-specific interval at authorization.
-Use existing meetings, tickets, and reviews; record a material decision and its
-owner in that carrier. No separate meeting, universal weekly 30-minute session,
+Use existing meetings, tickets, and reviews; record each material decision and
+its owner there. No separate meeting, universal weekly 30-minute session,
 or “nothing happened” activity report is required.
 
 Managers clarify direction, priorities, resources, and cross-domain decisions,

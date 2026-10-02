@@ -4,6 +4,7 @@ import {
   copyFileSync,
   cpSync,
   lstatSync,
+  linkSync,
   mkdirSync,
   mkdtempSync,
   readFileSync,
@@ -20,6 +21,7 @@ import { parseArgs } from "node:util";
 import { projectPackageRequest } from "./gitlab-package.mjs";
 import {
   declaredToolRuntime,
+  managedFileExists,
   nativeSupplyPath,
   offlineBundleRecordPath,
   readNativeSupply,
@@ -1006,7 +1008,36 @@ async function downloadBundle(request, target, fetcher, provider) {
     }
     chunks.push(chunk);
   }
-  writeFileSync(target, Buffer.concat(chunks));
+  writeFileSync(target, Buffer.concat(chunks), { flag: "wx" });
+}
+
+async function acquireBundle({
+  repository,
+  record,
+  request,
+  fetcher,
+  provider,
+}) {
+  const directory = path.join(repository, "build/artifacts/offline-bundle");
+  const target = path.join(directory, record.fileName);
+  if (managedFileExists(target, repository))
+    return verifyBundle({ bundlePath: target, record, repository });
+  mkdirSync(directory, { recursive: true });
+  const temporary = mkdtempSync(path.join(directory, ".acquire-"));
+  const staged = path.join(temporary, record.fileName);
+  try {
+    await downloadBundle(request, staged, fetcher, provider);
+    const verified = verifyBundle({ bundlePath: staged, record, repository });
+    try {
+      linkSync(staged, target);
+    } catch (error) {
+      if (error.code !== "EEXIST") throw error;
+      return verifyBundle({ bundlePath: target, record, repository });
+    }
+    return verified;
+  } finally {
+    rmSync(temporary, { recursive: true, force: true });
+  }
 }
 
 export async function acquireGitHubBundle({
@@ -1029,33 +1060,17 @@ export async function acquireGitHubBundle({
   ) {
     throw new Error("public GitHub release origin is unsupported");
   }
-  const directory = path.join(
+  return acquireBundle({
     repository,
-    "build",
-    "artifacts",
-    "offline-bundle",
-  );
-  const target = path.join(directory, record.fileName);
-  if (pathExists(target)) {
-    return verifyBundle({ bundlePath: target, record, repository });
-  }
-  mkdirSync(directory, { recursive: true });
-  try {
-    await downloadBundle(
-      {
-        url: `https://github.com/${githubRepository}/releases/download/${encodeURIComponent(tag)}/${encodeURIComponent(record.fileName)}`,
-        headers: {},
-        redirect: "follow",
-      },
-      target,
-      fetcher,
-      "GitHub",
-    );
-    return verifyBundle({ bundlePath: target, record, repository });
-  } catch (error) {
-    rmSync(target, { force: true });
-    throw error;
-  }
+    record,
+    request: {
+      url: `https://github.com/${githubRepository}/releases/download/${encodeURIComponent(tag)}/${encodeURIComponent(record.fileName)}`,
+      headers: {},
+      redirect: "follow",
+    },
+    fetcher,
+    provider: "GitHub",
+  });
 }
 
 export function gitlabBundleRequest(record, environment = process.env) {
@@ -1082,22 +1097,11 @@ export async function acquireGitLabBundle({
 } = {}) {
   const record = readBundleRecord(repository);
   const request = gitlabBundleRequest(record, environment);
-  const directory = path.join(
+  return acquireBundle({
     repository,
-    "build",
-    "artifacts",
-    "offline-bundle",
-  );
-  const target = path.join(directory, record.fileName);
-  if (pathExists(target)) {
-    return verifyBundle({ bundlePath: target, record, repository });
-  }
-  mkdirSync(directory, { recursive: true });
-  try {
-    await downloadBundle(request, target, fetcher, "GitLab");
-    return verifyBundle({ bundlePath: target, record, repository });
-  } catch (error) {
-    rmSync(target, { force: true });
-    throw error;
-  }
+    record,
+    request,
+    fetcher,
+    provider: "GitLab",
+  });
 }

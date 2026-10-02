@@ -1,5 +1,5 @@
 import { spawnSync } from "node:child_process";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, lstatSync, readFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -145,6 +145,33 @@ export function currentMarkdown(files = gitFiles()) {
   );
 }
 
+export function managedFileExists(target, repository = root) {
+  const boundary = path.resolve(repository);
+  const selected = path.resolve(target);
+  const relative = path.relative(boundary, selected);
+  if (
+    !relative ||
+    relative === ".." ||
+    relative.startsWith(`..${path.sep}`) ||
+    path.isAbsolute(relative)
+  )
+    throw new Error("managed file must remain inside the repository");
+  for (
+    let directory = path.dirname(selected);
+    path.relative(boundary, directory);
+    directory = path.dirname(directory)
+  ) {
+    const parent = lstatSync(directory, { throwIfNoEntry: false });
+    if (parent && (!parent.isDirectory() || parent.isSymbolicLink()))
+      throw new Error(`managed file parent is not a directory: ${directory}`);
+  }
+  const entry = lstatSync(selected, { throwIfNoEntry: false });
+  if (!entry) return false;
+  if (!entry.isFile() || entry.isSymbolicLink())
+    throw new Error(`managed entry is not a regular file: ${selected}`);
+  return true;
+}
+
 export function nativeToolBinary(tool) {
   const manifest = readNativeSupply();
   const descriptor = manifest.tools[tool];
@@ -156,7 +183,7 @@ export function nativeToolBinary(tool) {
   );
   const selected =
     process.env[`DDWG_${tool.toUpperCase()}_BIN`] ||
-    (existsSync(cached) ? cached : descriptor.binary + suffix);
+    (managedFileExists(cached) ? cached : descriptor.binary + suffix);
   const version = run(selected, ["--version"], {
     capture: true,
     timeout: 10_000,

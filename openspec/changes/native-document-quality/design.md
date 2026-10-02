@@ -45,6 +45,13 @@ topic, edit it for its reader, and compare the changed clauses with the
 original. Native style results do not prove equivalence. A shorter or more
 polished sentence is invalid if it drops a qualification.
 
+Use ordinary work terms in the department task pages. A work record is the
+existing ticket, review, discussion, or project document that holds the actual
+decision and evidence; it is not a new file, form, or lifecycle. Publication
+means delivery to the agreed destination. Product-specific terms stay at the
+repository-governance owner. Review this wording against the original duties,
+not only a style checker.
+
 ### Preserve the seven-topic review boundary
 
 The baseline comparison remains at
@@ -97,6 +104,25 @@ replace published asset bytes; any withdrawal must follow the explicit retention
 boundary below. Update only the existing task ledger; keep shared ETHOS
 integration and final archive open until their actual prerequisites are
 satisfied.
+
+### Preserve the cross-cycle prevention trigger
+
+A later full original-duty review found one condition still missing from the
+evolution topic: original blob `ce3d090be258e65534781769e3e2fd5ab7439ef8`,
+lines 515 through 523, requires reusable prevention when an issue affects
+different people, projects, or work cycles. The current sentence retained the
+other triggers but omitted cross-cycle impact. One unresolved issue can span
+successive cycles under the same owner and project without recurring or meeting
+another trigger; a work record alone does not satisfy that condition.
+
+Restore "spans work cycles" in the existing sentence and add that adverse case
+to this Change's guidance delta. Preserve recurrence, people and projects, tacit
+knowledge, material forgetting risk, and repeated Agent execution as independent
+triggers. Keep the lightest effective existing owner; no new report, template,
+meeting, or validator is required. Recheck the whole sentence and its surrounding
+duties, then rerun native quality and rendering checks. Earlier excerpt hashes
+retain their provenance but cannot establish completeness; this correction
+supersedes any unqualified coverage conclusion without rewriting old receipts.
 
 ### Separate English and Markdown responsibilities
 
@@ -254,6 +280,34 @@ registry; GitHub obtains pinned official archives. Credentials never cross those
 routes. Offline installation consumes one frozen bundle containing the locked
 npm cache, every declared native tool asset, and the corresponding notices.
 Missing or changed bytes fail before extraction or execution.
+
+Each Forge download uses an exclusively owned temporary directory beside its
+final destination. Verify its complete source-bound contents before a native
+hard link publishes the file without replacing an existing target. If another
+call has already published, verify that target; never overwrite it or remove it
+on failure. Cleanup removes only the current call's temporary directory. Both
+Forge entrypoints share this operation while retaining separate request and
+credential policy.
+
+The installer, verifier, and bundle acquisition share one no-follow managed-file
+check with an explicit repository boundary. Reject linked or non-directory local
+parents and linked or non-regular binary or archive entries. Validate the
+download destination before contacting either Forge or creating a stage; a
+linked parent must not redirect output into another directory. Existing regular
+paths and absent local paths remain valid. Reject sibling-prefix escapes and
+respect native Windows path casing without requiring this host's root. Reject
+invalid reused versions before execution. Set executable permission
+on the private extracted candidate, then use exclusive copy; preserve an
+existing cache entry's permissions. These checks do not promise isolation from a
+hostile same-user process replacing paths after inspection.
+
+Offline validation invokes the pinned official OpenSpec package with
+`OPENSPEC_TELEMETRY=0`. Remove inherited case-variant keys before setting that
+child environment so Windows receives one unambiguous value. The official
+option suppresses telemetry and update requests; it leaves the parent
+environment and global configuration untouched. Test both the wrapper's actual
+child arguments and the pinned CLI with an acknowledged telemetry fixture and
+an outbound-request trap.
 
 The bundle binds the complete package and native-tool manifests. Accepted
 governance requirements must name that single supply owner, not the retired

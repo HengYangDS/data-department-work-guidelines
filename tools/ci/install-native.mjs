@@ -2,7 +2,6 @@ import { createHash } from "node:crypto";
 import {
   constants,
   copyFileSync,
-  existsSync,
   lstatSync,
   mkdirSync,
   mkdtempSync,
@@ -15,7 +14,13 @@ import { rm } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { projectPackageRequest } from "./gitlab-package.mjs";
-import { filePath, readNativeSupply, root, run } from "../docs/runtime.mjs";
+import {
+  filePath,
+  managedFileExists,
+  readNativeSupply,
+  root,
+  run,
+} from "../docs/runtime.mjs";
 
 export const manifest = readNativeSupply();
 
@@ -98,7 +103,7 @@ function binaryFiles(directory, name) {
 }
 
 function verifiedCached(target, selected) {
-  if (!existsSync(target)) return false;
+  if (!managedFileExists(target)) return false;
   const version = run(target, ["--version"], {
     capture: true,
     timeout: 10_000,
@@ -160,8 +165,9 @@ export async function install({
     `build/runtime/tool-cache/${tool}/${selected.version}/${selected.key}`,
   );
   const target = path.join(directory, binaryName);
+  const cached = managedFileExists(target);
   if (!assetFile && !request) {
-    if (verifiedCached(target, selected)) return target;
+    if (cached && verifiedCached(target, selected)) return target;
     throw new Error(
       `${tool} is not cached; provide --asset PATH, --download, or --gitlab-package`,
     );
@@ -206,10 +212,8 @@ export async function install({
     try {
       copyFileSync(candidates[0], target, constants.COPYFILE_EXCL);
     } catch (error) {
-      if (error.code !== "EEXIST" || !verifiedCached(target, selected))
-        throw error;
+      if (error.code !== "EEXIST") throw error;
     }
-    if (process.platform !== "win32") chmodSync(target, 0o755);
     if (!verifiedCached(target, selected))
       throw new Error(`installed ${tool} failed verification`);
     return target;
