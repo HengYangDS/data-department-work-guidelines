@@ -15,6 +15,15 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
+### Fixed
+
+- Run the complete documentation test inventory with at most two concurrent
+  test files, avoiding CPU-dependent oversubscription on shared runners.
+  Existing deadlines and every quality boundary remain unchanged.
+- Test OpenSpec's offline environment at its actual invocation owner without
+  repeating unrelated repository prerequisites. Full source verification still
+  executes the real pinned tool.
+
 ## 7.0.7 - 2026-10-02
 
 History: [GitLab][7.0.7-gitlab] · [GitHub][7.0.7-github]

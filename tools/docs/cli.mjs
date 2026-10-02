@@ -18,31 +18,12 @@ import {
   checkNoScope,
   checkProfile,
 } from "./governance.mjs";
-import { assertNodeRuntime, gitFiles, run, runNodeTool } from "./runtime.mjs";
-
-function validateOpenSpec() {
-  const output = runNodeTool(
-    "@fission-ai/openspec",
-    "openspec",
-    ["validate", "--all", "--strict", "--json"],
-    {
-      capture: true,
-      env: {
-        ...Object.fromEntries(
-          Object.entries(process.env).filter(
-            ([key]) => key.toUpperCase() !== "OPENSPEC_TELEMETRY",
-          ),
-        ),
-        OPENSPEC_TELEMETRY: "0",
-      },
-    },
-  );
-  const result = JSON.parse(output);
-  if (result.summary?.totals?.failed !== 0 || !result.summary?.totals?.items) {
-    throw new Error("official OpenSpec validation did not pass");
-  }
-  console.log(`PASS official OpenSpec: ${result.summary.totals.passed} items`);
-}
+import {
+  assertNodeRuntime,
+  gitFiles,
+  run,
+  validateOpenSpec,
+} from "./runtime.mjs";
 
 function testFiles() {
   return gitFiles().filter((relative) =>
@@ -53,7 +34,9 @@ function testFiles() {
 function runTests() {
   const files = testFiles();
   if (!files.length) throw new Error("no repository quality tests found");
-  run(process.execPath, ["--test", ...files], { timeout: 180_000 });
+  run(process.execPath, ["--test", "--test-concurrency=2", ...files], {
+    timeout: 180_000,
+  });
 }
 
 async function checkRepository() {

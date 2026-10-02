@@ -94,6 +94,15 @@ Diagram, card, topic and evidence counts SHALL NOT determine validity.
 - **THEN** the check uses the same repository-relative Node entrypoint
 - **AND THEN** no repository-authored shell wrapper or browser is needed.
 
+#### Scenario: Multiple suites launch document-tool subprocesses
+
+- **WHEN** the standalone verifier runs its discovered quality-test inventory
+- **THEN** at most two test files execute concurrently on every platform
+- **AND** every discovered file still runs with unchanged failure and deadline
+  admission, without a CPU-dependent default or skipped boundary
+- **AND** a narrow OpenSpec environment regression exercises its actual
+  invocation owner while the canonical graph retains real tool execution.
+
 #### Scenario: A link points to local state that is absent from a clean checkout
 
 - **WHEN** a current source document links to an existing ignored cache file or

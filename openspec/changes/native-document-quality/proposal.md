@@ -108,6 +108,10 @@ linter beside the current stack would leave the duplication intact.
   native supply and bundle owners. Put native test cases in the two existing
   style rules and use official rule coverage to reject rules that load but
   match nothing; retain project-level prose tests and both Forge qualification.
+- Bound standalone test-file execution to two workers without reducing the
+  discovered inventory or increasing deadlines. Check OpenSpec's child
+  environment at its existing invocation owner rather than execute unrelated
+  repository prerequisites inside that narrow regression.
 - Restore remaining original duties at their topic owners: stable concepts,
   execution costs and milestones, operational data-governance review, visible
   priorities and open decisions, explicit communication purpose, meeting focus,

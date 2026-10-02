@@ -679,6 +679,16 @@ owner without retaining duplicate mechanisms.
 
 ## Risks / Trade-offs
 
+The standalone verifier runs the complete discovered Node test inventory with
+an explicit two-worker ceiling. CPU-derived defaults oversubscribe suites that
+spawn full document tools; a fixed ceiling is portable and does not depend on
+this host's CPU count. The existing 180-second outer deadline and each narrower
+deadline remain unchanged. The telemetry-environment regression calls the same
+OpenSpec invocation owner as `check`, without rerunning unrelated configuration,
+Changelog or native-tool discovery. The real pinned OpenSpec request trap and
+complete source verification remain required. Local measurements justify this
+execution correction; only a fresh complete Windows job qualifies that platform.
+
 - A parser migration can lose nested decision constraints. Keep every existing
   positive and negative case and add the new comment-control cases.
 - A tool transition can pass locally but fail offline or on a different ABI.

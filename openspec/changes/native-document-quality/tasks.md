@@ -132,6 +132,11 @@
       challenge a single issue spanning cycles under one owner and project,
       preserve the other triggers, and rerun source quality and rendering.
       Existing excerpt hashes do not establish complete semantic coverage.
+- [ ] 2.26 Bound the complete standalone test inventory to two workers and
+      remove unrelated prerequisite work from the OpenSpec environment
+      regression. Preserve all discovered tests, real tool execution, and
+      existing deadlines; prove negative controls, local timing and the complete
+      source graph, then qualify the unchanged requirements on Windows.
 
 ## 3. Qualification and publication
 
@@ -186,6 +191,11 @@
       and offline-supply corrections with a source-bound bundle, clean offline
       install, exact-HEAD installed proof, trusted signed patch, both Forge
       source and offline matrices, and verified download and lane aftercare.
+- [ ] 3.15 Qualify the compatible bounded-test execution correction with a
+      fresh source-bound bundle, cold offline install, exact-HEAD installed
+      proof, signed patch and both Forge source and offline matrices. Preserve
+      immutable v7.0.7 and its failed GitLab Windows evidence; retire superseded
+      downloads and owned scratch only after current consumers are verified.
 - [x] 3.10 Retire superseded download assets independently on both Forges;
       retain the latest qualified release, one qualified rollback, and tool
       packages consumed by retained source. Preserve tags, original notes, and

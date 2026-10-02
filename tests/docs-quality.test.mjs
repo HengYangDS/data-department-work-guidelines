@@ -132,8 +132,8 @@ test("offline verification disables official telemetry only in its OpenSpec chil
       throw new Error("offline environment captured before execution");
     };
     syncBuiltinESMExports();
-    process.argv = [process.execPath, ${JSON.stringify(path.join(root, "tools/docs/cli.mjs"))}, "check"];
-    await import(${JSON.stringify(pathToFileURL(path.join(root, "tools/docs/cli.mjs")).href)});
+    const { validateOpenSpec } = await import(${JSON.stringify(pathToFileURL(path.join(root, "tools/docs/runtime.mjs")).href)});
+    assert.throws(validateOpenSpec, /offline environment captured before execution/u);
     assert.equal(captured, true);
     assert.deepEqual({ ...process.env }, before);
     process.exitCode = 0;
@@ -162,7 +162,51 @@ test("offline verification disables official telemetry only in its OpenSpec chil
   );
   assert.ifError(result.error);
   assert.equal(result.status, 0, result.stderr);
-  assert.match(result.stderr, /offline environment captured before execution/u);
+  assert.equal(result.stderr, "");
+});
+
+test("the public test command bounds workers without reducing its discovered inventory", () => {
+  const script = `
+    import assert from "node:assert/strict";
+    import childProcess from "node:child_process";
+    import { syncBuiltinESMExports } from "node:module";
+    const original = childProcess.spawnSync;
+    let captured = false;
+    childProcess.spawnSync = (command, args, options) => {
+      if (args?.[0] !== "--test") return original(command, args, options);
+      assert.equal(command, process.execPath);
+      assert.equal(args[1], "--test-concurrency=2");
+      assert.equal(options.timeout, 180_000);
+      captured = true;
+      return { status: 0, stdout: "", stderr: "" };
+    };
+    syncBuiltinESMExports();
+    const { gitFiles } = await import(${JSON.stringify(pathToFileURL(path.join(root, "tools/docs/runtime.mjs")).href)});
+    const expected = gitFiles().filter((file) => /^tests\\/[^/]+\\.test\\.mjs$/u.test(file));
+    assert.ok(expected.length > 0);
+    const checkedSpawn = childProcess.spawnSync;
+    childProcess.spawnSync = (command, args, options) => {
+      if (args?.[0] === "--test") assert.deepEqual(args.slice(2), expected);
+      return checkedSpawn(command, args, options);
+    };
+    syncBuiltinESMExports();
+    process.argv = [process.execPath, ${JSON.stringify(path.join(root, "tools/docs/cli.mjs"))}, "test"];
+    await import(${JSON.stringify(pathToFileURL(path.join(root, "tools/docs/cli.mjs")).href)});
+    assert.equal(captured, true);
+    assert.equal(process.exitCode ?? 0, 0);
+  `;
+  const result = spawnSync(
+    process.execPath,
+    ["--input-type=module", "--eval", script],
+    {
+      cwd: root,
+      encoding: "utf8",
+      input: "",
+      timeout: 20_000,
+    },
+  );
+  assert.ifError(result.error);
+  assert.equal(result.status, 0, result.stderr);
 });
 
 test("the pinned OpenSpec CLI suppresses requests at exit, with an enabled control", () => {
