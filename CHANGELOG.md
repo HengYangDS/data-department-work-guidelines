@@ -15,6 +15,10 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
+## 7.0.9 - 2026-10-02
+
+History: [GitLab][7.0.9-gitlab] · [GitHub][7.0.9-github]
+
 ### Fixed
 
 - Reject prose defects before unrelated native source prerequisites, and
@@ -544,8 +548,10 @@ History: [GitLab][4.0.0-gitlab] · [GitHub][4.0.0-github]
   separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.8...main
-[Unreleased-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.8...main
+[Unreleased-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.9...main
+[Unreleased-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.9...main
+[7.0.9-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.8...v7.0.9
+[7.0.9-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.8...v7.0.9
 [7.0.8-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.7...v7.0.8
 [7.0.8-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.7...v7.0.8
 [7.0.7-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.6...v7.0.7

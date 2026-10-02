@@ -140,6 +140,8 @@
       v7.0.8 review's full test run still timed out on GitLab Windows; reject
       known prose defects before unrelated native prerequisites and reduce
       repeated native fixture launches without dropping any input or assertion.
+      Keep one native tag observation without omitting nested invalid release
+      refs or weakening strict SemVer and annotated-object checks.
 
 ## 3. Qualification and publication
 
