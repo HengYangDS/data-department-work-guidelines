@@ -178,14 +178,6 @@ and Git SHALL install and run the full verifier from empty application caches
 without network access. Before extraction, the installer SHALL match committed
 source identities and a trusted external or source-pinned digest. ETHOS remains
 separate; the bundle SHALL NOT impersonate its authority.
-Acquisition SHALL verify an exclusively owned temporary output before exclusive
-publication. Failed calls SHALL NOT overwrite or remove shared targets.
-Managed binary caches, downloaded archives, and repository-local parents SHALL
-reject symbolic links and non-regular types before remote access, staging, or
-execution; reuse SHALL preserve binary
-permissions. Offline validation SHALL suppress official OpenSpec outbound
-requests through a child-process environment option without changing global
-settings.
 
 #### Scenario: Cold local verification succeeds without network access
 
@@ -200,17 +192,21 @@ settings.
 
 #### Scenario: A concurrent acquisition fails after another call succeeds
 
-- **WHEN** two calls acquire the same source-bound bundle and one completes
-  before the other's download or verification fails
+- **WHEN** a caller acquires the source-bound bundle
+- **THEN** it verifies an exclusively owned temporary output before exclusive
+  publication
+- **WHEN** two calls acquire the same bundle and one completes before the
+  other's download or verification fails
 - **THEN** the completed target and its digest remain unchanged
-- **AND** only the failed call's exclusively owned temporary stage is removed.
+- **AND** the failed call neither overwrites nor removes that target and removes
+  only its own temporary stage.
 
 #### Scenario: A managed cache path is linked or already installed
 
-- **WHEN** a managed binary entry or repository-local cache parent is linked,
-  or has a type other than a regular binary file or directory
-- **THEN** installation and verification fail before using or staging through
-  that path
+- **WHEN** a managed binary, downloaded archive, or repository-local parent is
+  linked or has a type other than its required regular file or directory
+- **THEN** installation and verification fail before remote access, staging, or
+  execution through that path
 - **WHEN** an independently installed regular binary already has the pinned
   version
 - **THEN** a supplied concurrent install preserves its permissions and bytes.
@@ -227,7 +223,7 @@ settings.
 - **WHEN** the user has acknowledged telemetry and the parent environment
   enables it, including case-variant Windows keys
 - **THEN** the verifier's OpenSpec child receives one official opt-out value
-  and makes no telemetry or update request
+  through its child-process environment and makes no telemetry or update request
 - **AND** the parent environment and global configuration remain unchanged.
 
 #### Scenario: Offline supply is incomplete or altered

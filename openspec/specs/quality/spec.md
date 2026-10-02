@@ -188,6 +188,15 @@ Diagram, card, topic and evidence counts SHALL NOT determine validity.
 - **THEN** the check uses the same repository-relative Node entrypoint
 - **AND THEN** no repository-authored shell wrapper or browser is needed.
 
+#### Scenario: Multiple suites launch document-tool subprocesses
+
+- **WHEN** the standalone verifier runs its discovered quality-test inventory
+- **THEN** at most two test files execute concurrently on every platform
+- **AND** every discovered file still runs with unchanged failure and deadline
+  admission, without a CPU-dependent default or skipped boundary
+- **AND** a narrow OpenSpec environment regression exercises its actual
+  invocation owner while the canonical graph retains real tool execution.
+
 #### Scenario: A link points to local state that is absent from a clean checkout
 
 - **WHEN** a current source document links to an existing ignored cache file or
@@ -368,6 +377,42 @@ separate; the bundle SHALL NOT impersonate its authority.
   outbound network access is unavailable
 - **AND THEN** a successful `npm ci --offline --dry-run` alone is not accepted
   as installation evidence.
+
+#### Scenario: A concurrent acquisition fails after another call succeeds
+
+- **WHEN** a caller acquires the source-bound bundle
+- **THEN** it verifies an exclusively owned temporary output before exclusive
+  publication
+- **WHEN** two calls acquire the same bundle and one completes before the
+  other's download or verification fails
+- **THEN** the completed target and its digest remain unchanged
+- **AND** the failed call neither overwrites nor removes that target and removes
+  only its own temporary stage.
+
+#### Scenario: A managed cache path is linked or already installed
+
+- **WHEN** a managed binary, downloaded archive, or repository-local parent is
+  linked or has a type other than its required regular file or directory
+- **THEN** installation and verification fail before remote access, staging, or
+  execution through that path
+- **WHEN** an independently installed regular binary already has the pinned
+  version
+- **THEN** a supplied concurrent install preserves its permissions and bytes.
+
+#### Scenario: A bundle download parent points outside the repository
+
+- **WHEN** either Forge acquisition encounters a symbolic link or Windows
+  junction at any repository-local parent of its download target
+- **THEN** it fails before a network request or temporary stage is created
+- **AND** the foreign directory's existing files and bytes remain unchanged.
+
+#### Scenario: Offline validation inherits enabled telemetry
+
+- **WHEN** the user has acknowledged telemetry and the parent environment
+  enables it, including case-variant Windows keys
+- **THEN** the verifier's OpenSpec child receives one official opt-out value
+  through its child-process environment and makes no telemetry or update request
+- **AND** the parent environment and global configuration remain unchanged.
 
 #### Scenario: Offline supply is incomplete or altered
 

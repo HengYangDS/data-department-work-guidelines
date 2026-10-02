@@ -279,6 +279,13 @@ installable dependencies, current commands, or a second implementation.
 
 ### Reuse the current supply owner
 
+The existing complete-bundle requirement retains its original body. State the
+new acquisition, managed-path, and child-environment duties in their specific
+scenarios so the official main spec remains concise without losing conditions,
+controls, or old scenarios. The initial merged body exceeded OpenSpec's
+500-character guidance and was refused by the installed canonical-spec quality
+floor; that failed plan remains evidence, not permission to waive the floor.
+
 One repository-native supply manifest declares tool versions, exact platform
 assets, archive SHA-256 values, version output, and license sources. It is a
 repository supply contract, not an official OpenSpec schema. The existing

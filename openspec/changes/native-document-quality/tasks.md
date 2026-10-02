@@ -169,6 +169,10 @@
 - [ ] 3.5 Audit every requirement and its evidence, reconcile current
       references, and classify retained evidence, active state, and disposable
       residue before the official archive and retirement steps.
+      The official delta-to-main-spec merge now carries the cross-cycle
+      prevention, bounded test execution, managed acquisition, and offline
+      telemetry additions. All prior requirements and scenarios are preserved;
+      shared product qualification still prevents final closeout.
 - [x] 3.6 Publish the compatible original-duty correction with fresh local,
       installed ETHOS, signed patch, asset, and both Forge platform evidence;
       preserve the already qualified major release.
