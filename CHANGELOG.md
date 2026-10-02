@@ -15,6 +15,12 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
+### Fixed
+
+- Update the decision check's native shell lexer to the stable release,
+  preserving compound-command boundaries, quoted text, and ordinary rationale
+  without executing inspected input.
+
 ## 7.0.10 - 2026-10-03
 
 History: [GitLab][7.0.10-gitlab] · [GitHub][7.0.10-github]

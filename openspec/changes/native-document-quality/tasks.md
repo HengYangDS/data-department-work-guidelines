@@ -175,6 +175,10 @@
       lock resolution, install effects, advisories, notices, source-bound
       offline supply, exact-source proof, and both Forge platform matrices.
       Do not alter the published v7.0.10 objects or add a second lexer.
+      The official 1.12.0 release expands native operator grouping. The new
+      distinguishing regression fails on 1.11.0; the audited native lock adds
+      no dependency or install hook. Full source, offline, installed-product,
+      and hosted qualification remain open.
 
 ## 3. Qualification and publication
 

@@ -225,6 +225,29 @@ Replace the old token function completely and include the new package and its
 license in the next source-bound offline bundle. Do not preserve a fallback
 regex or add a host shell dependency.
 
+A fresh registry audit and the upstream v1.12.0 Changelog identify a stable
+minor update of the same lexer, released on 2026-10-02. Its parser groups
+here-document, tab-stripping here-document, output process-substitution, case
+terminator, and additional redirection operators. The only runtime changes
+are native operator definitions; the repository imports `parse`, not `quote`.
+Recognizing an operator does not parse a complete here-document body or add
+general shell-language support.
+
+Replace the exact 1.11.0 pin with 1.12.0 through npm's native lock resolution.
+The isolated resolver changes only the root dependency entry and this package;
+it adds no package, installation hook, or advisory. Preserve quotation, glob
+operands, compound commands, ordinary rationale, and the non-evaluation
+boundary. Add a distinguishing operator-grouping regression before the update,
+then recheck the public decision validator. Do not carry a compatibility parser
+or broaden its claims beyond the supported native token stream.
+
+This is a compatible repository-tool correction: department duties, member
+routes, and contributor commands stay unchanged. Qualify a new source-bound
+offline bundle and patch edition through local checks, exact-source installed
+proof, and both Forge source and offline matrices. Published v7.0.10 keeps its
+original tag and bundle bytes; shared ETHOS obligations and final archive stay
+open until their actual acceptance.
+
 Each defect must fail against the previous source and pass after the repair.
 Retain execution-content counterexamples and ordinary prose positives, then run
 the complete verifier. Record upcoming fixes under `Unreleased` and qualify the

@@ -29,7 +29,9 @@ linter beside the current stack would leave the duplication intact.
   JavaScript object property.
 - Replace hand-written shell token parsing with one audited native lexer;
   recognize quoted and compound invocations without evaluating text or reading
-  ambient variables, and retain bare paths and interpreter prose.
+  ambient variables, and retain bare paths and interpreter prose. Refresh that
+  same lexer to verified stable 1.12.0, preserving native operator boundaries
+  and qualifying its new lock and offline supply without a second parser.
 - Extend the existing native-tool installation and offline bundle owners to
   supply both Vale and lychee through one manifest. Remove the replaced entry,
   configurations, packages, and adapters.

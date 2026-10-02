@@ -14,6 +14,7 @@ import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 import { pathToFileURL } from "node:url";
+import { parse as parseShell } from "shell-quote";
 import {
   blankLineError,
   documentMetadata,
@@ -456,6 +457,12 @@ test("native shell tokens preserve quoting and compound invocation boundaries", 
     "git reset --hard",
     "rm -rf ./temporary",
     "curl --fail https://example.test/source",
+    "printf value >(ethos status --json)",
+    "cat <<(ethos status --json)",
+    "true &>log; ethos status --json",
+    "true &>>log; ethos status --json",
+    "case value in value) true ;& ethos status --json ;; esac",
+    "case value in value) true ;;& value) ethos status --json ;; esac",
   ]) {
     assert.equal(commandInvocation(source), true, source);
     assert.throws(
@@ -476,9 +483,50 @@ test("native shell tokens preserve quoting and compound invocation boundaries", 
     "a < b is a comparison, not an execution request.",
     "ETHOS lifecycle describes current work.",
     "./tools/docs/cli.mjs",
+    "The rationale describes here-documents and output redirection.",
+    "A case terminator differs from an actual decision boundary.",
   ]) {
     assert.equal(commandInvocation(source), false, source);
+    assert.doesNotThrow(() =>
+      validateDecision(
+        "docs/decisions/dr-0001-fixture.md",
+        decision({ body: source }),
+      ),
+    );
   }
+});
+
+test("native lexer groups supported operators and preserves quoted text", () => {
+  for (const operator of ["<<", "<<-", ">|", "<>", "&>", "&>>", ";&", ";;&"]) {
+    assert.deepEqual(
+      parseShell(`printf value ${operator}target`, (name) => `$${name}`),
+      ["printf", "value", { op: operator }, "target"],
+      operator,
+    );
+  }
+  assert.deepEqual(
+    parseShell("printf value >(ethos status --json)", (name) => `$${name}`),
+    ["printf", "value", { op: ">(" }, "ethos", "status", "--json", { op: ")" }],
+  );
+  assert.deepEqual(
+    parseShell("cat <<(ethos status --json)", (name) => `$${name}`),
+    [
+      "cat",
+      { op: "<" },
+      { op: "<(" },
+      "ethos",
+      "status",
+      "--json",
+      { op: ")" },
+    ],
+  );
+  assert.deepEqual(parseShell("printf '<<-' '>(value)' '&>>' '$TARGET'"), [
+    "printf",
+    "<<-",
+    ">(value)",
+    "&>>",
+    "$TARGET",
+  ]);
 });
 
 test("decision command inspection never evaluates shell input or ambient variables", () => {
