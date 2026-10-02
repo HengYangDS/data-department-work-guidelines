@@ -207,9 +207,9 @@ separate; the bundle SHALL NOT impersonate its authority.
   linked or has a type other than its required regular file or directory
 - **THEN** installation and verification fail before remote access, staging, or
   execution through that path
-- **WHEN** an independently installed regular binary already has the pinned
-  version
-- **THEN** a supplied concurrent install preserves its permissions and bytes.
+- **WHEN** installation or verification reuses a regular binary with the pinned
+  version, including an ordinary cache hit or a concurrent supplied install
+- **THEN** its permissions and bytes remain unchanged.
 
 #### Scenario: A bundle download parent points outside the repository
 
@@ -220,10 +220,11 @@ separate; the bundle SHALL NOT impersonate its authority.
 
 #### Scenario: Offline validation inherits enabled telemetry
 
-- **WHEN** the user has acknowledged telemetry and the parent environment
-  enables it, including case-variant Windows keys
-- **THEN** the verifier's OpenSpec child receives one official opt-out value
-  through its child-process environment and makes no telemetry or update request
+- **WHEN** the verifier invokes official OpenSpec during offline validation
+- **THEN** the child-process environment supplies one official opt-out value
+- **AND** inherited telemetry settings, including enabled values and
+  case-variant Windows keys, cannot override it
+- **AND** the child makes no telemetry or update request
 - **AND** the parent environment and global configuration remain unchanged.
 
 #### Scenario: Offline supply is incomplete or altered
