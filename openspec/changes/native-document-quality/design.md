@@ -621,9 +621,41 @@ limits without lowering the required product quality floor. Static semantics,
 unapproved-warning handling, and each code subject's applicable obligations
 remain shared ETHOS work. Product-defined native scopes may jointly cover a
 property; demanding every provider cover every language would contradict that
-boundary. No repository-private checker or third proof gate supplies the missing
-result. Qualify those distinctions after the formal installed successor is
-accepted.
+boundary. No repository-private checker or additional default gate supplies the
+missing result. A supporting descriptor must belong to the default gates'
+actual dependency graph and carry only its own native evidence. Qualify that
+contract after the formal installed successor is accepted.
+
+### Integrate the accepted native quality graph
+
+Keep the default floor at `docs-integrity` and `markdown-format`. The document
+check depends on `code-behavior`; the behavior axis names that native test owner,
+and the static-analysis axis names `markdown-format`. The product's profile
+validator owns the dependency closure. Do not copy its graph validation or
+forward a test owner's report through the document gate.
+
+Use the formally accepted installed contract, not prototype fields. A native
+Node attempt must execute the complete Git-selected test inventory once, with
+the existing two-worker bound. Format, document checks, native static analysis,
+and behavioral tests keep their distinct obligations. Missing prerequisites,
+failed document checks, unexercised required subjects, authored reports, and
+unapproved warnings must block acceptance. Equivalent warning-suppression and
+report-override options must be rejected before tests run.
+
+Change the existing profile, profile validator, tests, and affected guidance in
+one admitted migration. Permit only supporting descriptors needed by the two
+default gates. Reject orphaned descriptors and axes mapped to a disconnected or
+unverified owner. Remove old two-descriptor assumptions and stream-report
+fallbacks after their consumers have migrated; retain neither a second test
+executor nor a private lifecycle. Static semantics require native diagnostics,
+not Node syntax success. Qualify each subject's actual obligations without
+pretending that one language provider covers every code subject.
+
+Keep Task 3.3 open until the same accepted product is installed and verified on
+DDWG, AIGW, and Proxy. Compare product source and wheel identity, not merely
+version text or repository-local runtime digests. A successful prototype run
+establishes feasibility only. After migration, inspect actual plan dependencies,
+test execution, native reports, warning preservation, and exact-source proof.
 
 Shared ETHOS fixes are accepted only through their actual formal product
 contract. Repository-native tests cannot certify that product. If that
@@ -696,6 +728,15 @@ official Change and owned lane; qualify the formally accepted installed
 owner without retaining duplicate mechanisms.
 
 ## Risks / Trade-offs
+
+Native tests must establish their own filesystem prerequisites. The source-link
+fixtures need an ignored local path inside the selected repository, so each
+creates its existing `build` parent before making a temporary child. A cache
+fixture must model the regular concurrent target that produced `EEXIST`; a warm
+host binary cannot stand in for that effect. Repair those existing fixtures,
+retain all source confinement, exclusive-copy, version, and permission checks,
+and run them independently as well as in the complete source graph. Keep
+fixture children disposable and preserve unrelated local state.
 
 The standalone verifier runs the complete discovered Node test inventory with
 an explicit two-worker ceiling. CPU-derived defaults oversubscribe suites that

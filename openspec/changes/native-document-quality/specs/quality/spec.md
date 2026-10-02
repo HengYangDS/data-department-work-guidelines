@@ -66,6 +66,15 @@ and fragments; metadata, English, spacing, decisions and navigation.
 The same repository-relative entry SHALL run locally and on both CI planes.
 Diagram, card, topic and evidence counts SHALL NOT determine validity.
 
+#### Scenario: Verification fixtures do not borrow prior local state
+
+- **WHEN** the complete verifier runs in a fresh checkout with the declared
+  tools and locked dependencies but no prior build directory or native cache
+- **THEN** source-link and concurrent-install tests create or model their own
+  exact prerequisites and complete without an earlier verification run
+- **AND** source confinement, exclusive copy, version, and mode-preservation
+  assertions remain unchanged; fixture children are removed afterward.
+
 #### Scenario: Native formatting is not narrowed by source location
 
 - **WHEN** Git selects a supported code or document file outside the usual code
@@ -396,14 +405,59 @@ observing the actual consuming npm command.
   verification; a label or second npm-major field cannot qualify the host
 - **AND** the package audit does not certify Node's bundled npm executable.
 
+### Requirement: Default proof and root binding are distinct
+
+The profile SHALL list exactly `docs-integrity` and `markdown-format` as default
+proof gates. Both SHALL use a repository-relative Node entrypoint without
+executable bits or a POSIX shell. The former SHALL omit formatting; the latter
+owns it, while standalone verification runs it once. Supporting descriptors
+SHALL match only the formally accepted product's default dependency closure;
+quality axes SHALL name their actual verified owner within that closure.
+Installed ETHOS and Git-common hooks SHALL bind the selected worktree and
+enforce admission without a tracked adapter or optional root-binding gate.
+
+#### Scenario: Root-binding contract is audited
+
+- **WHEN** the repository validates `.ethos/profile.toml`
+- **THEN** its accepted typed profile has exactly the two default proof gates
+- **AND** each supporting descriptor is necessary to their actual dependency
+  closure and each quality axis names its verified owner
+- **AND THEN** no optional `repository-root-binding` descriptor is present.
+
+#### Scenario: Root binding is independently exercised
+
+- **WHEN** a contributor runs the installed ETHOS command from an owned
+  worktree and its Git-common hook protocol evaluates a staged path
+- **THEN** both resolve that selected worktree and apply current admission
+- **AND THEN** no repository shell adapter or optional gate changes the default
+  proof floor.
+
+#### Scenario: Format is checked once per verification path
+
+- **WHEN** a contributor invokes the standalone full verifier
+- **THEN** formatting runs once before the remaining checks
+- **AND WHEN** ETHOS executes the two default proof gates
+- **THEN** `docs-integrity` omits formatting and `markdown-format` owns it.
+
+#### Scenario: A supporting check is disconnected or lacks verification
+
+- **WHEN** a descriptor is outside the default dependency closure or a quality
+  axis names a missing, disconnected, or unverified owner
+- **THEN** the installed product rejects that policy before execution
+- **AND** repository checks do not create a competing graph authority.
+
 ### Requirement: Product-owned code evidence accompanies document proof
 
-`docs-integrity` SHALL conjoin its Node command with ETHOS-owned tests and
-coverage; `markdown-format` SHALL conjoin its command with ETHOS-owned JavaScript
-syntax checks. Both SHALL use the same committed tree. Profile validation SHALL
-reject missing or misdirected providers without a third gate. Command output or
-repository-authored reports SHALL NOT prove code correctness. Runtime success
-SHALL NOT close shared semantic, diagnostic, or subject-applicability acceptance.
+`docs-integrity` SHALL depend on the product-verified `code-behavior` attempt;
+`markdown-format` SHALL conjoin its command with native static diagnostics.
+The behavior and static-analysis axes SHALL name those actual evidence owners.
+All checks SHALL use the same committed tree. Installed product validation SHALL
+reject missing or misdirected evidence without another default gate or private
+lifecycle. Native behavioral execution SHALL use the complete Git-selected test
+inventory once and preserve unapproved warnings. Command output or
+repository-authored reports SHALL NOT prove code correctness. Shared semantic,
+diagnostic, and subject-applicability acceptance SHALL require the formally
+accepted installed contract on each required repository.
 
 #### Scenario: Document command passes but native code fails
 
@@ -421,9 +475,10 @@ SHALL NOT close shared semantic, diagnostic, or subject-applicability acceptance
 
 #### Scenario: Both sides of each gate pass
 
-- **WHEN** both document commands and their ETHOS-owned native verifiers pass
+- **WHEN** both document commands and their required native evidence owners pass
   for the exact committed source
-- **THEN** the two existing gate IDs satisfy their mapped runtime checks
+- **THEN** the two default gates and their necessary prerequisites satisfy the
+  mapped runtime obligations
 - **AND** shared semantic, diagnostic, and subject-applicability acceptance
   remains a separately verified ETHOS product obligation
 - **AND THEN** no additional default gate or private lifecycle is required.
@@ -452,6 +507,22 @@ SHALL NOT close shared semantic, diagnostic, or subject-applicability acceptance
 - **THEN** qualification checks each subject against its actual obligation
 - **AND** it does not require every provider to cover every language or accept
   uncovered required subjects.
+
+#### Scenario: One attempt supplies actual behavioral evidence
+
+- **WHEN** the default document check selects its native behavior prerequisite
+- **THEN** the actual native test executor runs the complete selected inventory
+  once and its original reports cover each required production subject
+- **AND** neither a wrapper nor a document gate replays tests or claims another
+  owner's report as its own.
+
+#### Scenario: Equivalent options cannot suppress native diagnostics
+
+- **WHEN** a declared native command uses an equivalent warning-suppression or
+  report-override option, including alternate separators or attached values
+- **THEN** the product rejects the invocation before tests run
+- **AND WHEN** ambient settings attempt to suppress an unapproved native warning
+- **THEN** the original warning remains observable and blocks acceptance.
 
 ## ADDED Requirements
 

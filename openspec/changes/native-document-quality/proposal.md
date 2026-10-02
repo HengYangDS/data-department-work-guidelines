@@ -102,6 +102,17 @@ linter beside the current stack would leave the duplication intact.
   ETHOS owns their implementation and acceptance, without a local substitute.
   Respect product-defined applicable scopes rather than requiring every
   provider to cover every language.
+- Make source verification work from a fresh checkout without inherited build
+  directories or native-tool caches. Existing link fixtures create their
+  ignored parent, and concurrent-install fixtures model the regular target
+  that causes native exclusive copy to refuse replacement. Keep confinement,
+  copy, version, and mode-preservation assertions unchanged.
+- Keep `docs-integrity` and `markdown-format` as the only default proof gates.
+  After formal product acceptance, let the document check depend on one real
+  native test owner and map each quality axis to its actual verifier. Reject
+  disconnected supporting descriptors, missing evidence, repeated execution,
+  and warning suppression. Use the installed schema and remove superseded
+  local assumptions; a supporting descriptor is not another default gate.
 - Review the seven work topics with the installed English editorial skills;
   retain every actor, obligation, condition, permission, and evidence limit.
 - Refresh Vale to the verified latest stable release through the existing

@@ -841,6 +841,7 @@ test("repository file links cannot escape the checkout", () => {
 });
 
 test("an ignored local file cannot satisfy a repository source link", () => {
+  mkdirSync(path.join(root, "build"), { recursive: true });
   const directory = mkdtempSync(path.join(root, "build", "ddwg-source-link-"));
   try {
     const target = path.join(directory, "local evidence.md");
@@ -858,6 +859,7 @@ test("an ignored local file cannot satisfy a repository source link", () => {
 });
 
 test("a delivered directory alias must also resolve to repository source", () => {
+  mkdirSync(path.join(root, "build"), { recursive: true });
   const directory = mkdtempSync(path.join(root, "build", "ddwg-source-alias-"));
   try {
     const delivered = path.join(directory, "delivered");

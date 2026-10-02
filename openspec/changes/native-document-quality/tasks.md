@@ -147,6 +147,12 @@
       peak-load v7.0.9 tag-source timeout evidence remains unchanged; passing
       later jobs does not prove that shared-host saturation cannot recur.
 
+- [x] 2.27 Remove inherited build-directory and native-cache prerequisites from
+      the existing source-link and concurrent-install fixtures. Create the
+      ignored parent explicitly and model the regular target behind `EEXIST`;
+      preserve source confinement, exclusive copy, version, and permissions.
+      Run isolated regressions and complete fresh-checkout verification.
+
 ## 3. Qualification and publication
 
 - [x] 3.1 Freeze source and a source-bound offline bundle; run format, lint,
@@ -157,6 +163,12 @@
       AIGW, and Proxy with the same installed runtime. Exercise static semantics,
       unapproved-warning handling, and each subject's applicable obligations;
       obtain exact-HEAD plan, proof, and acceptance without private substitutes.
+      After formal product acceptance, migrate the existing profile, validator,
+      tests, and guidance together: keep two default gates, map behavior to its
+      necessary native prerequisite, and remove superseded descriptor and
+      stream-report assumptions. Reject disconnected or unverified owners and
+      prove complete test selection, single execution, semantic diagnostics,
+      and warning preservation through the actual installed command plane.
 - [ ] 3.13 Qualify the accepted product's reusable release-history identity
       boundary and reconcile every audited affected adopter. Bind links to
       applicable declared peers and native reference resolution; distinguish

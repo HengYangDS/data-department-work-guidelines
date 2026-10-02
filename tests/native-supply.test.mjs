@@ -488,6 +488,7 @@ test("a supplied install never changes the mode of an existing cache entry", asy
   const actualStat = fs.lstatSync;
   const actualSpawn = childProcess.spawnSync;
   const modes = [];
+  let concurrentTarget = false;
   const mocks = [
     context.mock.method(fs, "readFileSync", (file, options) =>
       file === asset ? bytes : actualRead(file, options),
@@ -503,15 +504,22 @@ test("a supplied install never changes the mode of an existing cache entry", asy
           ]
         : actualEntries(directory, options),
     ),
-    context.mock.method(fs, "lstatSync", (file, options) =>
-      path.basename(path.dirname(file)) === "extracted"
+    context.mock.method(fs, "lstatSync", (file, options) => {
+      if (file === target) {
+        return concurrentTarget
+          ? { isFile: () => true, isSymbolicLink: () => false }
+          : undefined;
+      }
+      return path.basename(path.dirname(file)) === "extracted"
         ? { isFile: () => true, isSymbolicLink: () => false }
-        : actualStat(file, options),
-    ),
+        : actualStat(file, options);
+    }),
     context.mock.method(fs, "chmodSync", (file) => modes.push(file)),
     context.mock.method(fs, "copyFileSync", (_source, destination, flags) => {
       assert.equal(destination, target);
       assert.equal(flags, fs.constants.COPYFILE_EXCL);
+      assert.equal(concurrentTarget, false);
+      concurrentTarget = true;
       throw Object.assign(new Error("another install completed"), {
         code: "EEXIST",
       });
@@ -538,6 +546,7 @@ test("a supplied install never changes the mode of an existing cache entry", asy
   syncBuiltinESMExports();
   try {
     assert.equal(await install({ tool: "vale", assetFile: asset }), target);
+    assert.equal(concurrentTarget, true);
     assert.equal(modes.includes(target), false);
   } finally {
     descriptor.sha256 = originalDigest;

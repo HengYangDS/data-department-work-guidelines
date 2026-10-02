@@ -15,6 +15,12 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
+### Fixed
+
+- Make source-link and concurrent-install tests independent of earlier runs and
+  native-tool caches. Source confinement, exclusive installation, and retained
+  cache permissions remain required.
+
 ## 7.0.9 - 2026-10-02
 
 History: [GitLab][7.0.9-gitlab] · [GitHub][7.0.9-github]
