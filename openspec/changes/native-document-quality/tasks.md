@@ -112,7 +112,7 @@
       without rewriting its dated evidence. Preserve all other duties and
       avoid a new record, template, or validator.
 
-- [ ] 2.22 Replace specialist record and publication terminology in member
+- [x] 2.22 Replace specialist record and publication terminology in member
       guidance with ordinary work language. Preserve the existing record
       owner, decision date, authorization, evidence limits, and acceptance;
       compare changed clauses with the original and rerun affected source
@@ -123,11 +123,11 @@
       execution, preserve reused permissions, and test normal, failed,
       concurrent, and cross-platform paths. Exercise each linked local download
       parent on both Forges, preserve foreign bytes, and reuse one path guard.
-- [ ] 2.24 Disable OpenSpec outbound requests only for offline verification
+- [x] 2.24 Disable OpenSpec outbound requests only for offline verification
       through its official environment option. Exercise inherited on-values,
       case-variant keys, acknowledged telemetry, and unchanged global settings;
       rerun the canonical source graph without another adapter.
-- [ ] 2.25 Restore cross-cycle impact as an independent reusable-prevention
+- [x] 2.25 Restore cross-cycle impact as an independent reusable-prevention
       trigger in the evolution topic. Compare the original and current clauses,
       challenge a single issue spanning cycles under one owner and project,
       preserve the other triggers, and rerun source quality and rendering.
@@ -182,6 +182,10 @@
       exact-HEAD installed proof, a signed patch, both declared source and
       offline platform matrices, independent source and asset hashes, and
       retirement of its owned lane and superseded downloads.
+- [ ] 3.14 Qualify and publish the compatible plain-language, cross-cycle,
+      and offline-supply corrections with a source-bound bundle, clean offline
+      install, exact-HEAD installed proof, trusted signed patch, both Forge
+      source and offline matrices, and verified download and lane aftercare.
 - [x] 3.10 Retire superseded download assets independently on both Forges;
       retain the latest qualified release, one qualified rollback, and tool
       packages consumed by retained source. Preserve tags, original notes, and
