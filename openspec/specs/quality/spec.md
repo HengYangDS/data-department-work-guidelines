@@ -160,6 +160,46 @@ and fragments; metadata, English, spacing, decisions and navigation.
 The same repository-relative entry SHALL run locally and on both CI planes.
 Diagram, card, topic and evidence counts SHALL NOT determine validity.
 
+#### Scenario: Verification fixtures do not borrow prior local state
+
+- **WHEN** the complete verifier runs in a fresh checkout with the declared
+  tools and locked dependencies but no prior build directory or native cache
+- **THEN** source-link and concurrent-install tests create or model their own
+  exact prerequisites and complete without an earlier verification run
+- **AND** source confinement, exclusive copy, version, and mode-preservation
+  assertions remain unchanged; fixture children are removed afterward.
+
+#### Scenario: Navigation links are hidden in non-reader content
+
+- **WHEN** code, a comment, an unlinked image, escaped syntax, an unused
+  definition, or a shadowed reference replaces a required task route
+- **THEN** native Markdown link resolution rejects the missing reader route
+- **AND** those same examples cannot falsely count as repeated topic links.
+
+#### Scenario: A navigation anchor has no readable label
+
+- **WHEN** a required route has an empty label, only whitespace or invisible
+  formatting characters, or a linked image without descriptive alt text
+- **THEN** navigation rejects the missing reader route even if its destination
+  or optional title names the expected file
+- **AND** formatted text and descriptive linked-image alt text remain valid;
+  the native engine still owns link and reference resolution.
+
+#### Scenario: A reader uses a legitimate native Markdown route
+
+- **WHEN** a required route uses a titled, full, collapsed, or shortcut link,
+  a character reference, or a normalized repository-relative path
+- **THEN** navigation resolves its actual destination and first definition
+- **AND** real repeated topic routes remain rejected regardless of spelling;
+  native lychee still checks source targets and fragments.
+
+#### Scenario: A topic's reader cue is hidden or merely quoted as code
+
+- **WHEN** the use cue appears only in code, a comment, or an image instead of
+  the visible topic opening
+- **THEN** navigation rejects the missing reader entry
+- **AND** a visible cue with or without emphasis remains valid.
+
 #### Scenario: Native formatting is not narrowed by source location
 
 - **WHEN** Git selects a supported code or document file outside the usual code

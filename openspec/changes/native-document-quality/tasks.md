@@ -152,7 +152,7 @@
       ignored parent explicitly and model the regular target behind `EEXIST`;
       preserve source confinement, exclusive copy, version, and permissions.
       Run isolated regressions and complete fresh-checkout verification.
-- [ ] 2.28 Resolve navigation with the existing native Markdown parser and
+- [x] 2.28 Resolve navigation with the existing native Markdown parser and
       compiler. Reject hidden routes, unlinked images, unreadable labels, and
       shadowed definitions; accept formatted text, descriptive linked-image
       labels, legitimate titles, references, character decoding, and local
@@ -161,6 +161,20 @@
       regressions, complete source checks, rendering, and exact-source delivery.
       Use one stable native engine version and qualify the changed lock and
       source-bound offline supply without altering published release objects.
+      Signed v7.0.10 passed 200 local tests, exact-source installed proof,
+      denied-network cold installation, both original source and offline
+      platform matrices, matching downloaded hashes, and online links.
+      macOS ran 200 tests without skips; Linux and Windows passed 199 with one
+      intentional macOS-only skip. The temporary proposal, cold checkouts,
+      supply scratch, and duplicate downloads are retired. Both Forges retain
+      the current v7.0.10 and qualified v7.0.9 rollback downloads; v7.0.8 tags,
+      original notes, and historical verification remain after its withdrawal.
+- [ ] 2.29 Refresh the existing shell lexer to verified stable 1.12.0 after
+      the latest native metadata audit found version drift. Preserve command,
+      glob, quotation, and ordinary-rationale counterexamples; qualify native
+      lock resolution, install effects, advisories, notices, source-bound
+      offline supply, exact-source proof, and both Forge platform matrices.
+      Do not alter the published v7.0.10 objects or add a second lexer.
 
 ## 3. Qualification and publication
 
@@ -190,10 +204,17 @@
 - [ ] 3.5 Audit every requirement and its evidence, reconcile current
       references, and classify retained evidence, active state, and disposable
       residue before the official archive and retirement steps.
-      The official delta-to-main-spec merge now carries the cross-cycle
-      prevention, bounded test execution, managed acquisition, and offline
-      telemetry additions. All prior requirements and scenarios are preserved;
-      shared product qualification still prevents final closeout.
+      The partial official delta-to-main-spec merge carries the implemented
+      cross-cycle prevention, bounded test execution, managed acquisition,
+      offline telemetry, cold fixtures, and readable native navigation. All
+      prior requirements and scenarios are preserved. The two draft proof
+      requirements still await the accepted ETHOS contract and are not synced;
+      the removed duplicate npm policy is already absent. Full Change sync and
+      archive remain incomplete. The original 84-unit editorial comparison is
+      rebound to current excerpts with the edition-only change disclosed;
+      hashes do not prove semantic equivalence. Final shared product and
+      adopter qualification, post-archive proof/publication, and owned lane
+      retirement still remain.
 - [x] 3.6 Publish the compatible original-duty correction with fresh local,
       installed ETHOS, signed patch, asset, and both Forge platform evidence;
       preserve the already qualified major release.
@@ -236,9 +257,9 @@
       downloads and owned scratch only after current consumers are verified.
       Signed v7.0.9 passed local checks, denied-network cold installation,
       installed proof, and both complete source and offline platform matrices.
-      Both Forges retain only v7.0.9 and the qualified v7.0.8 rollback downloads;
-      all original notes, tags, and failed executions remain available. Owned
-      duplicate downloads and completed cold checkouts are absent.
+      Original notes, tags, and failed executions remain available. Retained
+      downloads follow the current-release and qualified-rollback policy;
+      completed cold checkouts and duplicate downloads are retired.
 - [x] 3.10 Retire superseded download assets independently on both Forges;
       retain the latest qualified release, one qualified rollback, and tool
       packages consumed by retained source. Preserve tags, original notes, and
