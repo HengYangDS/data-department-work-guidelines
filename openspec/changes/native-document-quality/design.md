@@ -45,6 +45,17 @@ topic, edit it for its reader, and compare the changed clauses with the
 original. Native style results do not prove equivalence. A shorter or more
 polished sentence is invalid if it drops a qualification.
 
+The full source graph rejects prose defects before starting unrelated native
+OpenSpec or Markdown prerequisites. Valid source still runs every gate. Native
+prose regressions preserve each input and assertion, batching only independent
+files under the same configuration. This removes repeated process startup; it
+does not increase the outer deadline, omit a case, or substitute fixture output
+for real tool execution. A passing local run does not qualify the Windows job.
+Release-tag inventory uses Git's native ref/object-type observation once;
+comparison references resolve once per validation, while each comparison still
+requires native ancestor admission. These invocation-local observations create
+no persistent cache, alternate reference authority, or relaxed tag rule.
+
 Use ordinary work terms in the department task pages. A work record is the
 existing ticket, review, discussion, or project document that holds the actual
 decision and evidence; it is not a new file, form, or lifecycle. Publication

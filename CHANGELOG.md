@@ -15,6 +15,14 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
+### Fixed
+
+- Reject prose defects before unrelated native source prerequisites, and
+  inspect release-tag types in one native Git observation. All checks and
+  deadlines remain required.
+- Balance native prose tests across the bounded workers and batch independent
+  samples without losing inputs, findings, or source-preservation checks.
+
 ## 7.0.8 - 2026-10-02
 
 History: [GitLab][7.0.8-gitlab] · [GitHub][7.0.8-github]

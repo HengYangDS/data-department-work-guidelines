@@ -48,9 +48,9 @@ async function checkRepository() {
   console.log(`PASS source-pinned offline bundle identity: v${bundle.version}`);
   checkNoScope();
   checkChangelog();
+  await checkProse();
   validateOpenSpec();
   lintMarkdown();
-  await checkProse();
   checkDocumentMetadata();
   checkLinks();
   checkTextLayout();

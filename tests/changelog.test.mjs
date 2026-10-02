@@ -10,6 +10,7 @@ import {
 import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
+import { fileURLToPath } from "node:url";
 import {
   parseChangelog as parseChangelogSource,
   strictVersion,
@@ -451,6 +452,67 @@ test("release tags must be annotated and covered by the changelog", () => {
       /does not identify HEAD/u,
     );
   });
+});
+
+test("release tag inventory rejects nested non-SemVer names", () => {
+  fixture((directory) => {
+    git(
+      directory,
+      "tag",
+      "-a",
+      "v4.0.0/not-a-version",
+      "-m",
+      "invalid release",
+    );
+    assert.throws(
+      () => validateChangelog({ repository: directory, selectedTag: "" }),
+      /strict SemVer/u,
+    );
+  });
+});
+
+test("native tag inventory ignores non-release tag namespaces", () => {
+  fixture((directory) => {
+    git(directory, "tag", "docs/snapshot");
+    assert.equal(
+      validateChangelog({ repository: directory, selectedTag: "" }).tagCount,
+      0,
+    );
+  });
+});
+
+test("native tag inventory verifies every tag in one Git observation", () => {
+  const script = `
+    import assert from "node:assert/strict";
+    import childProcess from "node:child_process";
+    import { syncBuiltinESMExports } from "node:module";
+    const original = childProcess.spawnSync;
+    const inventory = [];
+    childProcess.spawnSync = (command, args, options) => {
+      if (args?.[0] === "tag" || args?.[0] === "for-each-ref" || args?.[0] === "cat-file")
+        inventory.push(args);
+      return original(command, args, options);
+    };
+    syncBuiltinESMExports();
+    const { validateChangelog } = await import(${JSON.stringify(new URL("../tools/docs/changelog.mjs", import.meta.url).href)});
+    validateChangelog({ selectedTag: "" });
+    assert.equal(inventory.length, 1, JSON.stringify(inventory));
+    assert.equal(inventory[0][0], "for-each-ref");
+    assert.ok(inventory[0].includes("refs/tags"));
+    assert.ok(inventory[0].some((argument) => argument.includes("%(objecttype)")));
+  `;
+  const result = spawnSync(
+    process.execPath,
+    ["--input-type=module", "--eval", script],
+    {
+      cwd: path.resolve(path.dirname(fileURLToPath(import.meta.url)), ".."),
+      encoding: "utf8",
+      input: "",
+      timeout: 30_000,
+    },
+  );
+  assert.ifError(result.error);
+  assert.equal(result.status, 0, result.stderr);
 });
 
 test("tagged release links identify the tag, not a moving branch", () => {

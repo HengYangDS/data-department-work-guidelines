@@ -367,23 +367,25 @@ export function parseChangelog(
 }
 
 function localTags(repository) {
-  const names = run("git", ["tag", "--list", "v*"], {
-    cwd: repository,
-    capture: true,
-    timeout: 20_000,
-  })
+  const records = run(
+    "git",
+    [
+      "for-each-ref",
+      "--format=%(refname:strip=2)%00%(objecttype)",
+      "refs/tags",
+    ],
+    { cwd: repository, capture: true, timeout: 20_000 },
+  )
     .trim()
     .split(/\r?\n/u)
     .filter(Boolean);
   const tags = new Map();
-  for (const name of names) {
-    if (!name.startsWith("v")) throw new Error(`invalid release tag: ${name}`);
+  for (const record of records) {
+    const [name, type, ...extra] = record.split("\0");
+    if (!name || !type || extra.length)
+      throw new Error("invalid native release tag inventory");
+    if (!name.startsWith("v")) continue;
     const version = strictVersion(name.slice(1));
-    const type = run("git", ["cat-file", "-t", `refs/tags/${name}`], {
-      cwd: repository,
-      capture: true,
-      timeout: 20_000,
-    }).trim();
     if (type !== "tag")
       throw new Error(`release tag must be annotated: ${name}`);
     tags.set(version, name);
@@ -462,6 +464,20 @@ export function validateChangelog({
   const latest = [...tags.keys()].sort(semver.rcompare)[0];
   if (latest && semver.lt(version, latest))
     throw new Error(`VERSION ${version} precedes released ${latest}`);
+  const resolvedCommits = new Map();
+  const resolveCommit = (reference) => {
+    if (!resolvedCommits.has(reference)) {
+      resolvedCommits.set(
+        reference,
+        run("git", ["rev-parse", "--verify", reference], {
+          cwd: repository,
+          capture: true,
+          timeout: 20_000,
+        }).trim(),
+      );
+    }
+    return resolvedCommits.get(reference);
+  };
   const pending =
     releases[0] && !tags.has(releases[0].version) ? releases[0].version : "";
   if (pending && sections[0].items)
@@ -497,24 +513,12 @@ export function validateChangelog({
       throw new Error(`release comparison must end at v${label}`);
     }
     if (!(label === "Unreleased" && pending && base === `v${pending}`)) {
-      const baseCommit = run(
-        "git",
-        ["rev-parse", "--verify", `${base}^{commit}`],
-        {
-          cwd: repository,
-          capture: true,
-          timeout: 20_000,
-        },
-      ).trim();
-      const targetCommit =
+      const baseCommit = resolveCommit(`${base}^{commit}`);
+      const targetCommit = resolveCommit(
         label === "Unreleased" || !tags.has(label)
           ? "HEAD"
-          : `v${label}^{commit}`;
-      run("git", ["rev-parse", "--verify", targetCommit], {
-        cwd: repository,
-        capture: true,
-        timeout: 20_000,
-      });
+          : `v${label}^{commit}`,
+      );
       try {
         run("git", ["merge-base", "--is-ancestor", baseCommit, targetCommit], {
           cwd: repository,

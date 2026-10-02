@@ -136,7 +136,10 @@
       remove unrelated prerequisite work from the OpenSpec environment
       regression. Preserve all discovered tests, real tool execution, and
       existing deadlines; prove negative controls, local timing and the complete
-      source graph, then qualify the unchanged requirements on Windows.
+      source graph, then qualify the unchanged requirements on Windows. The
+      v7.0.8 review's full test run still timed out on GitLab Windows; reject
+      known prose defects before unrelated native prerequisites and reduce
+      repeated native fixture launches without dropping any input or assertion.
 
 ## 3. Qualification and publication
 
