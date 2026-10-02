@@ -17,6 +17,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Resolve reader navigation from actual Markdown links and visible opening
+  cues; hidden examples no longer satisfy routes, and legitimate titles and
+  references remain usable.
 - Make source-link and concurrent-install tests independent of earlier runs and
   native-tool caches. Source confinement, exclusive installation, and retained
   cache permissions remain required.

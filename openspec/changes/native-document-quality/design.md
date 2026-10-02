@@ -657,6 +657,43 @@ version text or repository-local runtime digests. A successful prototype run
 establishes feasibility only. After migration, inspect actual plan dependencies,
 test execution, native reports, warning preservation, and exact-source proof.
 
+### Resolve navigation from rendered Markdown
+
+The existing navigation check scans raw source for inline-link spelling. A
+code span, fenced example, comment, or image can therefore satisfy a required
+entry route even though the reader has no usable link. The same scan rejects
+valid titled and reference links and misses repeated topic routes expressed
+that way. A raw search for the reader cue also accepts hidden examples.
+
+Use the locked native Markdown engine's public compiler and the existing HTML
+parser at the current parser owner. Count its actual anchor destinations and
+let the native engine resolve the first definition and Unicode reference
+identity. Unresolved labels, unlinked images, code, and comments supply no route.
+Count an anchor only when its rendered text or linked-image alt text contains a
+readable character; titles, whitespace, and Unicode default-ignorable
+characters alone do not label a route. Use the native HTML events and Unicode
+properties, not a second parser or a blacklist of invisible characters.
+Normalize local destinations relative to the owning document after native
+character decoding, while external URLs cannot masquerade as repository paths.
+Native lychee still owns existence and fragments. Read the first visible topic
+paragraph after its title for the reader cue, excluding code and comments;
+emphasis is presentation, not authority. Keep the task inventory and current
+topic owners unchanged.
+
+Distinguishing tests cover hidden links, unlinked images, empty and invisible
+labels, formatted text and descriptive linked-image labels, escaped syntax,
+unused and shadowed definitions, legitimate titles and references, character
+references, local path normalization, duplicate real routes, and visible reader
+cues. This is repository-specific topology validation, not another lifecycle,
+published renderer, or shared ETHOS reference interpreter.
+
+Promote the already transitive Micromark engine to the verified stable 4.0.3
+direct dependency. npm's native `$micromark` override binds Markdownlint to the
+same compatible patch, avoiding parallel engine versions. The native resolver
+adds one support package and has no known advisories. Retain its actual lock,
+install with scripts disabled, and rebuild the source-bound offline bundle for
+the new compatible patch edition. Preserve the published v7.0.9 objects.
+
 Shared ETHOS fixes are accepted only through their actual formal product
 contract. Repository-native tests cannot certify that product. If that
 dependency is unavailable, complete independent local work and leave dependent

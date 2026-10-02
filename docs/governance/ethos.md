@@ -170,6 +170,13 @@ must contain source; delivered aliases must also resolve to source inside the
 repository. Ignored caches, Git metadata, and undelivered aliases cannot satisfy
 the boundary. Native lychee still checks target existence and fragments.
 
+Navigation follows actual Markdown links and the first reference definition.
+Code examples, comments, unlinked images, and anchors with no readable label
+do not supply a task route. Whitespace and invisible formatting characters
+alone are not labels. Formatted link text and descriptive linked-image alt
+text remain valid, as do titles, references, and normalized local paths. A
+topic's use cue appears in its visible opening, not merely in a hidden example.
+
 Git source selection precedes current Markdown checks. A normally ignored
 directory cannot exempt an already tracked file from prose or links. Ignored
 untracked state stays excluded; official archived Changes retain their

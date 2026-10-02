@@ -1,6 +1,7 @@
 import { decodeHTML } from "entities";
 import { lint } from "markdownlint/sync";
 import { Parser } from "htmlparser2";
+import { micromark } from "micromark";
 
 export function markdownTokens(source, name = "document.md") {
   let tokens;
@@ -101,6 +102,35 @@ export function headingText(token) {
     )
     .map((child) => markdownText(child, { code: true }))
     .join("");
+}
+
+export function markdownLinkDestinations(source) {
+  const destinations = [];
+  let anchor;
+  new Parser({
+    onopentag(name, attributes) {
+      if (name === "a" && attributes.href !== undefined) {
+        anchor = { destination: attributes.href, label: "" };
+      } else if (name === "img" && anchor) {
+        anchor.label += attributes.alt ?? "";
+      }
+    },
+    ontext(text) {
+      if (anchor) anchor.label += text;
+    },
+    onclosetag(name) {
+      if (name === "a" && anchor) {
+        if (
+          /[^\p{White_Space}\p{Default_Ignorable_Code_Point}]/u.test(
+            anchor.label,
+          )
+        )
+          destinations.push(anchor.destination);
+        anchor = undefined;
+      }
+    },
+  }).end(micromark(source));
+  return destinations;
 }
 
 // Match Vale's native comment controls after HTML decoding, not prose mentions.

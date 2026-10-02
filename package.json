@@ -14,6 +14,7 @@
     "htmlparser2": "12.0.0",
     "markdownlint": "0.41.1",
     "markdownlint-cli2": "0.23.3",
+    "micromark": "4.0.3",
     "prettier": "3.9.9",
     "semver": "7.8.5",
     "shell-quote": "1.11.0",
@@ -30,5 +31,8 @@
       "version": "12.2.0",
       "onFail": "error"
     }
+  },
+  "overrides": {
+    "micromark": "$micromark"
   }
 }

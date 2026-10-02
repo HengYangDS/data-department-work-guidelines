@@ -107,6 +107,14 @@ linter beside the current stack would leave the duplication intact.
   ignored parent, and concurrent-install fixtures model the regular target
   that causes native exclusive copy to refuse replacement. Keep confinement,
   copy, version, and mode-preservation assertions unchanged.
+- Resolve task navigation through actual native Markdown links and reference
+  definitions, not source-text matches. Use the existing native engine's public
+  compiler, with one locked stable version for every consumer. Reject code
+  examples, comments, unlinked images, unreadable labels, and shadowed
+  references as entry routes; accept formatted text, descriptive linked-image
+  labels, legitimate link titles, relative paths, character references, and
+  first-definition semantics. Keep reader cues in the visible topic opening
+  and preserve one task map.
 - Keep `docs-integrity` and `markdown-format` as the only default proof gates.
   After formal product acceptance, let the document check depend on one real
   native test owner and map each quality axis to its actual verifier. Reject

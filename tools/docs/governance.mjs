@@ -6,6 +6,7 @@ import { documentMetadata } from "./content.mjs";
 import {
   headingLevel,
   headingText,
+  markdownLinkDestinations,
   markdownText,
   markdownTokens,
   walkMarkdown,
@@ -284,11 +285,49 @@ export function checkDecisions(repository = root) {
   console.log(`PASS decision boundary: ${records.length} current records`);
 }
 
-function linksIn(source) {
+function linksIn(source, relative) {
   return new Set(
-    [...source.matchAll(/\]\(([^)#]+)(?:#[^)]+)?\)/gu)].map(
-      (match) => match[1],
-    ),
+    markdownLinkDestinations(source).flatMap((href) => {
+      let destination;
+      try {
+        destination = decodeURIComponent(href.split(/[?#]/u, 1)[0]);
+      } catch {
+        return [];
+      }
+      if (
+        /^(?:[a-z][a-z0-9+.-]*:|\/)/iu.test(destination) ||
+        destination.includes("\\")
+      ) {
+        return [];
+      }
+      const target = path.posix.normalize(
+        path.posix.join(
+          path.posix.dirname(relative),
+          destination || path.posix.basename(relative),
+        ),
+      );
+      return target === ".." || target.startsWith("../") ? [] : [target];
+    }),
+  );
+}
+
+function hasReaderOpening(source, relative) {
+  const tokens = markdownTokens(source, relative);
+  const title = tokens.findIndex((token) => headingLevel(token) === 1);
+  const opening = tokens
+    .slice(title + 1)
+    .find(
+      (token) =>
+        !["lineEnding", "lineEndingBlank", "htmlFlow"].includes(token.type),
+    );
+  const paragraph = opening?.children.find(
+    (token) => token.type === "paragraph",
+  );
+  return (
+    title >= 0 &&
+    opening?.type === "content" &&
+    paragraph !== undefined &&
+    markdownText(paragraph).trimStart().startsWith("When to use:")
   );
 }
 
@@ -305,19 +344,18 @@ export function checkNavigation(repository = root) {
       "AGENTS.md",
       ["docs/README.md", "docs/charter.md", "docs/governance/ethos.md"],
     ],
-    ["docs/README.md", normative.map((item) => path.posix.basename(item))],
+    ["docs/README.md", normative],
   ]);
   for (const [source, targets] of routes) {
-    const found = linksIn(read(source));
+    const found = linksIn(read(source), source);
     const missing = targets.filter((target) => !found.has(target));
     if (missing.length)
       throw new Error(
         `missing task routes in ${source}: ${missing.join(", ")}`,
       );
   }
-  const repeated = normative.filter((relative) =>
-    linksIn(read("README.md")).has(relative),
-  );
+  const rootRoutes = linksIn(read("README.md"), "README.md");
+  const repeated = normative.filter((relative) => rootRoutes.has(relative));
   if (repeated.length)
     throw new Error(`root entry repeats topic routes: ${repeated.join(", ")}`);
   if (
@@ -329,7 +367,7 @@ export function checkNavigation(repository = root) {
   for (const relative of normative.filter(
     (item) => item !== "docs/charter.md",
   )) {
-    if (!read(relative).includes("**When to use:**"))
+    if (!hasReaderOpening(read(relative), relative))
       throw new Error(`missing reader entry in ${relative}`);
   }
   console.log("PASS task-oriented navigation; this is not adoption evidence");

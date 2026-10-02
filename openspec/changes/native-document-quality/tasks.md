@@ -152,6 +152,15 @@
       ignored parent explicitly and model the regular target behind `EEXIST`;
       preserve source confinement, exclusive copy, version, and permissions.
       Run isolated regressions and complete fresh-checkout verification.
+- [ ] 2.28 Resolve navigation with the existing native Markdown parser and
+      compiler. Reject hidden routes, unlinked images, unreadable labels, and
+      shadowed definitions; accept formatted text, descriptive linked-image
+      labels, legitimate titles, references, character decoding, and local
+      paths. Check visible opening cues and repeated actual routes;
+      preserve one task map and native link ownership. Prove distinguishing
+      regressions, complete source checks, rendering, and exact-source delivery.
+      Use one stable native engine version and qualify the changed lock and
+      source-bound offline supply without altering published release objects.
 
 ## 3. Qualification and publication
 
