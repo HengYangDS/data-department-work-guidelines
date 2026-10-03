@@ -33,6 +33,12 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 - Remove the redundant Markdown lint wrapper and its unused dependencies while
   retaining native rule diagnostics, literal filenames, and comment controls.
 
+### Removed
+
+- Retire completed Change copies from the current tree after obligation and
+  consumer review. Historical references retain exact Git provenance on both
+  Forges; original source, tags, and verification evidence remain unchanged.
+
 ## 7.0.11 - 2026-10-03
 
 History: [GitLab][7.0.11-gitlab] · [GitHub][7.0.11-github]

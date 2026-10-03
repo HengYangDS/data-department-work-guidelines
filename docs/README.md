@@ -39,7 +39,9 @@ general guidelines.
 
 [OpenSpec and ETHOS](governance/ethos.md) govern repository changes.
 [Decision records](decisions/README.md) retain only choices that cannot be
-reconstructed from current rules. Past commits and archived Changes preserve
-context, not current rules or proof; they do not retrospectively certify work
+reconstructed from current rules. Git history preserves completed Changes;
+the current tree need not carry their redundant copies. Historical references
+name the full commit and original path. They provide context, not current rules
+or proof, and do not retrospectively certify work
 done before the lifecycle existed. A readable route and passing repository
 checks do not prove team adoption.

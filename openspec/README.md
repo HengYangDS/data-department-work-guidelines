@@ -22,7 +22,11 @@ cache, or registry. The command needs no executable bit or POSIX shell.
 ETHOS owns material-path attribution, write admission, proof, and closeout.
 `npm run verify` guards repository-specific document and decision topology; it
 is not another lifecycle or scope authority. A method-pack plan, claim, dated
-report, or private scope list cannot replace a Change. Official archives and
-Git history preserve what happened, not proof for the current HEAD or today's
-execution order. Editing an archived text later does not certify its original
-language or lifecycle.
+report, or private scope list cannot replace a Change. Official archival closes
+completed work; its result needs its own commit, proof, and publication.
+Completed historical copies may later leave the current tree through a new
+admitted Change after their unique facts, obligations, and consumers are reviewed.
+Cited artifacts retain the full ancestor commit and exact historical path;
+Git history preserves their original bytes without a second history directory.
+Historical sources do not prove the current HEAD or retrospectively certify
+their original language, lifecycle, or execution order.

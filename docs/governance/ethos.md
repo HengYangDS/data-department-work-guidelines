@@ -208,6 +208,14 @@ is durable. Reviewers move task and acceptance narratives to their producing
 Change or native record; executable examples are linked there, not embedded in a
 DR.
 
+Completed Changes remain recoverable in Git rather than forming a permanent
+current-tree history library. Before retiring a copy, review its unique facts,
+obligations and consumers, migrate references to the full ancestor commit and
+exact historical path, and verify the original bytes. Do not retire an
+unresolved obligation as absorbed. This new deletion commit leaves historical
+Git objects and proof unchanged; it neither closes the active Change nor
+replaces official archival and its subsequent proof and publication.
+
 ## Tool Supply and Offline Execution
 
 [`package.json`](../../package.json) declares the Node line and the sole exact

@@ -74,8 +74,10 @@ native report. Inspect before summarizing or selecting evidence excerpts; no
 new report store, parser, or approval step is required. Earlier no-finding
 reviews remain dated judgments, not proof of semantic equivalence.
 
-The baseline comparison remains at
-[the original-content review](../archive/2026-09-30-work-guidance-completeness/design.md).
+The baseline comparison is the original-content review at Git commit
+`c8599ce9c91ed5f988abd6b3f3011ac94430283d`, historical path
+`openspec/changes/archive/2026-09-30-work-guidance-completeness/design.md`
+([GitLab][baseline-review-gitlab] · [GitHub][baseline-review-github]).
 The initial native-tool migration must reread all seven topics before changing
 presentation. Editing the charter must preserve problem-resolution and judgment
 duties. Delivery must still record a material scope or risk change and its
@@ -324,8 +326,9 @@ checker remains.
 
 Final acceptance pairs native responsibility tests with a current-consumer and
 dependency-graph audit. A working Vale command alone does not prove retirement.
-Immutable release and official archive bytes are evidence of earlier source, not
-installable dependencies, current commands, or a second implementation.
+Immutable release and historical Git objects are evidence of earlier source,
+not installable dependencies, current commands, or a second implementation.
+Reviewed completed-Change copies need not remain in the current tree.
 
 ### Reuse the current supply owner
 
@@ -454,8 +457,8 @@ contributor, and active-Change reference, then remove `.config/tools/` entirely.
 The public commands and normative duties do not change, so this correction is a
 compatible patch edition. Freeze a new source-bound bundle and qualify its cold
 install, installed proof, and both Forge matrices. Earlier signed tags and
-official archives remain immutable. Published asset bytes cannot be replaced;
-download retirement follows the explicit retention boundary below.
+historical Git objects remain immutable. Published asset bytes cannot be
+replaced; download retirement follows the explicit retention boundary below.
 
 ### Bind local links to source
 
@@ -538,7 +541,8 @@ decision register explain when a new record is worth keeping. Missing sequence
 numbers, command changes, releases, and implementation results do not justify
 new decisions. No new DR is required by this review: the existing choices and
 official Changes already own the relevant rationale. Signed source, original
-release notes, and archive bytes remain unchanged; attachment withdrawal is
+release notes, and historical Git bytes remain unchanged; attachment withdrawal
+is
 separately governed.
 
 ### Retain useful distributions without unbounded storage
@@ -648,6 +652,39 @@ corruption, or a past lifecycle violation. Preserve the original records and
 digests; if a claim depends on an edited representation, identify its separate
 bytes and producer evidence. Do not infer historical execution or restore
 retired scope, browser, shell, or package-manager policy from these records.
+
+### Retire completed historical copies after their consumers migrate
+
+The current tree carries 39 completed Changes and 213 historical files. Their
+tasks are closed; the main specifications, current work topics, and this active
+Change own their effective obligations. The archive is not proof authority for
+the current source or a requirement to ship old execution records forever.
+Review every proposal, design, delta, and task record for unique facts and
+obligations before removal. Recovery alone neither evaluates a dated observation
+nor establishes semantic absorption. Retain incident-specific rationale and
+observations in their original Git objects; do not turn them into current rules
+or claim that their reported execution was independently certified.
+
+The archive tree `cda4b105165ab3a788848f74a58004cbc863edd2` is preserved unchanged
+at ancestor `c8599ce9c91ed5f988abd6b3f3011ac94430283d`. The two DR-0004 references
+and baseline-review reference name that full commit and their historical paths
+on both declared Forges. Retrieval must compare the returned bytes with the
+local Git objects. These dated sources explain prior decisions; they do not
+certify historical execution or current completeness.
+
+The formatter test must create its own temporary archive input instead of
+depending on a particular completed Change. Preserve archive-path format,
+spacing, and lint controls: future official archival still uses that path.
+After exact-path admission, remove only the reviewed 213 current-tree copies
+and empty directories. Do not add a compatibility route, historical catalog,
+second evidence store, or private lifecycle validator. Git objects, tags,
+original release notes, and native proof receipts remain unchanged.
+
+This deletion does not close the active Change. Its shared-product, security,
+hosted-delivery, official synchronization, and final archive obligations remain
+open. Its eventual official archive also needs fresh proof and publication;
+the resulting historical copy may retire later through a separately admitted
+change after its consumers and recovery are checked.
 
 ### Preserve the date of an actual decision
 
@@ -892,3 +929,6 @@ execution correction; only a fresh complete Windows job qualifies that platform.
 
 None require user input. The accepted shared ETHOS native evidence contract is
 an integration dependency whose actual schema must be consumed when available.
+
+[baseline-review-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/blob/c8599ce9c91ed5f988abd6b3f3011ac94430283d/openspec/changes/archive/2026-09-30-work-guidance-completeness/design.md
+[baseline-review-github]: https://github.com/HengYangDS/data-department-work-guidelines/blob/c8599ce9c91ed5f988abd6b3f3011ac94430283d/openspec/changes/archive/2026-09-30-work-guidance-completeness/design.md

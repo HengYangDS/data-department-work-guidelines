@@ -2,6 +2,45 @@
 
 ## MODIFIED Requirements
 
+### Requirement: Evidence remains with its producing owner
+
+Change admission SHALL NOT require tracked evidence or a claim/Chronicle pair.
+Source proof SHALL use current ETHOS Attestations, Git objects, official
+OpenSpec artifacts, and Forge observations. Adoption claims SHALL name a real
+task, evidence source, time, scope, and reviewer, not validation. Historical
+copies MAY retire only after reviewing unique facts, obligations, and inbound
+consumers; cited artifacts SHALL be recoverable by full Git commit and path. Git
+history SHALL remain unchanged.
+
+#### Scenario: A material Change has no tracked evidence directory
+
+- **WHEN** a complete official Change passes current ETHOS admission and proof
+  without a repository-authored claim or Chronicle
+- **THEN** the repository accepts the native lifecycle result
+- **AND THEN** no local directory is invented to satisfy a historical shape.
+
+#### Scenario: A team-adoption claim is requested
+
+- **WHEN** only source checks and hosted CI are available
+- **THEN** the repository reports only those source and delivery facts
+- **AND THEN** team adoption remains unproved until actual work observations are
+  reviewed at their producing owner.
+
+#### Scenario: Completed historical copies are retired
+
+- **WHEN** a new admitted Change removes completed historical copies after
+  reviewing unique facts, obligations, incoming references, and exact Git recovery
+- **THEN** the current source no longer ships those redundant copies
+- **AND** cited artifacts remain retrievable by full ancestor commit and exact
+  historical path; original Git objects, tags, and proof remain unchanged.
+
+#### Scenario: A historical consumer or obligation remains unresolved
+
+- **WHEN** a unique fact has not been reviewed, a cited artifact cannot be recovered,
+  or an effective obligation has no current owner
+- **THEN** that copy is not retired as absorbed
+- **AND** deletion does not replace the required consumer migration or review.
+
 ### Requirement: Changelog structure follows Keep a Changelog
 
 `CHANGELOG.md` SHALL follow Keep a Changelog 1.1.0: `Unreleased` first;

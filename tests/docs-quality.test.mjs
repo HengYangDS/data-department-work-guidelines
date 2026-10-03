@@ -18,7 +18,6 @@ import { parse as parseShell } from "shell-quote";
 import {
   blankLineError,
   documentMetadata,
-  formatTargets,
   lintMarkdown,
   repositoryFileUri,
   textViolations,
@@ -1185,29 +1184,8 @@ test("changelog categories may recur under different releases, not one release",
   assert.throws(() => lint(first + "### Fixed\n\n- Duplicate.\n"), /MD024/u);
 });
 
-test("formatting selects supported source while TOML syntax is checked separately", async () => {
-  const targets = await formatTargets([
-    "docs/README.md",
-    "openspec/changes/archive/2026-09-28-spelling-supply-refresh/design.md",
-    ".config/supply/native.json",
-    ".config/checks/format/prettier.toml",
-    ".config/checks/links/lychee.toml",
-    ".config/checks/markdown/markdownlint.toml",
-    "openspec/config.yaml",
-    ".github/workflows/docs-verify.yml",
-    "tools/docs/cli.mjs",
-  ]);
-  for (const file of [
-    "openspec/changes/archive/2026-09-28-spelling-supply-refresh/design.md",
-    ".config/supply/native.json",
-    "openspec/config.yaml",
-    ".github/workflows/docs-verify.yml",
-    "tools/docs/cli.mjs",
-  ]) {
-    assert.ok(targets.includes(file), file);
-  }
+test("TOML syntax is checked without introducing a second formatter", () => {
   const toml = ".config/checks/markdown/markdownlint.toml";
-  assert.equal(targets.includes(toml), false);
   assert.deepEqual(textViolations(toml, "[MD013]\nline_length = 80\n"), []);
   assert.match(textViolations(toml, "[invalid\n")[0], /invalid TOML/u);
 });
@@ -1363,6 +1341,10 @@ test("native formatting policy preserves prose and ignores ambient editor settin
       ["build/tracked.mjs", "export const result={ready:true}\n"],
       ["build/tracked.json", '{"result":{"ready":true}}\n'],
       ["build/tracked.yml", "ready:    true\n"],
+      [
+        "openspec/changes/archive/fixture/design.md",
+        "# Historical Design\n\nUse   the report.\n",
+      ],
       [".worktrees/tracked.md", "# Source\n\nUse   the report.\n"],
       [
         ".worktrees/node_modules/tracked.mjs",
@@ -1400,6 +1382,11 @@ test("native formatting policy preserves prose and ignores ambient editor settin
     const ignored = path.join(directory, "build", "ignored.mjs");
     const ignoredSource = "export const result={ready:true}\n";
     writeFileSync(ignored, ignoredSource);
+    const nativeToml = path.join(
+      directory,
+      ".config/checks/markdown/markdownlint.toml",
+    );
+    const tomlBefore = readFileSync(nativeToml, "utf8");
     const checked = spawnSync(
       process.execPath,
       ["tools/docs/cli.mjs", "format", "--check"],
@@ -1440,6 +1427,7 @@ test("native formatting policy preserves prose and ignores ambient editor settin
       );
     }
     assert.equal(readFileSync(ignored, "utf8"), ignoredSource);
+    assert.equal(readFileSync(nativeToml, "utf8"), tomlBefore);
     const repaired = spawnSync(
       process.execPath,
       ["tools/docs/cli.mjs", "format", "--check"],

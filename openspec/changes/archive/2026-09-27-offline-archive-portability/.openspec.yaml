@@ -1,4 +1,0 @@
-schema: spec-driven
-created: 2026-09-27
-goal: Ship a portable, warning-free offline verification bundle with identical
-  independently verified GitLab and GitHub release bytes.

@@ -51,15 +51,22 @@ profile fields.
 
 ## Evidence and Revisit
 
-The
-[adoption repair](../../openspec/changes/archive/2026-07-18-adoption-lifecycle-repair/design.md)
+The adoption repair ([GitLab][adoption-gitlab] · [GitHub][adoption-github])
 records the separation of decision rationale, methods, and Change authority. The
-[English and release-truth correction](../../openspec/changes/archive/2026-09-25-ddwg-english-release-truth/design.md)
+English and release-truth correction
+([GitLab][english-gitlab] · [GitHub][english-github])
 reaffirms that boundary without claiming the original adoption followed a later
-lifecycle. These records explain the choice, not current product behavior or
+lifecycle. Both cited designs name Git commit
+`c8599ce9c91ed5f988abd6b3f3011ac94430283d` and their exact historical paths.
+These records explain the choice, not current product behavior or
 remote delivery. [Repository governance](../governance/ethos.md) and the
 [official OpenSpec workspace](../../openspec/README.md) own the current rules.
 
 Revisit the product and adopter boundary if the official mechanism cannot bind
 material changes or completion claims. A defect needs an explicit authorized
 repair, not a permanent private lifecycle.
+
+[adoption-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/blob/c8599ce9c91ed5f988abd6b3f3011ac94430283d/openspec/changes/archive/2026-07-18-adoption-lifecycle-repair/design.md
+[adoption-github]: https://github.com/HengYangDS/data-department-work-guidelines/blob/c8599ce9c91ed5f988abd6b3f3011ac94430283d/openspec/changes/archive/2026-07-18-adoption-lifecycle-repair/design.md
+[english-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/blob/c8599ce9c91ed5f988abd6b3f3011ac94430283d/openspec/changes/archive/2026-09-25-ddwg-english-release-truth/design.md
+[english-github]: https://github.com/HengYangDS/data-department-work-guidelines/blob/c8599ce9c91ed5f988abd6b3f3011ac94430283d/openspec/changes/archive/2026-09-25-ddwg-english-release-truth/design.md

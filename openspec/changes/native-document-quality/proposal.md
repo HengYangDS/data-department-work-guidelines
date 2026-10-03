@@ -10,6 +10,12 @@ linter beside the current stack would leave the duplication intact.
 
 ## What Changes
 
+- Retire completed historical Change copies from the current tree after
+  reviewing unique facts, obligations, incoming references, and Git recovery. Preserve
+  their immutable Git objects and existing release evidence; bind the three
+  cited designs to exact historical commits and paths on both Forges. Replace
+  the test's dependency on a real old archive with an owned temporary fixture.
+  Do not add a history directory or change the official archive lifecycle.
 - Restore the Agent's duty to read the complete results of current,
   claim-matched checks before summarizing. Retaining decisive output does not
   replace inspecting warnings, omissions, or failures elsewhere in the result.
@@ -201,9 +207,12 @@ The existing document and native-supply tools, their tests, native
 configuration, npm dependencies, CI, contributor guidance, version identity, and
 offline bundle change. Normative content receives semantically reviewed English
 edits and restoration of original duties, not new approval roles or processes.
-Published tags and archived Changes remain immutable. Asset bytes are never
-rewritten; superseded downloads may be explicitly withdrawn under the retention
-boundary while their source and release history remain available. OpenSpec and
+Published tags and historical Git objects remain immutable. Reviewed copies of
+completed Changes may leave the current tree in this Change's new commit;
+their removal neither rewrites history nor certifies historical execution.
+Asset bytes are never rewritten; superseded downloads may be explicitly
+withdrawn under the retention boundary while their source and release history
+remain available. OpenSpec and
 ETHOS retain change, admission, proof, and publication authority. Formal shared
 ETHOS distribution and cross-adopter proof remain separate open dependencies;
 this Change neither implements nor claims those product fixes.

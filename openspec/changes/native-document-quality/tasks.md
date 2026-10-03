@@ -61,7 +61,7 @@
       semantic-equivalence proof.
 - [x] 2.4 Reconcile package, current OpenSpec, contribution, governance, CI,
       version, and changelog contracts. Audit current consumers and the resolved
-      dependency graph for retired residue; retain archived bytes unchanged.
+      dependency graph for retired residue; preserve historical Git bytes.
 - [x] 2.5 Repair inherited-property command classification, repeated stable
       decision IDs, and empty sections at the existing parser and tree owners;
       replace old shell token parsing with a pinned non-evaluating native lexer,
@@ -256,6 +256,16 @@
       existing requirements and scenarios. Exact-source installed proof, cold
       installation, and hosted qualification remain separate obligations; the
       next edition is not published.
+
+- [ ] 2.32 Retire all reviewed completed-Change copies from the current tree.
+      Audit unique facts, obligations, and incoming consumers; preserve exact ancestor
+      Git objects and existing proof. Replace three cited designs with full
+      commit-and-path references on both Forges and replace the real archive
+      test dependency with an owned temporary fixture. Preserve official
+      archive-path negative controls; verify source quality, recovery, installed
+      proof, and cold installation before acceptance. No history directory,
+      compatibility route, or lifecycle substitute is added. Hosted delivery
+      and final active-Change closure remain separate open obligations.
 
 ## 3. Qualification and publication
 
