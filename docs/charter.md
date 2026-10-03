@@ -72,8 +72,8 @@ and its impact. Do not alter the record or silently act as if either authority
 had resolved the other.
 
 Project rules may refine sources of truth, permissions, and acceptance. If they
-materially conflict with these guidelines or a higher constraint, expose the
-conflict and its impact for an authorized decision. Do not silently choose the
+conflict with these guidelines or a higher constraint, expose the conflict and
+its impact for an authorized decision. Do not guess or silently choose the
 convenient rule.
 
 ## Four Non-Negotiable Boundaries

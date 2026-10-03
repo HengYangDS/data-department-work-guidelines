@@ -21,6 +21,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   metric to judge a person's overall worth or monthly review to rank people.
 - Require correction after a boundary breach and visible document status in
   analysis, proposal, and decision titles.
+- Preserve conflict resolution, the task lead's final judgment, necessary
+  improvement before completion, and the limits of local metrics. Keep shared
+  evidence calibration within the approved task and periodic review cadence.
 - Restore the prohibition on uncoordinated shared edits and closing work of
   unknown ownership; make the charter table prohibit crossing limits.
 - Clarify human result inspection, action-authority order, high-risk

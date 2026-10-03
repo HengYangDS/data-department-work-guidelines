@@ -34,6 +34,12 @@ linter beside the current stack would leave the duplication intact.
   status. Expose existing decision records' accepted status in their titles
   without changing their decisions. Keep the existing owners without a state
   machine or form.
+- Restore the unqualified project-rule conflict boundary, the task lead's
+  non-transferable goal, boundary, and final judgment, and necessary capture
+  before high-impact or repeated work can be called complete. Keep local
+  metrics from standing for overall work or system value. Preserve shared
+  evidence calibration in the approved task and periodic review cadence,
+  without restoring a fixed weekly meeting or adding an evaluator.
 - Restore the Agent's duty to read the complete results of current,
   claim-matched checks before summarizing. Retaining decisive output does not
   replace inspecting warnings, omissions, or failures elsewhere in the result.

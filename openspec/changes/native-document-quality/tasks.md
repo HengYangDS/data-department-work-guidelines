@@ -19,10 +19,12 @@
       interface.
 - [x] 2.2 Extend the current installer and bundle owners without retaining a
       second command, manifest, or installer for the same concern.
-- [x] 2.3 Apply human English editing to all seven task topics and compare every
+- [ ] 2.3 Apply human English editing to all seven task topics and compare every
       changed duty, condition, authority, and evidence limit with its source.
       Keep one topic per duty. Retain task-owner and supervisor calibration,
-      actual-breach correction, document title status, unidentified-owner and
+      actual-breach correction, document title status, project-conflict
+      resolution, task-lead final judgment, pre-completion capture, local-metric
+      limits, shared evidence calibration, unidentified-owner and
       foreign-work stops, complete current claim-matched result inspection
       before summarizing, next verification, unverified-citation
       hard risks, all member result checks, action-authority order, explicit
@@ -35,24 +37,20 @@
       Primary review retains the narrower original limits, not every suggestion.
       Correct existing owners without another report, parser, evaluator, meeting,
       approval, or meaning gate.
-      Signed `ca746a35` and `c50e005b` retain the reviewed restorations and
-      paragraph boundaries. Earlier bounded Claude reviews report no further
-      omission in their supplied sources, not equivalence. The later
-      complete-original and seven-topic review at `a09b234` identifies
-      actual-breach correction and document-title status omissions. Both are
-      restored at their existing owners; status is explicit in the title and
-      existing DR titles expose their accepted state without changing decisions.
-      Targeted rechecks preserve all original requirement clauses and scenarios;
-      selected official sync retains 11 requirements and 40 scenarios. Current
-      full verification passes all 215 tests with no skips and renders all 28
-      Markdown sources. Prior cold evidence stays source-bound; current signed
-      proof, cold qualification, and hosted publication remain separate.
-      Later omissions supersede earlier bounded no-finding judgments; original
-      failure and review evidence remains intact. Installed changed planning
-      passes at signed `a09b234`; an earlier batch-reader deadline remains
-      historical evidence, not the current plan result. Current exact-HEAD
-      proof, shared acceptance, hosted publication, and Change closure remain
-      separate obligations; local checks do not prove total equivalence or use.
+      Signed `18db9c2` passes existing installed full proof and fresh
+      denied-network cold verification: 215 tests, zero skips, and 69 source
+      hashes and modes. Prior source renders cover all 28 Markdown files.
+      A later complete-original Claude review identifies four further limits.
+      They are restored at existing owners; its targeted actual-source recheck
+      finds no unresolved defect in those corrections, not whole-guidance
+      equivalence. Current local verification passes all 215 tests with zero
+      skips and renders all 28 Markdown files. Selected official sync conserves
+      11 requirements and all 40 prior scenarios, adding four bounded scenarios
+      without rewriting preambles. The approved cadence redesign keeps shared
+      evidence calibration, without a weekly ceremony. Current installed
+      changed planning times out in native Git attribute observation; leave
+      this task open until that acceptance passes. New signed-source proof,
+      supplier acceptance, and hosted delivery remain separate obligations.
 - [x] 2.4 Reconcile package, current OpenSpec, contribution, governance, CI,
       version, and changelog contracts. Audit current consumers and the resolved
       dependency graph for retired residue; preserve historical Git bytes.
@@ -219,8 +217,8 @@
       not fix the separate official OpenSpec braces dependency.
       Local removal at `1219528` eliminates 19 packages. The current signed
       source passes complete local and denied-network cold verification.
-      Current exact-source installed proof and both hosted matrices for the next
-      edition remain open.
+      Installed exact-source proof passes at `18db9c2`; the later duty
+      correction needs its own proof. Both hosted matrices remain open.
 - [ ] 2.31 Repair the existing official OpenSpec report consumer. Retain native
       diagnostics, reject standard error and wrong-root, incomplete, duplicate,
       or inconsistent evidence, and preserve the real official CLI execution.
@@ -230,8 +228,9 @@
       full source, installed proof, and cold checks without another gate or
       lifecycle implementation. The implemented requirement is officially
       synced; `c117ab1` qualifies its earlier exact-source proof and cold tests.
-      Current complete local and cold verification passes. Next-edition
-      installed proof and hosted source and offline qualification remain open.
+      Local and cold verification and installed proof pass at `18db9c2`.
+      The later duty correction needs refreshed exact-source proof; hosted
+      source and offline qualification remain open.
 - [x] 2.32 Retire all reviewed completed-Change copies from the current tree.
       Audit unique facts, obligations, and incoming consumers; preserve exact
       ancestor Git objects and existing proof. Replace three cited designs with
@@ -273,8 +272,10 @@
       quality-control comments without rejecting explanatory prose.
       As observed on 2026-10-04, both Forges still serve `ba982673`; this local
       correction is unpublished. Original Windows109 retries fail at npm audit,
-      not memory exhaustion. Current installed proof, shared-product acceptance,
-      supply security, both hosted matrices, and publication remain open.
+      not memory exhaustion. Installed proof and cold installation pass at
+      `18db9c2`; refresh proof for the later duty correction. Shared-product
+      acceptance, supply security, both hosted matrices, and publication remain
+      open.
 
 ## 3. Qualification and publication
 

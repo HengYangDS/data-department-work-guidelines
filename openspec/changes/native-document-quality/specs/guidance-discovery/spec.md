@@ -50,6 +50,15 @@ claim-matched checks before summarizing.
   accepting the consequential result; the author's or Agent's account cannot
   substitute for that inspection.
 
+#### Scenario: A task lead delegates the final judgment
+
+- **WHEN** a task lead delegates analysis or execution and sends the result to
+  another authorized decision owner
+- **THEN** the collaboration topic keeps the goal, boundary, risk, final
+  judgment, end-to-end result, and escalation with the task lead
+- **AND** that responsibility does not itself grant decision or acceptance
+  authority.
+
 #### Scenario: Parallel Agents inspect one task
 
 - **WHEN** independent Agent subtasks are assigned in parallel
@@ -100,6 +109,14 @@ or unknown ownership.
   to risk
 - **AND** stopping future work alone does not correct the prior breach.
 
+#### Scenario: A project rule conflicts with department guidance
+
+- **WHEN** a project rule conflicts with these guidelines or a higher constraint,
+  even if the person considers the difference minor
+- **THEN** the charter requires exposing the conflict and its impact for an
+  authorized decision before acting
+- **AND** guessing or choosing the convenient rule does not resolve the conflict.
+
 #### Scenario: A high-risk task enters the route
 
 - **WHEN** a member starts a production, sensitive-data, destructive, or
@@ -115,6 +132,14 @@ or unknown ownership.
 - **THEN** the delivery topic distinguishes executing, verified, accepted, and
   published or effective states
 - **AND THEN** the claim does not outrun its current subject-bound evidence.
+
+#### Scenario: High-impact work lacks necessary prevention
+
+- **WHEN** high-impact or repeated work passes its immediate checks but the
+  necessary test, monitor, rule, or recovery path is still missing
+- **THEN** the delivery topic prohibits calling the work complete before leaving
+  that improvement with its existing owner
+- **AND** an extra report or evidence directory does not satisfy that condition.
 
 #### Scenario: Repeated weak signals appear
 
@@ -223,7 +248,8 @@ personal worth, and monthly mechanism review SHALL NOT rank individuals.
 
 - **WHEN** a month passes without a single event that forces a systemic review
 - **THEN** the manager inspects real work and recurring weak signals in
-  an existing carrier and decides whether a mechanism needs correction
+  an existing carrier, calibrates how the team judges evidence, and decides
+  whether a mechanism needs correction
 - **AND THEN** a quarterly review tests whether current rules and tools still
   return more value than they cost, without staging a ceremonial new meeting.
 
@@ -234,6 +260,15 @@ personal worth, and monthly mechanism review SHALL NOT rank individuals.
   rather than ranking people
 - **AND** a single metric cannot represent anyone's overall worth, while
   case-based feedback and coaching remain available.
+
+#### Scenario: A local data metric stands for whole-system value
+
+- **WHEN** a pipeline's record-count metric is presented as the overall value of
+  a data asset or service without its use, quality, or cost boundaries
+- **THEN** the evolution topic prohibits using the local metric for that overall
+  judgment
+- **AND** the metric remains available for its stated decision, source, period,
+  and boundary; no new evaluator or ranking is required.
 
 ### Requirement: Decision framing preserves operational constraints
 

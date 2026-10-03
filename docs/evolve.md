@@ -98,8 +98,9 @@ returned, corrected, or out of bounds, growth from guided execution toward
 independent judgment, and whether a new mechanism lowers total cost. For every
 metric, first name the decision it supports, its fact source, period, boundary,
 and how it could be gamed. No single metric may stand for a person's overall
-worth. Investigate anomalies through cases and mechanisms; do not equate them
-directly with individual performance.
+worth, and no local metric may stand for the overall value of work or a system.
+Investigate anomalies through cases and mechanisms; do not equate them directly
+with individual performance.
 
 For every L1 or L2 task, align the subject and success condition at the start,
 recheck facts, options, and authority at material decisions or changed risk,
@@ -108,9 +109,9 @@ signals when observed; a calendar must not delay containment or a decision.
 
 At least monthly, the manager examines a real work sample and accumulated weak
 signals: recurring failures, escaped quality issues, Agent output corrections or
-misuse, and needless coordination. This review must not rank individuals;
-use it to find mechanism problems and decide whether a small correction is
-needed.
+misuse, and needless coordination. This review must not rank individuals. Use
+it to calibrate how the team judges evidence, find mechanism problems, and
+decide whether a small correction is needed.
 At least quarterly, the guideline maintainer and users review the net benefit
 of current rules, templates, tools, and Agent practices, and assess capability
 gaps. Keep, revise, or retire practices accordingly. L2 work may set a shorter

@@ -42,7 +42,7 @@ boundary.
 
 | Role             | May do                                                        | Responsibility that remains                                                            |
 | ---------------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| Task lead        | Clarify the goal and boundary; coordinate work and decisions. | End-to-end result, risk, and escalation.                                               |
+| Task lead        | Clarify the goal and boundary; coordinate work and decisions. | Goal, boundary, risk, final judgment, end-to-end result, and escalation.               |
 | Executing member | Decompose, delegate, integrate, and verify.                   | Understand and check Agent output before submission.                                   |
 | Agent            | Search, reason, draft, implement, test, and present options.  | Must not grant itself organizational authority or make commitments on people's behalf. |
 | Reviewer         | Independently check facts, changes, and evidence.             | State findings and limits; review alone does not authorize action.                     |

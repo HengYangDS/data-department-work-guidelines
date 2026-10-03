@@ -86,10 +86,10 @@ human acceptance is accepted by an authorized person.
 
 For L1 and L2 work, leave the material decision, actual result, limits, and
 remaining owner in the existing work record. Without a reviewable record, do
-not say the organization has learned from the work. For high-impact or
-repeated work, leave the necessary test, monitor, rule, or
-recovery path in the existing system of responsibility so the next occurrence
-is found earlier and judged more easily. Do not create an unconsumed evidence
+not say the organization has learned from the work. Before calling high-impact
+or repeated work complete, leave the necessary test, monitor, rule, or recovery
+path in the existing system of responsibility so the next occurrence is found
+earlier and judged more easily. Do not create an unconsumed evidence
 directory or report to prove effort. For data delivery, see
 [data quality and adoption](data.md); for this repository's source lifecycle,
 see [repository governance](governance/ethos.md).

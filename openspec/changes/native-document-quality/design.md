@@ -185,6 +185,23 @@ changing its rationale, date, or acceptance. Correction does not grant new
 authority. No form, state machine, or private
 semantic validator is needed.
 
+The complete-original and seven-topic review at `18db9c2` identifies remaining
+limits in original sections 1.3, 8.2, 9.2, and principle 5. A project-rule
+conflict cannot be dismissed by the actor as immaterial. A task lead retains
+goal, boundary, risk, final judgment, and result even when another person holds
+decision authority. High-impact or repeated work needs its necessary capture
+before a completion claim. A local metric cannot represent overall work or
+system value. Restore these duties at their four existing topic owners and
+scenarios without changing requirement preambles, tools, or document topology.
+
+The same review questions the weekly sample loop. The user authorized replacing
+fixed management cadence with task-bound checks, immediate signal review,
+monthly manager review, and quarterly net-benefit and capability review. Keep
+that redesign, not a universal weekly meeting or 30-minute form. Preserve the
+loop's purpose by making shared evidence calibration explicit in monthly review;
+task-start coaching and event-driven correction remain distinct obligations.
+Earlier no-finding reviews do not certify equivalence or override a counterexample.
+
 The native dictionary initially rejected the valid plural and possessive of
 `deliverable`. Accept only that real term and its two normal inflections; retain
 a misspelled near-match regression. Do not rewrite the obligation or disable
