@@ -21,6 +21,18 @@
       second command, manifest, or installer for the same concern.
 - [x] 2.3 Apply human English editing to all seven task topics and compare every
       changed duty, condition, authority, and evidence limit with its source.
+      Source-based review at `4c9ff1c` reopened this task: the original Agent stop
+      duty also names an unidentified responsible person for the current task.
+      The full rule, opening, continuation, and orientation now retain that duty.
+      Standing authorization and verified inputs do not establish that person;
+      encountered work ownership remains a separate trigger. Independent recheck
+      confirms the restoration and one distinguishing official scenario without
+      a new role or approval. Official sync preserves all requirements and adds
+      one scenario. The native long-requirement INFO is resolved by reviewed
+      same-duty compaction, not suppression. All 204 local tests, installed
+      changed planning, and six warning-free renders pass. The unchanged supplied
+      tools install with outbound network denied. New committed-source proof,
+      clean-checkout acceptance, and hosted delivery remain separate obligations.
       Independent section-8 review at `3569e60` finds that the Agent's original
       complete-result inspection duty is absent: decisive output and successful
       totals can hide a skipped-source finding elsewhere in a selected report.
@@ -333,8 +345,9 @@
       complete OpenSpec report consumption adds two, the analytical
       next-verification duty adds one, and complete Agent result inspection
       adds one. Historical-copy disposition adds two more, preserving all
-      previous requirements and scenarios. These 191 main-spec scenarios do not
-      prove whole-document semantic equivalence.
+      previous requirements and scenarios. The unidentified-task-owner
+      restoration adds one more; these 192 main-spec scenarios do not prove
+      whole-document semantic equivalence.
       The two draft proof requirements still await
       the accepted ETHOS contract and are not synced;
       the removed duplicate npm policy is already absent. Full Change sync and
@@ -351,9 +364,11 @@
       item 2.3. Earlier clean findings do not override the later source-based
       counterexamples; their dated evidence remains unchanged.
       Its bounded repair recheck confirms both corrections without a new
-      meeting, approval gate, or private meaning validator. Item 2.3 is completed
-      after local source checks; this does not establish whole-document semantic
-      equivalence or complete the outstanding delivery obligations.
+      meeting, approval gate, or private meaning validator. The later `4c9ff1c`
+      review finds the separate unidentified-task-owner omission recorded in
+      item 2.3. Its reviewed restoration passes current local checks; neither
+      recheck establishes whole-document semantic equivalence or completes the
+      outstanding delivery obligations.
 - [x] 3.6 Publish the compatible original-duty correction with fresh local,
       installed ETHOS, signed patch, asset, and both Forge platform evidence;
       preserve the already qualified major release.

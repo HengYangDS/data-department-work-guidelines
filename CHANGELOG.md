@@ -25,9 +25,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 - Preserve official OpenSpec findings instead of accepting successful summary
   totals alone. Reject warning output and incomplete, wrong-root, duplicate,
   or inconsistent reports at the existing verifier.
-- Restore the Agent's stop condition for another person's uncommitted work and
-  work of unknown ownership. Name the task owner and supervisor in task-start
-  calibration without adding a meeting or approval step.
+- Restore the Agent's stop conditions for an unidentified task owner, another
+  person's uncommitted work, and work of unknown ownership. Name the task owner
+  and supervisor in task-start calibration without adding a meeting or approval
+  step.
 - Check every Git-selected Markdown file with the native core and one TOML
   policy; ambient configuration can no longer hide source defects.
 - Remove the redundant Markdown lint wrapper and its unused dependencies while

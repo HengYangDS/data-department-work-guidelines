@@ -109,6 +109,16 @@ independent review or an automated proof of equivalence.
 | Section 8.6: stop for another person's unrecognized or uncommitted work and work of unknown ownership          | Human–AI collaboration | A known owner's unfinished edits are encountered, but the Agent continues because it recognizes the work.      |
 | Section 11.3: task-start calibration belongs jointly to the task owner and supervisor                          | Evolution management   | The task owner aligns alone, or a monthly sample review substitutes for task-start calibration.                |
 
+The source-based review at `4c9ff1c` identifies a separate section-8.6 omission:
+the Agent must also stop when the responsible person for its present task cannot
+be identified. Standing read-only permission and known datasets do not establish
+that accountability. Encountered work of unknown ownership is a different
+trigger; neither it nor a general named-owner rule replaces this point-of-use
+stop. Restore the full rule and its abbreviated cues at the existing
+collaboration topic, preserving safe continuation for nonessential preferences.
+The task lead, authorizer, reviewer, and acceptor remain distinct; no new role,
+approval gate, or DR is needed.
+
 Restore these duties in the existing paragraphs and execution table. Retain
 every surrounding permission, qualification, evidence limit, and owner. Do not
 restore redundant cards, fixed forms, or a universal weekly meeting. The monthly

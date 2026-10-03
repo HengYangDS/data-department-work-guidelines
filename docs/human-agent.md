@@ -14,9 +14,9 @@ relations:
 tests, or review to an Agent. People set direction and authority; intelligence
 extends capacity. Verify the facts. Decisions and consequences remain human
 responsibilities. An Agent is an executing or reasoning entity, not a source of
-organizational authorization. Stop when the target, fact source, or permission
-cannot be established; a person checks the actual work and evidence before
-accepting an Agent's result.
+organizational authorization. Stop when the target, fact source, responsible
+person, or permission cannot be established; a person checks the actual work and
+evidence before accepting an Agent's result.
 
 ## Delegate a Boundary, Not a Pile of Context
 
@@ -30,8 +30,9 @@ path, and who approves irreversible actions.
 
 If missing context does not materially affect direction, safety, or authority,
 the Agent should continue with reasonable stated assumptions. If the target,
-fact source, authority, or irreversible consequence cannot be established, stop
-and ask. “Finish this for me” is not an authorization boundary.
+fact source, responsible person, authority, or irreversible consequence cannot
+be established, stop and ask. “Finish this for me” is not an authorization
+boundary.
 
 > **Illustrative delegation:** “Compare the vendor's earlier and revised price
 > snapshots for the stated research cutoff. Work read-only. Report the source
@@ -59,8 +60,9 @@ work, not that duty.
 
 ## Execute and Verify
 
-An Agent first confirms the task, target root, current state, and applicable
-local rules, then restates the goal, scope, non-goals, and completion condition.
+An Agent first confirms the task, target root, current state, responsible person,
+and applicable local rules, then restates the goal, scope, non-goals, and
+completion condition.
 It distinguishes fact, hypothesis, inference, judgment, decision, and action;
 loads only relevant material; and advances in reversible, verifiable steps
 within its authority. Before writing, it checks the target, concurrent work, and
@@ -92,11 +94,11 @@ overwrite or clean up work of unknown ownership.
 ## Stop and Handoff
 
 Stop the affected action and escalate when instructions materially conflict; the
-target or fact source cannot be identified; authority is insufficient; an action
-is irreversible without authorization or recovery; another person's unrecognized
-or uncommitted work, or work of unknown ownership, appears; verification
-contradicts expectation; evidence has expired; or continuing would hide a
-failure, pollute a source of truth, or enlarge harm.
+target, fact source, or responsible person cannot be identified; authority is
+insufficient; an action is irreversible without authorization or recovery;
+another person's unrecognized or uncommitted work, or work of unknown ownership,
+appears; verification contradicts expectation; evidence has expired; or
+continuing would hide a failure, pollute a source of truth, or enlarge harm.
 Stopping is not failure. Continuing with a guess presented as fact is loss of
 control.
 

@@ -57,13 +57,13 @@ claim-matched checks before summarizing.
 
 ### Requirement: Task routes preserve the work-quality contract
 
-Entry and seven topics SHALL preserve duties: hard boundaries, risk-scaled
-minimums, six task boundaries, work states, evidence limits, and learning
-triggers. Resolving the matter, testing bounded judgment, and improving the
-system for next time SHALL remain distinct. Topics SHALL expose start, stop, and
-verification cues without a root monolith or second card inventory. Agents SHALL
-stop affected actions and escalate for another person's unrecognized or
-uncommitted work, or unknown ownership.
+Entry and seven topics SHALL retain hard boundaries, risk-scaled minimums, six
+task boundaries, work states, evidence limits, and learning triggers. Problem
+resolution, tested bounded judgment, and future system improvement SHALL remain
+distinct. Topics SHALL expose start, stop, and verification cues without a root
+monolith or duplicate cards. Agents SHALL stop affected actions and escalate for
+an unidentified task owner, another person's unrecognized or uncommitted work,
+or unknown ownership.
 
 #### Scenario: A high-risk task enters the route
 
@@ -147,6 +147,16 @@ uncommitted work, or unknown ownership.
 - **THEN** the Agent should continue with reasonable stated assumptions
 - **AND** missing facts or authority, material direction changes, and
   irreversible risk still stop the affected action for clarification.
+
+#### Scenario: An authorized task has no accountable person
+
+- **WHEN** standing read-only permission and verified datasets establish a safe
+  task, but its request identifies no responsible person and no foreign work is
+  encountered
+- **THEN** the collaboration topic requires stopping the affected action and
+  seeking that person
+- **AND** general permission does not establish task accountability; no new
+  role, approval gate, or report is required.
 
 #### Scenario: Another person's unfinished work is recognized
 
