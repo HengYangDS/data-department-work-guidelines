@@ -91,9 +91,10 @@ overwrite or clean up work of unknown ownership.
 
 Stop the affected action and escalate when instructions materially conflict; the
 target or fact source cannot be identified; authority is insufficient; an action
-is irreversible without authorization or recovery; someone else's unrecognized
-work appears; verification contradicts expectation; evidence has expired; or
-continuing would hide a failure, pollute a source of truth, or enlarge harm.
+is irreversible without authorization or recovery; another person's unrecognized
+or uncommitted work, or work of unknown ownership, appears; verification
+contradicts expectation; evidence has expired; or continuing would hide a
+failure, pollute a source of truth, or enlarge harm.
 Stopping is not failure. Continuing with a guess presented as fact is loss of
 control.
 

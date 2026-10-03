@@ -16,6 +16,10 @@ linter beside the current stack would leave the duplication intact.
 - Restore cross-cycle impact as an independent trigger for reusable prevention
   in the existing evolution topic. A problem need not recur or cross people or
   projects to meet that original condition.
+- Restore the Agent's stop and escalation condition for another person's
+  unrecognized or uncommitted work and work of unknown ownership. Name the task
+  owner and supervisor in task-start calibration. Keep both duties at their
+  existing topic owners without adding a meeting, approval gate, or validator.
 - Name existing work records and actual publication directly in member
   guidance, without specialist governance terminology. Preserve the record
   owner, authorization, evidence, and acceptance duties.

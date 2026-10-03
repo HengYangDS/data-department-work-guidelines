@@ -17,6 +17,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Restore the Agent's stop condition for another person's uncommitted work and
+  work of unknown ownership. Name the task owner and supervisor in task-start
+  calibration without adding a meeting or approval step.
 - Check every Git-selected Markdown file with the native core and one TOML
   policy; ambient configuration can no longer hide source defects.
 - Remove the redundant Markdown lint wrapper and its unused dependencies while

@@ -45,14 +45,14 @@ containment, direct correction, and prevention of recurrence.
 
 ## Grow Capability Through Real Work
 
-At the start of a task, align on subject, boundary, and success criteria. At
-important decisions, examine facts, hypotheses, options, and risks. After
-delivery, choose the most consequential gap in reasoning or expression and agree
-on an observable improvement for the next task. Keep a few successful and failed
-examples with reasons. Move gradually from guided execution to independent
-judgment, method-building, and coaching. Feedback names a proposition, evidence,
-behavior, and consequence; a label such as “weak logic” gives no actionable
-direction.
+At the start of a task, the task owner and supervisor align on subject,
+boundary, and success criteria. At important decisions, examine facts,
+hypotheses, options, and risks. After delivery, choose the most consequential
+gap in reasoning or expression and agree on an observable improvement for the
+next task. Keep a few successful and failed examples with reasons. Move
+gradually from guided execution to independent judgment, method-building, and
+coaching. Feedback names a proposition, evidence, behavior, and consequence; a
+label such as “weak logic” gives no actionable direction.
 
 Coaching tests the member's reasoning without making the judgment for them.
 

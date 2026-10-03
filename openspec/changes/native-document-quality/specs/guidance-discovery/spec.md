@@ -4,12 +4,13 @@
 
 ### Requirement: Task routes preserve the work-quality contract
 
-The entry and seven topics SHALL preserve the unified guideline's duties without
-a root monolith. Readers SHALL find hard boundaries, risk-scaled minimums, six
-task boundaries, work states, evidence limits, and learning triggers. Resolving
-the matter, testing judgment within its limits, and improving the system for the
-next occurrence SHALL remain distinct outcomes. Each topic SHALL expose start,
-stop, and verification cues without a second card inventory.
+Entry and seven topics SHALL preserve duties: hard boundaries, risk-scaled
+minimums, six task boundaries, work states, evidence limits, and learning
+triggers. Resolving the matter, testing bounded judgment, and improving the
+system for next time SHALL remain distinct. Topics SHALL expose start, stop, and
+verification cues without a root monolith or second card inventory. Agents SHALL
+stop affected actions and escalate for another person's unrecognized or
+uncommitted work, or unknown ownership.
 
 #### Scenario: A high-risk task enters the route
 
@@ -94,6 +95,23 @@ stop, and verification cues without a second card inventory.
 - **AND** missing facts or authority, material direction changes, and
   irreversible risk still stop the affected action for clarification.
 
+#### Scenario: Another person's unfinished work is recognized
+
+- **WHEN** an Agent encounters another person's uncommitted work, even when its
+  owner and purpose are known
+- **THEN** the collaboration topic requires stopping the affected action and
+  escalation
+- **AND** recognizing the work does not authorize overwriting, cleaning, or
+  continuing the affected action.
+
+#### Scenario: Work ownership cannot be established
+
+- **WHEN** encountered work has unknown ownership
+- **THEN** the collaboration topic requires stopping the affected action and
+  escalation, while preserving that work
+- **AND** the Agent does not infer disposal or editing authority from a clean
+  accepted branch or its own task.
+
 ### Requirement: Decision framing preserves operational constraints
 
 Problem framing SHALL name time, cost, compliance, technical, and resource
@@ -115,6 +133,34 @@ basis SHALL be recorded in the existing work carrier.
   when the authorized person actually made the choice
 - **THEN** the analysis topic requires the actual decision owner, date, and basis
 - **AND** the deadline does not establish approval or authorize execution.
+
+### Requirement: Communication and coaching preserve judgment
+
+Communication SHALL state its purpose in an objective, measured tone. Meetings
+SHALL refocus drifting discussion on the decision. Deadline risks SHALL name
+escalation owners and triggers before harm grows. Task owners and supervisors
+SHALL jointly align on subject, boundary, and success criteria at task start.
+Coaching SHALL examine member reasoning, not decide for them. Managers SHALL NOT
+normalize recurring rescue. Agent delegation SHALL name output format,
+destination, audience, and detail.
+
+#### Scenario: Fluent delivery hides the purpose or the judgment owner
+
+- **WHEN** an exchange leaves its purpose unstated, uses slogans instead of
+  reasoning, substitutes the supervisor's conclusion for the member's, or
+  leaves an Agent's deliverable ambiguous
+- **THEN** the communication and evolution topics require a clear purpose,
+  measured expression, and preserved member judgment
+- **AND** recurring intervention requires a management-system correction.
+
+#### Scenario: Task-start calibration omits its counterpart
+
+- **WHEN** a task owner begins capability-building work with an individual
+  interpretation of its subject, boundary, and success criteria
+- **THEN** the evolution topic requires the task owner and supervisor to align
+  jointly at task start
+- **AND** later monthly sampling does not substitute for that calibration, and
+  no new meeting or approval gate is required.
 
 ## ADDED Requirements
 
@@ -158,22 +204,3 @@ assuming authority over the other owners' judgments.
   operative governance review and controls
 - **THEN** the data topic identifies the responsible owners and missing decision
 - **AND** a coordination role cannot grant itself the missing authority.
-
-### Requirement: Communication and coaching preserve judgment
-
-Communication SHALL state its purpose and keep an objective, measured tone.
-Meetings SHALL return to the decision question when discussion drifts. Deadline
-risks SHALL name the escalation owner and trigger before harm grows.
-Coaching SHALL examine a member's reasoning without making the judgment for
-them. Managers SHALL NOT normalize recurring individual rescue. Agent
-delegation SHALL name the deliverable's format, destination, audience, and
-level of detail.
-
-#### Scenario: Fluent delivery hides the purpose or the judgment owner
-
-- **WHEN** an exchange leaves its purpose unstated, uses slogans instead of
-  reasoning, substitutes the supervisor's conclusion for the member's, or
-  leaves an Agent's deliverable ambiguous
-- **THEN** the communication and evolution topics require a clear purpose,
-  measured expression, and preserved member judgment
-- **AND** recurring intervention requires a management-system correction.

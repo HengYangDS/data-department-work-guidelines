@@ -95,6 +95,8 @@ independent review or an automated proof of equivalence.
 | Sections 6.1, 6.4, 6.5, and 7.1: declared purpose, meeting focus, deadline escalation, and measured expression | Communication          | An unstated request, off-topic meeting, unowned delay, or slogan replaces a bounded decision and action.       |
 | Sections 11.3 and 11.7: coaching preserves member judgment and managers must not normalize individual rescue   | Evolution management   | A supervisor supplies the conclusion, or repeated personal intervention becomes the permanent operating model. |
 | Section 8.4: precise Agent deliverable                                                                         | Human–AI collaboration | A delegation leaves its output format, destination, audience, or detail to guesswork.                          |
+| Section 8.6: stop for another person's unrecognized or uncommitted work and work of unknown ownership          | Human–AI collaboration | A known owner's unfinished edits are encountered, but the Agent continues because it recognizes the work.      |
+| Section 11.3: task-start calibration belongs jointly to the task owner and supervisor                          | Evolution management   | The task owner aligns alone, or a monthly sample review substitutes for task-start calibration.                |
 
 Restore these duties in the existing paragraphs and execution table. Retain
 every surrounding permission, qualification, evidence limit, and owner. Do not
@@ -102,6 +104,15 @@ restore redundant cards, fixed forms, or a universal weekly meeting. The monthly
 case review and quarterly net-benefit floor remain unchanged. Topic wording
 still follows the department's task and professional context, not a tool's
 preferred vocabulary.
+
+The follow-up independent review at `04ba476` found the last two omissions after
+rereading the complete original and all seven current topics. Restore those
+actors and triggers without changing the authorized cadence redesign. Compare
+the known-owner unfinished-work case, the owner-unknown case, and task-start
+coaching with their original clauses. Structural tests and excerpt hashes cannot
+establish those meanings; use a source-based editorial recheck. Historical
+reviews retain their dated findings rather than being relabeled as complete
+semantic equivalence.
 
 The native dictionary initially rejected the valid plural and possessive of
 `deliverable`. Accept only that real term and its two normal inflections; retain

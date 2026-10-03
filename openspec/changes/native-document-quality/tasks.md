@@ -21,6 +21,16 @@
       second command, manifest, or installer for the same concern.
 - [x] 2.3 Apply human English editing to all seven task topics and compare every
       changed duty, condition, authority, and evidence limit with its source.
+      Follow-up review at `04ba476` found two omissions: another person's
+      uncommitted work and unknown ownership in the Agent stop condition, and
+      the task owner and supervisor as task-start calibration participants.
+      Independent repair recheck confirms both restorations against the original
+      and distinguishing cases, with no remaining finding in those clauses.
+      Existing cadence, member judgment, and neighboring duties remain intact;
+      full local source verification passes all 202 tests. The implemented
+      guidance requirements are synced through official OpenSpec without
+      archiving the Change. Hosted qualification and shared-product acceptance
+      remain separate open obligations.
 - [x] 2.4 Reconcile package, current OpenSpec, contribution, governance, CI,
       version, and changelog contracts. Audit current consumers and the resolved
       dependency graph for retired residue; retain archived bytes unchanged.
@@ -256,7 +266,8 @@
       offline telemetry, cold fixtures, readable native navigation, native
       shell-operator boundaries, and the implemented Markdown core policy.
       All 55 prior requirements and 180 scenarios are preserved; the core
-      policy adds two scenarios. The two draft proof requirements still await
+      policy adds two scenarios and the stop/calibration restoration adds three.
+      The two draft proof requirements still await
       the accepted ETHOS contract and are not synced;
       the removed duplicate npm policy is already absent. Full Change sync and
       archive remain incomplete. The original 84-unit editorial comparison is
@@ -264,10 +275,17 @@
       hashes do not prove semantic equivalence. Final shared product and
       adopter qualification, post-archive proof/publication, and owned lane
       retirement still remain.
-      A fresh independent review reads the original and all seven current
-      topics at `5dc8a65` and finds no actionable material loss; its judgment
+      The independent review at `5dc8a65` reads the original and all seven current
+      topics and finds no actionable material loss; its judgment
       is bounded, not semantic-equivalence proof. The 84-unit prior review is
       rebound to 170 unchanged excerpts and one edition-only substitution.
+      The follow-up review at `04ba476` finds two material omissions and reopens
+      item 2.3. Earlier clean findings do not override the later source-based
+      counterexamples; their dated evidence remains unchanged.
+      Its bounded repair recheck confirms both corrections without a new
+      meeting, approval gate, or private meaning validator. Item 2.3 is completed
+      after local source checks; this does not establish whole-document semantic
+      equivalence or complete the outstanding delivery obligations.
 - [x] 3.6 Publish the compatible original-duty correction with fresh local,
       installed ETHOS, signed patch, asset, and both Forge platform evidence;
       preserve the already qualified major release.
