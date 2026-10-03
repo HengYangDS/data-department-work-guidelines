@@ -170,6 +170,25 @@ and fragments; metadata, English, spacing, decisions and navigation.
 The same repository-relative entry SHALL run locally and on both CI planes.
 Diagram, card, topic and evidence counts SHALL NOT determine validity.
 
+#### Scenario: Official OpenSpec reports success with findings
+
+- **WHEN** the official CLI exits successfully but its complete report contains
+  an INFO, WARNING, or ERROR finding, or the process emits standard error
+- **THEN** the existing verifier rejects the result and preserves the native
+  item, location, severity, and message
+- **AND** findings remain visible when standard error accompanies the report,
+  whether the process succeeds or fails
+- **AND** passing summary totals do not establish a clean source check.
+
+#### Scenario: Official validation evidence is incomplete or wrongly bound
+
+- **WHEN** a native report names another root, omits items or issue arrays,
+  repeats an item identity, omits a category selected by `--all` even when it
+  has no items, or reports counts inconsistent with its items
+- **THEN** the verifier rejects that evidence without a report waiver
+- **AND** official OpenSpec retains responsibility for validation and lifecycle;
+  the consumer does not replace its parser or admission.
+
 #### Scenario: Verification fixtures do not borrow prior local state
 
 - **WHEN** the complete verifier runs in a fresh checkout with the declared

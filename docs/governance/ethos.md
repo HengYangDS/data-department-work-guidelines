@@ -129,6 +129,14 @@ not a login redirect or another Forge's success.
 | Change artifacts      | Strict official OpenSpec validation.                                                                      |
 | Failure behavior      | Negative tests, run once by the standalone verifier.                                                      |
 
+The official OpenSpec result must name this repository, include unique typed
+items and complete diagnostics, and report consistent native counts for both
+categories selected by `--all`, including empty categories. INFO, WARNING, and
+ERROR findings remain visible and fail the strict source check; process standard
+error also fails without discarding the accompanying report. Successful totals
+alone do not establish clean validation. OpenSpec still owns validation and
+lifecycle.
+
 ### Proof and Configuration
 
 The profile has exactly two default gates: `docs-integrity` and

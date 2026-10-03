@@ -821,6 +821,18 @@ owner without retaining duplicate mechanisms.
 
 ## Risks / Trade-offs
 
+The existing OpenSpec consumer must read the complete native report, not only
+its totals. Require the selected repository root, native report version, unique
+typed item identities, complete issue arrays, and summary counts consistent with
+those items for both categories selected by `--all`, including zero-item
+categories. Every INFO, WARNING, or ERROR finding remains visible and blocks
+the repository's strict quality check; successful process standard error does
+too. Preserve the captured report before rejecting process diagnostics on
+either success or failure. Native field diagnostics identify the actual item
+and location. This consumer does not interpret OpenSpec requirements or
+implement its lifecycle. Its source quality result does not certify dependency
+security or an installed successor.
+
 Native tests must establish their own filesystem prerequisites. The source-link
 fixtures need an ignored local path inside the selected repository, so each
 creates its existing `build` parent before making a temporary child. A cache

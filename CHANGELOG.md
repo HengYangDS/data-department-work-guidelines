@@ -17,6 +17,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Preserve official OpenSpec findings instead of accepting successful summary
+  totals alone. Reject warning output and incomplete, wrong-root, duplicate,
+  or inconsistent reports at the existing verifier.
 - Restore the Agent's stop condition for another person's uncommitted work and
   work of unknown ownership. Name the task owner and supervisor in task-start
   calibration without adding a meeting or approval step.

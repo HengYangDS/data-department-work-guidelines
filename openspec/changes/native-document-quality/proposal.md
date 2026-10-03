@@ -25,6 +25,12 @@ linter beside the current stack would leave the duplication intact.
   owner, authorization, evidence, and acceptance duties.
 - Replace the two English pipelines with one pinned native Vale command, its
   vocabulary, and native style rules.
+- Preserve every official OpenSpec diagnostic at the existing verifier's report
+  consumer, including findings accompanied by process standard error. Reject
+  findings, standard error, wrong-root or incomplete reports, and inconsistent
+  counts for both categories selected by `--all`, including empty categories.
+  Successful totals are not clean evidence. The official CLI still owns
+  validation; no parser or lifecycle replacement is introduced.
 - Remove Markdownlint CLI2's redundant glob and configuration-discovery layer.
   The existing Markdownlint core reads the single TOML policy and checks the
   complete Git-selected source directly. Preserve native rule diagnostics,

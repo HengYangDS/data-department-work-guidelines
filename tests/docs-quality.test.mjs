@@ -165,6 +165,213 @@ test("offline verification disables official telemetry only in its OpenSpec chil
   assert.equal(result.stderr, "");
 });
 
+test("official OpenSpec findings and report identity cannot be reduced to totals", () => {
+  const script = `
+    import assert from "node:assert/strict";
+    import childProcess from "node:child_process";
+    import { syncBuiltinESMExports } from "node:module";
+    import path from "node:path";
+    const original = childProcess.spawnSync;
+    const repository = ${JSON.stringify(root)};
+    const clean = {
+      version: "1.0",
+      root: { path: repository, source: "nearest" },
+      items: [{ id: "fixture", type: "spec", valid: true, issues: [], durationMs: 1 }],
+      summary: {
+        totals: { items: 1, passed: 1, failed: 0 },
+        byType: {
+          change: { items: 0, passed: 0, failed: 0 },
+          spec: { items: 1, passed: 1, failed: 0 },
+        },
+      },
+    };
+    let report = clean;
+    let stderr = "";
+    let status = 0;
+    let executionError;
+    childProcess.spawnSync = (command, args, options) => {
+      if (!args?.[0]?.replaceAll(String.fromCharCode(92), "/").includes("@fission-ai/openspec/"))
+        return original(command, args, options);
+      assert.equal(command, process.execPath);
+      assert.deepEqual(args.slice(1), ["validate", "--all", "--strict", "--json"]);
+      return { status, error: executionError, stdout: JSON.stringify(report), stderr };
+    };
+    syncBuiltinESMExports();
+    const { validateOpenSpec } = await import(${JSON.stringify(pathToFileURL(path.join(root, "tools/docs/runtime.mjs")).href)});
+    assert.doesNotThrow(validateOpenSpec);
+    report = structuredClone(clean);
+    report.items.push({ id: "fixture-change", type: "change", valid: true, issues: [], durationMs: 0, futureField: "retained native extension" });
+    report.summary.totals.items = report.summary.totals.passed = 2;
+    report.summary.byType.change = { items: 1, passed: 1, failed: 0 };
+    assert.doesNotThrow(validateOpenSpec);
+    const cases = [
+      ...["INFO", "WARNING", "ERROR"].map((level) => ({
+        name: level,
+        change: (value) => value.items[0].issues.push({ level, path: "requirements[0]", message: "native fixture finding" }),
+        expected: /fixture.*requirements\\[0\\].*native fixture finding/u,
+      })),
+      { name: "stderr", stderr: "native fixture warning\\n", expected: /native fixture warning/u },
+      { name: "wrong root", change: (value) => { value.root.path = path.dirname(repository); } },
+      { name: "missing root", change: (value) => { delete value.root; } },
+      { name: "wrong version", change: (value) => { value.version = "2.0"; } },
+      { name: "missing items", change: (value) => { delete value.items; } },
+      { name: "empty items", change: (value) => { value.items = []; } },
+      { name: "wrong totals", change: (value) => { value.summary.totals.items = 2; } },
+      { name: "wrong passed", change: (value) => { value.summary.totals.passed = 0; } },
+      { name: "string count", change: (value) => { value.summary.totals.items = "1"; } },
+      { name: "wrong type totals", change: (value) => { value.summary.byType.spec.items = 2; } },
+      { name: "invalid item", change: (value) => { value.items[0].valid = false; } },
+      { name: "duplicate identity", change: (value) => { value.items.push(structuredClone(value.items[0])); value.summary.totals.items = value.summary.totals.passed = 2; value.summary.byType.spec.items = value.summary.byType.spec.passed = 2; } },
+      { name: "missing issues", change: (value) => { delete value.items[0].issues; } },
+      { name: "unknown item type", change: (value) => { value.items[0].type = "other"; } },
+      { name: "nonstring item type", change: (value) => { value.items[0].type = ["spec"]; } },
+      { name: "missing type totals", change: (value) => { delete value.summary.byType.spec; } },
+      { name: "missing empty type totals", change: (value) => { delete value.summary.byType.change; } },
+      { name: "unknown type totals", change: (value) => { value.summary.byType.other = { items: 0, passed: 0, failed: 0 }; } },
+      { name: "negative duration", change: (value) => { value.items[0].durationMs = -1; } },
+      { name: "unknown severity", change: (value) => { value.items[0].issues.push({ level: "other", path: "file", message: "native fixture finding" }); } },
+    ];
+    const incorrectlyAccepted = [];
+    for (const sample of cases) {
+      report = structuredClone(clean);
+      sample.change?.(report);
+      stderr = sample.stderr ?? "";
+      try {
+        assert.throws(validateOpenSpec, sample.expected ?? /OpenSpec/u);
+      } catch (error) {
+        incorrectlyAccepted.push({ name: sample.name, message: error.message });
+      }
+    }
+    for (const exitStatus of [0, 1, null]) {
+      report = structuredClone(clean);
+      const failed = exitStatus !== 0;
+      report.items[0].valid = !failed;
+      const finding = failed ? "native failed-process finding" : "native successful-process finding";
+      report.items[0].issues.push({ level: failed ? "ERROR" : "INFO", path: "requirements[0]", message: finding });
+      report.summary.totals.passed = report.summary.byType.spec.passed = failed ? 0 : 1;
+      report.summary.totals.failed = report.summary.byType.spec.failed = failed ? 1 : 0;
+      status = exitStatus;
+      executionError = exitStatus === null ? Object.assign(new Error("native fixture process timed out"), { code: "ETIMEDOUT" }) : undefined;
+      stderr = "native process diagnostic\\n";
+      const stdoutWrite = process.stdout.write;
+      const stderrWrite = process.stderr.write;
+      let failureOutput = "";
+      let failureError = "";
+      process.stdout.write = (chunk) => { failureOutput += chunk; return true; };
+      process.stderr.write = (chunk) => { failureError += chunk; return true; };
+      try {
+        assert.throws(validateOpenSpec, (error) => {
+          failureError += error.message;
+          return exitStatus === null ? /native fixture process timed out/u.test(error.message) : exitStatus ? /exited 1/u.test(error.message) : /emitted warning output/u.test(error.message);
+        });
+        assert.ok(failureOutput.includes(finding), "native findings must survive process diagnostic rejection");
+        assert.match(failureError, /native process diagnostic/u);
+      } catch (error) {
+        incorrectlyAccepted.push({ name: "findings with standard error at exit " + exitStatus, message: error.message });
+      } finally {
+        process.stdout.write = stdoutWrite;
+        process.stderr.write = stderrWrite;
+      }
+    }
+    assert.deepEqual(incorrectlyAccepted, [], JSON.stringify(incorrectlyAccepted));
+  `;
+  const result = spawnSync(
+    process.execPath,
+    ["--input-type=module", "--eval", script],
+    { cwd: root, encoding: "utf8", input: "", timeout: 20_000 },
+  );
+  assert.ifError(result.error);
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.stderr, "");
+});
+
+test("real official OpenSpec informational findings block source verification", () => {
+  const directory = mkdtempSync(
+    path.join(os.tmpdir(), "ddwg-openspec-report-"),
+  );
+  try {
+    const runtime = path.join(directory, "tools", "docs", "runtime.mjs");
+    mkdirSync(path.dirname(runtime), { recursive: true });
+    cpSync(path.join(root, "tools", "docs", "runtime.mjs"), runtime);
+    const manifest = path.join(
+      directory,
+      "node_modules",
+      "@fission-ai",
+      "openspec",
+      "package.json",
+    );
+    mkdirSync(path.dirname(manifest), { recursive: true });
+    writeFileSync(
+      manifest,
+      JSON.stringify({
+        bin: { openspec: nodeTool("@fission-ai/openspec", "openspec") },
+      }),
+    );
+    const spec = path.join(
+      directory,
+      "openspec",
+      "specs",
+      "fixture",
+      "spec.md",
+    );
+    mkdirSync(path.dirname(spec), { recursive: true });
+    writeFileSync(
+      path.join(directory, "openspec", "config.yaml"),
+      "schema: spec-driven\n",
+    );
+    const source = (body) =>
+      [
+        "# Fixture",
+        "",
+        "## Purpose",
+        "",
+        "Qualify complete native report consumption and preserve every diagnostic.",
+        "",
+        "## Requirements",
+        "",
+        "### Requirement: A native finding is preserved",
+        "",
+        body,
+        "",
+        "#### Scenario: A source check is requested",
+        "",
+        "- **WHEN** the fixture is checked",
+        "- **THEN** native diagnostics remain visible.",
+        "",
+      ].join("\n");
+    for (const finding of [false, true]) {
+      writeFileSync(
+        spec,
+        source(
+          `The tool SHALL preserve native diagnostics.${finding ? " Native source detail.".repeat(30) : ""}`,
+        ),
+      );
+      const before = readFileSync(spec, "utf8");
+      const script = `
+        import assert from "node:assert/strict";
+        const { validateOpenSpec } = await import(${JSON.stringify(pathToFileURL(runtime).href)});
+        ${finding ? "assert.throws(validateOpenSpec, /spec:fixture.*requirements\\[0\\].*\\[INFO\\].*very long/u);" : "assert.doesNotThrow(validateOpenSpec);"}
+      `;
+      const result = spawnSync(
+        process.execPath,
+        ["--input-type=module", "--eval", script],
+        {
+          cwd: directory,
+          encoding: "utf8",
+          input: "",
+          timeout: 20_000,
+        },
+      );
+      assert.ifError(result.error);
+      assert.equal(result.status, 0, result.stderr + result.stdout);
+      assert.equal(result.stderr, "");
+      assert.equal(readFileSync(spec, "utf8"), before);
+    }
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
 test("the public test command bounds workers without reducing its discovered inventory", () => {
   const script = `
     import assert from "node:assert/strict";

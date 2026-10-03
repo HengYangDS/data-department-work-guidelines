@@ -213,6 +213,22 @@
       network-denied cold installation. Hosted source and offline qualification
       for the next edition remain open.
 
+- [ ] 2.31 Repair the existing official OpenSpec report consumer. Retain native
+      diagnostics, reject standard error and wrong-root, incomplete, duplicate
+      or inconsistent evidence, and preserve the real official CLI execution.
+      Reproduce the totals-only acceptance defect, qualify distinguishing native
+      report controls, and rerun full source, installed proof, and cold offline
+      checks without a new gate or lifecycle implementation. Native report tests
+      reproduce the summary-only defect; independent review identifies and
+      rechecks diagnostic preservation on successful standard error and required
+      zero-item categories under `--all`. Native execution-error controls also
+      reproduce and repair lost partial diagnostics. The real CLI controls and
+      complete local verification pass all 204 tests. The
+      implemented requirement is synced through official OpenSpec, preserving
+      existing requirements and scenarios. Exact-source installed proof, cold
+      installation, and hosted qualification remain separate obligations; the
+      next edition is not published.
+
 ## 3. Qualification and publication
 
 - [x] 3.1 Freeze source and a source-bound offline bundle; run format, lint,
@@ -266,7 +282,8 @@
       offline telemetry, cold fixtures, readable native navigation, native
       shell-operator boundaries, and the implemented Markdown core policy.
       All 55 prior requirements and 180 scenarios are preserved; the core
-      policy adds two scenarios and the stop/calibration restoration adds three.
+      policy adds two scenarios, the stop/calibration restoration adds three,
+      and complete OpenSpec report consumption adds two.
       The two draft proof requirements still await
       the accepted ETHOS contract and are not synced;
       the removed duplicate npm policy is already absent. Full Change sync and
