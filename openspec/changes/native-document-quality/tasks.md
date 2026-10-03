@@ -353,6 +353,13 @@
       the existing parsed comment boundary; no prose-only alias remains.
       These are local source results, not installed shared-product acceptance
       or hosted publication. Cold and exact-HEAD acceptance follow this commit.
+      Signed `bf081da` passes full installed exact-HEAD proof and a fresh detached
+      install with outbound network denied by the OS. The complete 215-test
+      verifier passes there; all 69 source blobs and modes match the committed
+      tree. The three owned package and format-input scratch roots are retired;
+      original failed receipts and the frozen bundle stay outside source.
+      Local candidate/accepted integration and native lane retirement follow;
+      shared quality, supply advisory resolution, and hosted delivery remain open.
 
 ## 3. Qualification and publication
 
