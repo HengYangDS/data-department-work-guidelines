@@ -284,7 +284,7 @@
 - [ ] 2.33 Restore native format and spacing ownership. Reproduce rejection
       of meaningful code and data literals, then remove duplicate raw scans.
       Make Markdown block and list spacing explicit: single-paragraph items
-      are tight; genuinely multi-block lists are consistently separated.
+      are tight; internally separated multi-block lists use consistent peer gaps.
       Consume the official list-item-spacing rule with CommonMark semantics,
       not a private peer-list regex. Repair current source without changing
       duties, links, code, or data. Keep native format owners, English checks,
@@ -311,13 +311,21 @@
       the genuinely loose contributor steps are repaired. All 209 source tests
       pass, with no skipped cases; the updated bundle covers all 155 packages
       and their licenses. A mixed-old-and-new source fixture is repaired to read
-      the whole current tool owner. Literal-format supply, committed-source
-      proof, cold installation, shared integration, and hosted delivery remain
-      open; the existing supply advisory is not waived. Official partial sync
-      retains all 55 requirements and adds two list-spacing scenarios for a total
-      of 196; the pending shared proof requirements remain outside main specs.
-      All 28 current Markdown files render without warning; current changed
-      planning passes. No local success certifies the forthcoming shared product.
+      the whole current tool owner. Signed `4027bfe` and its task-only child
+      `1faca2f` carry the correction. The child passes exact-HEAD installed proof
+      and a clean detached install with OS-denied outbound network: all 209 tests
+      pass and all 68 source hashes and modes match. Native integration brings
+      local `dev`, `main`, and `candidate/dev` to that child; the canonical
+      toolchain is also reinstalled from the same bundle without network access.
+      The rendered task list keeps all 33 items while removing its 33 unnecessary
+      paragraph wrappers; the first 32 task texts are unchanged. Official partial
+      sync preserves all 55 requirements and adds two scenarios for a total of
+      196; pending shared proof requirements stay outside main specs. All 28
+      Markdown files render without warning. Completed cold and input scratch
+      are retired; receipts and the frozen bundle remain outside source.
+      Non-Markdown literal-format correction, shared integration, hosted matrices,
+      and publication remain open. The existing supply advisory is not waived,
+      and local proof does not accept the forthcoming shared product.
 
 ## 3. Qualification and publication
 
