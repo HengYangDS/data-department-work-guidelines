@@ -19,7 +19,7 @@
       interface.
 - [x] 2.2 Extend the current installer and bundle owners without retaining a
       second command, manifest, or installer for the same concern.
-- [ ] 2.3 Apply human English editing to all seven task topics and compare every
+- [x] 2.3 Apply human English editing to all seven task topics and compare every
       changed duty, condition, authority, and evidence limit with its source.
       Keep one topic per duty. Retain task-owner and supervisor calibration,
       actual-breach correction, document title status, project-conflict
@@ -37,20 +37,18 @@
       Primary review retains the narrower original limits, not every suggestion.
       Correct existing owners without another report, parser, evaluator, meeting,
       approval, or meaning gate.
-      Signed `18db9c2` passes existing installed full proof and fresh
-      denied-network cold verification: 215 tests, zero skips, and 69 source
-      hashes and modes. Prior source renders cover all 28 Markdown files.
-      A later complete-original Claude review identifies four further limits.
-      They are restored at existing owners; its targeted actual-source recheck
-      finds no unresolved defect in those corrections, not whole-guidance
-      equivalence. Current local verification passes all 215 tests with zero
-      skips and renders all 28 Markdown files. Selected official sync conserves
-      11 requirements and all 40 prior scenarios, adding four bounded scenarios
-      without rewriting preambles. The approved cadence redesign keeps shared
-      evidence calibration, without a weekly ceremony. Current installed
-      changed planning times out in native Git attribute observation; leave
-      this task open until that acceptance passes. New signed-source proof,
-      supplier acceptance, and hosted delivery remain separate obligations.
+      Signed `4ebd0f0` retains the four later original-duty corrections. The
+      targeted actual-source Claude recheck finds no unresolved defect in
+      those corrections, not whole-guidance equivalence. Local and fresh
+      denied-network cold verification pass all 215 tests with zero skips;
+      all 69 source hashes and modes match, and all 28 Markdown files render.
+      Selected official sync conserves 11 requirements and all 40 prior
+      scenarios, adding four bounded scenarios without rewriting preambles.
+      The approved cadence redesign retains shared evidence calibration.
+      Current installed changed planning and exact-HEAD full repository proof
+      pass. Native land still times out in the legacy finite-input transport;
+      no protected ref, runtime, hook, or publication is changed. Supplier
+      acceptance and hosted delivery remain separate open obligations.
 - [x] 2.4 Reconcile package, current OpenSpec, contribution, governance, CI,
       version, and changelog contracts. Audit current consumers and the resolved
       dependency graph for retired residue; preserve historical Git bytes.
@@ -217,8 +215,8 @@
       not fix the separate official OpenSpec braces dependency.
       Local removal at `1219528` eliminates 19 packages. The current signed
       source passes complete local and denied-network cold verification.
-      Installed exact-source proof passes at `18db9c2`; the later duty
-      correction needs its own proof. Both hosted matrices remain open.
+      Local and cold verification and installed exact-source proof pass at
+      `4ebd0f0`. Both hosted matrices for the next edition remain open.
 - [ ] 2.31 Repair the existing official OpenSpec report consumer. Retain native
       diagnostics, reject standard error and wrong-root, incomplete, duplicate,
       or inconsistent evidence, and preserve the real official CLI execution.
@@ -228,9 +226,8 @@
       full source, installed proof, and cold checks without another gate or
       lifecycle implementation. The implemented requirement is officially
       synced; `c117ab1` qualifies its earlier exact-source proof and cold tests.
-      Local and cold verification and installed proof pass at `18db9c2`.
-      The later duty correction needs refreshed exact-source proof; hosted
-      source and offline qualification remain open.
+      Local and cold verification and installed proof pass at `4ebd0f0`.
+      Hosted source and offline qualification remain open.
 - [x] 2.32 Retire all reviewed completed-Change copies from the current tree.
       Audit unique facts, obligations, and incoming consumers; preserve exact
       ancestor Git objects and existing proof. Replace three cited designs with
@@ -273,9 +270,8 @@
       As observed on 2026-10-04, both Forges still serve `ba982673`; this local
       correction is unpublished. Original Windows109 retries fail at npm audit,
       not memory exhaustion. Installed proof and cold installation pass at
-      `18db9c2`; refresh proof for the later duty correction. Shared-product
-      acceptance, supply security, both hosted matrices, and publication remain
-      open.
+      `4ebd0f0`. Shared-product acceptance, supply security, both hosted matrices,
+      and publication remain open.
 
 ## 3. Qualification and publication
 
