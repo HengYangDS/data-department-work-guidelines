@@ -332,9 +332,13 @@
       certify a protected branch or GitHub. Task-only `6ccee857` records that
       result without changing product inputs. Installed full proof still awaits
       the accepted ETHOS Python-provider repair. Actual GitHub execution,
-      repaired-baseline contribution admission, protected-source publication,
-      and exact failed-root aftercare remain open; no private provider or
-      conservation waiver is introduced.
+      repaired-baseline contribution admission and protected-source publication
+      remain open; no private provider or conservation waiver is introduced.
+      The source-bound native disposal receipt records retirement of the old
+      failed Windows fixture: 577 entries removed, all twelve sibling roots
+      preserved, and the original Runner controls and VM isolation restored.
+      No file contents or private test keys were read. This is superseded-test
+      aftercare, not proof that public recovery succeeded.
 - [x] 3.4 Publish the major signed SemVer edition independently to GitLab and
       GitHub; verify both exact refs, Releases, downloaded asset hashes, and
       declared source and offline platform jobs.
