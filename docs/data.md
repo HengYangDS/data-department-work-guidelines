@@ -31,12 +31,11 @@ Data with unanswered questions may support exploration, but must not be
 presented as a durable trusted asset. Exploratory code and temporary data may
 move quickly inside that boundary. Neither may enter a shared, production, or
 decision path until its meaning, quality, permissions, and reproducibility are
-qualified for that use; until then it remains exploratory. Distinguish
-source data, production data, experimental results, service views,
-platform-derived views, and reporting views. Reports, catalogs, caches, and
-Agent summaries are projections; none may quietly become the source of truth. Preserve
-the source and history of revisions, backfills, and derivations so the current
-value can be explained.
+qualified for that use. Distinguish source data, production data, experimental
+results, service views, platform-derived views, and reporting views. Reports,
+catalogs, caches, and Agent summaries are projections; none may quietly become
+the source of truth. Preserve the source and history of revisions, backfills,
+and derivations so the current value can be explained.
 
 ## Preserve the Historical Point of View
 

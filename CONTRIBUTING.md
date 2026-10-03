@@ -64,10 +64,11 @@ a rule without exercising a defect is insufficient. Keep the cases beside the
 rule rather than introducing another prose-test pipeline.
 
 The [configuration map](.config/README.md) identifies the single policy owner
-for each check. Prettier, Markdownlint, dprint, and lychee read native TOML directly;
-Vale uses its required native INI, YAML, and vocabulary files. Repository
-commands select those owners explicitly, without ambient editor configuration,
-format conversion, or duplicated package policy.
+for each check. Prettier and lychee read native TOML directly; Markdownlint
+and dprint receive parsed concern-local values through their public
+configuration interfaces. Vale uses its required native INI, YAML, and
+vocabulary files. Repository commands select those owners explicitly, without
+ambient editor configuration, format conversion, or duplicated package policy.
 
 Paragraphs, headings, lists, quotes, link labels, and table cells are reader
 text. Code spans, fenced commands, and URL destinations retain their syntax. The

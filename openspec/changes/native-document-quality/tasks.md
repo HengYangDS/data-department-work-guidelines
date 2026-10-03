@@ -307,6 +307,12 @@
       verified render custody remain outside source.
 - [ ] 2.33 Restore native format and spacing ownership. Reproduce rejection
       of meaningful code and data literals, then remove duplicate raw scans.
+      Actual-source Claude review confirms quantity compliance and identifies
+      misplaced semantic paragraph boundaries, an inaccurate configuration
+      claim, and a stale scenario count. Corrected owners retain every evolution
+      duty word and the shared cadence scope. Scoped source recheck has no
+      remaining finding; all 215 tests and 28 native renders pass. No spacing
+      rule is added; installed shared and hosted acceptance remain open.
       Make Markdown block and list spacing explicit: single-paragraph items
       are tight; internally separated multi-block lists use consistent peer gaps.
       Consume the official list-item-spacing rule with CommonMark semantics,
@@ -453,7 +459,8 @@
       adds one. Historical-copy disposition adds two more, preserving all
       previous requirements and scenarios. The unidentified-task-owner
       restoration adds one more; native literal-spacing preservation adds two
-      more. These 194 main-spec scenarios do not prove
+      more. Items 2.3 and 2.33 record later guidance, list-spacing, and
+      native-format scenarios. Synced main-spec scenarios do not prove
       whole-document semantic equivalence.
       The two draft proof requirements still await
       the accepted ETHOS contract and are not synced;

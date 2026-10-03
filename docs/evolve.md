@@ -51,10 +51,9 @@ hypotheses, options, and risks. After delivery, choose the most consequential
 gap in reasoning or expression and agree on an observable improvement for the
 next task. Keep a few successful and failed examples with reasons. Move
 gradually from guided execution to independent judgment, method-building, and
-coaching. Feedback names a proposition, evidence, behavior, and consequence; a
+coaching. Coaching tests the member's reasoning without making the judgment for
+them. Feedback names a proposition, evidence, behavior, and consequence; a
 label such as “weak logic” gives no actionable direction.
-
-Coaching tests the member's reasoning without making the judgment for them.
 
 Review evidence before judging delivery risk. At minimum, inspect problem
 framing, the logical model, evidence and uncertainty, trade-offs, execution and
@@ -79,6 +78,7 @@ Every task must meet the hard boundaries. Critical responsibilities should be
 performed independently and reliably. Call a result exceptional only when it
 produces evidenced net benefit, transfers a method, reduces long-term
 complexity, and improves others' capacity.
+
 If a five-level review is used, keep its meaning stable:
 
 | Level             | Observable delivery risk                                                                         |
@@ -115,6 +115,7 @@ At least quarterly, the guideline maintainer and users review the net benefit
 of current rules, templates, tools, and Agent practices, and assess capability
 gaps. Keep, revise, or retire practices accordingly. L2 work may set a shorter
 task-specific interval at authorization.
+
 Use existing meetings, tickets, and reviews; record each material decision and
 its owner there. Do not create a form or meeting unless existing carriers cannot
 hold the necessary review. No routine “nothing happened” activity report is
@@ -142,6 +143,8 @@ harm before filling in the record if needed; truth, authority, and
 responsibility remain binding. Record the temporary decision, who made it,
 on which facts and authority, its expiry, takeover owner, and rollback condition.
 Complete verification and review once risk is controlled. Repeated “emergency
-exceptions” are a system problem. Specific rule changes still follow
+exceptions” are a system problem.
+
+Specific rule changes still follow
 [repository governance](governance/ethos.md). Team adoption must be shown
 through real work, not inferred from publication.

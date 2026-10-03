@@ -44,6 +44,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   Markdown rules while still rejecting padding between reader blocks.
 - Keep single-paragraph list items together even when their text wraps; check
   genuinely multi-block lists for consistent separation with the native rule.
+  Separate general rule-change, review, and management duties from neighboring
+  paragraphs without changing their scope.
 - Preserve meaningful blank lines in code and data strings; native TOML
   formatting checks syntax and layout without changing values or comments.
 
