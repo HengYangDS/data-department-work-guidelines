@@ -133,7 +133,6 @@
       current proof from shared acceptance and product-defined applicable
       scopes. Retain exactly two default gates and no private substitute.
       Reconcile current references and rerun affected checks.
-
 - [x] 2.17 Remove duplicate directory-name exclusions after native Git source
       selection. Prove ignored local state stays excluded, while tracked current
       Markdown under normally ignored paths receives prose and link checks.
@@ -161,7 +160,6 @@
       with adverse cases and correct the earlier semantic-coverage conclusion
       without rewriting its dated evidence. Preserve all other duties and
       avoid a new record, template, or validator.
-
 - [x] 2.22 Replace specialist record and publication terminology in member
       guidance with ordinary work language. Preserve the existing record
       owner, decision date, authorization, evidence limits, and acceptance;
@@ -196,7 +194,6 @@
       `main`, and the post-release source and offline jobs. Original v7.0.8 and
       peak-load v7.0.9 tag-source timeout evidence remains unchanged; passing
       later jobs does not prove that shared-host saturation cannot recur.
-
 - [x] 2.27 Remove inherited build-directory and native-cache prerequisites from
       the existing source-link and concurrent-install fixtures. Create the
       ignored parent explicitly and model the regular target behind `EEXIST`;
@@ -239,7 +236,6 @@
       clones, supply inputs, duplicate downloads, and v7.0.9 download resources.
       v7.0.11 and v7.0.10 remain as current and qualified rollback. Original
       release notes, tags, source, and verification evidence remain.
-
 - [ ] 2.30 Replace the redundant Markdownlint CLI2 wrapper with the existing
       native core over all Git-selected Markdown. Preserve TOML policy,
       custom comment controls, native diagnostics, literal source paths,
@@ -252,7 +248,6 @@
       Markdown files, and passes all 202 tests, installed exact-HEAD proof, and
       network-denied cold installation. Hosted source and offline qualification
       for the next edition remain open.
-
 - [ ] 2.31 Repair the existing official OpenSpec report consumer. Retain native
       diagnostics, reject standard error and wrong-root, incomplete, duplicate
       or inconsistent evidence, and preserve the real official CLI execution.
@@ -268,7 +263,6 @@
       existing requirements and scenarios. Exact-source installed proof and
       denied-network cold installation pass at `c117ab1` with all 204 tests.
       Hosted qualification remains open; the next edition is not published.
-
 - [x] 2.32 Retire all reviewed completed-Change copies from the current tree.
       Audit unique facts, obligations, and incoming consumers; preserve exact
       ancestor Git objects and existing proof. Replace three cited designs with
@@ -287,15 +281,17 @@
       local roots are clean and identical after native integration. Completed
       cold checkouts and the prior absorbed Work Lane are retired; proof and
       verified render custody remain outside source.
-
-- [ ] 2.33 Restore native Markdown spacing ownership. Reproduce the raw-text
-      scan's rejection of meaningful fenced and indented spacing, then remove
-      that duplicate Markdown path. Preserve English checks, native reader-block
-      padding failures, nested code, and non-Markdown text hygiene. Qualify
-      distinguishing native cases, the full public source verifier, exact-HEAD
-      proof, cold installation, and both Forge matrices before closure. Shared
-      reader/configuration constraints remain an ETHOS integration obligation;
-      do not add a second Markdown rule or declare its product work complete.
+- [ ] 2.33 Restore native format and spacing ownership. Reproduce rejection
+      of meaningful code and data literals, then remove duplicate raw scans.
+      Make Markdown block and list spacing explicit: single-paragraph items
+      are tight; genuinely multi-block lists are consistently separated.
+      Consume the official list-item-spacing rule with CommonMark semantics,
+      not a private peer-list regex. Repair current source without changing
+      duties, links, code, or data. Keep native format owners, English checks,
+      negative cases, and justified plain-text hygiene. Qualify full source,
+      exact-HEAD proof, cold installation, and both Forge matrices. Shared
+      enforcement still requires formal ETHOS integration; remove superseded
+      local glue after that delivery, not the upstream rule or policy.
       Two original assertions reproduce the raw scan's literal-code failure.
       The six focused native controls and all 206 tests pass after the existing
       consumer delegates Markdown spacing to MD012. Public lint and layout
@@ -307,6 +303,21 @@
       All 68 source blobs and modes match. These qualify the local correction,
       not current supply security or the pending accepted shared-runtime repair;
       both Forge matrices and publication remain open.
+      A fresh native-structure audit finds seven unnecessary gaps between
+      single-paragraph task items. The current source is normalized and the
+      contributor convention is explicit. The official CommonMark rule now
+      runs in the existing lint entry; it rejects gaps despite source wrapping
+      and preserves literal and nested structure. Three missing separators in
+      the genuinely loose contributor steps are repaired. All 209 source tests
+      pass, with no skipped cases; the updated bundle covers all 155 packages
+      and their licenses. A mixed-old-and-new source fixture is repaired to read
+      the whole current tool owner. Literal-format supply, committed-source
+      proof, cold installation, shared integration, and hosted delivery remain
+      open; the existing supply advisory is not waived. Official partial sync
+      retains all 55 requirements and adds two list-spacing scenarios for a total
+      of 196; the pending shared proof requirements remain unsynced. All 28
+      current Markdown files render without warning, and current changed planning
+      passes. No local success certifies the forthcoming shared product.
 
 ## 3. Qualification and publication
 

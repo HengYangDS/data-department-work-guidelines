@@ -514,12 +514,12 @@ separate; the bundle SHALL NOT impersonate its authority.
 
 ### Requirement: Retained source receives format and spacing checks
 
-Prettier and Markdown lint SHALL check all tracked or unignored Markdown,
-including OpenSpec archives. Native Markdown rules SHALL own spacing and
-preserve fenced and indented code. Non-Markdown spacing SHALL cover decodable
-tracked or unignored text, including archives and files without extensions,
-excluding binaries and symlinks. Spelling, links, and metadata SHALL cover
-current reader material; archives SHALL NOT become current guidance.
+Prettier and native Markdown lint SHALL check tracked or unignored Markdown,
+including archives. Markdown blocks SHALL use one blank line; single-paragraph
+list peers SHALL be adjacent despite wrapping, and loose-list peers consistently
+separated. Literal code SHALL keep its spacing. Non-Markdown UTF-8 text SHALL
+receive spacing checks; binaries and symlinks are excluded. Spelling, links and
+metadata SHALL cover current readers, not promote archives to guidance.
 
 #### Scenario: An archived Markdown file breaks source hygiene
 
@@ -543,6 +543,22 @@ current reader material; archives SHALL NOT become current guidance.
 - **THEN** the existing native spacing rule preserves that literal content
 - **AND** the general text consumer does not reject it through a duplicate
   raw Markdown spacing scan.
+
+#### Scenario: Wrapped simple list items contain unnecessary gaps
+
+- **WHEN** a list has only single-paragraph items, including wrapped, ordered,
+  task, nested, or quoted items, and a blank line separates peers
+- **THEN** the native list-spacing rule rejects that gap with its source position
+- **AND** document comments and ambient policy cannot waive that check.
+
+#### Scenario: List structure requires separation
+
+- **WHEN** a list item has internally separated paragraphs or blocks, or a
+  fenced example contains literal blank lines
+- **THEN** the native rule preserves literal content and requires one blank line
+  between the genuinely loose list's peer items
+- **AND** tight nested lists, separate lists, heading boundaries, and ordinary
+  paragraph separation retain their structure.
 
 #### Scenario: Reader padding follows a valid code example
 

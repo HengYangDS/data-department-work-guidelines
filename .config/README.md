@@ -5,14 +5,14 @@ directory. Executable checks stay in `tools/`; caches, work state, and evidence
 stay outside this directory. The existing repository verifier rejects missing,
 misplaced, duplicated, executable, or linked configuration.
 
-| Responsibility            | Owner                                                                   | Native consumer                                                     |
-| ------------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| Formatting                | [Prettier TOML](checks/format/prettier.toml)                            | Prettier, with explicit policy and no ambient editor configuration. |
-| Markdown policy           | [Markdownlint TOML](checks/markdown/markdownlint.toml)                  | Markdownlint core, over Git-selected source with the existing rule. |
-| Prose and terms           | [Vale configuration](checks/prose/vale.ini), its styles, and vocabulary | Vale; the INI file selects its adjacent native YAML styles.         |
-| Link checking             | [Lychee TOML](checks/links/lychee.toml)                                 | Lychee; only the explicit online operation changes offline mode.    |
-| Native tool supply        | [Supply manifest](supply/native.json)                                   | The existing installer and offline-bundle builder.                  |
-| Release artifact identity | [Bundle record](release/offline-bundle.json)                            | Offline inspection, installation, and release verification.         |
+| Responsibility            | Owner                                                                   | Native consumer                                                              |
+| ------------------------- | ----------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Formatting                | [Prettier TOML](checks/format/prettier.toml)                            | Prettier, with explicit policy and no ambient editor configuration.          |
+| Markdown policy           | [Markdownlint TOML](checks/markdown/markdownlint.toml)                  | Markdownlint core and the native list-spacing rule over Git-selected source. |
+| Prose and terms           | [Vale configuration](checks/prose/vale.ini), its styles, and vocabulary | Vale; the INI file selects its adjacent native YAML styles.                  |
+| Link checking             | [Lychee TOML](checks/links/lychee.toml)                                 | Lychee; only the explicit online operation changes offline mode.             |
+| Native tool supply        | [Supply manifest](supply/native.json)                                   | The existing installer and offline-bundle builder.                           |
+| Release artifact identity | [Bundle record](release/offline-bundle.json)                            | Offline inspection, installation, and release verification.                  |
 
 Prefer TOML when a native policy consumer supports it. Vale requires INI for its
 main configuration, YAML for rules, and text for vocabulary. The supply manifest

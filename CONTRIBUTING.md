@@ -78,10 +78,18 @@ valid. A passing style check does not prove factual accuracy, semantic fidelity,
 or reader understanding. Review those at the
 [communication](docs/communicate.md) and task owners.
 
-Use one blank line between reader blocks, not repeated empty lines for visual
-padding. Native Markdown rules own that spacing and preserve meaningful blank
-lines inside fenced and indented code. The other text checks retain their
-non-Markdown spacing boundary; neither consumer rewrites literal content.
+Use one blank line between headings, paragraphs, and other reader blocks.
+Within a list, single-paragraph items stay together without blank lines, even
+when a paragraph wraps across source lines. If an item needs a blank line
+between its paragraphs or blocks, use one between peer items consistently.
+A nested list without an internal blank line may stay tight.
+Keep one blank line around a complete list, table, quote, or fenced example.
+Do not add empty lines for visual padding. Markdownlint owns block spacing;
+the official `remark-lint-list-item-spacing` rule uses CommonMark paragraph
+structure with `checkBlanks = true`, not the number of physical source lines.
+Both run through the existing lint command and governed TOML policy. Code
+literals retain their meaningful spacing. The other text checks retain their
+non-Markdown spacing boundary.
 
 For `docs/` pages, keep ETHOS metadata in the leading HTML comment and put the
 H1 after one blank line as the first visible block. Copy a current page's
@@ -193,6 +201,7 @@ Change authority.
    `npm audit --audit-level=moderate` on the intended Work Lane. The full source
    check follows the new bundle record in Step 2. Do not tag a merely prepared
    edition.
+
 2. Supply every platform archive and upstream license notice under `tools` in
    [the native supply manifest](.config/supply/native.json). Obtain their exact
    bytes from the declared sources or an already qualified mirror. Use two local
@@ -237,6 +246,7 @@ Change authority.
    earlier when their obligations are complete. Archive creates a new commit:
    inspect its attribution and signature, then prove its new OID. Do not
    raw-push around an ETHOS refusal.
+
 4. At the release cut, move the `Unreleased` items into a dated `X.Y.Z`
    Changelog section using the actual date, leave `Unreleased` empty, and update
    both comparison links. Commit that exact source, repeat the required local
@@ -255,6 +265,7 @@ Change authority.
    port, then verify `glab repo view GROUP/PROJECT`. For unattended calls, set
    `GH_PROMPT_DISABLED=1` or `GLAB_NO_PROMPT=1` as applicable, close stdin, and
    enforce a caller-owned deadline; stop on authentication failure.
+
 5. Use the same reviewed release notes from the prepared Changelog section on
    both Forges. `RELEASE_NOTES_FILE` is a temporary copy of that section, not a
    new tracked history. Only after each remote tag exists at the proved commit,

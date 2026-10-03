@@ -159,11 +159,14 @@ contract permits it; not every provider must cover every language.
 Repository-authored reports or command output cannot supply the missing native
 evidence. Proof does not create a second lifecycle.
 
-Native Markdown rules own reader spacing and preserve meaningful blank lines
-inside fenced and indented code, including nested examples. The general text
-consumer retains English checks and non-Markdown spacing; it does not scan
-Markdown a second time for raw blank lines. Literal code cannot hide padding
-outside its own block.
+Native Markdown rules enforce the
+[contributor spacing convention](../../CONTRIBUTING.md#verify-the-source).
+Markdownlint owns block spacing; the official CommonMark list-spacing rule
+checks paragraph structure through the same entry. Fenced and indented literal
+content, including nested examples, keeps its meaningful blank lines. The
+text consumer retains English and non-Markdown checks; it does not scan
+Markdown again for raw blanks. Shared enforcement remains an ETHOS integration
+obligation, not a second lifecycle or a completed product claim.
 
 The existing test suite runs Vale's official coverage for cases embedded in the
 two native style rules. A rule that loads but no longer matches its diagnosed

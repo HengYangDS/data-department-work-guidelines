@@ -2,6 +2,10 @@ import { decodeHTML } from "entities";
 import { lint } from "markdownlint/sync";
 import { Parser } from "htmlparser2";
 import { micromark } from "micromark";
+import remarkParse from "remark-parse";
+import remarkLintListItemSpacing from "remark-lint-list-item-spacing";
+import { unified } from "unified";
+import { VFile } from "vfile";
 
 export function markdownTokens(source, name = "document.md") {
   let tokens;
@@ -162,6 +166,32 @@ export const noProseControl = {
           },
         }).end(token.text);
       }
+    }
+  },
+};
+
+// The official rule owns list looseness; this bridge only maps diagnostics
+// into the existing native Markdown check, with no comment-control plugin.
+/** @type {import("markdownlint").Rule} */
+export const listItemSpacing = {
+  names: ["list-item-spacing"],
+  description: "List spacing follows paragraph structure, not source wrapping",
+  tags: ["blank_lines", "lists"],
+  parser: "none",
+  function(params, onError) {
+    const processor = unified()
+      .use(remarkParse)
+      .use(remarkLintListItemSpacing, params.config);
+    const file = new VFile({
+      path: params.name,
+      value: params.lines.join("\n"),
+    });
+    processor.runSync(processor.parse(file), file);
+    for (const message of file.messages) {
+      onError({
+        lineNumber: message.line,
+        detail: message.reason,
+      });
     }
   },
 };

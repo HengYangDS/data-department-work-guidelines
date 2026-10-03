@@ -14,7 +14,7 @@ import { getFileInfo } from "prettier";
 import { parse as parseToml } from "smol-toml";
 import YAML from "yaml";
 import { lint, readConfig } from "markdownlint/sync";
-import { noProseControl } from "./markdown.mjs";
+import { listItemSpacing, noProseControl } from "./markdown.mjs";
 import {
   currentMarkdown,
   filePath,
@@ -71,7 +71,7 @@ export function lintMarkdown({ files = sourceMarkdown(), strings } = {}) {
     strings,
     config,
     noInlineConfig: true,
-    customRules: [noProseControl],
+    customRules: [noProseControl, listItemSpacing],
   });
   const findings = Object.entries(results).flatMap(([file, errors]) =>
     errors.map(

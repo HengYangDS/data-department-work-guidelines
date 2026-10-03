@@ -479,6 +479,25 @@ install, installed proof, and both Forge matrices. Earlier signed tags and
 historical Git objects remain immutable. Published asset bytes cannot be
 replaced; download retirement follows the explicit retention boundary below.
 
+### Make Markdown spacing depend on document structure
+
+The single-blank-line ceiling does not determine list looseness. Stock MD012
+and MD032 accept unnecessary gaps between simple list items, and Prettier
+preserves them. Define the convention at the contributor owner: separate reader
+blocks once; keep single-paragraph list items adjacent, including wrapped
+paragraphs. Lists with internally separated paragraphs or blocks use one gap
+between peer items; a nested list without internal separation may stay tight.
+Preserve code, data, nesting, separate lists, and block boundaries.
+
+Use the official `remark-lint-list-item-spacing` rule with `checkBlanks: true`.
+Its native CommonMark item structure, not physical line count, decides whether
+the list is tight or loose. Integrate only that uncovered concern through the
+existing Markdown check; do not copy a private regex or build a shadow parser.
+Keep its dependencies, configuration, tests, and offline notices source-bound.
+The shared ETHOS owner must expose the same native mechanism; migrate to its
+accepted contract and remove superseded local glue in one batch. Until then,
+local source qualification is not shared-product acceptance.
+
 ### Bind local links to source
 
 The native link tool checks whether a target exists and whether its fragment

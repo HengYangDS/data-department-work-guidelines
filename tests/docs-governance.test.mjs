@@ -516,7 +516,21 @@ test("configuration rejects package-embedded policy as a second owner", () => {
 });
 
 test("configuration cannot disable or replace native Markdown policy", () => {
-  for (const source of ["[MD013]\nline_length = 0\n", 'globs = ["**"]\n']) {
+  const policy = readFileSync(
+    path.join(root, ".config/checks/markdown/markdownlint.toml"),
+    "utf8",
+  );
+  for (const source of [
+    "[MD013]\nline_length = 0\n",
+    'globs = ["**"]\n',
+    policy.replace("MD032 = true", "MD032 = false"),
+    policy.replace("MD058 = true", "MD058 = false"),
+    policy.replace("maximum = 1", "maximum = 2"),
+    policy.replace("lines_above = 1", "lines_above = 0"),
+    policy.replace("list_items = true", "list_items = false"),
+    policy.replace("checkBlanks = true", "checkBlanks = false"),
+    policy.replace("[list-item-spacing]\ncheckBlanks = true\n", ""),
+  ]) {
     configurationFixture((directory) => {
       writeFileSync(
         path.join(directory, ".config/checks/markdown/markdownlint.toml"),

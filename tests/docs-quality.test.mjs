@@ -1199,6 +1199,56 @@ test("one blank line is allowed; visual padding is not", () => {
   );
 });
 
+test("Markdown list spacing rejects gaps between single-paragraph items", () => {
+  for (const body of [
+    "- First.\n\n- Second.\n",
+    "- First with a wrapped\n  paragraph.\n\n- Second.\n",
+    "1. First.\n\n2. Second.\n",
+    "- [x] First.\n\n- [ ] Second.\n",
+    "> - First.\n>\n> - Second.\n",
+    "- Parent.\n  - First.\n\n  - Second.\n",
+    "<!-- markdownlint-disable list-item-spacing -->\n\n- First.\n\n- Second.\n",
+    "<!-- remark-lint: disable list-item-spacing -->\n\n- First.\n\n- Second.\n",
+  ]) {
+    assert.throws(
+      () =>
+        lintMarkdown({
+          files: [],
+          strings: { "spacing.md": `# Spacing\n\n${body}` },
+        }),
+      /spacing\.md:\d+ \[list-item-spacing\]/u,
+      body,
+    );
+  }
+});
+
+test("Markdown list spacing preserves meaningful block and literal boundaries", () => {
+  for (const body of [
+    "- First with a wrapped\n  paragraph.\n- Second.\n",
+    "- First.\n\n  Separate paragraph.\n\n- Second.\n",
+    "- First.\n\n  ```text\n  first\n\n\n  second\n  ```\n\n- Second.\n",
+    "- Parent.\n  - First.\n  - Second.\n- Next parent.\n",
+    "> - First.\n> - Second.\n",
+    "- First.\n\n## Separate Work\n\n- Second.\n",
+    "```markdown\n- First.\n\n- Second.\n```\n",
+  ]) {
+    assert.doesNotThrow(() =>
+      lintMarkdown({
+        files: [],
+        strings: { "spacing.md": `# Spacing\n\n${body}` },
+      }),
+    );
+  }
+});
+
+test("Markdown list spacing rejects inconsistent genuinely loose lists", () => {
+  const source = "# Spacing\n\n- First.\n\n  Separate paragraph.\n- Second.\n";
+  assert.throws(
+    () => lintMarkdown({ files: [], strings: { "spacing.md": source } }),
+    /spacing\.md:\d+ \[list-item-spacing\]/u,
+  );
+});
+
 test("changelog categories may recur under different releases, not one release", () => {
   const lint = (source) =>
     lintMarkdown({ files: [], strings: { "fixture.md": source } });
@@ -1274,6 +1324,15 @@ test("Markdown lint checks literal Git source without a glob or ambient policy",
     const valid = invoke();
     assert.ifError(valid.error);
     assert.equal(valid.status, 0, valid.stderr);
+    const paddedList =
+      "# Example\n\n- First with a wrapped\n  paragraph.\n\n- Second.\n";
+    writeFileSync(file, paddedList);
+    const listResult = invoke();
+    assert.ifError(listResult.error);
+    assert.equal(listResult.status, 1, listResult.stderr);
+    assert.match(listResult.stderr, /list-item-spacing/u);
+    assert.ok(listResult.stderr.includes(source), listResult.stderr);
+    assert.equal(readFileSync(file, "utf8"), paddedList);
     const literals = [
       "# Example\n\n```text\nfirst\n\n\nsecond\n```\n",
       "# Example\n\n    first\n\n\n    second\n",
@@ -1664,10 +1723,9 @@ test("the public link check rejects cache and Git state but accepts candidate so
       { encoding: "utf8", timeout: 30_000 },
     );
     assert.equal(clone.status, 0, clone.stderr);
-    cpSync(
-      path.join(root, "tools/docs/content.mjs"),
-      path.join(directory, "tools/docs/content.mjs"),
-    );
+    cpSync(path.join(root, "tools"), path.join(directory, "tools"), {
+      recursive: true,
+    });
     symlinkSync(
       path.join(root, "node_modules"),
       path.join(directory, "node_modules"),
