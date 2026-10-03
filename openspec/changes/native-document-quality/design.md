@@ -655,10 +655,11 @@ retired scope, browser, shell, or package-manager policy from these records.
 
 ### Retire completed historical copies after their consumers migrate
 
-The current tree carries 39 completed Changes and 213 historical files. Their
-tasks are closed; the main specifications, current work topics, and this active
-Change own their effective obligations. The archive is not proof authority for
-the current source or a requirement to ship old execution records forever.
+At this cleanup's baseline, the tree carried 39 completed Changes and 213
+historical files. Their tasks are closed; the main specifications, current work
+topics, and this active Change own their effective obligations. The archive is
+not proof authority for the current source or a requirement to ship old
+execution records forever.
 Review every proposal, design, delta, and task record for unique facts and
 obligations before removal. Recovery alone neither evaluates a dated observation
 nor establishes semantic absorption. Retain incident-specific rationale and

@@ -253,19 +253,28 @@
       reproduce and repair lost partial diagnostics. The real CLI controls and
       complete local verification pass all 204 tests. The
       implemented requirement is synced through official OpenSpec, preserving
-      existing requirements and scenarios. Exact-source installed proof, cold
-      installation, and hosted qualification remain separate obligations; the
-      next edition is not published.
+      existing requirements and scenarios. Exact-source installed proof and
+      denied-network cold installation pass at `c117ab1` with all 204 tests.
+      Hosted qualification remains open; the next edition is not published.
 
-- [ ] 2.32 Retire all reviewed completed-Change copies from the current tree.
-      Audit unique facts, obligations, and incoming consumers; preserve exact ancestor
-      Git objects and existing proof. Replace three cited designs with full
-      commit-and-path references on both Forges and replace the real archive
-      test dependency with an owned temporary fixture. Preserve official
+- [x] 2.32 Retire all reviewed completed-Change copies from the current tree.
+      Audit unique facts, obligations, and incoming consumers; preserve exact
+      ancestor Git objects and existing proof. Replace three cited designs with
+      full commit-and-path references on both Forges and replace the real
+      archive test dependency with an owned temporary fixture. Preserve official
       archive-path negative controls; verify source quality, recovery, installed
       proof, and cold installation before acceptance. No history directory,
       compatibility route, or lifecycle substitute is added. Hosted delivery
       and final active-Change closure remain separate open obligations.
+      Signed `c117ab1` removes 213 files from 39 completed Changes after the
+      independent body and task-fact review. Original archive objects match
+      ancestor `c8599ce9c91ed5f988abd6b3f3011ac94430283d`; both Forge endpoints
+      return the exact three cited designs. All 204 tests, strict official
+      OpenSpec, changed planning, installed exact-HEAD full proof, and denied-network
+      cold installation pass. All 68 cold-source blobs and modes match; four
+      local roots are clean and identical after native integration. Completed
+      cold checkouts and the prior absorbed Work Lane are retired; proof and
+      verified render custody remain outside source.
 
 ## 3. Qualification and publication
 
@@ -323,8 +332,9 @@
       policy adds two scenarios, the stop/calibration restoration adds three,
       complete OpenSpec report consumption adds two, the analytical
       next-verification duty adds one, and complete Agent result inspection
-      adds one. These 189 main-spec scenarios do not prove whole-document
-      semantic equivalence.
+      adds one. Historical-copy disposition adds two more, preserving all
+      previous requirements and scenarios. These 191 main-spec scenarios do not
+      prove whole-document semantic equivalence.
       The two draft proof requirements still await
       the accepted ETHOS contract and are not synced;
       the removed duplicate npm policy is already absent. Full Change sync and
