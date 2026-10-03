@@ -42,11 +42,15 @@
       those corrections, not whole-guidance equivalence. Local and fresh
       denied-network cold verification pass all 215 tests with zero skips;
       all 69 source hashes and modes match, and all 28 Markdown files render.
-      Selected official sync conserves 11 requirements and all 40 prior
-      scenarios, adding four bounded scenarios without rewriting preambles.
-      The approved cadence redesign retains shared evidence calibration.
-      Current installed changed planning and exact-HEAD full repository proof
-      pass. Native land still times out in the legacy finite-input transport;
+      The first selected sync conserves 11 requirements and 40 prior scenarios,
+      adding four bounded scenarios. A later correction aligns the missing
+      local-metric requirement clause while retaining every scenario body and
+      the other ten requirements. Native source checks pass without diagnostics;
+      the approved cadence keeps shared evidence calibration. Online lychee
+      checks 174 links with zero errors; its 39-redirect hint remains in the
+      original result. Installed changed planning and exact-HEAD full repository
+      proof pass at `f8786e2`. Native land still times out in the legacy
+      finite-input transport;
       no protected ref, runtime, hook, or publication is changed. Supplier
       acceptance and hosted delivery remain separate open obligations.
 - [x] 2.4 Reconcile package, current OpenSpec, contribution, governance, CI,

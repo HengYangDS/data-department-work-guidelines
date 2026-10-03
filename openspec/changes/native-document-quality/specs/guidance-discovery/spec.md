@@ -240,9 +240,10 @@ or unknown ownership.
 Evolution SHALL check material task transitions. Managers SHALL review real
 work and weak signals at least monthly; maintainers SHALL review rules, tools,
 and capability gaps at least quarterly. High-risk signals SHALL be escalated
-when observed. Reviews SHALL reuse existing carriers; a new form or meeting
-requires demonstrated carrier insufficiency. No single metric SHALL stand for
-personal worth, and monthly mechanism review SHALL NOT rank individuals.
+when observed. Reviews SHALL reuse existing carriers; new forms or meetings
+require proven carrier insufficiency. No metric SHALL represent personal worth;
+no local metric SHALL represent overall work or system value. Monthly mechanism
+review SHALL NOT rank people.
 
 #### Scenario: Weak signals accumulate without an incident
 
