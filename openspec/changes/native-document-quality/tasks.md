@@ -315,9 +315,9 @@
       proof, cold installation, shared integration, and hosted delivery remain
       open; the existing supply advisory is not waived. Official partial sync
       retains all 55 requirements and adds two list-spacing scenarios for a total
-      of 196; the pending shared proof requirements remain unsynced. All 28
-      current Markdown files render without warning, and current changed planning
-      passes. No local success certifies the forthcoming shared product.
+      of 196; the pending shared proof requirements remain outside main specs.
+      All 28 current Markdown files render without warning; current changed
+      planning passes. No local success certifies the forthcoming shared product.
 
 ## 3. Qualification and publication
 
