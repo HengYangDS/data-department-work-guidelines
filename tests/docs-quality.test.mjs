@@ -15,6 +15,7 @@ import path from "node:path";
 import { test } from "node:test";
 import { pathToFileURL } from "node:url";
 import { parse as parseShell } from "shell-quote";
+import { parse as parseToml } from "smol-toml";
 import {
   documentMetadata,
   lintMarkdown,
@@ -22,6 +23,7 @@ import {
   textViolations,
 } from "../tools/docs/content.mjs";
 import {
+  checkConfigurationLayout,
   checkDecisions,
   checkNoScope,
   commandInvocation,
@@ -1165,7 +1167,7 @@ test("a delivered directory alias must also resolve to repository source", () =>
   }
 });
 
-test("Markdown spacing preserves fenced and indented literal content", () => {
+test("Markdown spacing preserves fenced and indented literal content", async () => {
   for (const source of [
     "# Example\n\n```text\nfirst\n\n\nsecond\n```\n",
     "# Example\n\n````text\n```\n\n\n```\n````\n",
@@ -1175,17 +1177,17 @@ test("Markdown spacing preserves fenced and indented literal content", () => {
     assert.doesNotThrow(() =>
       lintMarkdown({ files: [], strings: { "fixture.md": source } }),
     );
-    assert.deepEqual(textViolations("fixture.md", source), []);
+    assert.deepEqual(await textViolations("fixture.md", source), []);
   }
 });
 
-test("Markdown spacing rejects reader padding after literal content", () => {
+test("Markdown spacing rejects reader padding after literal content", async () => {
   const source = "# Example\n\n```text\nfirst\n\n\nsecond\n```\n\n\nOutside.\n";
   assert.throws(
     () => lintMarkdown({ files: [], strings: { "fixture.md": source } }),
     /fixture\.md:10 \[MD012\]/u,
   );
-  assert.deepEqual(textViolations("fixture.md", source), []);
+  assert.deepEqual(await textViolations("fixture.md", source), []);
 });
 
 test("one blank line is allowed; visual padding is not", () => {
@@ -1249,6 +1251,42 @@ test("Markdown list spacing rejects inconsistent genuinely loose lists", () => {
   );
 });
 
+test("document comments cannot waive native Markdown formatting", () => {
+  for (const control of [
+    "<!-- prettier-ignore -->",
+    "<!-- prettier-ignore-start -->",
+    "<!-- prettier-ignore-end -->",
+  ]) {
+    for (const source of [
+      `# Spacing\n\n${control}\n\n> First.\n>\n>\n> Second.\n`,
+      `# Spacing\n\n> ${control}\n>\n> First.\n`,
+      `# Spacing\n\n- ${control}\n  First.\n`,
+    ]) {
+      assert.throws(
+        () => lintMarkdown({ files: [], strings: { "spacing.md": source } }),
+        /Remove the.*control comment/u,
+      );
+    }
+    for (const source of [
+      `# Spacing\n\n\`${control}\` is a literal example.\n`,
+      `# Spacing\n\n\`\`\`text\n${control}\n\`\`\`\n`,
+    ]) {
+      assert.doesNotThrow(() =>
+        lintMarkdown({ files: [], strings: { "spacing.md": source } }),
+      );
+    }
+  }
+  assert.doesNotThrow(() =>
+    lintMarkdown({
+      files: [],
+      strings: {
+        "spacing.md":
+          "# Spacing\n\n<!-- prettier-ignore was discussed in review. -->\n\nUse the report.\n",
+      },
+    }),
+  );
+});
+
 test("changelog categories may recur under different releases, not one release", () => {
   const lint = (source) =>
     lintMarkdown({ files: [], strings: { "fixture.md": source } });
@@ -1259,10 +1297,166 @@ test("changelog categories may recur under different releases, not one release",
   assert.throws(() => lint(first + "### Fixed\n\n- Duplicate.\n"), /MD024/u);
 });
 
-test("TOML syntax is checked without introducing a second formatter", () => {
+test("native structured formats preserve literal blank lines", async () => {
+  for (const [name, source] of [
+    ["example.mjs", "export const literal = `first\n\n\nsecond`;\n"],
+    ["example.yaml", "literal: |\n  first\n\n\n  second\n"],
+    ["example.toml", 'literal = """\nfirst\n\n\nsecond\n"""\n'],
+  ]) {
+    assert.deepEqual(await textViolations(name, source), [], name);
+    if (name.endsWith(".toml")) {
+      assert.equal(parseToml(source).literal, "first\n\n\nsecond\n");
+    }
+  }
+});
+
+test("native TOML formatting checks literal Git paths and preserves data", () => {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-toml-format-"));
+  try {
+    cpSync(path.join(root, "tools"), path.join(directory, "tools"), {
+      recursive: true,
+    });
+    cpSync(path.join(root, ".config"), path.join(directory, ".config"), {
+      recursive: true,
+    });
+    cpSync(
+      path.join(root, "package.json"),
+      path.join(directory, "package.json"),
+    );
+    symlinkSync(
+      path.join(root, "node_modules"),
+      path.join(directory, "node_modules"),
+      "junction",
+    );
+    const name = "{literal} source.toml";
+    const file = path.join(directory, name);
+    const source = 'literal = """\nfirst\n\n\nsecond\n"""\n\n\nnext=2\n';
+    writeFileSync(file, source);
+    writeFileSync(path.join(directory, "taplo.toml"), "include = []\n");
+    writeFileSync(
+      path.join(directory, "dprint.json"),
+      '{ "excludes": ["**"] }\n',
+    );
+    const init = spawnSync("git", ["init", "--quiet", directory], {
+      encoding: "utf8",
+      timeout: 10_000,
+    });
+    assert.equal(init.status, 0, init.stderr);
+    const add = spawnSync("git", ["add", "--", name], {
+      cwd: directory,
+      encoding: "utf8",
+      timeout: 10_000,
+    });
+    assert.equal(add.status, 0, add.stderr);
+    const invoke = (args) =>
+      spawnSync(process.execPath, ["tools/docs/cli.mjs", "format", ...args], {
+        cwd: directory,
+        encoding: "utf8",
+        timeout: 30_000,
+      });
+    const checked = invoke(["--check"]);
+    assert.ifError(checked.error);
+    assert.equal(checked.status, 1, checked.stderr);
+    assert.ok(checked.stderr.includes(name), checked.stderr);
+    assert.equal(readFileSync(file, "utf8"), source);
+    const written = invoke([]);
+    assert.ifError(written.error);
+    assert.equal(written.status, 0, written.stderr);
+    assert.equal(
+      readFileSync(file, "utf8"),
+      'literal = """\nfirst\n\n\nsecond\n"""\n\nnext = 2\n',
+    );
+    const clean = invoke(["--check"]);
+    assert.ifError(clean.error);
+    assert.equal(clean.status, 0, clean.stderr);
+    for (const malformed of ["[invalid\n", "value = 1\nvalue = 2\n"]) {
+      writeFileSync(file, malformed);
+      const invalid = invoke(["--check"]);
+      assert.ifError(invalid.error);
+      assert.equal(invalid.status, 1, invalid.stderr);
+      assert.ok(invalid.stderr.includes(name), invalid.stderr);
+      assert.equal(readFileSync(file, "utf8"), malformed);
+    }
+    const retained =
+      '#:schema offline-only\nliteral = """\nfirst\n\n\nsecond\n"""\n\nitems = [2, 1]\n\nz = 2\na = 1\n';
+    writeFileSync(file, retained);
+    const preserved = invoke([]);
+    assert.ifError(preserved.error);
+    assert.equal(preserved.status, 0, preserved.stderr);
+    assert.equal(readFileSync(file, "utf8"), retained);
+    const policy = path.join(directory, ".config/checks/format/toml.toml");
+    const policyBefore = readFileSync(policy, "utf8");
+    writeFileSync(policy, `${policyBefore}unknownNativeOption = true\n`);
+    const diagnostic = invoke(["--check"]);
+    assert.ifError(diagnostic.error);
+    assert.equal(diagnostic.status, 1, diagnostic.stderr);
+    assert.match(diagnostic.stderr, /unknownNativeOption/u);
+    assert.equal(readFileSync(file, "utf8"), retained);
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+    assert.equal(existsSync(directory), false);
+  }
+});
+
+test("the text boundary retains TOML syntax without duplicating native formatting", async () => {
   const toml = ".config/checks/markdown/markdownlint.toml";
-  assert.deepEqual(textViolations(toml, "[MD013]\nline_length = 80\n"), []);
-  assert.match(textViolations(toml, "[invalid\n")[0], /invalid TOML/u);
+  assert.deepEqual(
+    await textViolations(toml, "[MD013]\nline_length = 80\n"),
+    [],
+  );
+  assert.match((await textViolations(toml, "[invalid\n"))[0], /invalid TOML/u);
+});
+
+test("native TOML policy preserves data and agrees with the source format owner", () => {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-toml-policy-"));
+  try {
+    cpSync(path.join(root, ".config"), path.join(directory, ".config"), {
+      recursive: true,
+    });
+    const policyPath = path.join(directory, ".config/checks/format/toml.toml");
+    const original = readFileSync(policyPath, "utf8");
+    assert.doesNotThrow(() => checkConfigurationLayout(directory));
+    for (const [before, after] of [
+      ["lineWidth = 80", "lineWidth = 120"],
+      ["indentWidth = 2", "indentWidth = 4"],
+      ['newLineKind = "lf"', 'newLineKind = "crlf"'],
+      ['quoteStyle = "maintain"', 'quoteStyle = "preferDouble"'],
+      ["sortKeys = false", "sortKeys = true"],
+      ["sortArrays = false", "sortArrays = true"],
+      ["sortInlineTables = false", "sortInlineTables = true"],
+      [
+        '"comment.forceLeadingSpace" = false',
+        '"comment.forceLeadingSpace" = true',
+      ],
+      ['"cargo.applyConventions" = false', '"cargo.applyConventions" = true'],
+    ]) {
+      assert.ok(original.includes(before), before);
+      writeFileSync(policyPath, original.replace(before, after));
+      assert.throws(
+        () => checkConfigurationLayout(directory),
+        /native TOML.*policy/u,
+        after,
+      );
+    }
+    writeFileSync(policyPath, `${original}unknownNativeOption = true\n`);
+    assert.throws(
+      () => checkConfigurationLayout(directory),
+      /unknownNativeOption/u,
+    );
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+    assert.equal(existsSync(directory), false);
+  }
+});
+
+test("unowned code formats fail explicitly instead of accepting raw whitespace", async () => {
+  for (const name of ["sample.py", "sample.rs", "sample.sh"]) {
+    assert.match(
+      (await textViolations(name, "first\n\n\nsecond\n"))[0],
+      /no native formatting owner/u,
+      name,
+    );
+  }
 });
 
 test("Markdown checks consume the native concern-local TOML policy", () => {
@@ -1271,7 +1465,7 @@ test("Markdown checks consume the native concern-local TOML policy", () => {
   const source = "# Example\n\n<!-- vale off -->\n\nUse the report.\n";
   assert.throws(
     () => lintMarkdown({ files: [], strings: { "fixture.md": source } }),
-    /no-prose-control/u,
+    /no-quality-control/u,
   );
 });
 
@@ -1347,7 +1541,7 @@ test("Markdown lint checks literal Git source without a glob or ambient policy",
         [
           "--input-type=module",
           "--eval",
-          "import { checkTextLayout } from './tools/docs/content.mjs'; checkTextLayout();",
+          "import { checkTextLayout } from './tools/docs/content.mjs'; await checkTextLayout();",
         ],
         { cwd: directory, encoding: "utf8", timeout: 10_000 },
       );
@@ -1452,6 +1646,9 @@ test("native formatting policy preserves prose and ignores ambient editor settin
       ["build/tracked.mjs", "export const result={ready:true}\n"],
       ["build/tracked.json", '{"result":{"ready":true}}\n'],
       ["build/tracked.yml", "ready:    true\n"],
+      ["quote source.md", "# Report\n\n> First.\n>\n>\n> Second.\n"],
+      ["nested quote.md", "# Report\n\n> > First.\n> >\n> >\n> > Second.\n"],
+      ["quote boundary.md", "# Report\n\nText.\n> Quoted.\n"],
       [
         "openspec/changes/archive/fixture/design.md",
         "# Historical Design\n\nUse   the report.\n",
@@ -1493,6 +1690,14 @@ test("native formatting policy preserves prose and ignores ambient editor settin
     const ignored = path.join(directory, "build", "ignored.mjs");
     const ignoredSource = "export const result={ready:true}\n";
     writeFileSync(ignored, ignoredSource);
+    const literals = new Map([
+      ["literal.md", "# Report\n\n> ```text\n> first\n>\n>\n> second\n> ```\n"],
+      ["literal.mjs", "export const literal = `first\n\n\nsecond`;\n"],
+      ["literal.yaml", "literal: |\n  first\n\n\n  second\n"],
+    ]);
+    for (const [relative, source] of literals) {
+      writeFileSync(path.join(directory, relative), source);
+    }
     const nativeToml = path.join(
       directory,
       ".config/checks/markdown/markdownlint.toml",
@@ -1538,6 +1743,24 @@ test("native formatting policy preserves prose and ignores ambient editor settin
       );
     }
     assert.equal(readFileSync(ignored, "utf8"), ignoredSource);
+    for (const [relative, source] of literals) {
+      assert.equal(
+        readFileSync(path.join(directory, relative), "utf8"),
+        source,
+      );
+    }
+    assert.equal(
+      readFileSync(path.join(directory, "quote source.md"), "utf8"),
+      "# Report\n\n> First.\n>\n> Second.\n",
+    );
+    assert.equal(
+      readFileSync(path.join(directory, "nested quote.md"), "utf8"),
+      "# Report\n\n> > First.\n> >\n> > Second.\n",
+    );
+    assert.equal(
+      readFileSync(path.join(directory, "quote boundary.md"), "utf8"),
+      "# Report\n\nText.\n\n> Quoted.\n",
+    );
     assert.equal(readFileSync(nativeToml, "utf8"), tomlBefore);
     const repaired = spawnSync(
       process.execPath,
@@ -1579,9 +1802,9 @@ test("the public check command rejects incomplete-mode waivers", () => {
   assert.match(result.stderr, /check accepts no arguments/u);
 });
 
-test("English and spacing failures identify a file and line", () => {
+test("English and spacing failures identify a file and line", async () => {
   assert.match(
-    textViolations("docs/example.md", "# Heading\n\u4e2d\u6587\n")[0],
+    (await textViolations("docs/example.md", "# Heading\n\u4e2d\u6587\n"))[0],
     /docs\/example\.md:2/u,
   );
   assert.throws(
@@ -1594,7 +1817,7 @@ test("English and spacing failures identify a file and line", () => {
   );
 });
 
-test("native spacing checks archived Markdown; other text keeps its own boundary", () => {
+test("native spacing checks archived Markdown; other text keeps its own boundary", async () => {
   const file = "openspec/changes/archive/example/spec.md";
   assert.doesNotThrow(() =>
     lintMarkdown({ files: [], strings: { [file]: "# Example\n\nText.\n" } }),
@@ -1607,10 +1830,10 @@ test("native spacing checks archived Markdown; other text keeps its own boundary
       }),
     /:3 \[MD012\]/u,
   );
-  for (const name of ["LICENSE", ".config/README.txt", "tools/example.mjs"]) {
-    assert.deepEqual(textViolations(name, "First\n\nSecond\n"), []);
+  for (const name of ["LICENSE", ".config/README.txt", ".config/example.ini"]) {
+    assert.deepEqual(await textViolations(name, "First\n\nSecond\n"), []);
     assert.match(
-      textViolations(name, "First\n\n\nSecond\n")[0],
+      (await textViolations(name, "First\n\n\nSecond\n"))[0],
       /:3: consecutive blank lines/u,
     );
   }

@@ -5,6 +5,12 @@ OpenSpec
 SemVer
 Prettier
 Vale
+Taplo
+Wasm
+(?i:dprint)
+(?i:formatters?)
+(?i:gzip)
+(?i:multiline)
 (?i:backtests?)
 (?i:commonmark)
 (?i:config)

@@ -140,12 +140,13 @@ export function markdownLinkDestinations(source) {
 // Match Vale's native comment controls after HTML decoding, not prose mentions.
 const valeControl =
   /^vale (?:on|off|styles? = [^\r\n]*|[^\r\n]+ = (?:YES|NO|on|off))$/u;
+const prettierControl = /^prettier-ignore(?:-(?:start|end))?$/u;
 
 /** @type {import("markdownlint").Rule} */
-export const noProseControl = {
-  names: ["no-prose-control"],
+export const noQualityControl = {
+  names: ["no-quality-control"],
   description:
-    "Prose rules are configured by the repository, not document comments",
+    "Quality rules are configured by the repository, not document comments",
   tags: ["comments"],
   parser: "micromark",
   function(params, onError) {
@@ -156,11 +157,15 @@ export const noProseControl = {
       if (token.type === "htmlFlow" || token.type === "htmlText") {
         new Parser({
           oncomment(comment) {
-            if (valeControl.test(decodeHTML(comment).trim())) {
+            const consumer = valeControl.test(decodeHTML(comment).trim())
+              ? "Vale"
+              : prettierControl.test(comment.trim())
+                ? "Prettier"
+                : "";
+            if (consumer) {
               onError({
                 lineNumber: token.startLine,
-                detail:
-                  "Remove the Vale control comment; correct prose or the governed vocabulary.",
+                detail: `Remove the ${consumer} control comment; correct the source or its governed policy.`,
               });
             }
           },
@@ -196,4 +201,4 @@ export const listItemSpacing = {
   },
 };
 
-export default noProseControl;
+export default noQualityControl;

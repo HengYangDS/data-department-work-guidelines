@@ -120,14 +120,14 @@ not a login redirect or another Forge's success.
 
 `npm run verify` uses one [portable source entry](../../tools/docs/cli.mjs).
 
-| Concern               | Check                                                                                                     |
-| --------------------- | --------------------------------------------------------------------------------------------------------- |
-| Format and layout     | Prettier for Markdown, code, JSON, and YAML; TOML syntax; English text and one blank line between blocks. |
-| Reader text           | Markdown lint and native Vale spelling, prose, and terminology.                                           |
-| References            | Version-checked offline lychee links and fragments, plus source ownership and confinement.                |
-| Repository boundaries | Metadata, decision shape, navigation, configuration, version identity, and CI topology.                   |
-| Change artifacts      | Strict official OpenSpec validation.                                                                      |
-| Failure behavior      | Negative tests, run once by the standalone verifier.                                                      |
+| Concern               | Check                                                                                                              |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| Format and layout     | Prettier for Markdown, code, JSON, and YAML; native dprint TOML formatting; English source and structural spacing. |
+| Reader text           | Markdown lint and native Vale spelling, prose, and terminology.                                                    |
+| References            | Version-checked offline lychee links and fragments, plus source ownership and confinement.                         |
+| Repository boundaries | Metadata, decision shape, navigation, configuration, version identity, and CI topology.                            |
+| Change artifacts      | Strict official OpenSpec validation.                                                                               |
+| Failure behavior      | Negative tests, run once by the standalone verifier.                                                               |
 
 The official OpenSpec result must name this repository, include unique typed
 items and complete diagnostics, and report consistent native counts for both
@@ -161,12 +161,14 @@ evidence. Proof does not create a second lifecycle.
 
 Native Markdown rules enforce the
 [contributor spacing convention](../../CONTRIBUTING.md#verify-the-source).
-Markdownlint owns block spacing; the official CommonMark list-spacing rule
-checks paragraph structure through the same entry. Fenced and indented literal
-content, including nested examples, keeps its meaningful blank lines. The
-text consumer retains English and non-Markdown checks; it does not scan
-Markdown again for raw blanks. Shared enforcement remains an ETHOS integration
-obligation, not a second lifecycle or a completed product claim.
+Prettier and Markdownlint jointly enforce block spacing. Prettier normalizes
+quoted paragraph separators; the official CommonMark list-spacing rule checks
+list structure through the lint entry. Run both, or the full verifier. Fenced
+and indented examples, including nested literals, keep meaningful blank lines.
+The native TOML formatter preserves data, order, comments, and multiline strings.
+The general text consumer retains English and plain-text checks without another
+raw scan of code or structured data. Shared enforcement remains an ETHOS
+integration obligation, not a second lifecycle or a completed product claim.
 
 The existing test suite runs Vale's official coverage for cases embedded in the
 two native style rules. A rule that loads but no longer matches its diagnosed
@@ -199,9 +201,11 @@ directory cannot exempt an already tracked file from prose or links. Ignored
 untracked state stays excluded; official archived Changes retain their
 historical scope.
 
-Formatting uses the same Git inventory and native Prettier parser detection,
-without narrowing code by directory or extension. Ambient ignore files cannot
-exempt selected source; unsupported native formats retain their own checks.
+Formatting uses the same Git inventory and each native owner's format detection,
+without narrowing code by directory. Ambient ignore files cannot exempt selected
+source; unowned code formats fail explicitly rather than escaping validation.
+Native Markdown parsing rejects real formatter-suppression comments, including
+range controls; literal examples and ordinary explanatory comments remain valid.
 
 The [decision register](../decisions/README.md) owns the record format. The
 locked Markdown parser checks actual headings, unique stable IDs, and readable

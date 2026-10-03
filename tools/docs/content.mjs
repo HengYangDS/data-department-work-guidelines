@@ -11,10 +11,13 @@ import path from "node:path";
 import os from "node:os";
 import { fileURLToPath } from "node:url";
 import { getFileInfo } from "prettier";
+import { createFromBuffer } from "@dprint/formatter";
+import tomlPlugin from "@dprint/toml";
+import { isDeepStrictEqual } from "node:util";
 import { parse as parseToml } from "smol-toml";
 import YAML from "yaml";
 import { lint, readConfig } from "markdownlint/sync";
-import { listItemSpacing, noProseControl } from "./markdown.mjs";
+import { listItemSpacing, noQualityControl } from "./markdown.mjs";
 import {
   currentMarkdown,
   filePath,
@@ -30,33 +33,116 @@ import {
 
 const requiredMetadata = ["subject", "role", "state", "relations"];
 const cjk = /[\u2e80-\u9fff\uac00-\ud7af\uf900-\ufaff\uff00-\uffef]/u;
+export function nativeTomlFormatter(repository = root) {
+  const formatter = createFromBuffer(readFileSync(tomlPlugin.getPath()));
+  const policyPath = path.join(repository, ".config/checks/format/toml.toml");
+  formatter.setConfig(
+    {},
+    structuredClone(parseToml(readFileSync(policyPath, "utf8"))),
+  );
+  const diagnostics = formatter.getConfigDiagnostics();
+  if (diagnostics.length) {
+    throw new Error(
+      diagnostics
+        .map(
+          ({ propertyName, message }) =>
+            `${policyPath}: ${propertyName}: ${message}`,
+        )
+        .join("\n"),
+    );
+  }
+  const sourcePolicy = parseToml(
+    readFileSync(
+      path.join(repository, ".config/checks/format/prettier.toml"),
+      "utf8",
+    ),
+  );
+  const resolved = formatter.getResolvedConfig();
+  const required = {
+    lineWidth: sourcePolicy.printWidth,
+    indentWidth: sourcePolicy.tabWidth,
+    newLineKind: "lf",
+    useTabs: false,
+    quoteStyle: "maintain",
+    sortKeys: false,
+    sortArrays: false,
+    sortInlineTables: false,
+    commentForceLeadingSpace: false,
+    cargoApplyConventions: false,
+  };
+  if (
+    Object.entries(required).some(([key, value]) => resolved[key] !== value)
+  ) {
+    throw new Error(
+      "native TOML formatting policy must preserve data, comments, and source layout",
+    );
+  }
+  return formatter;
+}
+
 export async function formatTargets(files = gitFiles()) {
-  const targets = [];
+  const targets = { prettier: [], toml: [] };
+  const matching = nativeTomlFormatter().getFileMatchingInfo();
   for (const relative of files) {
     const absolute = filePath(relative);
     if (!existsSync(absolute) || !lstatSync(absolute).isFile()) continue;
+    if (
+      matching.fileExtensions.includes(path.extname(relative).slice(1)) ||
+      matching.fileNames.includes(path.basename(relative))
+    ) {
+      targets.toml.push(relative);
+      continue;
+    }
     const { inferredParser } = await getFileInfo(absolute, {
       ignorePath: [],
       withNodeModules: true,
       resolveConfig: false,
     });
-    if (inferredParser) targets.push(relative);
+    if (inferredParser) targets.prettier.push(relative);
   }
   return targets;
 }
 
 export async function formatSource({ check = true } = {}) {
   const targets = await formatTargets();
-  runNodeTool("prettier", "prettier", [
-    "--config",
-    ".config/checks/format/prettier.toml",
-    "--no-editorconfig",
-    "--ignore-path",
-    os.devNull,
-    "--with-node-modules",
-    check ? "--check" : "--write",
-    ...targets,
-  ]);
+  if (targets.prettier.length) {
+    runNodeTool("prettier", "prettier", [
+      "--config",
+      ".config/checks/format/prettier.toml",
+      "--no-editorconfig",
+      "--ignore-path",
+      os.devNull,
+      "--with-node-modules",
+      check ? "--check" : "--write",
+      ...targets.prettier,
+    ]);
+  }
+  const formatter = nativeTomlFormatter();
+  const findings = [];
+  for (const relative of targets.toml) {
+    const source = readText(relative);
+    let formatted;
+    try {
+      formatted = formatter.formatText({
+        filePath: relative,
+        fileText: source,
+      });
+      if (!isDeepStrictEqual(parseToml(source), parseToml(formatted))) {
+        throw new Error("native formatting changes TOML data");
+      }
+    } catch (error) {
+      findings.push(`${relative}: ${error.message}`);
+      continue;
+    }
+    if (formatted !== source) {
+      if (check) findings.push(`${relative}: native TOML formatting differs`);
+      else writeFileSync(filePath(relative), formatted);
+    }
+  }
+  if (findings.length) throw new Error(findings.join("\n"));
+  console.log(
+    `PASS native TOML formatting: ${targets.toml.length} source files`,
+  );
 }
 
 export function lintMarkdown({ files = sourceMarkdown(), strings } = {}) {
@@ -71,7 +157,7 @@ export function lintMarkdown({ files = sourceMarkdown(), strings } = {}) {
     strings,
     config,
     noInlineConfig: true,
-    customRules: [noProseControl, listItemSpacing],
+    customRules: [noQualityControl, listItemSpacing],
   });
   const findings = Object.entries(results).flatMap(([file, errors]) =>
     errors.map(
@@ -95,13 +181,13 @@ export function proseAlerts(files = currentMarkdown()) {
     files: absoluteFiles,
     frontMatter: null,
     noInlineConfig: true,
-    config: { default: false, "no-prose-control": true },
-    customRules: [noProseControl],
+    config: { default: false, "no-quality-control": true },
+    customRules: [noQualityControl],
   });
   const violations = Object.entries(controls).flatMap(([file, errors]) =>
     errors.map(
       ({ lineNumber, errorDetail }) =>
-        `${file}:${lineNumber} [no-prose-control] ${errorDetail}`,
+        `${file}:${lineNumber} [no-quality-control] ${errorDetail}`,
     ),
   );
   if (violations.length) throw new Error(violations.join("\n"));
@@ -290,7 +376,7 @@ function blankLineError(relative, source) {
   return "";
 }
 
-export function textViolations(relative, source) {
+export async function textViolations(relative, source) {
   const errors = [];
   if (relative.endsWith(".toml")) {
     try {
@@ -303,14 +389,26 @@ export function textViolations(relative, source) {
     if (cjk.test(line))
       errors.push(`${relative}:${index + 1}: CJK text is not allowed`);
   }
-  if (!relative.endsWith(".md")) {
-    const error = blankLineError(relative, source);
-    if (error) errors.push(error);
+  const { inferredParser } = await getFileInfo(relative, {
+    ignorePath: [],
+    withNodeModules: true,
+    resolveConfig: false,
+  });
+  if (!inferredParser && !relative.endsWith(".toml")) {
+    const extension = path.extname(relative);
+    if (!["", ".txt", ".ini"].includes(extension)) {
+      errors.push(
+        `${relative}: no native formatting owner for this text format`,
+      );
+    } else {
+      const error = blankLineError(relative, source);
+      if (error) errors.push(error);
+    }
   }
   return errors;
 }
 
-export function checkTextLayout() {
+export async function checkTextLayout() {
   const errors = [];
   for (const relative of gitFiles()) {
     const absolute = filePath(relative);
@@ -323,8 +421,8 @@ export function checkTextLayout() {
     } catch {
       continue;
     }
-    errors.push(...textViolations(relative, source));
+    errors.push(...(await textViolations(relative, source)));
   }
   if (errors.length) throw new Error(errors.join("\n"));
-  console.log("PASS English text and one-blank-line layout");
+  console.log("PASS English source and native or plain-text spacing ownership");
 }

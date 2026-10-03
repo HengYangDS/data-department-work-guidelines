@@ -1,10 +1,10 @@
 {
   "schemaVersion": 4,
   "version": "7.0.12",
-  "packageJsonSha256": "a811e3999d9d7623fa04e692287ac9fefa6269c6749c63cff45ab2ff9e34a619",
-  "lockSha256": "04152c1affe5f9c7f474215e2aa78fc6082392b13ae38e529e415eac7612d424",
+  "packageJsonSha256": "c77c4554f1929867902d76cf479ce5a290d263d41895264b4e9863b15ad31263",
+  "lockSha256": "007e433bf63b0bc01d4bdea499ea35c6a6682f877ce3d3819739dc05350f5c32",
   "nativeToolsSha256": "6e0275b797c9c678903fa0ffb6b606ea2ffa30c9b6c1de19657f508eebd37867",
   "nodeMajor": 26,
   "fileName": "data-department-work-guidelines-v7.0.12-offline-tools.tar.gz",
-  "sha256": "e74919a6d28f4606d24d4b3262d731ad82c106748574fe8ace32b681d1a74fb8"
+  "sha256": "5d313dec5407312e91fe3afe66a0d61c1d3ef1b52ef790b04604f1b881b04654"
 }

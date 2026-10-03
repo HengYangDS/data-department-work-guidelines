@@ -37,7 +37,7 @@ npm run verify
 ethos plan --changed --json
 ```
 
-`npm run verify` checks Markdown, code, JSON, and YAML formatting, TOML syntax,
+`npm run verify` checks Markdown, code, JSON, YAML, and native TOML formatting,
 Markdown lint, metadata, offline links and fragments, English text, spelling,
 native prose and terminology, decision and navigation boundaries, the official
 OpenSpec workspace, the changelog/version contract, CI declarations, and
@@ -64,7 +64,7 @@ a rule without exercising a defect is insufficient. Keep the cases beside the
 rule rather than introducing another prose-test pipeline.
 
 The [configuration map](.config/README.md) identifies the single policy owner
-for each check. Prettier, Markdownlint, and lychee read native TOML directly;
+for each check. Prettier, Markdownlint, dprint, and lychee read native TOML directly;
 Vale uses its required native INI, YAML, and vocabulary files. Repository
 commands select those owners explicitly, without ambient editor configuration,
 format conversion, or duplicated package policy.
@@ -72,24 +72,34 @@ format conversion, or duplicated package policy.
 Paragraphs, headings, lists, quotes, link labels, and table cells are reader
 text. Code spans, fenced commands, and URL destinations retain their syntax. The
 checker never rewrites a file. Repository configuration controls the rules;
-actual Vale control comments fail native Markdown lint, including controls in
-nested content. Literal code, escaped examples, and ordinary comments remain
-valid. A passing style check does not prove factual accuracy, semantic fidelity,
-or reader understanding. Review those at the
+actual Vale or Prettier control comments fail native Markdown lint, including
+controls in nested content. Literal code, escaped examples, and ordinary
+comments remain valid. A passing style check does not prove factual accuracy,
+semantic fidelity, or reader understanding. Review those at the
 [communication](docs/communicate.md) and task owners.
 
-Use one blank line between headings, paragraphs, and other reader blocks.
-Within a list, single-paragraph items stay together without blank lines, even
-when a paragraph wraps across source lines. If an item needs a blank line
-between its paragraphs or blocks, use one between peer items consistently.
-A nested list without an internal blank line may stay tight.
-Keep one blank line around a complete list, table, quote, or fenced example.
-Do not add empty lines for visual padding. Markdownlint owns block spacing;
-the official `remark-lint-list-item-spacing` rule uses CommonMark paragraph
-structure with `checkBlanks = true`, not the number of physical source lines.
-Both run through the existing lint command and governed TOML policy. Code
-literals retain their meaningful spacing. The other text checks retain their
-non-Markdown spacing boundary.
+Blank lines separate meaning; they are not visual padding.
+
+| Source structure                                                         | Spacing                                                      | Enforced by                                                         |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------------- |
+| Headings, paragraphs, complete lists, tables, quotes, or fenced examples | One blank line between blocks; never repeated empty lines.   | Prettier and Markdownlint.                                          |
+| Single-paragraph list items, including wrapped text and task checkboxes  | No blank line between peer items.                            | Official `remark-lint-list-item-spacing` with `checkBlanks = true`. |
+| A list with internally separated paragraphs or blocks                    | One blank line between peer items consistently.              | The same native list rule.                                          |
+| Nested lists without internal paragraph separation                       | Keep the list tight.                                         | The same native list rule.                                          |
+| Quoted paragraphs                                                        | One empty `>` line; nested quotes follow the same structure. | Prettier.                                                           |
+| Code and data literals                                                   | Preserve meaningful blank lines inside the literal.          | The format's native owner.                                          |
+
+Run both `npm run format -- --check` and `node tools/docs/cli.mjs lint`, or the
+full `npm run verify`. Neither check replaces the other: Prettier handles quote
+structure but preserves a simple list's unnecessary gaps; the official list
+rule rejects those gaps. Tests cover that distinction and literal preservation.
+Source wrapping does not make a paragraph a multi-block list item.
+
+Prettier owns supported code, JSON, and YAML; dprint owns TOML through its public
+Wasm API and concern-local policy. Neither applies a raw blank-line scan to
+literal strings. TOML formatting must retain parsed data, key and array order,
+comments, and multiline-string bytes. Plain text without a structural owner
+keeps the single-blank-line ceiling. Unsupported code formats fail explicitly.
 
 For `docs/` pages, keep ETHOS metadata in the leading HTML comment and put the
 H1 after one blank line as the first visible block. Copy a current page's
@@ -210,8 +220,10 @@ Change authority.
    name, SHA-256, npm package, and license notice; it does not silently download
    missing inputs. npm package notices may be dedicated license files or an
    explicit readme License section agreeing with the package's native license
-   declaration; code examples and incidental mentions do not qualify. Choose a
-   fresh ignored output path whose basename is
+   declaration; code examples and incidental mentions do not qualify. The locked
+   TOML plugin carries its complete MIT notice through its native Wasm API. The
+   builder verifies that original notice and plugin identity without adding or
+   rewriting package files. Choose a fresh ignored output path whose basename is
    `data-department-work-guidelines-vX.Y.Z-offline-tools.tar.gz`, where `X.Y.Z`
    is the new `VERSION`:
 

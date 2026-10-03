@@ -53,7 +53,7 @@ async function checkRepository() {
   lintMarkdown();
   checkDocumentMetadata();
   checkLinks();
-  checkTextLayout();
+  await checkTextLayout();
   checkDecisions();
   checkNavigation();
   checkCi();

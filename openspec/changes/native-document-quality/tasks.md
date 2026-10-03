@@ -326,6 +326,33 @@
       Non-Markdown literal-format correction, shared integration, hosted matrices,
       and publication remain open. The existing supply advisory is not waived,
       and local proof does not accept the forthcoming shared product.
+      The structured-format follow-up rejects native Taplo binary admission:
+      its published lock has known transitive vulnerabilities. The latest stable
+      official dprint TOML format-only Wasm has no host imports; its two-package
+      npm resolution adds no transitive packages, install hook, or reported
+      advisory. Reproduce the literal rejection and missing TOML formatting,
+      then update the existing formatter, native policy, tests, contributor
+      route, and offline supply together. No extra native installer or gate is
+      introduced. Installed and hosted acceptance remain open.
+      A current 28-file Markdown audit finds no repeated blank lines and only
+      the contributor's multi-block release list is loose. The two Forges still
+      serve predecessor `ba982673`; the local list correction is not published.
+      Stock MD012 accepts quote-marker padding, but the existing Prettier check
+      rejects it. Public-format regressions now cover ordinary and nested
+      quotes, paragraph boundaries, and unchanged literal bytes. The native
+      TOML policy and embedded-MIT notice defects are reproduced and repaired;
+      focused cases pass. Full source, cold install, exact-HEAD integration,
+      shared delivery, and hosted acceptance for this follow-up remain open.
+      The full local verifier now passes 215 tests with none skipped. All 28
+      Markdown files format and render cleanly, with no repeated empty lines;
+      the only loose list has six multi-block release steps. Official partial
+      sync preserves all 55 requirements and 196 scenarios and adds four native
+      format scenarios, for 200; pending shared proof requirements are not synced.
+      The frozen bundle covers all 157 locked packages and their original license
+      notices. Prettier range-ignore suppression is reproduced and refused by
+      the existing parsed comment boundary; no prose-only alias remains.
+      These are local source results, not installed shared-product acceptance
+      or hosted publication. Cold and exact-HEAD acceptance follow this commit.
 
 ## 3. Qualification and publication
 

@@ -485,6 +485,7 @@ test("configuration rejects mixed ownership, code, duplicates and local state", 
 test("configuration rejects missing native policy owners", () => {
   for (const relative of [
     ".config/checks/format/prettier.toml",
+    ".config/checks/format/toml.toml",
     ".config/checks/links/lychee.toml",
     ".config/checks/markdown/markdownlint.toml",
     ".config/checks/prose/vale.ini",

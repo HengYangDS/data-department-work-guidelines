@@ -2,7 +2,7 @@ import { existsSync, lstatSync, readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
 import { parse as parseShell } from "shell-quote";
 import { parse as parseToml } from "smol-toml";
-import { documentMetadata } from "./content.mjs";
+import { documentMetadata, nativeTomlFormatter } from "./content.mjs";
 import {
   headingLevel,
   headingText,
@@ -377,6 +377,7 @@ export function checkConfigurationLayout(repository = root) {
   const expectedFiles = new Set([
     ".config/README.md",
     ".config/checks/format/prettier.toml",
+    ".config/checks/format/toml.toml",
     ".config/checks/links/lychee.toml",
     ".config/checks/markdown/markdownlint.toml",
     ".config/checks/prose/vale.ini",
@@ -455,6 +456,7 @@ export function checkConfigurationLayout(repository = root) {
       "configuration ownership must preserve native Markdown rule policy",
     );
   }
+  nativeTomlFormatter(repository);
   const vale = JSON.parse(
     run(
       nativeToolBinary("vale"),

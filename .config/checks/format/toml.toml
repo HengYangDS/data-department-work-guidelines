@@ -1,0 +1,9 @@
+lineWidth = 80
+indentWidth = 2
+newLineKind = "lf"
+quoteStyle = "maintain"
+sortKeys = false
+sortArrays = false
+sortInlineTables = false
+"comment.forceLeadingSpace" = false
+"cargo.applyConventions" = false

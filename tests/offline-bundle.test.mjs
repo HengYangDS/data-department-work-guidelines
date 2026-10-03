@@ -4,6 +4,7 @@ import { spawnSync } from "node:child_process";
 import {
   appendFileSync,
   copyFileSync,
+  cpSync,
   existsSync,
   mkdirSync,
   mkdtempSync,
@@ -488,6 +489,67 @@ test("package licensing accepts explicit native README declarations, not casual 
     );
   } finally {
     rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test("the locked TOML plugin carries its full native MIT notice without sidecars", () => {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-native-license-"));
+  try {
+    const location = "node_modules/@dprint/toml";
+    const formatter = "node_modules/@dprint/formatter";
+    const lock = JSON.parse(
+      readFileSync(path.join(root, "package-lock.json"), "utf8"),
+    );
+    const selected = {
+      packages: {
+        [location]: lock.packages[location],
+        [formatter]: lock.packages[formatter],
+      },
+    };
+    for (const relative of [location, formatter]) {
+      cpSync(path.join(root, relative), path.join(directory, relative), {
+        recursive: true,
+      });
+    }
+    writeFileSync(
+      path.join(directory, "package.json"),
+      '{ "private": true }\n',
+    );
+    const plugin = path.join(directory, location, "plugin.wasm");
+    const original = readFileSync(plugin);
+    const inventory = readdirSync(path.dirname(plugin));
+    assert.equal(offline.checkPackageLicenses(directory, selected), 2);
+    assert.deepEqual(readFileSync(plugin), original);
+    assert.deepEqual(readdirSync(path.dirname(plugin)), inventory);
+
+    for (const invalid of [
+      Buffer.from("invalid Wasm"),
+      Buffer.from([0, 97, 115, 109, 1, 0, 0, 0]),
+    ]) {
+      writeFileSync(plugin, invalid);
+      assert.throws(
+        () => offline.checkPackageLicenses(directory, selected),
+        /native formatter license|lacks its license/u,
+      );
+      assert.deepEqual(readFileSync(plugin), invalid);
+    }
+    writeFileSync(plugin, original);
+    const manifestPath = path.join(directory, location, "package.json");
+    const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
+    for (const field of [
+      { name: "fixture" },
+      { license: "BSD-3-Clause" },
+      { version: "0.0.0" },
+    ]) {
+      writeFileSync(manifestPath, JSON.stringify({ ...manifest, ...field }));
+      assert.throws(
+        () => offline.checkPackageLicenses(directory, selected),
+        /native formatter license|lacks its license/u,
+      );
+    }
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+    assert.equal(existsSync(directory), false);
   }
 });
 

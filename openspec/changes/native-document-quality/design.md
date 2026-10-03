@@ -199,15 +199,15 @@ Git. Prove both cases through the public commands: ignored untracked material
 stays outside source, while force-added Markdown beneath a normally ignored
 path receives prose and link checks. Do not add another inventory or waiver.
 
-Formatting uses the same Git inventory and the pinned Prettier file-information
-API to identify supported source. It must not maintain a second language list,
+Formatting uses the same Git inventory and each pinned native format API to
+identify supported source. It must not maintain a second language list,
 restrict code to `tools/` or `tests/`, or let ambient ignore files erase files
 already selected by Git. Explicit native invocation includes tracked source
 under normally ignored directories; ignored untracked material stays outside
-the inventory. Unsupported formats retain their separate native validation.
+the inventory. Unowned code formats fail rather than escaping validation.
 Prove both checking and writing through the existing public formatter, with
 defective code outside the usual directories and force-added source under local
-state paths. Do not create another formatter, dependency, or configuration.
+state paths. There is one native owner per format, not overlapping formatters.
 
 Markdown lint owns syntax and parsed comment controls. Its supported parser
 identifies actual comments before checking Vale's control grammar. Literal code,
@@ -448,8 +448,8 @@ checker uses the same rule, not a copied parser or alternate configuration.
 The raw all-text blank-line scan duplicates native Markdown spacing and rejects
 meaningful spacing inside fenced and indented code. Markdownlint's existing
 MD012 already distinguishes those literal regions from reader blocks. Let the
-native rule own Markdown spacing; keep the text consumer's English checks and
-its non-Markdown spacing responsibility. Remove the raw Markdown scan and its
+native checks own Markdown spacing; keep the text consumer's English checks and
+plain-text spacing responsibility. Remove the raw Markdown scan and its
 export rather than masking findings or adding a fence parser. Qualify ordinary
 reader padding, fenced and indented literals, nested content, and non-Markdown
 text through the existing tests and public source verifier.
@@ -479,7 +479,48 @@ install, installed proof, and both Forge matrices. Earlier signed tags and
 historical Git objects remain immutable. Published asset bytes cannot be
 replaced; download retirement follows the explicit retention boundary below.
 
+### Keep structured-data literals outside raw spacing scans
+
+The remaining all-text scan rejects meaningful blank lines in JavaScript
+strings, YAML scalars, and TOML strings. Prettier already owns supported source
+formats. TOML needs a real formatter, not a raw-text exception or another
+private parser. Delegate formatting and literal boundaries to the native owners;
+retain the line-oriented check only for plain text without a structural owner.
+
+Taplo 0.10.0 is the latest stable native CLI, but its published lock contains
+known vulnerable network and language-server dependencies. Do not add its old
+binary to the portable supply or call a direct-package advisory query complete.
+The official format-only `@dprint/toml` 0.8.0 Wasm plugin and
+`@dprint/formatter` 0.5.1 provide a smaller native formatting boundary. The npm
+resolution adds only those two packages, with no install hooks or new reported
+advisory. The plugin's Wasm has no host imports. Published source-lock findings
+are confined to development dependencies outside its declared runtime closure;
+that observation is not a general safety certification.
+
+Use its public formatter API and native configuration in the existing source
+formatter. It must validate all literal Git-selected TOML paths, ignore ambient
+exclusions, preserve order, comments and multiline-string bytes, reject syntax
+and configuration diagnostics, and fail on missing supply. The existing npm
+lock and offline builder carry the exact plugin and notices. No native Taplo
+installer, gzip extension, extra gate, or competing source selector is added.
+The plugin embeds its full MIT notice in the Wasm API rather than a named npm
+license file. The existing license checker reads that native notice, matches the
+locked plugin identity and complete MIT grant, and refuses host imports. It
+neither modifies the package nor manufactures a sidecar or license waiver.
+
 ### Make Markdown spacing depend on document structure
+
+Prettier and Markdownlint jointly own Markdown spacing. Stock MD012 does not
+count quote marker lines as empty; native Prettier already collapses repeated
+quoted separators and supplies the missing paragraph-to-quote boundary. Cover
+that public formatter behavior and retain nested quoted code bytes. Do not add
+a private quote regex or claim that the lint command alone enforces the whole
+format contract. Ordinary list gaps remain the official list rule's concern.
+Prettier's native range-ignore comments can otherwise exempt that same padded
+quote. The existing parsed comment boundary rejects those exact controls as
+well as Vale controls; it retains code examples and explanatory comments. Rename
+the shared rule to quality control, retire its old prose-only name, and prove
+the distinguishing waiver case rather than adding another parser or linter.
 
 The single-blank-line ceiling does not determine list looseness. Stock MD012
 and MD032 accept unnecessary gaps between simple list items, and Prettier

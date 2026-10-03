@@ -271,7 +271,7 @@ test("real Vale control comments cannot disable prose checks", () => {
       `- ${control}\n  Use the the report.\n`,
       `| Duty |\n| --- |\n| ${control} Use the the report. |\n`,
     ])
-      assert.throws(() => proseFindings(source), /no-prose-control/u);
+      assert.throws(() => proseFindings(source), /no-quality-control/u);
   }
   const validSources = [
     "<!-- Vale explains configured prose rules. -->\n\nThe result is verified.\n",

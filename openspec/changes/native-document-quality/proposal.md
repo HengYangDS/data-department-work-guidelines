@@ -92,10 +92,11 @@ linter beside the current stack would leave the duplication intact.
   every selected current Markdown file for prose and links, even beneath a
   normally ignored local-state path. Keep ignored untracked state excluded and
   official archived Changes under their historical boundary.
-- Let the pinned native Prettier parser select supported Git source rather than
-  narrowing code by directory or extension. Prevent ambient ignore files from
-  exempting already selected source, while leaving ignored untracked state and
-  unsupported native formats outside formatting.
+- Let pinned native format owners select Git source rather than narrowing code
+  by directory. Preserve meaningful code and data literals, and use the official
+  format-only TOML plugin where Prettier supplies no owner. Prevent ambient
+  ignore files from exempting selected source; ignored untracked state remains
+  excluded, while unsupported code fails explicitly.
 - Name every runnable GitLab verification job by purpose and platform, with
   `:review` for source review. Keep shared steps in hidden native templates, not
   a platform-less runnable job or a Linux job inherited by other hosts. Preserve

@@ -772,6 +772,60 @@ function readmeLicenseNotice(directory, declarations) {
   });
 }
 
+function nativeFormatterLicenseNotice(
+  installation,
+  directory,
+  manifest,
+  entry,
+) {
+  if (
+    manifest.name !== "@dprint/toml" ||
+    manifest.license !== "MIT" ||
+    !entry?.version ||
+    manifest.version !== entry.version
+  )
+    return false;
+  try {
+    // The locked plugin publishes its complete notice through its Wasm API.
+    // Keep those original bytes; do not add a fabricated package sidecar.
+    const require = createRequire(path.join(installation, "package.json"));
+    const pluginPath = require("@dprint/toml").getPath();
+    const stat = lstatSync(pluginPath);
+    if (
+      !stat.isFile() ||
+      stat.isSymbolicLink() ||
+      realpathSync(path.dirname(pluginPath)) !== realpathSync(directory)
+    )
+      throw new Error("plugin path is not the selected package");
+    const bytes = readFileSync(pluginPath);
+    if (WebAssembly.Module.imports(new WebAssembly.Module(bytes)).length) {
+      throw new Error("license extraction cannot import host capabilities");
+    }
+    const formatter = require("@dprint/formatter").createFromBuffer(bytes);
+    formatter.setConfig({}, {});
+    const info = formatter.getPluginInfo();
+    if (info.name !== "dprint-plugin-toml" || info.version !== entry.version) {
+      throw new Error("native plugin identity differs from its locked package");
+    }
+    const notice = formatter.getLicenseText();
+    const hostNotice = readFileSync(
+      path.join(installation, "node_modules/@dprint/formatter/LICENSE"),
+      "utf8",
+    );
+    const grant = "Permission is hereby granted";
+    const start = hostNotice.indexOf(grant);
+    const normalize = (text) => text.replace(/\s+/gu, " ").trim();
+    return (
+      start >= 0 &&
+      /^The MIT License \(MIT\)/u.test(notice) &&
+      /Copyright \(c\)\s+\S/u.test(notice) &&
+      normalize(notice).includes(normalize(hostNotice.slice(start)))
+    );
+  } catch (error) {
+    throw new Error(`native formatter license is invalid: ${error.message}`);
+  }
+}
+
 export function checkPackageLicenses(installation, lock) {
   let count = 0;
   for (const location of Object.keys(lock.packages)) {
@@ -798,7 +852,14 @@ export function checkPackageLicenses(installation, lock) {
     });
     if (
       !declared ||
-      (!namedNotice && !readmeLicenseNotice(packageDirectory, declarations))
+      (!namedNotice &&
+        !readmeLicenseNotice(packageDirectory, declarations) &&
+        !nativeFormatterLicenseNotice(
+          installation,
+          packageDirectory,
+          manifest,
+          lock.packages[location],
+        ))
     ) {
       throw new Error(`offline package lacks its license: ${location}`);
     }

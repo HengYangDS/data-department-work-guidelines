@@ -165,8 +165,8 @@ enforce admission without a tracked adapter or optional gate.
 
 One locked, shell-independent verifier SHALL check all Git-selected source
 formats supported by pinned native Prettier, including Markdown, code, JSON and
-YAML; TOML syntax; Markdown lint; native Vale prose; pinned offline lychee links
-and fragments; metadata, English, spacing, decisions and navigation.
+YAML; native TOML formatting; Markdown lint; native Vale prose; pinned offline
+lychee links and fragments; metadata, English, spacing, decisions and navigation.
 The same repository-relative entry SHALL run locally and on both CI planes.
 Diagram, card, topic and evidence counts SHALL NOT determine validity.
 
@@ -241,8 +241,8 @@ Diagram, card, topic and evidence counts SHALL NOT determine validity.
 
 - **WHEN** a defective supported file is untracked and ignored by Git
 - **THEN** both public formatting modes leave it outside their source inventory
-- **AND** unsupported native formats retain their separate validation rather
-  than acquiring a second formatter.
+- **AND** unowned code formats fail explicitly rather than silently passing
+  or acquiring an overlapping formatter.
 
 #### Scenario: A diagram is removed without losing meaning
 
@@ -514,11 +514,11 @@ separate; the bundle SHALL NOT impersonate its authority.
 
 ### Requirement: Retained source receives format and spacing checks
 
-Prettier and native Markdown lint SHALL check tracked or unignored Markdown,
-including archives. Markdown blocks SHALL use one blank line; single-paragraph
-list peers SHALL be adjacent despite wrapping, and loose-list peers consistently
-separated. Literal code SHALL keep its spacing. Non-Markdown UTF-8 text SHALL
-receive spacing checks; binaries and symlinks are excluded. Spelling, links and
+Native format and Markdown checks SHALL cover Git-selected source, including
+archives. Reader blocks SHALL have one blank line; single-paragraph list peers
+stay adjacent and loose peers consistently separated. Code and data literals
+SHALL retain meaningful spacing. Plain UTF-8 text SHALL receive spacing checks;
+unowned code SHALL fail. Binaries and symlinks are excluded. Spelling, links, and
 metadata SHALL cover current readers, not promote archives to guidance.
 
 #### Scenario: An archived Markdown file breaks source hygiene
@@ -543,6 +543,38 @@ metadata SHALL cover current readers, not promote archives to guidance.
 - **THEN** the existing native spacing rule preserves that literal content
 - **AND** the general text consumer does not reject it through a duplicate
   raw Markdown spacing scan.
+
+#### Scenario: Structured source contains literal blank lines
+
+- **WHEN** JavaScript strings, YAML scalars, or TOML strings contain meaningful
+  consecutive blank lines
+- **THEN** the native formatter preserves those literal bytes and rejects only
+  structural format defects
+- **AND** the general text consumer does not apply a duplicate raw spacing scan.
+
+#### Scenario: TOML source is selected literally
+
+- **WHEN** Git selects a TOML source path with spaces or glob-like characters
+- **THEN** the formatter checks that exact file through its native public API
+- **AND** ambient exclusion files cannot remove it or change its policy
+- **AND** a syntax error, policy diagnostic, missing plugin, or meaningful-byte
+  change fails qualification rather than silently skipping the source.
+
+#### Scenario: Quoted paragraphs contain visual padding
+
+- **WHEN** ordinary or nested quoted paragraphs contain repeated empty quote
+  lines, or a quote lacks its separator from the preceding paragraph
+- **THEN** the native source format check rejects that exact Git-selected file
+- **AND** formatting restores one structural separator without changing nested
+  code literals or treating the standalone lint command as the full verifier.
+
+#### Scenario: A comment attempts to suppress formatting
+
+- **WHEN** a real native Prettier ignore or range-control comment would exempt
+  a source block from formatting
+- **THEN** native Markdown parsing rejects the control in the existing check
+- **AND** literal code examples and explanatory comments remain valid without
+  a second parser or document-level formatting waiver.
 
 #### Scenario: Wrapped simple list items contain unnecessary gaps
 
