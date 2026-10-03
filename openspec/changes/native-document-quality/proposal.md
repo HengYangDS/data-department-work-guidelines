@@ -74,6 +74,10 @@ linter beside the current stack would leave the duplication intact.
   preserve existing binary permissions. Suppress OpenSpec's outbound requests
   for offline validation through its official child-process environment option
   without altering global settings.
+- Restore native Markdown spacing ownership. Reject padding in reader blocks
+  while preserving meaningful blank lines inside fenced and indented code.
+  Remove the duplicate raw-text Markdown scan, retain other text checks, and
+  prove the boundary through the existing public verifier without another rule.
 - Correct configuration ownership: separate check policy, native tool supply,
   and release identity. Use native TOML for Prettier, Markdownlint, and lychee;
   remove package-embedded formatting policy and hard-coded link policy, move

@@ -445,6 +445,15 @@ entry selects that implementation directly; configuration contains only native
 rule policy, not executable code or another file-selection plane. The prose
 checker uses the same rule, not a copied parser or alternate configuration.
 
+The raw all-text blank-line scan duplicates native Markdown spacing and rejects
+meaningful spacing inside fenced and indented code. Markdownlint's existing
+MD012 already distinguishes those literal regions from reader blocks. Let the
+native rule own Markdown spacing; keep the text consumer's English checks and
+its non-Markdown spacing responsibility. Remove the raw Markdown scan and its
+export rather than masking findings or adding a fence parser. Qualify ordinary
+reader padding, fenced and indented literals, nested content, and non-Markdown
+text through the existing tests and public source verifier.
+
 Prettier reads `.config/checks/format/prettier.toml` through its native
 `--config` option. Remove the policy from `package.json`; do not leave discovery
 or editor overrides to select another owner. Lychee reads

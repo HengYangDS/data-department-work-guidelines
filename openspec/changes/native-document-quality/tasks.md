@@ -288,6 +288,23 @@
       cold checkouts and the prior absorbed Work Lane are retired; proof and
       verified render custody remain outside source.
 
+- [ ] 2.33 Restore native Markdown spacing ownership. Reproduce the raw-text
+      scan's rejection of meaningful fenced and indented spacing, then remove
+      that duplicate Markdown path. Preserve English checks, native reader-block
+      padding failures, nested code, and non-Markdown text hygiene. Qualify
+      distinguishing native cases, the full public source verifier, exact-HEAD
+      proof, cold installation, and both Forge matrices before closure. Shared
+      reader/configuration constraints remain an ETHOS integration obligation;
+      do not add a second Markdown rule or declare its product work complete.
+      Two original assertions reproduce the raw scan's literal-code failure.
+      The six focused native controls and all 206 tests pass after the existing
+      consumer delegates Markdown spacing to MD012. Public lint and layout
+      preserve code bytes and still reject reader padding; non-Markdown text
+      retains its boundary. Official merge preserves all 55 main requirements
+      and adds two spacing scenarios without syncing the pending proof contract.
+      Committed-source proof, cold installation, and hosted delivery remain
+      separate open obligations.
+
 ## 3. Qualification and publication
 
 - [x] 3.1 Freeze source and a source-bound offline bundle; run format, lint,
@@ -355,7 +372,8 @@
       next-verification duty adds one, and complete Agent result inspection
       adds one. Historical-copy disposition adds two more, preserving all
       previous requirements and scenarios. The unidentified-task-owner
-      restoration adds one more; these 192 main-spec scenarios do not prove
+      restoration adds one more; native literal-spacing preservation adds two
+      more. These 194 main-spec scenarios do not prove
       whole-document semantic equivalence.
       The two draft proof requirements still await
       the accepted ETHOS contract and are not synced;

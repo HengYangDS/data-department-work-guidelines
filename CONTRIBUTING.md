@@ -78,6 +78,11 @@ valid. A passing style check does not prove factual accuracy, semantic fidelity,
 or reader understanding. Review those at the
 [communication](docs/communicate.md) and task owners.
 
+Use one blank line between reader blocks, not repeated empty lines for visual
+padding. Native Markdown rules own that spacing and preserve meaningful blank
+lines inside fenced and indented code. The other text checks retain their
+non-Markdown spacing boundary; neither consumer rewrites literal content.
+
 For `docs/` pages, keep ETHOS metadata in the leading HTML comment and put the
 H1 after one blank line as the first visible block. Copy a current page's
 carrier rather than inventing a sidecar. The repository check guards this

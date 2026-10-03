@@ -33,6 +33,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   policy; ambient configuration can no longer hide source defects.
 - Remove the redundant Markdown lint wrapper and its unused dependencies while
   retaining native rule diagnostics, literal filenames, and comment controls.
+- Preserve meaningful blank lines in fenced and indented code through native
+  Markdown rules while still rejecting padding between reader blocks.
 
 ### Removed
 

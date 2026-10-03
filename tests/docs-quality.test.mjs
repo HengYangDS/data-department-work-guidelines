@@ -16,7 +16,6 @@ import { test } from "node:test";
 import { pathToFileURL } from "node:url";
 import { parse as parseShell } from "shell-quote";
 import {
-  blankLineError,
   documentMetadata,
   lintMarkdown,
   repositoryFileUri,
@@ -1166,11 +1165,37 @@ test("a delivered directory alias must also resolve to repository source", () =>
   }
 });
 
+test("Markdown spacing preserves fenced and indented literal content", () => {
+  for (const source of [
+    "# Example\n\n```text\nfirst\n\n\nsecond\n```\n",
+    "# Example\n\n````text\n```\n\n\n```\n````\n",
+    "# Example\n\n    first\n\n\n    second\n",
+    "# Example\n\n> ```text\n> first\n>\n>\n> second\n> ```\n",
+  ]) {
+    assert.doesNotThrow(() =>
+      lintMarkdown({ files: [], strings: { "fixture.md": source } }),
+    );
+    assert.deepEqual(textViolations("fixture.md", source), []);
+  }
+});
+
+test("Markdown spacing rejects reader padding after literal content", () => {
+  const source = "# Example\n\n```text\nfirst\n\n\nsecond\n```\n\n\nOutside.\n";
+  assert.throws(
+    () => lintMarkdown({ files: [], strings: { "fixture.md": source } }),
+    /fixture\.md:10 \[MD012\]/u,
+  );
+  assert.deepEqual(textViolations("fixture.md", source), []);
+});
+
 test("one blank line is allowed; visual padding is not", () => {
-  assert.equal(blankLineError("fixture.md", "# A\n\nText\n"), "");
-  assert.match(
-    blankLineError("fixture.md", "# A\n\n\nText\n"),
-    /consecutive blank lines/u,
+  assert.doesNotThrow(() =>
+    lintMarkdown({ files: [], strings: { "fixture.md": "# A\n\nText\n" } }),
+  );
+  assert.throws(
+    () =>
+      lintMarkdown({ files: [], strings: { "fixture.md": "# A\n\n\nText\n" } }),
+    /fixture\.md:3 \[MD012\]/u,
   );
 });
 
@@ -1249,6 +1274,33 @@ test("Markdown lint checks literal Git source without a glob or ambient policy",
     const valid = invoke();
     assert.ifError(valid.error);
     assert.equal(valid.status, 0, valid.stderr);
+    const literals = [
+      "# Example\n\n```text\nfirst\n\n\nsecond\n```\n",
+      "# Example\n\n    first\n\n\n    second\n",
+    ];
+    for (const literal of literals) {
+      writeFileSync(file, literal);
+      const native = invoke();
+      assert.ifError(native.error);
+      assert.equal(native.status, 0, native.stderr);
+      const layout = spawnSync(
+        process.execPath,
+        [
+          "--input-type=module",
+          "--eval",
+          "import { checkTextLayout } from './tools/docs/content.mjs'; checkTextLayout();",
+        ],
+        { cwd: directory, encoding: "utf8", timeout: 10_000 },
+      );
+      assert.ifError(layout.error);
+      assert.equal(layout.status, 0, layout.stderr);
+      assert.equal(readFileSync(file, "utf8"), literal);
+    }
+    writeFileSync(file, `${literals[0]}\n\nOutside.\n`);
+    const padded = invoke();
+    assert.ifError(padded.error);
+    assert.equal(padded.status, 1, padded.stderr);
+    assert.match(padded.stderr, /MD012/u);
     writeFileSync(
       file,
       "# Example\n\n<!-- markdownlint-disable MD013 -->\n\n" +
@@ -1473,17 +1525,33 @@ test("English and spacing failures identify a file and line", () => {
     textViolations("docs/example.md", "# Heading\n\u4e2d\u6587\n")[0],
     /docs\/example\.md:2/u,
   );
-  assert.match(
-    textViolations("docs/example.md", "# Heading\n\n\nText\n")[0],
-    /docs\/example\.md:3/u,
+  assert.throws(
+    () =>
+      lintMarkdown({
+        files: [],
+        strings: { "docs/example.md": "# Heading\n\n\nText\n" },
+      }),
+    /docs\/example\.md:3 \[MD012\]/u,
   );
 });
 
-test("spacing rejects archived text and files without extensions without rejecting one blank line", () => {
-  for (const file of ["openspec/changes/archive/example/spec.md", "LICENSE"]) {
-    assert.deepEqual(textViolations(file, "First\n\nSecond\n"), []);
+test("native spacing checks archived Markdown; other text keeps its own boundary", () => {
+  const file = "openspec/changes/archive/example/spec.md";
+  assert.doesNotThrow(() =>
+    lintMarkdown({ files: [], strings: { [file]: "# Example\n\nText.\n" } }),
+  );
+  assert.throws(
+    () =>
+      lintMarkdown({
+        files: [],
+        strings: { [file]: "# Example\n\n\nText.\n" },
+      }),
+    /:3 \[MD012\]/u,
+  );
+  for (const name of ["LICENSE", ".config/README.txt", "tools/example.mjs"]) {
+    assert.deepEqual(textViolations(name, "First\n\nSecond\n"), []);
     assert.match(
-      textViolations(file, "First\n\n\nSecond\n")[0],
+      textViolations(name, "First\n\n\nSecond\n")[0],
       /:3: consecutive blank lines/u,
     );
   }

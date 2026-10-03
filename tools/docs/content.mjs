@@ -276,7 +276,7 @@ export function checkLinks({ online = false } = {}) {
   }
 }
 
-export function blankLineError(relative, source) {
+function blankLineError(relative, source) {
   const lines = source.split(/\r?\n/u);
   for (let index = 1; index < lines.length; index += 1) {
     if (
@@ -303,8 +303,10 @@ export function textViolations(relative, source) {
     if (cjk.test(line))
       errors.push(`${relative}:${index + 1}: CJK text is not allowed`);
   }
-  const error = blankLineError(relative, source);
-  if (error) errors.push(error);
+  if (!relative.endsWith(".md")) {
+    const error = blankLineError(relative, source);
+    if (error) errors.push(error);
+  }
   return errors;
 }
 

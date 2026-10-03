@@ -514,12 +514,12 @@ separate; the bundle SHALL NOT impersonate its authority.
 
 ### Requirement: Retained source receives format and spacing checks
 
-Prettier and Markdown lint SHALL cover every tracked or unignored Markdown
-candidate, including archived OpenSpec records. The one-blank-line rule SHALL
-cover every decodable tracked or unignored text candidate, including archives
-and files without extensions; binary files and symlinks are excluded. Spelling,
-links, and document metadata SHALL remain scoped to current reader material;
-archived records SHALL NOT become current guidance.
+Prettier and Markdown lint SHALL check all tracked or unignored Markdown,
+including OpenSpec archives. Native Markdown rules SHALL own spacing and
+preserve fenced and indented code. Non-Markdown spacing SHALL cover decodable
+tracked or unignored text, including archives and files without extensions,
+excluding binaries and symlinks. Spelling, links, and metadata SHALL cover
+current reader material; archives SHALL NOT become current guidance.
 
 #### Scenario: An archived Markdown file breaks source hygiene
 
@@ -535,6 +535,20 @@ archived records SHALL NOT become current guidance.
   extension has consecutive blank lines
 - **THEN** the repository verifier fails with the file and line
 - **AND THEN** binary files and symlinks are not interpreted as prose.
+
+#### Scenario: Code requires literal blank lines
+
+- **WHEN** fenced or indented Markdown code contains meaningful consecutive
+  blank lines, including a nested or longer-fence example
+- **THEN** the existing native spacing rule preserves that literal content
+- **AND** the general text consumer does not reject it through a duplicate
+  raw Markdown spacing scan.
+
+#### Scenario: Reader padding follows a valid code example
+
+- **WHEN** reader blocks have consecutive blank lines outside literal code
+- **THEN** the native Markdown rule rejects the padding at its source location
+- **AND** the valid code example does not hide the reader-layout defect.
 
 ### Requirement: Reader guidance separates visible content from registry metadata
 
