@@ -166,21 +166,29 @@
       platform matrices, matching downloaded hashes, and online links.
       macOS ran 200 tests without skips; Linux and Windows passed 199 with one
       intentional macOS-only skip. The temporary proposal, cold checkouts,
-      supply scratch, and duplicate downloads are retired. Both Forges retain
-      the current v7.0.10 and qualified v7.0.9 rollback downloads; v7.0.8 tags,
-      original notes, and historical verification remain after its withdrawal.
-- [ ] 2.29 Refresh the existing shell lexer to verified stable 1.12.0 after
+      supply scratch, and duplicate downloads were retired. At that release's
+      aftercare, both Forges retained v7.0.10 and the qualified v7.0.9 rollback;
+      v7.0.8 tags, original notes, and historical verification remained after
+      withdrawal. Task 2.29 records the later release and current retention.
+- [x] 2.29 Refresh the existing shell lexer to verified stable 1.12.0 after
       the latest native metadata audit found version drift. Preserve command,
       glob, quotation, and ordinary-rationale counterexamples; qualify native
       lock resolution, install effects, advisories, notices, source-bound
       offline supply, exact-source proof, and both Forge platform matrices.
       Do not alter the published v7.0.10 objects or add a second lexer.
-      The official 1.12.0 release expands native operator grouping. The new
-      distinguishing regression fails on 1.11.0; the audited native lock adds
-      no dependency or install hook. Signed source passed 201 local tests,
-      current installed full proof, and a denied-network clean install with
-      every source hash unchanged. The native operator scenario is synced to
-      the main spec; release-cut and both Forge qualification remain open.
+      Signed v7.0.11 at `5dc8a65` qualifies the same native lexer without a
+      second parser. The operator regression fails on 1.11.0 and passes on
+      1.12.0; native lock resolution adds no package or install hook. Complete
+      local and denied-network clean verification pass 201 tests, and current
+      installed full proof passes. All 31 selected original source and offline
+      jobs on both Forges pass: macOS runs 201 tests; Linux and Windows run 200
+      with the one macOS-only archive-attribute test skipped. Each Forge's
+      downloaded bundle has the source-pinned hash; all 281 blobs and modes
+      match. The native operator scenario is synced, and post-tag links pass.
+      Exact aftercare removes the completed proposal, disposable acceptance
+      clones, supply inputs, duplicate downloads, and v7.0.9 download resources.
+      v7.0.11 and v7.0.10 remain as current and qualified rollback. Original
+      release notes, tags, source, and verification evidence remain.
 
 ## 3. Qualification and publication
 
@@ -204,6 +212,13 @@
       missing links, wrong repository targets, and unqualified repairs. Select
       exact source and installed-runtime evidence from each owner, then retire
       any product-superseded local identity implementation.
+      The accepted product's existing identity-repair operation now completes
+      the seven Proxy committer corrections locally at `e603ed4`. Its 246
+      replacement commits pass native DAG and trust checks; author metadata,
+      trees, message bytes, timestamps, tags, and the active Work Lane remain
+      unchanged. Remote integration and final proof are not complete: the
+      accepted original source still contains 21 official OpenSpec INFO
+      findings, while the active lane holds the reviewed source repairs.
 - [x] 3.4 Publish the major signed SemVer edition independently to GitLab and
       GitHub; verify both exact refs, Releases, downloaded asset hashes, and
       declared source and offline platform jobs.
@@ -222,6 +237,10 @@
       hashes do not prove semantic equivalence. Final shared product and
       adopter qualification, post-archive proof/publication, and owned lane
       retirement still remain.
+      A fresh independent review reads the original and all seven current
+      topics at `5dc8a65` and finds no actionable material loss; its judgment
+      is bounded, not semantic-equivalence proof. The 84-unit prior review is
+      rebound to 170 unchanged excerpts and one edition-only substitution.
 - [x] 3.6 Publish the compatible original-duty correction with fresh local,
       installed ETHOS, signed patch, asset, and both Forge platform evidence;
       preserve the already qualified major release.
