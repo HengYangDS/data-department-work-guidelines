@@ -304,14 +304,16 @@
       stream-report assumptions. Reject disconnected or unverified owners and
       prove complete test selection, single execution, semantic diagnostics,
       and warning preservation through the actual installed command plane.
-      On 2026-10-03, proposal `5625608` stops at the new high-severity braces
-      advisory before source checks. Removing CLI2 at `1219528` reduces the
-      native audit from six findings to four; official OpenSpec retains the
-      remaining dependency path. Verified stable publisher metadata offers no
-      patched braces version. Prior passing jobs do not establish current
-      security. Qualify the actual
-      schema, configuration, and selected input through the accepted shared
-      product and its audit consumer before dependent publication. Do not
+      Integration remains pending. Signed ETHOS source `ef67c584` includes
+      the native Python-provider repair, but its required security gate rejects
+      the OpenSpec-to-braces dependency; accepted source and installed runtimes
+      remain unchanged. Official OpenSpec 1.14.0 and braces 3.0.3 have no verified
+      patched stable release on 2026-10-03. The one high-severity advisory
+      propagates through four npm package findings. Removing CLI2 at `1219528`
+      removes an unrelated consumer, not that risk. Qualify the actual selected
+      schema, inputs, and mitigation through the accepted shared product and
+      its native audit owner before dependent publication. A safe default
+      schema does not establish safety for arbitrary overrides. Do not
       downgrade tools, hide findings, or introduce a repository waiver.
 - [ ] 3.13 Qualify the accepted product's reusable release-history identity
       boundary and reconcile every audited affected adopter. Bind links to
@@ -320,16 +322,19 @@
       exact source and installed-runtime evidence from each owner, then retire
       any product-superseded local identity implementation.
       Native identity repair corrects seven Proxy committer pairs at
-      `e603ed4`, conserving the 246 affected commits. The owned lane now
-      continues at `b4852ea` on that repaired base: all 55 lane contributions
-      and the reviewed merge retain their trees, authors, original author
-      times, messages, and ordered parent relation. Native signed replay
-      refreshes committer times and signatures; exact CAS and attachment pass.
-      Current full proof remains blocked: the repository's quality command
-      passes, but the installed native Python provider refuses its execution
-      evidence. Remote publication and generic repaired-history contribution
-      acceptance remain open; no private provider or conservation waiver is
-      introduced.
+      `e603ed4`, conserving the 246 affected commits. The owned Proxy lane
+      continues from that repaired base. Native signed replay conserves the
+      audited contributions' trees, authors, original author times, messages,
+      and ordered parents; exact CAS and attachment pass. Signed `865681f7`
+      repairs bounded Windows payload disposal and passes the full local source
+      graph and all eight original GitLab review jobs in pipeline 9401. Windows
+      native job 47926 passes 55 cases with one Linux-only skip; it does not
+      certify a protected branch or GitHub. Task-only `6ccee857` records that
+      result without changing product inputs. Installed full proof still awaits
+      the accepted ETHOS Python-provider repair. Actual GitHub execution,
+      repaired-baseline contribution admission, protected-source publication,
+      and exact failed-root aftercare remain open; no private provider or
+      conservation waiver is introduced.
 - [x] 3.4 Publish the major signed SemVer edition independently to GitLab and
       GitHub; verify both exact refs, Releases, downloaded asset hashes, and
       declared source and offline platform jobs.
