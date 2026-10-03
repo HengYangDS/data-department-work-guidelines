@@ -91,9 +91,17 @@ truth rather than copying it.
 
 State the risk or blocker; the facts, impact, and latest safe decision time;
 containment already attempted and its result; and the options, costs,
-recommendation, and person who must decide by when. Replace “soon,” “basically
-agreed,” and “probably fine” with owners, times, verified facts, and remaining
-risks.
+recommendation, and person who must decide by when. Replace vague assurances
+with statements that another person can check:
+
+| Instead of                  | Say                                                                |
+| --------------------------- | ------------------------------------------------------------------ |
+| “Actively progressing”      | Actual changes, current blocker, next milestone, and time.         |
+| “Probably fine”             | What passed verification, remaining risk, and confidence.          |
+| “As soon as possible”       | Owner, deadline, and escalation if that deadline is missed.        |
+| “Everyone basically agrees” | Who agreed, who objects, and who has decision authority.           |
+| “It's complicated”          | Which subjects, dependencies, conflicts, or unknowns matter.       |
+| “The Agent analyzed it”     | Its facts, the member's verification, and the conclusion's limits. |
 
 If a deadline may be missed, name the escalation owner and the condition for
 involving them before the delay causes harm.

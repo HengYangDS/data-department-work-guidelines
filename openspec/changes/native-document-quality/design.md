@@ -87,6 +87,37 @@ net-benefit review retain their minimum frequency and owners. Review omitted
 original duties separately from presentation and the incompatible tool contract;
 the baseline comparison cannot establish their completeness.
 
+The independent, tool-free Claude review at `d8413362` reads the complete
+original and seventeen current reader/configuration sources. It identifies
+three weakened duties: unverified citation is missing from the hard-risk list;
+parallel shared edits read as advice and owner-unknown work may be closed; and
+metric and monthly-review limits no longer exclude judging overall personal
+worth or ranking individuals. Restore those duties at their existing owners.
+The charter table itself must prohibit crossing limits. Remove only the second
+delivery-state reminder. Keep monthly and quarterly review and ordinary
+evidence-based evaluation; do not broaden the original limits into a ban on
+all evaluation. The review judges only its supplied sources and does not prove
+whole-document equivalence, installed acceptance, or hosted delivery.
+
+Its fixed-source repair recheck finds additional weakened subjects and limits.
+Primary comparison accepts restoration of the original default authority order,
+the member's nine result checks, explicit boundary and guess-as-fact stops,
+author-independent acceptance, and Agent implementation within delegated scope.
+Restore report and derivation provenance, pending-verification state, six vague
+expression corrections, score-label limits, honest-problem disclosure, quarterly
+capability gaps, carrier-reuse limits, emergency decision ownership, and the
+conjunctive net-benefit bar. Keep the manager's monthly responsibility consistent
+between topic and delta, and link delivery's L2 minimum to the charter.
+
+These are targeted restorations, not acceptance of every reviewer suggestion.
+The charter's authority order does not let a decision owner waive law or a
+contract without authority; unresolved conflicts still require a decision.
+The original top-level excellence criterion combines method transfer, lower
+complexity, and others' capability; a suggested disjunction would weaken it.
+An Agent may implement and verify but cannot approve high-risk action.
+GitLab's private address is an intentional organization publication boundary,
+with GitHub supplying independent public distribution, not a broken reader link.
+
 ### Restore omitted obligations without recreating the monolith
 
 A final reread of original blob `ce3d090be258e65534781769e3e2fd5ab7439ef8`,

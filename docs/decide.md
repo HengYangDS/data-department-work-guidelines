@@ -108,6 +108,8 @@ Once a choice is made, record what was decided, by whom, on what date, and why
 in the existing work record. A deadline says when a decision is needed; it
 does not establish when approval occurred.
 
+Give the proposed decision one of these three states:
+
 | State    | Say and do                                                           |
 | -------- | -------------------------------------------------------------------- |
 | Ready    | Premises hold; record the decision and first step.                   |

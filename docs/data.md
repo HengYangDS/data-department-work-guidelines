@@ -29,14 +29,14 @@ of its meaning, quality, permission, and reproducibility supports that decision.
 
 Data with unanswered questions may support exploration, but must not be
 presented as a durable trusted asset. Exploratory code and temporary data may
-move quickly inside that boundary. Before either enters a shared, production, or
-decision path, qualify its meaning, quality, permissions, and reproducibility
-for that specific use; otherwise keep it marked as exploratory. Distinguish
+move quickly inside that boundary. Neither may enter a shared, production, or
+decision path until its meaning, quality, permissions, and reproducibility are
+qualified for that use; until then it remains exploratory. Distinguish
 source data, production data, experimental results, service views,
-platform-derived views, and reporting views. Catalogs, caches, and Agent
-summaries are projections; none may quietly become the source of truth. Preserve
-the source and history of revisions and backfills so the current value can be
-explained.
+platform-derived views, and reporting views. Reports, catalogs, caches, and
+Agent summaries are projections; none may quietly become the source of truth. Preserve
+the source and history of revisions, backfills, and derivations so the current
+value can be explained.
 
 ## Preserve the Historical Point of View
 
@@ -65,8 +65,8 @@ Stages may be combined; the judgments may not disappear.
 
 “Technically possible” is not “worth doing”; “a signal exists” is not
 “production-ready”; “deployed” is not “approved for any use.” Label exploratory,
-temporary, limited-use, and admitted states separately. “Let's use it and see”
-does not erase risk.
+temporary, limited-use, awaiting verification, and admitted states separately.
+“Let's use it and see” does not erase risk.
 
 Admission permits a specified use under stated conditions. Adoption is observed
 use within those conditions, not a label inferred from deployment.
@@ -116,7 +116,8 @@ Changes to production, shared assets, or critical management chains require:
 
 The authorized decision owner approves admission for high-risk use, permission
 changes, production releases, destructive changes, and irreversible actions. An
-Agent may assist but cannot approve them.
+Agent may implement or help verify them within its delegated scope, but cannot
+approve them.
 
 Before data enters a lasting work system, its **meaning must be explainable,
 source traceable, time identifiable, process reproducible, quality verifiable,

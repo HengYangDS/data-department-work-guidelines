@@ -71,6 +71,30 @@
       remain separate qualification boundaries for the new correction.
       Earlier no-finding reviews remain dated, bounded judgments, not
       semantic-equivalence proof.
+      Independent Claude review at `d8413362` finds omitted unverified citation,
+      weakened parallel-edit and owner-unknown closure duties, and missing
+      single-metric and monthly anti-ranking limits. Restore each at its
+      existing topic, make the charter table's prohibition explicit, and remove
+      the delivery duplicate. Source recheck, complete checks, exact-HEAD proof,
+      and hosted delivery remain distinct acceptance steps.
+      Its fixed-source recheck identifies further weakened actors and limits.
+      Compare each with the original before acceptance; restore member result
+      checks, action-authority order, explicit stops, risk-scaled acceptance,
+      score and disclosure limits, capability review, emergency accountability,
+      data provenance and permitted execution, and vague-update replacements.
+      Keep one topic per duty and the original net-benefit conjunction.
+      No private meaning checker, new review role, or approval ceremony is added.
+      The actual-source Claude recheck finds no actionable material omission
+      within the complete original and supplied ten entry/topic documents.
+      Primary source review retains the narrower original limits instead of
+      adopting every suggestion. All 215 native tests pass without skips; all
+      28 Markdown sources render, format, and lint, with no prose finding.
+      Official selected guidance sync retains all 11 requirements and 33
+      scenarios and adds five, without syncing pending shared quality. This
+      establishes reviewed content and local verification, not equivalence,
+      installed shared acceptance, publication, or completed Change closure.
+      Current installed changed planning hits the diagnosed Git batch reader
+      deadline; its failed receipt and unchanged source are preserved.
 - [x] 2.4 Reconcile package, current OpenSpec, contribution, governance, CI,
       version, and changelog contracts. Audit current consumers and the resolved
       dependency graph for retired residue; preserve historical Git bytes.

@@ -16,6 +16,19 @@ linter beside the current stack would leave the duplication intact.
   cited designs to exact historical commits and paths on both Forges. Replace
   the test's dependency on a real old archive with an owned temporary fixture.
   Do not add a history directory or change the official archive lifecycle.
+- Restore unverified citation as a hard risk that fluent writing, effort, or
+  Agent speed cannot offset. Restore the prohibition on uncoordinated shared
+  edits and closing work of unknown ownership. Keep a single metric from
+  standing for a person's overall worth and monthly mechanism review from
+  ranking individuals. Clarify the charter table's prohibition and remove the
+  repeated delivery sentence; add no evaluator, meeting, or private validator.
+- Restore the original default action-authority order without granting power
+  to waive obligations. Make human result inspection, explicit Agent stops,
+  risk-based acceptance, and permitted Agent implementation visible at use.
+  Restore score-label limits, honest-disclosure protection, quarterly
+  capability review, emergency accountability, and the full net-benefit bar.
+  Keep projections and derivations traceable and rewrite all six vague update
+  phrases. Reuse the existing topic and specification owners.
 - Restore the Agent's duty to read the complete results of current,
   claim-matched checks before summarizing. Retaining decisive output does not
   replace inspecting warnings, omissions, or failures elsewhere in the result.

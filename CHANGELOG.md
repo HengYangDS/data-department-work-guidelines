@@ -17,6 +17,13 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Restore unverified citations as hard risks and the limits on using one
+  metric to judge a person's overall worth or monthly review to rank people.
+- Restore the prohibition on uncoordinated shared edits and closing work of
+  unknown ownership; make the charter table prohibit crossing limits.
+- Clarify human result inspection, action-authority order, high-risk
+  acceptance, data provenance, and Agent execution. Restore honest-disclosure,
+  score, capability-review, and emergency-accountability limits at their owners.
 - Require Agents to read complete, current, claim-matched verification results
   before summarizing; selected success excerpts cannot replace that inspection.
 - Require analytical conclusions to name their next verification action

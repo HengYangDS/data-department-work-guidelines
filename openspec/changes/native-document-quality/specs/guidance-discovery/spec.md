@@ -45,7 +45,10 @@ claim-matched checks before summarizing.
 - **THEN** the collaboration topic makes the subject, actual changes, current
   verification, evidence location, risks, assumptions, unresolved matters, and
   next responsible actor and time explicit
-- **AND THEN** a human still verifies and accepts the consequential result.
+- **AND THEN** a member checks the actual authority, inputs, changes, completed
+  current-version verification, evidence limits, and follow-up ownership before
+  accepting the consequential result; the author's or Agent's account cannot
+  substitute for that inspection.
 
 #### Scenario: Parallel Agents inspect one task
 
@@ -54,6 +57,14 @@ claim-matched checks before summarizing.
   and stop conditions
 - **AND THEN** one integrator owns the combined result, and a person remains
   responsible for consequential acceptance.
+
+#### Scenario: Shared Agent work lacks coordination or known ownership
+
+- **WHEN** multiple Agents may change one shared source or worktree, or another
+  Agent's session has unknown ownership
+- **THEN** the collaboration topic prohibits uncoordinated edits and closing,
+  overwriting, or cleaning up owner-unknown work
+- **AND** deadline pressure or an integration role does not grant that authority.
 
 ### Requirement: Task routes preserve the work-quality contract
 
@@ -64,6 +75,21 @@ distinct. Topics SHALL expose start, stop, and verification cues without a root
 monolith or duplicate cards. Agents SHALL stop affected actions and escalate for
 an unidentified task owner, another person's unrecognized or uncommitted work,
 or unknown ownership.
+
+#### Scenario: An unchecked citation accompanies fluent work
+
+- **WHEN** an analyst presents an unchecked secondhand figure as a fact in an
+  otherwise fluent and complete decision memo
+- **THEN** the evolution topic treats the citation as a hard risk
+- **AND** fluency, effort, and Agent efficiency do not offset it; neither can
+  Agent output replace responsibility.
+
+#### Scenario: Continued work would cross a boundary or invent a fact
+
+- **WHEN** an action would cross a permission, compliance, security, or data
+  boundary, or continuing requires presenting a guess as fact
+- **THEN** the Agent stops that affected action and escalates
+- **AND** independent authorized work may continue without hiding the gap.
 
 #### Scenario: A high-risk task enters the route
 
@@ -175,6 +201,31 @@ or unknown ownership.
 - **AND** the Agent does not infer disposal or editing authority from a clean
   accepted branch or its own task.
 
+### Requirement: Feedback combines events and periodic review
+
+Evolution SHALL check material task transitions. Managers SHALL review real
+work and weak signals at least monthly; maintainers SHALL review rules, tools,
+and capability gaps at least quarterly. High-risk signals SHALL be escalated
+when observed. Reviews SHALL reuse existing carriers; a new form or meeting
+requires demonstrated carrier insufficiency. No single metric SHALL stand for
+personal worth, and monthly mechanism review SHALL NOT rank individuals.
+
+#### Scenario: Weak signals accumulate without an incident
+
+- **WHEN** a month passes without a single event that forces a systemic review
+- **THEN** the manager inspects real work and recurring weak signals in
+  an existing carrier and decides whether a mechanism needs correction
+- **AND THEN** a quarterly review tests whether current rules and tools still
+  return more value than they cost, without staging a ceremonial new meeting.
+
+#### Scenario: A routine metric is used to rank people
+
+- **WHEN** a manager uses individual Agent-correction counts in monthly review
+- **THEN** the evolution topic keeps the review focused on mechanism problems
+  rather than ranking people
+- **AND** a single metric cannot represent anyone's overall worth, while
+  case-based feedback and coaching remain available.
+
 ### Requirement: Decision framing preserves operational constraints
 
 Problem framing SHALL name time, cost, compliance, technical, and resource
@@ -226,6 +277,14 @@ destination, audience, and detail.
 - **THEN** the communication and evolution topics require a clear purpose,
   measured expression, and preserved member judgment
 - **AND** recurring intervention requires a management-system correction.
+
+#### Scenario: A member reports a failure or receives a review score
+
+- **WHEN** a member exposes a problem honestly or receives scored feedback
+- **THEN** managers protect honest disclosure and do not penalize honest
+  uncertainty; scores describe delivery risk rather than label people
+- **AND** exceptional practice requires evidenced net benefit, transferable
+  methods, lower long-term complexity, and improved capacity for others.
 
 #### Scenario: Task-start calibration omits its counterpart
 

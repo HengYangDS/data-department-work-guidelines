@@ -20,9 +20,10 @@ The form may shrink with risk; the chain of trust may not skip a link.
 These duties can share one work record; each step does not need its own
 document. Low-risk, local, reversible work may close in one exchange. For
 cross-role or uncertain work, use the existing ticket, review, or project
-document. Production, sensitive data, destructive changes, security or
-compliance, and external commitments require explicit authorization, a
-recovery path, independent review, and human acceptance.
+document. High-risk work follows the charter's
+[L2 minimum](charter.md#form-follows-risk):
+a written decision, explicit authorization, a rollback or degradation path,
+independent review, and human acceptance.
 
 ## Before Acting
 
@@ -81,9 +82,7 @@ the language.
 Put the deliverable at the agreed location; satisfy each completion criterion;
 name risks, limits, uncovered cases, and follow-up ownership. Reach the
 agreed lifecycle state; a nearby state is not a substitute. Work requiring
-human acceptance is accepted by an authorized person. **Verified, accepted, and
-published or effective are distinct states.** Do not call “in progress” “mostly
-complete,” or promote verification to publication.
+human acceptance is accepted by an authorized person.
 
 For L1 and L2 work, leave the material decision, actual result, limits, and
 remaining owner in the existing work record. Without a reviewable record, do

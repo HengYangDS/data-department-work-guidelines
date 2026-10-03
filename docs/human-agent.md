@@ -40,16 +40,20 @@ boundary.
 > verified. Stop if the earlier snapshot is missing or a production write would
 > be needed; do not approve the data for use.”
 
-| Role             | May do                                                        | Responsibility that remains                                         |
-| ---------------- | ------------------------------------------------------------- | ------------------------------------------------------------------- |
-| Task lead        | Clarify the goal and boundary; coordinate work and decisions. | End-to-end result, risk, and escalation.                            |
-| Executing member | Decompose, delegate, integrate, and verify.                   | Understand and check Agent output before submission.                |
-| Agent            | Search, reason, draft, implement, test, and present options.  | Must not grant itself authority or promise consequences for people. |
-| Reviewer         | Independently check facts, changes, and evidence.             | State findings and limits; review alone does not authorize action.  |
-| Acceptor         | Confirm agreed completion when authorized.                    | Make the acceptance decision; do not rely on the Agent's account.   |
+| Role             | May do                                                        | Responsibility that remains                                                            |
+| ---------------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| Task lead        | Clarify the goal and boundary; coordinate work and decisions. | End-to-end result, risk, and escalation.                                               |
+| Executing member | Decompose, delegate, integrate, and verify.                   | Understand and check Agent output before submission.                                   |
+| Agent            | Search, reason, draft, implement, test, and present options.  | Must not grant itself organizational authority or make commitments on people's behalf. |
+| Reviewer         | Independently check facts, changes, and evidence.             | State findings and limits; review alone does not authorize action.                     |
+| Acceptor         | Confirm agreed completion when authorized.                    | Make the acceptance decision after examining the actual work.                          |
 
 A task lead may also decide or accept when authorized. The lead's title alone
 grants neither power.
+
+Review and acceptance require examination of facts, reasoning, changes, and
+evidence. The author's or Agent's own account must not substitute for that
+examination; people retain responsibility for commitments and consequences.
 
 **The person who calls an Agent owns its context, permissions, verification, and
 result.**
@@ -76,31 +80,43 @@ that match the claim and read their complete results before summarizing. Keep th
 command, target, exit status, and decisive output with the producing task;
 success excerpts do not replace inspection of warnings, omissions, or failures
 elsewhere in the selected results. Test or review code, analysis, and documents
-in proportion to risk. A person must not rely only on an Agent's prose summary:
-compare changed paths and content with the reported scope; inspect missing
-counterexamples, the current environment, uncovered cases, and high-risk
-authorization. Even checked Agent output becomes a durable team fact only when
+in proportion to risk. A member checks the actual work, not just the Agent's
+prose summary:
+
+- Confirm the correct authority and current state, true and complete current
+  inputs, and clear separation of assumptions, inferences, and judgments.
+- Compare actual changes with the reported scope; inspect counterexamples,
+  risks, non-goals, and uncovered cases.
+- Confirm that verification actually ran against the current version and
+  correct environment, the completion claim stays within its evidence, and
+  an authorized person explicitly approved high-risk actions.
+- Preserve reviewable outputs, evidence, and follow-up ownership.
+
+Even checked Agent output becomes a durable team fact only when
 its underlying source and limits are recorded in the authoritative system for
 that work.
 
 Use multiple Agents in parallel only when independent questions, paths, or
 review angles can be separated. Default parallel work to independent read-only
 research, review, or cross-checking. Give each subtask explicit inputs, outputs,
-scope, stop conditions, and ownership. Name an integration owner and avoid
-uncoordinated edits to the same source of truth or worktree. A majority opinion
-is not evidence; resolve disagreement against facts and criteria. Do not
-overwrite or clean up work of unknown ownership.
+scope, stop conditions, and ownership. Name an integration owner to resolve
+conflicts, remove duplicates, verify the combined result, and make the final
+judgment. Multiple Agents must not edit the same source of truth or worktree
+without coordination.
+A majority opinion is not evidence; resolve disagreement against facts and
+criteria. Do not close, overwrite, or clean up work of unknown ownership.
 
 ## Stop and Handoff
 
 Stop the affected action and escalate when instructions materially conflict; the
 target, fact source, or responsible person cannot be identified; authority is
-insufficient; an action is irreversible without authorization or recovery;
+insufficient; an action would cross a permission, compliance, security, or data
+boundary; an action is irreversible without authorization or recovery;
 another person's unrecognized or uncommitted work, or work of unknown ownership,
 appears; verification contradicts expectation; evidence has expired; or
-continuing would hide a failure, pollute a source of truth, or enlarge harm.
-Stopping is not failure. Continuing with a guess presented as fact is loss of
-control.
+continuing would hide a failure, pollute a source of truth, enlarge harm, or
+require presenting a guess as fact. Stopping the affected action protects that
+boundary; independent authorized work may continue.
 
 A completion report states the outcome (complete, partial, blocked, or
 deferred), target and version, actual changes, verification method, result,

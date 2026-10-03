@@ -59,27 +59,35 @@ Coaching tests the member's reasoning without making the judgment for them.
 Review evidence before judging delivery risk. At minimum, inspect problem
 framing, the logical model, evidence and uncertainty, trade-offs, execution and
 acceptance, oral and written communication, and delegation and verification of
-Agents. Hard risks include fabricated or selectively hidden facts; uncertainty
-presented as certainty; completion without current verification; Agent output
-treated as fact or authorization; high-risk action beyond authority; concealed
-blockers, delays, failures, or scope changes; rhetoric or activity counts in
-place of reasoning and results; and repeated manual rescue without prevention.
-Fluent presentation, effort, or tool speed does not cancel them. If scoring is
-used, define its levels, observable behavior, and purpose; do not treat a score
-as a person's overall worth.
+Agents. Fluency, effort, or Agent efficiency cannot offset these hard risks:
+
+- Fabricated, selectively hidden, or unverified facts and evidence presented
+  as established.
+- Known uncertainty presented as certainty to drive a decision.
+- Completion claimed without current verification.
+- Agent output treated as fact, authorization, or a substitute for responsibility.
+- High-risk or irreversible action beyond authorization.
+- Concealed blockers, delays, failures, or scope changes.
+- Rhetoric or activity counts in place of reasoning and results.
+- Repeated manual rescue without a mechanism to prevent recurrence.
+
+If scoring is used, define its levels, observable behavior, and purpose. A score
+expresses delivery risk; it must not label a person or stand for their overall
+worth.
 
 Every task must meet the hard boundaries. Critical responsibilities should be
 performed independently and reliably. Call a result exceptional only when it
-also transfers a method, reduces recurring cost, or improves others' capacity.
+produces evidenced net benefit, transfers a method, reduces long-term
+complexity, and improves others' capacity.
 If a five-level review is used, keep its meaning stable:
 
-| Level             | Observable delivery risk                                                                                                           |
-| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| 1: unacceptable   | The subject, facts, or responsibility are confused enough to invite a wrong action.                                                |
-| 2: below standard | Useful fragments exist, but reasoning, evidence, or delivery has a material gap.                                                   |
-| 3: borderline     | The work is usable with guidance, not yet reliable independently.                                                                  |
-| 4: meets standard | The person can independently make bounded judgments, executable choices, and deliver results that meet agreed acceptance criteria. |
-| 5: strong         | The result also leaves a transferable method or system improvement.                                                                |
+| Level             | Observable delivery risk                                                                         |
+| ----------------- | ------------------------------------------------------------------------------------------------ |
+| 1: unacceptable   | The subject, facts, or responsibility are confused enough to invite a wrong action.              |
+| 2: below standard | Useful fragments exist, but reasoning, evidence, or delivery has a material gap.                 |
+| 3: borderline     | The work is usable with guidance, not yet reliable independently.                                |
+| 4: meets standard | The work demonstrates independent bounded judgment, executable choices, and reliable acceptance. |
+| 5: strong         | The result also leaves a transferable method or system improvement.                              |
 
 ## Observe the System Without Worshipping Numbers
 
@@ -89,8 +97,9 @@ claims, reasons decisions wait, handoff continuity, why Agent output was
 returned, corrected, or out of bounds, growth from guided execution toward
 independent judgment, and whether a new mechanism lowers total cost. For every
 metric, first name the decision it supports, its fact source, period, boundary,
-and how it could be gamed. Investigate anomalies through cases and mechanisms;
-do not equate them directly with individual performance.
+and how it could be gamed. No single metric may stand for a person's overall
+worth. Investigate anomalies through cases and mechanisms; do not equate them
+directly with individual performance.
 
 For every L1 or L2 task, align the subject and success condition at the start,
 recheck facts, options, and authority at material decisions or changed risk,
@@ -99,20 +108,25 @@ signals when observed; a calendar must not delay containment or a decision.
 
 At least monthly, the manager examines a real work sample and accumulated weak
 signals: recurring failures, escaped quality issues, Agent output corrections or
-misuse, and needless coordination. Decide whether a small correction is needed.
-At least quarterly, the guideline maintainer reviews the net benefit of current
-rules, templates, tools, and Agent practices with their users; keep, revise, or
-retire them. L2 work may set a shorter task-specific interval at authorization.
+misuse, and needless coordination. This review must not rank individuals;
+use it to find mechanism problems and decide whether a small correction is
+needed.
+At least quarterly, the guideline maintainer and users review the net benefit
+of current rules, templates, tools, and Agent practices, and assess capability
+gaps. Keep, revise, or retire practices accordingly. L2 work may set a shorter
+task-specific interval at authorization.
 Use existing meetings, tickets, and reviews; record each material decision and
-its owner there. No separate meeting, universal weekly 30-minute session,
-or “nothing happened” activity report is required.
+its owner there. Do not create a form or meeting unless existing carriers cannot
+hold the necessary review. No routine “nothing happened” activity report is
+required.
 
 Managers clarify direction, priorities, resources, and cross-domain decisions,
 resolve long-standing open decisions in time for the work to proceed, and show
-their reasoning with concrete work examples. They protect honest disclosure of
-uncertainty and must not make one person's repeated rescue the department's
-normal way of operating. They must not use these guidelines for retrospective
-fault-finding, ceremonial review, or micromanagement. When goals conflict,
+their reasoning with concrete work examples. They protect people who honestly
+expose problems and must not penalize honest uncertainty or make one person's
+repeated rescue the department's normal way of operating. They must not use
+these guidelines for retrospective fault-finding, ceremonial review, or
+micromanagement. When goals conflict,
 priorities drift, resources are short, decisions stall, or interfaces mislead,
 repair the management system before blaming a member's capability. Within those
 boundaries, the person closest to the facts chooses the method; management
@@ -124,8 +138,9 @@ gather conflicts and signs of obsolescence, and state the reason, evidence,
 effective time, and scope for each addition or deletion.
 
 In an emergency, protect people, data, production, and compliance first. Contain
-harm before filling in the record if needed, but record the temporary decision's
-facts and authorization, expiry, takeover owner, and rollback condition.
+harm before filling in the record if needed; truth, authority, and
+responsibility remain binding. Record the temporary decision, who made it,
+on which facts and authority, its expiry, takeover owner, and rollback condition.
 Complete verification and review once risk is controlled. Repeated “emergency
 exceptions” are a system problem. Specific rule changes still follow
 [repository governance](governance/ethos.md). Team adoption must be shown

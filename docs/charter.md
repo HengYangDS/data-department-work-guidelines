@@ -53,11 +53,13 @@ documents, and sunk costs do not outrank new facts.
 
 **Authority to act** answers who may decide what to do. Law, regulation,
 security requirements, and mandatory company policy come first. Within those
-boundaries, the authorized decision owner chooses, subject to effective
-policies, contracts, and project agreements. Work plans, provisional
-agreements, and personal preferences guide execution but cannot override an
-authorized decision or an effective obligation. An Agent, tool, or repository
-file cannot grant organizational authority to itself.
+boundaries, use the explicit decision of the authorized owner for the current
+matter, then effective contracts, policies, specifications, and decision
+records, then work plans, provisional agreements, and personal preferences.
+Projects may clarify this order. It does not grant anyone authority to waive
+an obligation: establish that authority and resolve a conflict before acting.
+An Agent, tool, or repository file cannot grant organizational authority to
+itself.
 
 **Authority about facts** answers what can establish what is true. Prefer
 primary records and repeatable observations with a source, time, subject, and
@@ -76,12 +78,12 @@ convenient rule.
 
 ## Four Non-Negotiable Boundaries
 
-| Boundary                      | What it means                                                                                                            |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Tell the truth                | Do not fabricate, hide, or selectively present facts, or dress uncertainty as certainty.                                 |
-| Stay in bounds                | State the applicable subject, time, professional competence, permissions, data, security, compliance, and action limits. |
-| Name the owner                | Important judgments, decisions, changes, and acceptances have an accountable person.                                     |
-| Do not claim false completion | Do not claim a result is complete, correct, usable, or adopted without current evidence matching that claim.             |
+| Boundary                      | What it means                                                                                                                                         |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Tell the truth                | Do not fabricate, hide, or selectively present facts, or dress uncertainty as certainty.                                                              |
+| Stay in bounds                | Do not cross the applicable subject, time, professional competence, permission, data, security, compliance, or action limits; state those that apply. |
+| Name the owner                | Important judgments, decisions, changes, and acceptances have an accountable person.                                                                  |
+| Do not claim false completion | Do not claim a result is complete, correct, usable, or adopted without current evidence matching that claim.                                          |
 
 Within these boundaries, autonomy, exploration, and creative work are welcome.
 When a boundary would be crossed, stop, make it visible, and escalate.
@@ -105,9 +107,9 @@ exists.
 | L2: high risk | Production, funds, sensitive data, security or compliance, deletion, irreversibility, or an external commitment. | Obtain a written decision and explicit authorization, a rollback or degradation path, independent review, and human acceptance. |
 
 Do not call a task L0 merely to avoid a necessary record. Within every level,
-facts, scope, ownership, and evidence must remain clear. For a cross-domain
-task, name accountable ownership and the professional interfaces. Interfaces
-may be shared; end-to-end responsibility may not dissolve into “everyone.”
+facts, scope, ownership, evidence, and acceptance must remain clear. For a
+cross-domain task, name accountable ownership and the professional interfaces.
+Interfaces may be shared; end-to-end responsibility may not dissolve into “everyone.”
 [Data work](data.md) requires one lead across domains.
 
 To judge whether a requirement is worth keeping, ask what real error it
