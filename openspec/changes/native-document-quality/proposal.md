@@ -10,6 +10,10 @@ linter beside the current stack would leave the duplication intact.
 
 ## What Changes
 
+- Restore the next-verification duty for analytical conclusions. Confidence,
+  limitations, and possible contrary evidence do not replace the next check.
+  Keep the requirement in the existing analysis topic without another template
+  or report.
 - Restore the original requirement to record an actual decision's owner, date,
   and basis. Keep it in the existing work record; a deadline or fact cutoff
   does not establish when approval occurred.

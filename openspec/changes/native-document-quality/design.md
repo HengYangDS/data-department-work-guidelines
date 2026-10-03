@@ -114,6 +114,13 @@ establish those meanings; use a source-based editorial recheck. Historical
 reviews retain their dated findings rather than being relabeled as complete
 semantic equivalence.
 
+The original analytical conclusion duty includes confidence, limits, and next
+verification. A revision trigger describes what could change a judgment; it
+does not identify the check to perform next. Keep those meanings distinct in
+the existing analysis topic. A recommendation's first action may implement a
+choice rather than verify it, so it cannot replace that conclusion duty. No
+new report, template, or private meaning validator is needed.
+
 The native dictionary initially rejected the valid plural and possessive of
 `deliverable`. Accept only that real term and its two normal inflections; retain
 a misspelled near-match regression. Do not rewrite the obligation or disable

@@ -17,6 +17,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Require analytical conclusions to name their next verification action
+  alongside confidence, limits, and the observation that would change the
+  judgment.
 - Preserve official OpenSpec findings instead of accepting successful summary
   totals alone. Reject warning output and incomplete, wrong-root, duplicate,
   or inconsistent reports at the existing verifier.

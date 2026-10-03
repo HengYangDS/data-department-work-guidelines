@@ -70,8 +70,9 @@ so explicitly.
    plausible explanations. Rank candidates by explanatory power, likelihood
    under the known facts, and the cost of a decisive test. An easy test does not
    make a weak explanation more likely.
-4. Give a bounded conclusion: what the evidence supports, what remains possible,
-   and what later observation would change the judgment.
+4. Give a bounded conclusion: what the evidence supports, your confidence and
+   limits, what remains possible, the next verification action, and what later
+   observation would change the judgment.
 
 For an anomaly or repeated failure, preserve the original symptom and timeline,
 distinguish affected from unaffected subjects, and explain both the direct cause

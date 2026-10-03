@@ -261,10 +261,21 @@ new meeting, fixed duration, or department-wide activity report.
 ### Requirement: Decision framing preserves operational constraints
 
 Problem framing SHALL name time, cost, compliance, technical, and resource
-constraints. A central concept SHALL retain one meaning within a discussion.
-Execution plans SHALL expose resources, costs, milestones, and checkpoints.
-Once a decision is made, its choice, authorized decision owner, actual date, and
-basis SHALL be recorded in the existing work carrier.
+constraints. Each concept SHALL keep one meaning per discussion. Execution
+plans SHALL name resources, costs, milestones, and checkpoints. Each decision
+SHALL be recorded with its choice, authorized owner, actual date, and basis in
+the existing work record. Analytical conclusions SHALL name confidence, limits,
+and next verification; revision triggers or implementation steps SHALL NOT
+replace that check.
+
+#### Scenario: An analytical conclusion omits its next check
+
+- **WHEN** a supplier-name matching analysis recommends keeping the current
+  method, states confidence and sample limits, and names possible contrary evidence
+  but no next verification action
+- **THEN** the analysis topic requires that next check in the conclusion
+- **AND** an implementation step or revision trigger does not satisfy that
+  verification duty, and no new template or report is required.
 
 #### Scenario: A proposed plan hides a limiting constraint
 

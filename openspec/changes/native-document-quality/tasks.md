@@ -31,6 +31,20 @@
       guidance requirements are synced through official OpenSpec without
       archiving the Change. Hosted qualification and shared-product acceptance
       remain separate open obligations.
+      Later source-based review at `df50351` finds a further analytical omission:
+      confidence, limitations, and revision conditions do not identify the next
+      verification. The existing analysis topic is corrected and independent
+      recheck excludes the original supplier-name counterexample. Official
+      OpenSpec sync preserves all existing guidance requirements and scenarios;
+      complete local verification passes all 204 tests. The native over-length
+      finding is corrected by placing the duty at its existing decision-framing
+      owner, preserving every constraint. An exact user-authorized recovery of
+      the uncommitted main-spec write resolves the admission deadlock without
+      changing the runtime or gate policy; normal prewrite and planning pass
+      afterward. Exact-source proof, cold installation, and hosted delivery
+      remain separate qualification boundaries for the new correction.
+      Earlier no-finding reviews remain dated, bounded judgments, not
+      semantic-equivalence proof.
 - [x] 2.4 Reconcile package, current OpenSpec, contribution, governance, CI,
       version, and changelog contracts. Audit current consumers and the resolved
       dependency graph for retired residue; retain archived bytes unchanged.
@@ -283,7 +297,8 @@
       shell-operator boundaries, and the implemented Markdown core policy.
       All 55 prior requirements and 180 scenarios are preserved; the core
       policy adds two scenarios, the stop/calibration restoration adds three,
-      and complete OpenSpec report consumption adds two.
+      complete OpenSpec report consumption adds two, and the analytical
+      next-verification duty adds one.
       The two draft proof requirements still await
       the accepted ETHOS contract and are not synced;
       the removed duplicate npm policy is already absent. Full Change sync and
