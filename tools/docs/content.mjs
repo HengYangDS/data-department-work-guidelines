@@ -13,7 +13,7 @@ import { fileURLToPath } from "node:url";
 import { getFileInfo } from "prettier";
 import { parse as parseToml } from "smol-toml";
 import YAML from "yaml";
-import { lint } from "markdownlint/sync";
+import { lint, readConfig } from "markdownlint/sync";
 import { noProseControl } from "./markdown.mjs";
 import {
   currentMarkdown,
@@ -59,12 +59,30 @@ export async function formatSource({ check = true } = {}) {
   ]);
 }
 
-export function lintMarkdown() {
-  runNodeTool("markdownlint-cli2", "markdownlint-cli2", [
-    "--config",
-    ".config/checks/markdown/markdownlint-cli2.toml",
-    ...sourceMarkdown().map((relative) => `:${relative}`),
-  ]);
+export function lintMarkdown({ files = sourceMarkdown(), strings } = {}) {
+  const config = readConfig(
+    filePath(".config/checks/markdown/markdownlint.toml"),
+    [(source) => structuredClone(parseToml(source))],
+  );
+  const results = lint({
+    files: files.map((relative) =>
+      path.isAbsolute(relative) ? relative : filePath(relative),
+    ),
+    strings,
+    config,
+    noInlineConfig: true,
+    customRules: [noProseControl],
+  });
+  const findings = Object.entries(results).flatMap(([file, errors]) =>
+    errors.map(
+      ({ lineNumber, ruleNames, errorDetail, errorContext }) =>
+        `${file}:${lineNumber} [${ruleNames[0]}] ${errorDetail ?? errorContext ?? "Markdown rule violation"}`,
+    ),
+  );
+  if (findings.length) throw new Error(findings.join("\n"));
+  console.log(
+    `PASS native Markdown policy: ${Object.keys(results).length} source inputs`,
+  );
 }
 
 export function proseAlerts(files = currentMarkdown()) {

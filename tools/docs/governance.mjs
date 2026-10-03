@@ -378,7 +378,7 @@ export function checkConfigurationLayout(repository = root) {
     ".config/README.md",
     ".config/checks/format/prettier.toml",
     ".config/checks/links/lychee.toml",
-    ".config/checks/markdown/markdownlint-cli2.toml",
+    ".config/checks/markdown/markdownlint.toml",
     ".config/checks/prose/vale.ini",
     ".config/checks/prose/styles/Plain/Concise.yml",
     ".config/checks/prose/styles/Plain/StockPhrases.yml",
@@ -430,17 +430,20 @@ export function checkConfigurationLayout(repository = root) {
     );
   const markdown = parseToml(
     readFileSync(
-      path.join(repository, ".config/checks/markdown/markdownlint-cli2.toml"),
+      path.join(repository, ".config/checks/markdown/markdownlint.toml"),
       "utf8",
     ),
   );
   if (
-    markdown.noInlineConfig !== true ||
-    JSON.stringify(markdown.customRules) !==
-      '["../../../tools/docs/markdown.mjs"]'
+    Object.keys(markdown).some((name) => !/^MD\d{3}$/u.test(name)) ||
+    markdown.MD013?.line_length !== 80 ||
+    markdown.MD013?.code_blocks !== false ||
+    markdown.MD013?.tables !== false ||
+    markdown.MD013?.headings !== false ||
+    markdown.MD024?.siblings_only !== true
   ) {
     throw new Error(
-      "configuration ownership must select the native Markdown rule",
+      "configuration ownership must preserve native Markdown rule policy",
     );
   }
   const vale = JSON.parse(

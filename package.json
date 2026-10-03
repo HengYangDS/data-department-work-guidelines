@@ -13,7 +13,6 @@
     "entities": "8.1.0",
     "htmlparser2": "12.0.0",
     "markdownlint": "0.41.1",
-    "markdownlint-cli2": "0.23.3",
     "micromark": "4.0.3",
     "prettier": "3.9.9",
     "semver": "7.8.5",

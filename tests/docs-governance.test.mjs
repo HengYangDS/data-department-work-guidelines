@@ -486,7 +486,7 @@ test("configuration rejects missing native policy owners", () => {
   for (const relative of [
     ".config/checks/format/prettier.toml",
     ".config/checks/links/lychee.toml",
-    ".config/checks/markdown/markdownlint-cli2.toml",
+    ".config/checks/markdown/markdownlint.toml",
     ".config/checks/prose/vale.ini",
     ".config/supply/native.json",
     ".config/release/offline-bundle.json",
@@ -515,19 +515,16 @@ test("configuration rejects package-embedded policy as a second owner", () => {
   });
 });
 
-test("configuration cannot disable the native Markdown rule selection", () => {
-  for (const source of [
-    'noInlineConfig = false\ncustomRules = ["../../../tools/docs/markdown.mjs"]\n',
-    "noInlineConfig = true\ncustomRules = []\n",
-  ]) {
+test("configuration cannot disable or replace native Markdown policy", () => {
+  for (const source of ["[MD013]\nline_length = 0\n", 'globs = ["**"]\n']) {
     configurationFixture((directory) => {
       writeFileSync(
-        path.join(directory, ".config/checks/markdown/markdownlint-cli2.toml"),
+        path.join(directory, ".config/checks/markdown/markdownlint.toml"),
         source,
       );
       assert.throws(
         () => governance.checkConfigurationLayout(directory),
-        /select the native Markdown rule/u,
+        /preserve native Markdown rule policy/u,
       );
     });
   }

@@ -19,6 +19,7 @@ import {
   blankLineError,
   documentMetadata,
   formatTargets,
+  lintMarkdown,
   repositoryFileUri,
   textViolations,
 } from "../tools/docs/content.mjs";
@@ -218,7 +219,7 @@ test("source checks reject prose before unrelated native prerequisites", () => {
     const invocations = [];
     childProcess.spawnSync = (command, args, options) => {
       const normalized = args?.[0]?.replaceAll(String.fromCharCode(92), "/") ?? "";
-      if (normalized.includes("@fission-ai/openspec/") || normalized.includes("markdownlint-cli2/"))
+      if (normalized.includes("@fission-ai/openspec/"))
         throw new Error("unrelated native prerequisite executed before prose rejection");
       if (args?.includes("--output=JSON") && args.includes("--no-exit")) {
         invocations.push("vale");
@@ -969,24 +970,12 @@ test("one blank line is allowed; visual padding is not", () => {
 
 test("changelog categories may recur under different releases, not one release", () => {
   const lint = (source) =>
-    spawnSync(
-      process.execPath,
-      [
-        nodeTool("markdownlint-cli2", "markdownlint-cli2"),
-        "--config",
-        ".config/checks/markdown/markdownlint-cli2.toml",
-        "-",
-      ],
-      { cwd: root, encoding: "utf8", input: source, timeout: 10_000 },
-    );
+    lintMarkdown({ files: [], strings: { "fixture.md": source } });
   const first = "# Changelog\n\n## [4.0.1]\n\n### Fixed\n\n- New.\n\n";
   const second = "## [4.0.0]\n\n### Fixed\n\n- Old.\n";
-  const separate = lint(first + second);
-  assert.equal(separate.status, 0, separate.stderr);
+  assert.doesNotThrow(() => lint(first + second));
 
-  const duplicate = lint(first + "### Fixed\n\n- Duplicate.\n");
-  assert.notEqual(duplicate.status, 0);
-  assert.match(duplicate.stderr, /MD024/u);
+  assert.throws(() => lint(first + "### Fixed\n\n- Duplicate.\n"), /MD024/u);
 });
 
 test("formatting selects supported source while TOML syntax is checked separately", async () => {
@@ -996,7 +985,7 @@ test("formatting selects supported source while TOML syntax is checked separatel
     ".config/supply/native.json",
     ".config/checks/format/prettier.toml",
     ".config/checks/links/lychee.toml",
-    ".config/checks/markdown/markdownlint-cli2.toml",
+    ".config/checks/markdown/markdownlint.toml",
     "openspec/config.yaml",
     ".github/workflows/docs-verify.yml",
     "tools/docs/cli.mjs",
@@ -1010,29 +999,110 @@ test("formatting selects supported source while TOML syntax is checked separatel
   ]) {
     assert.ok(targets.includes(file), file);
   }
-  const toml = ".config/checks/markdown/markdownlint-cli2.toml";
+  const toml = ".config/checks/markdown/markdownlint.toml";
   assert.equal(targets.includes(toml), false);
-  assert.deepEqual(textViolations(toml, "noInlineConfig = true\n"), []);
+  assert.deepEqual(textViolations(toml, "[MD013]\nline_length = 80\n"), []);
   assert.match(textViolations(toml, "[invalid\n")[0], /invalid TOML/u);
 });
 
 test("Markdown checks consume the native concern-local TOML policy", () => {
-  const relative = ".config/checks/markdown/markdownlint-cli2.toml";
+  const relative = ".config/checks/markdown/markdownlint.toml";
   assert.ok(existsSync(path.join(root, relative)), relative);
   const source = "# Example\n\n<!-- vale off -->\n\nUse the report.\n";
-  const output = spawnSync(
-    process.execPath,
-    [
-      nodeTool("markdownlint-cli2", "markdownlint-cli2"),
-      "--config",
-      relative,
-      "-",
-    ],
-    { cwd: root, encoding: "utf8", input: source, timeout: 10_000 },
+  assert.throws(
+    () => lintMarkdown({ files: [], strings: { "fixture.md": source } }),
+    /no-prose-control/u,
   );
-  assert.ifError(output.error);
-  assert.equal(output.status, 1, output.stderr);
-  assert.match(output.stderr, /no-prose-control/u);
+});
+
+test("Markdown lint checks literal Git source without a glob or ambient policy", () => {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-native-lint-"));
+  try {
+    cpSync(path.join(root, "tools"), path.join(directory, "tools"), {
+      recursive: true,
+    });
+    cpSync(path.join(root, ".config"), path.join(directory, ".config"), {
+      recursive: true,
+    });
+    cpSync(
+      path.join(root, "package.json"),
+      path.join(directory, "package.json"),
+    );
+    symlinkSync(
+      path.join(root, "node_modules"),
+      path.join(directory, "node_modules"),
+      "junction",
+    );
+    const source = "{literal} markdown.md";
+    const file = path.join(directory, source);
+    writeFileSync(file, "# Example\n\nUse the report.\n");
+    writeFileSync(
+      path.join(directory, ".markdownlint-cli2.jsonc"),
+      '{"ignores":["**"],"config":{"default":false}}\n',
+    );
+    writeFileSync(
+      path.join(directory, ".markdownlint.json"),
+      '{"default":false}\n',
+    );
+    const init = spawnSync("git", ["init", "-q", directory], {
+      encoding: "utf8",
+      timeout: 10_000,
+    });
+    assert.equal(init.status, 0, init.stderr);
+    const add = spawnSync("git", ["add", "--", source], {
+      cwd: directory,
+      encoding: "utf8",
+      timeout: 10_000,
+    });
+    assert.equal(add.status, 0, add.stderr);
+    const invoke = () =>
+      spawnSync(process.execPath, ["tools/docs/cli.mjs", "lint"], {
+        cwd: directory,
+        encoding: "utf8",
+        timeout: 10_000,
+      });
+    const valid = invoke();
+    assert.ifError(valid.error);
+    assert.equal(valid.status, 0, valid.stderr);
+    writeFileSync(
+      file,
+      "# Example\n\n<!-- markdownlint-disable MD013 -->\n\n" +
+        "word ".repeat(40).trim() +
+        "\n",
+    );
+    const before = readFileSync(file, "utf8");
+    const invalid = invoke();
+    assert.ifError(invalid.error);
+    assert.equal(invalid.status, 1, invalid.stderr);
+    assert.match(invalid.stderr, /MD013/u);
+    assert.ok(invalid.stderr.includes(source), invalid.stderr);
+    assert.equal(readFileSync(file, "utf8"), before);
+    const historical = "openspec/changes/archive/fixture/specs/quality/spec.md";
+    const historicalFile = path.join(directory, historical);
+    mkdirSync(path.dirname(historicalFile), { recursive: true });
+    writeFileSync(
+      historicalFile,
+      "# Historical Spec\n\n" + "word ".repeat(40).trim() + "\n",
+    );
+    const addHistory = spawnSync("git", ["add", "--", historical], {
+      cwd: directory,
+      encoding: "utf8",
+      timeout: 10_000,
+    });
+    assert.equal(addHistory.status, 0, addHistory.stderr);
+    writeFileSync(file, "# Example\n\nUse the report.\n");
+    const archived = invoke();
+    assert.equal(archived.status, 1, archived.stderr);
+    assert.match(archived.stderr, /MD013/u);
+    assert.ok(archived.stderr.includes("spec.md"), archived.stderr);
+    assert.equal(
+      readFileSync(historicalFile, "utf8"),
+      "# Historical Spec\n\n" + "word ".repeat(40).trim() + "\n",
+    );
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+    assert.equal(existsSync(directory), false);
+  }
 });
 
 test("native formatting policy preserves prose and ignores ambient editor settings", () => {
@@ -1381,7 +1451,7 @@ test("the public link check rejects cache and Git state but accepts candidate so
 
 test("retired quality owners are absent from current source and dependencies", () => {
   const retiredPackage =
-    /(?:^|\/)(?:@textlint|@cspell|cspell[^/]*|textlint[^/]*|write-good)(?:\/|$)/u;
+    /(?:^|\/)(?:@textlint|@cspell|cspell[^/]*|textlint[^/]*|write-good|markdownlint-cli2(?:-formatter-default)?)(?:\/|$)/u;
   const lock = JSON.parse(
     readFileSync(path.join(root, "package-lock.json"), "utf8"),
   );
@@ -1407,6 +1477,8 @@ test("retired quality owners are absent from current source and dependencies", (
     "cspell",
     "write-good",
     "textlint-util-to-string",
+    "markdownlint-cli2",
+    "markdownlint-cli2-formatter-default",
   ]) {
     assert.equal(
       existsSync(path.join(root, "node_modules", name)),
@@ -1417,6 +1489,7 @@ test("retired quality owners are absent from current source and dependencies", (
   for (const name of [
     ".config/tools/textlint.json",
     ".config/tools/cspell.json",
+    ".config/checks/markdown/markdownlint-cli2.toml",
   ]) {
     assert.equal(existsSync(path.join(root, name)), false, name);
   }

@@ -190,6 +190,15 @@
       v7.0.11 and v7.0.10 remain as current and qualified rollback. Original
       release notes, tags, source, and verification evidence remain.
 
+- [ ] 2.30 Replace the redundant Markdownlint CLI2 wrapper with the existing
+      native core over all Git-selected Markdown. Preserve TOML policy,
+      custom comment controls, native diagnostics, literal source paths,
+      positive controls, and every existing counterexample. Remove the wrapper,
+      unused dependencies, configuration path, and all current references;
+      qualify locked removal, source-bound offline supply, clean installation,
+      exact-source proof, and both Forge matrices. Do not claim that removing
+      one consumer fixes the separate official OpenSpec braces dependency.
+
 ## 3. Qualification and publication
 
 - [x] 3.1 Freeze source and a source-bound offline bundle; run format, lint,
@@ -206,6 +215,13 @@
       stream-report assumptions. Reject disconnected or unverified owners and
       prove complete test selection, single execution, semantic diagnostics,
       and warning preservation through the actual installed command plane.
+      On 2026-10-03, current npm audit also reports the high-severity braces
+      advisory and five inherited findings. Stable publishers offer no patched
+      version. The latest proposal stops at that audit before source checks;
+      prior passing jobs do not establish current security. Qualify the actual
+      schema, configuration, and selected input through the accepted shared
+      product and its audit consumer before dependent publication. Do not
+      downgrade tools, hide findings, or introduce a repository waiver.
 - [ ] 3.13 Qualify the accepted product's reusable release-history identity
       boundary and reconcile every audited affected adopter. Bind links to
       applicable declared peers and native reference resolution; distinguish

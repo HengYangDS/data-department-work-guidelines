@@ -302,6 +302,26 @@ installable dependencies, current commands, or a second implementation.
 
 ### Reuse the current supply owner
 
+The current source already passes colon-prefixed literal Git filenames to
+Markdownlint CLI2. Its additional glob matching and ambient configuration
+discovery have no required reader or contributor behavior. Use the existing
+Markdownlint core's official synchronous `readConfig` and `lint` API instead.
+The existing pinned TOML parser supplies the documented configuration-parser
+argument; native `structuredClone` gives the rule engine ordinary configuration
+objects. Keep rule configuration at `.config/checks/markdown/markdownlint.toml`
+and the existing comment rule at its implementation owner. Native diagnostics
+retain filenames, line numbers, rule IDs, and details; any finding fails.
+
+Git remains the only source selector. Core lint accepts files or strings, not
+globs, and cannot discover a second per-directory configuration. Literal
+filenames, current and official historical Markdown, duplicate headings,
+prose-width policy, and ineffective inline suppression retain their existing
+checks. Native offline removal-only resolution removes 19 packages, adds none,
+and changes no retained dependency. Migrate every current consumer, test,
+configuration reference, and supply record before removing CLI2; do not keep an
+optional wrapper. Official OpenSpec still depends on braces through fast-glob,
+so the shared exact-input security and audit obligation remains open.
+
 The existing complete-bundle requirement retains its original body. State the
 new acquisition, managed-path, and child-environment duties in their specific
 scenarios so the official main spec remains concise without losing conditions,
@@ -378,10 +398,11 @@ policy or registry. The repository check rejects misplaced, executable,
 duplicated, and local-state configuration. No additional ETHOS proof gate is
 introduced.
 
-Use `.config/checks/markdown/markdownlint-cli2.toml`, which the pinned native
-CLI supports through `--config`. The existing Markdown module owns the parsed
-Vale-comment rule and exposes it to the native rule loader. Configuration
-selects that implementation; it does not contain executable code. The prose
+Use `.config/checks/markdown/markdownlint.toml`, read by the pinned native
+Markdownlint core's public `readConfig` API with the existing TOML parser.
+The existing Markdown module owns the parsed Vale-comment rule. The repository
+entry selects that implementation directly; configuration contains only native
+rule policy, not executable code or another file-selection plane. The prose
 checker uses the same rule, not a copied parser or alternate configuration.
 
 Prettier reads `.config/checks/format/prettier.toml` through its native

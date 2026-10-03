@@ -8,7 +8,7 @@ misplaced, duplicated, executable, or linked configuration.
 | Responsibility            | Owner                                                                   | Native consumer                                                     |
 | ------------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | Formatting                | [Prettier TOML](checks/format/prettier.toml)                            | Prettier, with explicit policy and no ambient editor configuration. |
-| Markdown policy           | [Markdownlint TOML](checks/markdown/markdownlint-cli2.toml)             | Markdownlint CLI2, including the existing Markdown rule module.     |
+| Markdown policy           | [Markdownlint TOML](checks/markdown/markdownlint.toml)                  | Markdownlint core, over Git-selected source with the existing rule. |
 | Prose and terms           | [Vale configuration](checks/prose/vale.ini), its styles, and vocabulary | Vale; the INI file selects its adjacent native YAML styles.         |
 | Link checking             | [Lychee TOML](checks/links/lychee.toml)                                 | Lychee; only the explicit online operation changes offline mode.    |
 | Native tool supply        | [Supply manifest](supply/native.json)                                   | The existing installer and offline-bundle builder.                  |

@@ -15,6 +15,13 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
+### Fixed
+
+- Check every Git-selected Markdown file with the native core and one TOML
+  policy; ambient configuration can no longer hide source defects.
+- Remove the redundant Markdown lint wrapper and its unused dependencies while
+  retaining native rule diagnostics, literal filenames, and comment controls.
+
 ## 7.0.11 - 2026-10-03
 
 History: [GitLab][7.0.11-gitlab] · [GitHub][7.0.11-github]

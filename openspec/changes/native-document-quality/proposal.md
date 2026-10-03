@@ -21,6 +21,13 @@ linter beside the current stack would leave the duplication intact.
   owner, authorization, evidence, and acceptance duties.
 - Replace the two English pipelines with one pinned native Vale command, its
   vocabulary, and native style rules.
+- Remove Markdownlint CLI2's redundant glob and configuration-discovery layer.
+  The existing Markdownlint core reads the single TOML policy and checks the
+  complete Git-selected source directly. Preserve native rule diagnostics,
+  custom comment controls, literal filenames, and existing positive and
+  negative cases. Retire the wrapper, unused packages, and old configuration
+  path without a fallback. This removes one unnecessary dependency path; it
+  does not close the separate OpenSpec braces advisory.
 - Replace textlint parsing in both DR boundaries and the offline bundle's README
   license reader with the existing native Markdown parser. Reject actual
   disabling comments without rejecting code or meaningful evidence links.
