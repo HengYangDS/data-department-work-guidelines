@@ -302,8 +302,11 @@
       preserve code bytes and still reject reader padding; non-Markdown text
       retains its boundary. Official merge preserves all 55 main requirements
       and adds two spacing scenarios without syncing the pending proof contract.
-      Committed-source proof, cold installation, and hosted delivery remain
-      separate open obligations.
+      Signed `52d5141` passes exact-HEAD installed proof and a fresh detached
+      checkout's full install and 206-test verifier with outbound network denied.
+      All 68 source blobs and modes match. These qualify the local correction,
+      not current supply security or the pending accepted shared-runtime repair;
+      both Forge matrices and publication remain open.
 
 ## 3. Qualification and publication
 
