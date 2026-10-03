@@ -212,13 +212,17 @@
       missing links, wrong repository targets, and unqualified repairs. Select
       exact source and installed-runtime evidence from each owner, then retire
       any product-superseded local identity implementation.
-      The accepted product's existing identity-repair operation now completes
-      the seven Proxy committer corrections locally at `e603ed4`. Its 246
-      replacement commits pass native DAG and trust checks; author metadata,
-      trees, message bytes, timestamps, tags, and the active Work Lane remain
-      unchanged. Remote integration and final proof are not complete: the
-      accepted original source still contains 21 official OpenSpec INFO
-      findings, while the active lane holds the reviewed source repairs.
+      Native identity repair corrects seven Proxy committer pairs at
+      `e603ed4`, conserving the 246 affected commits. The owned lane now
+      continues at `b4852ea` on that repaired base: all 55 lane contributions
+      and the reviewed merge retain their trees, authors, original author
+      times, messages, and ordered parent relation. Native signed replay
+      refreshes committer times and signatures; exact CAS and attachment pass.
+      Current full proof remains blocked: the repository's quality command
+      passes, but the installed native Python provider refuses its execution
+      evidence. Remote publication and generic repaired-history contribution
+      acceptance remain open; no private provider or conservation waiver is
+      introduced.
 - [x] 3.4 Publish the major signed SemVer edition independently to GitLab and
       GitHub; verify both exact refs, Releases, downloaded asset hashes, and
       declared source and offline platform jobs.
