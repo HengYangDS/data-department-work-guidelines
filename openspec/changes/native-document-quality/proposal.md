@@ -29,6 +29,11 @@ linter beside the current stack would leave the duplication intact.
   capability review, emergency accountability, and the full net-benefit bar.
   Keep projections and derivations traceable and rewrite all six vague update
   phrases. Reuse the existing topic and specification owners.
+- Restore correction after an actual boundary breach and the original title
+  duty for analysis, proposal, and decision documents: subject, purpose, and
+  status. Expose existing decision records' accepted status in their titles
+  without changing their decisions. Keep the existing owners without a state
+  machine or form.
 - Restore the Agent's duty to read the complete results of current,
   claim-matched checks before summarizing. Retaining decisive output does not
   replace inspecting warnings, omissions, or failures elsewhere in the result.

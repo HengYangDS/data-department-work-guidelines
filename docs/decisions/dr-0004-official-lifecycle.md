@@ -11,7 +11,7 @@ relations:
 ---
 -->
 
-# DR-0004: Official Change Lifecycle
+# DR-0004: Official Change Lifecycle (Accepted)
 
 ## Context
 

@@ -69,10 +69,11 @@ both from a different risk preference despite shared reasoning.
 1. **Fidelity:** Give facts their sources. Separate facts, hypotheses,
    judgments, and decisions. Do not hide counterexamples, uncertainty, failure,
    or limits.
-2. **Clarity:** Let the title identify the subject and purpose. Give the
-   conclusion, decision request, or reason no conclusion is available on the
-   first screen. Make one main point per paragraph, define important terms at
-   first use, and leave reasoning and next steps actionable.
+2. **Clarity:** Let the title identify the subject and purpose. For analysis,
+   proposal, and decision documents, also name their status in the title.
+   Give the conclusion, decision request, or reason no conclusion is available
+   on the first screen. Make one main point per paragraph, define important
+   terms at first use, and leave reasoning and next steps actionable.
 3. **Elegance:** Remove formulaic filler, repetition, and decoration that add no
    information. Choose precise verbs and concrete nouns. Keep the tone
    objective and measured, without slogans or pretended depth. Let structure serve

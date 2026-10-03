@@ -11,7 +11,7 @@ relations:
 ---
 -->
 
-# DR-0001: Human–AI Collaboration
+# DR-0001: Human–AI Collaboration (Accepted)
 
 ## Context
 

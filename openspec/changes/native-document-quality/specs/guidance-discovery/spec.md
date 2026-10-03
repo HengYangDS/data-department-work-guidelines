@@ -91,6 +91,15 @@ or unknown ownership.
 - **THEN** the Agent stops that affected action and escalates
 - **AND** independent authorized work may continue without hiding the gap.
 
+#### Scenario: An unsupported completion claim has already been sent
+
+- **WHEN** a member or Agent discovers an actual hard-boundary breach, including
+  a completion claim without matching evidence
+- **THEN** the charter requires stopping the affected action, disclosing and
+  correcting the breach within existing authority, and escalation according
+  to risk
+- **AND** stopping future work alone does not correct the prior breach.
+
 #### Scenario: A high-risk task enters the route
 
 - **WHEN** a member starts a production, sensitive-data, destructive, or
@@ -277,6 +286,13 @@ destination, audience, and detail.
 - **THEN** the communication and evolution topics require a clear purpose,
   measured expression, and preserved member judgment
 - **AND** recurring intervention requires a management-system correction.
+
+#### Scenario: A draft decision could be mistaken for acceptance
+
+- **WHEN** a member presents an analysis, proposal, or decision document
+- **THEN** its title names the subject, purpose, and document status
+- **AND** its content or work-state claims do not substitute for visible
+  document status.
 
 #### Scenario: A member reports a failure or receives a review score
 

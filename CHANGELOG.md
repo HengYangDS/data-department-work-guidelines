@@ -19,6 +19,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 - Restore unverified citations as hard risks and the limits on using one
   metric to judge a person's overall worth or monthly review to rank people.
+- Require correction after a boundary breach and visible document status in
+  analysis, proposal, and decision titles.
 - Restore the prohibition on uncoordinated shared edits and closing work of
   unknown ownership; make the charter table prohibit crossing limits.
 - Clarify human result inspection, action-authority order, high-risk

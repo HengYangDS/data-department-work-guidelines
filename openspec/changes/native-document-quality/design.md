@@ -173,6 +173,18 @@ the existing analysis topic. A recommendation's first action may implement a
 choice rather than verify it, so it cannot replace that conclusion duty. No
 new report, template, or private meaning validator is needed.
 
+The complete-original and seven-topic review at `a09b234` identifies two
+further omissions. Original section 11.2 requires correcting an actual boundary
+breach; a prospective stop does not correct a claim already sent. Section 7.2
+requires analysis, proposal, and decision titles to expose subject, purpose, and
+status; a work-state report does not expose a document's maturity. Restore both
+duties at the existing charter and communication owners and their scenarios.
+The title duty is specific to those documents, not every repository heading.
+Show each existing decision record's accepted status in its title without
+changing its rationale, date, or acceptance. Correction does not grant new
+authority. No form, state machine, or private
+semantic validator is needed.
+
 The native dictionary initially rejected the valid plural and possessive of
 `deliverable`. Accept only that real term and its two normal inflections; retain
 a misspelled near-match regression. Do not rewrite the obligation or disable

@@ -86,7 +86,9 @@ convenient rule.
 | Do not claim false completion | Do not claim a result is complete, correct, usable, or adopted without current evidence matching that claim.                                          |
 
 Within these boundaries, autonomy, exploration, and creative work are welcome.
-When a boundary would be crossed, stop, make it visible, and escalate.
+When a boundary would be crossed, stop, make it visible, and escalate. If a
+breach has occurred, stop the affected action, disclose it, correct it within
+your authority, and escalate according to risk.
 
 Professional judgment belongs with people who have relevant competence and
 access to the facts. Bring in the appropriate domain owner when either is

@@ -22,8 +22,9 @@
 - [x] 2.3 Apply human English editing to all seven task topics and compare every
       changed duty, condition, authority, and evidence limit with its source.
       Keep one topic per duty. Retain task-owner and supervisor calibration,
-      unidentified-owner and foreign-work stops, complete current claim-matched
-      result inspection before summarizing, next verification, unverified-citation
+      actual-breach correction, document title status, unidentified-owner and
+      foreign-work stops, complete current claim-matched result inspection
+      before summarizing, next verification, unverified-citation
       hard risks, all member result checks, action-authority order, explicit
       stops, risk-scaled human acceptance, permitted Agent implementation, data
       provenance, score and disclosure limits, capability review, emergency
@@ -35,16 +36,23 @@
       Correct existing owners without another report, parser, evaluator, meeting,
       approval, or meaning gate.
       Signed `ca746a35` and `c50e005b` retain the reviewed restorations and
-      paragraph boundaries. Actual-source Claude review finds no remaining
-      actionable omission within the complete original and ten supplied entry
-      and topic pages. All 215 local and denied-network cold tests and 28 native
-      renders pass. Selected guidance sync preserves 11 requirements and all
-      33 prior scenarios, adding five without pending shared-quality changes.
+      paragraph boundaries. Earlier bounded Claude reviews report no further
+      omission in their supplied sources, not equivalence. The later
+      complete-original and seven-topic review at `a09b234` identifies
+      actual-breach correction and document-title status omissions. Both are
+      restored at their existing owners; status is explicit in the title and
+      existing DR titles expose their accepted state without changing decisions.
+      Targeted rechecks preserve all original requirement clauses and scenarios;
+      selected official sync retains 11 requirements and 40 scenarios. Current
+      full verification passes all 215 tests with no skips and renders all 28
+      Markdown sources. Prior cold evidence stays source-bound; current signed
+      proof, cold qualification, and hosted publication remain separate.
       Later omissions supersede earlier bounded no-finding judgments; original
-      failure and review evidence remains intact. Current installed changed
-      planning hits the diagnosed Git batch-reader deadline; exact-HEAD proof
-      remains open. This closes reviewed content, not total equivalence, team
-      adoption, installed shared acceptance, publication, or the Change.
+      failure and review evidence remains intact. Installed changed planning
+      passes at signed `a09b234`; an earlier batch-reader deadline remains
+      historical evidence, not the current plan result. Current exact-HEAD
+      proof, shared acceptance, hosted publication, and Change closure remain
+      separate obligations; local checks do not prove total equivalence or use.
 - [x] 2.4 Reconcile package, current OpenSpec, contribution, governance, CI,
       version, and changelog contracts. Audit current consumers and the resolved
       dependency graph for retired residue; preserve historical Git bytes.
