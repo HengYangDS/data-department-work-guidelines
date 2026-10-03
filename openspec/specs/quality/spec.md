@@ -868,9 +868,27 @@ records SHALL NOT gain converters, duplicate copies, or old-path fallback.
 #### Scenario: Native Markdown policy is selected
 
 - **WHEN** source verification selects Markdownlint policy
-- **THEN** the native CLI reads the concern-local TOML configuration and invokes
-  the existing Markdown rule implementation
+- **THEN** the native core reads the concern-local TOML configuration through
+  its official configuration API and checks the complete Git-selected files
+- **AND** the existing Markdown rule implementation remains the comment owner
 - **AND** actual disabling comments fail while literal examples remain valid.
+
+#### Scenario: Markdown source does not need a glob wrapper
+
+- **WHEN** Git selects current or official historical Markdown with literal
+  braces, spaces, or leading punctuation in a filename
+- **THEN** the native core checks those exact files with one configured policy
+- **AND** no glob expansion, ambient per-directory policy, or retired CLI2
+  dependency selects, excludes, or reinterprets that source.
+
+#### Scenario: Native configuration objects retain rule options
+
+- **WHEN** the TOML policy permits repeated categories under separate releases
+  and excludes tables, headings, and code from prose-width checking
+- **THEN** the native core preserves those options without adding exceptions
+- **AND** duplicate categories within one release, over-width prose, and
+  document-level suppression of required rules still fail with native location
+  and rule diagnostics.
 
 #### Scenario: Formatting and links consume native policy
 

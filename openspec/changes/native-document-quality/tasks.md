@@ -198,6 +198,10 @@
       qualify locked removal, source-bound offline supply, clean installation,
       exact-source proof, and both Forge matrices. Do not claim that removing
       one consumer fixes the separate official OpenSpec braces dependency.
+      Local migration at `1219528` removes 19 packages, checks all 202 source
+      Markdown files, and passes all 202 tests, installed exact-HEAD proof, and
+      network-denied cold installation. Hosted source and offline qualification
+      for the next edition remain open.
 
 ## 3. Qualification and publication
 
@@ -215,10 +219,12 @@
       stream-report assumptions. Reject disconnected or unverified owners and
       prove complete test selection, single execution, semantic diagnostics,
       and warning preservation through the actual installed command plane.
-      On 2026-10-03, current npm audit also reports the high-severity braces
-      advisory and five inherited findings. Stable publishers offer no patched
-      version. The latest proposal stops at that audit before source checks;
-      prior passing jobs do not establish current security. Qualify the actual
+      On 2026-10-03, proposal `5625608` stops at the new high-severity braces
+      advisory before source checks. Removing CLI2 at `1219528` reduces the
+      native audit from six findings to four; official OpenSpec retains the
+      remaining dependency path. Verified stable publisher metadata offers no
+      patched braces version. Prior passing jobs do not establish current
+      security. Qualify the actual
       schema, configuration, and selected input through the accepted shared
       product and its audit consumer before dependent publication. Do not
       downgrade tools, hide findings, or introduce a repository waiver.
@@ -247,10 +253,11 @@
       residue before the official archive and retirement steps.
       The partial official delta-to-main-spec merge carries the implemented
       cross-cycle prevention, bounded test execution, managed acquisition,
-      offline telemetry, cold fixtures, readable native navigation, and native
-      shell-operator boundaries. All prior requirements and scenarios are
-      preserved. The two draft proof
-      requirements still await the accepted ETHOS contract and are not synced;
+      offline telemetry, cold fixtures, readable native navigation, native
+      shell-operator boundaries, and the implemented Markdown core policy.
+      All 55 prior requirements and 180 scenarios are preserved; the core
+      policy adds two scenarios. The two draft proof requirements still await
+      the accepted ETHOS contract and are not synced;
       the removed duplicate npm policy is already absent. Full Change sync and
       archive remain incomplete. The original 84-unit editorial comparison is
       rebound to current excerpts with the edition-only change disclosed;
