@@ -2,6 +2,59 @@
 
 ## MODIFIED Requirements
 
+### Requirement: Point-of-use analysis, data, and Agent boundaries
+
+Analysis SHALL divide the whole problem into non-overlapping parts tied to
+the governing decision. Exploratory data or code SHALL NOT enter a shared,
+production, or decision path until meaning, quality, permission, and
+reproducibility are qualified. Parallel Agent work SHALL default to independent
+read-only review with one integrator; reports SHALL expose evidence, limits,
+and human responsibility. Agents SHALL read complete results of current,
+claim-matched checks before summarizing.
+
+#### Scenario: A verification summary omits a finding
+
+- **WHEN** a batch check exits successfully but a finding elsewhere in its
+  native result reports that an input source was skipped
+- **THEN** the collaboration topic requires the Agent to inspect the complete
+  selected result before summarizing or retaining decisive excerpts
+- **AND** a successful summary or exit status does not replace that inspection,
+  and no new report store or approval step is required.
+
+#### Scenario: An analysis is split into parts
+
+- **WHEN** a member decomposes a material problem before proposing options
+- **THEN** the decision topic requires one classification axis, non-overlapping
+  parts that together cover the problem, and a link from each part back to the
+  decision the analysis supports
+- **AND THEN** a longer list or polished prose does not substitute for the
+  missing model.
+
+#### Scenario: Exploratory work enters a shared path
+
+- **WHEN** exploratory code or temporary data is proposed for shared,
+  production, or decision use
+- **THEN** the data topic requires qualified meaning, quality, permission, and
+  reproducibility before that promotion
+- **AND THEN** exploration remains available without being mislabeled as an
+  admitted asset.
+
+#### Scenario: An Agent completes delegated work
+
+- **WHEN** an Agent reports completion or hands work back to a person
+- **THEN** the collaboration topic makes the subject, actual changes, current
+  verification, evidence location, risks, assumptions, unresolved matters, and
+  next responsible actor and time explicit
+- **AND THEN** a human still verifies and accepts the consequential result.
+
+#### Scenario: Parallel Agents inspect one task
+
+- **WHEN** independent Agent subtasks are assigned in parallel
+- **THEN** research and review default to read-only work with explicit scope
+  and stop conditions
+- **AND THEN** one integrator owns the combined result, and a person remains
+  responsible for consequential acceptance.
+
 ### Requirement: Task routes preserve the work-quality contract
 
 Entry and seven topics SHALL preserve duties: hard boundaries, risk-scaled

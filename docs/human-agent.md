@@ -69,10 +69,12 @@ and next steps.
 
 Agent memory, summaries, guesses, and generated content are candidate material.
 Check a source against the original, version, time, and applicable scope, and
-check whether the inputs are complete enough for the decision. Keep the command,
-target, exit status, and decisive output with the producing task; inspect them
-before relying on the result. Test or review code, analysis, and documents in
-proportion to risk. A person must not rely only on an Agent's prose summary:
+check whether the inputs are complete enough for the decision. Run current checks
+that match the claim and read their complete results before summarizing. Keep the
+command, target, exit status, and decisive output with the producing task;
+success excerpts do not replace inspection of warnings, omissions, or failures
+elsewhere in the selected results. Test or review code, analysis, and documents
+in proportion to risk. A person must not rely only on an Agent's prose summary:
 compare changed paths and content with the reported scope; inspect missing
 counterexamples, the current environment, uncovered cases, and high-risk
 authorization. Even checked Agent output becomes a durable team fact only when

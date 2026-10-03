@@ -21,6 +21,20 @@
       second command, manifest, or installer for the same concern.
 - [x] 2.3 Apply human English editing to all seven task topics and compare every
       changed duty, condition, authority, and evidence limit with its source.
+      Independent section-8 review at `3569e60` finds that the Agent's original
+      complete-result inspection duty is absent: decisive output and successful
+      totals can hide a skipped-source finding elsewhere in a selected report.
+      Current, claim-matched checks and complete inspection before summarizing
+      are restored at the existing topic and point-of-use requirement.
+      Independent recheck preserves adjacent source, scope, human acceptance,
+      and evidence-location duties; official sync preserves the existing
+      requirements and scenarios. Complete local verification passes all 204
+      tests. One native line-width failure is corrected by wrapping the same
+      words; a later whole-command caller timeout is not passing evidence.
+      The successful run retains the native test owner's unchanged deadline
+      and complete inventory. Committed-source proof, cold installation, and
+      hosted delivery remain separate obligations; no report store, parser,
+      approval, or proof gate is added.
       Follow-up review at `04ba476` found two omissions: another person's
       uncommitted work and unknown ownership in the Agent stop condition, and
       the task owner and supervisor as task-start calibration participants.
@@ -297,8 +311,10 @@
       shell-operator boundaries, and the implemented Markdown core policy.
       All 55 prior requirements and 180 scenarios are preserved; the core
       policy adds two scenarios, the stop/calibration restoration adds three,
-      complete OpenSpec report consumption adds two, and the analytical
-      next-verification duty adds one.
+      complete OpenSpec report consumption adds two, the analytical
+      next-verification duty adds one, and complete Agent result inspection
+      adds one. These 189 main-spec scenarios do not prove whole-document
+      semantic equivalence.
       The two draft proof requirements still await
       the accepted ETHOS contract and are not synced;
       the removed duplicate npm policy is already absent. Full Change sync and

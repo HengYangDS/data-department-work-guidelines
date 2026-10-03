@@ -17,6 +17,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Require Agents to read complete, current, claim-matched verification results
+  before summarizing; selected success excerpts cannot replace that inspection.
 - Require analytical conclusions to name their next verification action
   alongside confidence, limits, and the observation that would change the
   judgment.

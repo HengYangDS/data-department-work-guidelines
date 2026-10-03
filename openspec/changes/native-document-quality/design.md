@@ -65,6 +65,15 @@ not only a style checker.
 
 ### Preserve the seven-topic review boundary
 
+The original Agent protocol requires current, claim-matched checks and reading
+their complete results. At `3569e60`, preserving command identity, exit status,
+and decisive output does not retain that complete inspection duty. Restore it
+at the existing collaboration topic and point-of-use requirement. A batch's
+successful summary must not hide a skipped-source finding elsewhere in its
+native report. Inspect before summarizing or selecting evidence excerpts; no
+new report store, parser, or approval step is required. Earlier no-finding
+reviews remain dated judgments, not proof of semantic equivalence.
+
 The baseline comparison remains at
 [the original-content review](../archive/2026-09-30-work-guidance-completeness/design.md).
 The initial native-tool migration must reread all seven topics before changing

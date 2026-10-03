@@ -10,6 +10,11 @@ linter beside the current stack would leave the duplication intact.
 
 ## What Changes
 
+- Restore the Agent's duty to read the complete results of current,
+  claim-matched checks before summarizing. Retaining decisive output does not
+  replace inspecting warnings, omissions, or failures elsewhere in the result.
+  Keep that duty in the existing collaboration topic and requirement without
+  another report store or approval step.
 - Restore the next-verification duty for analytical conclusions. Confidence,
   limitations, and possible contrary evidence do not replace the next check.
   Keep the requirement in the existing analysis topic without another template

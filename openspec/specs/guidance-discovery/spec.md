@@ -206,7 +206,17 @@ the governing decision. Exploratory data or code SHALL NOT enter a shared,
 production, or decision path until meaning, quality, permission, and
 reproducibility are qualified. Parallel Agent work SHALL default to independent
 read-only review with one integrator; reports SHALL expose evidence, limits,
-and human responsibility.
+and human responsibility. Agents SHALL read complete results of current,
+claim-matched checks before summarizing.
+
+#### Scenario: A verification summary omits a finding
+
+- **WHEN** a batch check exits successfully but a finding elsewhere in its
+  native result reports that an input source was skipped
+- **THEN** the collaboration topic requires the Agent to inspect the complete
+  selected result before summarizing or retaining decisive excerpts
+- **AND** a successful summary or exit status does not replace that inspection,
+  and no new report store or approval step is required.
 
 #### Scenario: An analysis is split into parts
 
