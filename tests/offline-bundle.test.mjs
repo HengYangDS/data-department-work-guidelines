@@ -22,6 +22,7 @@ import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 import { gunzipSync } from "node:zlib";
+import { strictVersion } from "../tools/docs/changelog.mjs";
 import * as offline from "../tools/ci/offline-bundle.mjs";
 import {
   acquireGitHubBundle,
@@ -29,6 +30,7 @@ import {
   assertSafeBundleListing,
   inspectBundle,
   installBundle,
+  isolatedNpmEnvironment,
   npmCliPath,
   readBundleRecord,
   validateBundleRecord,
@@ -1721,6 +1723,68 @@ test("npm owns exact package-manager admission without duplicate fields", () => 
   assert.equal(manifest.engines?.npm, undefined);
 });
 
+function assertNpmResult(result, expectedStatus, args) {
+  const diagnostic = JSON.stringify(
+    {
+      args,
+      expectedStatus,
+      status: result.status,
+      signal: result.signal,
+      error: result.error && {
+        name: result.error.name,
+        message: result.error.message,
+        code: result.error.code,
+        path: result.error.path,
+        syscall: result.error.syscall,
+      },
+      stdout: result.stdout,
+      stderr: result.stderr,
+    },
+    null,
+    2,
+  );
+  assert.equal(result.error, undefined, diagnostic);
+  assert.equal(result.status, expectedStatus, diagnostic);
+  return diagnostic;
+}
+
+test("native npm result assertions preserve process failure diagnostics", () => {
+  const result = {
+    status: null,
+    signal: "SIGTERM",
+    error: Object.assign(new Error("native npm timed out"), {
+      code: "ETIMEDOUT",
+      path: process.execPath,
+      syscall: "spawnSync",
+    }),
+    stdout: "partial native npm stdout",
+    stderr: "partial native npm stderr",
+  };
+  assert.throws(
+    () => assertNpmResult(result, 1, ["install", "--ignore-scripts"]),
+    (error) => {
+      for (const value of [
+        "install",
+        "SIGTERM",
+        "ETIMEDOUT",
+        "spawnSync",
+        "partial native npm stdout",
+        "partial native npm stderr",
+        JSON.stringify(process.execPath).slice(1, -1),
+      ]) {
+        assert.ok(
+          error.message.includes(value),
+          `missing diagnostic: ${value}`,
+        );
+      }
+      return true;
+    },
+  );
+  assert.doesNotThrow(() =>
+    assertNpmResult({ status: 1, stderr: "native npm refusal" }, 1, ["ci"]),
+  );
+});
+
 test("native npm rejects mismatched install, ci, and run before effects", () => {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-npm-admission-"));
   try {
@@ -1750,37 +1814,43 @@ test("native npm rejects mismatched install, ci, and run before effects", () => 
         packages: { "": { name: manifest.name, version: manifest.version } },
       }),
     );
-    const env = {
-      ...process.env,
-      npm_config_cache: path.join(directory, "cache"),
-      npm_config_offline: "true",
-      npm_config_audit: "false",
-      npm_config_fund: "false",
-    };
+    const cli = npmCliPath();
+    const env = isolatedNpmEnvironment(
+      directory,
+      path.join(directory, "cache"),
+    );
     for (const args of [
       ["install", "--ignore-scripts"],
       ["ci", "--ignore-scripts"],
       ["run", "effect"],
     ]) {
-      const result = spawnSync(process.execPath, [npmCliPath(), ...args], {
+      const result = spawnSync(process.execPath, [cli, ...args], {
         cwd: directory,
         env,
         encoding: "utf8",
         timeout: 15_000,
         input: "",
       });
-      assert.equal(result.status, 1);
-      assert.match(result.stderr, /EBADDEVENGINES/u);
-      assert.equal(existsSync(marker), false);
-      assert.equal(existsSync(path.join(directory, "node_modules")), false);
+      const diagnostic = assertNpmResult(result, 1, args);
+      assert.match(result.stderr, /EBADDEVENGINES/u, diagnostic);
+      assert.equal(existsSync(marker), false, diagnostic);
+      assert.equal(
+        existsSync(path.join(directory, "node_modules")),
+        false,
+        diagnostic,
+      );
     }
-    const actual = spawnSync(process.execPath, [npmCliPath(), "--version"], {
+    const version = spawnSync(process.execPath, [cli, "--version"], {
+      cwd: directory,
       env,
       encoding: "utf8",
       timeout: 10_000,
       input: "",
-    }).stdout.trim();
-    manifest.devEngines.packageManager.version = actual;
+    });
+    const versionDiagnostic = assertNpmResult(version, 0, ["--version"]);
+    const versionText = version.stdout.trim();
+    assert.doesNotThrow(() => strictVersion(versionText), versionDiagnostic);
+    manifest.devEngines.packageManager.version = versionText;
     writeFileSync(
       path.join(directory, "package.json"),
       JSON.stringify(manifest),
@@ -1789,22 +1859,25 @@ test("native npm rejects mismatched install, ci, and run before effects", () => 
       ["install", "--ignore-scripts"],
       ["ci", "--ignore-scripts"],
     ]) {
-      const result = spawnSync(process.execPath, [npmCliPath(), ...args], {
+      const result = spawnSync(process.execPath, [cli, ...args], {
         cwd: directory,
         env,
         encoding: "utf8",
         timeout: 15_000,
         input: "",
       });
-      assert.equal(result.status, 0, result.stderr);
+      assertNpmResult(result, 0, args);
     }
-    const allowed = spawnSync(
-      process.execPath,
-      [npmCliPath(), "run", "effect"],
-      { cwd: directory, env, encoding: "utf8", timeout: 15_000, input: "" },
-    );
-    assert.equal(allowed.status, 0, allowed.stderr);
-    assert.equal(readFileSync(marker, "utf8"), "unexpected");
+    const allowed = spawnSync(process.execPath, [cli, "run", "effect"], {
+      cwd: directory,
+      env,
+      encoding: "utf8",
+      timeout: 15_000,
+      input: "",
+    });
+    const allowedDiagnostic = assertNpmResult(allowed, 0, ["run", "effect"]);
+    assert.equal(existsSync(marker), true, allowedDiagnostic);
+    assert.equal(readFileSync(marker, "utf8"), "unexpected", allowedDiagnostic);
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }

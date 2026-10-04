@@ -129,7 +129,7 @@
       challenge a single issue spanning cycles under one owner and project,
       preserve the other triggers, and rerun source quality and rendering.
       Existing excerpt hashes do not establish complete semantic coverage.
-- [x] 2.26 Bound the complete standalone inventory to two workers and remove
+- [ ] 2.26 Bound the complete standalone inventory to two workers and remove
       unrelated prerequisites from the OpenSpec environment regression. Preserve
       all discovered cases, real tools, assertions, and deadlines. Prove adverse
       controls, local timing, and the full graph, then qualify Windows. Reject
@@ -137,7 +137,10 @@
       native inputs. Observe tags once while retaining nested invalid-ref,
       strict SemVer, annotation, and ancestry checks. Preserve original v7.0.8
       and peak-load v7.0.9 timeout evidence; later passes do not disprove
-      saturation risk.
+      saturation risk. Resolve npm admission's native entry once and reuse its
+      existing isolated environment; preserve child status, error, signal, and
+      partial streams before checking refusal or permitted effects. Qualify
+      full Windows execution without retries, skipped cases, or longer deadlines.
 - [x] 2.27 Remove inherited build-directory and native-cache prerequisites from
       the existing source-link and concurrent-install fixtures. Create the
       ignored parent explicitly and model the regular target behind `EEXIST`;

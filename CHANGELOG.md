@@ -20,6 +20,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Preserve native npm admission errors, signals, and partial output before
+  checking refusal or permitted effects. Isolate fixture configuration and
+  resolve the selected entry once without changing test coverage or deadlines.
 - Keep L1 and L2 record duties at the charter's complete risk boundary, and name
   the existing owner of evidence calibration. Distinguish working source from
   signed-release content and publishable branches from release tags.

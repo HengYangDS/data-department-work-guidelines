@@ -289,6 +289,13 @@ output. A one-second fixture deadline cannot require fixed progress text that
 the child never emitted. Non-timeout cases keep exact expected text; capture
 modes, diagnostic counts, deadlines, and single execution remain unchanged.
 
+Native npm admission fixtures resolve the selected CLI once, reuse the existing
+isolated npm environment, and retain every child status, signal, native error,
+and partial stream before asserting rejection or success. A missing status is
+not a native refusal. Keep install, `ci`, run, allowed effects, and their original
+deadlines; qualify the hosted Windows journey rather than infer its failure's
+cause from an assertion that lost the process result.
+
 Each test establishes its own filesystem prerequisites. Source-link fixtures
 create their ignored parent; concurrent-install fixtures model the regular
 exclusive-copy target; format/lint fixtures carry the source Git ignore policy.
