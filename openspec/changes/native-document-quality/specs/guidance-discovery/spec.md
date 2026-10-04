@@ -336,8 +336,9 @@ replace that check.
 
 Communication SHALL state its purpose in an objective, measured tone. Meetings
 SHALL refocus drifting discussion on the decision. Deadline risks SHALL name
-escalation owners and triggers before harm grows. Task owners and supervisors
-SHALL jointly align on subject, boundary, and success criteria at task start.
+escalation owners and triggers before harm grows. Responsible members and
+supervisors SHALL jointly align on subject, boundary, and success criteria at
+task start.
 Coaching SHALL examine member reasoning, not decide for them. Managers SHALL NOT
 normalize recurring rescue. Agent delegation SHALL name output format,
 destination, audience, and detail.
@@ -368,10 +369,10 @@ destination, audience, and detail.
 
 #### Scenario: Task-start calibration omits its counterpart
 
-- **WHEN** a task owner begins capability-building work with an individual
-  interpretation of its subject, boundary, and success criteria
-- **THEN** the evolution topic requires the task owner and supervisor to align
-  jointly at task start
+- **WHEN** a responsible member begins capability-building work with an
+  individual interpretation of its subject, boundary, and success criteria
+- **THEN** the evolution topic requires the responsible member and supervisor
+  to align jointly at task start
 - **AND** later monthly sampling does not substitute for that calibration, and
   no new meeting or approval gate is required.
 

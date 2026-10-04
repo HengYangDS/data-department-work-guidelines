@@ -129,7 +129,7 @@
       challenge a single issue spanning cycles under one owner and project,
       preserve the other triggers, and rerun source quality and rendering.
       Existing excerpt hashes do not establish complete semantic coverage.
-- [ ] 2.26 Bound the complete standalone inventory to two workers and remove
+- [x] 2.26 Bound the complete standalone inventory to two workers and remove
       unrelated prerequisites from the OpenSpec environment regression. Preserve
       all discovered cases, real tools, assertions, and deadlines. Prove adverse
       controls, local timing, and the full graph, then qualify Windows. Reject
