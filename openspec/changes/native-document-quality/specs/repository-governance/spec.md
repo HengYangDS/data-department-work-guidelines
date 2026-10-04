@@ -218,3 +218,32 @@ asset cleanup.
   identities and digests unchanged on each Forge
 - **AND** storage reclamation is reported only when provider statistics confirm
   it; deletion acceptance alone does not prove released physical space.
+
+### Requirement: Active task artifacts remain implementation checklists
+
+Active `tasks.md` artifacts SHALL follow the selected official OpenSpec task
+template: numbered groups, bounded checkbox actions, and completion checks in
+their descriptions. Task state SHALL remain with that checklist; requirements
+and implementation choices SHALL remain with specifications and design.
+Original execution results and review coverage SHALL remain with their
+producing evidence. Tasks MAY reference that evidence but SHALL NOT copy logs,
+checkpoints, debugging narratives, or acceptance reports. Successful official
+checkbox parsing SHALL NOT constitute template conformance. Shared installed
+ETHOS document-quality diagnostics SHALL enforce this boundary through its
+existing command plane without a private task schema or another default gate.
+
+#### Scenario: A parsed checklist contains execution narration
+
+- **WHEN** an active task artifact contains copied execution results or progress
+  narration outside a checkbox or indented beneath one
+- **THEN** the shared installed ETHOS task-authoring diagnostic rejects that
+  artifact through the existing document-quality admission
+- **AND** official checkbox counts cannot override that diagnostic.
+
+#### Scenario: A task records an action and its completion check
+
+- **WHEN** an active task follows the selected official template with a bounded
+  action, a completion check, and any necessary reference to producer evidence
+- **THEN** the shared diagnostic accepts meaningful links, inline verification
+  commands, and wrapped action text
+- **AND** the official parser remains the owner of task identity and completion.

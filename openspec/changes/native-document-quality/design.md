@@ -19,8 +19,10 @@ The complete pre-consolidation design is preserved at
 `openspec/changes/native-document-quality/design.md`
 ([GitLab][previous-design-gitlab] · [GitHub][previous-design-github]). It
 retains dated diagnoses, review boundaries, and rejected approaches. Current
-execution and acceptance belong only in [the task ledger](tasks.md); original
-Git and producer evidence remain unchanged.
+task actions, completion checks, and checkbox state belong only in
+[the task checklist](tasks.md). Original execution results, review coverage,
+and acceptance evidence stay with their producers; Git history remains
+unchanged.
 
 ## Goals / Non-Goals
 
@@ -97,8 +99,9 @@ Independent reviews cover fixed source, not a moving summary. Review all
 original numbered subsections, then challenge the revised duties with concrete
 adverse cases. Earlier no-finding judgments remain dated evidence when a later
 counterexample corrects them. A source-based editorial crosswalk is not an
-automated equivalence proof. Record actual reviewer coverage and failed routes
-in tasks, without inventing a committee quorum or another meaning validator.
+automated equivalence proof. Keep actual reviewer coverage and failed routes
+with their producing evidence; mark only the corresponding task's observed
+completion. Do not invent a committee quorum or another meaning validator.
 
 ### Give native quality concerns one owner
 
@@ -517,6 +520,17 @@ unapproved warnings, report overrides, equivalent warning suppression, and
 unexercised required subjects must block accepted proof. The product owns graph
 validation and diagnostic interpretation; the adopter adds no copied linter,
 provider, graph, or lifecycle.
+
+Shared task-authoring diagnostics use the selected official OpenSpec template
+and native Markdown structure. The official parser owns task selection and
+completion; ETHOS checks the active artifact's conformance through its existing
+document-quality and command plane. A successfully parsed checklist must not hide
+untracked progress prose or copied results, whether outside a task or indented
+beneath it. Verification commands, meaningful links, and wrapped action text
+must remain valid. Keep original results at their producer and do not add
+a private task schema, local duplicate validator, or default proof gate.
+Qualify this shared contract in the same accepted integration before treating
+guidance or an official parse as enforced admission.
 
 Qualify DDWG, AIGW, and Proxy against the same accepted product source and
 wheel, with each actual installed binding, owned source, exact-HEAD plan/proof,

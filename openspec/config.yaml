@@ -15,7 +15,12 @@ rules:
     - Include at least one Scenario with WHEN and THEN clauses for each
       requirement.
   tasks:
-    - Track implementation, tests, documentation, and closeout evidence as
-      checkable items.
+    - Follow the selected official task template with numbered groups and
+      checkbox actions; put each completion check in its task description.
+    - Keep each action bounded and dependency-ordered. Include the tests and
+      documentation its group owes; reserve final checks for integration.
+    - Keep only task actions, completion checks, and checkbox state here.
+      Reference existing evidence when needed; do not copy command output,
+      execution checkpoints, debugging narratives, or acceptance reports.
   design:
     - Record architecture, tradeoffs, authority boundaries, and migration risks.

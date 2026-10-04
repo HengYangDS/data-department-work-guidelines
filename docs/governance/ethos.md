@@ -37,6 +37,14 @@ procedures. This page defines their authority and acceptance boundaries.
 The compiled Commitment is transient. No private `scope.toml`, tracked claim
 ledger, method-pack plan, or local script supplies a second lifecycle.
 
+Keep `tasks.md` to numbered groups of bounded actions, their completion checks,
+and checkbox state. Specifications own observable requirements; design owns
+implementation choices and migration order. Original results stay with their
+producing tool or evidence record. A task may reference that evidence, but
+must not copy execution logs, checkpoints, or acceptance reports, including
+under an indented checkbox. Successful checkbox parsing alone does not establish
+task-template conformance.
+
 1. **Before writing:** Run the installed ETHOS status command in the intended
    worktree. Follow its verdict, gaps, next action, and continuation. Obtain
    passing prewrite admission for the exact paths and current state.
