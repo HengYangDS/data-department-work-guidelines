@@ -1058,8 +1058,15 @@ async function downloadBundle(request, target, fetcher, provider) {
     throw new Error(`${provider} release bundle download failed`);
   }
   if (!response.ok || !response.body) {
+    let cause;
+    try {
+      await response.body?.cancel();
+    } catch (error) {
+      cause = error;
+    }
     throw new Error(
       `${provider} release bundle download failed: HTTP ${response.status}`,
+      cause === undefined ? undefined : { cause },
     );
   }
   const limit = 512 * 1024 * 1024;

@@ -4,10 +4,12 @@ import { spawnSync } from "node:child_process";
 import childProcess from "node:child_process";
 import fs from "node:fs";
 import fsPromises from "node:fs/promises";
+import { createServer } from "node:http";
 import os from "node:os";
 import path from "node:path";
 import { syncBuiltinESMExports } from "node:module";
 import { test } from "node:test";
+import { setTimeout as delay } from "node:timers/promises";
 import {
   assertAssetDigest,
   downloadAsset,
@@ -160,6 +162,75 @@ test("authenticated package download refuses redirects before forwarding identit
   });
   await assert.rejects(downloadAsset(request), /HTTP 302/u);
   assert.equal(calls.length, 2);
+});
+
+test("rejected native downloads await response disposal and retain its failure", async (context) => {
+  let response;
+  let requests = 0;
+  context.mock.method(globalThis, "fetch", async () => {
+    requests += 1;
+    return response;
+  });
+  for (const status of [500, 302]) {
+    const cause = new Error("native response disposal failed");
+    for (const cleanupFailure of [undefined, cause]) {
+      requests = 0;
+      let disposed = false;
+      response = new Response(
+        new ReadableStream({
+          async cancel() {
+            await new Promise((resolve) => setImmediate(resolve));
+            disposed = true;
+            if (cleanupFailure) throw cleanupFailure;
+          },
+        }),
+        { status },
+      );
+      await assert.rejects(
+        downloadAsset({ url: "https://fixture.invalid/asset" }),
+        (error) =>
+          error.message === `native tool download failed: HTTP ${status}` &&
+          error.cause === cleanupFailure &&
+          Object.hasOwn(error, "cause") === (cleanupFailure !== undefined),
+      );
+      assert.equal(requests, 1);
+      assert.equal(disposed, true);
+    }
+  }
+});
+
+test("a rejected live HTTP stream closes before test teardown", async () => {
+  let requests = 0;
+  const closed = Promise.withResolvers();
+  const deadline = new AbortController();
+  const server = createServer((request, response) => {
+    requests += 1;
+    response.on("close", () => closed.resolve(true));
+    response.writeHead(500);
+    response.write("failed native asset");
+  });
+  await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
+  try {
+    await assert.rejects(
+      downloadAsset({
+        url: `http://127.0.0.1:${server.address().port}/asset`,
+      }),
+      /native tool download failed: HTTP 500/u,
+    );
+    assert.equal(
+      await Promise.race([
+        closed.promise,
+        delay(2000, false, { signal: deadline.signal }),
+      ]),
+      true,
+      "rejected response must close before fallback teardown",
+    );
+    assert.equal(requests, 1);
+  } finally {
+    deadline.abort();
+    server.closeAllConnections();
+    await new Promise((resolve) => server.close(resolve));
+  }
 });
 
 test("GitLab CLI mode fails closed without CI identity", () => {

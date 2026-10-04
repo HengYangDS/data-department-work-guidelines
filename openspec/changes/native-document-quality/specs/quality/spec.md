@@ -230,6 +230,15 @@ and host paths; each claimed OS SHALL execute the full graph. Current command
 examples SHALL be checked against the installed CLI. GitLab jobs SHALL name
 purpose and platform; hidden phase templates SHALL own common steps.
 
+#### Scenario: An upstream download returns a rejected response
+
+- **WHEN** a native-tool or either Forge's release download returns a rejected
+  HTTP response with an unread body
+- **THEN** its existing owner awaits native body cancellation before returning
+  failure and retains the HTTP status and any original cleanup error
+- **AND** it performs no automatic retry or fallback and publishes no unverified
+  output; a concurrent verified target remains unchanged.
+
 #### Scenario: Verification job names omit the platform
 
 - **WHEN** a GitLab source or offline verification job has a platform-less name,

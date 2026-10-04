@@ -1208,6 +1208,21 @@ actual jobs and native resource waits. Keep every original failure and
 resource limit that was not proved. Do not increase timeouts, skip fixtures,
 rebuild a Runner, or add a private scheduler to obtain a green result.
 
+## Rejected Download Responses
+
+Both existing download owners must cancel a rejected native response body before
+returning failure. An unread error stream can retain its network connection;
+throwing the HTTP status alone does not release that resource. Await the native
+cancel operation and keep a failed cancellation as the HTTP error's original
+cause. Successful downloads, size limits, digest checks, credential redirects,
+exclusive publication, and concurrent verified output keep their current owners.
+Do not add retries, a fallback endpoint, a network controller, or another module.
+
+Native Response regressions distinguish asynchronous cancellation from immediate
+refusal and retain cleanup error identity. A real local HTTP error stream must
+close before test cleanup. These observations do not prove the exact source of
+a hosted provider's delay or control upstream availability.
+
 ## Migration Plan
 
 The original Windows source checks expose native path and fixture-boundary

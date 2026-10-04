@@ -17,6 +17,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Cancel rejected native-tool and release-download response bodies before
+  returning failure. Keep the HTTP status and any cleanup error without retrying
+  or publishing unverified output.
 - Reject native prose and link-extraction warnings before accepting their
   reports; keep diagnostic output visible even when the tools exit successfully.
 - Keep original process, filesystem, formatter-plugin, and Git error causes

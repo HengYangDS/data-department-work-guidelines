@@ -336,6 +336,12 @@
       discovers 230 tests, passes 229, and skips only its declared Darwin case.
       This qualifies project serialization, not sole resource causality or
       the next release's offline asset.
+- [ ] 2.35 Close rejected native-tool and release-download response bodies at
+      their existing owners. Preserve HTTP status, native cleanup errors,
+      successful downloads, credential redirects, and concurrent verified
+      output. Prove asynchronous disposal and a real HTTP error stream without
+      retries, fallbacks, another module, or claims about upstream availability;
+      qualify the complete source and both Forge matrices.
 
 ## 3. Qualification and publication
 

@@ -1189,6 +1189,70 @@ test("public GitHub acquisition fails closed and removes only its failed output"
   }
 });
 
+test("rejected Forge downloads await response disposal without publishing output", async () => {
+  for (const [acquire, environment, provider] of [
+    [
+      acquireGitHubBundle,
+      { GITHUB_REPOSITORY: "Example/Repository", DDWG_RELEASE_TAG: "v4.2.0" },
+      "GitHub",
+    ],
+    [
+      offline.acquireGitLabBundle,
+      {
+        CI_API_V4_URL: "http://gitlab.example.test/api/v4",
+        CI_PROJECT_ID: "42",
+        CI_JOB_TOKEN: "fixture-only",
+        CI_COMMIT_TAG: "v4.2.0",
+        CI_PIPELINE_SOURCE: "api",
+      },
+      "GitLab",
+    ],
+  ]) {
+    const cause = new Error("native response disposal failed");
+    for (const cleanupFailure of [undefined, cause]) {
+      await buildFixture(async (inputs) => {
+        const built = assembleBundle(inputs);
+        writeFileSync(
+          path.join(inputs.repository, ".config/release/offline-bundle.json"),
+          JSON.stringify(built),
+        );
+        let requests = 0;
+        let disposed = false;
+        const fetcher = async () => {
+          requests += 1;
+          return new Response(
+            new ReadableStream({
+              async cancel() {
+                await new Promise((resolve) => setImmediate(resolve));
+                disposed = true;
+                if (cleanupFailure) throw cleanupFailure;
+              },
+            }),
+            { status: 500 },
+          );
+        };
+        await assert.rejects(
+          acquire({ repository: inputs.repository, environment, fetcher }),
+          (error) =>
+            error.message ===
+              `${provider} release bundle download failed: HTTP 500` &&
+            error.cause === cleanupFailure &&
+            Object.hasOwn(error, "cause") === (cleanupFailure !== undefined),
+        );
+        assert.equal(requests, 1);
+        assert.equal(disposed, true);
+        assert.deepEqual(
+          readdirSync(
+            path.join(inputs.repository, "build/artifacts/offline-bundle"),
+          ),
+          [],
+        );
+        assert.equal(existsSync(inputs.outputPath), true);
+      });
+    }
+  }
+});
+
 test("a failed concurrent acquisition preserves either Forge's verified output", async () => {
   for (const [acquire, environment] of [
     [

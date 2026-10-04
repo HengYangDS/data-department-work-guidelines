@@ -133,8 +133,18 @@ export async function downloadAsset(request, asset = {}) {
     redirect: request.redirect ?? "follow",
     signal: AbortSignal.timeout(90_000),
   });
-  if (!response.ok)
-    throw new Error(`native tool download failed: HTTP ${response.status}`);
+  if (!response.ok) {
+    let cause;
+    try {
+      await response.body?.cancel();
+    } catch (error) {
+      cause = error;
+    }
+    throw new Error(
+      `native tool download failed: HTTP ${response.status}`,
+      cause === undefined ? undefined : { cause },
+    );
+  }
   if (!response.body) throw new Error("native tool download returned no body");
   const limit = asset.size ?? 32 * 1024 * 1024;
   const chunks = [];

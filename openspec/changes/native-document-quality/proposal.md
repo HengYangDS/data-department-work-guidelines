@@ -249,6 +249,10 @@ None.
 
 ## Impact
 
+Rejected native-tool and release downloads close their response bodies before
+refusal. Preserve HTTP status, native cleanup errors, credential boundaries,
+and verified concurrent output without adding retries or a download owner.
+
 The existing document and native-supply tools, their tests, native
 configuration, npm dependencies, CI, contributor guidance, version identity, and
 offline bundle change. Normative content receives semantically reviewed English
