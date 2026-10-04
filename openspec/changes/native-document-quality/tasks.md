@@ -364,6 +364,12 @@ commitment. Original narration and dated evidence remain at
       downloads, and rollback; the v7.0.9 qualification does not erase the
       original failures.
 
+The completed quality deltas are officially synchronized at the existing native
+spec owner: 23 prior requirements and 104 scenarios are preserved, seven
+qualified scenarios are added, and both pending proof requirements remain
+unchanged. The native merge reports no warnings. This does not accept the
+shared product, archive the Change, or qualify a later release.
+
 ## Current source acceptance
 
 Signed source `934293b8a6ab0600af75ea86fbdbdf36c46d1bd9`, tree

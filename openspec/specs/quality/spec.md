@@ -189,6 +189,22 @@ Diagram, card, topic and evidence counts SHALL NOT determine validity.
 - **AND** a successful command with warning output still fails without losing
   its partial result; no extra executor or failure-suppression mode is added.
 
+#### Scenario: A contextual error wraps a native refusal
+
+- **WHEN** the process, bundle, or Changelog owner adds context to a native
+  process, filesystem, plugin, or Git error
+- **THEN** the contextual error retains the original error as its cause
+- **AND** the existing refusal message and owned-resource cleanup remain
+  observable; context must not erase native diagnosis.
+
+#### Scenario: Native execution cannot start or reaches its deadline
+
+- **WHEN** a command is missing or reaches its execution deadline
+- **THEN** the existing process error retains the original native error object,
+  including its code and command path
+- **AND** successful output, nonzero exit status, warning refusal, and single
+  replay of partial diagnostics keep their existing behavior.
+
 #### Scenario: Official validation evidence is incomplete or wrongly bound
 
 - **WHEN** a native report names another root, omits items or issue arrays,
@@ -308,6 +324,24 @@ and host paths; each claimed OS SHALL execute the full graph. Current command
 examples SHALL be checked against the installed CLI. GitLab jobs SHALL name
 purpose and platform; hidden phase templates SHALL own common steps.
 
+#### Scenario: An upstream download returns a rejected response
+
+- **WHEN** a native-tool or either Forge's release download returns a rejected
+  HTTP response with an unread body
+- **THEN** its existing owner awaits native body cancellation before returning
+  failure and retains the HTTP status and any original cleanup error
+- **AND** it performs no automatic retry or fallback and publishes no unverified
+  output; a concurrent verified target remains unchanged.
+
+#### Scenario: A native audit times out before or after output
+
+- **WHEN** the audit's native process exceeds its unchanged deadline, whether
+  or not it emits output first
+- **THEN** the original attempt's command, streams, status, signal, and error
+  remain in its own evidence and execution fails before disposition
+- **AND** validation does not assume startup latency, synthesize progress,
+  replay the attempt, or extend the deadline.
+
 #### Scenario: Verification job names omit the platform
 
 - **WHEN** a GitLab source or offline verification job has a platform-less name,
@@ -318,6 +352,17 @@ purpose and platform; hidden phase templates SHALL own common steps.
 - **AND** jobs use `docs:verify:<os>` or `offline:verify:<os>` for `linux`,
   `macos`, and `windows`, with `:review` for source review; no runnable shared
   owner or platform-specific parent substitutes for the hidden phase template.
+
+#### Scenario: Windows verification events share a finite executor
+
+- **WHEN** Windows review, protected-source, and offline verification jobs
+  become eligible for the same project's finite executor
+- **THEN** they declare one stable native project-scoped resource group,
+  independent of the event and ref
+- **AND** the existing CI contract rejects missing or divergent reservations
+- **AND** separate runner identities and ref admission remain unchanged
+- **AND** all discovered tests and existing deadlines remain mandatory;
+  the reservation does not prove isolation from another project.
 
 #### Scenario: A command was retired by its product
 
@@ -793,6 +838,15 @@ NOT influence this check.
 - **THEN** the native rule reports the source location and reason
 - **AND** standalone prose and full verification fail on that finding.
 
+#### Scenario: Native prose emits a warning beside a valid report
+
+- **WHEN** the selected Vale process exits successfully with a valid report but
+  also emits standard error
+- **THEN** the existing prose owner refuses the result without hiding the
+  original report or warning
+- **AND** one warning-free native attempt may pass without another attempt or a
+  waiver.
+
 #### Scenario: A native style rule stops matching its examples
 
 - **WHEN** a configured style rule loads but no longer diagnoses its declared
@@ -982,6 +1036,14 @@ target existence and fragment checks.
 - **THEN** the public link check rejects it even when the local target exists
 - **AND** ordinary tracked and non-ignored candidate files, source directories,
   and delivered internal aliases remain valid.
+
+#### Scenario: Native link extraction emits a warning
+
+- **WHEN** the selected lychee extraction process exits successfully with
+  links but also emits standard error
+- **THEN** the existing link owner preserves those diagnostics and refuses
+  acceptance before checking targets
+- **AND** its owned temporary input list is removed without another attempt.
 
 ### Requirement: Configuration placement follows native ownership
 
