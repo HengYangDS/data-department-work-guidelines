@@ -313,7 +313,13 @@ test("piped native failures preserve diagnostics without duplicate output", () =
       if (!options.rejectStderr && failure.source === "warning output")
         continue;
       const script = [
+        'import childProcess from "node:child_process";',
+        'import { syncBuiltinESMExports } from "node:module";',
         `import { run } from ${JSON.stringify(module)};`,
+        "const spawn = childProcess.spawnSync;",
+        "let native;",
+        "childProcess.spawnSync = (...args) => { native = spawn(...args); return native; };",
+        "syncBuiltinESMExports();",
         `try { run(process.execPath, ["-e", ${JSON.stringify(child)}],`,
         `${JSON.stringify({ ...options, timeout })}); }`,
         "catch (error) {",
@@ -321,7 +327,9 @@ test("piped native failures preserve diagnostics without duplicate output", () =
         'console.error(`native execution code: ${error.cause?.code ?? "none"}`);',
         "console.error(`native execution path matches: ${error.cause?.path === process.execPath}`);",
         'console.error(`has cause property: ${Object.hasOwn(error, "cause")}`);',
+        'console.error(`native streams: ${Buffer.from(JSON.stringify({ stdout: native.stdout ?? "", stderr: native.stderr ?? "" })).toString("base64")}`);',
         "process.exitCode = 1; }",
+        "finally { childProcess.spawnSync = spawn; syncBuiltinESMExports(); }",
       ].join("\n");
       const result = spawnSync(
         process.execPath,
@@ -329,9 +337,19 @@ test("piped native failures preserve diagnostics without duplicate output", () =
         { encoding: "utf8", timeout: 10_000 },
       );
       assert.equal(result.status, 1, result.stderr);
-      assert.equal(result.stdout, "partial result\n");
+      const streams = JSON.parse(
+        Buffer.from(
+          /native streams: ([A-Za-z0-9+/=]+)/u.exec(result.stderr)[1],
+          "base64",
+        ).toString("utf8"),
+      );
+      assert.equal(result.stdout, streams.stdout);
+      if (!nativeCode) assert.equal(streams.stdout, "partial result\n");
       assert.match(result.stderr, failure);
-      assert.equal(result.stderr.split("native cause").length - 1, 1);
+      assert.equal(
+        result.stderr.split("native cause").length - 1,
+        streams.stderr.split("native cause").length - 1,
+      );
       assert.ok(
         result.stderr.includes(
           `native execution code: ${nativeCode ?? "none"}`,

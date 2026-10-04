@@ -252,6 +252,8 @@ None.
 Rejected native-tool and release downloads close their response bodies before
 refusal. Preserve HTTP status, native cleanup errors, credential boundaries,
 and verified concurrent output without adding retries or a download owner.
+Native timeout evidence matches the actual attempt, including termination
+before output, instead of assuming startup latency or changing deadlines.
 
 The existing document and native-supply tools, their tests, native
 configuration, npm dependencies, CI, contributor guidance, version identity, and

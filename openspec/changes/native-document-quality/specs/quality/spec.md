@@ -239,6 +239,15 @@ purpose and platform; hidden phase templates SHALL own common steps.
 - **AND** it performs no automatic retry or fallback and publishes no unverified
   output; a concurrent verified target remains unchanged.
 
+#### Scenario: A native audit times out before or after output
+
+- **WHEN** the audit's native process exceeds its unchanged deadline, whether
+  or not it emits output first
+- **THEN** the original attempt's command, streams, status, signal, and error
+  remain in its own evidence and execution fails before disposition
+- **AND** validation does not assume startup latency, synthesize progress,
+  replay the attempt, or extend the deadline.
+
 #### Scenario: Verification job names omit the platform
 
 - **WHEN** a GitLab source or offline verification job has a platform-less name,

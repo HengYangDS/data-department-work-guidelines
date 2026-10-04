@@ -1223,6 +1223,20 @@ refusal and retain cleanup error identity. A real local HTTP error stream must
 close before test cleanup. These observations do not prove the exact source of
 a hosted provider's delay or control upstream availability.
 
+## Native Timeout Evidence
+
+The original macOS failure at the audit timeout regression does not show lost
+production output. Its assertion assumes that a Node child emits fixed strings
+before a one-second deadline. Native startup under load need not satisfy that
+assumption. Keep that deadline, the real child execution, and every prior
+adverse case. Compare each stored report with the original attempt's command,
+standard output, standard error, status, signal, and error. Add termination
+before output as a valid native failure input; no fixed progress, extra timeout,
+fabricated report, or second execution supplies evidence.
+The existing process-output regression also compares replay with that same
+native attempt across its capture and warning modes. Non-timeout cases retain
+their exact expected text; a timeout cannot require output that never occurred.
+
 ## Migration Plan
 
 The original Windows source checks expose native path and fixture-boundary

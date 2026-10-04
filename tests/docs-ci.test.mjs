@@ -241,6 +241,7 @@ test("native audit refusal retains malformed, warning, failure and timeout outpu
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-audit-refusal-"));
   const actual = childProcess.spawnSync;
   let response;
+  const timedExecutions = [];
   let calls = 0;
   const mock = context.mock.method(
     childProcess,
@@ -248,15 +249,22 @@ test("native audit refusal retains malformed, warning, failure and timeout outpu
     (command, args, options) => {
       if (args[0] !== "scan") return actual(command, args, options);
       calls++;
-      if (response === "timeout")
-        return actual(
+      if (response === "timeout" || response === "timeout-before-output") {
+        const output =
+          'process.stdout.write("partial native report"); process.stderr.write("timeout diagnostic");';
+        const result = actual(
           process.execPath,
           [
             "-e",
-            'process.stdout.write("partial native report"); process.stderr.write("timeout diagnostic"); setTimeout(() => {}, 5000);',
+            response === "timeout"
+              ? `${output} setTimeout(() => {}, 5000);`
+              : `setTimeout(() => { ${output} }, 5000);`,
           ],
           { ...options, timeout: 1000 },
         );
+        timedExecutions.push({ result, command: [command, ...args] });
+        return result;
+      }
       if (response === "malformed") {
         writeFileSync(
           args[args.indexOf("--output-file") + 1],
@@ -286,6 +294,7 @@ test("native audit refusal retains malformed, warning, failure and timeout outpu
       { status: 0, stdout: "", stderr: "" },
       "malformed",
       "timeout",
+      "timeout-before-output",
     ]) {
       response = result;
       const before = calls;
@@ -311,7 +320,7 @@ test("native audit refusal retains malformed, warning, failure and timeout outpu
         stderr: readFileSync(path.join(evidence, "raw.stderr"), "utf8"),
       };
     });
-    assert.equal(records.length, 5);
+    assert.equal(records.length, 6);
     assert.ok(
       records.some(
         (entry) =>
@@ -319,14 +328,23 @@ test("native audit refusal retains malformed, warning, failure and timeout outpu
           entry.stdout === "partial report",
       ),
     );
-    assert.ok(
-      records.some(
+    assert.equal(timedExecutions.length, 2);
+    for (const { result, command } of timedExecutions) {
+      assert.equal(result.error?.code, "ETIMEDOUT");
+      const record = records.find(
         (entry) =>
-          entry.execution.execution[0].error &&
-          entry.stdout === "partial native report" &&
-          entry.stderr === "timeout diagnostic",
-      ),
-    );
+          JSON.stringify(entry.execution.execution[0].command) ===
+          JSON.stringify(command),
+      );
+      assert.ok(record, "each native timeout must retain its own evidence");
+      assert.equal(record.stdout, result.stdout ?? "");
+      assert.equal(record.stderr, result.stderr ?? "");
+      assert.equal(record.execution.execution[0].status, result.status);
+      assert.equal(record.execution.execution[0].signal, result.signal);
+      assert.equal(record.execution.execution[0].error, result.error.message);
+    }
+    assert.equal(timedExecutions[1].result.stdout, "");
+    assert.equal(timedExecutions[1].result.stderr, "");
   } finally {
     mock.mock.restore();
     syncBuiltinESMExports();

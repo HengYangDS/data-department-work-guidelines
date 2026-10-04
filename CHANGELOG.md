@@ -17,6 +17,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Verify native timeout evidence against the actual process streams, including
+  failure before output. Do not assume a child starts before its deadline or
+  fabricate progress under load.
 - Cancel rejected native-tool and release-download response bodies before
   returning failure. Keep the HTTP status and any cleanup error without retrying
   or publishing unverified output.

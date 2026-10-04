@@ -342,6 +342,13 @@
       output. Prove asynchronous disposal and a real HTTP error stream without
       retries, fallbacks, another module, or claims about upstream availability;
       qualify the complete source and both Forge matrices.
+- [ ] 2.36 Compare native audit timeout evidence with each original attempt's
+      command, streams, exit, signal, and error. Preserve all adverse cases and
+      the one-second fixture deadline; add real termination before output
+      without assuming startup speed or fabricating progress. Qualify source,
+      exact-HEAD proof, cold installation, and both Forge matrices. Apply the
+      same native-stream comparison to the existing process-replay regression;
+      retain every capture mode, diagnostic count, and non-timeout exact text.
 
 ## 3. Qualification and publication
 
