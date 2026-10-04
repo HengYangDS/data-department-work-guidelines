@@ -86,6 +86,15 @@ Diagram, card, topic and evidence counts SHALL NOT determine validity.
   whether the process succeeds or fails
 - **AND** passing summary totals do not establish a clean source check.
 
+#### Scenario: A strict native command fails with partial diagnostics
+
+- **WHEN** a native archive or source command emits output before failure or
+  timeout while its caller rejects standard error without requesting capture
+- **THEN** the existing process owner preserves both partial output streams
+  once and reports the failure or timeout
+- **AND** a successful command with warning output still fails without losing
+  its partial result; no extra executor or failure-suppression mode is added.
+
 #### Scenario: Official validation evidence is incomplete or wrongly bound
 
 - **WHEN** a native report names another root, omits items or issue arrays,
@@ -258,6 +267,15 @@ separate; the bundle SHALL NOT impersonate its authority.
   outbound network access is unavailable
 - **AND THEN** a successful `npm ci --offline --dry-run` alone is not accepted
   as installation evidence.
+
+#### Scenario: An archive carries another machine's file ownership
+
+- **WHEN** a verified bundle or native-tool archive names the packaging
+  machine's owners and the destination cannot change file ownership
+- **THEN** native extraction retains the current executor's ownership without
+  adding privileges, altering the source-pinned archive, or skipping validation
+- **AND** digest, confinement, license, and required executable-mode checks
+  remain intact; full verification still runs in the constrained consumer.
 
 #### Scenario: A concurrent acquisition fails after another call succeeds
 

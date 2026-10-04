@@ -598,7 +598,7 @@ export function installBundle({
   const temporary = mkdtempSync(path.join(os.tmpdir(), "ddwg-bundle-install-"));
   let startedNpmInstall = false;
   try {
-    run("tar", ["-xf", archive, "-C", temporary], {
+    run("tar", ["-xf", archive, "--no-same-owner", "-C", temporary], {
       rejectStderr: true,
       timeout: 90_000,
     });
@@ -948,7 +948,7 @@ export function verifyBundle({ bundlePath, record, repository = root }) {
   inspectBundle(archive, record, sourceIdentity(repository));
   const temporary = mkdtempSync(path.join(os.tmpdir(), "ddwg-bundle-check-"));
   try {
-    run("tar", ["-xf", archive, "-C", temporary], {
+    run("tar", ["-xf", archive, "--no-same-owner", "-C", temporary], {
       rejectStderr: true,
       timeout: 90_000,
     });

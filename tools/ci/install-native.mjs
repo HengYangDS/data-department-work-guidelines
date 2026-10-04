@@ -195,7 +195,7 @@ export async function install({
     );
     const extracted = path.join(temporary, "extracted");
     mkdirSync(extracted);
-    run("tar", ["-xf", archive, "-C", extracted], {
+    run("tar", ["-xf", archive, "--no-same-owner", "-C", extracted], {
       rejectStderr: true,
       timeout: 30_000,
     });

@@ -1068,6 +1068,31 @@ Preserve prior requirements and scenario bodies, the authorized cadence redesign
 and all failed review evidence. This editorial comparison is not automated
 semantic proof or a claim of shared-product, hosted, or team-use acceptance.
 
+A Linux cold-supply attempt at `1960f088` reports only `tar exited 2`, not
+its native explanation. The existing process owner pipes output whenever
+`rejectStderr` is selected, but its failure and timeout branches replay output
+only for `capture`. This loses partial results and errors for strict commands
+that do not return captured text. A focused real-Node regression is RED at
+`51d0d48`: the emitted partial result is absent. Repair that existing owner to
+replay piped failure output once, retain the native failure cause, and preserve
+warning rejection with partial results. Do not add a runner wrapper, relax
+archive checks, or infer the archive's root cause before seeing native output.
+This repair improves diagnosis; successful archive inspection and complete
+platform verification remain separate obligations.
+
+The exact Linux reproducer separates listing from extraction: GNU tar lists
+the frozen bundle successfully, then fails to change file ownership to the
+packaging machine's UID and GID. The rootless container has no `CAP_CHOWN`;
+its available temporary storage exceeds the archive's expanded size. That is
+an archive-consumer ownership error, not a network or storage failure. Add the
+native `--no-same-owner` extraction option at both bundle consumers and the
+native-tool installer. Keep source-pinned hashes, archive confinement, original
+notices, destination permissions, and strict standard-error checks. Do not give
+the container additional capability or rewrite the immutable bundle. Retained
+fixture tests guard the actual extraction invocations, while the same frozen
+bundle must pass the original constrained Linux consumer before portability
+is claimed. Native macOS and Windows consumers still need their own acceptance.
+
 ## Migration Plan
 
 1. Add distinguishing native rule, supply, and source-conservation tests.

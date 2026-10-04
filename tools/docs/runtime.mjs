@@ -70,22 +70,18 @@ export function run(command, args = [], options = {}) {
     maxBuffer: 16 * 1024 * 1024,
     stdio: piped ? ["ignore", "pipe", "pipe"] : "inherit",
   });
-  if (result.error) {
-    if (capture) {
+  if (result.error || result.status !== 0) {
+    if (piped) {
       process.stdout.write(result.stdout ?? "");
       process.stderr.write(result.stderr ?? "");
     }
-    throw new Error(`${command}: ${result.error.message}`);
-  }
-  if (result.status !== 0) {
-    if (capture) {
-      process.stdout.write(result.stdout ?? "");
-      process.stderr.write(result.stderr ?? "");
-    }
-    throw new Error(`${command} exited ${result.status ?? "without status"}`);
+    const cause = result.error
+      ? `: ${result.error.message}`
+      : ` exited ${result.status ?? "without status"}`;
+    throw new Error(`${command}${cause}`);
   }
   if (rejectStderr && result.stderr) {
-    if (capture) process.stdout.write(result.stdout ?? "");
+    process.stdout.write(result.stdout ?? "");
     throw new Error(`${command} emitted warning output:\n${result.stderr}`);
   }
   return capture ? result.stdout : "";

@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
+import childProcess from "node:child_process";
 import {
   appendFileSync,
   copyFileSync,
@@ -16,6 +17,7 @@ import {
   unlinkSync,
   writeFileSync,
 } from "node:fs";
+import { syncBuiltinESMExports } from "node:module";
 import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
@@ -182,6 +184,55 @@ test("archive command warnings cannot establish clean verification", () => {
       }),
     /warning output/u,
   );
+});
+
+test("piped native failures preserve diagnostics without duplicate output", () => {
+  const module = new URL("../tools/docs/runtime.mjs", import.meta.url).href;
+  const cases = [
+    {
+      child:
+        'process.stdout.write("partial result\\n"); process.stderr.write("native cause\\n"); process.exitCode = 2;',
+      timeout: 5_000,
+      failure: /exited 2/u,
+    },
+    {
+      child:
+        'process.stdout.write("partial result\\n"); process.stderr.write("native cause\\n"); setInterval(() => {}, 1_000);',
+      timeout: 2_000,
+      failure: /ETIMEDOUT/u,
+    },
+    {
+      child:
+        'process.stdout.write("partial result\\n"); process.stderr.write("native cause\\n");',
+      timeout: 5_000,
+      failure: /warning output/u,
+    },
+  ];
+  for (const options of [
+    { capture: true },
+    { capture: true, rejectStderr: true },
+    { rejectStderr: true },
+  ]) {
+    for (const { child, timeout, failure } of cases) {
+      if (!options.rejectStderr && failure.source === "warning output")
+        continue;
+      const script = [
+        `import { run } from ${JSON.stringify(module)};`,
+        `try { run(process.execPath, ["-e", ${JSON.stringify(child)}],`,
+        `${JSON.stringify({ ...options, timeout })}); }`,
+        "catch (error) { console.error(error.message); process.exitCode = 1; }",
+      ].join("\n");
+      const result = spawnSync(
+        process.execPath,
+        ["--input-type=module", "--eval", script],
+        { encoding: "utf8", timeout: 10_000 },
+      );
+      assert.equal(result.status, 1, result.stderr);
+      assert.equal(result.stdout, "partial result\n");
+      assert.match(result.stderr, failure);
+      assert.equal(result.stderr.split("native cause").length - 1, 1);
+    }
+  }
 });
 
 async function bundleFixture(
@@ -604,6 +655,53 @@ test("extracted bundle contents agree with source and pinned supply", () => {
       () => validateExtractedBundle(extracted, inputs.repository),
       /cache.*count/u,
     );
+  });
+});
+
+test("bundle extraction retains the current executor's ownership", (context) => {
+  buildFixture((inputs) => {
+    const built = assembleBundle(inputs);
+    const nativeSpawn = childProcess.spawnSync;
+    const extraction = context.mock.method(
+      childProcess,
+      "spawnSync",
+      (command, args, options) => {
+        if (command === "tar" && args.includes("-xf")) {
+          assert.ok(args.includes("--no-same-owner"));
+        }
+        return nativeSpawn(command, args, options);
+      },
+    );
+    syncBuiltinESMExports();
+    try {
+      offline.verifyBundle({
+        bundlePath: inputs.outputPath,
+        record: built,
+        repository: inputs.repository,
+      });
+      installBundle({
+        bundlePath: inputs.outputPath,
+        record: built,
+        repository: inputs.repository,
+        commandRunner: (_command, args) => {
+          if (args[1] === "--version") return "12.2.0\n";
+          if (args[1] === "ci") {
+            mkdirSync(path.join(inputs.repository, "node_modules"));
+          }
+          return "";
+        },
+      });
+      assert.equal(
+        extraction.mock.calls.filter(
+          ({ arguments: [command, args] }) =>
+            command === "tar" && args.includes("-xf"),
+        ).length,
+        2,
+      );
+    } finally {
+      extraction.mock.restore();
+      syncBuiltinESMExports();
+    }
   });
 });
 

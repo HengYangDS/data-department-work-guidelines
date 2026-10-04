@@ -489,6 +489,7 @@ test("a supplied install never changes the mode of an existing cache entry", asy
   const actualSpawn = childProcess.spawnSync;
   const modes = [];
   let concurrentTarget = false;
+  let extractionCount = 0;
   const mocks = [
     context.mock.method(fs, "readFileSync", (file, options) =>
       file === asset ? bytes : actualRead(file, options),
@@ -526,6 +527,10 @@ test("a supplied install never changes the mode of an existing cache entry", asy
     }),
     context.mock.method(childProcess, "spawnSync", (command, args, options) => {
       if (command === "tar") {
+        if (args.includes("-xf")) {
+          extractionCount += 1;
+          assert.ok(args.includes("--no-same-owner"));
+        }
         const stdout =
           args[0] === "-tf"
             ? `${selected.binaryName}\n`
@@ -547,6 +552,7 @@ test("a supplied install never changes the mode of an existing cache entry", asy
   try {
     assert.equal(await install({ tool: "vale", assetFile: asset }), target);
     assert.equal(concurrentTarget, true);
+    assert.equal(extractionCount, 1);
     assert.equal(modes.includes(target), false);
   } finally {
     descriptor.sha256 = originalDigest;

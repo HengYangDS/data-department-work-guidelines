@@ -17,6 +17,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Extract verified data and native-tool archives under the current executor's
+  ownership, without requiring container permission to adopt a packaging
+  machine's user identity. Preserve native failure and timeout diagnostics.
 - Restore overwrite risk, mechanism analysis for delays and recurring disputes,
   immediate correction of disproved judgments, and meeting-decision ownership,
   deadlines, and completion criteria.

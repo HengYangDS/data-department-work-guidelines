@@ -119,6 +119,8 @@ npm run verify
 
 The installer verifies the bundle before extraction, uses `npm ci --offline` and
 the same pinned Vale and lychee asset paths, and never downloads a missing tool.
+Archive extraction keeps the current executor's ownership; the packaging
+machine's account identity grants no permission on the destination.
 Obtain the bundle from either Forge while online or transfer it separately;
 acquisition and offline execution are different claims. ETHOS is a separate
 installed product prerequisite for Change admission and proof. The bundle's

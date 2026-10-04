@@ -231,6 +231,16 @@
       lifecycle implementation. The implemented requirement is officially
       synced; `c117ab1` qualifies its earlier exact-source proof and cold tests.
       Local and cold verification and installed proof pass at `4ebd0f0`.
+      The native process owner also restores partial failure and timeout output
+      for strict non-capture commands. A focused real-process case fails before
+      repair and passes afterward; warnings remain rejected. Claude's bounded
+      review leads to a naturally flushed child and cold-start margin without
+      changing production deadlines. Qualify the signed successor, cold install,
+      and original Linux failure separately; diagnosis alone is not portability.
+      Confirmed Linux extraction tried to adopt the packaging account without
+      permission. Both bundle consumers and the native installer must keep
+      the executor's ownership; validate the same immutable bundle under the
+      original capability limit without extra privilege or skipped checks.
       Hosted source and offline qualification remain open.
 - [x] 2.32 Retire all reviewed completed-Change copies from the current tree.
       Audit unique facts, obligations, and incoming consumers; preserve exact
