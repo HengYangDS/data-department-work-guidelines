@@ -174,6 +174,21 @@ native-tool manifest, and `.config/release/` owns frozen artifact identity.
 Executable rules stay at their existing implementation owner. The configuration
 README routes readers; it is not another registry or policy.
 
+The shared layout distinguishes `resources/` for program-consumed non-code
+inputs from `assets/` for original media used by readers or the product. Native
+tool settings stay in `.config/`; reproducible output and bounded local work
+stay in ignored `build/` subdirectories. ETHOS's `system/` is its product-specific
+contract carrier, not a required adopter directory. Create a resource or asset
+directory only for actual content with a named consumer, and retain native
+package conventions where they govern loading or distribution.
+
+ETHOS's resource and asset contract is pending integration. Qualify its accepted
+source and installed consumer before moving this repository's supply or bundle
+inputs. Update imports, package inclusion, tests, contributor routes, CI, and
+offline loading together; verify exact bytes and retire the old paths in the
+same migration. Do not copy schemas, add empty scaffolding, keep aliases, or
+move obsolete records into a new directory.
+
 Prettier, Markdownlint, and lychee consume native TOML. Vale requires INI, YAML
 styles, and plain-text vocabulary. The cold installer reads supply and release
 JSON before npm dependencies exist. Keep those native formats rather than

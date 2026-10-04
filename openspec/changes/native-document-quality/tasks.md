@@ -237,7 +237,10 @@
       development-only braces boundary; refuse changed applicability and all
       other unapproved applicable findings. Replace the temporary repository
       input guard with accepted product risk admission without a
-      production-security claim.
+      production-security claim. Integrate the accepted resource and asset
+      boundary with actual loading, package inclusion, and offline consumers;
+      retain native configuration ownership and retire superseded paths in the
+      same migration. Create no empty directories or copied product contracts.
 - [x] 3.4 Publish the major signed SemVer edition independently to GitLab and
       GitHub; verify both exact refs, Releases, downloaded asset hashes, and
       declared source and offline platform jobs.
@@ -253,7 +256,10 @@
       contract](design.md#preserve-the-original-work-contract-at-seven-topic-owners).
       Reconcile references and officially sync every reviewed
       requirement/scenario only after its acceptance; omitted or unqualified
-      requirements block closure. Retain raw reviewer snapshots and independent
+      requirements block closure. Audit root entries, documentation, configuration,
+      tools, resources, assets, native bindings, and local output by actual owner
+      and consumer; resolve misplaced or duplicated content without scaffolding
+      or a catch-all archive. Retain raw reviewer snapshots and independent
       raw-read guards at their producer; attribute edited representations as
       editorial evidence, not raw results or independently verified execution.
       Claim neither automated whole-guidance equivalence nor team adoption.
