@@ -39,6 +39,7 @@ import {
   nativeToolBinary,
   nodeTool,
   root,
+  run,
   sourceMarkdown,
 } from "../tools/docs/runtime.mjs";
 
@@ -111,6 +112,20 @@ test("document metadata reads the product-supported title-first carrier", () => 
     state: "canonical",
     relations: { canonical_for: "reader guidance" },
   });
+});
+
+test("native process input reaches its selected child without a shell", () => {
+  const input = "First reference\0Second reference\0";
+  const output = run(
+    process.execPath,
+    [
+      "--input-type=module",
+      "--eval",
+      "const chunks = []; for await (const chunk of process.stdin) chunks.push(chunk); process.stdout.write(Buffer.concat(chunks));",
+    ],
+    { capture: true, input, timeout: 10_000 },
+  );
+  assert.equal(output, input);
 });
 
 test("offline verification disables official telemetry only in its OpenSpec child", () => {

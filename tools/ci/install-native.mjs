@@ -230,6 +230,7 @@ export async function install({
       candidate = candidates[0];
     }
     if (process.platform !== "win32") chmodSync(candidate, 0o755);
+    const verifiedBytes = readFileSync(candidate);
     const version = run(candidate, ["--version"], {
       capture: true,
       rejectStderr: true,
@@ -237,13 +238,27 @@ export async function install({
     }).trim();
     if (version !== selected.versionOutput)
       throw new Error(`${tool} binary version mismatch: ${version}`);
+    let copied = true;
     try {
       copyFileSync(candidate, target, constants.COPYFILE_EXCL);
     } catch (error) {
       if (error.code !== "EEXIST") throw error;
+      copied = false;
     }
-    if (!verifiedCached(target, selected))
+    if (
+      !managedFileExists(target) ||
+      !readFileSync(target).equals(verifiedBytes)
+    )
+      throw new Error(`installed ${tool} copied bytes failed verification`);
+    if (copied) {
+      if (
+        process.platform !== "win32" &&
+        (lstatSync(target).mode & 0o777) !== 0o755
+      )
+        throw new Error(`installed ${tool} copied mode failed verification`);
+    } else if (!verifiedCached(target, selected)) {
       throw new Error(`installed ${tool} failed verification`);
+    }
     return target;
   } finally {
     await rm(temporary, {

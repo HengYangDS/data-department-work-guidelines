@@ -58,6 +58,7 @@ export function run(command, args = [], options = {}) {
     capture = false,
     cwd = root,
     env = process.env,
+    input,
     rejectStderr = false,
     timeout = 120_000,
   } = options;
@@ -65,10 +66,16 @@ export function run(command, args = [], options = {}) {
   const result = spawnSync(command, args, {
     cwd,
     env,
+    input,
     encoding: "utf8",
     timeout,
     maxBuffer: 16 * 1024 * 1024,
-    stdio: piped ? ["ignore", "pipe", "pipe"] : "inherit",
+    stdio:
+      input === undefined
+        ? piped
+          ? ["ignore", "pipe", "pipe"]
+          : "inherit"
+        : ["pipe", piped ? "pipe" : "inherit", piped ? "pipe" : "inherit"],
   });
   if (result.error || result.status !== 0) {
     if (piped) {

@@ -111,6 +111,17 @@ Diagram, card, topic and evidence counts SHALL NOT determine validity.
 - **AND** successful output, nonzero exit status, warning refusal, and single
   replay of partial diagnostics keep their existing behavior.
 
+#### Scenario: Native history resolves one complete selection
+
+- **WHEN** Changelog validation selects its current comparison and tag refs
+- **THEN** one native Git batch resolves every selected reference to a commit
+  before native ancestry checks run for all distinct resolved pairs
+- **AND** missing objects, non-commit observations, incomplete line-delimited
+  output, or native warnings fail without accepting partial history
+- **AND** exact tag/HEAD identity, full test selection, and process deadlines
+  remain unchanged; native batch defaults add no Git version requirement,
+  local ancestry implementation, or cache.
+
 #### Scenario: Official validation evidence is incomplete or wrongly bound
 
 - **WHEN** a native report names another root, omits items or issue arrays,
@@ -793,6 +804,42 @@ target existence and fragment checks.
   acceptance before checking targets
 - **AND** its owned temporary input list is removed without another attempt.
 
+### Requirement: One source-bound native quality supply
+
+One repository-native tool manifest SHALL bind the lychee and Vale versions,
+platform assets, archive digests, and license notices. The existing native
+installer and source-bound offline bundle SHALL consume that manifest without
+duplicated tool supply. Local verification SHALL never download a missing tool.
+GitLab and GitHub SHALL supply and qualify the frozen release independently.
+The old manifest and installer SHALL retire when their consumers are replaced.
+
+#### Scenario: A native tool is supplied offline
+
+- **WHEN** a supported host receives the exact source-bound bundle or a pinned
+  local archive
+- **THEN** the installer verifies its digest, safe archive members, executable
+  version, and source binding before admitting the tool
+- **AND** it preserves the destination's host installation and credentials.
+
+#### Scenario: An accepted native candidate is copied once
+
+- **WHEN** pinned supply and the candidate's native version pass before
+  exclusive installation
+- **THEN** the existing installer verifies complete copied-byte equality and
+  its owned POSIX mode without repeating the same version startup
+- **AND** a pre-existing or concurrent target retains independent verification
+  and its existing mode; changed copied bytes fail
+- **AND** actual installed consumers still run with unchanged deadlines, while
+  the installer's own temporary stage is removed before completion.
+
+#### Scenario: Native supply is incomplete or changed
+
+- **WHEN** the requested ABI, archive, digest, or source-bound manifest is missing
+  or changed
+- **THEN** installation and verification fail without fetching a substitute,
+  borrowing another Forge's identity, or reusing an earlier bundle
+- **AND** only the exact operation's disposable temporary stage is removed.
+
 ## ADDED Requirements
 
 ### Requirement: Source-event tag routes match the release family
@@ -885,31 +932,6 @@ dependency or current authority.
   any retired package or fallback
 - **AND** DR constraints, explicit matching license notices, upstream bytes,
   source locations, and meaningful uncertainty remain intact.
-
-### Requirement: One source-bound native quality supply
-
-One repository-native tool manifest SHALL bind the lychee and Vale versions,
-platform assets, archive digests, and license notices. The existing native
-installer and source-bound offline bundle SHALL consume that manifest without
-duplicated tool supply. Local verification SHALL never download a missing tool.
-GitLab and GitHub SHALL supply and qualify the frozen release independently.
-The old manifest and installer SHALL retire when their consumers are replaced.
-
-#### Scenario: A native tool is supplied offline
-
-- **WHEN** a supported host receives the exact source-bound bundle or a pinned
-  local archive
-- **THEN** the installer verifies its digest, safe archive members, executable
-  version, and source binding before admitting the tool
-- **AND** it preserves the destination's host installation and credentials.
-
-#### Scenario: Native supply is incomplete or changed
-
-- **WHEN** the requested ABI, archive, digest, or source-bound manifest is missing
-  or changed
-- **THEN** installation and verification fail without fetching a substitute,
-  borrowing another Forge's identity, or reusing an earlier bundle
-- **AND** only the exact operation's disposable temporary stage is removed.
 
 ### Requirement: Configuration placement follows native ownership
 

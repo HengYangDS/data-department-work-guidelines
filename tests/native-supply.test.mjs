@@ -423,11 +423,14 @@ test("raw native installation verifies bytes before execution without archive co
   const original = { ...pin };
   const actualSpawn = childProcess.spawnSync;
   const actualStat = fs.lstatSync;
+  const actualRead = fs.readFileSync;
   const actualChmod = fs.chmodSync;
   const actualTemporary = fs.mkdtempSync;
   const modes = [];
   const stages = [];
+  const executions = [];
   let published = false;
+  let corruptCopy = false;
   const mocks = [
     context.mock.method(fs, "mkdtempSync", (...args) => {
       const stage = actualTemporary(...args);
@@ -437,9 +440,16 @@ test("raw native installation verifies bytes before execution without archive co
     context.mock.method(fs, "lstatSync", (file, options) =>
       file === target
         ? published
-          ? { isFile: () => true, isSymbolicLink: () => false }
+          ? { isFile: () => true, isSymbolicLink: () => false, mode: 0o755 }
           : undefined
         : actualStat(file, options),
+    ),
+    context.mock.method(fs, "readFileSync", (file, options) =>
+      file === target && published
+        ? corruptCopy
+          ? Buffer.from("changed copied bytes")
+          : bytes
+        : actualRead(file, options),
     ),
     context.mock.method(fs, "chmodSync", (file, mode) => {
       modes.push(file);
@@ -453,6 +463,8 @@ test("raw native installation verifies bytes before execution without archive co
     context.mock.method(childProcess, "spawnSync", (command, args, options) => {
       assert.notEqual(command, "tar", "a raw binary is not an archive");
       if (command === target || path.basename(command) === selected.name) {
+        executions.push(command);
+        assert.equal(options.timeout, 10_000);
         if (command !== target)
           assert.deepEqual(fs.readFileSync(command), bytes);
         return { status: 0, stdout: selected.versionOutput, stderr: "" };
@@ -476,8 +488,21 @@ test("raw native installation verifies bytes before execution without archive co
       target,
     );
     assert.equal(published, true);
+    assert.equal(
+      executions.length,
+      1,
+      "one verified copy must not restart the binary",
+    );
+    assert.equal(executions.includes(target), false);
     assert.equal(modes.includes(target), false);
-    assert.equal(stages.length, 2);
+    published = false;
+    corruptCopy = true;
+    await assert.rejects(
+      install({ tool: "osv-scanner", assetFile: asset }),
+      /copied.*bytes|verification/u,
+    );
+    assert.equal(executions.length, 2);
+    assert.equal(stages.length, 3);
     assert.equal(
       stages.every((stage) => !fs.existsSync(stage)),
       true,
@@ -676,11 +701,16 @@ test("a supplied install never changes the mode of an existing cache entry", asy
   const actualStat = fs.lstatSync;
   const actualSpawn = childProcess.spawnSync;
   const modes = [];
+  const executions = [];
   let concurrentTarget = false;
   let extractionCount = 0;
   const mocks = [
     context.mock.method(fs, "readFileSync", (file, options) =>
-      file === asset ? bytes : actualRead(file, options),
+      file === asset ||
+      (file === target && concurrentTarget) ||
+      path.basename(path.dirname(file)) === "extracted"
+        ? bytes
+        : actualRead(file, options),
     ),
     context.mock.method(fs, "readdirSync", (directory, options) =>
       path.basename(directory) === "extracted"
@@ -730,8 +760,10 @@ test("a supplied install never changes the mode of an existing cache entry", asy
       if (
         command === target ||
         path.basename(path.dirname(command)) === "extracted"
-      )
+      ) {
+        executions.push(command);
         return { status: 0, stdout: selected.versionOutput, stderr: "" };
+      }
       return actualSpawn(command, args, options);
     }),
   ];
@@ -742,6 +774,8 @@ test("a supplied install never changes the mode of an existing cache entry", asy
     assert.equal(concurrentTarget, true);
     assert.equal(extractionCount, 1);
     assert.equal(modes.includes(target), false);
+    assert.equal(executions.length, 2);
+    assert.equal(executions[1], target);
   } finally {
     descriptor.sha256 = originalDigest;
     for (const mock of mocks) mock.mock.restore();

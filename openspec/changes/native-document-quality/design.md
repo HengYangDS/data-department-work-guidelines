@@ -269,6 +269,16 @@ source defects before unrelated prerequisites, while valid source still runs the
 full graph. Narrow telemetry tests call the real invocation owner rather than
 repeat unrelated repository setup. No case or assertion is dropped.
 
+Resolve the complete Changelog reference selection in one native Git
+`cat-file --batch-check` call with native line-delimited input and output. The
+existing reference grammar excludes control characters, so the default batch
+protocol needs no newer Git option or raised runtime minimum. Require one
+valid commit observation per selected reference, then keep native
+`merge-base --is-ancestor` for every distinct resolved pair and exact tag/HEAD
+identity. Missing objects, incomplete output, non-commit types, and native
+diagnostics fail. The existing process owner supplies stdin without a shell;
+there is no custom ancestry graph, history cache, or relaxed deadline.
+
 ### Supply exact tools without a second installation plane
 
 The existing native manifest owns versions, host/ABI assets, sizes, digests,
@@ -289,6 +299,14 @@ overwrite or remove it. Reject linked managed parents, binaries, or archives
 before remote access or staging. Respect repository confinement and native
 Windows casing; preserve an existing binary's permissions. These checks do not
 claim protection against hostile same-user replacement after inspection.
+
+An exclusively copied candidate has already passed its pinned supply and native
+version checks. Preserve its pre-execution bytes and verify complete equality
+and the owned POSIX mode after copying, rather than restart the same binary to
+obtain the same version. Independently verify a pre-existing or concurrently
+installed target without changing its mode. The actual audit, prose, and link
+consumers still execute the installed tool. This reduces redundant startup; it
+does not prove historical host-pressure causality or admit skipped checks.
 
 Await native asynchronous cleanup of the installer's own extraction stage,
 including bounded native removal retries. Failure still propagates and success

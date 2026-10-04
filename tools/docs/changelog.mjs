@@ -374,7 +374,7 @@ function localTags(repository) {
       "--format=%(refname:strip=2)%00%(objecttype)",
       "refs/tags",
     ],
-    { cwd: repository, capture: true, timeout: 20_000 },
+    { cwd: repository, capture: true, rejectStderr: true, timeout: 20_000 },
   )
     .trim()
     .split(/\r?\n/u)
@@ -464,20 +464,8 @@ export function validateChangelog({
   const latest = [...tags.keys()].sort(semver.rcompare)[0];
   if (latest && semver.lt(version, latest))
     throw new Error(`VERSION ${version} precedes released ${latest}`);
-  const resolvedCommits = new Map();
-  const resolveCommit = (reference) => {
-    if (!resolvedCommits.has(reference)) {
-      resolvedCommits.set(
-        reference,
-        run("git", ["rev-parse", "--verify", reference], {
-          cwd: repository,
-          capture: true,
-          timeout: 20_000,
-        }).trim(),
-      );
-    }
-    return resolvedCommits.get(reference);
-  };
+  const references = new Set();
+  const comparisons = [];
   const pending =
     releases[0] && !tags.has(releases[0].version) ? releases[0].version : "";
   if (pending && sections[0].items)
@@ -513,24 +501,14 @@ export function validateChangelog({
       throw new Error(`release comparison must end at v${label}`);
     }
     if (!(label === "Unreleased" && pending && base === `v${pending}`)) {
-      const baseCommit = resolveCommit(`${base}^{commit}`);
-      const targetCommit = resolveCommit(
+      const baseReference = `${base}^{commit}`;
+      const targetReference =
         label === "Unreleased" || !tags.has(label)
           ? "HEAD"
-          : `v${label}^{commit}`,
-      );
-      try {
-        run("git", ["merge-base", "--is-ancestor", baseCommit, targetCommit], {
-          cwd: repository,
-          capture: true,
-          timeout: 20_000,
-        });
-      } catch (error) {
-        if (error.message !== "git exited 1") throw error;
-        throw new Error(`comparison base is not an ancestor: ${label}`, {
-          cause: error,
-        });
-      }
+          : `v${label}^{commit}`;
+      references.add(baseReference);
+      references.add(targetReference);
+      comparisons.push({ label, baseReference, targetReference });
     }
   }
   if (selectedTag) {
@@ -545,15 +523,64 @@ export function validateChangelog({
     }
     if (sections[0].items)
       throw new Error("tagged release must not contain Unreleased changes");
-    const taggedHead = run("git", ["rev-parse", `${selectedTag}^{}`], {
-      cwd: repository,
-      capture: true,
-    }).trim();
-    const head = run("git", ["rev-parse", "HEAD"], {
-      cwd: repository,
-      capture: true,
-    }).trim();
-    if (taggedHead !== head)
+    references.add(`${selectedTag}^{commit}`);
+    references.add("HEAD");
+  }
+  const resolvedCommits = new Map();
+  if (references.size) {
+    const selected = [...references];
+    const records = run(
+      "git",
+      ["cat-file", "--batch-check=%(objectname) %(objecttype)"],
+      {
+        cwd: repository,
+        capture: true,
+        input: `${selected.join("\n")}\n`,
+        rejectStderr: true,
+        timeout: 20_000,
+      },
+    ).split(/\r?\n/u);
+    if (records.pop() !== "" || records.length !== selected.length)
+      throw new Error("native history reference report is incomplete");
+    for (const [index, record] of records.entries()) {
+      const [oid, type, ...extra] = record.split(" ");
+      if (
+        !/^(?:[0-9a-f]{40}|[0-9a-f]{64})$/u.test(oid) ||
+        type !== "commit" ||
+        extra.length
+      )
+        throw new Error(
+          `native history reference is not a commit: ${selected[index]}: ${record}`,
+        );
+      resolvedCommits.set(selected[index], oid);
+    }
+  }
+  const compared = new Set();
+  for (const { label, baseReference, targetReference } of comparisons) {
+    const baseCommit = resolvedCommits.get(baseReference);
+    const targetCommit = resolvedCommits.get(targetReference);
+    const identity = `${baseCommit}:${targetCommit}`;
+    if (compared.has(identity)) continue;
+    try {
+      run("git", ["merge-base", "--is-ancestor", baseCommit, targetCommit], {
+        cwd: repository,
+        capture: true,
+        rejectStderr: true,
+        timeout: 20_000,
+      });
+    } catch (error) {
+      if (error.message !== "git exited 1") throw error;
+      throw new Error(`comparison base is not an ancestor: ${label}`, {
+        cause: error,
+      });
+    }
+    compared.add(identity);
+  }
+  if (selectedTag) {
+    if (
+      resolvedCommits.get(`${selectedTag}^{commit}`) !==
+      resolvedCommits.get("HEAD")
+    )
       throw new Error(
         `selected release tag does not identify HEAD: ${selectedTag}`,
       );

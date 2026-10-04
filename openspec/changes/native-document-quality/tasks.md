@@ -390,7 +390,7 @@ the native Vale version command reached its unchanged ten-second deadline,
 after supply, audit, and formatting passed; this is not a failed prose rule.
 Preserve the exact trace and the separately observed Runner 108 job identity.
 
-## Current source acceptance
+## Source acceptance and current repair
 
 Signed source `934293b8a6ab0600af75ea86fbdbdf36c46d1bd9`, tree
 `e0c7494946ad9154291da1ec5f24014f64027354`, qualifies 2.35 and 2.36. Local and
@@ -419,6 +419,49 @@ repairs remain Unreleased. Shared ETHOS quality/formatting, risk, history, Proxy
 acceptance, final coherent release, official closure, and retirement still need
 acceptance. No whole-guidance equivalence or team-adoption certification is
 claimed.
+
+Signed successor `8d537881f3e077a11b5686d59f802ac3ecaa09f8`, tree
+`5a8d11f171bf019fdab425ae9dc92475f97cf140`, passed local and fresh-HOME,
+denied-remote cold verification: 235 tests, zero skips, and 70 conserved source
+hashes and modes. Installed full proof passed both default gates with
+attestation
+`6141b5f533641531f966dd6d82b6e1861f0bfd97be9114a85ad6e0acd4af6074`.
+Its 28 native Markdown compilations and original-duty citation basis remain
+qualified within their stated limits. Both peers' `dev`, `main`, and proposal
+refs read back at that OID on 2026-10-04. GitHub source runs 37192241708,
+37192567002, and 37192567038 passed. GitLab pipelines 9485, 9486, and 9487
+failed; ref convergence does not qualify that source on every platform.
+
+The original Windows full-test timeouts remain. Main job 48269 reached the
+unchanged 180-second child deadline; macOS 48268 reached the ten-second OSV
+version deadline after exclusive copying, before audit. A later exact UID 506
+observation verified the unchanged pinned target and version in 0.135 seconds;
+it rules out a permanent startup fault at that later observation, not a unique
+historical cause. Preserve the original traces and independent guest evidence.
+
+The current repair reduces the actual Changelog command from 76 native Git
+starts to 39: one tag inventory, one complete reference batch, and all 37
+distinct native ancestry checks. RED input/batch regressions and complete
+commit-report cases are preserved. The installer now verifies the supplied
+candidate's version once, then its exclusive copy's complete bytes and owned
+mode; concurrent targets retain independent version verification and existing
+modes. The redundant-startup regression failed with two calls before repair;
+copy-corruption, linked-parent, and concurrent-target cases pass afterward.
+The repaired working tree passes all 237 tests with zero skips. Official
+validation also caught an already-synced supply requirement still marked ADDED;
+its complete preserved block now uses MODIFIED, without a warning waiver or
+direct baseline edit. Final committed-source cold verification, installed proof,
+and actual Forge jobs remain pending for this repair. No task IDs or completion
+states change, and no deadline, test selection, default gate, or shared-product
+acceptance is weakened.
+
+The bounded Claude review identified one portability defect: the initial batch
+used Git's newer `-Z` option without a declared minimum version. Native batch
+defaults now use line delimiters; the existing reference grammar excludes
+control characters. One resolution call, completeness checks, all ancestry
+checks, and byte-preserving stdin remain. This removes the new Git-version
+requirement instead of adding a platform waiver. Qualify the changed source again;
+the preceding 237-test result does not certify this later edit.
 
 [previous-tasks-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/blob/934293b8a6ab0600af75ea86fbdbdf36c46d1bd9/openspec/changes/native-document-quality/tasks.md
 [previous-tasks-github]: https://github.com/HengYangDS/data-department-work-guidelines/blob/934293b8a6ab0600af75ea86fbdbdf36c46d1bd9/openspec/changes/native-document-quality/tasks.md

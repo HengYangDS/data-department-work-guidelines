@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { spawnSync } from "node:child_process";
+import childProcess, { spawnSync } from "node:child_process";
 import {
   mkdirSync,
   mkdtempSync,
@@ -8,6 +8,7 @@ import {
   writeFileSync,
 } from "node:fs";
 import os from "node:os";
+import { syncBuiltinESMExports } from "node:module";
 import path from "node:path";
 import { test } from "node:test";
 import {
@@ -507,9 +508,12 @@ test("native tag inventory verifies every tag in one Git observation", () => {
     import { syncBuiltinESMExports } from "node:module";
     const original = childProcess.spawnSync;
     const inventory = [];
+    const resolutions = [];
     childProcess.spawnSync = (command, args, options) => {
-      if (args?.[0] === "tag" || args?.[0] === "for-each-ref" || args?.[0] === "cat-file")
+      if (args?.[0] === "tag" || args?.[0] === "for-each-ref")
         inventory.push(args);
+      if (args?.[0] === "rev-parse" || args?.[0] === "cat-file")
+        resolutions.push({ args, options });
       return original(command, args, options);
     };
     syncBuiltinESMExports();
@@ -520,6 +524,13 @@ test("native tag inventory verifies every tag in one Git observation", () => {
     assert.equal(inventory[0][0], "for-each-ref");
     assert.ok(inventory[0].includes("refs/tags"));
     assert.ok(inventory[0].some((argument) => argument.includes("%(objecttype)")));
+    assert.equal(resolutions.length, 1);
+    assert.deepEqual(resolutions[0].args, ["cat-file", "--batch-check=%(objectname) %(objecttype)"]);
+    assert.equal(resolutions[0].options.cwd, ${JSON.stringify(directory)});
+    assert.deepEqual(
+      new Set(resolutions[0].options.input.split("\\n").filter(Boolean)),
+      new Set([${JSON.stringify(`${base}^{commit}`)}, "v4.0.0^{commit}", "v4.0.1^{commit}", "HEAD"]),
+    );
   `;
     const result = spawnSync(
       process.execPath,
@@ -533,6 +544,59 @@ test("native tag inventory verifies every tag in one Git observation", () => {
     );
     assert.ifError(result.error);
     assert.equal(result.status, 0, result.stderr);
+  });
+});
+
+test("native history resolution requires complete commit observations", (context) => {
+  fixture((directory, base) => {
+    const changelog = path.join(directory, "CHANGELOG.md");
+    const valid = source(base);
+    assert.equal(
+      validateChangelog({ repository: directory, selectedTag: "" }).version,
+      "4.0.0",
+    );
+    const nativeSpawn = childProcess.spawnSync;
+    let truncate = false;
+    const observation = context.mock.method(
+      childProcess,
+      "spawnSync",
+      (command, args, options) => {
+        const result = nativeSpawn(command, args, options);
+        if (truncate && command === "git" && args[0] === "cat-file") {
+          assert.equal(result.status, 0, result.stderr);
+          return { ...result, stdout: result.stdout.slice(0, -1) };
+        }
+        return result;
+      },
+    );
+    syncBuiltinESMExports();
+    try {
+      truncate = true;
+      assert.throws(
+        () => validateChangelog({ repository: directory, selectedTag: "" }),
+        /native history reference report is incomplete/u,
+      );
+      truncate = false;
+      writeFileSync(changelog, source("f".repeat(40)));
+      assert.throws(
+        () => validateChangelog({ repository: directory, selectedTag: "" }),
+        /native history reference is not a commit/u,
+      );
+      const blob = git(directory, "rev-parse", "HEAD:VERSION");
+      writeFileSync(changelog, source(blob));
+      assert.throws(
+        () => validateChangelog({ repository: directory, selectedTag: "" }),
+        /not a commit|warning output/u,
+      );
+      writeFileSync(changelog, valid);
+      assert.equal(
+        validateChangelog({ repository: directory, selectedTag: "" }).version,
+        "4.0.0",
+      );
+    } finally {
+      observation.mock.restore();
+      syncBuiltinESMExports();
+    }
   });
 });
 

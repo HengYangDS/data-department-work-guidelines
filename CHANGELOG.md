@@ -17,6 +17,11 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Resolve all Changelog references in one native Git batch. Keep every distinct
+  ancestry check and reject missing, non-commit, or incomplete observations.
+- Verify each supplied native binary's version once before exclusive copying,
+  then check the copied bytes and mode. Concurrent and existing targets retain
+  their independent verification; process deadlines remain unchanged.
 - Derive the link-confinement test target from the repository boundary, so an
   in-repository temporary directory cannot invalidate the test prerequisite.
   Preserve the production refusal and its diagnostic distinctions.
