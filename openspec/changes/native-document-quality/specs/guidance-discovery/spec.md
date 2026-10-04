@@ -379,6 +379,32 @@ destination, audience, and detail.
   itself as well as for each action
 - **AND** a transcript or collective agreement does not establish those duties.
 
+### Requirement: Data roles retain operational responsibility
+
+Domain owners SHALL make professional judgments. Production owners SHALL
+ensure reliable long-term operation. Production, shared-asset, and critical
+management-chain changes SHALL have actual acceptance against agreed criteria.
+Governance owners SHALL make admission, permission, lineage, review, veto, and
+exit controls operate in the workflow. Delivery owners SHALL expose priorities
+and unresolved decisions without assuming authority over the other owners'
+judgments.
+
+#### Scenario: Coordination substitutes for a domain or governance decision
+
+- **WHEN** delivery coordination proposes a use without domain judgment or
+  operative governance review and controls
+- **THEN** the data topic identifies the responsible owners and missing decision
+- **AND** a coordination role cannot grant itself the missing authority.
+
+#### Scenario: Data-change criteria are defined but never accepted
+
+- **WHEN** a production, shared-asset, or critical management-chain change
+  defines acceptance criteria but has no actual acceptance against them
+- **THEN** the data topic requires that acceptance before the result can be
+  treated as an accepted change
+- **AND** tests, a written checklist, or a deployment cannot substitute for it;
+  acceptance follows the work's existing authority and does not add a ceremony.
+
 ## ADDED Requirements
 
 ### Requirement: Governance and decision reading follow the reader's task
@@ -406,18 +432,3 @@ revisit condition; transient implementation work SHALL NOT require a DR.
 - **THEN** the decision register routes to that owner instead of adding a DR
 - **AND** existing accepted records preserve identity and choice while
   clarifying their alternatives, consequences, evidence, and revisit conditions.
-
-### Requirement: Data roles retain operational responsibility
-
-Domain owners SHALL make professional judgments. Production owners SHALL
-ensure reliable long-term operation. Governance owners SHALL make admission,
-permission, lineage, review, veto, and exit controls operate in the workflow.
-Delivery owners SHALL expose priorities and unresolved decisions without
-assuming authority over the other owners' judgments.
-
-#### Scenario: Coordination substitutes for a domain or governance decision
-
-- **WHEN** delivery coordination proposes a use without domain judgment or
-  operative governance review and controls
-- **THEN** the data topic identifies the responsible owners and missing decision
-- **AND** a coordination role cannot grant itself the missing authority.

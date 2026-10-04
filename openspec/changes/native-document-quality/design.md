@@ -1093,6 +1093,17 @@ fixture tests guard the actual extraction invocations, while the same frozen
 bundle must pass the original constrained Linux consumer before portability
 is claimed. Native macOS and Windows consumers still need their own acceptance.
 
+The final bounded data-only Claude review at `b4181b8` covers the remaining
+seven original data subsections and identifies one further loss: defining
+acceptance criteria does not mean a data change was actually accepted. Original
+section 5.6 requires acceptance, not merely a planned checklist. Retain the
+existing criteria and add actual acceptance at the data owner and its existing
+requirement. This applies to production, shared assets, and critical management
+chains, through their existing authority; it does not require staged team
+adoption, a new human role, or another approval ceremony. The earlier positive
+crosswalk's 5.6 conclusion is superseded for that one qualifier. Preserve its
+source and evidence rather than relabeling it as complete equivalence.
+
 ## Migration Plan
 
 1. Add distinguishing native rule, supply, and source-conservation tests.

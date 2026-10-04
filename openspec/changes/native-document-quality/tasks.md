@@ -344,7 +344,10 @@
       Restore the four remaining overwrite, delay/dispute, correction-timing,
       and meeting-decision limits in their existing owners; recheck the exact
       changed source without another meeting, approval gate, or private meaning
-      validator. Complete shared and adopter qualification and
+      validator. The data-only review also distinguishes actual acceptance
+      from defined criteria for production, shared assets, and critical chains;
+      restore that qualifier at the data owner without staged team adoption.
+      Complete shared and adopter qualification and
       next-edition delivery on both Forges before claiming closure. Archive
       through the official owner only after every obligation has evidence;
       inspect the new OID,

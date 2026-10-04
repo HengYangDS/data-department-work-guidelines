@@ -411,10 +411,12 @@ replace that check.
 ### Requirement: Data roles retain operational responsibility
 
 Domain owners SHALL make professional judgments. Production owners SHALL
-ensure reliable long-term operation. Governance owners SHALL make admission,
-permission, lineage, review, veto, and exit controls operate in the workflow.
-Delivery owners SHALL expose priorities and unresolved decisions without
-assuming authority over the other owners' judgments.
+ensure reliable long-term operation. Production, shared-asset, and critical
+management-chain changes SHALL have actual acceptance against agreed criteria.
+Governance owners SHALL make admission, permission, lineage, review, veto, and
+exit controls operate in the workflow. Delivery owners SHALL expose priorities
+and unresolved decisions without assuming authority over the other owners'
+judgments.
 
 #### Scenario: Coordination substitutes for a domain or governance decision
 
@@ -422,6 +424,15 @@ assuming authority over the other owners' judgments.
   operative governance review and controls
 - **THEN** the data topic identifies the responsible owners and missing decision
 - **AND** a coordination role cannot grant itself the missing authority.
+
+#### Scenario: Data-change criteria are defined but never accepted
+
+- **WHEN** a production, shared-asset, or critical management-chain change
+  defines acceptance criteria but has no actual acceptance against them
+- **THEN** the data topic requires that acceptance before the result can be
+  treated as an accepted change
+- **AND** tests, a written checklist, or a deployment cannot substitute for it;
+  acceptance follows the work's existing authority and does not add a ceremony.
 
 ### Requirement: Communication and coaching preserve judgment
 

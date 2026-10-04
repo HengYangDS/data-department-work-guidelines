@@ -107,7 +107,7 @@ Changes to production, shared assets, or critical management chains require:
 
 - A defined subject, impact, task lead, and authority.
 - Replayable inputs, logic, version, and outputs.
-- Tests, acceptance criteria, and operational observation.
+- Tests, acceptance against agreed criteria, and operational observation.
 - A release window and rollback or degradation path.
 - Security, access-permission, and sensitive-information checks.
 - Escalation, human takeover, and stop conditions.
