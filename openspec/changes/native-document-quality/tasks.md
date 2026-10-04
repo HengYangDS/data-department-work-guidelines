@@ -585,5 +585,39 @@ qualified format/lint scenario; the other 22 blocks, including both unaccepted
 proof requirements, remain byte-identical. Signed-source proof, cold verification,
 and both peer matrices remain pending.
 
+Signed source `530c61dc43614df656483afb15cd4ac8df38f081`, tree
+`a3ae2211430e9df9dd13cfc33bb2a4f3a2864f6b`, is accepted at local `dev`, `main`,
+`candidate/dev`, and this owned lane with 70 matching tracked hashes and modes.
+Native publication is applied and both Forges independently resolve `dev` and
+`main` to that source. The review source matrices pass: GitLab 9501 and GitHub
+37203475200 discover 238 tests on every declared platform; Windows and Linux
+each report the one declared Darwin-only skip. The complete online link command
+passes 187 links with zero errors. Installed optional `docs-registry` proof
+passes with attestation
+`6578a94c22987078d35b6c01534af589a6b0e663936333dfdc5fb9493782022b`; it is not
+default proof, shared integration, or root/OpenSpec coverage. Original failed
+attempts and diagnostic-scope errors remain with their producer.
+
+Protected GitHub runs 37207232014 and 37207232016 also pass all three platforms.
+GitLab 9504 and 9505 pass Linux and macOS, but original Windows jobs 48347 and
+48350 on Runner 109 reach the unchanged 180-second complete-test deadline.
+The review Windows job on Runner 106 completed in 105 seconds; that difference
+does not identify the protected failure's cause. The fleet owner recovered the
+stopped macOS VM with one native start, and original jobs 48346 and 48349 passed
+on unchanged Runner 108. Windows VM-wide contention remains a hypothesis;
+native guest inspection is refused by isolation, not proof of a broken VM.
+No job retry, deadline, test selection, or trust boundary is changed.
+
+The current DR-0001 topic path and relation description now use human–AI
+collaboration. Its stable subject, ID, accepted decision, date, five sections,
+and evidence remain unchanged, and the sole current index link follows the new
+path. This working-tree correction still requires validation and signed-source
+acceptance. Formally accepted ETHOS quality, risk, formatting, and repaired
+history integration, the coherent successor release, and official closure
+remain pending. All 54 task IDs and states remain unchanged; tasks 2.33, 3.3,
+3.5, and 3.13 remain open. Evidence is retained under the existing
+`20261004-claude-source-review` record owner, including the accepted publication,
+both protected matrices, and original Windows traces.
+
 [previous-tasks-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/blob/934293b8a6ab0600af75ea86fbdbdf36c46d1bd9/openspec/changes/native-document-quality/tasks.md
 [previous-tasks-github]: https://github.com/HengYangDS/data-department-work-guidelines/blob/934293b8a6ab0600af75ea86fbdbdf36c46d1bd9/openspec/changes/native-document-quality/tasks.md

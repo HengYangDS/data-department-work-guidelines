@@ -7,7 +7,7 @@ decision_id: DR-0001
 decision_status: accepted
 decision_date: 2026-07-12
 relations:
-  canonical_for: human-intelligence collaboration terminology
+  canonical_for: human–AI collaboration terminology
 ---
 -->
 

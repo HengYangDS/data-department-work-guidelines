@@ -208,6 +208,12 @@ choices, actual dates, consequences, serious alternatives, and revisit limits.
 Move transient readiness and acceptance narration to its Change or producer; do
 not soften the decision or add task-report sections.
 
+Current filenames and relation descriptions use the accepted topic name. Moving
+DR-0001 to `dr-0001-human-ai-collaboration.md` preserves its stable subject,
+numbered identity, decision date, and reasoning; update the current incoming
+index link without an old-path alias. A descriptive path is not a second
+decision identity.
+
 ### Resolve reader routes and links from their native meaning
 
 Use the locked native Markdown compiler and existing HTML parser to inspect

@@ -17,6 +17,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Align DR-0001's filename and relation description with human–AI collaboration.
+  Keep its stable subject, accepted decision, date, and evidence unchanged.
 - Report native prose defects before unrelated Changelog history traversal.
   Keep every successful-path check, ancestry operation, and original deadline.
 - Keep the public prose/integrity regression compact while retaining native

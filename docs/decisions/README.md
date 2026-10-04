@@ -14,10 +14,10 @@ Read a record when you need the reason for a lasting choice. The
 [task map](../README.md) leads to current working rules; the
 [official Change](../../openspec/README.md) carries change intent and progress.
 
-| Decision                                                                       | Question it resolves                                                                    |
-| ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------- |
-| [DR-0001: Human–AI collaboration](dr-0001-human-intelligence-collaboration.md) | Why name the relationship separately from its executing Agent?                          |
-| [DR-0004: Official Change lifecycle](dr-0004-official-lifecycle.md)            | Why do OpenSpec and ETHOS govern material changes rather than methods or local scripts? |
+| Decision                                                             | Question it resolves                                                                    |
+| -------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| [DR-0001: Human–AI collaboration](dr-0001-human-ai-collaboration.md) | Why name the relationship separately from its executing Agent?                          |
+| [DR-0004: Official Change lifecycle](dr-0004-official-lifecycle.md)  | Why do OpenSpec and ETHOS govern material changes rather than methods or local scripts? |
 
 ## Add Only a Decision Worth Keeping
 
