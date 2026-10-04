@@ -1130,6 +1130,18 @@ archive checks, or infer the archive's root cause before seeing native output.
 This repair improves diagnosis; successful archive inspection and complete
 platform verification remain separate obligations.
 
+A bounded source-only invocation of the shared product's current native
+ESLint entry reports six diagnostics across all 17 DDWG JavaScript inputs:
+two unused bindings, implicit literal regex spacing, and three contextual
+errors that discard their original cause. This is a diagnostic preview, not
+accepted product proof. Remove the unused bindings and preserve the same regex
+language with an explicit count. At the existing bundle and Changelog owners,
+attach the caught native error through the standard Error cause option.
+Keep current messages, refusal, input confinement, and cleanup. Extend the
+existing missing-license, invalid-plugin, and unrelated-ancestry counterexamples
+to inspect their original causes before repairing code. No copied linter,
+configuration, provider, or new package is introduced.
+
 The exact Linux reproducer separates listing from extraction: GNU tar lists
 the frozen bundle successfully, then fails to change file ownership to the
 packaging machine's UID and GID. The rootless container has no `CAP_CHOWN`;

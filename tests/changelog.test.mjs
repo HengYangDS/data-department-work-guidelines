@@ -587,7 +587,7 @@ test("an untagged prepared release cannot use the direct-tag exception", () => {
 });
 
 test("later tagged releases cannot use the first-release link exception", () => {
-  fixture((directory, base) => {
+  fixture((directory) => {
     git(directory, "tag", "-a", "v3.0.0", "-m", "older fixture release");
     const changelog = [
       intro,
@@ -656,7 +656,14 @@ test("comparison bases must belong to the published ancestry", () => {
     writeFileSync(changelog, source(sideBase));
     assert.throws(
       () => validateChangelog({ repository: directory, selectedTag: "" }),
-      /comparison base is not an ancestor: Unreleased/u,
+      (error) => {
+        assert.match(
+          error.message,
+          /comparison base is not an ancestor: Unreleased/u,
+        );
+        assert.equal(error.cause?.message, "git exited 1");
+        return true;
+      },
     );
 
     writeFileSync(

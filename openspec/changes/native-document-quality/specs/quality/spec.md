@@ -95,6 +95,14 @@ Diagram, card, topic and evidence counts SHALL NOT determine validity.
 - **AND** a successful command with warning output still fails without losing
   its partial result; no extra executor or failure-suppression mode is added.
 
+#### Scenario: A contextual error wraps a native refusal
+
+- **WHEN** the bundle or Changelog owner adds context to a caught native
+  filesystem, plugin, or Git error
+- **THEN** the contextual error retains the original error as its cause
+- **AND** the existing refusal message and owned-resource cleanup remain
+  observable; context must not erase native diagnosis.
+
 #### Scenario: Official validation evidence is incomplete or wrongly bound
 
 - **WHEN** a native report names another root, omits items or issue arrays,

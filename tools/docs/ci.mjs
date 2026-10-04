@@ -23,7 +23,6 @@ import {
   nativeToolBinary,
   readText,
   root,
-  run,
 } from "./runtime.mjs";
 
 export const dependencyPolicyPath = ".config/checks/dependencies/policy.toml";

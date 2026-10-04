@@ -346,6 +346,11 @@
       Reject disconnected or unverified owners; prove complete test selection,
       single execution, semantic diagnostics, and preserved warnings through
       the actual installed command plane.
+      The product's bounded source-only lexical preview identifies six real
+      diagnostics across all 17 current JavaScript files. Retire unused
+      bindings, preserve literal regex meaning, and retain original caught
+      errors through native causes; extend the existing adverse tests.
+      The preview does not establish accepted product integration.
       Shared integration remains pending. Signed v7.0.12 at `2446c338` passes
       all 229 local and fresh-HOME, denied-network macOS tests, installed full
       proof, and native local acceptance. All 34 original proposal, protected,

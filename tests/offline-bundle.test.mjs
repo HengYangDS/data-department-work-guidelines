@@ -518,7 +518,15 @@ test("builder admits only pinned, licensed, regular supply", () => {
   });
   buildFixture((inputs) => {
     rmSync(path.join(inputs.licenseDirectory, "lychee", "LICENSE-MIT"));
-    assert.throws(() => assembleBundle(inputs), /license/u);
+    assert.throws(
+      () => assembleBundle(inputs),
+      (error) => {
+        assert.match(error.message, /missing offline bundle license/u);
+        assert.equal(error.cause?.code, "ENOENT");
+        assert.equal(path.basename(error.cause.path), "LICENSE-MIT");
+        return true;
+      },
+    );
   });
   buildFixture((inputs) => {
     const manifestPath = path.join(
@@ -668,7 +676,15 @@ test("the locked TOML plugin carries its full native MIT notice without sidecars
       writeFileSync(plugin, invalid);
       assert.throws(
         () => offline.checkPackageLicenses(directory, selected),
-        /native formatter license|lacks its license/u,
+        (error) => {
+          assert.match(error.message, /native formatter license/u);
+          if (invalid.equals(Buffer.from("invalid Wasm"))) {
+            assert.ok(error.cause instanceof WebAssembly.CompileError);
+          } else {
+            assert.ok(error.cause instanceof Error);
+          }
+          return true;
+        },
       );
       assert.deepEqual(readFileSync(plugin), invalid);
     }

@@ -64,6 +64,10 @@ linter beside the current stack would leave the duplication intact.
   owner, authorization, evidence, and acceptance duties.
 - Replace the two English pipelines with one pinned native Vale command, its
   vocabulary, and native style rules.
+- Repair findings from the shared product's native source-only lexical check:
+  retire unused bindings, express literal regex spacing explicitly, and keep
+  original native errors as causes when adding bundle or Changelog context.
+  Preserve strict refusal, cleanup, and messages; do not add a private linter.
 - Preserve every official OpenSpec diagnostic at the existing verifier's report
   consumer, including findings accompanied by process standard error. Reject
   findings, standard error, wrong-root or incomplete reports, and inconsistent

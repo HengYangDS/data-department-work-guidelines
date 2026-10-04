@@ -527,7 +527,9 @@ export function validateChangelog({
         });
       } catch (error) {
         if (error.message !== "git exited 1") throw error;
-        throw new Error(`comparison base is not an ancestor: ${label}`);
+        throw new Error(`comparison base is not an ancestor: ${label}`, {
+          cause: error,
+        });
       }
     }
   }

@@ -17,6 +17,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Preserve original filesystem, formatter-plugin, and Git error causes when
+  adding verification context. Remove unused bindings and make literal regex
+  spacing explicit without changing checks or refusal messages.
 - Reserve one native GitLab Windows resource for source review, protected
   branches, and offline verification. Keep separate trust and all checks while
   eligible jobs wait for that project's capacity.

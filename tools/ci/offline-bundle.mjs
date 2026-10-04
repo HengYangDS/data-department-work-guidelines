@@ -235,7 +235,9 @@ function pinnedFile(directory, name, expectedDigest, kind) {
     stat = lstatSync(file);
   } catch (error) {
     if (error.code === "ENOENT") {
-      throw new Error(`missing offline bundle ${kind}: ${name}`);
+      throw new Error(`missing offline bundle ${kind}: ${name}`, {
+        cause: error,
+      });
     }
     throw error;
   }
@@ -816,7 +818,9 @@ function nativeFormatterLicenseNotice(
       normalize(notice).includes(normalize(hostNotice.slice(start)))
     );
   } catch (error) {
-    throw new Error(`native formatter license is invalid: ${error.message}`);
+    throw new Error(`native formatter license is invalid: ${error.message}`, {
+      cause: error,
+    });
   }
 }
 

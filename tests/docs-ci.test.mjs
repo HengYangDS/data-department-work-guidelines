@@ -1402,7 +1402,7 @@ test("GitLab offline release CI runs only after a release asset is available", (
     ],
     [
       gitlab.replace(
-        /(\.offline:verify:[\s\S]*?    - )npm run verify/u,
+        /(\.offline:verify:[\s\S]*? {4}- )npm run verify/u,
         "$1npm run partial",
       ),
       /GitLab offline verifier/u,
