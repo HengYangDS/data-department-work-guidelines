@@ -1169,7 +1169,7 @@ test("a delivered directory alias must also resolve to repository source", () =>
       /not repository source/u,
     );
     const outsideAlias = path.join(directory, "outside-alias");
-    symlinkSync(os.tmpdir(), outsideAlias, "junction");
+    symlinkSync(path.dirname(root), outsideAlias, "junction");
     const outsideCandidate = path
       .relative(root, outsideAlias)
       .split(path.sep)

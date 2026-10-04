@@ -370,6 +370,26 @@ qualified scenarios are added, and both pending proof requirements remain
 unchanged. The native merge reports no warnings. This does not accept the
 shared product, archive the Change, or qualify a later release.
 
+Cold verification of signed source `f6eddacf` exposed one invalid test
+precondition: the directory-alias fixture treated the OS temporary directory as
+external even when it was inside the repository. Production still refused the
+link; the test expected the wrong refusal. The native test now derives its
+external target from the repository parent. Same-input RED and focused inside
+and ordinary-temp GREEN are preserved; full source, cold verification, proof,
+and both original source matrices for the repair remain pending. Preserve the
+failed cold run, the timed-out protected publication (both remote refs were
+independently observed), and the bounded advisor timeout without findings.
+Original Windows review 48244 failed after its tag-inventory regression exceeded
+30 seconds and the complete test child reached its unchanged 180-second limit.
+The one-observation regression now uses two real annotated release tags and a
+non-release tag in its existing fixture, avoiding a second whole-repository
+history traversal. Full CLI history validation, all discovered tests, original
+deadlines, and native Git remain unchanged. Concurrent host pressure is observed,
+not accepted as proof of that job's cause. Original macOS 48251 failed when
+the native Vale version command reached its unchanged ten-second deadline,
+after supply, audit, and formatting passed; this is not a failed prose rule.
+Preserve the exact trace and the separately observed Runner 108 job identity.
+
 ## Current source acceptance
 
 Signed source `934293b8a6ab0600af75ea86fbdbdf36c46d1bd9`, tree

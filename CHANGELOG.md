@@ -17,6 +17,12 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Derive the link-confinement test target from the repository boundary, so an
+  in-repository temporary directory cannot invalidate the test prerequisite.
+  Preserve the production refusal and its diagnostic distinctions.
+- Check native batch-tag inventory on multiple real fixture tags without
+  repeating the full repository history walk. Keep complete source validation
+  and test deadlines unchanged.
 - Verify native timeout evidence against the actual process streams, including
   failure before output. Do not assume a child starts before its deadline or
   fabricate progress under load.

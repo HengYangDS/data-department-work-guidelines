@@ -10,7 +10,6 @@ import {
 import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
-import { fileURLToPath } from "node:url";
 import {
   parseChangelog as parseChangelogSource,
   strictVersion,
@@ -482,7 +481,27 @@ test("native tag inventory ignores non-release tag namespaces", () => {
 });
 
 test("native tag inventory verifies every tag in one Git observation", () => {
-  const script = `
+  fixture((directory, base) => {
+    writeFileSync(path.join(directory, "VERSION"), "4.0.1\n");
+    writeFileSync(
+      path.join(directory, "docs", "charter.md"),
+      "> **Guideline edition:** v4.0.1\n",
+    );
+    writeFileSync(
+      path.join(directory, "CHANGELOG.md"),
+      source(
+        base,
+        "## 4.0.1 - 2026-09-26\n\n### Fixed\n\n- Correct a boundary.\n\n" +
+          "## 4.0.0 - 2026-09-25\n\n### Added\n\n- First release.\n\n",
+        "v4.0.1",
+        "v4.0.1",
+      ),
+    );
+    commit(directory, "prepare releases");
+    for (const version of ["4.0.0", "4.0.1"])
+      git(directory, "tag", "-a", `v${version}`, "-m", "fixture release");
+    git(directory, "tag", "docs/snapshot");
+    const script = `
     import assert from "node:assert/strict";
     import childProcess from "node:child_process";
     import { syncBuiltinESMExports } from "node:module";
@@ -495,24 +514,26 @@ test("native tag inventory verifies every tag in one Git observation", () => {
     };
     syncBuiltinESMExports();
     const { validateChangelog } = await import(${JSON.stringify(new URL("../tools/docs/changelog.mjs", import.meta.url).href)});
-    validateChangelog({ selectedTag: "" });
+    const result = validateChangelog({ repository: ${JSON.stringify(directory)}, selectedTag: "" });
+    assert.equal(result.tagCount, 2);
     assert.equal(inventory.length, 1, JSON.stringify(inventory));
     assert.equal(inventory[0][0], "for-each-ref");
     assert.ok(inventory[0].includes("refs/tags"));
     assert.ok(inventory[0].some((argument) => argument.includes("%(objecttype)")));
   `;
-  const result = spawnSync(
-    process.execPath,
-    ["--input-type=module", "--eval", script],
-    {
-      cwd: path.resolve(path.dirname(fileURLToPath(import.meta.url)), ".."),
-      encoding: "utf8",
-      input: "",
-      timeout: 30_000,
-    },
-  );
-  assert.ifError(result.error);
-  assert.equal(result.status, 0, result.stderr);
+    const result = spawnSync(
+      process.execPath,
+      ["--input-type=module", "--eval", script],
+      {
+        cwd: directory,
+        encoding: "utf8",
+        input: "",
+        timeout: 30_000,
+      },
+    );
+    assert.ifError(result.error);
+    assert.equal(result.status, 0, result.stderr);
+  });
 });
 
 test("tagged release links identify the tag, not a moving branch", () => {
