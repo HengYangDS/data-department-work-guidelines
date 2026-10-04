@@ -1142,6 +1142,16 @@ existing missing-license, invalid-plugin, and unrelated-ancestry counterexamples
 to inspect their original causes before repairing code. No copied linter,
 configuration, provider, or new package is introduced.
 
+The process owner also converted a native spawn error into message text without
+retaining its original object. Extend the existing real-command tests with a
+missing executable and native timeout; both lose their error code before the
+repair. Use the standard Error cause at that owner while keeping successful
+output, exit-status handling, warning refusal, and diagnostic replay unchanged.
+The failure object remains native; no new process schema or wrapper is added.
+Attach a cause only when the native error exists, so an exit-status refusal
+without an error keeps its former shape. Verify code and path for the timeout,
+the missing-command message, and absence of a cause on exit-only refusal.
+
 The exact Linux reproducer separates listing from extraction: GNU tar lists
 the frozen bundle successfully, then fails to change file ownership to the
 packaging machine's UID and GID. The rootless container has no `CAP_CHOWN`;

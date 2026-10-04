@@ -75,10 +75,13 @@ export function run(command, args = [], options = {}) {
       process.stdout.write(result.stdout ?? "");
       process.stderr.write(result.stderr ?? "");
     }
-    const cause = result.error
+    const detail = result.error
       ? `: ${result.error.message}`
       : ` exited ${result.status ?? "without status"}`;
-    throw new Error(`${command}${cause}`);
+    throw new Error(
+      `${command}${detail}`,
+      result.error ? { cause: result.error } : undefined,
+    );
   }
   if (rejectStderr && result.stderr) {
     process.stdout.write(result.stdout ?? "");

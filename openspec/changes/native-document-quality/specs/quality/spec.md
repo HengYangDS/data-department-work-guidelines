@@ -97,11 +97,19 @@ Diagram, card, topic and evidence counts SHALL NOT determine validity.
 
 #### Scenario: A contextual error wraps a native refusal
 
-- **WHEN** the bundle or Changelog owner adds context to a caught native
-  filesystem, plugin, or Git error
+- **WHEN** the process, bundle, or Changelog owner adds context to a native
+  process, filesystem, plugin, or Git error
 - **THEN** the contextual error retains the original error as its cause
 - **AND** the existing refusal message and owned-resource cleanup remain
   observable; context must not erase native diagnosis.
+
+#### Scenario: Native execution cannot start or reaches its deadline
+
+- **WHEN** a command is missing or reaches its execution deadline
+- **THEN** the existing process error retains the original native error object,
+  including its code and command path
+- **AND** successful output, nonzero exit status, warning refusal, and single
+  replay of partial diagnostics keep their existing behavior.
 
 #### Scenario: Official validation evidence is incomplete or wrongly bound
 

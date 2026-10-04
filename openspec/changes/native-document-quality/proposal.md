@@ -66,7 +66,8 @@ linter beside the current stack would leave the duplication intact.
   vocabulary, and native style rules.
 - Repair findings from the shared product's native source-only lexical check:
   retire unused bindings, express literal regex spacing explicitly, and keep
-  original native errors as causes when adding bundle or Changelog context.
+  original native errors as causes when adding process, bundle, or Changelog
+  context. Keep missing-command and timeout error codes and paths intact.
   Preserve strict refusal, cleanup, and messages; do not add a private linter.
 - Preserve every official OpenSpec diagnostic at the existing verifier's report
   consumer, including findings accompanied by process standard error. Reject

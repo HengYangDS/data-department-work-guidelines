@@ -318,7 +318,7 @@
       unpublished state. The item remains open only for accepted shared-owner
       integration and simultaneous retirement of product-superseded local
       glue; native rules and all original failure evidence remain.
-- [ ] 2.34 Admit Windows verification against finite native capacity. Preserve
+- [x] 2.34 Admit Windows verification against finite native capacity. Preserve
       original overlapping failures 48142, 48145, and 48148 at signed
       `cf4b9eb`: each reaches the unchanged 180-second test deadline without
       a failed assertion. Keep one project-scoped GitLab resource group for
@@ -329,6 +329,13 @@
       finite window, then observe repaired source and native resource waits.
       Cross-project pressure remains unproved; do not change capacity or
       manufacture isolation from current counters.
+      Original-source retry 48154 passes without changing tests or limits.
+      At signed `ec97b2f`, GitLab proposal, `dev`, and `main` pipelines 9453–9455
+      pass all nine jobs. Windows jobs 48157, 48160, and 48163 run without
+      overlap; the last is observed waiting for the native resource. Each
+      discovers 230 tests, passes 229, and skips only its declared Darwin case.
+      This qualifies project serialization, not sole resource causality or
+      the next release's offline asset.
 
 ## 3. Qualification and publication
 
@@ -351,6 +358,10 @@
       bindings, preserve literal regex meaning, and retain original caught
       errors through native causes; extend the existing adverse tests.
       The preview does not establish accepted product integration.
+      Retain native missing-command and timeout errors in the existing process
+      owner, including their code and path. Extend its real-execution adverse
+      tests without changing successful output, exit handling, warning refusal,
+      or single diagnostic replay.
       Shared integration remains pending. Signed v7.0.12 at `2446c338` passes
       all 229 local and fresh-HOME, denied-network macOS tests, installed full
       proof, and native local acceptance. All 34 original proposal, protected,

@@ -245,7 +245,7 @@ test("bundle inventory derives raw and archived assets from the same supply mani
   );
 });
 
-test("archive command warnings cannot establish clean verification", () => {
+test("archive commands preserve native errors and reject warnings", () => {
   assert.equal(
     runCommand(process.execPath, ["-e", 'process.stdout.write("clean")'], {
       capture: true,
@@ -261,6 +261,24 @@ test("archive command warnings cannot establish clean verification", () => {
       }),
     /warning output/u,
   );
+  const directory = mkdtempSync(
+    path.join(os.tmpdir(), "ddwg-missing-command-"),
+  );
+  const missing = path.join(directory, "missing-native-command");
+  try {
+    assert.throws(
+      () => runCommand(missing, [], { capture: true, rejectStderr: true }),
+      (error) => {
+        assert.ok(error.message.startsWith(`${missing}: `), error.message);
+        assert.match(error.message, /ENOENT/u);
+        assert.equal(error.cause?.code, "ENOENT");
+        assert.equal(error.cause.path, missing);
+        return true;
+      },
+    );
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
 });
 
 test("piped native failures preserve diagnostics without duplicate output", () => {
@@ -277,6 +295,7 @@ test("piped native failures preserve diagnostics without duplicate output", () =
         'process.stdout.write("partial result\\n"); process.stderr.write("native cause\\n"); setInterval(() => {}, 1_000);',
       timeout: 2_000,
       failure: /ETIMEDOUT/u,
+      nativeCode: "ETIMEDOUT",
     },
     {
       child:
@@ -290,14 +309,19 @@ test("piped native failures preserve diagnostics without duplicate output", () =
     { capture: true, rejectStderr: true },
     { rejectStderr: true },
   ]) {
-    for (const { child, timeout, failure } of cases) {
+    for (const { child, timeout, failure, nativeCode } of cases) {
       if (!options.rejectStderr && failure.source === "warning output")
         continue;
       const script = [
         `import { run } from ${JSON.stringify(module)};`,
         `try { run(process.execPath, ["-e", ${JSON.stringify(child)}],`,
         `${JSON.stringify({ ...options, timeout })}); }`,
-        "catch (error) { console.error(error.message); process.exitCode = 1; }",
+        "catch (error) {",
+        "console.error(error.message);",
+        'console.error(`native execution code: ${error.cause?.code ?? "none"}`);',
+        "console.error(`native execution path matches: ${error.cause?.path === process.execPath}`);",
+        'console.error(`has cause property: ${Object.hasOwn(error, "cause")}`);',
+        "process.exitCode = 1; }",
       ].join("\n");
       const result = spawnSync(
         process.execPath,
@@ -308,6 +332,22 @@ test("piped native failures preserve diagnostics without duplicate output", () =
       assert.equal(result.stdout, "partial result\n");
       assert.match(result.stderr, failure);
       assert.equal(result.stderr.split("native cause").length - 1, 1);
+      assert.ok(
+        result.stderr.includes(
+          `native execution code: ${nativeCode ?? "none"}`,
+        ),
+        result.stderr,
+      );
+      assert.ok(
+        result.stderr.includes(
+          `native execution path matches: ${!!nativeCode}`,
+        ),
+        result.stderr,
+      );
+      assert.ok(
+        result.stderr.includes(`has cause property: ${!!nativeCode}`),
+        result.stderr,
+      );
     }
   }
 });
