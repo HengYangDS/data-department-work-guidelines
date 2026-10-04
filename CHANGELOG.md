@@ -20,6 +20,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 - Distinguish live link checks from authenticated Forge comparison evidence,
   link the existing offline matrix, and name the native list-spacing rule.
   Keep audit acceptance at its governance owner without duplicate instructions.
+  Reconcile Change evidence, shared release terminology, and branch-retirement
+  prerequisites without changing department duties or task states.
 - Align DR-0001's filename and relation description with human–AI collaboration.
   Keep its stable subject, accepted decision, date, and evidence unchanged.
 - Report native prose defects before unrelated Changelog history traversal.

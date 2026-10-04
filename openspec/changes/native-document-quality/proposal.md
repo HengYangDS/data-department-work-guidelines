@@ -51,8 +51,8 @@ capabilities remain product dependencies.
   rejected response bodies before failure and retain cleanup causes.
 - Replace npm audit with native OSV raw and disposition scans. Retain complete
   failure evidence on both Forges and enforce only the approved, expiring
-  development exception. Retire the temporary local approval guard when the
-  accepted ETHOS risk owner replaces it.
+  development exception. Retire the temporary repository input guard when
+  the accepted ETHOS risk owner replaces it.
 - Keep local verification independent of remote supply. GitLab and GitHub each
   supply and publish the same qualified source and offline bytes independently.
   Give runnable CI jobs symmetric purpose/platform names, restrict tag routes

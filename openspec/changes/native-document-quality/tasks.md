@@ -88,8 +88,8 @@ commitment. Original narration and dated evidence remain at
       affected quality checks. Correct the earlier comparison's unqualified
       conclusion without rewriting its dated evidence.
 - [x] 2.14 Restrict GitLab workflow, protected-source, and offline tag rules to
-      the GitHub `v*` tag family before tool supply. Prove old broad routes
-      fail, valid version routes pass, and native GitLab dry-runs reject
+      the shared release `v*` tag family before tool supply. Prove old broad
+      routes fail, valid version routes pass, and native GitLab dry-runs reject
       unrelated tags without changing Runner or strict release admission.
 - [x] 2.15 Correct the OpenSpec entry's cache, capability, and sync descriptions
       against the installed official contract, and name both GitLab native-tool
@@ -269,9 +269,10 @@ commitment. Original narration and dated evidence remain at
       expressly approved, expiring development-only braces 3.0.3 boundary.
       Refuse changed or obsolete exception applicability; all other applicable
       unapproved raw findings remain blocking under the existing audit, not a
-      new gate. Qualify actual supply and matrices. Replace the temporary input
-      guard with accepted product risk admission in the same migration, without
-      a private schema/provider/controller or production-security claim.
+      new gate. Qualify actual supply and matrices. Replace the temporary
+      repository input guard with accepted product risk admission in the same
+      migration, without a private schema/provider/controller or production-security
+      claim.
       Integration remains pending.
 - [x] 3.4 Publish the major signed SemVer edition independently to GitLab and
       GitHub; verify both exact refs, Releases, downloaded asset hashes, and
@@ -293,15 +294,15 @@ commitment. Original narration and dated evidence remain at
       crosswalk, original duty source, overwrite-risk, delay/dispute analysis,
       immediate correction-timing, meeting-decision, and actual data-acceptance
       duties, plus provenance, failed receipts, and bounded review limits. No
-      staged adoption or meaning gate is added. Superseded v7.0.10
-      downloads/package/link and the prior absorbed proposal are already
-      retired; signed source, original note prefixes, and evidence remain.
+      staged adoption or meaning gate is added. Preserve signed source, original
+      note prefixes, and evidence for the retired downloads and proposals.
       Before archive, retire only earlier absorbed resources and exact
       disposable duplicates after consumer/hash/native-inventory checks; this
       active Change's Work Lane must remain until final closure. An absorbed
-      proposal ref may retire after exact peer/source acceptance; recreate it
-      through native publication for later source. Reclaimed remote bytes stay
-      unproved until provider statistics establish a measured reduction. Confirm
+      proposal ref may retire after exact peer/source acceptance and its declared
+      jobs pass; recreate it through native publication for later source.
+      Reclaimed remote bytes stay unproved until provider statistics establish
+      a measured reduction. Confirm
       every archive prerequisite before this item closes. Official archive,
       new-OID inspection/signature/proof/publication, both new source matrices,
       and this Change's Work Lane, any final proposal ref, and new residue
@@ -410,10 +411,8 @@ sample was not collected.
 
 These are exact-source observations, not a new signed version or offline
 release. VERSION remains 7.0.12; its published bytes are unchanged and later
-repairs remain Unreleased. Shared ETHOS quality/formatting, risk, history, Proxy
-acceptance, final coherent release, official closure, and retirement still need
-acceptance. No whole-guidance equivalence or team-adoption certification is
-claimed.
+repairs remain Unreleased. No whole-guidance equivalence or team-adoption
+certification is claimed.
 
 Signed successor `8d537881f3e077a11b5686d59f802ac3ecaa09f8`, tree
 `5a8d11f171bf019fdab425ae9dc92475f97cf140`, passed local and fresh-HOME,
@@ -541,10 +540,6 @@ that read-only judgment is not installed-product or hosted acceptance. Original
 duty comparison still covers 62 numbered subsections and five groups within its
 editorial limits, not automated semantic equivalence or team adoption.
 
-Accepted shared integration, full platform acceptance, final edition, and
-closure remain open. VERSION and the v7.0.12 tag and bundle remain unchanged.
-Tasks 2.33, 3.3, 3.5, and 3.13 remain open.
-
 Signed source `aa31ade4fc56abbe7ebd97fba4cad6b469f2d09a`, tree
 `43d4a020e221b7aa8e7ca2eab164e876ddd624a2`, passes all 237 local and fresh-HOME,
 denied-remote cold tests with zero skips and 70 conserved hashes and modes.
@@ -617,25 +612,58 @@ OpenSpec validation, installed exact-HEAD proof, and a fresh offline installatio
 All 70 tracked file hashes and modes are preserved; its temporary cold worktree
 is natively removed while all four durable worktrees remain unchanged. The
 stable subject, ID, accepted decision, date, five sections, and evidence remain
-unchanged. This source has not been landed or published.
+unchanged. At that validation checkpoint, this source had not yet been landed
+or published.
 
 A bounded tool-free Claude review identifies the comparison-authentication
 instruction gap and inaccurate attribution of the native list rule. Those
 corrections, a direct link to the existing four-host offline workflow, and
-removal of duplicated audit-acceptance prose are now being qualified. The audit
+removal of duplicated audit-acceptance prose are included in this source. The audit
 contract remains at its governance owner. No release field, provider, gate,
 controller, or normative duty is added. Advisory preferences and claims based on
 an omitted workflow are not accepted as defects. Current evidence and review
 limits remain under `20261004-claude-source-review`.
 
-Formally accepted ETHOS quality, risk, formatting, and repaired-history
-integration, the coherent successor release, and official closure remain
-pending. All 54 task IDs and states remain unchanged; tasks 2.33, 3.3, 3.5, and
-3.13 stay open. These editorial changes pass all 238 local tests with zero
-skips, strict official OpenSpec validation, native rendering, and empty standard
-error. Seven normative topic files and all task IDs/states are unchanged.
-Trusted signature, exact-HEAD installed proof, and source acceptance remain
-pending.
+Signed source `2ea45d451470f16419f916b5f4d426eafc33cceb`, tree
+`30d9efcf318da912d0792780e622422d0f77d5ad`, qualifies the reader-contract
+corrections with all 238 local and fresh-HOME, denied-remote cold tests passing,
+zero skips, strict official OpenSpec validation, and empty standard error.
+The trusted SSH signature and installed exact-HEAD proof are verified; the
+proof attestation is
+`39d5b92e1f0349599dfc27ee655ec4555dca4fc47334dfac46a3406938785d25`.
+Explicit Change plan and native land pass. Local `candidate/dev` now resolves to
+that source with 70 matching source hashes and modes. Local `dev` and `main`
+remain at `530c61dc43614df656483afb15cd4ac8df38f081`; no new publication or
+version is claimed. The temporary cold worktree and its generated roots are
+removed through native Git without force; the four original worktrees and
+v7.0.12 bundle remain unchanged. These observations are recorded at their
+producers; this paragraph does not certify its own commit.
+
+Current spec comparison uses the locked official OpenSpec parser. All 26
+qualified delta requirement blocks match the accepted main specs; every prior
+scenario name is conserved. Only the two product-dependent proof requirements
+remain deliberately not yet synchronized. The seven normative topic files retain
+six primary-crosswalk hashes and the corrected data-acceptance hash. The older
+crosswalk's map and decision-index quotations are superseded by their reviewed
+current owners, not by missing department duties. This is source-bound
+editorial evidence, not automated semantic equivalence or team-use evidence.
+
+The four-artifact tool-free Claude review identifies stale current-state
+phrasing, a missing declared-job retirement prerequisite, and inconsistent
+names for the temporary repository input guard and shared release tag family.
+Those corrections preserve all 54 task IDs and states, department obligations,
+and original producer evidence. Review coverage is limited to proposal, design,
+tasks, and the repository-governance delta; omitted implementation and other
+deltas are not certified. Earlier v7.0.10 downloads/package/link and the
+absorbed proposal are already retired; their signed source, original notes, and
+evidence remain.
+
+Formally accepted shared quality/formatting, risk, and repaired-history
+integration, AIGW and Proxy acceptance, full platform acceptance, the coherent
+successor release, official closure, and exact retirement remain pending.
+Tasks 2.33, 3.3, 3.5, and 3.13 stay open. Signature, exact-HEAD proof, and later
+acceptance for subsequent source are observed at their producers, not inferred
+from this ledger.
 
 [previous-tasks-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/blob/934293b8a6ab0600af75ea86fbdbdf36c46d1bd9/openspec/changes/native-document-quality/tasks.md
 [previous-tasks-github]: https://github.com/HengYangDS/data-department-work-guidelines/blob/934293b8a6ab0600af75ea86fbdbdf36c46d1bd9/openspec/changes/native-document-quality/tasks.md

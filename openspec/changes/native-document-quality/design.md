@@ -401,9 +401,9 @@ and declared offline hosts. One plane's success supplies no result to the other.
 
 GitHub source updates may proceed through native admission and that peer's
 actual checks while GitLab is unavailable; qualified releases remain
-distributable there. A new dual-Forge edition still requires both release-cut
-matrices. Preserve this distinction without narrowing GitHub to a snapshot or
-inventing evidence for the unavailable peer.
+distributable there. A new edition still requires both release-cut matrices.
+Preserve this distinction without narrowing GitHub to a snapshot or inventing
+evidence for the unavailable peer.
 
 Keep one Changelog with neutral local version headings and clearly labeled
 GitLab/GitHub history links. Native `publication.peers[].forge_repository` owns
@@ -436,9 +436,9 @@ capabilities, exact image/native assets, timeouts, source selection, and
 commands. Minimal wiring to a declared native command is not a business,
 acceptance, installation, or rollback controller.
 
-Restrict GitLab workflow, source, and offline tag routes to the GitHub `v*`
-family, excluding slash-containing tags, before tool supply. A matching prefix
-still needs native signed SemVer admission. Keep project locking, tagged-only
+Restrict GitLab workflow, source, and offline tag routes to the shared release
+`v*` tag family, excluding slash-containing tags, before tool supply. A matching
+prefix still needs native signed SemVer admission. Keep project locking, tagged-only
 scheduling, protected dev/main/tags, and separate review/protected identities,
 accounts, workspaces, caches, and credential reachability.
 
