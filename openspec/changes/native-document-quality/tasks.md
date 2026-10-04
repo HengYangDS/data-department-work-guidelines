@@ -180,7 +180,7 @@
       ignored parent explicitly and model the regular target behind `EEXIST`;
       preserve source confinement, exclusive copy, version, and permissions.
       Run isolated regressions and complete fresh-checkout verification.
-- [ ] 2.28 Resolve navigation with the existing native Markdown parser and
+- [x] 2.28 Resolve navigation with the existing native Markdown parser and
       compiler. Reject hidden routes, unlinked images, unreadable labels, and
       shadowed definitions; accept formatted text, descriptive linked-image
       labels, legitimate titles, references, character decoding, and local
@@ -201,6 +201,11 @@
       declare its single latest-stable owner, and qualify changed supply,
       source, proof, cold installation, and both Forge matrices. Conversion-only
       receipts do not establish table appearance or whole-document visual quality.
+      Signed v7.0.12 at `2446c338` qualifies the native GFM table repair,
+      full source checks, installed proof, denied-network cold installation,
+      both independent source and offline matrices, asset verification, and links.
+      Actual desktop rendering confirms visible table routes; this does not
+      certify whole-document appearance or semantic equivalence.
 - [x] 2.29 Refresh the existing shell lexer to verified stable 1.12.0 after
       the latest native metadata audit found version drift. Preserve command,
       glob, quotation, and ordinary-rationale counterexamples; qualify native
@@ -215,7 +220,7 @@
       intentional macOS-only archive-attribute skip. Aftercare retires completed
       temporary resources and v7.0.9 downloads; v7.0.11 and v7.0.10 remain current
       and qualified rollback. Original notes, tags, source, and evidence remain.
-- [ ] 2.30 Replace the redundant Markdownlint CLI2 wrapper with the existing
+- [x] 2.30 Replace the redundant Markdownlint CLI2 wrapper with the existing
       native core over all Git-selected Markdown. Preserve TOML policy,
       custom comment controls, native diagnostics, literal source paths,
       positive controls, and every existing counterexample. Remove the wrapper,
@@ -223,11 +228,12 @@
       qualify locked removal, source-bound offline supply, clean installation,
       exact-source proof, and both Forge matrices. Removing this consumer does
       not fix the separate official OpenSpec braces dependency.
-      Local removal at `1219528` eliminates 19 packages. The current signed
-      source passes complete local and denied-network cold verification.
-      Local and cold verification and installed exact-source proof pass at
-      `4ebd0f0`. Both hosted matrices for the next edition remain open.
-- [ ] 2.31 Repair the existing official OpenSpec report consumer. Retain native
+      Local removal at `1219528` eliminates 19 packages. Signed v7.0.12 at
+      `2446c338` qualifies full local and denied-network cold verification,
+      installed proof, both Forge source and offline matrices, source-bound
+      downloads, and links. No retired wrapper dependency, configuration,
+      executable, or current consumer remains.
+- [x] 2.31 Repair the existing official OpenSpec report consumer. Retain native
       diagnostics, reject standard error and wrong-root, incomplete, duplicate,
       or inconsistent evidence, and preserve the real official CLI execution.
       Reject totals-only reports, findings on successful standard error,
@@ -260,6 +266,12 @@
       only report and execution evidence. Repair native Windows Git long-path
       handling and retire the exact original cache after preserving its failure
       artifact; do not reset a Runner or weaken source checks.
+      Signed v7.0.12 at `2446c338` closes these native report, extraction,
+      Windows root/fixture, and cache-lifetime obligations. Failed checkout
+      48112 remains preserved. Native service-profile long-path settings and
+      exact cache retirement precede successful original Windows 48113,
+      48116, 48119, 48122, 48125, and offline 48128 execution. Both Forge
+      source and offline matrices, source-bound downloads, and links pass.
 - [x] 2.32 Retire all reviewed completed-Change copies from the current tree.
       Audit unique facts, obligations, and incoming consumers; preserve exact
       ancestor Git objects and existing proof. Replace three cited designs with
@@ -299,11 +311,13 @@
       issue; every evolution duty word and the shared cadence scope are intact.
       Existing cases reject literal loss, padded lists and quotes, and real
       quality-control comments without rejecting explanatory prose.
-      As observed on 2026-10-04, both Forges still serve `ba982673`; this local
-      correction is unpublished. Original Windows109 retries fail at npm audit,
-      not memory exhaustion. Installed proof and cold installation pass at
-      `4ebd0f0`. Shared-product acceptance, supply security, both hosted matrices,
-      and publication remain open.
+      Signed v7.0.12 at `2446c338` qualifies native spacing and format
+      behavior through local and cold verification, installed proof, both
+      Forge source and offline matrices, the approved native OSV supply
+      boundary, source-bound downloads, and links. This supersedes the earlier
+      unpublished state. The item remains open only for accepted shared-owner
+      integration and simultaneous retirement of product-superseded local
+      glue; native rules and all original failure evidence remain.
 
 ## 3. Qualification and publication
 
@@ -321,16 +335,17 @@
       Reject disconnected or unverified owners; prove complete test selection,
       single execution, semantic diagnostics, and preserved warnings through
       the actual installed command plane.
-      Integration remains pending. Installed minimal finite-input repair
-      `4a258689` closes the original changed-plan and proof hangs. Normal signed
-      `454145f` passes full exact-HEAD proof and all 229 local and fresh-home,
-      denied-network macOS tests; native landing accepts it locally. GitLab
-      publishes that source; GitHub retains it on the proposal while Windows
-      checks fail. Both original failures remain preserved. All six OSV assets
-      and their notice match independently downloaded GitLab bytes; temporary
-      supply and cold checkouts are retired. These results do not certify the
-      shared semantic quality contract or ETHOS release. Qualify the native
-      retention successor before claiming exact runtime rollback.
+      Shared integration remains pending. Signed v7.0.12 at `2446c338` passes
+      all 229 local and fresh-HOME, denied-network macOS tests, installed full
+      proof, and native local acceptance. All 34 original proposal, protected,
+      tag-source, and post-publication jobs pass. GitHub qualifies four offline
+      hosts and GitLab three. Both Releases expose the same frozen bytes;
+      independent downloads match SHA-256 and native inspection, and 179
+      online links pass. Original failures remain preserved. The native
+      retention successor is consumed with exact predecessor runtime and
+      wheel rollback supply retained. These observations supersede earlier
+      partial delivery without accepting shared JavaScript semantics,
+      same-attempt warnings, applicability, or risk admission.
       OpenSpec 1.14.0 reaches braces 3.0.3. Its single high-severity advisory
       propagates through four npm findings; native OSV names one raw advisory.
       Enforce the expressly approved, expiring development-only disposition
@@ -377,8 +392,14 @@
       validator. The data-only review also distinguishes actual acceptance
       from defined criteria for production, shared assets, and critical chains;
       restore that qualifier at the data owner without staged team adoption.
-      Complete shared and adopter qualification and
-      next-edition delivery on both Forges before claiming closure. Archive
+      Signed v7.0.12 delivery and native aftercare are complete. Superseded
+      v7.0.10 downloads, package, and link retire while signed tags, source,
+      original note prefixes, and evidence remain. v7.0.11 is the qualified
+      rollback. The absorbed old proposal retires through native publication
+      CAS. Exact duplicate downloads retire locally with the frozen original
+      preserved; Forge statistics have not confirmed reclaimed remote bytes.
+      Complete shared quality, risk, and history acceptance on every required
+      adopter before claiming closure. Keep the owned lane for that work. Archive
       through the official owner only after every obligation has evidence;
       inspect the new OID,
       reprove and publish it, then retire absorbed owned lanes and branches.
