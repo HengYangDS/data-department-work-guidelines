@@ -63,10 +63,15 @@ ledger, method-pack plan, or local script supplies a second lifecycle.
 
 Local verification contacts neither Forge. GitLab is the organization's primary
 publication plane; GitHub is a complete independent repository and CI/CD plane,
-including alternative distribution when GitLab is unavailable. To claim that
-fallback, observe ETHOS publishing the selected object to GitHub during the
-unavailability and verify the exact remote ref. Configuration or an older green
-run does not establish it. Do not raw-push around a native refusal.
+including updates and distribution when GitLab is unavailable. Source updates
+still require native ETHOS admission and GitHub's actual source checks. Verify
+the selected object, exact remote ref, and required jobs for that operation;
+GitHub cannot supply GitLab's missing result. Qualified releases remain available
+from GitHub, while a new dual-Forge edition still requires
+[both release-cut checks](#versioned-releases). To claim an outage update,
+observe native ETHOS publication during that outage, then read back the ref and
+jobs. Configuration or an older green run does not prove it. Do not raw-push
+around a native refusal.
 
 Only `dev`, `main`, and `proposal/*` may publish. `candidate/dev` and `work/*`
 remain local. The [workspace policy](../../.ethos/workspace.toml) and
@@ -152,10 +157,12 @@ permission to ignore semantic defects or warnings.
 
 Each of the two gates requires both its document command and product-owned
 verifier to pass for the committed tree. That result alone does not complete the
-shared quality obligation: the accepted installed ETHOS contract must establish
-static semantics, unapproved-warning handling, and each code subject's applicable
-obligations. Different native scopes may jointly cover a property when that
-contract permits it; not every provider must cover every language.
+shared quality obligation. The required ETHOS quality upgrade is not yet
+available as a formally accepted installed contract for this repository. Static
+semantics, unapproved-warning handling, and each code subject's applicable
+obligations remain open until that integration is qualified. Different native
+scopes may jointly cover a property when the accepted contract permits it;
+not every provider must cover every language.
 Repository-authored reports or command output cannot supply the missing native
 evidence. Proof does not create a second lifecycle.
 
@@ -260,22 +267,22 @@ on every claimed host; exercise and record its actual npm version. Download each
 Forge's asset independently and compare its SHA-256. A bundle on disk, an
 install dry-run, or another platform's success is insufficient.
 
-GitHub release acquisition uses Node's native HTTP client at the exact
-repository, tag, and filename, without `gh` or a token. GitLab uses its
-project-scoped CI identity and refuses redirects before forwarding it. Both
-paths bound time and size and check the source-pinned digest before extraction.
-Each download is verified in its own temporary directory before exclusive
-publication. A concurrent call can reuse a verified target but cannot overwrite
-or remove it. Cleanup touches only the calling operation's temporary stage.
-Managed binary caches, bundle downloads, and their repository-local parents
-must be regular files and directories, with no symbolic links. Reject linked
-download parents before contacting either Forge or staging bytes outside the
-repository. Reusing an installed binary does not
-change its permissions. The verifier disables OpenSpec telemetry and update
-requests through the official environment option for that child process; the
-user's global settings remain unchanged.
-Archives exclude host extended attributes; inspection and extraction reject
-warning output even on a zero exit status.
+Acquire GitHub releases through Node's native HTTP client without `gh` or a
+token; GitLab uses its project-scoped CI identity and refuses redirects before
+forwarding it. Both routes select the exact repository, tag, and filename, bound
+time and size, and verify the pinned digest in an owned temporary directory
+before extraction or exclusive publication. A concurrent caller may reuse a
+verified target, never overwrite or remove it.
+
+Managed caches, bundle downloads, and their repository-local parents must be
+regular files and directories, not symbolic links. Refuse linked parents before
+network access or staging outside the repository. Preserve an existing binary's
+permissions; cleanup removes only the calling operation's temporary stage.
+
+Use OpenSpec's official child-process option to disable telemetry and update
+requests without changing global settings. Archives exclude host extended
+attributes; inspection and extraction reject native warnings even on a zero exit
+status.
 
 Bundled packages and native tools keep their upstream notices; this
 repository's MIT license does not relicense them. Both hosted planes audit
@@ -297,7 +304,8 @@ reviewed development checks using npm `braces` 3.0.3 and expires on 18 October
 checks every matching lock path, raw package identity and development group.
 A changed stable release, official fix, withdrawn or missing finding, or expired
 entry requires retirement and new qualification. Observe the public npm registry
-with isolated native configuration and cache and explicit online freshness.
+with isolated native configuration, cache, and explicit freshness during online
+dependency auditing.
 The registry cache lives in an owned OS temporary directory and is removed
 after the attempt. Retain configuration snapshots, reports, and diagnostics;
 the cache itself is neither evidence nor a CI artifact.

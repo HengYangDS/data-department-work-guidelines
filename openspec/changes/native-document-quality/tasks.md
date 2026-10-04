@@ -364,19 +364,14 @@ commitment. Original narration and dated evidence remain at
       downloads, and rollback; the v7.0.9 qualification does not erase the
       original failures.
 
-The completed quality deltas are officially synchronized at the existing native
-spec owner: 23 prior requirements and 104 scenarios are preserved, seven
-qualified scenarios are added, and both pending proof requirements remain
-unchanged. The native merge reports no warnings. This does not accept the
-shared product, archive the Change, or qualify a later release.
-
 Cold verification of signed source `f6eddacf` exposed one invalid test
 precondition: the directory-alias fixture treated the OS temporary directory as
 external even when it was inside the repository. Production still refused the
 link; the test expected the wrong refusal. The native test now derives its
 external target from the repository parent. Same-input RED and focused inside
-and ordinary-temp GREEN are preserved; full source, cold verification, proof,
-and both original source matrices for the repair remain pending. Preserve the
+and ordinary-temp GREEN are preserved. The signed source acceptance below
+completes full source, cold verification, proof, and both original source
+matrices for that repair. Preserve the
 failed cold run, the timed-out protected publication (both remote refs were
 independently observed), and the bounded advisor timeout without findings.
 Original Windows review 48244 failed after its tag-inventory regression exceeded
@@ -439,29 +434,66 @@ observation verified the unchanged pinned target and version in 0.135 seconds;
 it rules out a permanent startup fault at that later observation, not a unique
 historical cause. Preserve the original traces and independent guest evidence.
 
-The current repair reduces the actual Changelog command from 76 native Git
-starts to 39: one tag inventory, one complete reference batch, and all 37
-distinct native ancestry checks. RED input/batch regressions and complete
-commit-report cases are preserved. The installer now verifies the supplied
+Signed source `dbb6bc9de4b8df9c5dfebb89669aef17be3d6f8e`, tree
+`0660223311336554174cc5e7b05ed73d7d1f21e4`, reduces the actual Changelog command
+from 76 native Git starts to 39: one tag inventory, one complete reference
+batch, and all 37 distinct native ancestry checks. RED input/batch
+regressions and complete commit-report cases are preserved. The installer
+now verifies the supplied
 candidate's version once, then its exclusive copy's complete bytes and owned
 mode; concurrent targets retain independent version verification and existing
 modes. The redundant-startup regression failed with two calls before repair;
 copy-corruption, linked-parent, and concurrent-target cases pass afterward.
-The repaired working tree passes all 237 tests with zero skips. Official
+Local and fresh-HOME, denied-remote cold verification pass all 237 tests with
+zero skips and 70 conserved source hashes and modes. Installed full proof passes
+both default gates with attestation
+`aa4ae18337206051f877de1a896df1f8e52b4c198a3c1fa6c9c8e995861b53de`.
+All 18 original source jobs pass: GitLab pipelines 9490, 9491, and 9492;
+GitHub runs 37194647653, 37194805314, and 37194805649. Both peers' protected
+`dev` and `main` were read back at this OID. Official
 validation also caught an already-synced supply requirement still marked ADDED;
 its complete preserved block now uses MODIFIED, without a warning waiver or
-direct baseline edit. Final committed-source cold verification, installed proof,
-and actual Forge jobs remain pending for this repair. No task IDs or completion
-states change, and no deadline, test selection, default gate, or shared-product
-acceptance is weakened.
+direct baseline edit. The detached qualification checkout and absorbed proposal
+ref are retired through their native owners; the active lane remains. No task
+IDs or completion states change, and no deadline, test selection, default gate,
+or shared-product acceptance is weakened.
 
 The bounded Claude review identified one portability defect: the initial batch
 used Git's newer `-Z` option without a declared minimum version. Native batch
 defaults now use line delimiters; the existing reference grammar excludes
 control characters. One resolution call, completeness checks, all ancestry
 checks, and byte-preserving stdin remain. This removes the new Git-version
-requirement instead of adding a platform waiver. Qualify the changed source again;
-the preceding 237-test result does not certify this later edit.
+requirement instead of adding a platform waiver. The signed source acceptance
+above covers this correction, not subsequent edits.
+
+Official quality sync now preserves all 23 requirements and 111 prior scenarios
+and adds two qualified scenarios. Both product-pending proof requirements remain
+byte-identical and not synchronized. The native `writeUpdatedSpec` call omitted
+its reporting counts argument: writing completed before a reporting TypeError.
+The exact output, hashes, preservation, and strict 4/4 validation were
+independently checked; the write was not replayed. That synchronized
+working-tree successor still needs full verification, commit, proof, and
+publication.
+
+The current editorial repair clarifies unavailable shared ETHOS quality
+acceptance, independent GitHub source updates versus full dual-Forge edition
+qualification, and current governance/profile authority in DR-0004. It corrects
+historical citation wording and reduces duplicated member-map and DR-0001 prose
+without changing decision IDs, choices, duties, link targets, or task states.
+All seven department topic files retain their qualified bytes. The working-tree
+successor passed all 237 tests with zero skips, 28 native Markdown lint inputs,
+and strict official 4/4 validation. Online lychee checked 187 links with no
+errors; it retains the 42-redirect hint. The native audit observed 149 identities
+and the one approved, expiring development finding; original raw evidence stays
+with its producer. A later clarification of actual outage publication and this
+checkpoint still need verification before committing. The bounded nine-file
+Claude re-review timed out after 180 seconds without output; it is not approval.
+The earlier supplied findings and this self-review remain distinct evidence.
+Committed-source cold qualification, proof, and publication remain pending;
+`dbb6bc9` evidence cannot certify this successor. VERSION and the v7.0.12 tag
+and bundle remain unchanged. Tasks 2.33, 3.3, 3.5, and
+3.13 stay open for accepted shared integration, final release, closure,
+and retirement.
 
 [previous-tasks-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/blob/934293b8a6ab0600af75ea86fbdbdf36c46d1bd9/openspec/changes/native-document-quality/tasks.md
 [previous-tasks-github]: https://github.com/HengYangDS/data-department-work-guidelines/blob/934293b8a6ab0600af75ea86fbdbdf36c46d1bd9/openspec/changes/native-document-quality/tasks.md

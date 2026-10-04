@@ -205,6 +205,17 @@ Diagram, card, topic and evidence counts SHALL NOT determine validity.
 - **AND** successful output, nonzero exit status, warning refusal, and single
   replay of partial diagnostics keep their existing behavior.
 
+#### Scenario: Native history resolves one complete selection
+
+- **WHEN** Changelog validation selects its current comparison and tag refs
+- **THEN** one native Git batch resolves every selected reference to a commit
+  before native ancestry checks run for all distinct resolved pairs
+- **AND** missing objects, non-commit observations, incomplete line-delimited
+  output, or native warnings fail without accepting partial history
+- **AND** exact tag/HEAD identity, full test selection, and process deadlines
+  remain unchanged; native batch defaults add no Git version requirement,
+  local ancestry implementation, or cache.
+
 #### Scenario: Official validation evidence is incomplete or wrongly bound
 
 - **WHEN** a native report names another root, omits items or issue arrays,
@@ -991,6 +1002,17 @@ The old manifest and installer SHALL retire when their consumers are replaced.
 - **THEN** the installer verifies its digest, safe archive members, executable
   version, and source binding before admitting the tool
 - **AND** it preserves the destination's host installation and credentials.
+
+#### Scenario: An accepted native candidate is copied once
+
+- **WHEN** pinned supply and the candidate's native version pass before
+  exclusive installation
+- **THEN** the existing installer verifies complete copied-byte equality and
+  its owned POSIX mode without repeating the same version startup
+- **AND** a pre-existing or concurrent target retains independent verification
+  and its existing mode; changed copied bytes fail
+- **AND** actual installed consumers still run with unchanged deadlines, while
+  the installer's own temporary stage is removed before completion.
 
 #### Scenario: Native supply is incomplete or changed
 

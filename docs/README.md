@@ -37,11 +37,8 @@ project-specific facts, and records of actual work stay in the system that
 produced them. Link to those sources; do not copy them into a second set of
 general guidelines.
 
-[OpenSpec and ETHOS](governance/ethos.md) govern repository changes.
-[Decision records](decisions/README.md) retain only choices that cannot be
-reconstructed from current rules. Git history preserves completed Changes;
-the current tree need not carry their redundant copies. Historical references
-name the full commit and original path. They provide context, not current rules
-or proof, and do not retrospectively certify work
-done before the lifecycle existed. A readable route and passing repository
-checks do not prove team adoption.
+[OpenSpec and ETHOS](governance/ethos.md) own repository change authority and
+historical-source recovery and retirement. [Decision records](decisions/README.md)
+keep choices that current rules alone cannot explain. Historical sources provide
+context, not current rules, proof, or retrospective lifecycle certification.
+A readable route and passing repository checks do not prove team adoption.

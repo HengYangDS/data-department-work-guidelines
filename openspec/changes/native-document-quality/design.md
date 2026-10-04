@@ -366,6 +366,12 @@ organization publication plane; GitHub is an independent complete repository and
 CI/CD plane. Each must qualify its own source, Release object, downloaded bytes,
 and declared offline hosts. One plane's success supplies no result to the other.
 
+GitHub source updates may proceed through native admission and that peer's
+actual checks while GitLab is unavailable; qualified releases remain
+distributable there. A new dual-Forge edition still requires both release-cut
+matrices. Preserve this distinction without narrowing GitHub to a snapshot or
+inventing evidence for the unavailable peer.
+
 Keep one Changelog with neutral local version headings and clearly labeled
 GitLab/GitHub history links. Native `publication.peers[].forge_repository` owns
 web coordinates; do not infer ports from Git transport. Each native route

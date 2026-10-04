@@ -46,8 +46,10 @@ Source acceptance and delivery to the two Forges require separate observations.
 GitLab remains the organization release plane; GitHub has an independent
 complete repository and CI/CD plane. Candidate and work branches remain local.
 The [current governance contract](../governance/ethos.md) owns publishable refs;
-contributor procedures and relevant Changes own commands, runner selection, and
-profile fields.
+it also owns runner boundaries and default gates. The
+[contributor route](../../CONTRIBUTING.md) owns procedures; the native
+[profile](../../.ethos/profile.toml) owns its actual fields. Completed Changes
+explain earlier decisions, not current configuration.
 
 ## Evidence and Revisit
 
@@ -56,8 +58,10 @@ records the separation of decision rationale, methods, and Change authority. The
 English and release-truth correction
 ([GitLab][english-gitlab] · [GitHub][english-github])
 reaffirms that boundary without claiming the original adoption followed a later
-lifecycle. Both cited designs name Git commit
-`c8599ce9c91ed5f988abd6b3f3011ac94430283d` and their exact historical paths.
+lifecycle. Both designs are cited at Git commit
+`c8599ce9c91ed5f988abd6b3f3011ac94430283d`, at the exact historical paths linked
+below. The commit and paths identify the durable sources; Forge links are
+convenience routes at the declared repository coordinates.
 These records explain the choice, not current product behavior or
 remote delivery. [Repository governance](../governance/ethos.md) and the
 [official OpenSpec workspace](../../openspec/README.md) own the current rules.

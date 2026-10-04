@@ -17,6 +17,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Clarify pending ETHOS quality acceptance, GitHub outage updates versus
+  dual-Forge edition qualification, and current authority links in governance
+  and decision records. Preserve stable decisions and historical-source limits.
 - Resolve all Changelog references in one native Git batch. Keep every distinct
   ancestry check and reject missing, non-commit, or incomplete observations.
 - Verify each supplied native binary's version once before exclusive copying,

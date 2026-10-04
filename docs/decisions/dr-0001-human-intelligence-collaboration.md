@@ -24,10 +24,10 @@ authorization, judgment, and accountability for consequences clear.
 ## Decision
 
 Use **human–AI collaboration** for the overall relationship and Agent for a
-specific executing or reasoning entity. People set direction; intelligence
-extends capacity; accountability stays with people. Use intelligence to
-accomplish the task, judge against reality, and keep accountability human. The
-name does not change authorization or verification duties.
+specific executing or reasoning entity. People set direction and remain
+accountable. Intelligence extends their capacity to accomplish the task; judge
+its results against reality. The name does not change authorization or
+verification duties.
 
 ## Alternatives Rejected
 
