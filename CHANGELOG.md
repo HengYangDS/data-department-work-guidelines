@@ -17,6 +17,11 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Use native OSV dependency auditing with complete raw findings, bounded
+  execution, and always-retained CI evidence. Limit the human-approved exception
+  to its exact development input and expiry; unrelated findings still block.
+- Supply official raw native binaries through the existing installer and
+  offline bundle, checking exact sizes and digests without repackaging.
 - Extract verified data and native-tool archives under the current executor's
   ownership, without requiring container permission to adopt a packaging
   machine's user identity. Preserve native failure and timeout diagnostics.

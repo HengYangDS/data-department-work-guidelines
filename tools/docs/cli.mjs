@@ -1,6 +1,6 @@
 import { readBundleRecord } from "../ci/offline-bundle.mjs";
 import { checkChangelog } from "./changelog.mjs";
-import { checkCi } from "./ci.mjs";
+import { auditDependencies, checkCi } from "./ci.mjs";
 import {
   checkDocumentMetadata,
   checkLinks,
@@ -88,6 +88,10 @@ try {
       if (arguments_.length) throw new Error("lint accepts no arguments");
       lintMarkdown();
       break;
+    case "audit":
+      if (arguments_.length) throw new Error("audit accepts no arguments");
+      auditDependencies();
+      break;
     case "prose":
       if (arguments_.length) throw new Error("prose accepts no arguments");
       await checkProse();
@@ -120,7 +124,7 @@ try {
       break;
     default:
       throw new Error(
-        "usage: node tools/docs/cli.mjs verify|check|format|lint|prose|links [--online]|changelog|boundary|navigation|test",
+        "usage: node tools/docs/cli.mjs verify|check|format|lint|prose|links [--online]|changelog|boundary|navigation|audit|test",
       );
   }
 } catch (error) {

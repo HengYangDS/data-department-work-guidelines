@@ -4,6 +4,11 @@ import { parse as parseShell } from "shell-quote";
 import { parse as parseToml } from "smol-toml";
 import { documentMetadata, nativeTomlFormatter } from "./content.mjs";
 import {
+  dependencyPolicyPath,
+  parseDependencyPolicy,
+  validateDependencyInput,
+} from "./ci.mjs";
+import {
   headingLevel,
   headingText,
   markdownLinkDestinations,
@@ -379,6 +384,7 @@ export function checkConfigurationLayout(repository = root) {
     ".config/checks/format/prettier.toml",
     ".config/checks/format/toml.toml",
     ".config/checks/links/lychee.toml",
+    dependencyPolicyPath,
     ".config/checks/markdown/markdownlint.toml",
     ".config/checks/prose/vale.ini",
     ".config/checks/prose/styles/Plain/Concise.yml",
@@ -457,6 +463,16 @@ export function checkConfigurationLayout(repository = root) {
     );
   }
   nativeTomlFormatter(repository);
+  const dependencyPolicy = parseDependencyPolicy(
+    readFileSync(path.join(repository, dependencyPolicyPath), "utf8"),
+  );
+  if (existsSync(path.join(repository, "package-lock.json")))
+    validateDependencyInput(
+      JSON.parse(
+        readFileSync(path.join(repository, "package-lock.json"), "utf8"),
+      ),
+      dependencyPolicy,
+    );
   const vale = JSON.parse(
     run(
       nativeToolBinary("vale"),

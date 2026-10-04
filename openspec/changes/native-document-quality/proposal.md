@@ -89,8 +89,13 @@ linter beside the current stack would leave the duplication intact.
   same lexer to verified stable 1.12.0, preserving native operator boundaries
   and qualifying its new lock and offline supply without a second parser.
 - Extend the existing native-tool installation and offline bundle owners to
-  supply both Vale and lychee through one manifest. Remove the replaced entry,
+  supply Vale, lychee, and official OSV Scanner binaries through one manifest.
+  Remove the replaced entry,
   configurations, packages, and adapters.
+- Replace the superseded npm audit consumers with native OSV raw and disposition
+  scans. Preserve full findings and failure evidence on both Forges. Enforce the
+  expressly approved development exception at the existing input boundary;
+  retire that temporary logic when accepted ETHOS risk admission replaces it.
 - Make bundle acquisition safe for concurrent calls: verify an owned temporary
   output before exclusive publication and never remove a shared target on
   failure. Reject linked binary-cache and bundle-download paths before remote

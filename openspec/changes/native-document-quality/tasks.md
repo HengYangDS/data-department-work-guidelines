@@ -309,15 +309,23 @@
       Reject disconnected or unverified owners; prove complete test selection,
       single execution, semantic diagnostics, and preserved warnings through
       the actual installed command plane.
-      Integration remains pending. The current locked OpenSpec 1.14.0 reaches
-      braces 3.0.3, whose single high-severity advisory propagates through four
-      npm package findings. As observed on 2026-10-04, accepted ETHOS and the
-      installed adopter runtimes remain at `1b30232e`; unaccepted signed source
-      `ef67c584` carries the Python-provider repair but has not passed required
-      security acceptance. Qualify selected schema, inputs, and mitigation
-      through the native audit owner, including supported custom schemas,
-      before dependent publication. Do not downgrade, hide findings, waive
-      security, or call a Git transport repair full shared acceptance.
+      Integration remains pending. Installed minimal finite-input repair
+      `4a258689` closes the original changed-plan and proof hangs, not the shared
+      semantic quality contract or formal product release. Source hashes, modes,
+      and refs are conserved; the prior exact runtime was removed by native
+      cleanup, while same-source and wheel fallback is retained. Qualify the
+      product-owned retention repair before claiming exact rollback.
+      OpenSpec 1.14.0 reaches braces 3.0.3. Its single high-severity advisory
+      propagates through four npm findings; native OSV names one raw advisory.
+      Enforce the expressly approved, expiring development-only disposition
+      through the existing input owner and native OSV policy. Preserve complete
+      raw reports separately, reject unrelated findings and changed or obsolete
+      applicability, and retain failure evidence on both CI planes. Qualify
+      six-host raw binary supply, cold installation, and both Forge matrices.
+      Replace the temporary input guard with accepted ETHOS risk admission in
+      the same integration; do not keep a private schema or duplicate controller.
+      Neither the exception nor the finite-input repair proves production
+      security, shared-product acceptance, or publication.
 - [ ] 3.13 Qualify the accepted product's reusable release-history identity
       boundary and reconcile every audited affected adopter. Bind links to
       applicable declared peers and native reference resolution; distinguish

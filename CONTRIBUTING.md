@@ -20,14 +20,15 @@ Node installation owner before running repository commands. npm checks its
 native declaration before `install`, `ci`, and `run`; do not disable it with
 `--force` or a policy override. Version matching is a prerequisite, not proof of
 correct source. Install the locked dependencies with `npm ci --ignore-scripts`.
-Use the Vale and lychee versions pinned in the
+Use the Vale, lychee, and OSV Scanner versions pinned in the
 [native supply manifest](.config/supply/native.json), through your platform's
 existing installation owner or the repository-local installer. To install
-previously supplied archives, run each tool through the same entry:
+previously supplied assets, run each tool through the same entry:
 
 ```text
 node tools/ci/install-native.mjs vale --asset VALE_ARCHIVE
 node tools/ci/install-native.mjs lychee --asset LYCHEE_ARCHIVE
+node tools/ci/install-native.mjs osv-scanner --asset OSV_BINARY
 ```
 
 Then run:
@@ -43,8 +44,17 @@ native prose and terminology, decision and navigation boundaries, the official
 OpenSpec workspace, the changelog/version contract, CI declarations, and
 negative tests. `npm run prose` runs the same locked spelling, prose, and
 terminology checks without the rest of the verification graph. Run
-`npm audit --audit-level=moderate` separately when online before source
-acceptance; both hosted CI planes require it. This audit covers the locked
+`node tools/docs/cli.mjs audit` separately when online before source acceptance;
+both hosted CI planes require it and retain its evidence even on failure.
+The native OSV audit preserves all raw findings before applying the
+[native disposition](.config/checks/dependencies/policy.toml). That policy admits
+only the expressly approved, expiring development exception. An unapproved raw
+finding remains blocking even if absent from the later scan. Changed input,
+expired exception, unavailable scan, or upstream fix fails.
+The stable-version observation uses the public npm registry, isolated native
+configuration and cache, and explicit online freshness.
+The temporary repository input check is not general ETHOS risk admission.
+This audit covers the locked
 repository packages, not the npm executable bundled with Node. The offline
 repository verifier does not contact either Forge.
 
@@ -118,7 +128,7 @@ npm run verify
 ```
 
 The installer verifies the bundle before extraction, uses `npm ci --offline` and
-the same pinned Vale and lychee asset paths, and never downloads a missing tool.
+the same pinned native asset paths, and never downloads a missing tool.
 Archive extraction keeps the current executor's ownership; the packaging
 machine's account identity grants no permission on the destination.
 Obtain the bundle from either Forge while online or transfer it separately;
@@ -145,9 +155,10 @@ GitLab's `offline:verify:linux`, `offline:verify:macos`, and
 **after** its own package and Release are available. Tag-push `docs:verify:<os>`
 jobs check source; they do not qualify the offline asset. Each job obtains the
 same package through the current project's CI identity, not through GitHub or an
-operator's credentials. Native GitLab runners also need the manifest-pinned
-Vale and lychee archives in this project's registry before online source jobs can
-run; a missing archive is not permission to add a GitHub fallback. Proposal and
+operator's credentials. Native GitLab runners also need every manifest-pinned
+native asset in this
+project's registry before online source jobs can run; a missing asset is not
+permission to add a GitHub fallback. Proposal and
 merge-request jobs must use project-locked review runners, while protected
 branches and release jobs use separate trusted runners and workspaces. For
 credential transport admission, follow
@@ -211,15 +222,16 @@ Change authority.
    contributor-command diff under SemVer, then align `VERSION` and the charter.
    Record upcoming changes under `Unreleased` in `CHANGELOG.md`; do not assign a
    release date before the release cut. Run `npm ci --ignore-scripts` and
-   `npm audit --audit-level=moderate` on the intended Work Lane. The full source
+   `node tools/docs/cli.mjs audit` on the intended Work Lane. The full source
    check follows the new bundle record in Step 2. Do not tag a merely prepared
    edition.
 
-2. Supply every platform archive and upstream license notice under `tools` in
+2. Supply every platform asset and upstream license notice under `tools` in
    [the native supply manifest](.config/supply/native.json). Obtain their exact
    bytes from the declared sources or an already qualified mirror. Use two local
-   directories outside Git: `ASSET_DIR/vale/`, `ASSET_DIR/lychee/`,
-   `LICENSE_DIR/vale/`, and `LICENSE_DIR/lychee/`. The builder checks every
+   directories outside Git, with `ASSET_DIR/TOOL/` and `LICENSE_DIR/TOOL/` for
+   every declared tool. OSV Scanner uses its official raw binary, not a repacked
+   archive. The builder checks every
    name, SHA-256, npm package, and license notice; it does not silently download
    missing inputs. npm package notices may be dedicated license files or an
    explicit readme License section agreeing with the package's native license

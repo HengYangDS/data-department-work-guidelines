@@ -302,6 +302,7 @@ export function nativeToolBinary(tool) {
     (managedFileExists(cached) ? cached : descriptor.binary + suffix);
   const version = run(selected, ["--version"], {
     capture: true,
+    rejectStderr: true,
     timeout: 10_000,
   }).trim();
   if (version !== descriptor.versionOutput) {

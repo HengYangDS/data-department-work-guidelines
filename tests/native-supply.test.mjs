@@ -268,9 +268,13 @@ test("persistent native installer cleanup errors remain failures", async (contex
   }
 });
 
-test("one supply manifest declares Vale and lychee without a retired entry", () => {
+test("one supply manifest declares the selected native tools without a retired entry", () => {
   assert.equal(manifest.schemaVersion, 1);
-  assert.deepEqual(Object.keys(manifest.tools), ["lychee", "vale"]);
+  assert.deepEqual(Object.keys(manifest.tools), [
+    "lychee",
+    "vale",
+    "osv-scanner",
+  ]);
   const vale = manifest.tools.vale;
   assert.deepEqual(Object.keys(vale.assets).sort(), [
     "darwin-arm64",
@@ -300,6 +304,119 @@ test("one supply manifest declares Vale and lychee without a retired entry", () 
     fs.existsSync(path.join(root, "tools/ci/install-lychee.mjs")),
     false,
   );
+});
+
+test("official OSV supply pins raw binaries and notices for every native host", () => {
+  const descriptor = manifest.tools["osv-scanner"];
+  assert.ok(descriptor, "the existing supply owner must declare OSV Scanner");
+  assert.equal(descriptor.format, "binary");
+  assert.deepEqual(Object.keys(descriptor.assets).sort(), [
+    "darwin-arm64",
+    "darwin-x64",
+    "linux-arm64",
+    "linux-x64",
+    "win32-arm64",
+    "win32-x64",
+  ]);
+  for (const [key, asset] of Object.entries(descriptor.assets)) {
+    const selected = selectedAsset("osv-scanner", ...key.split("-"));
+    assert.equal(selected.format, "binary");
+    assert.equal(selected.size, asset.size);
+    assert.ok(selected.size > 32 * 1024 * 1024);
+    assert.ok(selected.size < 64 * 1024 * 1024);
+    assert.match(selected.sha256, /^[0-9a-f]{64}$/u);
+    assert.match(selected.url, /google\/osv-scanner\/releases\/download/u);
+  }
+  assert.deepEqual(Object.keys(descriptor.licenses), ["LICENSE"]);
+  assert.match(descriptor.licenses.LICENSE.sha256, /^[0-9a-f]{64}$/u);
+});
+
+test("raw native installation verifies bytes before execution without archive coercion", async (context) => {
+  const descriptor = manifest.tools["osv-scanner"];
+  assert.ok(descriptor, "raw supply must be declared before installation");
+  const selected = selectedAsset("osv-scanner");
+  const target = path.join(
+    root,
+    "build/runtime/tool-cache/osv-scanner",
+    selected.version,
+    selected.key,
+    selected.binaryName,
+  );
+  const temporaryAsset = fs.mkdtempSync(
+    path.join(os.tmpdir(), "ddwg-raw-native-"),
+  );
+  const asset = path.join(temporaryAsset, selected.name);
+  const bytes = Buffer.from("bounded raw native fixture");
+  fs.writeFileSync(asset, bytes);
+  const pin = descriptor.assets[selected.key];
+  const original = { ...pin };
+  const actualSpawn = childProcess.spawnSync;
+  const actualStat = fs.lstatSync;
+  const actualChmod = fs.chmodSync;
+  const actualTemporary = fs.mkdtempSync;
+  const modes = [];
+  const stages = [];
+  let published = false;
+  const mocks = [
+    context.mock.method(fs, "mkdtempSync", (...args) => {
+      const stage = actualTemporary(...args);
+      stages.push(stage);
+      return stage;
+    }),
+    context.mock.method(fs, "lstatSync", (file, options) =>
+      file === target
+        ? published
+          ? { isFile: () => true, isSymbolicLink: () => false }
+          : undefined
+        : actualStat(file, options),
+    ),
+    context.mock.method(fs, "chmodSync", (file, mode) => {
+      modes.push(file);
+      actualChmod(file, mode);
+    }),
+    context.mock.method(fs, "copyFileSync", (_source, destination, flags) => {
+      assert.equal(destination, target);
+      assert.equal(flags, fs.constants.COPYFILE_EXCL);
+      published = true;
+    }),
+    context.mock.method(childProcess, "spawnSync", (command, args, options) => {
+      assert.notEqual(command, "tar", "a raw binary is not an archive");
+      if (command === target || path.basename(command) === selected.name) {
+        if (command !== target)
+          assert.deepEqual(fs.readFileSync(command), bytes);
+        return { status: 0, stdout: selected.versionOutput, stderr: "" };
+      }
+      return actualSpawn(command, args, options);
+    }),
+  ];
+  pin.sha256 = createHash("sha256").update(bytes).digest("hex");
+  pin.size = bytes.length;
+  syncBuiltinESMExports();
+  try {
+    fs.writeFileSync(asset, "corrupt");
+    await assert.rejects(
+      install({ tool: "osv-scanner", assetFile: asset }),
+      /digest|size/u,
+    );
+    assert.equal(published, false);
+    fs.writeFileSync(asset, bytes);
+    assert.equal(
+      await install({ tool: "osv-scanner", assetFile: asset }),
+      target,
+    );
+    assert.equal(published, true);
+    assert.equal(modes.includes(target), false);
+    assert.equal(stages.length, 2);
+    assert.equal(
+      stages.every((stage) => !fs.existsSync(stage)),
+      true,
+    );
+  } finally {
+    Object.assign(pin, original);
+    for (const mock of mocks) mock.mock.restore();
+    syncBuiltinESMExports();
+    await fsPromises.rm(temporaryAsset, { recursive: true, force: true });
+  }
 });
 
 test("native extraction rejects links, duplicates, empty and unpaired listings", () => {

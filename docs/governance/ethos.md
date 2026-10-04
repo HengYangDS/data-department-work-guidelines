@@ -246,12 +246,13 @@ unsupported. Git's native `.gitattributes` keeps tracked text at LF on every OS.
 | Offline installation | Uses the source-bound bundle and no replacement download.        |
 
 The [supply manifest](../../.config/supply/native.json) pins Vale and lychee
-archives by platform and SHA-256. Explicit CI download and a supplied `--asset`
-archive are different operations. Verify digests before extraction.
+archives and official OSV Scanner binaries by platform and SHA-256. Raw binaries
+also have exact byte limits. Explicit CI download and a supplied `--asset` file
+are different operations. Verify bytes before extraction or execution.
 
 The [bundle record](../../.config/release/offline-bundle.json) binds edition,
 Node major, complete package manifest, lockfile, and native supply. The bundle
-contains the complete npm cache, every declared native archive, and upstream
+contains the complete npm cache, every declared native asset, and upstream
 notices. It does not duplicate npm's version policy or impersonate ETHOS.
 
 For offline qualification, install and run the full graph without remote supply
@@ -276,11 +277,31 @@ user's global settings remain unchanged.
 Archives exclude host extended attributes; inspection and extraction reject
 warning output even on a zero exit status.
 
-Bundled packages, Vale, and lychee keep their upstream notices; this
+Bundled packages and native tools keep their upstream notices; this
 repository's MIT license does not relicense them. Both hosted planes audit
-locked repository dependencies for moderate-or-higher advisories during online
-supply. That audit does not qualify the npm executable bundled with Node. Local
-source verification remains independent of the network.
+all locked repository dependencies during online supply. OSV Scanner owns the
+native finding and disposition results. Keep the undisposed raw report, source
+lock and policy snapshots, standard output, standard error, and exit statuses
+separately from the decision result; the latter removes ignored findings,
+even with `--all-vulns`. Both CI planes retain complete audit evidence on failure.
+An unavailable, incomplete, warning-bearing, changed-input, or unapproved finding
+blocks execution. A passing later scan cannot clear an unapproved raw finding.
+The audit does not qualify the npm executable bundled with Node.
+Local source verification remains independent of the network.
+
+The [native policy](../../.config/checks/dependencies/policy.toml) carries only
+the native `IgnoredVulns` fields. Its single human-approved exception is limited
+to
+reviewed development checks using npm `braces` 3.0.3 and expires on 18 October
+2026; it is not a production or arbitrary-input waiver. The existing input owner
+checks every matching lock path, raw package identity and development group.
+A changed stable release, official fix, withdrawn or missing finding, or expired
+entry requires retirement and new qualification. Observe the public npm registry
+with isolated native configuration and cache and explicit online freshness.
+This temporary repository boundary must be replaced by accepted ETHOS risk
+admission, not preserved as a private
+second policy. Neither the exception nor this source check certifies the shared
+ETHOS product or its release.
 
 ## Runner and Transport Boundaries
 

@@ -1,12 +1,627 @@
 import assert from "node:assert/strict";
+import childProcess from "node:child_process";
+import {
+  cpSync,
+  mkdtempSync,
+  mkdirSync,
+  readFileSync,
+  readdirSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
+import os from "node:os";
+import { syncBuiltinESMExports } from "node:module";
+import path from "node:path";
 import { test } from "node:test";
 import YAML from "yaml";
 import { validateCi } from "../tools/docs/ci.mjs";
-import { assertNodeRuntime, readText } from "../tools/docs/runtime.mjs";
+import * as ci from "../tools/docs/ci.mjs";
+import { assertNodeRuntime, readText, root } from "../tools/docs/runtime.mjs";
 
 const github = readText(".github/workflows/docs-verify.yml");
 const gitlab = readText(".gitlab-ci.yml");
 const offline = readText(".github/workflows/offline-verify.yml");
+
+const dependencyPolicy = `[[IgnoredVulns]]
+id = "GHSA-vfj7-8cjw-p6xm"
+ignoreUntil = 2026-10-18
+reason = "Human-approved reviewed development checks only; retain complete raw findings."
+`;
+
+test("the bounded native disposition admits only the approved development input", () => {
+  const policy = ci.parseDependencyPolicy(dependencyPolicy);
+  const lock = JSON.parse(readText("package-lock.json"));
+  const current = new Date("2026-10-04T00:00:00Z");
+  assert.doesNotThrow(() => ci.validateDependencyInput(lock, policy, current));
+  for (const mutate of [
+    (copy) => {
+      copy.packages["node_modules/braces"].dev = false;
+    },
+    (copy) => {
+      copy.packages["node_modules/braces"].version = "3.0.4";
+    },
+    (copy) => {
+      delete copy.packages["node_modules/braces"];
+    },
+    (copy) => {
+      copy.packages["node_modules/other/node_modules/braces"] = {
+        ...copy.packages["node_modules/braces"],
+        dev: false,
+      };
+    },
+  ]) {
+    const changed = structuredClone(lock);
+    mutate(changed);
+    assert.throws(
+      () => ci.validateDependencyInput(changed, policy, current),
+      /approved|development|braces/u,
+    );
+  }
+  assert.throws(
+    () =>
+      ci.validateDependencyInput(
+        lock,
+        policy,
+        new Date("2026-10-18T00:00:00Z"),
+      ),
+    /expired/u,
+  );
+  for (const invalid of [
+    dependencyPolicy.replace("GHSA-vfj7-8cjw-p6xm", "OSV-OTHER"),
+    `${dependencyPolicy}\nscope = { name = "braces" }\n`,
+    `${dependencyPolicy}\n[[PackageOverrides]]\nignore = true\n`,
+  ]) {
+    assert.throws(
+      () => ci.parseDependencyPolicy(invalid),
+      /native|approved|policy/u,
+    );
+  }
+});
+
+test("native raw evidence must cover the exact input and retain every finding", () => {
+  const policy = ci.parseDependencyPolicy(dependencyPolicy);
+  const lock = JSON.parse(readText("package-lock.json"));
+  const identities = ci.validateDependencyInput(
+    lock,
+    policy,
+    new Date("2026-10-04T00:00:00Z"),
+  );
+  const report = {
+    results: [
+      {
+        source: { path: "package-lock.json", type: "lockfile" },
+        packages: [...identities.values()].map((identity) => ({
+          package: identity,
+          dependency_groups: ["dev"],
+        })),
+      },
+    ],
+  };
+  const braces = report.results[0].packages.find(
+    (entry) => entry.package.name === "braces",
+  );
+  braces.vulnerabilities = [
+    { id: "GHSA-vfj7-8cjw-p6xm", aliases: ["CVE-2026-93687"] },
+    { id: "OSV-UNRELATED" },
+  ];
+  assert.deepEqual(
+    ci.validateDependencyEvidence(report, identities, policy, 1),
+    {
+      findings: 2,
+      approvedFindings: 1,
+    },
+  );
+  assert.equal(
+    braces.vulnerabilities.length,
+    2,
+    "admission must not filter raw evidence",
+  );
+  for (const mutate of [
+    (copy) => {
+      copy.results[0].source.path = "../other/package-lock.json";
+    },
+    (copy) => {
+      copy.results[0].packages.pop();
+    },
+    (copy) => {
+      copy.results[0].packages.push(copy.results[0].packages[0]);
+    },
+    (copy) => {
+      copy.results[0].packages.find(
+        (entry) => entry.package.name === "braces",
+      ).dependency_groups = ["prod"];
+    },
+    (copy) => {
+      copy.results[0].packages.find(
+        (entry) => entry.package.name === "braces",
+      ).vulnerabilities = [];
+    },
+  ]) {
+    const changed = structuredClone(report);
+    mutate(changed);
+    assert.throws(
+      () => ci.validateDependencyEvidence(changed, identities, policy, 1),
+      /native|approved|input|finding/u,
+    );
+  }
+  assert.throws(
+    () => ci.validateDependencyEvidence(report, identities, policy, 0),
+    /exit|native/u,
+  );
+});
+
+test("actual native audit preserves the approved raw finding and blocks another advisory", () => {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-native-osv-"));
+  // Fixed native OSV database archives, produced by the official ZIP format.
+  const databases = [
+    "UEsDBBQAAAAIAAAARF2pSvlpjgAAAKkAAAAYAAAAR0hTQS12Zmo3LThjanctcDZ4bS5qc29uLY7BDoIwGIPfpWe2/IABw82T3vWkIWaOfzrMYGEENYR3dxiTXpp+bToj6Ac7dZ14CLbvUCGVpSQksE00+8NxJybTlmKr25fwxdvFyPWNNZZXIKOsECkJ2pyIqp/OkVDGsB5X4jLDK/1Ud0Y1g3UfPmFkF6udX7c65WKC26A0BywJ/k9CrCKXJHPUS718AVBLAQIUAxQAAAAIAAAARF2pSvlpjgAAAKkAAAAYAAAAAAAAAAAAAACAAQAAAABHSFNBLXZmajctOGNqdy1wNnhtLmpzb25QSwUGAAAAAAEAAQBGAAAAxAAAAAAA",
+    "UEsDBBQAAAAIAAAARF2pSvlpjgAAAKkAAAAYAAAAR0hTQS12Zmo3LThjanctcDZ4bS5qc29uLY7BDoIwGIPfpWe2/IABw82T3vWkIWaOfzrMYGEENYR3dxiTXpp+bToj6Ac7dZ14CLbvUCGVpSQksE00+8NxJybTlmKr25fwxdvFyPWNNZZXIKOsECkJ2pyIqp/OkVDGsB5X4jLDK/1Ud0Y1g3UfPmFkF6udX7c65WKC26A0BywJ/k9CrCKXJHPUS718AVBLAwQUAAAACAAAAERdt1qSG5QAAACrAAAAGgAAAE9TVi1GSVhUVVJFLVVOUkVMQVRFRC5qc29uLY7RCoJAEEX/ZZ7dZdQo8C3IIIgC04hCYl1na4lVcSUI8d8bI7gvl3sO3BG8fpJT9zf13rYNJBDKlUQIwNZcjqez2O4ueZGlojhk6X6dpxseXVtbY2lGIoyWIkSBixwx+eXKhDKG9DATtxE6pV/qQZCMQLr1Hz+QY7XpHJONcrxA1StNHqYA/l88qxBLlDGUUzl9AVBLAQIUAxQAAAAIAAAARF2pSvlpjgAAAKkAAAAYAAAAAAAAAAAAAACAAQAAAABHSFNBLXZmajctOGNqdy1wNnhtLmpzb25QSwECFAMUAAAACAAAAERdt1qSG5QAAACrAAAAGgAAAAAAAAAAAAAAgAHEAAAAT1NWLUZJWFRVUkUtVU5SRUxBVEVELmpzb25QSwUGAAAAAAIAAgCOAAAAkAEAAAAA",
+  ];
+  try {
+    mkdirSync(path.join(directory, ".config/checks/dependencies"), {
+      recursive: true,
+    });
+    cpSync(
+      path.join(root, ".config/checks/dependencies/policy.toml"),
+      path.join(directory, ci.dependencyPolicyPath),
+    );
+    const braces = JSON.parse(readText("package-lock.json")).packages[
+      "node_modules/braces"
+    ];
+    writeFileSync(
+      path.join(directory, "package-lock.json"),
+      JSON.stringify({
+        lockfileVersion: 3,
+        packages: { "": {}, "node_modules/braces": braces },
+      }),
+    );
+    mkdirSync(path.join(directory, "cache/osv-scalibr/npm"), {
+      recursive: true,
+    });
+    // A caller's broad ignore cannot shadow the explicitly selected native policy.
+    writeFileSync(
+      path.join(directory, "osv-scanner.toml"),
+      "[[PackageOverrides]]\nignore = true\n",
+    );
+    const environment = {
+      ...process.env,
+      OSV_SCALIBR_LOCAL_DB_CACHE_DIRECTORY: path.join(directory, "cache"),
+    };
+    writeFileSync(
+      path.join(directory, "cache/osv-scalibr/npm/all.zip"),
+      Buffer.from(databases[0], "base64"),
+    );
+    const accepted = ci.auditDependencies({
+      repository: directory,
+      offline: true,
+      environment,
+    });
+    const raw = JSON.parse(
+      readFileSync(path.join(accepted.evidence, "raw.json"), "utf8"),
+    );
+    const rawBytes = readFileSync(path.join(accepted.evidence, "raw.json"));
+    const decision = JSON.parse(
+      readFileSync(path.join(accepted.evidence, "decision.json"), "utf8"),
+    );
+    assert.equal(
+      raw.results[0].packages[0].vulnerabilities[0].id,
+      "GHSA-vfj7-8cjw-p6xm",
+    );
+    assert.equal(decision.results[0].packages[0].vulnerabilities, undefined);
+    assert.deepEqual(
+      JSON.parse(
+        readFileSync(path.join(accepted.evidence, "execution.json"), "utf8"),
+      ).execution.map((entry) => entry.status),
+      [1, 0],
+    );
+    writeFileSync(
+      path.join(directory, "cache/osv-scalibr/npm/all.zip"),
+      Buffer.from(databases[1], "base64"),
+    );
+    assert.throws(
+      () =>
+        ci.auditDependencies({
+          repository: directory,
+          offline: true,
+          environment,
+        }),
+      /unapproved dependency findings/u,
+    );
+    assert.deepEqual(
+      readFileSync(path.join(accepted.evidence, "raw.json")),
+      rawBytes,
+    );
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test("native audit refusal retains malformed, warning, failure and timeout output", (context) => {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-audit-refusal-"));
+  const actual = childProcess.spawnSync;
+  let response;
+  let calls = 0;
+  const mock = context.mock.method(
+    childProcess,
+    "spawnSync",
+    (command, args, options) => {
+      if (args[0] !== "scan") return actual(command, args, options);
+      calls++;
+      if (response === "timeout")
+        return actual(
+          process.execPath,
+          [
+            "-e",
+            'process.stdout.write("partial native report"); process.stderr.write("timeout diagnostic"); setTimeout(() => {}, 5000);',
+          ],
+          { ...options, timeout: 1000 },
+        );
+      if (response === "malformed") {
+        writeFileSync(
+          args[args.indexOf("--output-file") + 1],
+          "not a native report",
+        );
+        return { status: 0, stdout: "", stderr: "" };
+      }
+      return response;
+    },
+  );
+  syncBuiltinESMExports();
+  try {
+    mkdirSync(path.join(directory, path.dirname(ci.dependencyPolicyPath)), {
+      recursive: true,
+    });
+    writeFileSync(
+      path.join(directory, ci.dependencyPolicyPath),
+      dependencyPolicy,
+    );
+    cpSync(
+      path.join(root, "package-lock.json"),
+      path.join(directory, "package-lock.json"),
+    );
+    for (const result of [
+      { status: 1, stdout: "partial report", stderr: "native warning" },
+      { status: 127, stdout: "failed report", stderr: "execution failed" },
+      { status: 0, stdout: "", stderr: "" },
+      "malformed",
+      "timeout",
+    ]) {
+      response = result;
+      const before = calls;
+      assert.throws(
+        () => ci.auditDependencies({ repository: directory, offline: true }),
+        /native|ENOENT|JSON|Unexpected/u,
+      );
+      assert.equal(
+        calls,
+        before + 1,
+        "failed raw execution cannot reach disposition",
+      );
+    }
+    const evidenceRoot = path.join(directory, "build/evidence/dependencies");
+    const records = readdirSync(evidenceRoot).map((name) => {
+      const evidence = path.join(evidenceRoot, name);
+      const execution = JSON.parse(
+        readFileSync(path.join(evidence, "execution.json"), "utf8"),
+      );
+      return {
+        execution,
+        stdout: readFileSync(path.join(evidence, "raw.stdout"), "utf8"),
+        stderr: readFileSync(path.join(evidence, "raw.stderr"), "utf8"),
+      };
+    });
+    assert.equal(records.length, 5);
+    assert.ok(
+      records.some(
+        (entry) =>
+          entry.stderr === "native warning" &&
+          entry.stdout === "partial report",
+      ),
+    );
+    assert.ok(
+      records.some(
+        (entry) =>
+          entry.execution.execution[0].error &&
+          entry.stdout === "partial native report" &&
+          entry.stderr === "timeout diagnostic",
+      ),
+    );
+  } finally {
+    mock.mock.restore();
+    syncBuiltinESMExports();
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test("an unapproved raw finding cannot disappear between native scans", (context) => {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-audit-findings-"));
+  const actual = childProcess.spawnSync;
+  const lock = JSON.parse(readText("package-lock.json"));
+  const policy = ci.parseDependencyPolicy(dependencyPolicy);
+  const identities = ci.validateDependencyInput(
+    lock,
+    policy,
+    new Date("2026-10-04T00:00:00Z"),
+  );
+  const reports = [];
+  const mock = context.mock.method(
+    childProcess,
+    "spawnSync",
+    (command, args, options) => {
+      if (args[0] !== "scan") return actual(command, args, options);
+      const raw = reports.length === 0;
+      const report = {
+        results: [
+          {
+            source: {
+              type: "lockfile",
+              path: path.join(directory, "package-lock.json"),
+            },
+            packages: [...identities.values()].map((identity) => ({
+              package: identity,
+              dependency_groups: ["dev"],
+              ...(raw && identity.name === "braces"
+                ? {
+                    vulnerabilities: [
+                      { id: "GHSA-vfj7-8cjw-p6xm" },
+                      { id: "OSV-UNRELATED" },
+                    ],
+                  }
+                : {}),
+            })),
+          },
+        ],
+      };
+      reports.push(report);
+      writeFileSync(
+        args[args.indexOf("--output-file") + 1],
+        JSON.stringify(report),
+      );
+      return { status: raw ? 1 : 0, stdout: "", stderr: "" };
+    },
+  );
+  syncBuiltinESMExports();
+  try {
+    mkdirSync(path.join(directory, path.dirname(ci.dependencyPolicyPath)), {
+      recursive: true,
+    });
+    writeFileSync(
+      path.join(directory, ci.dependencyPolicyPath),
+      dependencyPolicy,
+    );
+    writeFileSync(
+      path.join(directory, "package-lock.json"),
+      JSON.stringify(lock),
+    );
+    assert.throws(
+      () => ci.auditDependencies({ repository: directory, offline: true }),
+      /unapproved dependency findings/u,
+    );
+    assert.equal(
+      reports.length,
+      2,
+      "both original native reports must be retained",
+    );
+    const evidenceRoot = path.join(directory, "build/evidence/dependencies");
+    const [scan] = readdirSync(evidenceRoot);
+    const evidence = path.join(evidenceRoot, scan);
+    for (const [index, mode] of ["raw", "decision"].entries()) {
+      assert.equal(
+        readFileSync(path.join(evidence, `${mode}.json`), "utf8"),
+        JSON.stringify(reports[index]),
+      );
+    }
+    assert.deepEqual(
+      JSON.parse(
+        readFileSync(path.join(evidence, "execution.json"), "utf8"),
+      ).execution.map((entry) => entry.status),
+      [1, 0],
+    );
+  } finally {
+    mock.mock.restore();
+    syncBuiltinESMExports();
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test("stable withdrawal observes the public registry without ambient npm policy", (context) => {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-audit-registry-"));
+  const actual = childProcess.spawnSync;
+  const lock = JSON.parse(readText("package-lock.json"));
+  const policy = ci.parseDependencyPolicy(dependencyPolicy);
+  const identities = ci.validateDependencyInput(
+    lock,
+    policy,
+    new Date("2026-10-04T00:00:00Z"),
+  );
+  const observations = [];
+  let version = "3.0.3";
+  let scans = 0;
+  const environment = {
+    ...process.env,
+    npm_config_registry: "https://mirror.invalid",
+    NPM_CONFIG_OFFLINE: "true",
+    npm_config_prefer_offline: "true",
+    npm_config_cache: path.join(directory, "ambient-cache"),
+    NPM_TOKEN: "fixture-only",
+    NODE_AUTH_TOKEN: "fixture-only",
+  };
+  const mock = context.mock.method(
+    childProcess,
+    "spawnSync",
+    (command, args, options) => {
+      if (args[1] === "view") {
+        observations.push({ args, options });
+        return { status: 0, stdout: JSON.stringify(version), stderr: "" };
+      }
+      if (args[0] !== "scan") return actual(command, args, options);
+      const raw = scans++ % 2 === 0;
+      writeFileSync(
+        args[args.indexOf("--output-file") + 1],
+        JSON.stringify({
+          results: [
+            {
+              source: {
+                type: "lockfile",
+                path: path.join(directory, "package-lock.json"),
+              },
+              packages: [...identities.values()].map((identity) => ({
+                package: identity,
+                dependency_groups: ["dev"],
+                ...(raw && identity.name === "braces"
+                  ? { vulnerabilities: [{ id: "GHSA-vfj7-8cjw-p6xm" }] }
+                  : {}),
+              })),
+            },
+          ],
+        }),
+      );
+      return { status: raw ? 1 : 0, stdout: "", stderr: "" };
+    },
+  );
+  syncBuiltinESMExports();
+  try {
+    mkdirSync(path.join(directory, path.dirname(ci.dependencyPolicyPath)), {
+      recursive: true,
+    });
+    writeFileSync(
+      path.join(directory, ci.dependencyPolicyPath),
+      dependencyPolicy,
+    );
+    writeFileSync(
+      path.join(directory, "package-lock.json"),
+      JSON.stringify(lock),
+    );
+    writeFileSync(
+      path.join(directory, ".npmrc"),
+      "registry=https://mirror.invalid\noffline=true\n",
+    );
+    const accepted = ci.auditDependencies({
+      repository: directory,
+      environment,
+    });
+    const { args, options } = observations[0];
+    for (const argument of [
+      "--registry=https://registry.npmjs.org",
+      "--offline=false",
+      "--prefer-online=true",
+      "--prefer-offline=false",
+      "--fetch-retries=0",
+    ])
+      assert.ok(
+        args.includes(argument),
+        `official observation requires ${argument}`,
+      );
+    assert.notEqual(
+      options.cwd,
+      directory,
+      "repository npm policy cannot influence the observation",
+    );
+    assert.equal(args[args.indexOf("--prefix") + 1], options.cwd);
+    assert.equal(options.env.npm_config_registry, undefined);
+    assert.equal(options.env.NPM_CONFIG_OFFLINE, undefined);
+    assert.equal(options.env.npm_config_offline, "false");
+    assert.equal(options.env.NPM_TOKEN, undefined);
+    assert.equal(options.env.NODE_AUTH_TOKEN, undefined);
+    assert.notEqual(options.env.npm_config_cache, environment.npm_config_cache);
+    for (const key of ["npm_config_userconfig", "npm_config_globalconfig"]) {
+      assert.equal(readFileSync(options.env[key], "utf8"), "");
+    }
+    const execution = JSON.parse(
+      readFileSync(path.join(accepted.evidence, "execution.json"), "utf8"),
+    );
+    assert.deepEqual(execution.execution[0].command.slice(1), args);
+    version = "3.0.4";
+    assert.throws(
+      () => ci.auditDependencies({ repository: directory, environment }),
+      /official stable braces changed/u,
+    );
+    assert.equal(scans, 2, "changed upstream cannot reach another native scan");
+    assert.equal(observations.length, 2);
+    const evidenceRoot = path.join(directory, "build/evidence/dependencies");
+    const retained = readdirSync(evidenceRoot).map((name) =>
+      readFileSync(
+        path.join(evidenceRoot, name, "stable-version.stdout"),
+        "utf8",
+      ),
+    );
+    assert.ok(retained.includes(JSON.stringify("3.0.4")));
+  } finally {
+    mock.mock.restore();
+    syncBuiltinESMExports();
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test("native audit refuses an input changed after raw evidence before disposition", (context) => {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-audit-drift-"));
+  const actual = childProcess.spawnSync;
+  let calls = 0;
+  const lock = JSON.parse(readText("package-lock.json"));
+  const policy = ci.parseDependencyPolicy(dependencyPolicy);
+  const identities = ci.validateDependencyInput(
+    lock,
+    policy,
+    new Date("2026-10-04T00:00:00Z"),
+  );
+  const mock = context.mock.method(
+    childProcess,
+    "spawnSync",
+    (command, args, options) => {
+      if (args[0] !== "scan") return actual(command, args, options);
+      calls++;
+      const packages = [...identities.values()].map((identity) => ({
+        package: identity,
+        dependency_groups: ["dev"],
+        ...(identity.name === "braces"
+          ? { vulnerabilities: [{ id: "GHSA-vfj7-8cjw-p6xm" }] }
+          : {}),
+      }));
+      writeFileSync(
+        args[args.indexOf("--output-file") + 1],
+        JSON.stringify({
+          results: [
+            {
+              source: {
+                type: "lockfile",
+                path: path.join(directory, "package-lock.json"),
+              },
+              packages,
+            },
+          ],
+        }),
+      );
+      writeFileSync(
+        path.join(directory, "package-lock.json"),
+        "changed after scan",
+      );
+      return { status: 1, stdout: "", stderr: "" };
+    },
+  );
+  syncBuiltinESMExports();
+  try {
+    mkdirSync(path.join(directory, path.dirname(ci.dependencyPolicyPath)), {
+      recursive: true,
+    });
+    writeFileSync(
+      path.join(directory, ci.dependencyPolicyPath),
+      dependencyPolicy,
+    );
+    writeFileSync(
+      path.join(directory, "package-lock.json"),
+      JSON.stringify(lock),
+    );
+    assert.throws(
+      () => ci.auditDependencies({ repository: directory, offline: true }),
+      /inputs changed/u,
+    );
+    assert.equal(calls, 1, "stale input cannot reach the native disposition");
+  } finally {
+    mock.mock.restore();
+    syncBuiltinESMExports();
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
 
 function changedGitLab(jobName, change) {
   const pipeline = YAML.parse(gitlab);
@@ -119,7 +734,7 @@ test("the repository check rejects an undeclared Node major", () => {
 test("both providers invoke one verifier on declared hosts", () => {
   const result = validateCi(github, gitlab);
   assert.equal(result.verifier, "npm run verify");
-  assert.equal(result.audit, "npm audit --audit-level=moderate");
+  assert.equal(result.audit, "node tools/docs/cli.mjs audit");
   assert.equal(result.nodeMajor, 26);
   assert.deepEqual(result.hosts, [
     "ubuntu-latest",
@@ -416,7 +1031,7 @@ test("both providers refuse to skip the dependency audit", () => {
     () =>
       validateCi(
         github.replace(
-          "run: npm audit --audit-level=moderate",
+          "run: node tools/docs/cli.mjs audit",
           "run: echo skipped",
         ),
         gitlab,
@@ -427,9 +1042,43 @@ test("both providers refuse to skip the dependency audit", () => {
     () =>
       validateCi(
         github,
-        gitlab.replace("- npm audit --audit-level=moderate", "- echo skipped"),
+        gitlab.replace("- node tools/docs/cli.mjs audit", "- echo skipped"),
       ),
     /dependency audit|native source supply/u,
+  );
+});
+
+test("both source planes preserve complete audit evidence after a failure", () => {
+  const workflow = YAML.parse(github);
+  const archive = workflow.jobs.verify.steps.find((step) =>
+    step.uses?.startsWith("actions/upload-artifact@"),
+  );
+  assert.ok(archive);
+  for (const changed of [undefined, "success()"])
+    assert.throws(
+      () =>
+        validateCi(
+          YAML.stringify({
+            ...workflow,
+            jobs: {
+              verify: {
+                ...workflow.jobs.verify,
+                steps: workflow.jobs.verify.steps.map((step) =>
+                  step === archive ? { ...step, if: changed } : step,
+                ),
+              },
+            },
+          }),
+          gitlab,
+          offline,
+        ),
+      /evidence|cannot skip/u,
+    );
+  const pipeline = YAML.parse(gitlab);
+  pipeline[".docs:verify"].artifacts.when = "on_success";
+  assert.throws(
+    () => validateCi(github, YAML.stringify(pipeline), offline),
+    /evidence/u,
   );
 });
 

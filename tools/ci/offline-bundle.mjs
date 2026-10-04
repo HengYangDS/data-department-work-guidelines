@@ -81,7 +81,11 @@ function lines(source) {
   return source.split(/\r?\n/u).filter(Boolean);
 }
 
-export function assertSafeBundleListing(namesSource, verboseSource) {
+export function assertSafeBundleListing(
+  namesSource,
+  verboseSource,
+  supply = readNativeSupply(),
+) {
   const names = lines(namesSource);
   const verbose = lines(verboseSource);
   if (!names.length || names.length !== verbose.length) {
@@ -89,8 +93,16 @@ export function assertSafeBundleListing(namesSource, verboseSource) {
   }
   const seen = new Set();
   let cacheFile = false;
-  const nativeFiles = new Set();
-  const licenseFiles = new Set();
+  const requiredFiles = new Set(["manifest.json"]);
+  const allowedDirectories = new Set(["", "native/", "licenses/"]);
+  for (const [tool, descriptor] of Object.entries(supply.tools)) {
+    allowedDirectories.add(`native/${tool}/`);
+    allowedDirectories.add(`licenses/${tool}/`);
+    for (const asset of Object.values(descriptor.assets))
+      requiredFiles.add(`native/${tool}/${asset.name}`);
+    for (const name of Object.keys(descriptor.licenses))
+      requiredFiles.add(`licenses/${tool}/${name}`);
+  }
   for (const [index, name] of names.entries()) {
     if (
       !name.startsWith("./") ||
@@ -120,7 +132,11 @@ export function assertSafeBundleListing(namesSource, verboseSource) {
     if (directory ? type !== "d" : type !== "-") {
       throw new Error(`non-regular offline bundle member: ${name}`);
     }
-    if (relative === "" || relative === "manifest.json") continue;
+    if (
+      (directory && allowedDirectories.has(relative)) ||
+      (!directory && requiredFiles.has(relative))
+    )
+      continue;
     if (
       relative === "npm-cache/" ||
       relative === "npm-cache/_cacache/" ||
@@ -130,42 +146,20 @@ export function assertSafeBundleListing(namesSource, verboseSource) {
       if (!directory) cacheFile = true;
       continue;
     }
-    if (relative === "native/") continue;
-    const native =
-      /^native\/(lychee|vale)\/(?:([A-Za-z0-9][A-Za-z0-9_.-]*\.(?:tar\.gz|zip)))?$/u.exec(
-        relative,
-      );
-    if (native) {
-      if (!directory && native[2]) nativeFiles.add(native[1]);
-      else if (!directory || native[2])
-        throw new Error(`unexpected offline bundle member: ${name}`);
-      continue;
-    }
-    if (relative === "licenses/") continue;
-    const license =
-      /^licenses\/(lychee|vale)\/(?:((?:LICENSE|LICENCE|COPYING|NOTICE)(?:-[A-Z0-9-]+)?))?$/u.exec(
-        relative,
-      );
-    if (license) {
-      if (!directory && license[2]) licenseFiles.add(license[1]);
-      else if (!directory || license[2])
-        throw new Error(`unexpected offline bundle member: ${name}`);
-      continue;
-    }
     throw new Error(`unexpected offline bundle member: ${name}`);
   }
-  if (
-    !seen.has("manifest.json") ||
-    !cacheFile ||
-    nativeFiles.size !== 2 ||
-    licenseFiles.size !== 2
-  ) {
+  if (!cacheFile || [...requiredFiles].some((member) => !seen.has(member))) {
     throw new Error("offline bundle is missing required members");
   }
   return names;
 }
 
-export function inspectBundle(bundlePath, record, source) {
+export function inspectBundle(
+  bundlePath,
+  record,
+  source,
+  supply = readNativeSupply(),
+) {
   validateBundleRecord(record, source);
   const archive = path.resolve(bundlePath);
   const stat = lstatSync(archive);
@@ -191,7 +185,7 @@ export function inspectBundle(bundlePath, record, source) {
     rejectStderr: true,
     timeout: 30_000,
   });
-  assertSafeBundleListing(names, verbose);
+  assertSafeBundleListing(names, verbose, supply);
   return { sha256: actual, version: record.version };
 }
 
@@ -230,7 +224,7 @@ function pinnedFile(directory, name, expectedDigest, kind) {
   }
   const safeName =
     kind === "asset"
-      ? /^[A-Za-z0-9][A-Za-z0-9_.-]*\.(?:tar\.gz|zip)$/u
+      ? /^[A-Za-z0-9][A-Za-z0-9_.-]*$/u
       : /^(?:LICENSE|LICENCE|COPYING|NOTICE)(?:-[A-Z0-9-]+)?$/u;
   if (typeof name !== "string" || !safeName.test(name)) {
     throw new Error(`unsafe offline bundle ${kind} name`);
@@ -360,7 +354,7 @@ export function assembleBundle({
       fileName,
       sha256: digestBytes(readFileSync(archive)),
     };
-    inspectBundle(archive, record, source);
+    inspectBundle(archive, record, source, native);
     return record;
   } catch (error) {
     if (created) rmSync(archive, { force: true });
@@ -547,24 +541,24 @@ export function npmCliPath({
   throw new Error("supported npm JavaScript entrypoint is unavailable");
 }
 
-function isolatedNpmEnvironment(
+export function isolatedNpmEnvironment(
   directory,
   cacheDirectory,
-  { offline = true } = {},
+  { offline = true, environment = process.env } = {},
 ) {
   const userConfig = path.join(directory, "empty-user.npmrc");
   const globalConfig = path.join(directory, "empty-global.npmrc");
   writeFileSync(userConfig, "");
   writeFileSync(globalConfig, "");
-  const environment = Object.fromEntries(
-    Object.entries(process.env).filter(
+  const isolated = Object.fromEntries(
+    Object.entries(environment).filter(
       ([key]) =>
         !/^npm_config_/iu.test(key) &&
         !["NPM_TOKEN", "NODE_AUTH_TOKEN"].includes(key),
     ),
   );
   return {
-    ...environment,
+    ...isolated,
     npm_config_force: "false",
     npm_config_userconfig: userConfig,
     npm_config_globalconfig: globalConfig,
@@ -594,7 +588,7 @@ export function installBundle({
       "node_modules already exists; preserve or remove it explicitly",
     );
   }
-  inspectBundle(archive, record, source);
+  inspectBundle(archive, record, source, readNativeSupply(repository));
   const temporary = mkdtempSync(path.join(os.tmpdir(), "ddwg-bundle-install-"));
   let startedNpmInstall = false;
   try {
@@ -945,7 +939,12 @@ export function readBundleRecord(repository = root) {
 
 export function verifyBundle({ bundlePath, record, repository = root }) {
   const archive = path.resolve(bundlePath);
-  inspectBundle(archive, record, sourceIdentity(repository));
+  inspectBundle(
+    archive,
+    record,
+    sourceIdentity(repository),
+    readNativeSupply(repository),
+  );
   const temporary = mkdtempSync(path.join(os.tmpdir(), "ddwg-bundle-check-"));
   try {
     run("tar", ["-xf", archive, "--no-same-owner", "-C", temporary], {
@@ -1059,7 +1058,7 @@ async function downloadBundle(request, target, fetcher, provider) {
       `${provider} release bundle download failed: HTTP ${response.status}`,
     );
   }
-  const limit = 128 * 1024 * 1024;
+  const limit = 512 * 1024 * 1024;
   const chunks = [];
   let size = 0;
   for await (const chunk of response.body) {

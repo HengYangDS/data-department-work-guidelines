@@ -207,11 +207,12 @@ Diagram, card, topic and evidence counts SHALL NOT determine validity.
 
 ### Requirement: Tool supply and portability require executed checks
 
-CI SHALL verify pinned Vale and lychee digests and audit locked dependencies
-online, separately from offline source checks. Public checks SHALL avoid POSIX
-shells and host paths; each claimed OS SHALL execute the full graph. Current
-command examples SHALL be checked against the installed CLI. GitLab jobs SHALL
-name purpose and platform; hidden phase templates SHALL own common steps.
+CI SHALL verify native-tool digests and audit all locked dependencies online
+with OSV Scanner, separately from offline source checks. Raw findings and
+disposition evidence SHALL stay distinct. Public checks SHALL avoid POSIX shells
+and host paths; each claimed OS SHALL execute the full graph. Current command
+examples SHALL be checked against the installed CLI. GitLab jobs SHALL name
+purpose and platform; hidden phase templates SHALL own common steps.
 
 #### Scenario: Verification job names omit the platform
 
@@ -237,8 +238,26 @@ name purpose and platform; hidden phase templates SHALL own common steps.
 
 - **WHEN** a current Markdown file contains a misspelling
 - **THEN** the locked spelling check rejects it without a local waiver.
-- **WHEN** the locked dependency audit reports a moderate-or-higher advisory
-- **THEN** each hosted job fails before running the repository verifier.
+- **WHEN** the native dependency audit reports an unapproved advisory, fails,
+  or provides incomplete evidence
+- **THEN** each hosted job fails before running the repository verifier
+- **AND** both Forges preserve complete raw findings and execution output.
+
+#### Scenario: The approved native disposition is scoped and expires
+
+- **WHEN** the exact human-approved native OSV entry is active
+- **THEN** the existing input boundary admits only npm `braces` 3.0.3 in
+  development paths, with its complete original raw finding retained
+- **AND** an unapproved raw advisory remains blocking even if absent from the
+  later scan; OSV alone applies its native ID disposition
+- **AND** stable-version observation selects the public npm registry with
+  isolated native configuration and cache and explicit online freshness
+- **WHEN** a matching input, native report, stable release, or official fix
+  changes, the finding disappears or is withdrawn, or the entry expires
+- **THEN** execution fails until the entry is retired and the inputs are qualified
+  again
+- **AND** no package-wide ignore, private OSV schema, or general security waiver
+  substitutes for the approved boundary.
 
 #### Scenario: A fresh supported host runs the full graph
 
@@ -259,7 +278,7 @@ name purpose and platform; hidden phase templates SHALL own common steps.
 ### Requirement: A supplied offline bundle can install the complete verification toolchain
 
 Each declared platform's release-bound bundle SHALL supply every locked npm
-package, pinned Vale and lychee asset, and upstream notice. Supported Node/npm
+package, declared native asset, and upstream notice. Supported Node/npm
 and Git SHALL install and run the full verifier from empty application caches
 without network access. Before extraction, the installer SHALL match committed
 source identities and a trusted external or source-pinned digest. ETHOS remains

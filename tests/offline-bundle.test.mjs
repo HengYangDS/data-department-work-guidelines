@@ -37,11 +37,25 @@ import {
 } from "../tools/ci/offline-bundle.mjs";
 import {
   declaredToolRuntime,
+  readNativeSupply,
   root,
   run as runCommand,
 } from "../tools/docs/runtime.mjs";
 
 const digest = (text) => createHash("sha256").update(text).digest("hex");
+
+const listingSupply = {
+  tools: {
+    lychee: {
+      assets: { fixture: { name: "lychee-aarch64-apple-darwin.tar.gz" } },
+      licenses: { "LICENSE-MIT": {} },
+    },
+    vale: {
+      assets: { fixture: { name: "vale-fixture.tar.gz" } },
+      licenses: { LICENSE: {} },
+    },
+  },
+};
 
 function record(overrides = {}) {
   return {
@@ -135,7 +149,9 @@ test("bundle archive admits only regular files in its declared roots", () => {
     "drwxr-xr-x 0/0 0 Jan 1 00:00 ./licenses/vale/",
     "-rw-r--r-- 0/0 10 Jan 1 00:00 ./licenses/vale/LICENSE",
   ].join("\n");
-  assert.doesNotThrow(() => assertSafeBundleListing(names, verbose));
+  assert.doesNotThrow(() =>
+    assertSafeBundleListing(names, verbose, listingSupply),
+  );
   for (const unsafe of [
     "../outside",
     "/tmp/outside",
@@ -148,6 +164,7 @@ test("bundle archive admits only regular files in its declared roots", () => {
       assertSafeBundleListing(
         `${names}\n${unsafe}`,
         `${verbose}\n-rw-r--r-- 0/0 10 Jan 1 00:00 ${unsafe}`,
+        listingSupply,
       ),
     );
   }
@@ -155,16 +172,76 @@ test("bundle archive admits only regular files in its declared roots", () => {
     assertSafeBundleListing(
       `${names}\n./manifest.json`,
       `${verbose}\n-rw-r--r-- 0/0 10 Jan 1 00:00 ./manifest.json`,
+      listingSupply,
     ),
   );
   assert.throws(() =>
     assertSafeBundleListing(
       `${names}\n./native/lychee/link`,
       `${verbose}\nlrwxr-xr-x 0/0 0 Jan 1 00:00 ./native/lychee/link -> /tmp/outside`,
+      listingSupply,
     ),
   );
   assert.throws(() =>
-    assertSafeBundleListing(names, verbose.split("\n").slice(0, -1).join("\n")),
+    assertSafeBundleListing(
+      names,
+      verbose.split("\n").slice(0, -1).join("\n"),
+      listingSupply,
+    ),
+  );
+});
+
+test("bundle inventory derives raw and archived assets from the same supply manifest", () => {
+  const tools = {
+    "osv-scanner": {
+      format: "binary",
+      assets: { "linux-arm64": { name: "osv-scanner_linux_arm64" } },
+      licenses: { LICENSE: {} },
+    },
+  };
+  const members = [
+    ["./", "d"],
+    ["./manifest.json", "-"],
+    ["./npm-cache/", "d"],
+    ["./npm-cache/_cacache/", "d"],
+    ["./npm-cache/_cacache/entry", "-"],
+    ["./native/", "d"],
+    ["./native/osv-scanner/", "d"],
+    ["./native/osv-scanner/osv-scanner_linux_arm64", "-"],
+    ["./licenses/", "d"],
+    ["./licenses/osv-scanner/", "d"],
+    ["./licenses/osv-scanner/LICENSE", "-"],
+  ];
+  const listing = (items) => [
+    items.map(([name]) => name).join("\n"),
+    items.map(([name, type]) => `${type}rwxr-xr-x 0/0 10 ${name}`).join("\n"),
+  ];
+  assert.doesNotThrow(() =>
+    assertSafeBundleListing(...listing(members), { tools }),
+  );
+  for (const extra of [
+    "./native/osv-scanner/undeclared",
+    "./native/retired/",
+    "./licenses/osv-scanner/old-notice",
+  ]) {
+    assert.throws(
+      () =>
+        assertSafeBundleListing(
+          ...listing([...members, [extra, extra.endsWith("/") ? "d" : "-"]]),
+          { tools },
+        ),
+      /unexpected|missing/u,
+    );
+  }
+  assert.throws(
+    () =>
+      assertSafeBundleListing(
+        ...listing(
+          members.filter(([name]) => !name.endsWith("osv-scanner_linux_arm64")),
+        ),
+        { tools },
+      ),
+    /missing/u,
   );
 });
 
@@ -296,11 +373,14 @@ async function bundleFixture(
 test("bundle digest is verified before archive inspection", async () => {
   await bundleFixture(async (bundle, expected) => {
     assert.equal(
-      (await inspectBundle(bundle, expected, source)).sha256,
+      (await inspectBundle(bundle, expected, source, listingSupply)).sha256,
       expected.sha256,
     );
     appendFileSync(bundle, "altered");
-    assert.throws(() => inspectBundle(bundle, expected, source), /digest/u);
+    assert.throws(
+      () => inspectBundle(bundle, expected, source, listingSupply),
+      /digest/u,
+    );
   });
 });
 
@@ -311,7 +391,10 @@ test("bundle inspection rejects incomplete supply", async () => {
     { vale: false },
   ]) {
     await bundleFixture(async (bundle, expected) => {
-      assert.throws(() => inspectBundle(bundle, expected, source), /missing/u);
+      assert.throws(
+        () => inspectBundle(bundle, expected, source, listingSupply),
+        /missing/u,
+      );
     }, missing);
   }
 });
@@ -412,13 +495,18 @@ test("builder admits only pinned, licensed, regular supply", () => {
     const built = assembleBundle(inputs);
     assert.equal(built.version, "4.2.0");
     assert.match(built.sha256, /^[0-9a-f]{64}$/u);
-    const checked = inspectBundle(inputs.outputPath, built, {
-      version: built.version,
-      lockSha256: built.lockSha256,
-      packageJsonSha256: built.packageJsonSha256,
-      nativeToolsSha256: built.nativeToolsSha256,
-      nodeMajor: built.nodeMajor,
-    });
+    const checked = inspectBundle(
+      inputs.outputPath,
+      built,
+      {
+        version: built.version,
+        lockSha256: built.lockSha256,
+        packageJsonSha256: built.packageJsonSha256,
+        nativeToolsSha256: built.nativeToolsSha256,
+        nodeMajor: built.nodeMajor,
+      },
+      readNativeSupply(inputs.repository),
+    );
     assert.equal(checked.sha256, built.sha256);
   });
   buildFixture((inputs) => {

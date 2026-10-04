@@ -36,8 +36,18 @@ export function selectedAsset(
   if (!asset || !/^[0-9a-f]{64}$/u.test(asset.sha256)) {
     throw new Error(`unsupported or unpinned ${tool} platform: ${key}`);
   }
+  const format = descriptor.format ?? "archive";
+  if (
+    !["archive", "binary"].includes(format) ||
+    (format === "binary" &&
+      (!Number.isSafeInteger(asset.size) ||
+        asset.size <= 0 ||
+        asset.size > 64 * 1024 * 1024))
+  )
+    throw new Error(`invalid ${tool} asset format or size: ${key}`);
   return {
     ...asset,
+    format,
     key,
     tool,
     version: descriptor.version,
@@ -106,6 +116,7 @@ function verifiedCached(target, selected) {
   if (!managedFileExists(target)) return false;
   const version = run(target, ["--version"], {
     capture: true,
+    rejectStderr: true,
     timeout: 10_000,
   }).trim();
   if (version !== selected.versionOutput) {
@@ -116,7 +127,7 @@ function verifiedCached(target, selected) {
   return true;
 }
 
-export async function downloadAsset(request) {
+export async function downloadAsset(request, asset = {}) {
   const response = await fetch(request.url, {
     headers: request.headers,
     redirect: request.redirect ?? "follow",
@@ -125,7 +136,7 @@ export async function downloadAsset(request) {
   if (!response.ok)
     throw new Error(`native tool download failed: HTTP ${response.status}`);
   if (!response.body) throw new Error("native tool download returned no body");
-  const limit = 32 * 1024 * 1024;
+  const limit = asset.size ?? 32 * 1024 * 1024;
   const chunks = [];
   let size = 0;
   for await (const chunk of response.body) {
@@ -138,6 +149,8 @@ export async function downloadAsset(request) {
 }
 
 export function assertAssetDigest(bytes, asset) {
+  if (asset.size !== undefined && bytes.length !== asset.size)
+    throw new Error(`native asset size mismatch: ${asset.name}`);
   const digest = createHash("sha256").update(bytes).digest("hex");
   if (digest !== asset.sha256)
     throw new Error(`native asset digest mismatch: ${asset.name}`);
@@ -178,39 +191,44 @@ export async function install({
     const archive = path.join(temporary, selected.name);
     const bytes = assetFile
       ? readFileSync(path.resolve(assetFile))
-      : await downloadAsset(request);
+      : await downloadAsset(request, selected);
     assertAssetDigest(bytes, selected);
     writeFileSync(archive, bytes);
-    safeArchiveEntries(
-      run("tar", ["-tf", archive], {
-        capture: true,
+    let candidate = archive;
+    if (selected.format === "archive") {
+      safeArchiveEntries(
+        run("tar", ["-tf", archive], {
+          capture: true,
+          rejectStderr: true,
+          timeout: 30_000,
+        }),
+        run("tar", ["-tvf", archive], {
+          capture: true,
+          rejectStderr: true,
+          timeout: 30_000,
+        }),
+      );
+      const extracted = path.join(temporary, "extracted");
+      mkdirSync(extracted);
+      run("tar", ["-xf", archive, "--no-same-owner", "-C", extracted], {
         rejectStderr: true,
         timeout: 30_000,
-      }),
-      run("tar", ["-tvf", archive], {
-        capture: true,
-        rejectStderr: true,
-        timeout: 30_000,
-      }),
-    );
-    const extracted = path.join(temporary, "extracted");
-    mkdirSync(extracted);
-    run("tar", ["-xf", archive, "--no-same-owner", "-C", extracted], {
-      rejectStderr: true,
-      timeout: 30_000,
-    });
-    const candidates = binaryFiles(extracted, binaryName);
-    if (candidates.length !== 1)
-      throw new Error(`${tool} archive has ${candidates.length} binaries`);
-    if (process.platform !== "win32") chmodSync(candidates[0], 0o755);
-    const version = run(candidates[0], ["--version"], {
+      });
+      const candidates = binaryFiles(extracted, binaryName);
+      if (candidates.length !== 1)
+        throw new Error(`${tool} archive has ${candidates.length} binaries`);
+      candidate = candidates[0];
+    }
+    if (process.platform !== "win32") chmodSync(candidate, 0o755);
+    const version = run(candidate, ["--version"], {
       capture: true,
+      rejectStderr: true,
       timeout: 10_000,
     }).trim();
     if (version !== selected.versionOutput)
       throw new Error(`${tool} binary version mismatch: ${version}`);
     try {
-      copyFileSync(candidates[0], target, constants.COPYFILE_EXCL);
+      copyFileSync(candidate, target, constants.COPYFILE_EXCL);
     } catch (error) {
       if (error.code !== "EEXIST") throw error;
     }

@@ -80,6 +80,53 @@
           "source": "https://github.com/vale-cli/vale/blob/v3.24.0/LICENSE"
         }
       }
+    },
+    "osv-scanner": {
+      "version": "2.6.0",
+      "source": "https://github.com/google/osv-scanner/releases/tag/v2.6.0",
+      "github_download_base": "https://github.com/google/osv-scanner/releases/download/v2.6.0",
+      "gitlab_package_name": "osv-scanner",
+      "binary": "osv-scanner",
+      "format": "binary",
+      "versionOutput": "osv-scanner version: 2.6.0\nosv-scalibr version: 0.5.2\ncommit: e840a6e8adb14b7777c78e26cfbf6e2abc1d1fc6\nbuilt at: 2026-09-14T01:44:58Z",
+      "assets": {
+        "darwin-arm64": {
+          "name": "osv-scanner_darwin_arm64",
+          "size": 55130242,
+          "sha256": "98c460dcd37de25819babd757d04542045b6243113e209edcd4d89fedb0256b4"
+        },
+        "darwin-x64": {
+          "name": "osv-scanner_darwin_amd64",
+          "size": 58672624,
+          "sha256": "60c5296637e977b28eeda5c7f13573e447659a632922737f94d11fa7e30ad6ca"
+        },
+        "linux-arm64": {
+          "name": "osv-scanner_linux_arm64",
+          "size": 53608608,
+          "sha256": "2c71403eb443d05891c4f268c3ad771cf4f16e5443463fd7851ef8f454d3c7e4"
+        },
+        "linux-x64": {
+          "name": "osv-scanner_linux_amd64",
+          "size": 57524384,
+          "sha256": "ca69b3d3cd08f889a49dc0a383122f71cc528b83803671df5fd874d97485b108"
+        },
+        "win32-arm64": {
+          "name": "osv-scanner_windows_arm64.exe",
+          "size": 54076928,
+          "sha256": "ca1379da0e408279ef2c85cde0846a903495738a91c7b065a208048437c1686c"
+        },
+        "win32-x64": {
+          "name": "osv-scanner_windows_amd64.exe",
+          "size": 58692096,
+          "sha256": "e0ed7644118b717b028c249ee9d3515024e55e8510747ca08906eb96765354d6"
+        }
+      },
+      "licenses": {
+        "LICENSE": {
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "source": "https://github.com/google/osv-scanner/blob/v2.6.0/LICENSE"
+        }
+      }
     }
   }
 }

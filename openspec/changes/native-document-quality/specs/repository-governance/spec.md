@@ -70,11 +70,12 @@ links.
 
 ### Requirement: Each Forge supplies its pinned documentation tool independently
 
-GitLab SHALL fetch pinned Vale and lychee from its own project package registry
+GitLab SHALL fetch every declared pinned native tool from its own project
+package registry
 with its CI API URL, project ID and job token, never a GitHub fallback. GitHub
 MAY use pinned upstream assets. Both SHALL verify committed digests and executable
 versions. Tokens SHALL appear only in request headers, never URLs or logs.
-Local supplied archives SHALL work without either Forge. One native manifest
+Local supplied assets SHALL work without either Forge. One native manifest
 SHALL own versions, platform assets and notices.
 
 #### Scenario: GitLab runs while GitHub is unavailable

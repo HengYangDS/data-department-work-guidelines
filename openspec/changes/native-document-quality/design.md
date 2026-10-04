@@ -1,5 +1,36 @@
 # Design
 
+## Native dependency disposition
+
+The approved exception is not a claim that `braces` is unaffected. The native OSV
+ID disposition also applies its aliases and removes those findings from its
+output, even with `--all-vulns`. Keep an undisposed raw scan and a native
+disposition scan under the existing CI owner. Both Forges preserve the original
+lock, policy snapshots, reports, standard output, standard error, and exits even
+on failure. Refuse an unapproved raw finding even if it disappears from the
+later decision scan. Do not filter npm JSON, omit development packages, or
+ignore an entire package to obtain a passing result.
+
+Use only the native `IgnoredVulns` fields. The expressly authorized tuple is
+npm `braces` 3.0.3 in reviewed development checks, expiring on 18 October 2026.
+The existing input boundary checks every matching lock path and native report
+identity, retains all other findings, and refuses changed, missing, withdrawn,
+fixed, or expired applicability. An online stable-version observation requires
+new qualification when upstream changes. Reuse the existing native npm isolation
+owner; select the public registry and online freshness explicitly, with separate
+empty configuration and cache. This is a temporary repository-specific approval
+guard; replace it with accepted ETHOS risk admission in the same
+integration, without keeping a duplicate policy or calling it official OSV.
+
+Extend the existing native supply owner, not a second installer. OSV releases
+raw binaries for six host/architecture pairs. Pin upstream bytes, sizes, and
+license notices, verify before executing, and install exclusively without
+changing a prior cache entry. Derive bundle membership from that same manifest;
+tool-name regular expressions and archive-only assumptions are superseded.
+Qualify raw installation, offline native finding cases, cold execution, and both
+Forge source and release matrices independently. The development exception
+does not certify ETHOS's shared product, production runtime, or formal release.
+
 ## Context
 
 At Change opening, the accepted source was

@@ -16,7 +16,8 @@ default:
 .docs:source-supply:
   before_script: &docs-source-supply
     - npm ci --ignore-scripts
-    - npm audit --audit-level=moderate
+    - node tools/ci/install-native.mjs osv-scanner --gitlab-package
+    - node tools/docs/cli.mjs audit
     - node tools/ci/install-native.mjs lychee --gitlab-package
     - node tools/ci/install-native.mjs vale --gitlab-package
 
@@ -26,6 +27,10 @@ default:
   interruptible: true
   variables:
     GIT_DEPTH: "0"
+  artifacts:
+    when: always
+    paths:
+      - build/evidence/dependencies/
   before_script:
     - npm install --global --ignore-scripts "npm@$(node -p 'require("./package.json").devEngines.packageManager.version')"
     - *docs-source-supply
