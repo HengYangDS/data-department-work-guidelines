@@ -34,8 +34,8 @@ previous report, not how much activity occurred. If there is no conclusion,
 state which evidence is missing and when it can be obtained. Answer the question
 first, then explain. If no decision is requested, give the next
 action, its owner and due time, and the condition that will show it is done.
-Say “I don't know” when that is true. Revise a position when new evidence
-overturns it; do not hide the point behind jargon or background.
+Say “I don't know” when that is true. Revise a position immediately when new
+evidence overturns it; do not hide the point behind jargon or background.
 
 In a follow-up, keep the subject, definitions, and evaluation criteria unchanged.
 If a change is necessary, identify it and explain why before answering.
@@ -56,9 +56,9 @@ and own no action. In the meeting, align facts and definitions before comparing
 options. When the discussion drifts, return to the question that needs a
 decision. Locate disagreement in facts,
 inference, values, resources, or authority. Afterward, keep only the conclusion,
-basis, decision, actions, open points, and risks. Each action has an owner,
-deadline, and completion criterion. Without a decision or action, do not call
-the problem advanced.
+basis, decision, actions, open points, and risks. Each decision and action has
+an owner, deadline, and completion criterion. Without a decision or action, do
+not call the problem advanced.
 
 Challenge propositions, evidence, and costs, not personalities or motives.
 Distinguish disagreement about a fact from disagreement about an inference, and

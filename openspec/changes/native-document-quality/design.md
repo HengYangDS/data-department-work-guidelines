@@ -1054,6 +1054,20 @@ execution correction; only a fresh complete Windows job qualifies that platform.
 - A generic installer can become a framework. Extend only the two present tool
   consumers and remove the old path instead of preserving a compatibility layer.
 
+The positive original-duty crosswalk at `1960f088` checks all 62 numbered
+subsections against the current seven owners, not only earlier adverse examples.
+Two bounded, tool-free Claude slices independently identify four real remaining
+limits: an overwrite does not become low risk merely because it is reversible;
+delays and recurring disputes still require mechanism analysis; a disproved
+position must be corrected immediately; and meeting decisions, not only action
+items, require an owner, deadline, and completion condition. Restore those
+meanings in the existing charter, analysis, and communication topics and add
+focused scenarios under the existing requirements. Other conditional findings
+are already covered by the evolution and analysis owners; do not duplicate them.
+Preserve prior requirements and scenario bodies, the authorized cadence redesign,
+and all failed review evidence. This editorial comparison is not automated
+semantic proof or a claim of shared-product, hosted, or team-use acceptance.
+
 ## Migration Plan
 
 1. Add distinguishing native rule, supply, and source-conservation tests.

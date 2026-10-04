@@ -74,11 +74,11 @@ so explicitly.
    limits, what remains possible, the next verification action, and what later
    observation would change the judgment.
 
-For an anomaly or repeated failure, preserve the original symptom and timeline,
-distinguish affected from unaffected subjects, and explain both the direct cause
-and **why the existing system did not prevent or detect it in time**. Separate
-immediate containment, direct repair, and prevention of recurrence. Completing
-only the first two is not a systemic fix.
+For an incident, anomaly, delay, quality problem, or recurring dispute, preserve
+the original symptom and timeline, distinguish affected from unaffected subjects,
+and explain both the direct cause and **why the existing system did not prevent
+or detect it in time**. Separate immediate containment, direct repair, and
+prevention of recurrence. Completing only the first two is not a systemic fix.
 
 Reproduce the original symptom with recorded inputs and conditions when it is
 safe to do so. If reproduction is unsafe or unavailable, define an observation

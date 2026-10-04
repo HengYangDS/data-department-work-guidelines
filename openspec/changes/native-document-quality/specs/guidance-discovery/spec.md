@@ -235,6 +235,23 @@ or unknown ownership.
 - **AND** the Agent does not infer disposal or editing authority from a clean
   accepted branch or its own task.
 
+#### Scenario: A reversible overwrite bypasses high-risk checks
+
+- **WHEN** an overwrite can be rolled back but replaces existing source or data
+  and is treated as L0 solely because it is reversible
+- **THEN** the charter still includes overwrite in the L2 risk floor
+- **AND** written decision, authorization, recovery, independent review, and
+  human acceptance remain required; reversibility does not replace them.
+
+#### Scenario: A delay or recurring dispute escapes mechanism analysis
+
+- **WHEN** a delay or recurring dispute is dismissed as coordination noise
+  instead of investigated as a possible mechanism problem
+- **THEN** the decision topic requires the original symptom, timeline, affected
+  subjects, competing explanations, and why prevention or detection failed
+- **AND** a safe reproducer or observation plan and claim-matched regression
+  remain necessary without another form, rule store, or meeting.
+
 ### Requirement: Feedback combines events and periodic review
 
 Evolution SHALL check material task transitions. Managers SHALL review real
@@ -346,6 +363,21 @@ destination, audience, and detail.
   jointly at task start
 - **AND** later monthly sampling does not substitute for that calibration, and
   no new meeting or approval gate is required.
+
+#### Scenario: New facts disprove a stated judgment
+
+- **WHEN** verified new evidence overturns a position already communicated
+- **THEN** the communication topic requires immediate correction
+- **AND** the author does not defer that correction to the next meeting or
+  periodic review, or conceal the disproved position behind background detail.
+
+#### Scenario: A meeting decision has no execution commitment
+
+- **WHEN** a meeting records a decision but names no owner, deadline, or
+  completion criterion because no separate action item was created
+- **THEN** the communication topic requires those commitments for the decision
+  itself as well as for each action
+- **AND** a transcript or collective agreement does not establish those duties.
 
 ## ADDED Requirements
 

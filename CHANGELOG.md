@@ -17,6 +17,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Restore overwrite risk, mechanism analysis for delays and recurring disputes,
+  immediate correction of disproved judgments, and meeting-decision ownership,
+  deadlines, and completion criteria.
 - Restore unverified citations as hard risks and the limits on using one
   metric to judge a person's overall worth or monthly review to rank people.
 - Require correction after a boundary breach and visible document status in

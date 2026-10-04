@@ -330,8 +330,11 @@
       acceptance. Preserve the original duty source, exact Git provenance,
       failed receipts, and bounded reviews. Later source counterexamples
       supersede earlier no-finding judgments without rewriting their evidence.
-      Recheck bounded repairs without another meeting, approval gate, or private
-      meaning validator. Complete shared and adopter qualification and
+      The positive crosswalk checks all 62 original numbered subsections.
+      Restore the four remaining overwrite, delay/dispute, correction-timing,
+      and meeting-decision limits in their existing owners; recheck the exact
+      changed source without another meeting, approval gate, or private meaning
+      validator. Complete shared and adopter qualification and
       next-edition delivery on both Forges before claiming closure. Archive
       through the official owner only after every obligation has evidence;
       inspect the new OID,

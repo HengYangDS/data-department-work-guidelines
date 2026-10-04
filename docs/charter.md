@@ -102,11 +102,11 @@ default unless a reason for departure is given; **may** leaves a choice to the
 responsible person. Risk determines the form, not whether the underlying duty
 exists.
 
-| Level         | When it applies                                                                                                  | Minimum response                                                                                                                |
-| ------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| L0: light     | Local, reversible work without an external commitment.                                                           | State the conclusion, basis, and action in one clear exchange.                                                                  |
-| L1: standard  | Cross-role or extended work, competing options, or material uncertainty.                                         | Record the problem, options, execution path, and acceptance in the existing work record.                                        |
-| L2: high risk | Production, funds, sensitive data, security or compliance, deletion, irreversibility, or an external commitment. | Obtain a written decision and explicit authorization, a rollback or degradation path, independent review, and human acceptance. |
+| Level         | When it applies                                                                                                               | Minimum response                                                                                                                |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| L0: light     | Local, reversible work without an external commitment.                                                                        | State the conclusion, basis, and action in one clear exchange.                                                                  |
+| L1: standard  | Cross-role or extended work, competing options, or material uncertainty.                                                      | Record the problem, options, execution path, and acceptance in the existing work record.                                        |
+| L2: high risk | Production, funds, sensitive data, security or compliance, deletion or overwrite, irreversibility, or an external commitment. | Obtain a written decision and explicit authorization, a rollback or degradation path, independent review, and human acceptance. |
 
 Do not call a task L0 merely to avoid a necessary record. Within every level,
 facts, scope, ownership, evidence, and acceptance must remain clear. For a
