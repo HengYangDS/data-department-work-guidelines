@@ -180,6 +180,16 @@ Diagram, card, topic and evidence counts SHALL NOT determine validity.
   whether the process succeeds or fails
 - **AND** passing summary totals do not establish a clean source check.
 
+#### Scenario: Native prose has already rejected the source
+
+- **WHEN** native prose reports a source defect through the public integrity
+  command
+- **THEN** the command preserves that finding and fails before unrelated
+  Changelog history or official OpenSpec execution
+- **AND** valid prose still reaches every declared check, all distinct native
+  ancestry checks, and the complete test inventory with unchanged deadlines;
+  no cache, private history implementation, or weaker acceptance is added.
+
 #### Scenario: A strict native command fails with partial diagnostics
 
 - **WHEN** a native archive or source command emits output before failure or
@@ -233,6 +243,18 @@ Diagram, card, topic and evidence counts SHALL NOT determine validity.
   exact prerequisites and complete without an earlier verification run
 - **AND** source confinement, exclusive copy, version, and mode-preservation
   assertions remain unchanged; fixture children are removed afterward.
+
+#### Scenario: A public rejection regression carries only its native prerequisites
+
+- **WHEN** the focused prose/integrity regression runs against a temporary
+  repository
+- **THEN** it uses actual native executables, policies, dependencies, and Git
+  selection with compact positive source and complete local links
+- **AND** both command refusals, unchanged source, ignored-untracked exclusion,
+  force-tracked inclusion, each missing anchor, repair, and cleanup remain
+  checked without cloning unrelated history or repeatedly checking other documents
+- **AND** full source verification still selects every actual repository input
+  and test with the same workers and deadlines; no native report is fabricated.
 
 #### Scenario: Navigation links are hidden in non-reader content
 

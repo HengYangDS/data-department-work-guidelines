@@ -333,21 +333,28 @@ test("real Vale control comments cannot disable prose checks", () => {
 test("public prose and integrity commands reject the same current-file defect", () => {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-prose-entry-"));
   try {
-    const clone = spawnSync(
-      "git",
-      [
-        "clone",
-        "--quiet",
-        "--local",
-        "--shared",
-        "--no-checkout",
-        root,
-        directory,
-      ],
-      { encoding: "utf8", timeout: 30_000 },
-    );
-    assert.equal(clone.status, 0, clone.stderr);
+    const initialized = spawnSync("git", ["init", "--quiet", directory], {
+      encoding: "utf8",
+      timeout: 30_000,
+    });
+    assert.ifError(initialized.error);
+    assert.equal(initialized.status, 0, initialized.stderr);
+    const required = new Set([
+      ".ethos/profile.toml",
+      ".gitattributes",
+      ".gitignore",
+      "LICENSE",
+      "VERSION",
+      "package.json",
+      "package-lock.json",
+    ]);
     for (const relative of gitFiles()) {
+      if (
+        !required.has(relative) &&
+        !relative.startsWith(".config/") &&
+        !relative.startsWith("tools/")
+      )
+        continue;
       if (!existsSync(path.join(root, relative))) continue;
       const target = path.join(directory, relative);
       mkdirSync(path.dirname(target), { recursive: true });
@@ -359,13 +366,31 @@ test("public prose and integrity commands reject the same current-file defect", 
       "junction",
     );
     const target = path.join(directory, "README.md");
-    const original = readFileSync(target, "utf8");
+    const original =
+      "# Source\n\nThe result is verified.\n\n[MIT License](LICENSE)\n";
+    writeFileSync(target, original);
+    writeFileSync(
+      path.join(directory, ".config/README.md"),
+      "# Configuration\n\n[Source](../README.md)\n",
+    );
     const defective = `${original}\nUse the the report.\n`;
     const environment = {
       ...process.env,
       DDWG_VALE_BIN: nativeToolBinary("vale"),
       DDWG_LYCHEE_BIN: nativeToolBinary("lychee"),
     };
+    const observedSource = spawnSync(
+      "git",
+      ["ls-files", "--cached", "--others", "--exclude-standard", "-z"],
+      { cwd: directory, encoding: "utf8", timeout: 30_000 },
+    );
+    assert.ifError(observedSource.error);
+    assert.equal(observedSource.status, 0, observedSource.stderr);
+    assert.deepEqual(
+      observedSource.stdout.split("\0").filter((file) => file.endsWith(".md")),
+      [".config/README.md", "README.md"],
+      "the public defect journey must not rescan unrelated documents",
+    );
     writeFileSync(target, defective);
     for (const command of ["prose", "check"]) {
       const result = spawnSync(

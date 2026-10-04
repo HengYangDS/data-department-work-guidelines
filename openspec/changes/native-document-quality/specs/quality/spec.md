@@ -150,6 +150,18 @@ Diagram, card, topic and evidence counts SHALL NOT determine validity.
 - **AND** source confinement, exclusive copy, version, and mode-preservation
   assertions remain unchanged; fixture children are removed afterward.
 
+#### Scenario: A public rejection regression carries only its native prerequisites
+
+- **WHEN** the focused prose/integrity regression runs against a temporary
+  repository
+- **THEN** it uses actual native executables, policies, dependencies, and Git
+  selection with compact positive source and complete local links
+- **AND** both command refusals, unchanged source, ignored-untracked exclusion,
+  force-tracked inclusion, each missing anchor, repair, and cleanup remain
+  checked without cloning unrelated history or repeatedly checking other documents
+- **AND** full source verification still selects every actual repository input
+  and test with the same workers and deadlines; no native report is fabricated.
+
 #### Scenario: Navigation links are hidden in non-reader content
 
 - **WHEN** code, a comment, an unlinked image, escaped syntax, an unused

@@ -276,6 +276,14 @@ source defects before unrelated prerequisites, while valid source still runs the
 full graph. Narrow telemetry tests call the real invocation owner rather than
 repeat unrelated repository setup. No case or assertion is dropped.
 
+The public prose/integrity regression uses a compact native Git repository,
+the actual executable and policy bytes, and positive source with complete local
+links. It exercises both commands, ignored and force-tracked source, every
+missing anchor, repair, and cleanup without cloning unrelated history or
+rechecking the whole document corpus. The full repository verifier separately
+checks all actual source. A smaller fixture must not narrow that selection or
+replace native Vale, lychee, or Git with a fabricated report.
+
 Resolve the complete Changelog reference selection in one native Git
 `cat-file --batch-check` call with native line-delimited input and output. The
 existing reference grammar excludes control characters, so the default batch

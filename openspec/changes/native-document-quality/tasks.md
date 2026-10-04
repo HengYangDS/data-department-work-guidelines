@@ -500,19 +500,50 @@ public prose/integrity regression took 77.065 seconds. Later host pressure is a
 separate observation, not proof of that job's unique cause. Preserve the failed
 job and full trace; this source is not accepted on every platform.
 
-The current failure-order repair extends the existing regression to native
-history starts. RED rejects the current public sequence because it traverses
-history before a known native prose refusal. Move that refusal before unrelated
-history and official OpenSpec; keep all checks for valid source, every test,
-native history, and existing deadlines. The distinguishing regression now
-passes; all 237 working-tree tests pass with zero skips, and strict official
-validation passes 4/4. The existing public prose/integrity journey remains
-complete. Committed-source cold verification, proof, and hosted acceptance
-remain pending; neither earlier source proof certifies this repair.
-Accepted shared integration,
-full platform acceptance, final edition, and closure remain open. VERSION and
-the v7.0.12 tag and bundle remain unchanged. Tasks 2.33, 3.3, 3.5, and 3.13
-remain open.
+Signed source `f18a5f620337588d9b89a0c02e93226cb68ff4da`, tree
+`b0e975d6c1a0d6d83c296c7352a99189d152738c`, rejects native prose before unrelated
+history. Local and fresh-HOME, denied-remote cold verification pass all 237
+tests with zero skips and 70 conserved hashes and modes. Installed full proof
+passes both default gates with attestation
+`930ed5117af5be2c88bea05fd99d7bda7c51906dd4ecb38fe5d2cfa2ba9f4838`.
+Both peers' protected `dev` and `main` read back at this OID. All nine GitHub
+proposal/dev/main source jobs pass. GitLab dev/main Linux and macOS jobs pass;
+Windows jobs 48306 and 48309 fail at the unchanged 180-second full-test child
+deadline, without a failed assertion in the available traces. Earlier proposal
+jobs 48301 and 48303 reached the isolated registry command's 15-second deadline
+before source checks; retain them as a separate failure boundary. Current peer
+source and test evidence is not complete platform qualification.
+
+The public prose/integrity regression repeated 28 Markdown files across its
+focused native invocations. A corrected RED inventory assertion now rejects
+that unrelated input. Its compact native Git fixture keeps actual executables,
+policies, dependencies, both command refusals, unchanged source, positive prose,
+ignored-untracked exclusion, force-tracked inclusion, each missing anchor,
+repair, and cleanup. Its positive configuration README has complete local links;
+the first reduced fixture exposed an unrelated omitted-link prerequisite, which
+was corrected without weakening any original assertion. The focused journey
+passes and all 86 related tests pass. Local measured journey time changes from
+6.469 to 3.212 seconds; those later timings do not establish the original
+Windows failure's unique cause. Preserve the initial incorrect delimiter test,
+valid RED, failed link prerequisite, and formatter refusal. Full successor
+working-tree verification passes all 237 tests with zero skips, native format,
+28 Markdown inputs, and strict official 4/4 validation. Official synchronization
+then preserves all 23 quality requirements and 113 prior scenarios and adds two
+qualified scenarios; the other 22 requirement blocks, including both pending
+proof requirements, remain byte-identical. Committed-source verification, cold
+checks, installed proof, and hosted acceptance remain pending.
+
+Fresh remote inventories show only this lane's current proposal at `f18a5f6`
+and no open PR or MR on either peer. Preserve that proposal while its peer
+acceptance is incomplete. Whole-source review found no required correction in
+the assigned configuration, governance, contributor, and decision-record scope;
+that read-only judgment is not installed-product or hosted acceptance. Original
+duty comparison still covers 62 numbered subsections and five groups within its
+editorial limits, not automated semantic equivalence or team adoption.
+
+Accepted shared integration, full platform acceptance, final edition, and
+closure remain open. VERSION and the v7.0.12 tag and bundle remain unchanged.
+Tasks 2.33, 3.3, 3.5, and 3.13 remain open.
 
 [previous-tasks-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/blob/934293b8a6ab0600af75ea86fbdbdf36c46d1bd9/openspec/changes/native-document-quality/tasks.md
 [previous-tasks-github]: https://github.com/HengYangDS/data-department-work-guidelines/blob/934293b8a6ab0600af75ea86fbdbdf36c46d1bd9/openspec/changes/native-document-quality/tasks.md
