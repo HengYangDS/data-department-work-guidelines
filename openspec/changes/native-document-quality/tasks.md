@@ -211,7 +211,7 @@ commitment. Original narration and dated evidence remain at
       glue in the same formally accepted ETHOS integration. Reproduce meaningful
       code/data literal rejection before removing raw scans. Use one
       reader-block separator, tight single-paragraph peers despite wrapping, and
-      consistent multi-block spacing through the official CommonMark rule.
+      consistent multi-block spacing through `remark-lint-list-item-spacing`.
       Preserve all duties, links, literal bytes, data/order/comments, English
       checks, and plain-text hygiene. Prettier owns supported source/quote
       structure; dprint owns TOML through its public Wasm/policy. Reject syntax,
@@ -598,26 +598,44 @@ passes with attestation
 default proof, shared integration, or root/OpenSpec coverage. Original failed
 attempts and diagnostic-scope errors remain with their producer.
 
-Protected GitHub runs 37207232014 and 37207232016 also pass all three platforms.
-GitLab 9504 and 9505 pass Linux and macOS, but original Windows jobs 48347 and
-48350 on Runner 109 reach the unchanged 180-second complete-test deadline.
-The review Windows job on Runner 106 completed in 105 seconds; that difference
-does not identify the protected failure's cause. The fleet owner recovered the
-stopped macOS VM with one native start, and original jobs 48346 and 48349 passed
-on unchanged Runner 108. Windows VM-wide contention remains a hypothesis;
-native guest inspection is refused by isolation, not proof of a broken VM.
-No job retry, deadline, test selection, or trust boundary is changed.
+Protected GitHub runs 37207232014 and 37207232016 pass all three platforms.
+GitLab 9504 now passes after one admitted retry of original Windows job 48347:
+job 48371 on unchanged Runner 109 and source `530c61d` discovers 238 tests,
+with 237 passing, zero failures, and the one declared Darwin-only skip. Its full
+test run takes 123.905 seconds under the unchanged 180-second child deadline.
+The fleet drained other Windows jobs for that attempt. This establishes a
+capacity-dependent difference, not permanent recovery; GitLab main pipeline
+9505 and original job 48350 remain failed. The fleet restored all six changed
+runner pause settings to their original values; previously paused Runner 119
+and eligible Runner 109 remain unchanged. The fleet still owns the permanent
+native capacity correction. No source, test selection,
+emulation, timeout, or trust boundary changed.
 
-The current DR-0001 topic path and relation description now use human–AI
-collaboration. Its stable subject, ID, accepted decision, date, five sections,
-and evidence remain unchanged, and the sole current index link follows the new
-path. This working-tree correction still requires validation and signed-source
-acceptance. Formally accepted ETHOS quality, risk, formatting, and repaired
-history integration, the coherent successor release, and official closure
-remain pending. All 54 task IDs and states remain unchanged; tasks 2.33, 3.3,
-3.5, and 3.13 remain open. Evidence is retained under the existing
-`20261004-claude-source-review` record owner, including the accepted publication,
-both protected matrices, and original Windows traces.
+Signed source `45860848db9f871f0a0f9391ee7ca996c754f186` qualifies the DR-0001
+topic and relation correction with 238 passing local tests, strict official
+OpenSpec validation, installed exact-HEAD proof, and a fresh offline installation.
+All 70 tracked file hashes and modes are preserved; its temporary cold worktree
+is natively removed while all four durable worktrees remain unchanged. The
+stable subject, ID, accepted decision, date, five sections, and evidence remain
+unchanged. This source has not been landed or published.
+
+A bounded tool-free Claude review identifies the comparison-authentication
+instruction gap and inaccurate attribution of the native list rule. Those
+corrections, a direct link to the existing four-host offline workflow, and
+removal of duplicated audit-acceptance prose are now being qualified. The audit
+contract remains at its governance owner. No release field, provider, gate,
+controller, or normative duty is added. Advisory preferences and claims based on
+an omitted workflow are not accepted as defects. Current evidence and review
+limits remain under `20261004-claude-source-review`.
+
+Formally accepted ETHOS quality, risk, formatting, and repaired-history
+integration, the coherent successor release, and official closure remain
+pending. All 54 task IDs and states remain unchanged; tasks 2.33, 3.3, 3.5, and
+3.13 stay open. These editorial changes pass all 238 local tests with zero
+skips, strict official OpenSpec validation, native rendering, and empty standard
+error. Seven normative topic files and all task IDs/states are unchanged.
+Trusted signature, exact-HEAD installed proof, and source acceptance remain
+pending.
 
 [previous-tasks-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/blob/934293b8a6ab0600af75ea86fbdbdf36c46d1bd9/openspec/changes/native-document-quality/tasks.md
 [previous-tasks-github]: https://github.com/HengYangDS/data-department-work-guidelines/blob/934293b8a6ab0600af75ea86fbdbdf36c46d1bd9/openspec/changes/native-document-quality/tasks.md

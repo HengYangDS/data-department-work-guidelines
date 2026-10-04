@@ -46,17 +46,13 @@ negative tests. `npm run prose` runs the same locked spelling, prose, and
 terminology checks without the rest of the verification graph. Run
 `node tools/docs/cli.mjs audit` separately when online before source acceptance;
 both hosted CI planes require it and retain its evidence even on failure.
-The native OSV audit preserves all raw findings before applying the
-[native disposition](.config/checks/dependencies/policy.toml). That policy admits
-only the expressly approved, expiring development exception. An unapproved raw
-finding remains blocking even if absent from the later scan. Changed input,
-expired exception, unavailable scan, or upstream fix fails.
-The stable-version observation uses the public npm registry, isolated native
-configuration and cache, and explicit online freshness.
-The temporary repository input check is not general ETHOS risk admission.
-This audit covers the locked
-repository packages, not the npm executable bundled with Node. The offline
-repository verifier does not contact either Forge.
+The audit keeps raw findings before applying the
+[native disposition](.config/checks/dependencies/policy.toml). The
+[supply and audit contract](docs/governance/ethos.md#tool-supply-and-offline-execution)
+owns acceptance, the approved expiring development exception, registry
+freshness, and refusal conditions. This audit covers locked repository packages,
+not the npm executable bundled with Node. The offline repository verifier does
+not contact either Forge.
 
 Vale checks spelling, repeated words, selected technical terms, and diagnosed
 wordy phrases using [native configuration](.config/checks/prose/vale.ini),
@@ -306,7 +302,9 @@ Change authority.
    `glab` must target this project's configured API host and port; use the full
    configured repository URL when a short repository name loses that endpoint.
    Its `release-assets` generic package is what GitLab's post-publication job
-   obtains. GitHub's Release starts its four-host offline workflow. After the
+   obtains. GitHub's Release starts the
+   [offline workflow](.github/workflows/offline-verify.yml) on `ubuntu-latest`,
+   `ubuntu-24.04-arm`, `macos-latest`, and `windows-latest`. After the
    GitLab package and Release exist, start a tag pipeline with
    `glab ci run --branch vX.Y.Z --repo GROUP/PROJECT` and require the
    `offline:verify:linux`, `offline:verify:macos`, and `offline:verify:windows`
@@ -329,7 +327,11 @@ Change authority.
    lychee and current Markdown inventory without changing the offline source
    verifier. A prepared Changelog's comparison links return 404 before its tag
    exists; do not waive those errors or count a pre-tag live check as release
-   qualification.
+   qualification. A lychee pass does not authenticate a Forge destination. Use
+   each provider's native comparison API with the History row's base and head
+   refs at its declared repository. Retain the response and confirm both ref
+   identities; reject sign-in redirects and responses from another repository,
+   as [governance](docs/governance/ethos.md#versioned-releases) requires.
 
    Check each Forge's exact refs, Release object, source CI, and complete
    offline runs at the selected tag. One successful host or peer proves nothing

@@ -151,8 +151,8 @@ Use one reader-block separator. Single-paragraph list peers stay tight even when
 their text wraps; peers with internally separated paragraphs or blocks use one
 consistent gap. Tight nested lists and separate-list boundaries retain their
 native meaning. Prettier handles quote separators; Markdownlint and the official
-CommonMark list-spacing rule handle the remaining structure. Stock MD012 alone
-cannot enforce quote or list looseness.
+`remark-lint-list-item-spacing` rule handle the remaining structure. Stock MD012
+alone cannot enforce quote or list looseness.
 
 Keep the general text owner's English and justified plain-text hygiene. Remove
 duplicate raw scans of Markdown, source code, and structured data. Meaningful
@@ -413,9 +413,13 @@ SemVer, dates, annotations, prepared-release, and ancestry checks.
 
 The existing Changelog owner rejects missing, duplicate, unused, mislabeled,
 credential-bearing, cross-peer, wrong-repository, and divergent-ref links.
-Private GitLab qualification needs its authenticated native destination, not a
-login redirect. Preserve the intentional HTTP deployment and keep source bytes
-identical rather than add host detection, redirects, or Forge-specific rewrites.
+An online link pass does not authenticate a Forge destination. The contributor
+route requires each provider's native comparison response at the declared
+repository, with the History row's actual base and head identities. It links
+the existing four-host GitHub offline workflow rather than copying its matrix
+into a new release field. Preserve the intentional HTTP deployment and keep
+source bytes identical rather than add host detection, redirects, or
+Forge-specific rewrites.
 
 Reusable peer-navigation and repaired-history admission belong in ETHOS. Consume
 applicable declared peers and native reference semantics, including shadowed

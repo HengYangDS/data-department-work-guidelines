@@ -118,7 +118,7 @@ stay in the document; each section explicitly offers GitLab and GitHub history.
 Both links must identify the same refs at their declared repository identities.
 The release declaration owns those web coordinates independently of Git
 transport. Offline validation checks identity and ancestry; each provider's
-authenticated comparison response establishes its actual private destination,
+authenticated comparison response establishes its actual destination,
 not a login redirect or another Forge's success.
 
 ## Quality and Local State
@@ -169,9 +169,10 @@ evidence. Proof does not create a second lifecycle.
 Native Markdown rules enforce the
 [contributor spacing convention](../../CONTRIBUTING.md#verify-the-source).
 Prettier and Markdownlint jointly enforce block spacing. Prettier normalizes
-quoted paragraph separators; the official CommonMark list-spacing rule checks
-list structure through the lint entry. Run both, or the full verifier. Fenced
-and indented examples, including nested literals, keep meaningful blank lines.
+quoted paragraph separators; the official `remark-lint-list-item-spacing` rule
+checks CommonMark list structure through the lint entry. Run both, or the full
+verifier. Fenced and indented examples, including nested literals, keep
+meaningful blank lines.
 The native TOML formatter preserves data, order, comments, and multiline strings.
 The general text consumer retains English and plain-text checks without another
 raw scan of code or structured data. Shared enforcement remains an ETHOS
