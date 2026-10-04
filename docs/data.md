@@ -21,7 +21,7 @@ of its meaning, quality, permission, and reproducibility supports that decision.
 | Question                | What must be known                                                              |
 | ----------------------- | ------------------------------------------------------------------------------- |
 | Where did it come from? | Original source, acquisition method, source of truth, and authorization.        |
-| When was it knowable?   | Event, publication, collection, ingestion, and actual observation times.        |
+| When was it knowable?   | Event, publication, collection, ingestion, and availability times.              |
 | What does it mean?      | Subject, fields, metric, granularity, units, states, and business meaning.      |
 | What changed it?        | Cleaning, mapping, revision, backfill, aggregation, and derivation.             |
 | How good is it?         | Completeness, accuracy, consistency, timeliness, stability, and anomaly limits. |
@@ -40,30 +40,32 @@ and derivations so the current value can be explained.
 ## Preserve the Historical Point of View
 
 For historical research, event analysis, model validation, or cross-source
-comparison, distinguish what could have been observed then from what can be seen
-in hindsight. Check historical revisions, backfills, and restatements; identify
-bias from sample selection, entity changes, market calendars, and survival
-status. Explain how missingness, delay, conflict, and anomalies affect the
-conclusion. If point-in-time consistency cannot be proved, do not automatically
-call the data wrong; lower the strength of the conclusion and stop research or
-business commitments that exceed the evidence. State confidence, alternative
+comparison, distinguish what could have been known then from what can be seen
+in hindsight. Availability time is when a value became accessible to the
+relevant user or system, not when someone later queried it. Check historical
+revisions, backfills, and restatements, and whether sample selection, entity
+changes, market calendars, or survival status introduce bias. Explain how
+missingness, delay, conflict, and anomalies affect the conclusion. If
+point-in-time consistency cannot be proved, do not automatically call the data
+wrong; lower the strength of the conclusion and stop making research or business
+commitments that exceed the evidence. State confidence, alternative
 explanations, and conclusions the data cannot support.
 
 ## Move from a Signal to Controlled Use
 
 Stages may be combined; the judgments may not disappear.
 
-| Stage        | Decision                        | Typical basis                                                          |
-| ------------ | ------------------------------- | ---------------------------------------------------------------------- |
-| Opportunity  | Is evaluation worthwhile?       | Business question, value hypothesis, source, and information boundary. |
-| Exploration  | What is the data?               | Samples, meaning, timeline, quality profile, and alternative sources.  |
-| Reproduction | Can key findings be reproduced? | Replayable method, controls, anomalies, and failure explanation.       |
-| Production   | Can it run reliably?            | Tests, release, backfill, monitoring, ownership, and recovery.         |
-| Admission    | May it serve this use?          | Acceptance, permissions, lineage, limits, veto, and exit conditions.   |
-| Feedback     | Is continued use worthwhile?    | Actual use, quality trends, cost, incidents, and review.               |
+| Stage        | Decision                          | Typical basis                                                          |
+| ------------ | --------------------------------- | ---------------------------------------------------------------------- |
+| Opportunity  | Is evaluation worthwhile?         | Business question, value hypothesis, source, and information boundary. |
+| Exploration  | What is the data?                 | Samples, meaning, timeline, quality profile, and alternative sources.  |
+| Reproduction | Can key findings be reproduced?   | Replayable method, controls, anomalies, and failure explanation.       |
+| Production   | Can it run reliably?              | Tests, release, backfill, monitoring, ownership, and recovery.         |
+| Admission    | May it serve this use?            | Acceptance, permissions, lineage, limits, veto, and exit conditions.   |
+| Feedback     | Do results support continued use? | Use feedback, quality trends, cost, incidents, and review.             |
 
 “Technically possible” is not “worth doing”; “a signal exists” is not
-“production-ready”; “deployed” is not “approved for any use.” Label exploratory,
+“production-ready”; “deployed” is not “admitted for every use.” Label exploratory,
 temporary, limited-use, awaiting verification, and admitted states separately.
 “Let's use it and see” does not erase risk.
 
@@ -93,15 +95,16 @@ observed use, not this table, establishes adoption.
 
 | Owner      | Responsibility                                                                                                       |
 | ---------- | -------------------------------------------------------------------------------------------------------------------- |
-| Domain     | Define meaning, quality, permitted use, and professional judgments.                                                  |
+| Domain     | Define meaning, quality requirements, suitable use cases, and professional judgments.                                |
 | Production | Ensure deployability, backfill, monitoring, recovery, and reliable long-term operation.                              |
 | Platform   | Abstract repeated, cross-domain capabilities needed for durable operation without replacing domain judgment.         |
 | Governance | Define admission, permissions, lineage, review, veto, and exit, and make those controls work in the actual workflow. |
 | Delivery   | Make priorities, resources, dependencies, risks, and open decisions visible.                                         |
 
-Coordination does not grant authority over the other owners' judgments.
-Cross-domain data work has one accountable task lead and clear professional
-interfaces, not an undifferentiated “everyone is responsible.”
+Sharing an interface does not transfer responsibility or grant authority over
+another owner's judgments. Cross-domain data work must have one accountable
+task lead and clear professional interfaces, not an undifferentiated “everyone
+is responsible.”
 
 Changes to production, shared assets, or critical management chains require:
 
@@ -113,12 +116,15 @@ Changes to production, shared assets, or critical management chains require:
 - Escalation, human takeover, and stop conditions.
 - Evidence bound to the current version and environment.
 
-The authorized decision owner approves admission for high-risk use, permission
-changes, production releases, destructive changes, and irreversible actions. An
-Agent may implement or help verify them within its delegated scope, but cannot
-approve them.
+The authorized decision owner must approve high-risk use admission, permission
+changes, production releases, deletion or overwrite, and irreversible actions.
+An Agent may implement or help verify them within its delegated scope, but
+cannot approve them.
 
 Before data enters a lasting work system, its **meaning must be explainable,
 source traceable, time identifiable, process reproducible, quality verifiable,
-operation observable, owner identifiable, and use bounded**. Close the specific
-completion claim through [execution and delivery](deliver.md).
+operation observable, owner identifiable, and use bounded**. If any condition is
+unmet, label the data exploratory, temporary, limited-use, or awaiting
+verification. A limited use requires its own evidence and permission; it does
+not make the data a fully qualified asset. Close the specific completion claim
+through [execution and delivery](deliver.md).

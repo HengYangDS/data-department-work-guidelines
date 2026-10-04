@@ -20,6 +20,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Preserve data availability, professional use cases, and permission as distinct
+  judgments. Keep each data owner's authority intact and require a non-final
+  state when any completion condition is unmet.
 - Preserve native npm admission errors, signals, and partial output before
   checking refusal or permitted effects. Isolate fixture configuration and
   resolve the selected entry once without changing test coverage or deadlines.

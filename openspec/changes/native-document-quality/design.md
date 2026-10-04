@@ -74,6 +74,13 @@ unrecognized or unfinished work, unknown task responsibility, unknown fact
 sources, authority gaps, and material irreversible risks remain distinct stops.
 Nonessential presentation preferences do not suspend otherwise authorized work.
 
+Data timelines distinguish availability to the relevant user or system from a
+later query. Domain owners define suitable use cases and quality requirements;
+use permission remains a separate authorized judgment. No data role absorbs
+another role's responsibility or authority. A missing completion condition
+requires a truthful non-final label; separately qualified limited use does not
+establish a fully qualified asset.
+
 Management cadence retains its purpose without a universal weekly meeting: joint
 task-start calibration, immediate signal-based correction, monthly review by
 the department head or an appointed guideline maintainer with shared evidence

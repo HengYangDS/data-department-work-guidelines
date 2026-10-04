@@ -10,7 +10,10 @@ production, or decision path until meaning, quality, permission, and
 reproducibility are qualified. Parallel Agent work SHALL default to independent
 read-only review with one integrator; reports SHALL expose evidence, limits,
 and human responsibility. Agents SHALL read complete results of current,
-claim-matched checks before summarizing.
+claim-matched checks before summarizing. Data timelines SHALL identify when a
+value became available to the relevant user or system, not merely when it was
+later observed. Data-state labels SHALL reflect every declared completion
+condition.
 
 #### Scenario: A verification summary omits a finding
 
@@ -74,6 +77,23 @@ claim-matched checks before summarizing.
 - **THEN** the collaboration topic prohibits uncoordinated edits and closing,
   overwriting, or cleaning up owner-unknown work
 - **AND** deadline pressure or an integration role does not grant that authority.
+
+#### Scenario: A later query is presented as historical availability
+
+- **WHEN** a researcher can query a revised historical value now but cannot
+  establish when the relevant user or system could first access it
+- **THEN** the data topic separates availability from the later query time
+- **AND** the researcher cannot use that query alone to establish point-in-time
+  validity; exploratory work may continue within the stated evidence limit.
+
+#### Scenario: A data-state label hides an unmet completion condition
+
+- **WHEN** a dataset meets some completion conditions but lacks operational
+  observation, identifiable ownership, or another required condition
+- **THEN** the data topic requires an exploratory, temporary, limited-use, or
+  awaiting-verification label rather than a fully qualified asset label
+- **AND** a limited use needs its own evidence and permission; deployment or
+  permission for that use does not satisfy the missing condition.
 
 ### Requirement: Task routes preserve the work-quality contract
 
@@ -393,9 +413,12 @@ destination, audience, and detail.
 
 ### Requirement: Data roles retain operational responsibility
 
-Domain owners SHALL make professional judgments. Production owners SHALL
-ensure reliable long-term operation. Production, shared-asset, and critical
-management-chain changes SHALL have actual acceptance against agreed criteria.
+Domain owners SHALL define meaning, quality requirements, suitable use cases,
+and professional judgments. A suitable use case SHALL NOT itself establish
+permission. Shared interfaces SHALL NOT transfer another owner's responsibility
+or grant authority over its judgments. Production owners SHALL ensure reliable
+long-term operation. Production, shared-asset, and critical management-chain
+changes SHALL have actual acceptance against agreed criteria.
 Governance owners SHALL make admission, permission, lineage, review, veto, and
 exit controls operate in the workflow. Delivery owners SHALL expose priorities
 and unresolved decisions without assuming authority over the other owners'
@@ -407,6 +430,15 @@ judgments.
   operative governance review and controls
 - **THEN** the data topic identifies the responsible owners and missing decision
 - **AND** a coordination role cannot grant itself the missing authority.
+
+#### Scenario: One data owner assumes another owner's authority
+
+- **WHEN** a domain owner treats a suitable use case as permission, or a
+  governance reviewer changes business meaning through an admission review
+- **THEN** the data topic preserves professional judgment and permission as
+  distinct responsibilities
+- **AND** a shared interface or accountable task lead cannot grant the missing
+  authority.
 
 #### Scenario: Data-change criteria are defined but never accepted
 
