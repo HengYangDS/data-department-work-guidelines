@@ -241,6 +241,8 @@ Diagram, card, topic and evidence counts SHALL NOT determine validity.
   tools and locked dependencies but no prior build directory or native cache
 - **THEN** source-link and concurrent-install tests create or model their own
   exact prerequisites and complete without an earlier verification run
+- **AND** the public source-link test uses compact tracked and candidate source
+  with real Git selection and lychee, not unrelated history or documents
 - **AND** source confinement, exclusive copy, version, and mode-preservation
   assertions remain unchanged; fixture children are removed afterward.
 

@@ -28,6 +28,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   Keep every successful-path check, ancestry operation, and original deadline.
 - Keep the public prose/integrity regression compact while retaining native
   tools, policies, source-selection controls, and every original assertion.
+- Keep the public source-link regression independent of full Git history and
+  unrelated documents. Retain real lychee execution, candidate-source admission,
+  local-state refusal, unchanged source, and the original deadline.
 - Keep native format and lint fixtures focused on their declared source inputs.
   Retain real tools, policy consumption, literals, tracked inputs, and all checks.
 - Share one fresh native TOML formatter between matching and output in each

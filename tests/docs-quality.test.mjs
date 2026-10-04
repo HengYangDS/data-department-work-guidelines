@@ -2113,30 +2113,65 @@ test("link checking rejects an incomplete-mode waiver", () => {
 test("the public link check rejects cache and Git state but accepts candidate source", () => {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-source-links-"));
   try {
-    const clone = spawnSync(
-      "git",
-      ["clone", "--quiet", "--no-hardlinks", root, directory],
-      { encoding: "utf8", timeout: 30_000 },
-    );
-    assert.equal(clone.status, 0, clone.stderr);
-    cpSync(path.join(root, "tools"), path.join(directory, "tools"), {
-      recursive: true,
+    const initialized = spawnSync("git", ["init", "--quiet", directory], {
+      encoding: "utf8",
+      timeout: 10_000,
     });
+    assert.ifError(initialized.error);
+    assert.equal(initialized.status, 0, initialized.stderr);
+    for (const prerequisite of ["tools", ".config", "package.json"]) {
+      cpSync(
+        path.join(root, prerequisite),
+        path.join(directory, prerequisite),
+        {
+          recursive: true,
+        },
+      );
+    }
     symlinkSync(
       path.join(root, "node_modules"),
       path.join(directory, "node_modules"),
       "junction",
     );
     const entry = path.join(directory, "README.md");
-    const original = readFileSync(entry, "utf8");
+    const original = "# Source Links\n";
+    writeFileSync(entry, original);
+    mkdirSync(path.join(directory, "docs"));
+    writeFileSync(
+      path.join(directory, "docs", "README.md"),
+      "# Guide\n\nRead the [source entry](../README.md).\n",
+    );
+    writeFileSync(
+      path.join(directory, ".gitignore"),
+      "node_modules/\n/node_modules\n/tools/\n/.config/\n/package.json\nbuild/\n.cache/\n",
+    );
+    const added = spawnSync(
+      "git",
+      ["add", "--", ".gitignore", "README.md", "docs/README.md"],
+      { cwd: directory, encoding: "utf8", timeout: 10_000 },
+    );
+    assert.ifError(added.error);
+    assert.equal(added.status, 0, added.stderr);
+    assertFixtureSources(directory, [
+      ".gitignore",
+      "README.md",
+      "docs/README.md",
+    ]);
     const check = (target) => {
-      writeFileSync(entry, `${original}\n[Source reference](${target})\n`);
-      return spawnSync(process.execPath, ["tools/docs/cli.mjs", "links"], {
-        cwd: directory,
-        encoding: "utf8",
-        timeout: 15_000,
-        env: { ...process.env, DDWG_LYCHEE_BIN: nativeToolBinary("lychee") },
-      });
+      const source = `${original}\n[Source reference](${target})\n`;
+      writeFileSync(entry, source);
+      const result = spawnSync(
+        process.execPath,
+        ["tools/docs/cli.mjs", "links"],
+        {
+          cwd: directory,
+          encoding: "utf8",
+          timeout: 15_000,
+          env: { ...process.env, DDWG_LYCHEE_BIN: nativeToolBinary("lychee") },
+        },
+      );
+      assert.equal(readFileSync(entry, "utf8"), source);
+      return result;
     };
     const tracked = check("docs/README.md");
     assert.ifError(tracked.error);
@@ -2160,6 +2195,12 @@ test("the public link check rejects cache and Git state but accepts candidate so
       assert.notEqual(invalid.status, 0, `${target}: ${invalid.stdout}`);
       assert.match(invalid.stderr, /not repository source/u, target);
     }
+    assertFixtureSources(directory, [
+      ".gitignore",
+      "README.md",
+      "docs/README.md",
+      candidate,
+    ]);
   } finally {
     rmSync(directory, { recursive: true, force: true });
     assert.equal(existsSync(directory), false);

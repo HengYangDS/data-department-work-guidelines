@@ -142,7 +142,10 @@
       the existing source-link and concurrent-install fixtures. Create the
       ignored parent explicitly and model the regular target behind `EEXIST`;
       preserve source confinement, exclusive copy, version, and permissions. Run
-      isolated regressions and complete fresh-checkout verification.
+      isolated regressions and complete fresh-checkout verification. Keep the
+      public source-link fixture compact through actual Git selection and
+      lychee, retaining tracked/candidate positives, local-state refusals,
+      unchanged source, cleanup, and its original child deadline.
 - [x] 2.28 Resolve navigation through the existing native Markdown parser and
       compiler. Reject hidden routes, unlinked images, unreadable labels,
       shadowed definitions, and repeated real routes; accept formatted text,
