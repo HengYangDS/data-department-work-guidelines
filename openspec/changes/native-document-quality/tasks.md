@@ -545,5 +545,45 @@ Accepted shared integration, full platform acceptance, final edition, and
 closure remain open. VERSION and the v7.0.12 tag and bundle remain unchanged.
 Tasks 2.33, 3.3, 3.5, and 3.13 remain open.
 
+Signed source `aa31ade4fc56abbe7ebd97fba4cad6b469f2d09a`, tree
+`43d4a020e221b7aa8e7ca2eab164e876ddd624a2`, passes all 237 local and fresh-HOME,
+denied-remote cold tests with zero skips and 70 conserved hashes and modes.
+Installed full proof passes both default gates with attestation
+`fa0eabe4eb29de2ad0c33cb6aae3ca4a88a1c0123b87e3997fc903cbfc18dd98`.
+Both proposal refs read back at that source. GitHub run 37201346039 passes all
+three source jobs. GitLab pipeline 9499 Linux and macOS jobs 48310/48311 pass;
+Windows job 48312 reaches the unchanged 180-second complete-test deadline.
+The available trace has no failed assertion. Its compact public prose journey
+passes in 21.550 seconds; native TOML, formatting-policy, and literal lint
+fixtures remain costly at 50.513, 25.363, and 18.263 seconds respectively.
+This source is not qualified on every platform. The accepted-root apply timed
+out without output; independent ref inspection proves local dev/main did not move.
+Preserve the failed operation rather than blindly replay it.
+
+The next native formatter repair has a genuine RED showing two compilations
+instead of one. One fresh local formatter now serves matching and output without
+a cross-attempt cache. Three additional RED inventory assertions expose copied
+tool, policy, and dependency carriers as unrelated fixture source. Temporary Git
+ignore rules now exclude only those prerequisites, while native commands consume
+their actual bytes. The formatting fixture force-tracks its observed Markdown
+TOML policy, keeping its preservation assertion substantive. Every original
+sample, literal, ambient-policy counterexample, archive input, assertion, and
+deadline remains. All four focused tests pass with zero skips; local TOML,
+formatting-policy, and literal lint timings are 4.523, 2.868, and 5.734 seconds.
+These local observations do not establish Windows recovery. Full source, cold
+qualification, exact-HEAD proof, and hosted acceptance of this patch remain
+pending; all 54 task IDs and their states remain unchanged.
+
+The successor's full local verifier passes all 238 tests with zero skips,
+28 Markdown source inputs, strict official 4/4 validation, and an empty standard
+error stream. Native Vale first rejected the new task prose's word `readback`;
+the sentence was corrected rather than waiving the rule. Independent read-only
+review found no required correction within the formatter and fixture patch;
+it did not run tests or accept Windows or the shared product. Official native
+synchronization preserves 23 requirements and 115 prior scenarios and adds the
+qualified format/lint scenario; the other 22 blocks, including both unaccepted
+proof requirements, remain byte-identical. Signed-source proof, cold verification,
+and both peer matrices remain pending.
+
 [previous-tasks-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/blob/934293b8a6ab0600af75ea86fbdbdf36c46d1bd9/openspec/changes/native-document-quality/tasks.md
 [previous-tasks-github]: https://github.com/HengYangDS/data-department-work-guidelines/blob/934293b8a6ab0600af75ea86fbdbdf36c46d1bd9/openspec/changes/native-document-quality/tasks.md

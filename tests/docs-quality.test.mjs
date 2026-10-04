@@ -20,6 +20,7 @@ import { parse as parseShell } from "shell-quote";
 import { parse as parseToml } from "smol-toml";
 import {
   documentMetadata,
+  formatSource,
   checkLinks,
   lintMarkdown,
   repositoryFileUri,
@@ -87,6 +88,21 @@ function fixture(run) {
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }
+}
+
+function assertFixtureSources(directory, expected) {
+  const inventory = spawnSync(
+    "git",
+    ["ls-files", "--cached", "--others", "--exclude-standard", "-z"],
+    { cwd: directory, encoding: "utf8", timeout: 10_000 },
+  );
+  assert.ifError(inventory.error);
+  assert.equal(inventory.status, 0, inventory.stderr);
+  assert.deepEqual(
+    [...new Set(inventory.stdout.split("\0").filter(Boolean))].sort(),
+    [...expected].sort(),
+    "native fixture source contains only the declared test inputs",
+  );
 }
 
 test("document metadata reads the product-supported title-first carrier", () => {
@@ -1349,10 +1365,48 @@ test("native structured formats preserve literal blank lines", async () => {
   }
 });
 
+test("one formatting attempt uses one fresh native TOML formatter", async (context) => {
+  const NativeModule = WebAssembly.Module;
+  let constructions = 0;
+  WebAssembly.Module = new Proxy(NativeModule, {
+    construct(target, args) {
+      constructions += 1;
+      return Reflect.construct(target, args);
+    },
+  });
+  const nativeSpawn = childProcess.spawnSync;
+  const mocked = context.mock.method(
+    childProcess,
+    "spawnSync",
+    (command, args, options) => {
+      if (args?.[0] === nodeTool("prettier", "prettier"))
+        return { status: 0, stdout: "", stderr: "" };
+      return nativeSpawn(command, args, options);
+    },
+  );
+  syncBuiltinESMExports();
+  try {
+    await formatSource();
+    assert.equal(
+      constructions,
+      1,
+      "matching and formatting share one native instance",
+    );
+  } finally {
+    WebAssembly.Module = NativeModule;
+    mocked.mock.restore();
+    syncBuiltinESMExports();
+  }
+});
+
 test("native TOML formatting checks literal Git paths and preserves data", () => {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-toml-format-"));
   try {
-    cpSync(path.join(root, ".gitignore"), path.join(directory, ".gitignore"));
+    writeFileSync(
+      path.join(directory, ".gitignore"),
+      readFileSync(path.join(root, ".gitignore"), "utf8") +
+        "\n/tools/\n/.config/\n/package.json\n/node_modules\n",
+    );
     cpSync(path.join(root, "tools"), path.join(directory, "tools"), {
       recursive: true,
     });
@@ -1390,6 +1444,12 @@ test("native TOML formatting checks literal Git paths and preserves data", () =>
       timeout: 10_000,
     });
     assert.equal(add.status, 0, add.stderr);
+    assertFixtureSources(directory, [
+      ".gitignore",
+      name,
+      "dprint.json",
+      "taplo.toml",
+    ]);
     const invoke = (args) =>
       spawnSync(process.execPath, ["tools/docs/cli.mjs", "format", ...args], {
         cwd: directory,
@@ -1514,7 +1574,11 @@ test("Markdown checks consume the native concern-local TOML policy", () => {
 test("Markdown lint checks literal Git source without a glob or ambient policy", () => {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-native-lint-"));
   try {
-    cpSync(path.join(root, ".gitignore"), path.join(directory, ".gitignore"));
+    writeFileSync(
+      path.join(directory, ".gitignore"),
+      readFileSync(path.join(root, ".gitignore"), "utf8") +
+        "\n/tools/\n/.config/\n/package.json\n/node_modules\n",
+    );
     cpSync(path.join(root, "tools"), path.join(directory, "tools"), {
       recursive: true,
     });
@@ -1557,6 +1621,13 @@ test("Markdown lint checks literal Git source without a glob or ambient policy",
       timeout: 10_000,
     });
     assert.equal(add.status, 0, add.stderr);
+    const selected = [
+      ".gitignore",
+      ".markdownlint-cli2.jsonc",
+      ".markdownlint.json",
+      source,
+    ];
+    assertFixtureSources(directory, selected);
     const invoke = () =>
       spawnSync(process.execPath, ["tools/docs/cli.mjs", "lint"], {
         cwd: directory,
@@ -1628,6 +1699,7 @@ test("Markdown lint checks literal Git source without a glob or ambient policy",
       timeout: 10_000,
     });
     assert.equal(addHistory.status, 0, addHistory.stderr);
+    assertFixtureSources(directory, [...selected, historical]);
     writeFileSync(file, "# Example\n\nUse the report.\n");
     const archived = invoke();
     assert.equal(archived.status, 1, archived.stderr);
@@ -1646,6 +1718,7 @@ test("Markdown lint checks literal Git source without a glob or ambient policy",
 test("native formatting policy preserves prose and ignores ambient editor settings", () => {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-format-policy-"));
   try {
+    const tomlRelative = ".config/checks/markdown/markdownlint.toml";
     cpSync(path.join(root, "tools"), path.join(directory, "tools"), {
       recursive: true,
     });
@@ -1709,7 +1782,7 @@ test("native formatting policy preserves prose and ignores ambient editor settin
     ]);
     writeFileSync(
       path.join(directory, ".gitignore"),
-      "node_modules/\nbuild/\n.worktrees/\n",
+      "node_modules/\nbuild/\n.worktrees/\n/tools/\n/.config/\n/package.json\n/node_modules\n",
     );
     writeFileSync(
       path.join(directory, ".prettierignore"),
@@ -1726,6 +1799,7 @@ test("native formatting policy preserves prose and ignores ambient editor settin
         "add",
         "--force",
         "--",
+        tomlRelative,
         ...[...sources.keys()].filter(
           (relative) =>
             relative.startsWith("build/") || relative.startsWith(".worktrees/"),
@@ -1746,11 +1820,18 @@ test("native formatting policy preserves prose and ignores ambient editor settin
     for (const [relative, source] of literals) {
       writeFileSync(path.join(directory, relative), source);
     }
-    const nativeToml = path.join(
-      directory,
-      ".config/checks/markdown/markdownlint.toml",
-    );
+    const nativeToml = path.join(directory, tomlRelative);
     const tomlBefore = readFileSync(nativeToml, "utf8");
+    assertFixtureSources(directory, [
+      ".editorconfig",
+      ".gitignore",
+      ".prettierignore",
+      "README.md",
+      "sample.json",
+      tomlRelative,
+      ...sources.keys(),
+      ...literals.keys(),
+    ]);
     const checked = spawnSync(
       process.execPath,
       ["tools/docs/cli.mjs", "format", "--check"],
@@ -1819,6 +1900,7 @@ test("native formatting policy preserves prose and ignores ambient editor settin
     assert.equal(repaired.status, 0, repaired.stderr);
   } finally {
     rmSync(directory, { recursive: true, force: true });
+    assert.equal(existsSync(directory), false);
   }
 });
 

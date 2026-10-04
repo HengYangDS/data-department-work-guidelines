@@ -80,9 +80,11 @@ export function nativeTomlFormatter(repository = root) {
   return formatter;
 }
 
-export async function formatTargets(files = gitFiles()) {
+export async function formatTargets(
+  files = gitFiles(),
+  matching = nativeTomlFormatter().getFileMatchingInfo(),
+) {
   const targets = { prettier: [], toml: [] };
-  const matching = nativeTomlFormatter().getFileMatchingInfo();
   for (const relative of files) {
     const absolute = filePath(relative);
     if (!existsSync(absolute) || !lstatSync(absolute).isFile()) continue;
@@ -104,7 +106,11 @@ export async function formatTargets(files = gitFiles()) {
 }
 
 export async function formatSource({ check = true } = {}) {
-  const targets = await formatTargets();
+  const formatter = nativeTomlFormatter();
+  const targets = await formatTargets(
+    gitFiles(),
+    formatter.getFileMatchingInfo(),
+  );
   if (targets.prettier.length) {
     runNodeTool("prettier", "prettier", [
       "--config",
@@ -117,7 +123,6 @@ export async function formatSource({ check = true } = {}) {
       ...targets.prettier,
     ]);
   }
-  const formatter = nativeTomlFormatter();
   const findings = [];
   for (const relative of targets.toml) {
     const source = readText(relative);

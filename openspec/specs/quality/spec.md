@@ -256,6 +256,20 @@ Diagram, card, topic and evidence counts SHALL NOT determine validity.
 - **AND** full source verification still selects every actual repository input
   and test with the same workers and deadlines; no native report is fabricated.
 
+#### Scenario: Native format and lint fixtures select their complete relevant source
+
+- **WHEN** a focused native format or lint regression runs in a temporary Git
+  repository
+- **THEN** executable, policy, and dependency carriers remain present and are
+  consumed normally without becoming unrelated checked source
+- **AND** native Git inventory retains every sample, literal, ambient-policy
+  counterexample, archive input, and force-tracked source, including the observed
+  Markdown TOML policy; original assertions and deadlines remain unchanged
+- **AND** one formatting attempt uses one fresh native TOML formatter for matching
+  and output, preserving diagnostics and data without a cross-attempt cache
+- **AND** full repository verification still checks all selected source and tests;
+  the temporary fixture is removed after success or failure.
+
 #### Scenario: Navigation links are hidden in non-reader content
 
 - **WHEN** code, a comment, an unlinked image, escaped syntax, an unused

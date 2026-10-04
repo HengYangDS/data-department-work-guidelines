@@ -21,6 +21,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   Keep every successful-path check, ancestry operation, and original deadline.
 - Keep the public prose/integrity regression compact while retaining native
   tools, policies, source-selection controls, and every original assertion.
+- Keep native format and lint fixtures focused on their declared source inputs.
+  Retain real tools, policy consumption, literals, tracked inputs, and all checks.
+- Share one fresh native TOML formatter between matching and output in each
+  formatting attempt, without caching policy or changing validation.
 - Clarify pending ETHOS quality acceptance, GitHub outage updates versus
   dual-Forge edition qualification, and current authority links in governance
   and decision records. Preserve stable decisions and historical-source limits.

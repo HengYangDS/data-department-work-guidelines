@@ -284,6 +284,18 @@ rechecking the whole document corpus. The full repository verifier separately
 checks all actual source. A smaller fixture must not narrow that selection or
 replace native Vale, lychee, or Git with a fabricated report.
 
+Native format and lint fixtures likewise keep executable, policy, and dependency
+carriers present but outside their temporary Git source inventory. Every explicit
+sample, ambient-ignore counterexample, literal, archive input, and force-tracked
+source remains selected. Force-track the formatting fixture's observed Markdown
+TOML policy so its unchanged-byte assertion still exercises a selected source.
+Native Git inventory assertions bind each fixture to its declared inputs.
+
+Each formatting attempt creates one fresh native TOML formatter for file matching
+and output. Standalone target discovery retains its native default acquisition;
+there is no cross-attempt cache. Native diagnostics, preservation policy, parsed
+data comparison, source selection, and process deadlines remain unchanged.
+
 Resolve the complete Changelog reference selection in one native Git
 `cat-file --batch-check` call with native line-delimited input and output. The
 existing reference grammar excludes control characters, so the default batch
