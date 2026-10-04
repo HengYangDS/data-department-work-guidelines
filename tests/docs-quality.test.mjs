@@ -169,6 +169,7 @@ test("official OpenSpec findings and report identity cannot be reduced to totals
   const script = `
     import assert from "node:assert/strict";
     import childProcess from "node:child_process";
+    import fs from "node:fs";
     import { syncBuiltinESMExports } from "node:module";
     import path from "node:path";
     const original = childProcess.spawnSync;
@@ -204,6 +205,23 @@ test("official OpenSpec findings and report identity cannot be reduced to totals
     report.summary.totals.items = report.summary.totals.passed = 2;
     report.summary.byType.change = { items: 1, passed: 1, failed: 0 };
     assert.doesNotThrow(validateOpenSpec);
+    // Model equivalent Windows short-path spelling through the native owner.
+    const ordinaryRealpath = fs.realpathSync;
+    const nativeRealpath = ordinaryRealpath.native;
+    const alias = path.join(repository, "native-root-alias");
+    fs.realpathSync = (target) => target === alias ? alias : ordinaryRealpath(target);
+    fs.realpathSync.native = (target) => target === alias ? nativeRealpath(repository) : nativeRealpath(target);
+    syncBuiltinESMExports();
+    report = structuredClone(clean);
+    report.root.path = alias;
+    try {
+      assert.doesNotThrow(validateOpenSpec, "equivalent native roots must not depend on path spelling");
+      report.root.path = path.dirname(repository);
+      assert.throws(validateOpenSpec, /OpenSpec/u, "a genuinely different native root stays invalid");
+    } finally {
+      fs.realpathSync = ordinaryRealpath;
+      syncBuiltinESMExports();
+    }
     const cases = [
       ...["INFO", "WARNING", "ERROR"].map((level) => ({
         name: level,
@@ -1313,6 +1331,7 @@ test("native structured formats preserve literal blank lines", async () => {
 test("native TOML formatting checks literal Git paths and preserves data", () => {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-toml-format-"));
   try {
+    cpSync(path.join(root, ".gitignore"), path.join(directory, ".gitignore"));
     cpSync(path.join(root, "tools"), path.join(directory, "tools"), {
       recursive: true,
     });
@@ -1332,6 +1351,8 @@ test("native TOML formatting checks literal Git paths and preserves data", () =>
     const file = path.join(directory, name);
     const source = 'literal = """\nfirst\n\n\nsecond\n"""\n\n\nnext=2\n';
     writeFileSync(file, source);
+    mkdirSync(path.join(directory, "build"));
+    writeFileSync(path.join(directory, "build", "cache.toml"), "broken = [\n");
     writeFileSync(path.join(directory, "taplo.toml"), "include = []\n");
     writeFileSync(
       path.join(directory, "dprint.json"),
@@ -1472,6 +1493,7 @@ test("Markdown checks consume the native concern-local TOML policy", () => {
 test("Markdown lint checks literal Git source without a glob or ambient policy", () => {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-native-lint-"));
   try {
+    cpSync(path.join(root, ".gitignore"), path.join(directory, ".gitignore"));
     cpSync(path.join(root, "tools"), path.join(directory, "tools"), {
       recursive: true,
     });
@@ -1490,6 +1512,11 @@ test("Markdown lint checks literal Git source without a glob or ambient policy",
     const source = "{literal} markdown.md";
     const file = path.join(directory, source);
     writeFileSync(file, "# Example\n\nUse the report.\n");
+    mkdirSync(path.join(directory, "build"));
+    writeFileSync(
+      path.join(directory, "build", "cache.md"),
+      "# Cache\n\n\n\nIgnored install state.\n",
+    );
     writeFileSync(
       path.join(directory, ".markdownlint-cli2.jsonc"),
       '{"ignores":["**"],"config":{"default":false}}\n',

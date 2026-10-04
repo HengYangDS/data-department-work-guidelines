@@ -143,7 +143,7 @@ export function validateOpenSpec() {
   try {
     reportedRoot =
       typeof result?.root?.path === "string"
-        ? realpathSync(result.root.path)
+        ? realpathSync.native(result.root.path)
         : undefined;
   } catch {
     invalidReport();
@@ -152,7 +152,7 @@ export function validateOpenSpec() {
     result?.version !== "1.0" ||
     typeof result.root?.path !== "string" ||
     !path.isAbsolute(result.root.path) ||
-    reportedRoot !== realpathSync(root) ||
+    reportedRoot !== realpathSync.native(root) ||
     !Array.isArray(result.items) ||
     !result.items.length
   ) {

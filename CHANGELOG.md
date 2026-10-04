@@ -17,6 +17,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Use native filesystem identity for OpenSpec report roots on Windows, including
+  short-path aliases. Keep temporary format and lint checks bound to Git source,
+  so installed dependencies and caches cannot masquerade as source files.
 - Use native OSV dependency auditing with complete raw findings, bounded
   execution, and always-retained CI evidence. Limit the human-approved exception
   to its exact development input and expiry; unrelated findings still block.

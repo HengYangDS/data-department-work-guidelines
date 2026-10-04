@@ -248,6 +248,12 @@
       the executor's ownership; validate the same immutable bundle under the
       original capability limit without extra privilege or skipped checks.
       Hosted source and offline qualification remain open.
+      The original Windows jobs reject the clean OpenSpec fixture's short-path
+      root, and temporary format and lint fixtures include installed dependency
+      state. Reuse native filesystem resolution and the repository's Git
+      ignore policy. Preserve wrong-root rejection, ignored-state controls, and
+      real official clean and INFO execution; qualify a new exact source rather
+      than retrying or waiving the original failures.
 - [x] 2.32 Retire all reviewed completed-Change copies from the current tree.
       Audit unique facts, obligations, and incoming consumers; preserve exact
       ancestor Git objects and existing proof. Replace three cited designs with
@@ -310,11 +316,15 @@
       single execution, semantic diagnostics, and preserved warnings through
       the actual installed command plane.
       Integration remains pending. Installed minimal finite-input repair
-      `4a258689` closes the original changed-plan and proof hangs, not the shared
-      semantic quality contract or formal product release. Source hashes, modes,
-      and refs are conserved; the prior exact runtime was removed by native
-      cleanup, while same-source and wheel fallback is retained. Qualify the
-      product-owned retention repair before claiming exact rollback.
+      `4a258689` closes the original changed-plan and proof hangs. Normal signed
+      `454145f` passes full exact-HEAD proof and all 229 local and fresh-home,
+      denied-network macOS tests; native landing accepts it locally. GitLab
+      publishes that source; GitHub retains it on the proposal while Windows
+      checks fail. Both original failures remain preserved. All six OSV assets
+      and their notice match independently downloaded GitLab bytes; temporary
+      supply and cold checkouts are retired. These results do not certify the
+      shared semantic quality contract or ETHOS release. Qualify the native
+      retention successor before claiming exact runtime rollback.
       OpenSpec 1.14.0 reaches braces 3.0.3. Its single high-severity advisory
       propagates through four npm findings; native OSV names one raw advisory.
       Enforce the expressly approved, expiring development-only disposition

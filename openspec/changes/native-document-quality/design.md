@@ -1152,6 +1152,15 @@ source and evidence rather than relabeling it as complete equivalence.
 
 ## Migration Plan
 
+The original Windows source checks expose native path and fixture-boundary
+differences. Official OpenSpec expands short-path aliases with the native
+filesystem resolver; its consumer must compare both roots through that same
+owner. Temporary format and lint fixtures must carry the repository's Git ignore
+policy so Windows directory junctions cannot register installed dependencies as
+source. Keep real native validation, wrong-root rejection, ignored-state
+counterexamples, and all native diagnostics. Do not increase argument limits,
+skip Windows tests, or weaken source selection to cover up a fixture defect.
+
 1. Add distinguishing native rule, supply, and source-conservation tests.
 2. Replace implementations at their existing owners; remove superseded files.
 3. Review topic prose and reconcile all current documentation and CI consumers.
