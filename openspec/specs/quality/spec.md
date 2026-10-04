@@ -231,6 +231,14 @@ Diagram, card, topic and evidence counts SHALL NOT determine validity.
 - **AND** real repeated topic routes remain rejected regardless of spelling;
   native lychee still checks source targets and fragments.
 
+#### Scenario: A table source link is not visible in its rendered cell
+
+- **WHEN** a cell separator without an escape splits a required navigation
+  link, or places it beyond a GFM table's declared columns
+- **THEN** the existing navigation owner rejects the missing rendered route
+- **AND** ordinary links and escaped-pipe labels inside visible cells remain
+  valid; the official native table extension owns the cell boundaries.
+
 #### Scenario: A topic's reader cue is hidden or merely quoted as code
 
 - **WHEN** the use cue appears only in code, a comment, or an image instead of

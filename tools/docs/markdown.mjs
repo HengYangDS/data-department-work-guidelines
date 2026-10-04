@@ -2,6 +2,7 @@ import { decodeHTML } from "entities";
 import { lint } from "markdownlint/sync";
 import { Parser } from "htmlparser2";
 import { micromark } from "micromark";
+import { gfmTable, gfmTableHtml } from "micromark-extension-gfm-table";
 import remarkParse from "remark-parse";
 import remarkLintListItemSpacing from "remark-lint-list-item-spacing";
 import { unified } from "unified";
@@ -133,7 +134,12 @@ export function markdownLinkDestinations(source) {
         anchor = undefined;
       }
     },
-  }).end(micromark(source));
+  }).end(
+    micromark(source, {
+      extensions: [gfmTable()],
+      htmlExtensions: [gfmTableHtml()],
+    }),
+  );
   return destinations;
 }
 

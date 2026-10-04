@@ -254,6 +254,31 @@ test("navigation resolves native link destinations and first reference definitio
   });
 });
 
+test("navigation follows native GFM table cell boundaries", () => {
+  fixture((directory) => {
+    const entry = path.join(directory, "README.md");
+    const original = readFileSync(entry, "utf8");
+    const route = "[documentation map](docs/README.md)";
+    const table = (cell) =>
+      `\n\n| Task | Entry |\n| --- | --- |\n| Start | ${cell} |\n\n`;
+    for (const cell of [route, "[documentation \\| map](docs/README.md)"]) {
+      writeFileSync(entry, original.replace(route, table(cell)));
+      assert.doesNotThrow(() => checkNavigation(directory), cell);
+    }
+    for (const cell of [
+      "[documentation | map](docs/README.md)",
+      "unlinked | [documentation map](docs/README.md)",
+    ]) {
+      writeFileSync(entry, original.replace(route, table(cell)));
+      assert.throws(
+        () => checkNavigation(directory),
+        /missing task routes/u,
+        cell,
+      );
+    }
+  });
+});
+
 test("navigation rejects anchors without readable rendered content", () => {
   fixture((directory) => {
     const entry = path.join(directory, "README.md");

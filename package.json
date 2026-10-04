@@ -16,6 +16,7 @@
     "htmlparser2": "12.0.0",
     "markdownlint": "0.41.1",
     "micromark": "4.0.3",
+    "micromark-extension-gfm-table": "2.1.2",
     "prettier": "3.9.9",
     "remark-lint-list-item-spacing": "5.0.1",
     "remark-parse": "11.0.0",
@@ -38,6 +39,7 @@
     }
   },
   "overrides": {
-    "micromark": "$micromark"
+    "micromark": "$micromark",
+    "micromark-extension-gfm-table": "$micromark-extension-gfm-table"
   }
 }

@@ -180,7 +180,7 @@
       ignored parent explicitly and model the regular target behind `EEXIST`;
       preserve source confinement, exclusive copy, version, and permissions.
       Run isolated regressions and complete fresh-checkout verification.
-- [x] 2.28 Resolve navigation with the existing native Markdown parser and
+- [ ] 2.28 Resolve navigation with the existing native Markdown parser and
       compiler. Reject hidden routes, unlinked images, unreadable labels, and
       shadowed definitions; accept formatted text, descriptive linked-image
       labels, legitimate titles, references, character decoding, and local
@@ -195,6 +195,12 @@
       macOS-only skip. Its completed proposal, cold checkouts, supply scratch,
       and duplicate downloads are retired. Withdrawn v7.0.8 retains original
       tags, notes, and verification; item 2.29 records later release retention.
+      The later native-table counterexample reopens this item: CommonMark-only
+      compilation counted links the Forge table renderer discards. Restore the
+      existing official GFM table dialect, keep escaped and reference links,
+      declare its single latest-stable owner, and qualify changed supply,
+      source, proof, cold installation, and both Forge matrices. Conversion-only
+      receipts do not establish table appearance or whole-document visual quality.
 - [x] 2.29 Refresh the existing shell lexer to verified stable 1.12.0 after
       the latest native metadata audit found version drift. Preserve command,
       glob, quotation, and ordinary-rationale counterexamples; qualify native

@@ -928,6 +928,21 @@ paragraph after its title for the reader cue, excluding code and comments;
 emphasis is presentation, not authority. Keep the task inventory and current
 topic owners unchanged.
 
+The compiler must use the table dialect read on both Forges. CommonMark-only
+HTML treats table rows as paragraphs and can count a link split by
+a cell separator without an escape, or a link discarded beyond the declared
+columns. Use the
+existing official GFM table syntax and HTML extensions, not local token
+splitting. Preserve ordinary, escaped-pipe, titled, and reference links. The
+same native extension is already in the locked graph through Markdownlint;
+declare its direct use and bind both consumers to verified stable 2.1.2 through
+npm's native override. No package identity, parser, installer, or gate is added.
+Rebuild the unpublished source-bound bundle because its manifest and lock
+inputs change. Earlier CommonMark conversion receipts remain immutable and do
+not establish table layout or Forge parity; native table renders and the actual
+Forge render API supply the corrected syntax evidence. Visual inspection and
+hosted source acceptance remain separate.
+
 Distinguishing tests cover hidden links, unlinked images, empty and invisible
 labels, formatted text and descriptive linked-image labels, escaped syntax,
 unused and shadowed definitions, legitimate titles and references, character

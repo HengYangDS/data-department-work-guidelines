@@ -54,6 +54,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   retaining native rule diagnostics, literal filenames, and comment controls.
 - Preserve meaningful blank lines in fenced and indented code through native
   Markdown rules while still rejecting padding between reader blocks.
+- Resolve navigation through native GFM table cells; links truncated by a cell
+  separator or outside the visible columns cannot satisfy a reader route.
 - Keep single-paragraph list items together even when their text wraps; check
   genuinely multi-block lists for consistent separation with the native rule.
   Separate general rule-change, review, and management duties from neighboring
