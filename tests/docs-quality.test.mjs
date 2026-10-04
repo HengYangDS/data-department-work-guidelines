@@ -462,7 +462,10 @@ test("source checks reject prose before unrelated native prerequisites", () => {
     const invocations = [];
     childProcess.spawnSync = (command, args, options) => {
       const normalized = args?.[0]?.replaceAll(String.fromCharCode(92), "/") ?? "";
-      if (normalized.includes("@fission-ai/openspec/"))
+      if (
+        normalized.includes("@fission-ai/openspec/") ||
+        (command === "git" && ["for-each-ref", "cat-file", "merge-base"].includes(args?.[0]))
+      )
         throw new Error("unrelated native prerequisite executed before prose rejection");
       if (args?.includes("--output=JSON") && args.includes("--no-exit")) {
         invocations.push("vale");

@@ -86,6 +86,16 @@ Diagram, card, topic and evidence counts SHALL NOT determine validity.
   whether the process succeeds or fails
 - **AND** passing summary totals do not establish a clean source check.
 
+#### Scenario: Native prose has already rejected the source
+
+- **WHEN** native prose reports a source defect through the public integrity
+  command
+- **THEN** the command preserves that finding and fails before unrelated
+  Changelog history or official OpenSpec execution
+- **AND** valid prose still reaches every declared check, all distinct native
+  ancestry checks, and the complete test inventory with unchanged deadlines;
+  no cache, private history implementation, or weaker acceptance is added.
+
 #### Scenario: A strict native command fails with partial diagnostics
 
 - **WHEN** a native archive or source command emits output before failure or

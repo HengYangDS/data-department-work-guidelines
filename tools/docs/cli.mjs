@@ -47,8 +47,8 @@ async function checkRepository() {
   const bundle = readBundleRecord();
   console.log(`PASS source-pinned offline bundle identity: v${bundle.version}`);
   checkNoScope();
-  checkChangelog();
   await checkProse();
+  checkChangelog();
   validateOpenSpec();
   lintMarkdown();
   checkDocumentMetadata();

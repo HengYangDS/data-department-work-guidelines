@@ -472,8 +472,7 @@ byte-identical and not synchronized. The native `writeUpdatedSpec` call omitted
 its reporting counts argument: writing completed before a reporting TypeError.
 The exact output, hashes, preservation, and strict 4/4 validation were
 independently checked; the write was not replayed. That synchronized
-working-tree successor still needs full verification, commit, proof, and
-publication.
+successor is now included in signed source `004b645` below.
 
 The current editorial repair clarifies unavailable shared ETHOS quality
 acceptance, independent GitHub source updates versus full dual-Forge edition
@@ -485,15 +484,35 @@ successor passed all 237 tests with zero skips, 28 native Markdown lint inputs,
 and strict official 4/4 validation. Online lychee checked 187 links with no
 errors; it retains the 42-redirect hint. The native audit observed 149 identities
 and the one approved, expiring development finding; original raw evidence stays
-with its producer. A later clarification of actual outage publication and this
-checkpoint still need verification before committing. The bounded nine-file
+with its producer. The bounded nine-file
 Claude re-review timed out after 180 seconds without output; it is not approval.
 The earlier supplied findings and this self-review remain distinct evidence.
-Committed-source cold qualification, proof, and publication remain pending;
-`dbb6bc9` evidence cannot certify this successor. VERSION and the v7.0.12 tag
-and bundle remain unchanged. Tasks 2.33, 3.3, 3.5, and
-3.13 stay open for accepted shared integration, final release, closure,
-and retirement.
+Signed source `004b64587624884b91d568bb696906094cd5b9d0`, tree
+`c97ddfa7621371ffdea66f65bfe731cc33fc7456`, passed all 237 local and fresh-HOME,
+denied-remote cold tests with zero skips and 70 conserved hashes and modes.
+Installed full proof passes both gates with attestation
+`358412434ed26e5638c90fa00bada206edb23e4cff9f613964d68026c57db4d6`.
+Its detached qualification checkout and generated state are retired. Both
+proposal refs reached that OID. GitHub run 37197206692 and GitLab Linux/macOS
+jobs 48298/48299 pass; Windows job 48300 failed at its unchanged 180-second test
+child deadline without a failed assertion in the available trace. Its native
+public prose/integrity regression took 77.065 seconds. Later host pressure is a
+separate observation, not proof of that job's unique cause. Preserve the failed
+job and full trace; this source is not accepted on every platform.
+
+The current failure-order repair extends the existing regression to native
+history starts. RED rejects the current public sequence because it traverses
+history before a known native prose refusal. Move that refusal before unrelated
+history and official OpenSpec; keep all checks for valid source, every test,
+native history, and existing deadlines. The distinguishing regression now
+passes; all 237 working-tree tests pass with zero skips, and strict official
+validation passes 4/4. The existing public prose/integrity journey remains
+complete. Committed-source cold verification, proof, and hosted acceptance
+remain pending; neither earlier source proof certifies this repair.
+Accepted shared integration,
+full platform acceptance, final edition, and closure remain open. VERSION and
+the v7.0.12 tag and bundle remain unchanged. Tasks 2.33, 3.3, 3.5, and 3.13
+remain open.
 
 [previous-tasks-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/blob/934293b8a6ab0600af75ea86fbdbdf36c46d1bd9/openspec/changes/native-document-quality/tasks.md
 [previous-tasks-github]: https://github.com/HengYangDS/data-department-work-guidelines/blob/934293b8a6ab0600af75ea86fbdbdf36c46d1bd9/openspec/changes/native-document-quality/tasks.md

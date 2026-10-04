@@ -115,6 +115,13 @@ reviewed domain terms and normal inflections narrowly. Keep misspelled
 near-matches and real negative examples; no wildcard baseline or inherited
 blacklist replaces judgment.
 
+Reject a native prose finding before unrelated Changelog history and official
+OpenSpec execution. A known refusal does not need 39 Git starts before it can
+return. The successful path still runs every declared check and distinct native
+ancestry operation; the existing failure-order regression guards that boundary.
+This reduces demonstrated duplicate work on refusal, not the full test scope,
+and does not establish the unique cause of a hosted timeout.
+
 The two native style rules carry their own examples. Official Vale coverage must
 fail when a loaded rule no longer matches its diagnosed defect. Project-level
 tests retain Markdown, configuration, real invocation, and warning controls.

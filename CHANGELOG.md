@@ -17,6 +17,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Report native prose defects before unrelated Changelog history traversal.
+  Keep every successful-path check, ancestry operation, and original deadline.
 - Clarify pending ETHOS quality acceptance, GitHub outage updates versus
   dual-Forge edition qualification, and current authority links in governance
   and decision records. Preserve stable decisions and historical-source limits.
