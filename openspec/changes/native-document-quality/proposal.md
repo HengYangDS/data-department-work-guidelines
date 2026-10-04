@@ -64,6 +64,9 @@ linter beside the current stack would leave the duplication intact.
   owner, authorization, evidence, and acceptance duties.
 - Replace the two English pipelines with one pinned native Vale command, its
   vocabulary, and native style rules.
+- Refuse native process warnings beside otherwise valid prose reports or link
+  extraction. Reuse the existing process rejection and diagnostic replay;
+  do not rerun tools or change their native report formats.
 - Repair findings from the shared product's native source-only lexical check:
   retire unused bindings, express literal regex spacing explicitly, and keep
   original native errors as causes when adding process, bundle, or Changelog

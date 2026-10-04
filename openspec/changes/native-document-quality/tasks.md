@@ -358,6 +358,9 @@
       bindings, preserve literal regex meaning, and retain original caught
       errors through native causes; extend the existing adverse tests.
       The preview does not establish accepted product integration.
+      Refuse standard error beside captured native prose and link-extraction
+      reports through the existing process owner. Verify single execution,
+      preserved diagnostics, and link-input cleanup without another provider.
       Retain native missing-command and timeout errors in the existing process
       owner, including their code and path. Extend its real-execution adverse
       tests without changing successful output, exit handling, warning refusal,

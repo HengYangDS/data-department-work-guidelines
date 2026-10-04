@@ -17,6 +17,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Reject native prose and link-extraction warnings before accepting their
+  reports; keep diagnostic output visible even when the tools exit successfully.
 - Keep original process, filesystem, formatter-plugin, and Git error causes
   when adding verification context. Remove unused bindings and make literal
   regex spacing explicit without changing checks or refusal messages.

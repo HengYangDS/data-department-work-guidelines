@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
+import childProcess from "node:child_process";
 import {
   cpSync,
   existsSync,
@@ -12,12 +13,14 @@ import {
 } from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { syncBuiltinESMExports } from "node:module";
 import { test } from "node:test";
 import { pathToFileURL } from "node:url";
 import { parse as parseShell } from "shell-quote";
 import { parse as parseToml } from "smol-toml";
 import {
   documentMetadata,
+  checkLinks,
   lintMarkdown,
   repositoryFileUri,
   textViolations,
@@ -1910,6 +1913,49 @@ test("live link checking is explicit and retains one native policy owner", async
   );
   assert.ok(!online.includes("--accept"));
   assert.equal(online.at(-1), "files.txt");
+});
+
+test("native link extraction refuses warnings before checking targets", (context) => {
+  const actualSpawn = childProcess.spawnSync;
+  const output = context.mock.method(process.stdout, "write", () => true);
+  let extractions = 0;
+  let checks = 0;
+  let sourceList;
+  let nativeOutput;
+  const mock = context.mock.method(
+    childProcess,
+    "spawnSync",
+    (command, args, options) => {
+      const result = actualSpawn(command, args, options);
+      if (args.includes("--dump")) {
+        extractions += 1;
+        sourceList = args[args.indexOf("--files-from") + 1];
+        nativeOutput = result.stdout;
+        return {
+          ...result,
+          stderr: `${result.stderr ?? ""}native link extraction warning\n`,
+        };
+      }
+      if (args.includes("--files-from")) checks += 1;
+      return result;
+    },
+  );
+  syncBuiltinESMExports();
+  try {
+    assert.throws(
+      () => checkLinks(),
+      /emitted warning output:[\s\S]*native link extraction warning/u,
+    );
+    assert.equal(extractions, 1);
+    assert.equal(checks, 0);
+    assert.equal(output.mock.callCount(), 1);
+    assert.equal(output.mock.calls[0].arguments[0], nativeOutput);
+    assert.equal(existsSync(path.dirname(sourceList)), false);
+  } finally {
+    mock.mock.restore();
+    output.mock.restore();
+    syncBuiltinESMExports();
+  }
 });
 
 test("native link policy rejects broken local anchors and makes no network request", async () => {

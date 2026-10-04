@@ -413,6 +413,15 @@ NOT influence this check.
 - **THEN** the native rule reports the source location and reason
 - **AND** standalone prose and full verification fail on that finding.
 
+#### Scenario: Native prose emits a warning beside a valid report
+
+- **WHEN** the selected Vale process exits successfully with a valid report but
+  also emits standard error
+- **THEN** the existing prose owner refuses the result without hiding the
+  original report or warning
+- **AND** one warning-free native attempt may pass without another attempt or a
+  waiver.
+
 #### Scenario: A native style rule stops matching its examples
 
 - **WHEN** a configured style rule loads but no longer diagnoses its declared
@@ -742,6 +751,30 @@ metadata SHALL cover current readers, not promote archives to guidance.
 - **THEN** the native Markdown rule rejects the padding at its source location
 - **AND** the valid code example does not hide the reader-layout defect.
 
+### Requirement: Local references resolve to delivered source
+
+Local file links SHALL remain inside the repository and resolve to tracked or
+non-ignored candidate source. Ignored state and undelivered aliases SHALL NOT
+establish validity. A source directory SHALL contain source; both requested and
+resolved alias paths SHALL belong to the source inventory. Native lychee retains
+target existence and fragment checks.
+
+#### Scenario: Existing local state would hide a broken source link
+
+- **WHEN** a local link names ignored state, Git metadata, or an alias whose
+  requested or resolved path is not source
+- **THEN** the public link check rejects it even when the local target exists
+- **AND** ordinary tracked and non-ignored candidate files, source directories,
+  and delivered internal aliases remain valid.
+
+#### Scenario: Native link extraction emits a warning
+
+- **WHEN** the selected lychee extraction process exits successfully with
+  links but also emits standard error
+- **THEN** the existing link owner preserves those diagnostics and refuses
+  acceptance before checking targets
+- **AND** its owned temporary input list is removed without another attempt.
+
 ## ADDED Requirements
 
 ### Requirement: Source-event tag routes match the release family
@@ -764,22 +797,6 @@ GitHub offline acquisition retains source/version checks.
 - **WHEN** a tag begins with `v` but is not a signed strict SemVer edition
 - **THEN** native release checks still reject that identity
 - **AND** an eligible source-event route does not prove a Release or asset.
-
-### Requirement: Local references resolve to delivered source
-
-Local file links SHALL remain inside the repository and resolve to tracked or
-non-ignored candidate source. Ignored state and undelivered aliases SHALL NOT
-establish validity. A source directory SHALL contain source; both requested and
-resolved alias paths SHALL belong to the source inventory. Native lychee retains
-target existence and fragment checks.
-
-#### Scenario: Existing local state would hide a broken source link
-
-- **WHEN** a local link names ignored state, Git metadata, or an alias whose
-  requested or resolved path is not source
-- **THEN** the public link check rejects it even when the local target exists
-- **AND** ordinary tracked and non-ignored candidate files, source directories,
-  and delivered internal aliases remain valid.
 
 ### Requirement: Decision identity and section completeness remain explicit
 

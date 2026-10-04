@@ -1152,6 +1152,14 @@ Attach a cause only when the native error exists, so an exit-status refusal
 without an error keeps its former shape. Verify code and path for the timeout,
 the missing-command message, and absence of a cause on exit-only refusal.
 
+The captured Vale report and lychee link-extraction callers omitted the process
+owner's strict standard-error selection. A real native report plus an injected
+process warning still passed while the warning disappeared. Select the existing
+strict option at those two callers, preserve their native output, and stop link
+validation before target checks. Keep the same native tool versions, reports,
+source inventory, and temporary-input cleanup. A fixture warning tests that
+consumer gap; it does not claim either native tool produced a live warning.
+
 The exact Linux reproducer separates listing from extraction: GNU tar lists
 the frozen bundle successfully, then fails to change file ownership to the
 packaging machine's UID and GID. The rootless container has no `CAP_CHOWN`;

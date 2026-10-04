@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
+import childProcess from "node:child_process";
 import {
   cpSync,
   existsSync,
@@ -12,6 +13,7 @@ import {
 } from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { syncBuiltinESMExports } from "node:module";
 import { test } from "node:test";
 import { proseAlerts, checkProse } from "../tools/docs/content.mjs";
 import { gitFiles, nativeToolBinary, root } from "../tools/docs/runtime.mjs";
@@ -46,6 +48,43 @@ test("native prose spelling rejects a real typo without changing source", () => 
   ]);
   assert.deepEqual(valid, []);
   assert.ok(findings.some(({ Check }) => Check === "Vale.Spelling"));
+});
+
+test("native prose refuses process warnings without losing its report", (context) => {
+  const actualSpawn = childProcess.spawnSync;
+  const output = context.mock.method(process.stdout, "write", () => true);
+  let executions = 0;
+  let nativeOutput;
+  const mock = context.mock.method(
+    childProcess,
+    "spawnSync",
+    (command, args, options) => {
+      const result = actualSpawn(command, args, options);
+      if (args.includes("--output=JSON")) {
+        executions += 1;
+        nativeOutput = result.stdout;
+        return {
+          ...result,
+          stderr: `${result.stderr ?? ""}native prose warning\n`,
+        };
+      }
+      return result;
+    },
+  );
+  syncBuiltinESMExports();
+  try {
+    assert.throws(
+      () => proseFindings("The result is verified.\n"),
+      /emitted warning output:[\s\S]*native prose warning/u,
+    );
+    assert.equal(executions, 1);
+    assert.equal(output.mock.callCount(), 1);
+    assert.equal(output.mock.calls[0].arguments[0], nativeOutput);
+  } finally {
+    mock.mock.restore();
+    output.mock.restore();
+    syncBuiltinESMExports();
+  }
 });
 
 test("native prose ignores ambient global configuration", () => {

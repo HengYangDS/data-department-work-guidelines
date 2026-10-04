@@ -201,7 +201,7 @@ export function proseAlerts(files = currentMarkdown()) {
       "--no-color",
       ...absoluteFiles,
     ],
-    { capture: true },
+    { capture: true, rejectStderr: true },
   );
   const alerts = JSON.parse(output);
   if (!alerts || typeof alerts !== "object" || Array.isArray(alerts))
@@ -349,6 +349,7 @@ export function checkLinks({ online = false } = {}) {
     const lychee = nativeToolBinary("lychee");
     const links = run(lychee, [...linkCheckArguments(list), "--dump"], {
       capture: true,
+      rejectStderr: true,
       timeout: 60_000,
     });
     for (const uri of links.split(/\r?\n/u).filter(Boolean))
