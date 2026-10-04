@@ -1,5 +1,11 @@
 # Tasks
 
+Task progress lives only here. This consolidation preserves every task ID and
+commitment. Original narration and dated evidence remain at
+`934293b8a6ab0600af75ea86fbdbdf36c46d1bd9`, path
+`openspec/changes/native-document-quality/tasks.md`
+([GitLab][previous-tasks-gitlab] · [GitHub][previous-tasks-github]).
+
 ## 1. Native responsibilities and contract
 
 - [x] 1.1 Validate native Vale against all current English positive and negative
@@ -21,38 +27,21 @@
       second command, manifest, or installer for the same concern.
 - [x] 2.3 Apply human English editing to all seven task topics and compare every
       changed duty, condition, authority, and evidence limit with its source.
-      Keep one topic per duty. Retain task-owner and supervisor calibration,
-      actual-breach correction, document title status, project-conflict
+      Keep one topic per duty. Retain joint task-owner/supervisor calibration,
+      actual-breach correction, document-title status, project-conflict
       resolution, task-lead final judgment, pre-completion capture, local-metric
-      limits, shared evidence calibration, unidentified-owner and
-      foreign-work stops, complete current claim-matched result inspection
-      before summarizing, next verification, unverified-citation
-      hard risks, all member result checks, action-authority order, explicit
-      stops, risk-scaled human acceptance, permitted Agent implementation, data
-      provenance, score and disclosure limits, capability review, emergency
-      accountability, vague-update replacements, the charter-table prohibition,
-      single-metric and monthly anti-ranking limits, and the net-benefit
-      conjunction. Standing authorization and verified inputs do not establish
-      the responsible person; encountered work ownership is a separate trigger.
-      Primary review retains the narrower original limits, not every suggestion.
-      Correct existing owners without another report, parser, evaluator, meeting,
-      approval, or meaning gate.
-      Signed `4ebd0f0` retains the four later original-duty corrections. The
-      targeted actual-source Claude recheck finds no unresolved defect in
-      those corrections, not whole-guidance equivalence. Local and fresh
-      denied-network cold verification pass all 215 tests with zero skips;
-      all 69 source hashes and modes match, and all 28 Markdown files render.
-      The first selected sync conserves 11 requirements and 40 prior scenarios,
-      adding four bounded scenarios. A later correction aligns the missing
-      local-metric requirement clause while retaining every scenario body and
-      the other ten requirements. Native source checks pass without diagnostics;
-      the approved cadence keeps shared evidence calibration. Online lychee
-      checks 174 links with zero errors; its 39-redirect hint remains in the
-      original result. Installed changed planning and exact-HEAD full repository
-      proof pass at `f8786e2`. Native land still times out in the legacy
-      finite-input transport;
-      no protected ref, runtime, hook, or publication is changed. Supplier
-      acceptance and hosted delivery remain separate open obligations.
+      limits, shared evidence calibration, unidentified-owner and foreign-work
+      stops, complete current claim-matched result inspection before
+      summarizing, next verification, unverified-citation hard risks, all member
+      result checks, action-authority order, explicit stops, risk-scaled human
+      acceptance, permitted Agent implementation, data provenance,
+      score/disclosure limits, capability review, emergency accountability,
+      vague-update corrections, the charter-table prohibition, single-metric and
+      monthly anti-ranking limits, and the conjunctive net-benefit bar. Standing
+      authorization and verified inputs do not identify the responsible person;
+      encountered work ownership is a separate trigger. Preserve the narrower
+      original duties, not every reviewer suggestion, without another report,
+      parser, evaluator, meeting, approval, or meaning gate.
 - [x] 2.4 Reconcile package, current OpenSpec, contribution, governance, CI,
       version, and changelog contracts. Audit current consumers and the resolved
       dependency graph for retired residue; preserve historical Git bytes.
@@ -83,28 +72,25 @@
       durable rationale, alternatives, evidence, and revisit conditions;
       preserve choices, metadata, and all governance obligations, then check
       links, native prose, and the rendered reading path.
-- [x] 2.12 Complete an independent review of all documentation and
-      configuration from fixed source snapshots with bounded repair rechecks;
-      assess original meaning, business use, authority, English voice,
-      navigation, native configuration, and historical truth. Resolve findings
-      at existing owners and reverify
-      every affected claim before final publication. One successful independent
-      reviewer covered all seven lenses across bounded snapshot reviews and
-      repair checks: all 202 Markdown paths, all 213 archive files, current
-      configuration policy, and the official three-capability synchronization.
-      The six failed specialist routes and timed-out whole-source advisor
-      supplied no findings; no multi-specialist committee completion is claimed.
-      Generated lockfile entries were not individually read by that reviewer;
-      dependency-graph and audit conclusions require separate native evidence.
+- [x] 2.12 Complete independent fixed-source review of all documentation and
+      configuration, with bounded repair rechecks across original meaning,
+      business use, authority, English voice, navigation, native configuration,
+      and historical truth. Resolve findings at existing owners and reverify
+      affected claims. The successful reviewer covered all seven lenses, 202
+      Markdown paths, 213 archive files, configuration policy, and
+      three-capability sync. Six failed specialist routes and a timed-out
+      advisor returned no findings and do not establish a committee quorum.
+      Generated lock entries need native graph/audit evidence; they were not
+      individually read by that reviewer.
 - [x] 2.13 Restore explicit sample-selection and anomaly-impact duties and the
       default continuation when Agent context is not blocking; compare both with
       the original clauses, challenge them with adverse cases, and rerun
       affected quality checks. Correct the earlier comparison's unqualified
       conclusion without rewriting its dated evidence.
 - [x] 2.14 Restrict GitLab workflow, protected-source, and offline tag rules to
-      the GitHub `v*` tag family before tool supply. Prove old broad routes fail,
-      valid version routes pass, and native GitLab dry-runs reject unrelated
-      tags without changing Runner or strict release admission.
+      the GitHub `v*` tag family before tool supply. Prove old broad routes
+      fail, valid version routes pass, and native GitLab dry-runs reject
+      unrelated tags without changing Runner or strict release admission.
 - [x] 2.15 Correct the OpenSpec entry's cache, capability, and sync descriptions
       against the installed official contract, and name both GitLab native-tool
       prerequisites. Verify the documented local CLI fails without its package
@@ -129,24 +115,24 @@
       the two existing rules, reject a silently ineffective rule through native
       coverage, and retain project-level prose tests without a second pipeline.
 - [x] 2.20 Replace implicit single-Forge Changelog navigation with neutral
-      version headings and explicit GitLab and GitHub history links. Consume
-      the installed product's official `forge_repository` declaration, enforce
-      both peer identities and identical refs, preserve every existing release
+      version headings and explicit GitLab and GitHub history links. Consume the
+      installed product's official `forge_repository` declaration, enforce both
+      peer identities and identical refs, preserve every existing release
       counterexample, and add missing-peer, wrong-route, credential, and
       divergent-range controls. Verify native Markdown presentation and
       authenticated private comparison destinations without a second file or
       redirect service.
 - [x] 2.21 Restore the original decision-date duty at the existing analysis
       owner. Distinguish an actual decision's owner, date, and basis from a
-      deadline or fact cutoff; compare the original and current obligations
-      with adverse cases and correct the earlier semantic-coverage conclusion
-      without rewriting its dated evidence. Preserve all other duties and
-      avoid a new record, template, or validator.
+      deadline or fact cutoff; compare the original and current obligations with
+      adverse cases and correct the earlier semantic-coverage conclusion without
+      rewriting its dated evidence. Preserve all other duties and avoid a new
+      record, template, or validator.
 - [x] 2.22 Replace specialist record and publication terminology in member
-      guidance with ordinary work language. Preserve the existing record
-      owner, decision date, authorization, evidence limits, and acceptance;
-      compare changed clauses with the original and rerun affected source
-      quality and rendering checks.
+      guidance with ordinary work language. Preserve the existing record owner,
+      decision date, authorization, evidence limits, and acceptance; compare
+      changed clauses with the original and rerun affected source quality and
+      rendering checks.
 - [x] 2.23 Repair bundle acquisition and managed-cache ownership at their
       existing owners. Preserve a successful concurrent target, reject linked
       binary-cache and bundle-download paths before remote access, staging, or
@@ -162,193 +148,105 @@
       challenge a single issue spanning cycles under one owner and project,
       preserve the other triggers, and rerun source quality and rendering.
       Existing excerpt hashes do not establish complete semantic coverage.
-- [x] 2.26 Bound the complete standalone test inventory to two workers and
-      remove unrelated prerequisite work from the OpenSpec environment
-      regression. Preserve all discovered tests, real tool execution, and
-      existing deadlines; prove negative controls, local timing and the complete
-      source graph, then qualify the unchanged requirements on Windows. Reject
-      known prose defects before unrelated native prerequisites and reduce
-      repeated native fixture launches without dropping any input or assertion.
-      Keep one native tag observation without omitting nested invalid release
-      refs or weakening strict SemVer and annotated-object checks.
-      Signed v7.0.9 passed both Forge source and offline matrices; the complete
-      GitLab Windows inventory later passed on `dev`, `main`, and post-release
-      source and offline jobs. Retain original v7.0.8 and peak-load v7.0.9
-      tag-source timeout evidence; later passes do not disprove saturation risk.
+- [x] 2.26 Bound the complete standalone inventory to two workers and remove
+      unrelated prerequisites from the OpenSpec environment regression. Preserve
+      all discovered cases, real tools, assertions, and deadlines. Prove adverse
+      controls, local timing, and the full graph, then qualify Windows. Reject
+      known prose defects before unrelated setup and batch only independent
+      native inputs. Observe tags once while retaining nested invalid-ref,
+      strict SemVer, annotation, and ancestry checks. Preserve original v7.0.8
+      and peak-load v7.0.9 timeout evidence; later passes do not disprove
+      saturation risk.
 - [x] 2.27 Remove inherited build-directory and native-cache prerequisites from
       the existing source-link and concurrent-install fixtures. Create the
       ignored parent explicitly and model the regular target behind `EEXIST`;
-      preserve source confinement, exclusive copy, version, and permissions.
-      Run isolated regressions and complete fresh-checkout verification.
-- [x] 2.28 Resolve navigation with the existing native Markdown parser and
-      compiler. Reject hidden routes, unlinked images, unreadable labels, and
-      shadowed definitions; accept formatted text, descriptive linked-image
-      labels, legitimate titles, references, character decoding, and local
-      paths. Check visible opening cues and repeated actual routes;
-      preserve one task map and native link ownership. Prove distinguishing
-      regressions, complete source checks, rendering, and exact-source delivery.
-      Use one stable native engine version and qualify the changed lock and
-      source-bound offline supply without altering published release objects.
-      Signed v7.0.10 qualifies local checks, exact-source installed proof,
-      denied-network cold installation, both Forge source and offline matrices,
-      downloaded hashes, and links. Linux and Windows have one intentional
-      macOS-only skip. Its completed proposal, cold checkouts, supply scratch,
-      and duplicate downloads are retired. Withdrawn v7.0.8 retains original
-      tags, notes, and verification; item 2.29 records later release retention.
-      The later native-table counterexample reopens this item: CommonMark-only
-      compilation counted links the Forge table renderer discards. Restore the
-      existing official GFM table dialect, keep escaped and reference links,
-      declare its single latest-stable owner, and qualify changed supply,
-      source, proof, cold installation, and both Forge matrices. Conversion-only
-      receipts do not establish table appearance or whole-document visual quality.
-      Signed v7.0.12 at `2446c338` qualifies the native GFM table repair,
-      full source checks, installed proof, denied-network cold installation,
-      both independent source and offline matrices, asset verification, and links.
-      Actual desktop rendering confirms visible table routes; this does not
-      certify whole-document appearance or semantic equivalence.
-- [x] 2.29 Refresh the existing shell lexer to verified stable 1.12.0 after
-      the latest native metadata audit found version drift. Preserve command,
-      glob, quotation, and ordinary-rationale counterexamples; qualify native
-      lock resolution, install effects, advisories, notices, source-bound
-      offline supply, exact-source proof, and both Forge platform matrices.
-      Do not alter the published v7.0.10 objects or add a second lexer.
-      The operator regression fails on 1.11.0 and passes on 1.12.0 without a new
-      package or install hook. Signed v7.0.11 at `5dc8a65` qualifies local and
-      denied-network cold checks, installed full proof, all 31 selected original
-      source and offline jobs, source-pinned downloaded hashes, the synced native
-      operator scenario, and post-tag links. Linux and Windows have one
-      intentional macOS-only archive-attribute skip. Aftercare retires completed
-      temporary resources and v7.0.9 downloads; v7.0.11 and v7.0.10 remain current
-      and qualified rollback. Original notes, tags, source, and evidence remain.
-- [x] 2.30 Replace the redundant Markdownlint CLI2 wrapper with the existing
-      native core over all Git-selected Markdown. Preserve TOML policy,
-      custom comment controls, native diagnostics, literal source paths,
-      positive controls, and every existing counterexample. Remove the wrapper,
-      unused dependencies, configuration path, and all current references;
-      qualify locked removal, source-bound offline supply, clean installation,
-      exact-source proof, and both Forge matrices. Removing this consumer does
-      not fix the separate official OpenSpec braces dependency.
-      Local removal at `1219528` eliminates 19 packages. Signed v7.0.12 at
-      `2446c338` qualifies full local and denied-network cold verification,
-      installed proof, both Forge source and offline matrices, source-bound
-      downloads, and links. No retired wrapper dependency, configuration,
-      executable, or current consumer remains.
-- [x] 2.31 Repair the existing official OpenSpec report consumer. Retain native
-      diagnostics, reject standard error and wrong-root, incomplete, duplicate,
-      or inconsistent evidence, and preserve the real official CLI execution.
-      Reject totals-only reports, findings on successful standard error,
-      omitted zero-item categories under `--all`, and lost partial diagnostics
-      after execution failure. Qualify distinguishing native report controls,
-      full source, installed proof, and cold checks without another gate or
-      lifecycle implementation. The implemented requirement is officially
-      synced; `c117ab1` qualifies its earlier exact-source proof and cold tests.
-      Local and cold verification and installed proof pass at `4ebd0f0`.
-      The native process owner also restores partial failure and timeout output
-      for strict non-capture commands. A focused real-process case fails before
-      repair and passes afterward; warnings remain rejected. Claude's bounded
-      review leads to a naturally flushed child and cold-start margin without
-      changing production deadlines. Qualify the signed successor, cold install,
-      and original Linux failure separately; diagnosis alone is not portability.
-      Confirmed Linux extraction tried to adopt the packaging account without
-      permission. Both bundle consumers and the native installer must keep
-      the executor's ownership; validate the same immutable bundle under the
-      original capability limit without extra privilege or skipped checks.
-      Hosted source and offline qualification remain open.
-      The original Windows jobs reject the clean OpenSpec fixture's short-path
-      root, and temporary format and lint fixtures include installed dependency
-      state. Reuse native filesystem resolution and the repository's Git
-      ignore policy. Preserve wrong-root rejection, ignored-state controls, and
-      real official clean and INFO execution; qualify a new exact source rather
-      than retrying or waiving the original failures.
-      The next Windows checkout fails while removing a deeply nested registry
-      cache from the previous attempt. Keep the audit cache in a short owned OS
-      temporary directory, use native cleanup after every attempt, and preserve
-      only report and execution evidence. Repair native Windows Git long-path
-      handling and retire the exact original cache after preserving its failure
-      artifact; do not reset a Runner or weaken source checks.
-      Signed v7.0.12 at `2446c338` closes these native report, extraction,
-      Windows root/fixture, and cache-lifetime obligations. Failed checkout
-      48112 remains preserved. Native service-profile long-path settings and
-      exact cache retirement precede successful original Windows 48113,
-      48116, 48119, 48122, 48125, and offline 48128 execution. Both Forge
-      source and offline matrices, source-bound downloads, and links pass.
-- [x] 2.32 Retire all reviewed completed-Change copies from the current tree.
-      Audit unique facts, obligations, and incoming consumers; preserve exact
-      ancestor Git objects and existing proof. Replace three cited designs with
-      full commit-and-path references on both Forges and replace the real
-      archive test dependency with an owned temporary fixture. Preserve official
-      archive-path negative controls; verify source quality, recovery, installed
-      proof, and cold installation before acceptance. No history directory,
-      compatibility route, or lifecycle substitute is added.
-      Signed `c117ab1` removes 213 files from 39 completed Changes after
-      independent body and task-fact review. Recovery matches ancestor
-      `c8599ce9c91ed5f988abd6b3f3011ac94430283d`; both Forges serve the three
-      cited designs. Local source, official OpenSpec, changed planning, installed
-      exact-HEAD full proof, denied-network cold installation, and native
-      integration pass for that source. Its absorbed Work Lane and cold
-      checkouts are retired; proof and render evidence remain outside source.
-      Hosted delivery and final active-Change closure remain separate open
-      obligations.
-- [ ] 2.33 Restore native format and spacing ownership. Reproduce rejection
-      of meaningful code and data literals, then remove duplicate raw scans.
-      Make reader blocks use one separator, single-paragraph list peers stay
-      tight despite wrapping, and genuine multi-block peers stay consistently
-      separated. Use the official CommonMark list-spacing rule, not a private
-      list regex. Preserve duties, links, literal bytes, data, key and array
-      order, comments, English checks, and justified plain-text hygiene.
-      Native Prettier owns supported code, JSON, YAML, and quote structure;
-      dprint owns TOML through its public Wasm interface and native policy.
-      Reject syntax, policy, missing-supply, and meaningful-byte changes. Check
-      the plugin's original complete MIT notice and absence of host imports;
-      do not admit the known-vulnerable Taplo binary or add an installer or gate.
-      Qualify full source, exact-HEAD proof, cold installation, and both Forge
-      matrices. Retire superseded local glue after formal ETHOS integration,
-      not the upstream rule or policy. Preserve all failed and accepted evidence.
-      Signed `c50e005b` passes all 215 local and denied-network cold tests,
-      all 28 native Markdown renders, and all 69 source hash and mode checks.
-      Its existing frozen bundle covers 157 locked packages and notices.
-      Claude's actual-source recheck finds no remaining paragraph-boundary
-      issue; every evolution duty word and the shared cadence scope are intact.
-      Existing cases reject literal loss, padded lists and quotes, and real
-      quality-control comments without rejecting explanatory prose.
-      Signed v7.0.12 at `2446c338` qualifies native spacing and format
-      behavior through local and cold verification, installed proof, both
-      Forge source and offline matrices, the approved native OSV supply
-      boundary, source-bound downloads, and links. This supersedes the earlier
-      unpublished state. The item remains open only for accepted shared-owner
-      integration and simultaneous retirement of product-superseded local
-      glue; native rules and all original failure evidence remain.
+      preserve source confinement, exclusive copy, version, and permissions. Run
+      isolated regressions and complete fresh-checkout verification.
+- [x] 2.28 Resolve navigation through the existing native Markdown parser and
+      compiler. Reject hidden routes, unlinked images, unreadable labels,
+      shadowed definitions, and repeated real routes; accept formatted text,
+      descriptive linked images, titles, references, character decoding, and
+      normalized local paths. Check visible opening cues and retain one task
+      map. Use the official GFM table dialect so links discarded by Forge table
+      rendering cannot satisfy routes; preserve escaped/reference links and one
+      stable shared engine. Qualify distinguishing tests, full source, actual
+      table rendering, proof, cold install, changed lock/supply, and both Forge
+      matrices without changing published objects. Conversion evidence does not
+      establish whole-document appearance or semantic equivalence.
+- [x] 2.29 Refresh the existing shell lexer to verified stable 1.12.0. Preserve
+      native command/operator grouping, globs, quotation, compound commands,
+      ordinary rationale, and non-evaluation cases. Qualify locked resolution,
+      install effects, advisories, original notices, source-bound offline
+      supply, exact-source proof, official scenario sync, and both platform
+      matrices. Preserve published objects and one lexer; no hook or fallback is
+      added.
+- [x] 2.30 Replace Markdownlint CLI2 with the native core over all Git-selected
+      Markdown. Preserve TOML options, comment controls, literal filenames,
+      native diagnostics, positive controls, and every counterexample. Retire
+      wrapper, unused dependencies, configuration path, and current consumers
+      together. Qualify removal, source-bound supply, cold install, proof, and
+      both matrices. The native removal eliminates 19 packages without fixing
+      the separate OpenSpec braces dependency.
+- [x] 2.31 Repair the existing official OpenSpec report consumer. Preserve
+      native diagnostics and reject standard error, wrong roots, totals-only,
+      incomplete, duplicate, inconsistent, or omitted zero-category reports,
+      including partial findings after failure. Keep one official CLI and no
+      lifecycle replacement. Preserve piped failure/timeout output once for
+      strict non-capture commands. Retain executor ownership during archive
+      extraction, native Windows short-root resolution, fixture Git ignore
+      policy, and short owned registry-cache lifetime. Qualify real clean/INFO
+      checks, wrong-root/ignored-state controls, constrained Linux extraction,
+      cold install, proof, official sync, and both matrices. Preserve failed
+      Windows checkout 48112 and native long-path/cleanup evidence; no extra
+      privilege, platform skip, or warning waiver is admitted.
+- [x] 2.32 Retire all reviewed completed-Change copies after unique-fact,
+      obligation, incoming-consumer, and recovery review. Preserve exact
+      ancestor Git/proof; replace three cited designs with full commit/path
+      links on both Forges and the real archive fixture with an owned temporary
+      input. Keep future archive-path controls. Qualify source, recovery, proof,
+      cold install, and native integration. The 213 removed files from 39
+      Changes remain at ancestor c8599ce9c91ed5f988abd6b3f3011ac94430283d; no
+      history directory, compatibility route, or lifecycle substitute is added.
+- [ ] 2.33 Restore native format/spacing ownership and retire product-superseded
+      glue in the same formally accepted ETHOS integration. Reproduce meaningful
+      code/data literal rejection before removing raw scans. Use one
+      reader-block separator, tight single-paragraph peers despite wrapping, and
+      consistent multi-block spacing through the official CommonMark rule.
+      Preserve all duties, links, literal bytes, data/order/comments, English
+      checks, and plain-text hygiene. Prettier owns supported source/quote
+      structure; dprint owns TOML through its public Wasm/policy. Reject syntax,
+      policy, missing supply, and meaningful-byte changes; retain the complete
+      MIT notice and no host imports. No Taplo binary, installer, or gate is
+      added. v7.0.12 qualifies local spacing, full source, cold install, proof,
+      renders, source conservation, approved OSV boundary, and both
+      source/offline matrices. Only accepted shared-owner integration and
+      simultaneous local-glue retirement remain pending; preserve all original
+      failures and native rules.
 - [x] 2.34 Admit Windows verification against finite native capacity. Preserve
-      original overlapping failures 48142, 48145, and 48148 at signed
-      `cf4b9eb`: each reaches the unchanged 180-second test deadline without
-      a failed assertion. Keep one project-scoped GitLab resource group for
-      Windows review, protected-source, and offline jobs; reject missing,
-      ref-dependent, or divergent reservations. Preserve separate trust,
-      all tests, two workers, deadlines, and original resource evidence.
-      Qualify one isolated original-source attempt when Fleet admits its
-      finite window, then observe repaired source and native resource waits.
-      Cross-project pressure remains unproved; do not change capacity or
-      manufacture isolation from current counters.
-      Original-source retry 48154 passes without changing tests or limits.
-      At signed `ec97b2f`, GitLab proposal, `dev`, and `main` pipelines 9453–9455
-      pass all nine jobs. Windows jobs 48157, 48160, and 48163 run without
-      overlap; the last is observed waiting for the native resource. Each
-      discovers 230 tests, passes 229, and skips only its declared Darwin case.
-      This qualifies project serialization, not sole resource causality or
-      the next release's offline asset.
-- [ ] 2.35 Close rejected native-tool and release-download response bodies at
-      their existing owners. Preserve HTTP status, native cleanup errors,
-      successful downloads, credential redirects, and concurrent verified
-      output. Prove asynchronous disposal and a real HTTP error stream without
-      retries, fallbacks, another module, or claims about upstream availability;
-      qualify the complete source and both Forge matrices.
-- [ ] 2.36 Compare native audit timeout evidence with each original attempt's
-      command, streams, exit, signal, and error. Preserve all adverse cases and
-      the one-second fixture deadline; add real termination before output
-      without assuming startup speed or fabricating progress. Qualify source,
-      exact-HEAD proof, cold installation, and both Forge matrices. Apply the
-      same native-stream comparison to the existing process-replay regression;
-      retain every capture mode, diagnostic count, and non-timeout exact text.
+      overlapping 48142/48145/48148 failures at cf4b9eb and unchanged 180-second
+      deadlines without a failed assertion. Use one project-scoped native
+      resource group for review, protected-source, and offline, rejecting
+      missing, ref-dependent, or divergent reservations. Keep separate trust,
+      full discovery, two workers, and deadlines. Original retry 48154 passes
+      unchanged; repaired proposal/dev/main jobs show no overlap and a native
+      resource wait. This proves project serialization, not sole resource
+      causality, cross-project isolation, or the next offline release. No
+      private scheduler or capacity waiver is added.
+- [x] 2.35 Close rejected native-tool and release-download response bodies at
+      their existing owners. Preserve status, cleanup causes, successful
+      downloads, credential redirects, and concurrent verified output. Prove
+      awaited disposal and a real HTTP error stream, then full source and both
+      matrices without retries, fallbacks, another module, or
+      upstream-availability claims. Source `f8f7a15` and successor `934293b` are
+      qualified by the acceptance below.
+- [x] 2.36 Bind audit/process timeout evidence to each original command,
+      streams, status, signal, and native error, including termination before
+      output. Preserve every adverse case, one-second fixture deadline, capture
+      mode, diagnostic count, non-timeout exact text, and once-only execution.
+      Qualify full source, exact-HEAD proof, cold install, and both matrices
+      without assuming startup speed or fabricating progress. Successor
+      `934293b` is qualified below; the original macOS fixture failure did not
+      prove production output loss.
 
 ## 3. Qualification and publication
 
@@ -356,98 +254,58 @@
       prose, links, negative tests, strict official OpenSpec, and diff checks.
 - [x] 3.2 Prove a clean offline install and full verification without inherited
       caches, host paths, credentials, or remote supply.
-- [ ] 3.3 Qualify the formally accepted shared ETHOS quality contract on DDWG,
-      AIGW, and Proxy with the same installed runtime. Exercise static semantics,
-      unapproved-warning handling, and each subject's applicable obligations;
-      obtain exact-HEAD plan, proof, and acceptance without private substitutes.
-      After formal acceptance, migrate the existing profile, validator, tests,
-      and guidance together. Keep two default gates, map behavior to its native
-      prerequisite, and retire superseded descriptor and stream assumptions.
-      Reject disconnected or unverified owners; prove complete test selection,
-      single execution, semantic diagnostics, and preserved warnings through
-      the actual installed command plane.
-      The product's bounded source-only lexical preview identifies six real
-      diagnostics across all 17 current JavaScript files. Retire unused
-      bindings, preserve literal regex meaning, and retain original caught
-      errors through native causes; extend the existing adverse tests.
-      The preview does not establish accepted product integration.
-      Refuse standard error beside captured native prose and link-extraction
-      reports through the existing process owner. Verify single execution,
-      preserved diagnostics, and link-input cleanup without another provider.
-      Retain native missing-command and timeout errors in the existing process
-      owner, including their code and path. Extend its real-execution adverse
-      tests without changing successful output, exit handling, warning refusal,
-      or single diagnostic replay.
-      Shared integration remains pending. Signed v7.0.12 at `2446c338` passes
-      all 229 local and fresh-HOME, denied-network macOS tests, installed full
-      proof, and native local acceptance. All 34 original proposal, protected,
-      tag-source, and post-publication jobs pass. GitHub qualifies four offline
-      hosts and GitLab three. Both Releases expose the same frozen bytes;
-      independent downloads match SHA-256 and native inspection, and 179
-      online links pass. Original failures remain preserved. The native
-      retention successor is consumed with exact predecessor runtime and
-      wheel rollback supply retained. These observations supersede earlier
-      partial delivery without accepting shared JavaScript semantics,
-      same-attempt warnings, applicability, or risk admission.
-      OpenSpec 1.14.0 reaches braces 3.0.3. Its single high-severity advisory
-      propagates through four npm findings; native OSV names one raw advisory.
-      Enforce the expressly approved, expiring development-only disposition
-      through the existing input owner and native OSV policy. Preserve complete
-      raw reports separately, reject unrelated findings and changed or obsolete
-      applicability, and retain failure evidence on both CI planes. Qualify
-      six-host raw binary supply, cold installation, and both Forge matrices.
-      Replace the temporary input guard with accepted ETHOS risk admission in
-      the same integration; do not keep a private schema or duplicate controller.
-      Neither the exception nor the finite-input repair proves production
-      security, shared-product acceptance, or publication.
-- [ ] 3.13 Qualify the accepted product's reusable release-history identity
-      boundary and reconcile every audited affected adopter. Bind links to
-      applicable declared peers and native reference resolution; distinguish
-      missing links, wrong repository targets, and unqualified repairs. Select
-      exact source and installed-runtime evidence from each owner, then retire
-      product-superseded local identity implementations.
-      Proxy's native repair at `e603ed4` conserves 246 audited commits while
-      correcting seven false committer pairs. Replay preserves trees, authors,
-      original author times, messages, and ordered parents. Signed `5580a3af`
-      passes the full local graph; earlier `865681f7` passes original GitLab
-      review pipeline 9401 and its bounded Windows native suite. These do not
-      certify GitHub, protected-source publication, or public recovery.
-      Same-runtime installed proof awaits the accepted ETHOS Python-provider
-      repair. Repaired-baseline contribution admission, both Forge execution,
-      and protected acceptance remain open; no private provider or conservation
-      waiver is introduced. Proxy's own Change retains detailed native and
-      residue evidence; old-fixture retirement is aftercare, not public recovery.
+- [ ] 3.3 Qualify formally accepted ETHOS quality and risk contracts on DDWG,
+      AIGW, and Proxy with the same product source and wheel at actual installed
+      bindings. Exercise static semantics, same-attempt warning/failure custody,
+      subject applicability, complete test selection, single execution, and
+      exact-HEAD plan/proof/acceptance. Migrate profile, validator, tests, and
+      guidance together; keep exactly two default gates and native supporting
+      prerequisites. Retire superseded descriptor/stream assumptions. Reject
+      visible unapproved warnings as well as disconnected, unverified, authored,
+      or warning-suppressed evidence. Preserve the applied lexical, cause,
+      native warning-reader, and process-error repairs. Source-only previews,
+      green repository proof, and qualified v7.0.12 delivery do not accept the
+      shared product. Retain complete OSV raw/disposition evidence and the
+      expressly approved, expiring development-only braces 3.0.3 boundary.
+      Refuse changed or obsolete exception applicability; all other applicable
+      unapproved raw findings remain blocking under the existing audit, not a
+      new gate. Qualify actual supply and matrices. Replace the temporary input
+      guard with accepted product risk admission in the same migration, without
+      a private schema/provider/controller or production-security claim.
+      Integration remains pending.
 - [x] 3.4 Publish the major signed SemVer edition independently to GitLab and
       GitHub; verify both exact refs, Releases, downloaded asset hashes, and
       declared source and offline platform jobs.
-- [ ] 3.5 Audit every requirement against current source and evidence; reconcile
-      current references and classify durable evidence, active state, and
-      disposable residue before official archival and retirement.
-      Selected official sync preserves prior main requirements and scenarios;
-      the two pending proof requirements are not synced before shared-product
-      acceptance. Preserve the original duty source, exact Git provenance,
-      failed receipts, and bounded reviews. Later source counterexamples
-      supersede earlier no-finding judgments without rewriting their evidence.
-      The positive crosswalk checks all 62 original numbered subsections.
-      Restore the four remaining overwrite, delay/dispute, correction-timing,
-      and meeting-decision limits in their existing owners; recheck the exact
-      changed source without another meeting, approval gate, or private meaning
-      validator. The data-only review also distinguishes actual acceptance
-      from defined criteria for production, shared assets, and critical chains;
-      restore that qualifier at the data owner without staged team adoption.
-      Signed v7.0.12 delivery and native aftercare are complete. Superseded
-      v7.0.10 downloads, package, and link retire while signed tags, source,
-      original note prefixes, and evidence remain. v7.0.11 is the qualified
-      rollback. The absorbed old proposal retires through native publication
-      CAS. Exact duplicate downloads retire locally with the frozen original
-      preserved; Forge statistics have not confirmed reclaimed remote bytes.
-      Complete shared quality, risk, and history acceptance on every required
-      adopter before claiming closure. Keep the owned lane for that work. Archive
-      through the official owner only after every obligation has evidence;
-      inspect the new OID,
-      reprove and publish it, then retire absorbed owned lanes and branches.
-      Neither hashes nor passing checks establish whole-document equivalence
-      or observed team adoption. No history directory or second ledger is added.
+- [ ] 3.5 Complete the final requirement/evidence audit and accepted shared
+      quality, risk, history, and adopter integration before official closure.
+      Qualified v7.0.12 source, offline delivery, and native aftercare remain
+      complete; v7.0.11 is the retained qualified rollback. Current Unreleased
+      repairs and accepted integration require one coherent compatible successor
+      release with fresh source-bound bytes, full local checks, cold verification,
+      trusted signature, exact-HEAD installed proof, both source/offline
+      matrices, independent Releases/download hashes, and every declared
+      offline host. Preserve the v7.0.12 tag and original bundle identity.
+      Reconcile current references and officially sync reviewed deltas while
+      preserving prior requirements/scenarios; pending proof requirements stay
+      out of sync until product acceptance, then officially sync every remaining
+      requirement before this item closes; an omitted accepted requirement
+      blocks closure. Retain the original 62 numbered
+      subsection crosswalk, original duty source, overwrite-risk, delay/dispute
+      analysis, immediate correction-timing, meeting-decision, and actual
+      data-acceptance duties, plus provenance, failed receipts, and bounded
+      review limits. No staged adoption or meaning gate is added. Superseded
+      v7.0.10 downloads/package/link and the prior absorbed proposal are already
+      retired; signed source, original note prefixes, and evidence remain.
+      Before archive, retire only earlier absorbed resources and exact
+      disposable duplicates after consumer/hash/native-inventory checks; this
+      active Change's own lane/proposal must remain. Reclaimed remote bytes stay
+      unproved until provider statistics establish a measured reduction. Confirm
+      every archive prerequisite before this item closes. Official archive,
+      new-OID inspection/signature/proof/publication, both new source matrices,
+      and this Change's own lane/proposal and newly created residue retirement
+      are subsequent Goal acceptance, not earlier checkboxes. Do not claim
+      whole-guidance equivalence or team adoption; no history directory or
+      second ledger.
 - [x] 3.6 Publish the compatible original-duty correction with fresh local,
       installed ETHOS, signed patch, asset, and both Forge platform evidence;
       preserve the already qualified major release.
@@ -458,14 +316,16 @@
       current native tests, a fresh cold-install bundle, exact-HEAD installed
       proof, and both source and offline platform matrices.
 - [x] 3.9 Qualify and publish the compatible source-link, CI-naming, and reader
-      corrections after the final source audit, with fresh local checks, a
-      cold-install bundle, exact-HEAD installed proof, a signed patch, and both
-      Forge platform matrices; preserve the earlier release objects. The signed
-      `v7.0.4` source and independent Releases passed the declared source and
-      offline jobs on both Forges, matching downloaded bundle hashes, and the
-      post-tag online link check. Exact aftercare retained current and rollback
-      downloads while retiring superseded assets; aggregate storage statistics
-      may lag those verified resource removals.
+      repairs with full source, cold bundle, exact-HEAD proof, signed patch,
+      both source/offline matrices, independent downloads, links, and exact
+      aftercare. Preserve older signed objects and notes; provider statistics
+      can lag verified resource retirement.
+- [x] 3.10 Retire superseded download assets independently on both Forges;
+      retain the latest qualified release, one qualified rollback, and tool
+      packages consumed by retained source. Preserve tags, original notes, and
+      historical evidence; remove retired download links, record the withdrawal,
+      and verify retained digests and exact absence. Claim storage reduction
+      only when native provider statistics establish it.
 - [x] 3.11 Qualify and publish the compatible formatter and native-tool refresh
       with a source-bound bundle, cold install, trusted signature, exact-HEAD
       installed proof, both Forge source and offline matrices, and bounded
@@ -475,26 +335,62 @@
       exact-HEAD installed proof, a signed patch, both declared source and
       offline platform matrices, independent source and asset hashes, and
       retirement of its owned lane and superseded downloads.
-- [x] 3.14 Qualify and publish the compatible plain-language, cross-cycle,
-      and offline-supply corrections with a source-bound bundle, clean offline
-      install, exact-HEAD installed proof, trusted signed patch, both Forge
-      source and offline matrices, and verified download and lane aftercare.
-      Signed v7.0.9 carries the unchanged corrected normative duties; both
-      independent Releases, downloaded hashes, and declared platforms passed.
-      Superseded constituent lanes and validation copies are retired; the
-      current owned lane remains active only for shared product integration.
-- [x] 3.15 Qualify the compatible bounded-test execution correction with a
-      fresh source-bound bundle, cold offline install, exact-HEAD installed
-      proof, signed patch and both Forge source and offline matrices. Preserve
-      immutable v7.0.7 and its failed GitLab Windows evidence; retire superseded
-      downloads and owned scratch only after current consumers are verified.
-      Signed v7.0.9 passed local checks, denied-network cold installation,
-      installed proof, and both complete source and offline platform matrices.
-      Original notes, tags, and failed executions remain available. Retained
-      downloads follow the current-release and qualified-rollback policy;
-      completed cold checkouts and duplicate downloads are retired.
-- [x] 3.10 Retire superseded download assets independently on both Forges;
-      retain the latest qualified release, one qualified rollback, and tool
-      packages consumed by retained source. Preserve tags, original notes, and
-      historical evidence; remove retired download links, record the withdrawal,
-      and verify retained digests and storage reduction.
+- [ ] 3.13 Qualify the accepted product's reusable release-history and
+      peer-navigation boundary on every audited affected adopter. Use applicable
+      declared peers and native reference resolution; distinguish missing links,
+      wrong targets, and unqualified repairs. Bind each owner to exact source
+      and installed evidence before retiring product-superseded identity code.
+      Proxy's native e603ed4 repair conserves 246 commits and corrects seven
+      false committer pairs while retaining trees, authors/times, messages, and
+      ordered parents. Signed `5580a3af` local success and earlier GitLab
+      9401/Windows results do not certify GitHub, protected publication, or
+      public recovery. Accepted Python evidence, repaired-baseline contribution
+      admission, both Forge execution, and protected acceptance remain pending.
+      Preserve the existing publication receipt; it has not been applied; no
+      hard-coded SHA, HEAD substitution, private provider, or
+      conservation/ancestry waiver is admitted.
+- [x] 3.14 Qualify and publish compatible plain-language, cross-cycle, and
+      offline-supply repairs with source-bound bundle, cold install, proof,
+      trusted signed patch, both source/offline matrices, independent downloads,
+      and exact lane/asset aftercare. Preserve the corrected normative duties;
+      absorbed constituent lanes are retired, while this lane remains for shared
+      integration.
+- [x] 3.15 Qualify the compatible bounded-test correction with frozen bundle,
+      cold install, exact-HEAD proof, signed patch, both source/offline
+      matrices, and exact download/scratch retirement. Preserve immutable v7.0.7
+      and failed GitLab Windows evidence, original tags/notes, current qualified
+      downloads, and rollback; the v7.0.9 qualification does not erase the
+      original failures.
+
+## Current source acceptance
+
+Signed source `934293b8a6ab0600af75ea86fbdbdf36c46d1bd9`, tree
+`e0c7494946ad9154291da1ec5f24014f64027354`, qualifies 2.35 and 2.36. Local and
+fresh-HOME cold verification pass all 235 tests with zero skips; 70 source
+hashes and modes are conserved. Installed full proof passes both default gates
+with attestation
+`f3eadea92584f5b9481b69cb8ae36312758d639308140911e43b8b239a7e15a6`.
+
+All 18 original review/dev/main source jobs pass: GitHub runs 37185900482,
+37186087464, and 37186087570; GitLab pipelines 9467, 9468, and 9469. Windows
+jobs 48203, 48206, and 48209 do not overlap and skip only the declared Darwin
+case. The native Markdown render inventory is 28; online lychee checks 179 links
+without errors and retains its 40-redirect hint.
+
+The source-delivery receipt is
+`continuation-oct04-resource-closure-source-delivery.acceptance.json`, SHA-256
+`26e7267e0a481e318f0e77c83e8c511aa3350db0cddfd1690901697f52f33a1c`, under this
+operation's repository-records evidence owner. Its six original job receipt
+hashes are conserved. Preserve the earlier HTTP500, macOS timeout fixture, and
+caller-only duplicate-npm-config failures. Runner 107's running-job PID/UID
+sample was not collected.
+
+These are exact-source observations, not a new signed version or offline
+release. VERSION remains 7.0.12; its published bytes are unchanged and later
+repairs remain Unreleased. Shared ETHOS quality/formatting, risk, history, Proxy
+acceptance, final coherent release, official closure, and retirement still need
+acceptance. No whole-guidance equivalence or team-adoption certification is
+claimed.
+
+[previous-tasks-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/blob/934293b8a6ab0600af75ea86fbdbdf36c46d1bd9/openspec/changes/native-document-quality/tasks.md
+[previous-tasks-github]: https://github.com/HengYangDS/data-department-work-guidelines/blob/934293b8a6ab0600af75ea86fbdbdf36c46d1bd9/openspec/changes/native-document-quality/tasks.md
