@@ -498,15 +498,23 @@ clean proof.
 4. Integrate formally accepted shared quality, formatting, risk, and history
    contracts. Qualify DDWG, AIGW, and Proxy at their actual installed bindings.
 5. Freeze one compatible final source and bundle. Run local checks, cold
-   verification, trusted signature, exact-HEAD proof, both source/offline matrices,
-   independent Releases/download hashes, and every declared offline host.
+   verification, trusted signature, exact-HEAD proof, both source/offline
+   matrices, independent Releases/download hashes, and every declared offline
+   host.
 6. Complete the final requirement/evidence audit and official spec sync. Retire
    earlier absorbed resources and exact disposable duplicates after their
    consumer/hash/native-inventory checks. Confirm archive prerequisites without
    checking off its future Git effects.
 7. Archive through the official owner, inspect/sign/prove/publish the new OID,
-   observe both source matrices, and natively retire this Change's own
-   lane/proposal and exact disposable residue created by those operations.
+   observe both source matrices, and natively retire this Change's Work Lane,
+   any remaining proposal ref, and exact disposable residue from those
+   operations.
+
+Proposal refs are disposable publication projections. Once source is accepted on
+both peers and its declared jobs pass, retire the absorbed ref through native
+CAS; later work may recreate it. The active Work Lane and Change remain until
+their obligations close. Ref retirement neither archives a Change nor proves
+shared-product acceptance.
 
 The official archive requires completed prerequisite tasks; evidence of its own
 future commit cannot be an earlier checkbox. Those subsequent effects remain

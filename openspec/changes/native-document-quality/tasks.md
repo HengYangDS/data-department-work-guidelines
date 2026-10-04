@@ -281,30 +281,32 @@ commitment. Original narration and dated evidence remain at
       Qualified v7.0.12 source, offline delivery, and native aftercare remain
       complete; v7.0.11 is the retained qualified rollback. Current Unreleased
       repairs and accepted integration require one coherent compatible successor
-      release with fresh source-bound bytes, full local checks, cold verification,
-      trusted signature, exact-HEAD installed proof, both source/offline
-      matrices, independent Releases/download hashes, and every declared
-      offline host. Preserve the v7.0.12 tag and original bundle identity.
-      Reconcile current references and officially sync reviewed deltas while
-      preserving prior requirements/scenarios; pending proof requirements stay
-      out of sync until product acceptance, then officially sync every remaining
-      requirement before this item closes; an omitted accepted requirement
-      blocks closure. Retain the original 62 numbered
-      subsection crosswalk, original duty source, overwrite-risk, delay/dispute
-      analysis, immediate correction-timing, meeting-decision, and actual
-      data-acceptance duties, plus provenance, failed receipts, and bounded
-      review limits. No staged adoption or meaning gate is added. Superseded
-      v7.0.10 downloads/package/link and the prior absorbed proposal are already
+      release with fresh source-bound bytes, full local checks, cold
+      verification, trusted signature, exact-HEAD installed proof, both
+      source/offline matrices, independent Releases/download hashes, and every
+      declared offline host. Preserve the v7.0.12 tag and original bundle
+      identity. Reconcile current references and officially sync reviewed deltas
+      while preserving prior requirements/scenarios; pending proof requirements
+      stay out of sync until product acceptance, then officially sync every
+      remaining requirement before this item closes; an omitted accepted
+      requirement blocks closure. Retain the original 62 numbered subsection
+      crosswalk, original duty source, overwrite-risk, delay/dispute analysis,
+      immediate correction-timing, meeting-decision, and actual data-acceptance
+      duties, plus provenance, failed receipts, and bounded review limits. No
+      staged adoption or meaning gate is added. Superseded v7.0.10
+      downloads/package/link and the prior absorbed proposal are already
       retired; signed source, original note prefixes, and evidence remain.
       Before archive, retire only earlier absorbed resources and exact
       disposable duplicates after consumer/hash/native-inventory checks; this
-      active Change's own lane/proposal must remain. Reclaimed remote bytes stay
+      active Change's Work Lane must remain until final closure. An absorbed
+      proposal ref may retire after exact peer/source acceptance; recreate it
+      through native publication for later source. Reclaimed remote bytes stay
       unproved until provider statistics establish a measured reduction. Confirm
       every archive prerequisite before this item closes. Official archive,
       new-OID inspection/signature/proof/publication, both new source matrices,
-      and this Change's own lane/proposal and newly created residue retirement
-      are subsequent Goal acceptance, not earlier checkboxes. Do not claim
-      whole-guidance equivalence or team adoption; no history directory or
+      and this Change's Work Lane, any final proposal ref, and new residue
+      retirement are subsequent Goal acceptance, not earlier checkboxes. Do not
+      claim whole-guidance equivalence or team adoption; no history directory or
       second ledger.
 - [x] 3.6 Publish the compatible original-duty correction with fresh local,
       installed ETHOS, signed patch, asset, and both Forge platform evidence;
