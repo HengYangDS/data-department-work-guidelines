@@ -74,6 +74,7 @@ docs:verify:macos:review:
     - if: '$CI_COMMIT_BRANCH =~ /^proposal\// && $CI_PIPELINE_SOURCE == "push"'
 
 docs:verify:windows:
+  resource_group: windows-verification
   extends: .docs:verify
   inherit:
     default: false
@@ -84,6 +85,7 @@ docs:verify:windows:
     - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG =~ /^v[^\/]*$/'
 
 docs:verify:windows:review:
+  resource_group: windows-verification
   extends: .docs:verify
   inherit:
     default: false
@@ -124,6 +126,7 @@ offline:verify:macos:
     - ci-macos-arm64-shell
 
 offline:verify:windows:
+  resource_group: windows-verification
   extends: .offline:verify
   inherit:
     default: false

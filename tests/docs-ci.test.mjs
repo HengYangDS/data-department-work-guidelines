@@ -980,6 +980,46 @@ test("GitLab native review and protected jobs use separate capabilities", () => 
   }
 });
 
+test("GitLab Windows verification shares one project resource without merging trust", () => {
+  const pipeline = YAML.parse(gitlab);
+  const jobs = [
+    "docs:verify:windows",
+    "docs:verify:windows:review",
+    "offline:verify:windows",
+  ];
+  const resource = pipeline[jobs[0]].resource_group;
+  assert.equal(typeof resource, "string");
+  assert.ok(resource.trim());
+  assert.ok(
+    !resource.includes("$"),
+    "the resource must not split by event or ref",
+  );
+  for (const name of jobs) {
+    assert.equal(pipeline[name].resource_group, resource, name);
+  }
+  assert.notDeepEqual(
+    pipeline[jobs[0]].tags,
+    pipeline[jobs[1]].tags,
+    "sharing a capacity reservation does not share a runner identity",
+  );
+  assert.doesNotThrow(() => validateCi(github, gitlab, offline));
+  for (const name of jobs) {
+    for (const change of [
+      (job) => delete job.resource_group,
+      (job) => (job.resource_group = "windows-$CI_COMMIT_REF_SLUG"),
+      (job) => (job.resource_group = "separate-event"),
+    ]) {
+      const changed = YAML.parse(gitlab);
+      change(changed[name]);
+      assert.throws(
+        () => validateCi(github, YAML.stringify(changed), offline),
+        /GitLab.*resource/u,
+        name,
+      );
+    }
+  }
+});
+
 test("GitLab Linux review and protected jobs use separate capabilities", () => {
   const result = validateCi(github, gitlab, offline);
   const pipeline = YAML.parse(gitlab);

@@ -318,6 +318,17 @@
       unpublished state. The item remains open only for accepted shared-owner
       integration and simultaneous retirement of product-superseded local
       glue; native rules and all original failure evidence remain.
+- [ ] 2.34 Admit Windows verification against finite native capacity. Preserve
+      original overlapping failures 48142, 48145, and 48148 at signed
+      `cf4b9eb`: each reaches the unchanged 180-second test deadline without
+      a failed assertion. Keep one project-scoped GitLab resource group for
+      Windows review, protected-source, and offline jobs; reject missing,
+      ref-dependent, or divergent reservations. Preserve separate trust,
+      all tests, two workers, deadlines, and original resource evidence.
+      Qualify one isolated original-source attempt when Fleet admits its
+      finite window, then observe repaired source and native resource waits.
+      Cross-project pressure remains unproved; do not change capacity or
+      manufacture isolation from current counters.
 
 ## 3. Qualification and publication
 

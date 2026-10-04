@@ -327,6 +327,11 @@ SemVer identity.
   trusted runners also require native `ref_protected` access. Keep `dev`,
   `main`, and `v*` protected. A proposal can request any YAML tag, so native ref
   restrictions must refuse its access to trusted runners.
+- Windows review, protected-source, and offline jobs reserve one native
+  project-scoped resource group. Keep its name independent of the ref and event
+  so concurrent eligible jobs wait rather than exceed that project's capacity.
+  The reservation does not grant another runner's trust or isolate other
+  projects. Preserve complete test discovery and existing deadlines.
 - Once a proposal has an open merge request, use the merge-request pipeline
   instead of a duplicate branch-push pipeline.
 - Before Linux runner admission, verify the exact OCI digest declared by CI is

@@ -126,6 +126,10 @@ linter beside the current stack would leave the duplication intact.
   format-only TOML plugin where Prettier supplies no owner. Prevent ambient
   ignore files from exempting selected source; ignored untracked state remains
   excluded, while unsupported code fails explicitly.
+- Reserve one native project-scoped GitLab resource for Windows review,
+  protected-source, and offline jobs. Prevent their observed overlap while
+  retaining separate runner identities, complete verification, and existing
+  deadlines. This reservation does not establish cross-project isolation.
 - Name every runnable GitLab verification job by purpose and platform, with
   `:review` for source review. Keep shared steps in hidden native templates, not
   a platform-less runnable job or a Linux job inherited by other hosts. Preserve

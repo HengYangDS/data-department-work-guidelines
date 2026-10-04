@@ -648,14 +648,28 @@ function validateGitLabNativeJobs(gitlab, base, kind, lane) {
           ? protectedRules
           : undefined;
     const job = gitlab[name];
+    const resourceKeys =
+      capabilities.system === "windows" ? ",resource_group" : "";
+    if (capabilities.system === "windows") {
+      const resource = gitlab["docs:verify:windows"]?.resource_group;
+      if (
+        typeof resource !== "string" ||
+        !resource.trim() ||
+        resource !== resource.trim() ||
+        resource.includes("$") ||
+        job?.resource_group !== resource
+      ) {
+        throw new Error(
+          `GitLab ${kind} platform job ${name} must share one stable project resource`,
+        );
+      }
+    }
     if (
       !job ||
       typeof job !== "object" ||
       Array.isArray(job) ||
       Object.keys(job).sort().join(",") !==
-        (rules
-          ? "before_script,extends,inherit,rules,tags"
-          : "before_script,extends,inherit,tags") ||
+        `before_script,extends,inherit${resourceKeys}${rules ? ",rules" : ""},tags` ||
       job.extends !== `.${base}` ||
       JSON.stringify(sourceSupply(job)) !==
         JSON.stringify(kind === "source" ? nativeSourceSupply : []) ||

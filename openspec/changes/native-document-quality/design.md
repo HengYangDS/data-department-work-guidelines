@@ -1154,6 +1154,30 @@ adoption, a new human role, or another approval ceremony. The earlier positive
 crosswalk's 5.6 conclusion is superseded for that one qualifier. Preserve its
 source and evidence rather than relabeling it as complete equivalence.
 
+## Windows Verification Capacity
+
+The original Windows jobs 48142, 48145, and 48148 at the same signed ledger
+successor overlap on one four-vCPU VM. Each reaches the existing 180-second
+Node test deadline without a failed assertion; independent fixtures slow down
+across all three jobs. The six Linux and macOS jobs and all nine GitHub jobs
+pass. This observes overlapping jobs, not the sole cause of the timeout.
+Another project's
+work also runs on the VM; no counters cover the original failure interval.
+
+Use one native GitLab project-scoped resource group across the existing Windows
+review, protected-source, and offline jobs. The stable resource name must not
+include the ref or event, which would split the reservation. The same native
+CI owner checks all three routes. Keep separate identities, workspaces, caches,
+credentials, runner capabilities, and ref admission. A shared reservation
+schedules capacity; it grants no trust or cross-project isolation. Preserve
+the complete test inventory, two-worker ceiling, and current deadlines.
+
+Qualify the original failed source in one isolated, measured attempt when the
+Fleet owner confirms its finite window. Then observe the repaired source's
+actual jobs and native resource waits. Keep every original failure and
+resource limit that was not proved. Do not increase timeouts, skip fixtures,
+rebuild a Runner, or add a private scheduler to obtain a green result.
+
 ## Migration Plan
 
 The original Windows source checks expose native path and fixture-boundary

@@ -15,6 +15,12 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
+### Fixed
+
+- Reserve one native GitLab Windows resource for source review, protected
+  branches, and offline verification. Keep separate trust and all checks while
+  eligible jobs wait for that project's capacity.
+
 ## 7.0.12 - 2026-10-04
 
 History: [GitLab][7.0.12-gitlab] · [GitHub][7.0.12-github]

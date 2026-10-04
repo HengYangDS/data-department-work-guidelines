@@ -225,6 +225,17 @@ purpose and platform; hidden phase templates SHALL own common steps.
   `macos`, and `windows`, with `:review` for source review; no runnable shared
   owner or platform-specific parent substitutes for the hidden phase template.
 
+#### Scenario: Windows verification events share a finite executor
+
+- **WHEN** Windows review, protected-source, and offline verification jobs
+  become eligible for the same project's finite executor
+- **THEN** they declare one stable native project-scoped resource group,
+  independent of the event and ref
+- **AND** the existing CI contract rejects missing or divergent reservations
+- **AND** separate runner identities and ref admission remain unchanged
+- **AND** all discovered tests and existing deadlines remain mandatory;
+  the reservation does not prove isolation from another project.
+
 #### Scenario: A command was retired by its product
 
 - **WHEN** a current instruction names a command absent from the installed
