@@ -298,6 +298,9 @@ checks every matching lock path, raw package identity and development group.
 A changed stable release, official fix, withdrawn or missing finding, or expired
 entry requires retirement and new qualification. Observe the public npm registry
 with isolated native configuration and cache and explicit online freshness.
+The registry cache lives in an owned OS temporary directory and is removed
+after the attempt. Retain configuration snapshots, reports, and diagnostics;
+the cache itself is neither evidence nor a CI artifact.
 This temporary repository boundary must be replaced by accepted ETHOS risk
 admission, not preserved as a private
 second policy. Neither the exception nor this source check certifies the shared

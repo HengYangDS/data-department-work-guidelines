@@ -254,6 +254,12 @@
       ignore policy. Preserve wrong-root rejection, ignored-state controls, and
       real official clean and INFO execution; qualify a new exact source rather
       than retrying or waiving the original failures.
+      The next Windows checkout fails while removing a deeply nested registry
+      cache from the previous attempt. Keep the audit cache in a short owned OS
+      temporary directory, use native cleanup after every attempt, and preserve
+      only report and execution evidence. Repair native Windows Git long-path
+      handling and retire the exact original cache after preserving its failure
+      artifact; do not reset a Runner or weaken source checks.
 - [x] 2.32 Retire all reviewed completed-Change copies from the current tree.
       Audit unique facts, obligations, and incoming consumers; preserve exact
       ancestor Git objects and existing proof. Replace three cited designs with

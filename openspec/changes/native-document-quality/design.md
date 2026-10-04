@@ -19,7 +19,11 @@ fixed, or expired applicability. An online stable-version observation requires
 new qualification when upstream changes. Reuse the existing native npm isolation
 owner; select the public registry and online freshness explicitly, with separate
 empty configuration and cache. This is a temporary repository-specific approval
-guard; replace it with accepted ETHOS risk admission in the same
+guard. Keep registry caches in a short OS temporary directory and remove them
+after each attempt, including withdrawal and failure. Configuration snapshots
+and execution output remain with the original reports; a package cache is not
+permanent evidence. Reused Windows checkouts must not inherit it.
+Replace the guard with accepted ETHOS risk admission in the same
 integration, without keeping a duplicate policy or calling it official OSV.
 
 Extend the existing native supply owner, not a second installer. OSV releases

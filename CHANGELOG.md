@@ -15,8 +15,15 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
+## 7.0.12 - 2026-10-04
+
+History: [GitLab][7.0.12-gitlab] · [GitHub][7.0.12-github]
+
 ### Fixed
 
+- Keep online registry caches in a short, isolated temporary directory and
+  remove them after success or failure. Preserve audit reports and diagnostics
+  without leaving caches to break the next Windows checkout.
 - Use native filesystem identity for OpenSpec report roots on Windows, including
   short-path aliases. Keep temporary format and lint checks bound to Git source,
   so installed dependencies and caches cannot masquerade as source files.
@@ -633,8 +640,10 @@ History: [GitLab][4.0.0-gitlab] · [GitHub][4.0.0-github]
   separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.11...main
-[Unreleased-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.11...main
+[Unreleased-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.12...main
+[Unreleased-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.12...main
+[7.0.12-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.11...v7.0.12
+[7.0.12-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.11...v7.0.12
 [7.0.11-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.10...v7.0.11
 [7.0.11-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.10...v7.0.11
 [7.0.10-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.9...v7.0.10

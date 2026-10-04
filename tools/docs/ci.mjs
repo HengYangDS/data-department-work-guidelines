@@ -4,9 +4,11 @@ import {
   mkdtempSync,
   readFileSync,
   realpathSync,
+  rmSync,
   writeFileSync,
 } from "node:fs";
 import path from "node:path";
+import os from "node:os";
 import semver from "semver";
 import { parse as parseToml, stringify as stringifyToml } from "smol-toml";
 import YAML from "yaml";
@@ -271,67 +273,87 @@ export function auditDependencies({
   identities = validateDependencyInput(JSON.parse(lockSource), policy);
   assertInputs();
   if (!offline && policy.IgnoredVulns.length) {
-    const registryArgs = [
-      npmCliPath(),
-      "view",
-      approvedDependency.name,
-      "version",
-      "--json",
-      "--registry=https://registry.npmjs.org",
-      "--offline=false",
-      "--prefer-online=true",
-      "--prefer-offline=false",
-      "--fetch-retries=0",
-      "--prefix",
-      evidence,
-    ];
-    const registry = spawnSync(process.execPath, registryArgs, {
-      cwd: evidence,
-      env: isolatedNpmEnvironment(evidence, path.join(evidence, "npm-cache"), {
-        offline: false,
-        environment,
-      }),
-      stdio: ["ignore", "pipe", "pipe"],
-      encoding: "utf8",
-      timeout: 15_000,
-      maxBuffer: 1024 * 1024,
-    });
-    writeFileSync(
-      path.join(evidence, "stable-version.stdout"),
-      registry.stdout ?? "",
-    );
-    writeFileSync(
-      path.join(evidence, "stable-version.stderr"),
-      registry.stderr ?? "",
-    );
-    execution.push({
-      command: [process.execPath, ...registryArgs],
-      status: registry.status,
-      signal: registry.signal,
-      error: registry.error?.message,
-    });
-    writeFileSync(
-      path.join(evidence, "execution.json"),
-      JSON.stringify(
-        { time: new Date().toISOString(), offline, execution },
-        null,
-        2,
-      ) + "\n",
-    );
-    if (registry.error || registry.status !== 0 || registry.stderr)
-      throw new Error(
-        `official stable version observation failed; evidence ${evidence}`,
+    const temporary = mkdtempSync(path.join(os.tmpdir(), "ddwg-npm-view-"));
+    try {
+      const registryArgs = [
+        npmCliPath(),
+        "view",
+        approvedDependency.name,
+        "version",
+        "--json",
+        "--registry=https://registry.npmjs.org",
+        "--offline=false",
+        "--prefer-online=true",
+        "--prefer-offline=false",
+        "--fetch-retries=0",
+        "--prefix",
+        temporary,
+      ];
+      const registry = spawnSync(process.execPath, registryArgs, {
+        cwd: temporary,
+        env: isolatedNpmEnvironment(
+          temporary,
+          path.join(temporary, "npm-cache"),
+          {
+            offline: false,
+            environment,
+          },
+        ),
+        stdio: ["ignore", "pipe", "pipe"],
+        encoding: "utf8",
+        timeout: 15_000,
+        maxBuffer: 1024 * 1024,
+      });
+      for (const name of ["empty-user.npmrc", "empty-global.npmrc"]) {
+        writeFileSync(
+          path.join(evidence, name),
+          readFileSync(path.join(temporary, name)),
+        );
+      }
+      writeFileSync(
+        path.join(evidence, "stable-version.stdout"),
+        registry.stdout ?? "",
       );
-    const result = JSON.parse(registry.stdout);
-    const versions = Array.isArray(result) ? result : [result];
-    if (
-      versions.length !== 1 ||
-      !semver.valid(versions[0]) ||
-      versions[0] !== approvedDependency.version
-    )
-      throw new Error(
-        "official stable braces changed; retire and requalify the disposition",
+      writeFileSync(
+        path.join(evidence, "stable-version.stderr"),
+        registry.stderr ?? "",
       );
+      execution.push({
+        command: [process.execPath, ...registryArgs],
+        status: registry.status,
+        signal: registry.signal,
+        error: registry.error?.message,
+      });
+      writeFileSync(
+        path.join(evidence, "execution.json"),
+        JSON.stringify(
+          { time: new Date().toISOString(), offline, execution },
+          null,
+          2,
+        ) + "\n",
+      );
+      if (registry.error || registry.status !== 0 || registry.stderr)
+        throw new Error(
+          `official stable version observation failed; evidence ${evidence}`,
+        );
+      const result = JSON.parse(registry.stdout);
+      const versions = Array.isArray(result) ? result : [result];
+      if (
+        versions.length !== 1 ||
+        !semver.valid(versions[0]) ||
+        versions[0] !== approvedDependency.version
+      )
+        throw new Error(
+          "official stable braces changed; retire and requalify the disposition",
+        );
+    } finally {
+      rmSync(temporary, {
+        recursive: true,
+        force: true,
+        maxRetries: 10,
+        retryDelay: 200,
+      });
+    }
   }
   const raw = execute("raw");
   assertInputs();

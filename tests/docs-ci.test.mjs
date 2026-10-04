@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import childProcess from "node:child_process";
 import {
   cpSync,
+  existsSync,
   mkdtempSync,
   mkdirSync,
   readFileSync,
@@ -436,6 +437,7 @@ test("stable withdrawal observes the public registry without ambient npm policy"
   );
   const observations = [];
   let version = "3.0.3";
+  let registryFailure = false;
   let scans = 0;
   const environment = {
     ...process.env,
@@ -451,7 +453,24 @@ test("stable withdrawal observes the public registry without ambient npm policy"
     "spawnSync",
     (command, args, options) => {
       if (args[1] === "view") {
-        observations.push({ args, options });
+        mkdirSync(options.env.npm_config_cache, { recursive: true });
+        writeFileSync(
+          path.join(options.env.npm_config_cache, "retained-cache"),
+          "disposable native cache",
+        );
+        observations.push({
+          args,
+          options,
+          configs: ["npm_config_userconfig", "npm_config_globalconfig"].map(
+            (key) => readFileSync(options.env[key], "utf8"),
+          ),
+        });
+        if (registryFailure)
+          return {
+            status: 127,
+            stdout: "partial registry result",
+            stderr: "native registry diagnostic",
+          };
         return { status: 0, stdout: JSON.stringify(version), stderr: "" };
       }
       if (args[0] !== "scan") return actual(command, args, options);
@@ -500,7 +519,7 @@ test("stable withdrawal observes the public registry without ambient npm policy"
       repository: directory,
       environment,
     });
-    const { args, options } = observations[0];
+    const { args, options, configs } = observations[0];
     for (const argument of [
       "--registry=https://registry.npmjs.org",
       "--offline=false",
@@ -524,8 +543,17 @@ test("stable withdrawal observes the public registry without ambient npm policy"
     assert.equal(options.env.NPM_TOKEN, undefined);
     assert.equal(options.env.NODE_AUTH_TOKEN, undefined);
     assert.notEqual(options.env.npm_config_cache, environment.npm_config_cache);
-    for (const key of ["npm_config_userconfig", "npm_config_globalconfig"]) {
-      assert.equal(readFileSync(options.env[key], "utf8"), "");
+    assert.deepEqual(configs, ["", ""]);
+    assert.equal(
+      existsSync(options.cwd),
+      false,
+      "successful observation must retire its native cache and config stage",
+    );
+    for (const name of ["empty-user.npmrc", "empty-global.npmrc"]) {
+      assert.equal(
+        readFileSync(path.join(accepted.evidence, name), "utf8"),
+        "",
+      );
     }
     const execution = JSON.parse(
       readFileSync(path.join(accepted.evidence, "execution.json"), "utf8"),
@@ -538,6 +566,11 @@ test("stable withdrawal observes the public registry without ambient npm policy"
     );
     assert.equal(scans, 2, "changed upstream cannot reach another native scan");
     assert.equal(observations.length, 2);
+    assert.equal(
+      existsSync(observations[1].options.cwd),
+      false,
+      "upstream withdrawal must also retire its native stage",
+    );
     const evidenceRoot = path.join(directory, "build/evidence/dependencies");
     const retained = readdirSync(evidenceRoot).map((name) =>
       readFileSync(
@@ -546,6 +579,38 @@ test("stable withdrawal observes the public registry without ambient npm policy"
       ),
     );
     assert.ok(retained.includes(JSON.stringify("3.0.4")));
+    registryFailure = true;
+    assert.throws(
+      () => ci.auditDependencies({ repository: directory, environment }),
+      /official stable version observation failed/u,
+    );
+    assert.equal(
+      scans,
+      2,
+      "failed registry observation cannot reach native scans",
+    );
+    assert.equal(
+      existsSync(observations[2].options.cwd),
+      false,
+      "native failure must retire its cache stage",
+    );
+    const failures = readdirSync(evidenceRoot).map((name) => ({
+      stdout: readFileSync(
+        path.join(evidenceRoot, name, "stable-version.stdout"),
+        "utf8",
+      ),
+      stderr: readFileSync(
+        path.join(evidenceRoot, name, "stable-version.stderr"),
+        "utf8",
+      ),
+    }));
+    assert.ok(
+      failures.some(
+        (entry) =>
+          entry.stdout === "partial registry result" &&
+          entry.stderr === "native registry diagnostic",
+      ),
+    );
   } finally {
     mock.mock.restore();
     syncBuiltinESMExports();
