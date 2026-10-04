@@ -75,9 +75,10 @@ sources, authority gaps, and material irreversible risks remain distinct stops.
 Nonessential presentation preferences do not suspend otherwise authorized work.
 
 Management cadence retains its purpose without a universal weekly meeting: joint
-task-start calibration, immediate signal-based correction, monthly manager
-review with shared evidence calibration, and quarterly net-benefit and
-capability review. The monthly loop does not rank individuals; a single metric
+task-start calibration, immediate signal-based correction, monthly review by
+the department head or an appointed guideline maintainer with shared evidence
+calibration, and quarterly net-benefit and capability review. The monthly loop
+does not rank individuals; a single metric
 does not measure overall personal worth, work, or system value. Excellence still
 requires transferable method, lower complexity, and stronger capability in
 others together.

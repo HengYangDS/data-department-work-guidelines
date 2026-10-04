@@ -19,8 +19,9 @@ The form may shrink with risk; the chain of trust may not skip a link.
 
 These duties can share one work record; each step does not need its own
 document. Low-risk, local, reversible work may close in one exchange. For
-cross-role or uncertain work, use the existing ticket, review, or project
-document. High-risk work follows the charter's
+L1 and L2 work, use a reviewable record in the existing ticket, review, or
+project document under the [charter's risk levels](charter.md#form-follows-risk).
+High-risk work also follows the charter's
 [L2 minimum](charter.md#form-follows-risk):
 a written decision, explicit authorization, a rollback or degradation path,
 independent review, and human acceptance.

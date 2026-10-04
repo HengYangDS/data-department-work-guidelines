@@ -126,6 +126,15 @@ or unknown ownership.
 - **AND THEN** the task's six boundaries can be found without reading unrelated
   topics.
 
+#### Scenario: A long-running or uncertain task crosses the L1 boundary
+
+- **WHEN** work involves multiple options, material uncertainty, or a
+  long-running commitment without crossing a role boundary
+- **THEN** the analysis and delivery routes still require a reviewable existing
+  work record for L1 and L2 work
+- **AND** both routes refer to the charter's complete risk levels instead of
+  narrowing the duty to cross-person or high-risk work.
+
 #### Scenario: A result is called complete
 
 - **WHEN** a member or Agent reports a deliverable
@@ -254,9 +263,10 @@ or unknown ownership.
 
 ### Requirement: Feedback combines events and periodic review
 
-Evolution SHALL check material task transitions. Managers SHALL review real
-work and weak signals at least monthly; maintainers SHALL review rules, tools,
-and capability gaps at least quarterly. High-risk signals SHALL be escalated
+Evolution SHALL check material task transitions. The department head or an
+appointed guideline maintainer SHALL review real work and weak signals at least
+monthly; maintainers SHALL review rules, tools, and capability gaps at least
+quarterly. High-risk signals SHALL be escalated
 when observed. Reviews SHALL reuse existing carriers; new forms or meetings
 require proof of insufficiency. No single metric SHALL represent personal worth;
 no local metric SHALL represent overall work or system value. Monthly mechanism
@@ -265,8 +275,9 @@ review SHALL NOT rank people.
 #### Scenario: Weak signals accumulate without an incident
 
 - **WHEN** a month passes without a single event that forces a systemic review
-- **THEN** the manager inspects real work and recurring weak signals in
-  an existing carrier, calibrates how the team judges evidence, and decides
+- **THEN** the department head or an appointed guideline maintainer inspects
+  real work and recurring weak signals in an existing carrier, calibrates how
+  the team judges evidence, and decides
   whether a mechanism needs correction
 - **AND THEN** a quarterly review tests whether current rules and tools still
   return more value than they cost, without staging a ceremonial new meeting.

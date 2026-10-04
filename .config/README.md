@@ -2,8 +2,9 @@
 
 Configuration lives with the responsibility it serves, not in a catch-all tools
 directory. Executable checks stay in `tools/`; caches, work state, and evidence
-stay outside this directory. The existing repository verifier rejects missing,
-misplaced, duplicated, executable, or linked configuration.
+stay outside this directory. The existing repository verifier requires the
+declared native files and rejects unowned entries, linked configuration, and
+duplicate formatting policy in `package.json`.
 
 | Responsibility            | Owner                                                                   | Native consumer                                                                         |
 | ------------------------- | ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |

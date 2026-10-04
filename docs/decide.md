@@ -22,8 +22,8 @@ In the existing ticket, discussion, or proposal, answer: Who must decide what,
 and by when? What is the subject, who is affected, and what are the present
 state, target, non-goals, and constraints? Which facts are known, and which
 unknowns matter? Who owns the work, who has authority to decide, and who accepts
-it? A low-risk matter may need one conversation; cross-person or high-risk work
-needs a reviewable record.
+it? A low-risk matter may need one conversation; L1 and L2 work needs a
+reviewable record under the [charter's risk levels](charter.md#form-follows-risk).
 
 Name the time, cost, compliance, technical, and resource constraints. A target
 without those limits is not an executable commitment.

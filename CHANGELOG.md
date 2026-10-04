@@ -5,9 +5,12 @@ This file follows
 [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/), and editions
 follow [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html).
 
-`VERSION` names the next edition. Keep upcoming notes under `Unreleased` until
-the release is cut; only then give the edition its actual date. A changelog
-heading, accepted branch, or CI result is not a signed tag or a Forge Release.
+`VERSION` retains the released edition between release cuts; release preparation
+sets it to the next edition. Working source may include `Unreleased` changes;
+the version label alone does not identify exact signed-release content. Keep
+upcoming notes under `Unreleased` until the release is cut; only then give the
+edition its actual date. A changelog heading, accepted branch, or CI result is
+not a signed tag or a Forge Release.
 Earlier branch editions had no versioned release tags; their original records
 remain in Git history rather than being relabeled as formal SemVer releases.
 
@@ -17,6 +20,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Keep L1 and L2 record duties at the charter's complete risk boundary, and name
+  the existing owner of evidence calibration. Distinguish working source from
+  signed-release content and publishable branches from release tags.
 - Distinguish live link checks from authenticated Forge comparison evidence,
   link the existing offline matrix, and name the native list-spacing rule.
   Keep audit acceptance at its governance owner without duplicate instructions.

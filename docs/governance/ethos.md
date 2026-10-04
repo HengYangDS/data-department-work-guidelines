@@ -81,15 +81,19 @@ observe native ETHOS publication during that outage, then read back the ref and
 jobs. Configuration or an older green run does not prove it. Do not raw-push
 around a native refusal.
 
-Only `dev`, `main`, and `proposal/*` may publish. `candidate/dev` and `work/*`
-remain local. The [workspace policy](../../.ethos/workspace.toml) and
+Only `dev`, `main`, and `proposal/*` branches may publish, along with
+ETHOS-admitted signed release tags. `candidate/dev` and `work/*` remain local.
+The [workspace policy](../../.ethos/workspace.toml) and
 [release declaration](../../.ethos/release.toml) define branch and tag admission
 without embedding a host path or operator key.
 
 ## Versioned Releases
 
-[`VERSION`](../../VERSION) owns the intended edition; the
-[charter](../charter.md) displays it. The private npm manifest carries no second
+[`VERSION`](../../VERSION) retains the released edition between release cuts;
+release preparation sets it to the next edition. The [charter](../charter.md)
+displays that identity. Working source may include
+[Unreleased changes](../../CHANGELOG.md#unreleased); only the signed tag
+identifies exact release content. The private npm manifest carries no second
 release version. Compatibility covers normative duties, stable member and Agent
 routes, and documented contributor commands.
 

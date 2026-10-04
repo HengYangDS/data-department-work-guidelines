@@ -18,10 +18,10 @@ __pycache__/
 .cache/
 build/
 
-# Root tool caches and package output are denied residue. Tools must route
-# caches to build/runtime/tool-cache/<tool>/, provider work to
-# build/runtime/work/<provider>/, machine evidence to build/evidence/ or
-# build/ethos/, and local artifacts to build/artifacts/<kind>/.
+# Root tool caches and package output are denied residue. Repository-local
+# caches use build/runtime/tool-cache/<tool>/, bounded work uses
+# build/runtime/work/<purpose>/, machine evidence uses build/evidence/ or
+# build/ethos/, and local artifacts use build/artifacts/<kind>/.
 .import_linter_cache/
 .import-linter-cache/
 .pytest_cache/

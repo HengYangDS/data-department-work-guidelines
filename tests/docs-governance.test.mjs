@@ -21,6 +21,12 @@ import {
   checkNavigation,
   checkProfile,
 } from "../tools/docs/governance.mjs";
+import {
+  markdownLinkDestinations,
+  markdownText,
+  markdownTokens,
+  walkMarkdown,
+} from "../tools/docs/markdown.mjs";
 import { root } from "../tools/docs/runtime.mjs";
 
 function fixture(run) {
@@ -199,6 +205,27 @@ test("navigation rejects a missing map, repeated root topic, and missing reader 
     );
     assert.throws(() => checkNavigation(directory), /missing reader entry/u);
   });
+});
+
+test("L1 and L2 work records use the full charter boundary at both task routes", () => {
+  for (const [relative, opening] of [
+    ["docs/decide.md", "In the existing ticket"],
+    ["docs/deliver.md", "These duties can share"],
+  ]) {
+    const source = readFileSync(path.join(root, relative), "utf8");
+    const paragraph = [...walkMarkdown(markdownTokens(source, relative))].find(
+      (token) =>
+        token.type === "paragraph" && markdownText(token).startsWith(opening),
+    );
+    assert.ok(paragraph, relative);
+    assert.match(markdownText(paragraph), /\bL1 and L2\b/u, relative);
+    assert.ok(
+      markdownLinkDestinations(paragraph.text).includes(
+        "charter.md#form-follows-risk",
+      ),
+      relative,
+    );
+  }
 });
 
 test("navigation requires a rendered link rather than an example or image", () => {

@@ -12,13 +12,17 @@ relations:
 
 > **Guideline edition:** v7.0.12
 >
+> This label alone does not establish released content. Working branches may
+> include [Unreleased changes](../CHANGELOG.md#unreleased); use the signed tag
+> for the exact release.
+>
 > **Applies to:** Data Department members and Agents acting under their
 > delegation.
 >
 > **Accountability:** The department head owns these guidelines and may appoint
-> maintainers to organize revisions. A task lead, authorized decision owner,
-> and acceptor may be the same person when policy permits; do not infer one
-> role's authority from another.
+> maintainers to organize calibration and revisions. A task lead, authorized
+> decision owner, and acceptor may be the same person when policy permits;
+> do not infer one role's authority from another.
 
 ## Purpose
 
@@ -56,8 +60,9 @@ security requirements, and mandatory company policy come first. Within those
 boundaries, use the explicit decision of the authorized owner for the current
 matter, then effective contracts, policies, specifications, and decision
 records, then work plans, provisional agreements, and personal preferences.
-Projects may clarify this order. It does not grant anyone authority to waive
-an obligation: establish that authority and resolve a conflict before acting.
+Projects may clarify this order. Clarifying it does not grant waiver authority;
+establish the authority to waive an obligation and resolve any conflict before
+acting.
 An Agent, tool, or repository file cannot grant organizational authority to
 itself.
 

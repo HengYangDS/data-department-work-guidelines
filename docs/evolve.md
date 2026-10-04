@@ -45,7 +45,7 @@ containment, direct correction, and prevention of recurrence.
 
 ## Grow Capability Through Real Work
 
-At the start of a task, the task owner and supervisor align on subject,
+At the start of a task, the responsible member and supervisor align on subject,
 boundary, and success criteria. At important decisions, examine facts,
 hypotheses, options, and risks. After delivery, choose the most consequential
 gap in reasoning or expression and agree on an observable improvement for the
@@ -107,10 +107,11 @@ recheck facts, options, and authority at material decisions or changed risk,
 verify at the end, and preserve a handoff when interrupted. Escalate high-risk
 signals when observed; a calendar must not delay containment or a decision.
 
-At least monthly, the manager examines a real work sample and accumulated weak
-signals: recurring failures, escaped quality issues, Agent output corrections or
-misuse, and needless coordination. This review must not rank individuals. Use
-it to calibrate how the team judges evidence, find mechanism problems, and
+At least monthly, the department head or an appointed guideline maintainer
+examines a real work sample and accumulated weak signals: recurring failures,
+escaped quality issues, Agent output corrections or misuse, and needless
+coordination. This review must not rank individuals. Use it to calibrate how the
+team judges evidence, find mechanism problems, and
 decide whether a small correction is needed.
 At least quarterly, the guideline maintainer and users review the net benefit
 of current rules, templates, tools, and Agent practices, and assess capability
