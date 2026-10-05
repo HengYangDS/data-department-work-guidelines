@@ -27,6 +27,7 @@ High-risk work also follows the charter's
 [L2 minimum](charter.md#form-follows-risk):
 a written decision, explicit authorization, a rollback or degradation path,
 independent review, and human acceptance.
+Urgent containment follows [emergencies and exceptions](evolve.md#emergencies-and-exceptions).
 
 ## Before Acting
 

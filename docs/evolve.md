@@ -107,6 +107,8 @@ worth, and no local metric may stand for the overall value of work or a system.
 Investigate anomalies through cases and mechanisms; do not equate them directly
 with individual performance.
 
+## Cadence and Responsibilities
+
 For every L1 or L2 task, align the subject and success condition at the start,
 recheck facts, options, and authority at material decisions or changed risk,
 verify at the end, and preserve a handoff when interrupted. Escalate high-risk
@@ -134,7 +136,8 @@ its owner there. Do not create a form or meeting unless existing carriers cannot
 hold the necessary review. No routine “nothing happened” activity report is
 required.
 
-Managers clarify direction, priorities, resources, and cross-domain decisions;
+Managers clarify direction, priorities, decision boundaries, resources, and
+cross-domain decisions;
 ensure results, anomalies, and actual-use effects return promptly to the
 responsible owner; resolve long-standing open decisions in time for work to
 proceed; and show
@@ -142,16 +145,21 @@ their reasoning with concrete work examples. They protect people who honestly
 expose problems and must not penalize honest uncertainty or make one person's
 repeated rescue the department's normal way of operating. They must not use
 these guidelines for retrospective fault-finding, ceremonial review, or
-micromanagement. When goals conflict,
+micromanagement.
+
+When goals conflict,
 priorities drift, resources are short, decisions stall, or interfaces mislead,
-repair the management system before blaming a member's capability. Within those
-boundaries, the person closest to the facts chooses the method; management
-should not dictate every step.
+repair the management system before blaming a member's capability. Within the
+stated decision boundaries, the person closest to the facts chooses the method;
+the charter's hard boundaries still apply. Management should not dictate every
+step.
 
 Members own end-to-end results in their remit and disclose unknowns, risks,
 dependencies, and failures without waiting to be asked. Guideline maintainers
 gather conflicts and signs of obsolescence, and state the reason, evidence,
 effective time, and scope for each addition or deletion.
+
+## Emergencies and Exceptions
 
 In an emergency, protect people, data, production, and compliance first. Contain
 harm before filling in the record if needed; truth, authority, and

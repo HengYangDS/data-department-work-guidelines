@@ -36,6 +36,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Make emergency containment reachable from the charter and delivery pages.
+  Clarify managers' decision boundaries and route review, coaching, and cadence
+  questions to their existing topic.
 - Restore the justified single-lead default without weakening accountability,
   with explicit interface needs and delivery evidence. Keep L1 and L2 record
   duties at the charter's complete risk boundary.

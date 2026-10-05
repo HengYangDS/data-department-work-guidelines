@@ -10,15 +10,15 @@ relations:
 
 # Start with the Work Question
 
-| Your question                            | Current rule                             | You should leave knowing                                                 |
-| ---------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------ |
-| Who may decide, and what must I protect? | [Charter](charter.md)                    | The subject, fact and action authority, and hard boundaries.             |
-| How do I frame the problem and choose?   | [Analysis and decisions](decide.md)      | Facts, hypotheses, alternatives, decision owner, and revisit conditions. |
-| When can I call the work complete?       | [Execution and delivery](deliver.md)     | Deliverable, current verification, limits, and acceptor.                 |
-| May this data support this use?          | [Data quality and adoption](data.md)     | Source, time, meaning, quality, permission, and exit conditions.         |
-| How do I help others understand and act? | [Communication](communicate.md)          | Conclusion, basis, impact, request, and next step.                       |
-| How do I delegate to an Agent?           | [Human–AI collaboration](human-agent.md) | Scope, stop conditions, verification, and human responsibility.          |
-| Should this practice become a rule?      | [Practice and evolution](evolve.md)      | Failure mode, trial, net benefit, maintenance, and retirement.           |
+| Your question                                              | Current rule                             | You should leave knowing                                                 |
+| ---------------------------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------ |
+| Who may decide, and what must I protect?                   | [Charter](charter.md)                    | The subject, fact and action authority, and hard boundaries.             |
+| How do I frame the problem and choose?                     | [Analysis and decisions](decide.md)      | Facts, hypotheses, alternatives, decision owner, and revisit conditions. |
+| When can I call the work complete?                         | [Execution and delivery](deliver.md)     | Deliverable, current verification, limits, and acceptor.                 |
+| May this data support this use?                            | [Data quality and adoption](data.md)     | Source, time, meaning, quality, permission, and exit conditions.         |
+| How do I help others understand and act?                   | [Communication](communicate.md)          | Conclusion, basis, impact, request, and next step.                       |
+| How do I delegate to an Agent?                             | [Human–AI collaboration](human-agent.md) | Scope, stop conditions, verification, and human responsibility.          |
+| How do we review work, coach people, or change a practice? | [Practice and evolution](evolve.md)      | Hard risks, feedback, cadence, net benefit, and retirement.              |
 
 Choose the question that blocks your next action and open that page first. At
 its opening, identify the decision owner and what must be known before acting;

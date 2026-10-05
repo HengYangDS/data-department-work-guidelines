@@ -22,6 +22,8 @@ import {
   checkProfile,
 } from "../tools/docs/governance.mjs";
 import {
+  headingLevel,
+  headingText,
   markdownLinkDestinations,
   markdownText,
   markdownTokens,
@@ -224,6 +226,44 @@ test("L1 and L2 work records use the full charter boundary at both task routes",
         "charter.md#form-follows-risk",
       ),
       relative,
+    );
+  }
+});
+
+test("emergency containment has its own section and both risk-entry routes", () => {
+  const relative = "docs/evolve.md";
+  const source = readFileSync(path.join(root, relative), "utf8");
+  const tokens = markdownTokens(source, relative);
+  const heading = tokens.findIndex(
+    (token) =>
+      headingLevel(token) === 2 &&
+      headingText(token) === "Emergencies and Exceptions",
+  );
+  assert.notEqual(heading, -1, "emergency duties need a discoverable section");
+  const following = tokens.findIndex(
+    (token, index) =>
+      index > heading && headingLevel(token) > 0 && headingLevel(token) <= 2,
+  );
+  const section = tokens.slice(
+    heading + 1,
+    following < 0 ? undefined : following,
+  );
+  const paragraph = [...walkMarkdown(section)].find(
+    (token) =>
+      token.type === "paragraph" &&
+      markdownText(token).startsWith("In an emergency,"),
+  );
+  assert.ok(paragraph, "containment duties must remain under their heading");
+  assert.match(
+    markdownText(paragraph).replace(/\s+/gu, " "),
+    /truth, authority, and responsibility remain binding/u,
+  );
+  for (const entry of ["docs/charter.md", "docs/deliver.md"]) {
+    assert.ok(
+      markdownLinkDestinations(
+        readFileSync(path.join(root, entry), "utf8"),
+      ).includes("evolve.md#emergencies-and-exceptions"),
+      `${entry} must route to emergency containment without restating it`,
     );
   }
 });
