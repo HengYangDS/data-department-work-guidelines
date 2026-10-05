@@ -18,8 +18,8 @@ capabilities remain product dependencies.
 - Use native Vale for spelling, selected terminology, repetition, and diagnosed
   prose defects. Keep native vocabulary and effective rule coverage; preserve
   uncertainty, authority, code, and evidence limits.
-- Migrate decision and license parsing before removing textlint, CSpell,
-  write-good, and their unused dependencies, configuration, adapters, and
+- **BREAKING** Migrate decision and license parsing before removing textlint,
+  CSpell, write-good, and their unused dependencies, configuration, adapters, and
   commands. Remove Markdownlint CLI2's redundant selection layer while keeping
   the native core, diagnostics, TOML policy, and all distinguishing cases.
 - Restore every omitted original duty at its existing task owner. Review full
