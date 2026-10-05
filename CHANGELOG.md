@@ -16,83 +16,52 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Added
 
-- A lightweight weekly sample-calibration default with explained departures and
-  a revisit time. Keep monthly mechanism review and quarterly net-benefit review
-  separate, without a new all-member meeting or report.
+- A lightweight weekly sample-calibration default, with explained departures and
+  a revisit time. Monthly mechanism review and quarterly net-benefit review
+  remain separate; no new all-member meeting or report is required.
 
 ### Changed
 
-- Upgrade the native TOML formatter to 0.9.0 and refresh compatible npm
-  dependencies without adding overrides.
+- Update the native TOML formatter to 0.9.0 and compatible npm dependencies
+  without adding overrides.
+- Shorten active OpenSpec Change documents and simplify governance navigation.
+  Change tasks remain bounded implementation checklists; decision records hold
+  durable rationale.
+- Reduce repeated native-tool and Git observations and keep test fixtures focused
+  on their declared inputs. Retain complete source validation, every distinct
+  ancestry check, source-selection controls, policy, deadlines, and diagnostics.
 
 ### Fixed
 
-- Restore the justified single-lead default without weakening accountability;
-  state what each interface needs and which evidence accompanies delivery.
-  Keep model simplification bounded by reality, restore effective recurrence
-  prevention, and clarify Agent stop conditions.
-- Require every completion condition and current passed verification before a
-  complete claim. Bind Agent reports and execution to the actual delivery
-  state, goal, and agreed scope. Require prevention before the first failure
-  when its triggers apply, including key judgments that rely on a few people's
-  tacit knowledge, and return downstream feedback to its responsible owner.
-- Keep practice admission at one topic owner and concise official requirements
-  with their existing scenarios.
+- Restore the justified single-lead default without weakening accountability,
+  with explicit interface needs and delivery evidence. Keep L1 and L2 record
+  duties at the charter's complete risk boundary.
+- Require every completion condition and current passed verification matching
+  the claim before declaring work complete. Bind Agent reports to the actual
+  delivery state and execution to the delegated goal and scope, with explicit
+  stop conditions.
 - Preserve data availability, professional use cases, and permission as distinct
-  judgments. Keep each data owner's authority intact and require a non-final
-  state when any completion condition is unmet.
-- Preserve native npm admission errors, signals, and partial output before
-  checking refusal or permitted effects. Isolate fixture configuration and
-  resolve the selected entry once without changing test coverage or deadlines.
-- Keep L1 and L2 record duties at the charter's complete risk boundary, and name
-  the existing owner of evidence calibration. Distinguish working source from
-  signed-release content and publishable branches from release tags.
-- Distinguish live link checks from authenticated Forge comparison evidence,
-  link the existing offline matrix, and name the native list-spacing rule.
-  Keep audit acceptance at its governance owner without duplicate instructions.
-  Reconcile Change evidence, shared release terminology, and branch-retirement
-  prerequisites without changing department duties or task states.
-- Align DR-0001's filename and relation description with human–AI collaboration.
-  Keep its stable subject, accepted decision, date, and evidence unchanged.
-- Report native prose defects before unrelated Changelog history traversal.
-  Keep every successful-path check, ancestry operation, and original deadline.
-- Keep the public prose/integrity regression compact while retaining native
-  tools, policies, source-selection controls, and every original assertion.
-- Keep the public source-link regression independent of full Git history and
-  unrelated documents. Retain real lychee execution, candidate-source admission,
-  local-state refusal, unchanged source, and the original deadline.
-- Keep native format and lint fixtures focused on their declared source inputs.
-  Retain real tools, policy consumption, literals, tracked inputs, and all checks.
-- Share one fresh native TOML formatter between matching and output in each
-  formatting attempt, without caching policy or changing validation.
-- Clarify pending ETHOS quality acceptance, GitHub outage updates versus
-  dual-Forge edition qualification, and current authority links in governance
-  and decision records. Preserve stable decisions and historical-source limits.
-- Resolve all Changelog references in one native Git batch. Keep every distinct
-  ancestry check and reject missing, non-commit, or incomplete observations.
-- Verify each supplied native binary's version once before exclusive copying,
-  then check the copied bytes and mode. Concurrent and existing targets retain
-  their independent verification; process deadlines remain unchanged.
-- Derive the link-confinement test target from the repository boundary, so an
-  in-repository temporary directory cannot invalidate the test prerequisite.
-  Preserve the production refusal and its diagnostic distinctions.
-- Check native batch-tag inventory on multiple real fixture tags without
-  repeating the full repository history walk. Keep complete source validation
-  and test deadlines unchanged.
-- Verify native timeout evidence against the actual process streams, including
-  failure before output. Do not assume a child starts before its deadline or
-  fabricate progress under load.
-- Cancel rejected native-tool and release-download response bodies before
-  returning failure. Keep the HTTP status and any cleanup error without retrying
-  or publishing unverified output.
-- Reject native prose and link-extraction warnings before accepting their
-  reports; keep diagnostic output visible even when the tools exit successfully.
-- Keep original process, filesystem, formatter-plugin, and Git error causes
-  when adding verification context. Remove unused bindings and make literal
-  regex spacing explicit without changing checks or refusal messages.
-- Reserve one native GitLab Windows resource for source review, protected
-  branches, and offline verification. Keep separate trust and all checks while
-  eligible jobs wait for that project's capacity.
+  judgments; keep each data owner's authority intact. Unmet completion
+  conditions leave the work unfinished.
+- Keep model simplification bounded by reality and restore effective recurrence
+  prevention. Require prevention before the first failure when its triggers
+  apply, including critical judgments that rely on a few people's tacit
+  knowledge. Return downstream feedback to its responsible owner.
+- Keep practice admission at one task-topic owner, and evidence calibration and
+  audit acceptance at their responsible owners.
+- Align dr-0001's filename with human–AI collaboration without changing its
+  stable subject or accepted decision.
+- Clarify working source versus signed-release content and publishable branches
+  versus release tags. Distinguish live link checks from authenticated Forge
+  history evidence, and GitHub outage updates from dual-Forge release
+  qualification.
+- Keep original errors, warnings, partial output, and cleanup causes visible in
+  verification, installation, and downloads. Native prose and link-extraction
+  warnings fail verification even when a tool exits successfully. Close rejected
+  download responses before failure, without retries or unverified output.
+- Prevent this project's GitLab Windows review, protected-branch, and offline
+  jobs from competing for its reserved capacity. Keep trust boundaries and
+  verification coverage unchanged.
 
 ## 7.0.12 - 2026-10-04
 
