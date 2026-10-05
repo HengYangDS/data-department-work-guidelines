@@ -43,6 +43,7 @@ import {
   root,
   run as runCommand,
 } from "../tools/docs/runtime.mjs";
+import * as runtime from "../tools/docs/runtime.mjs";
 
 const digest = (text) => createHash("sha256").update(text).digest("hex");
 
@@ -280,6 +281,120 @@ test("archive commands preserve native errors and reject warnings", () => {
     );
   } finally {
     rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test("CLI diagnostics retain native causes without repeating command output", (context) => {
+  const lines = [];
+  context.mock.method(console, "error", (message) => lines.push(message));
+  const cause = Object.assign(new Error("connection refused"), {
+    code: "ECONNREFUSED",
+  });
+  runtime.reportError(new Error("fetch failed", { cause }));
+  assert.deepEqual(lines, ["fetch failed", "ECONNREFUSED: connection refused"]);
+  lines.length = 0;
+  runtime.reportError(
+    new Error("native command: ECONNREFUSED: connection refused", { cause }),
+  );
+  assert.deepEqual(lines, ["native command: ECONNREFUSED: connection refused"]);
+  lines.length = 0;
+  runtime.reportError(
+    new Error("native command: connection refused", { cause }),
+  );
+  assert.deepEqual(lines, [
+    "native command: connection refused",
+    "ECONNREFUSED: connection refused",
+  ]);
+  lines.length = 0;
+  runtime.reportError(
+    new Error("native execution failed", {
+      cause: Object.assign(new Error(""), { code: "EPIPE" }),
+    }),
+  );
+  assert.deepEqual(lines, ["native execution failed", "EPIPE"]);
+  lines.length = 0;
+  const circular = new Error("response disposal failed");
+  circular.cause = circular;
+  runtime.reportError(
+    new Error("native download refused: HTTP 500", { cause: circular }),
+  );
+  assert.deepEqual(lines, [
+    "native download refused: HTTP 500",
+    "response disposal failed",
+  ]);
+  lines.length = 0;
+  runtime.reportError(new Error("GitLab release bundle download failed"));
+  assert.deepEqual(lines, ["GitLab release bundle download failed"]);
+});
+
+test("release priming preserves native npm failures through the shared executor", (context) => {
+  const actual = childProcess.spawnSync;
+  let result;
+  let output;
+  let started = 0;
+  let temporary;
+  const mocks = [
+    context.mock.method(process.stdout, "write", (bytes) => {
+      output.stdout += bytes;
+      return true;
+    }),
+    context.mock.method(process.stderr, "write", (bytes) => {
+      output.stderr += bytes;
+      return true;
+    }),
+    context.mock.method(childProcess, "spawnSync", (command, args, options) => {
+      if (command !== process.execPath || args[1] !== "--version")
+        return actual(command, args, options);
+      started++;
+      temporary = path.dirname(options.cwd);
+      assert.equal(options.input, "");
+      assert.equal(options.timeout, 10_000);
+      return result;
+    }),
+  ];
+  syncBuiltinESMExports();
+  try {
+    for (const response of [
+      { status: 1, stdout: "npm partial result", stderr: "EBADDEVENGINES" },
+      {
+        status: null,
+        signal: "SIGTERM",
+        error: Object.assign(new Error("native npm timeout"), {
+          code: "ETIMEDOUT",
+        }),
+        stdout: "npm partial result",
+        stderr: "npm partial error",
+      },
+      { status: 0, stdout: "12.2.0", stderr: "native npm warning" },
+    ]) {
+      result = response;
+      output = { stdout: "", stderr: "" };
+      const before = started;
+      buildFixture((inputs) => {
+        copyFileSync(
+          path.join(root, "package-lock.json"),
+          path.join(inputs.repository, "package-lock.json"),
+        );
+        assert.throws(
+          () => offline.buildReleaseBundle(inputs),
+          (error) => {
+            assert.match(
+              error.message,
+              /exited 1|native npm timeout|warning output/u,
+            );
+            assert.equal(error.cause, response.error);
+            return true;
+          },
+        );
+      });
+      assert.equal(started, before + 1, "failed startup must not begin npm ci");
+      assert.equal(output.stdout, response.stdout);
+      assert.equal(output.stderr, response.status === 0 ? "" : response.stderr);
+      assert.equal(existsSync(temporary), false);
+    }
+  } finally {
+    for (const mock of mocks) mock.mock.restore();
+    syncBuiltinESMExports();
   }
 });
 
@@ -1155,21 +1270,30 @@ test("GitHub acquisition uses the exact public asset without a CLI or credential
 });
 
 test("public GitHub acquisition fails closed and removes only its failed output", async () => {
-  for (const fetcher of [
-    async () => new Response("missing", { status: 404 }),
-    async () => new Response(null, { status: 200 }),
-    async () => {
-      throw new Error("network failed");
-    },
-    async () =>
-      new Response(
-        new ReadableStream({
-          pull(controller) {
-            controller.enqueue(new Uint8Array(129 * 1024 * 1024));
-            controller.close();
-          },
-        }),
-      ),
+  for (const [fetcher, expected] of [
+    [async () => new Response("missing", { status: 404 }), /HTTP 404/u],
+    [async () => new Response(null, { status: 200 }), /download failed/u],
+    [
+      async () => {
+        throw new Error("network failed");
+      },
+      /download failed/u,
+    ],
+    [
+      async () => {
+        const chunk = new Uint8Array(1024 * 1024);
+        let count = 0;
+        return new Response(
+          new ReadableStream({
+            pull(controller) {
+              if (count++ < 513) controller.enqueue(chunk);
+              else controller.close();
+            },
+          }),
+        );
+      },
+      /exceeds the size limit/u,
+    ],
   ]) {
     await buildFixture(async (inputs) => {
       const built = assembleBundle(inputs);
@@ -1182,15 +1306,17 @@ test("public GitHub acquisition fails closed and removes only its failed output"
         ),
         JSON.stringify(built),
       );
-      await assert.rejects(() =>
-        acquireGitHubBundle({
-          repository: inputs.repository,
-          environment: {
-            GITHUB_REPOSITORY: "Example/Repository",
-            DDWG_RELEASE_TAG: "v4.2.0",
-          },
-          fetcher,
-        }),
+      await assert.rejects(
+        () =>
+          acquireGitHubBundle({
+            repository: inputs.repository,
+            environment: {
+              GITHUB_REPOSITORY: "Example/Repository",
+              DDWG_RELEASE_TAG: "v4.2.0",
+            },
+            fetcher,
+          }),
+        expected,
       );
       assert.equal(
         existsSync(

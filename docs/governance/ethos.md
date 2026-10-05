@@ -261,6 +261,10 @@ archives and official OSV Scanner binaries by platform and SHA-256. Raw binaries
 also have exact byte limits. Explicit CI download and a supplied `--asset` file
 are different operations. Verify bytes before extraction or execution.
 
+The manifest supplies macOS x64 assets, but the current CI matrices do not run
+that ABI. A pinned archive is not host qualification. Windows ARM64 runners use
+the declared x64 process and assets; report both architectures.
+
 The [bundle record](../../.config/release/offline-bundle.json) binds edition,
 Node major, complete package manifest, lockfile, and native supply. The bundle
 contains the complete npm cache, every declared native asset, and upstream
@@ -278,6 +282,12 @@ time and size, and verify the pinned digest in an owned temporary directory
 before extraction or exclusive publication. A concurrent caller may reuse a
 verified target, never overwrite or remove it.
 
+Native-tool publication links the complete verified candidate atomically within
+its cache directory. An interrupted copy cannot create a partial final entry.
+Existing entries retain their bytes and permissions; an invalid entry remains
+a failure rather than being overwritten. Package-manager failures and native
+causes remain visible in CLI output without repeating command streams.
+
 Managed caches, bundle downloads, and their repository-local parents must be
 regular files and directories, not symbolic links. Refuse linked parents before
 network access or staging outside the repository. Preserve an existing binary's
@@ -287,6 +297,13 @@ Use OpenSpec's official child-process option to disable telemetry and update
 requests without changing global settings. Archives exclude host extended
 attributes; inspection and extraction reject native warnings even on a zero exit
 status.
+
+Release CI bootstraps Node and npm and downloads the exact asset before the
+offline step. The subsequent install and source checks need no remote supply;
+the whole hosted job is not a network-isolation test. Qualify cold local use
+separately with a fresh HOME, no inherited configuration or cache, and denied
+remote connections. Fixed audit fixtures use a declared test time; the real
+audit still rejects the live disposition when it expires.
 
 Bundled packages and native tools keep their upstream notices; this
 repository's MIT license does not relicense them. Both hosted planes audit

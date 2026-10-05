@@ -220,6 +220,14 @@
       then local checks and both Forge source matrices. Keep VM identity,
       isolation, and throughput qualification with the runner owner; add no
       controller, capacity threshold, or proof gate.
+- [ ] 2.38 Resolve the complete fixed-source implementation review at the
+      existing installer, bundle, audit, and documentation owners. Publish
+      verified native candidates atomically; preserve package-manager failure
+      output and the expiring disposition without date-dependent test failures.
+      Exercise the actual download size boundary and distinguish supplied ABIs
+      from qualified hosts. Verify focused regressions, full source, cold
+      installation, exact-HEAD proof, and both Forge platform matrices; retain
+      original failures and every review disposition by reference.
 
 ## 3. Qualification and publication
 

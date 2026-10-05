@@ -144,10 +144,12 @@ The old manifest and installer SHALL retire when their consumers are replaced.
 
 - **WHEN** pinned supply and the candidate's native version pass before
   exclusive installation
-- **THEN** the existing installer verifies complete copied-byte equality and
+- **THEN** the existing installer publishes the complete verified candidate
+  atomically within the destination directory, without a partial final entry
+- **AND** it verifies complete published-byte equality and
   its owned POSIX mode without repeating the same version startup
 - **AND** a pre-existing or concurrent target retains independent verification
-  and its existing mode; changed copied bytes fail
+  and its existing mode; changed published bytes fail
 - **AND** actual installed consumers still run with unchanged deadlines, while
   the installer's own temporary stage is removed before completion.
 

@@ -25,7 +25,7 @@ import {
   root,
 } from "../tools/docs/runtime.mjs";
 
-test("official supply declares exactly the qualified host assets", () => {
+test("official supply declares exactly the supported platform assets", () => {
   assert.deepEqual(Object.keys(manifest.tools.lychee.assets).sort(), [
     "darwin-arm64",
     "darwin-x64",
@@ -398,7 +398,7 @@ test("official OSV supply pins raw binaries and notices for every native host", 
   assert.match(descriptor.licenses.LICENSE.sha256, /^[0-9a-f]{64}$/u);
 });
 
-test("raw native installation verifies bytes before execution without archive coercion", async (context) => {
+test("raw native installation publishes verified bytes atomically without archive coercion", async (context) => {
   const descriptor = manifest.tools["osv-scanner"];
   assert.ok(descriptor, "raw supply must be declared before installation");
   const selected = selectedAsset("osv-scanner");
@@ -451,9 +451,13 @@ test("raw native installation verifies bytes before execution without archive co
       modes.push(file);
       actualChmod(file, mode);
     }),
-    context.mock.method(fs, "copyFileSync", (_source, destination, flags) => {
+    context.mock.method(fs, "copyFileSync", () => {
+      throw new Error("native tool publication must not expose a partial copy");
+    }),
+    context.mock.method(fs, "linkSync", (source, destination) => {
+      assert.deepEqual(fs.readFileSync(source), bytes);
+      assert.equal(path.dirname(path.dirname(source)), path.dirname(target));
       assert.equal(destination, target);
-      assert.equal(flags, fs.constants.COPYFILE_EXCL);
       published = true;
     }),
     context.mock.method(childProcess, "spawnSync", (command, args, options) => {
@@ -730,9 +734,12 @@ test("a supplied install never changes the mode of an existing cache entry", asy
         : actualStat(file, options);
     }),
     context.mock.method(fs, "chmodSync", (file) => modes.push(file)),
-    context.mock.method(fs, "copyFileSync", (_source, destination, flags) => {
+    context.mock.method(fs, "copyFileSync", () => {
+      throw new Error("native tool publication must not expose a partial copy");
+    }),
+    context.mock.method(fs, "linkSync", (source, destination) => {
+      assert.deepEqual(fs.readFileSync(source), bytes);
       assert.equal(destination, target);
-      assert.equal(flags, fs.constants.COPYFILE_EXCL);
       assert.equal(concurrentTarget, false);
       concurrentTarget = true;
       throw Object.assign(new Error("another install completed"), {

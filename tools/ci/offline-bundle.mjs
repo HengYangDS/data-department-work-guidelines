@@ -1,5 +1,4 @@
 import { createHash } from "node:crypto";
-import { spawnSync } from "node:child_process";
 import {
   copyFileSync,
   cpSync,
@@ -25,6 +24,7 @@ import {
   nativeSupplyPath,
   offlineBundleRecordPath,
   readNativeSupply,
+  reportError,
   root,
   run,
 } from "../docs/runtime.mjs";
@@ -703,24 +703,14 @@ export function validateLockSupply(lock) {
 }
 
 function boundedNpm(args, { cwd, env, timeout = 150_000 }) {
-  const result = spawnSync(process.execPath, [npmCliPath(), ...args], {
+  return run(process.execPath, [npmCliPath(), ...args], {
     cwd,
     env,
-    encoding: "utf8",
     input: "",
+    capture: true,
+    rejectStderr: true,
     timeout,
-    maxBuffer: 4 * 1024 * 1024,
-  });
-  if (result.error) {
-    throw new Error(`npm execution failed: ${result.error.code ?? "unknown"}`);
-  }
-  if (result.status !== 0) {
-    const cause = result.stderr?.includes("ENOTCACHED")
-      ? "cache incomplete"
-      : `exit ${result.status}`;
-    throw new Error(`locked npm installation failed: ${cause}`);
-  }
-  return result.stdout.trim();
+  }).trim();
 }
 
 function readmeLicenseNotice(directory, declarations) {
@@ -1041,7 +1031,7 @@ if (
   path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
 ) {
   cli(process.argv.slice(2)).catch((error) => {
-    console.error(error instanceof Error ? error.message : String(error));
+    reportError(error);
     process.exitCode = 1;
   });
 }

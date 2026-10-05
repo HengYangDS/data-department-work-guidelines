@@ -36,6 +36,12 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Publish verified native tools atomically instead of exposing partial cache
+  entries. Keep dependency fixtures independent of the live exception's expiry
+  while real audit admission still rejects expired dispositions.
+- Preserve package-manager output and native error causes, and test the actual
+  release-download size limit. Distinguish supplied ABIs and hosted offline
+  steps from host qualification and network isolation.
 - Keep the prepared minor edition, complete local publication check, supported
   tool platforms, and Change authority descriptions consistent with their
   existing contracts.

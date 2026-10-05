@@ -59,6 +59,29 @@ export function assertNodeRuntime(version = process.versions.node) {
   }
 }
 
+export function reportError(error) {
+  let observed = error instanceof Error ? error.message : String(error);
+  console.error(observed);
+  const seen = new Set([error]);
+  let cause = error instanceof Error ? error.cause : undefined;
+  while (cause !== undefined && !seen.has(cause)) {
+    seen.add(cause);
+    const message = cause instanceof Error ? cause.message : String(cause);
+    const code = cause instanceof Error ? cause.code : undefined;
+    const detail =
+      typeof code === "string" && !message.includes(code)
+        ? message
+          ? `${code}: ${message}`
+          : code
+        : message;
+    if (detail && !observed.includes(detail)) {
+      console.error(detail);
+      observed += `\n${detail}`;
+    }
+    cause = cause instanceof Error ? cause.cause : undefined;
+  }
+}
+
 export function run(command, args = [], options = {}) {
   const {
     capture = false,

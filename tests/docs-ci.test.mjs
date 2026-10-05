@@ -28,6 +28,7 @@ id = "GHSA-vfj7-8cjw-p6xm"
 ignoreUntil = 2026-10-18
 reason = "Human-approved reviewed development checks only; retain complete raw findings."
 `;
+const dependencyReviewTime = new Date("2026-10-04T00:00:00Z");
 
 test("the bounded native disposition admits only the approved development input", () => {
   const policy = ci.parseDependencyPolicy(dependencyPolicy);
@@ -151,7 +152,7 @@ test("native raw evidence must cover the exact input and retain every finding", 
   );
 });
 
-test("actual native audit preserves the approved raw finding and blocks another advisory", () => {
+test("actual native audit retains undisposed raw findings and blocks advisory inputs", () => {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-native-osv-"));
   // Fixed native OSV database archives, produced by the official ZIP format.
   const databases = [
@@ -162,9 +163,10 @@ test("actual native audit preserves the approved raw finding and blocks another 
     mkdirSync(path.join(directory, ".config/checks/dependencies"), {
       recursive: true,
     });
-    cpSync(
-      path.join(root, ".config/checks/dependencies/policy.toml"),
+    // Native scanner fixtures must not inherit the live exception's expiry.
+    writeFileSync(
       path.join(directory, ci.dependencyPolicyPath),
+      "IgnoredVulns = []\n",
     );
     const braces = JSON.parse(readText("package-lock.json")).packages[
       "node_modules/braces"
@@ -190,12 +192,13 @@ test("actual native audit preserves the approved raw finding and blocks another 
     };
     writeFileSync(
       path.join(directory, "cache/osv-scalibr/npm/all.zip"),
-      Buffer.from(databases[0], "base64"),
+      Buffer.from("UEsFBgAAAAAAAAAAAAAAAAAAAAAAAA==", "base64"),
     );
     const accepted = ci.auditDependencies({
       repository: directory,
       offline: true,
       environment,
+      now: dependencyReviewTime,
     });
     const raw = JSON.parse(
       readFileSync(path.join(accepted.evidence, "raw.json"), "utf8"),
@@ -204,30 +207,30 @@ test("actual native audit preserves the approved raw finding and blocks another 
     const decision = JSON.parse(
       readFileSync(path.join(accepted.evidence, "decision.json"), "utf8"),
     );
-    assert.equal(
-      raw.results[0].packages[0].vulnerabilities[0].id,
-      "GHSA-vfj7-8cjw-p6xm",
-    );
+    assert.equal(raw.results[0].packages[0].vulnerabilities, undefined);
     assert.equal(decision.results[0].packages[0].vulnerabilities, undefined);
     assert.deepEqual(
       JSON.parse(
         readFileSync(path.join(accepted.evidence, "execution.json"), "utf8"),
       ).execution.map((entry) => entry.status),
-      [1, 0],
+      [0, 0],
     );
-    writeFileSync(
-      path.join(directory, "cache/osv-scalibr/npm/all.zip"),
-      Buffer.from(databases[1], "base64"),
-    );
-    assert.throws(
-      () =>
-        ci.auditDependencies({
-          repository: directory,
-          offline: true,
-          environment,
-        }),
-      /unapproved dependency findings/u,
-    );
+    for (const database of databases) {
+      writeFileSync(
+        path.join(directory, "cache/osv-scalibr/npm/all.zip"),
+        Buffer.from(database, "base64"),
+      );
+      assert.throws(
+        () =>
+          ci.auditDependencies({
+            repository: directory,
+            offline: true,
+            environment,
+            now: dependencyReviewTime,
+          }),
+        /unapproved dependency findings/u,
+      );
+    }
     assert.deepEqual(
       readFileSync(path.join(accepted.evidence, "raw.json")),
       rawBytes,
@@ -299,7 +302,12 @@ test("native audit refusal retains malformed, warning, failure and timeout outpu
       response = result;
       const before = calls;
       assert.throws(
-        () => ci.auditDependencies({ repository: directory, offline: true }),
+        () =>
+          ci.auditDependencies({
+            repository: directory,
+            offline: true,
+            now: dependencyReviewTime,
+          }),
         /native|ENOENT|JSON|Unexpected/u,
       );
       assert.equal(
@@ -413,7 +421,12 @@ test("an unapproved raw finding cannot disappear between native scans", (context
       JSON.stringify(lock),
     );
     assert.throws(
-      () => ci.auditDependencies({ repository: directory, offline: true }),
+      () =>
+        ci.auditDependencies({
+          repository: directory,
+          offline: true,
+          now: dependencyReviewTime,
+        }),
       /unapproved dependency findings/u,
     );
     assert.equal(
@@ -536,6 +549,7 @@ test("stable withdrawal observes the public registry without ambient npm policy"
     const accepted = ci.auditDependencies({
       repository: directory,
       environment,
+      now: dependencyReviewTime,
     });
     const { args, options, configs } = observations[0];
     for (const argument of [
@@ -579,7 +593,12 @@ test("stable withdrawal observes the public registry without ambient npm policy"
     assert.deepEqual(execution.execution[0].command.slice(1), args);
     version = "3.0.4";
     assert.throws(
-      () => ci.auditDependencies({ repository: directory, environment }),
+      () =>
+        ci.auditDependencies({
+          repository: directory,
+          environment,
+          now: dependencyReviewTime,
+        }),
       /official stable braces changed/u,
     );
     assert.equal(scans, 2, "changed upstream cannot reach another native scan");
@@ -599,7 +618,12 @@ test("stable withdrawal observes the public registry without ambient npm policy"
     assert.ok(retained.includes(JSON.stringify("3.0.4")));
     registryFailure = true;
     assert.throws(
-      () => ci.auditDependencies({ repository: directory, environment }),
+      () =>
+        ci.auditDependencies({
+          repository: directory,
+          environment,
+          now: dependencyReviewTime,
+        }),
       /official stable version observation failed/u,
     );
     assert.equal(
@@ -695,7 +719,12 @@ test("native audit refuses an input changed after raw evidence before dispositio
       JSON.stringify(lock),
     );
     assert.throws(
-      () => ci.auditDependencies({ repository: directory, offline: true }),
+      () =>
+        ci.auditDependencies({
+          repository: directory,
+          offline: true,
+          now: dependencyReviewTime,
+        }),
       /inputs changed/u,
     );
     assert.equal(calls, 1, "stale input cannot reach the native disposition");

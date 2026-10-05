@@ -206,11 +206,12 @@ Change authority.
    bytes from the declared sources or an already qualified mirror. Use two local
    directories outside Git, with `ASSET_DIR/TOOL/` and `LICENSE_DIR/TOOL/` for
    every declared tool. OSV Scanner uses its official raw binary, not a repacked
-   archive. The builder checks every
-   name, SHA-256, npm package, and license notice; it does not silently download
-   missing inputs. npm package notices may be dedicated license files or an
-   explicit readme License section agreeing with the package's native license
-   declaration; code examples and incidental mentions do not qualify. The locked
+   archive. The builder checks every name, SHA-256, npm package, and license
+   notice. It installs locked npm packages online to prime the bundle; missing
+   native assets and notices are never downloaded implicitly. npm package
+   notices may be dedicated license files or an explicit readme License section
+   agreeing with the package's native license declaration; code examples and
+   incidental mentions do not qualify. The locked
    TOML plugin carries its complete MIT notice through its native Wasm API. The
    builder verifies that original notice and plugin identity without adding or
    rewriting package files. Choose a fresh output path under

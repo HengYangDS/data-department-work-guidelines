@@ -329,6 +329,10 @@ raw binaries and archives use that same supply owner. The bundle carries the
 complete npm cache, every declared native asset, and upstream notices, bound to
 edition, Node major, full package manifest, lock, and native supply.
 
+Supply and host qualification are distinct. The manifest carries macOS x64
+assets, but the declared CI matrices do not execute that ABI. Windows ARM64
+runner acceptance records the x64 Node process and complete x64 tool graph.
+
 Local installed or locally supplied verification needs no remote service. GitLab
 uses its own project registry and CI identity; GitHub uses its independent
 declared acquisition route. Refuse missing input or wrong bytes before
@@ -342,9 +346,11 @@ before remote access or staging. Respect repository confinement and native
 Windows casing; preserve an existing binary's permissions. These checks do not
 claim protection against hostile same-user replacement after inspection.
 
-An exclusively copied candidate has already passed its pinned supply and native
-version checks. Preserve its pre-execution bytes and verify complete equality
-and the owned POSIX mode after copying, rather than restart the same binary to
+An exclusively published candidate has already passed its pinned supply and native
+version checks. Link that complete candidate atomically within its destination
+directory; do not expose a partially copied final entry. Preserve its
+pre-execution bytes and verify complete equality and the owned POSIX mode after
+publication, rather than restart the same binary to
 obtain the same version. Independently verify a pre-existing or concurrently
 installed target without changing its mode. The actual audit, prose, and link
 consumers still execute the installed tool. This reduces redundant startup; it
@@ -354,7 +360,9 @@ Await native asynchronous cleanup of the installer's own extraction stage,
 including bounded native removal retries. Failure still propagates and success
 cannot precede cleanup. Cancel an unread rejected response body before HTTP
 failure, awaiting native cancellation and retaining a failed cancellation as its
-cause. Keep status, success limits, digests, and concurrent output unchanged;
+cause. CLI error rendering retains native causes without repeating streams;
+GitLab download errors intentionally omit credential-bearing transport details.
+Keep status, success limits, digests, and concurrent output unchanged;
 add no network retry, endpoint fallback, or download abstraction.
 
 Archive extraction retains the executor's ownership through the native
@@ -375,6 +383,13 @@ fresh HOME, separate empty user/global npm configuration files, and a clean
 environment establish cold execution. Deny remote connections; permit only local
 connections required by the real HTTP regression.
 
+This is a qualification environment, not an effect of npm configuration alone.
+Hosted jobs install Node/npm and acquire their exact asset before offline
+installation; they do not prove network isolation. The builder deliberately
+installs locked npm packages online to prime its cache, but never acquires
+missing native assets or notices implicitly. Its bounded npm execution uses the
+existing native executor so errors, warnings, and partial output remain visible.
+
 ### Keep native dependency findings and their disposition distinct
 
 OSV Scanner owns raw findings and native disposition. Preserve an undisposed
@@ -388,6 +403,12 @@ reviewed checks, expiring on 18 October 2026. It is not a fix, a production
 waiver, or authorization for arbitrary inputs. Use only native `IgnoredVulns`
 fields. The existing input boundary checks every matching lock path, raw package
 identity, and development group; all other findings remain blocking.
+
+Offline scanner fixtures use an undisposed policy and fixed databases. Fixed
+admission fixtures select their review time explicitly; they must not expire
+with the real policy. Live audit admission still uses the current clock and
+rejects an expired disposition. Do not backdate the real scanner or silently
+extend its native expiry.
 
 Changed stable supply, a fix, withdrawn/missing finding, or expiry requires
 retirement and qualification. Observe the public registry with separate native

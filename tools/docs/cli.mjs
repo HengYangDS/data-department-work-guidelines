@@ -21,6 +21,7 @@ import {
 import {
   assertNodeRuntime,
   gitFiles,
+  reportError,
   run,
   validateOpenSpec,
   workspaceObservation,
@@ -130,6 +131,6 @@ try {
       );
   }
 } catch (error) {
-  console.error(error instanceof Error ? error.message : String(error));
+  reportError(error);
   process.exitCode = 1;
 }

@@ -177,6 +177,7 @@ export function auditDependencies({
   repository = root,
   offline = false,
   environment = process.env,
+  now = new Date(),
 } = {}) {
   const policySource = readFileSync(
     path.join(repository, dependencyPolicyPath),
@@ -269,7 +270,7 @@ export function auditDependencies({
       status: result.status,
     };
   };
-  identities = validateDependencyInput(JSON.parse(lockSource), policy);
+  identities = validateDependencyInput(JSON.parse(lockSource), policy, now);
   assertInputs();
   if (!offline && policy.IgnoredVulns.length) {
     const temporary = mkdtempSync(path.join(os.tmpdir(), "ddwg-npm-view-"));

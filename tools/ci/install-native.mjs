@@ -1,7 +1,6 @@
 import { createHash } from "node:crypto";
 import {
-  constants,
-  copyFileSync,
+  linkSync,
   lstatSync,
   mkdirSync,
   mkdtempSync,
@@ -18,6 +17,7 @@ import {
   filePath,
   managedFileExists,
   readNativeSupply,
+  reportError,
   root,
   run,
 } from "../docs/runtime.mjs";
@@ -238,24 +238,24 @@ export async function install({
     }).trim();
     if (version !== selected.versionOutput)
       throw new Error(`${tool} binary version mismatch: ${version}`);
-    let copied = true;
+    let published = true;
     try {
-      copyFileSync(candidate, target, constants.COPYFILE_EXCL);
+      linkSync(candidate, target);
     } catch (error) {
       if (error.code !== "EEXIST") throw error;
-      copied = false;
+      published = false;
     }
     if (
       !managedFileExists(target) ||
       !readFileSync(target).equals(verifiedBytes)
     )
-      throw new Error(`installed ${tool} copied bytes failed verification`);
-    if (copied) {
+      throw new Error(`installed ${tool} published bytes failed verification`);
+    if (published) {
       if (
         process.platform !== "win32" &&
         (lstatSync(target).mode & 0o777) !== 0o755
       )
-        throw new Error(`installed ${tool} copied mode failed verification`);
+        throw new Error(`installed ${tool} published mode failed verification`);
     } else if (!verifiedCached(target, selected)) {
       throw new Error(`installed ${tool} failed verification`);
     }
@@ -297,7 +297,7 @@ if (
         ),
       )
       .catch((error) => {
-        console.error(error.message);
+        reportError(error);
         process.exitCode = 1;
       });
   } else {
