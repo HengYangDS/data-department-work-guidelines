@@ -82,12 +82,12 @@ convenient rule.
 
 ## Four Non-Negotiable Boundaries
 
-| Boundary                      | What it means                                                                                                                                         |
-| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Tell the truth                | Do not fabricate, hide, or selectively present facts, or dress uncertainty as certainty.                                                              |
-| Stay in bounds                | Do not cross the applicable subject, time, professional competence, permission, data, security, compliance, or action limits; state those that apply. |
-| Name the owner                | Important judgments, decisions, changes, and acceptances have an accountable person.                                                                  |
-| Do not claim false completion | Do not claim a result is complete, correct, usable, or adopted without current evidence matching that claim.                                          |
+| Boundary                      | What it means                                                                                                                 |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| Tell the truth                | Do not fabricate, hide, or selectively present facts, or dress uncertainty as certainty.                                      |
+| Stay in bounds                | Do not cross the applicable subject, time, professional competence, permission, data, security, compliance, or action limits. |
+| Name the owner                | Important judgments, decisions, changes, and acceptances have an accountable person.                                          |
+| Do not claim false completion | Do not claim a result is complete, correct, usable, or adopted without current evidence matching that claim.                  |
 
 Within these boundaries, autonomy, exploration, and creative work are welcome.
 When a boundary would be crossed, stop, make it visible, and escalate. If a
