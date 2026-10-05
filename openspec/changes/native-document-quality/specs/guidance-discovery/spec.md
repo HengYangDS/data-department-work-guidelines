@@ -10,7 +10,8 @@ reproducibility. Data states SHALL reflect every completion condition; timelines
 SHALL distinguish availability from later queries. Parallel Agents SHALL default
 to read-only work with one integrator. Human responsibility SHALL remain human.
 Agents SHALL report the delivery state after reviewing complete claim-matched
-results.
+results. Delivery coordination SHALL NOT replace domain owners' professional
+judgments.
 
 #### Scenario: A verification summary omits a finding
 
@@ -106,11 +107,16 @@ monolith or duplicate cards. Agents SHALL stop affected actions and escalate for
 an unidentified task owner, another person's unrecognized or uncommitted work,
 or unknown ownership.
 
+Local rules SHOULD reference shared guidelines rather than restate them. Every
+important update SHALL name current risks or blockers and its next action,
+responsible actor, deadline, and completion condition, including when it requests
+a decision.
+
 #### Scenario: An unchecked citation accompanies fluent work
 
 - **WHEN** an analyst presents an unchecked secondhand figure as a fact in an
   otherwise fluent and complete decision memo
-- **THEN** the charter treats the citation as a hard risk
+- **THEN** the evolution topic treats the citation as a hard risk
 - **AND** fluency, effort, and Agent efficiency do not offset it; neither can
   Agent output replace responsibility.
 

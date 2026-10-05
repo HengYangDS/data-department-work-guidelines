@@ -31,8 +31,10 @@ Data with unanswered questions may support exploration, but must not be
 presented as a durable trusted asset. Exploratory code and temporary data may
 move quickly inside that boundary. Neither may enter a shared, production, or
 decision path until its meaning, quality, permissions, and reproducibility are
-qualified for that use. Distinguish source data, production data, experimental
-results, service views, platform-derived views, and reporting views. Reports,
+qualified for that use.
+
+Keep source data, production data, experimental results, service views,
+platform-derived views, and reporting views distinct. Reports,
 catalogs, caches, and Agent summaries are projections; none may quietly become
 the source of truth. Preserve the source and history of revisions, backfills,
 and derivations so the current value can be explained.
@@ -84,7 +86,7 @@ time.
 | --------------- | ------------------------------------------------------------------------------ | --------------------------------------------- |
 | Research claim  | Earlier snapshot, availability time, and correction history.                   | Do not call the backtest point-in-time valid. |
 | Production feed | Replayable inputs and outputs, tests, monitoring, access review, and recovery. | Keep the file exploratory.                    |
-| Use admission   | Domain meaning, rights and veto, authorized decision, and acceptance.          | Do not infer permission from deployment.      |
+| Use admission   | Domain meaning, permissions and veto, authorized decision, and acceptance.     | Do not infer permission from deployment.      |
 
 An Agent may locate snapshots, compare revisions, or run replay checks within
 its delegation. It cannot decide that the dataset is admitted. The task lead
@@ -93,13 +95,13 @@ observed use, not this table, establishes adoption.
 
 ## Ownership and Change Boundaries
 
-| Owner      | Responsibility                                                                                                       |
-| ---------- | -------------------------------------------------------------------------------------------------------------------- |
-| Domain     | Define meaning, quality requirements, suitable use cases, and professional judgments.                                |
-| Production | Ensure deployability, backfill, monitoring, recovery, and reliable long-term operation.                              |
-| Platform   | Abstract repeated, cross-domain capabilities needed for durable operation without replacing domain judgment.         |
-| Governance | Define admission, permissions, lineage, review, veto, and exit, and make those controls work in the actual workflow. |
-| Delivery   | Make priorities, resources, dependencies, risks, and open decisions visible.                                         |
+| Owner      | Responsibility                                                                                                                          |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Domain     | Define meaning, quality requirements, suitable use cases, and professional judgments.                                                   |
+| Production | Ensure deployability, backfill, monitoring, recovery, and reliable long-term operation.                                                 |
+| Platform   | Abstract repeated, cross-domain capabilities needed for durable operation without replacing domain judgment.                            |
+| Governance | Define admission, permissions, lineage, review, veto, and exit, and make those controls work in the actual workflow.                    |
+| Delivery   | Make priorities, resources, dependencies, risks, and open decisions visible without replacing the other owners' professional judgments. |
 
 Sharing an interface does not transfer responsibility or grant authority over
 another owner's judgments. Cross-domain work should have one accountable task

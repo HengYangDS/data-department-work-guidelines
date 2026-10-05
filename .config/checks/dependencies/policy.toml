@@ -1,6 +1,7 @@
 # Native OSV disposition only. The existing repository input boundary enforces
-# npm/braces/3.0.3/dev until ETHOS supplies reusable risk admission. Remove this
-# entry sooner if an official fix exists or the raw finding becomes obsolete.
+# npm/braces/3.0.3/dev until ETHOS supplies reusable risk admission. On withdrawal,
+# replace the complete disposition table with IgnoredVulns = []; keep this file.
+# Withdraw sooner if an official fix exists or the raw finding becomes obsolete.
 [[IgnoredVulns]]
 id = "GHSA-vfj7-8cjw-p6xm"
 ignoreUntil = 2026-10-18

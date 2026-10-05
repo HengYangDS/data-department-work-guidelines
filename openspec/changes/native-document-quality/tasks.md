@@ -228,6 +228,11 @@
       from qualified hosts. Verify focused regressions, full source, cold
       installation, exact-HEAD proof, and both Forge platform matrices; retain
       original failures and every review disposition by reference.
+      Cover original-duty findings, actual npm diagnostics, portable native
+      selectors, public download causes, and the reachable empty-policy
+      withdrawal. Before 2026-10-18T00:00:00Z, the repository maintainer must
+      qualify fixed supply or obtain a new explicit risk decision; verify that
+      expiry still refuses both offline source checks and online audit.
 
 ## 3. Qualification and publication
 

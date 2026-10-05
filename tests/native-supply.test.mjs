@@ -53,6 +53,50 @@ test("official supply declares exactly the supported platform assets", () => {
   );
 });
 
+test("explicit native tool selectors use portable names and retain version admission", (context) => {
+  const actual = childProcess.spawnSync;
+  const saved = new Map();
+  let expected;
+  let version;
+  let executions = 0;
+  const mock = context.mock.method(
+    childProcess,
+    "spawnSync",
+    (command, args, options) => {
+      if (command !== expected) return actual(command, args, options);
+      assert.deepEqual(args, ["--version"]);
+      assert.equal(options.timeout, 10_000);
+      executions++;
+      return { status: 0, stdout: version, stderr: "" };
+    },
+  );
+  syncBuiltinESMExports();
+  try {
+    for (const [tool, descriptor] of Object.entries(manifest.tools)) {
+      const key = `DDWG_${tool.toUpperCase().replaceAll("-", "_")}_BIN`;
+      saved.set(key, process.env[key]);
+      expected = path.join(
+        os.tmpdir(),
+        "ddwg-native-selector",
+        descriptor.binary,
+      );
+      process.env[key] = expected;
+      version = descriptor.versionOutput;
+      assert.equal(nativeToolBinary(tool), expected, tool);
+      version = "unexpected version\n";
+      assert.throws(() => nativeToolBinary(tool), /version mismatch/u);
+    }
+    assert.equal(executions, Object.keys(manifest.tools).length * 2);
+  } finally {
+    for (const [key, value] of saved) {
+      if (value === undefined) delete process.env[key];
+      else process.env[key] = value;
+    }
+    mock.mock.restore();
+    syncBuiltinESMExports();
+  }
+});
+
 test("asset digest is checked before extraction", () => {
   const bytes = Buffer.from("bounded fixture");
   const sha256 = createHash("sha256").update(bytes).digest("hex");

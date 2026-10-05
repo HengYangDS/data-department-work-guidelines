@@ -1018,7 +1018,9 @@ async function cli(argv) {
       mode === "inspect"
         ? verifyBundle({ bundlePath, record })
         : installBundle({ bundlePath, record, repository: root });
-    console.log(`PASS offline ${mode}: ${result.version} ${result.sha256}`);
+    console.log(
+      `PASS offline ${mode}: ${result.version} ${result.sha256}${mode === "install" ? ` npm ${result.npmVersion}` : ""}`,
+    );
     return;
   }
   throw new Error(
@@ -1044,8 +1046,11 @@ async function downloadBundle(request, target, fetcher, provider) {
       redirect: request.redirect,
       signal: AbortSignal.timeout(90_000),
     });
-  } catch {
-    throw new Error(`${provider} release bundle download failed`);
+  } catch (error) {
+    throw new Error(
+      `${provider} release bundle download failed`,
+      provider === "GitLab" ? undefined : { cause: error },
+    );
   }
   if (!response.ok || !response.body) {
     let cause;

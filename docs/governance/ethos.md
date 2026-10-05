@@ -134,11 +134,15 @@ not a login redirect or another Forge's success.
 
 `npm run verify` uses one [portable source entry](../../tools/docs/cli.mjs).
 
-The source check reports its commit, tree, tracked-change state, native runtime,
-and workspace filesystem capacity. Byte counts use exact integers. This observes
-the mounted workspace, not VM identity, isolation, or throughput; a container
+The source check reports its observed repository path, commit, tree,
+tracked-change state, Node platform and version, process architecture, `hostname`,
+and workspace filesystem capacity. Paths and host names describe that execution;
+they do not configure a portable target. Byte counts use exact integers. This
+observes the mounted workspace, not VM identity, isolation, or throughput; a container
 may report its workspace filesystem rather than the guest's root volume. Native
-read failures remain failures, not fabricated zero-capacity observations.
+read failures remain failures, not fabricated zero-capacity observations. The
+runner owner separately verifies the actual guest and host architecture;
+process architecture and a declared YAML capability do not establish either.
 
 | Concern               | Check                                                                                                              |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------ |
@@ -263,7 +267,9 @@ are different operations. Verify bytes before extraction or execution.
 
 The manifest supplies macOS x64 assets, but the current CI matrices do not run
 that ABI. A pinned archive is not host qualification. Windows ARM64 runners use
-the declared x64 process and assets; report both architectures.
+the declared x64 process and assets. The source check reports
+`processArchitecture`; qualify host architecture separately through native
+runner and guest observations.
 
 The [bundle record](../../.config/release/offline-bundle.json) binds edition,
 Node major, complete package manifest, lockfile, and native supply. The bundle
@@ -302,8 +308,10 @@ Release CI bootstraps Node and npm and downloads the exact asset before the
 offline step. The subsequent install and source checks need no remote supply;
 the whole hosted job is not a network-isolation test. Qualify cold local use
 separately with a fresh HOME, no inherited configuration or cache, and denied
-remote connections. Fixed audit fixtures use a declared test time; the real
-audit still rejects the live disposition when it expires.
+remote connections. Fixed audit fixtures use a declared test time. Live input
+validation uses the current clock in both offline source checks and online
+audits; an expired disposition blocks `verify`, `docs-integrity`, and ETHOS
+proof, including revalidation of a released edition that retains that policy.
 
 Bundled packages and native tools keep their upstream notices; this
 repository's MIT license does not relicense them. Both hosted planes audit
@@ -319,19 +327,33 @@ Local source verification remains independent of the network.
 
 The [native policy](../../.config/checks/dependencies/policy.toml) carries only
 the native `IgnoredVulns` fields. Its single human-approved exception is limited
-to reviewed development checks using npm `braces` 3.0.3 and expires on 18 October
-2026; it is not a production or arbitrary-input waiver. The existing input owner
-checks every matching lock path, raw package identity and development group.
+to reviewed development checks using npm `braces` 3.0.3 and expires at
+2026-10-18T00:00:00Z; it is not a production or arbitrary-input waiver. The
+existing input owner checks every matching lock path, raw package identity and
+development group.
+
 A changed stable release, official fix, withdrawn or missing finding, or expired
-entry requires retirement and new qualification. Observe the public npm registry
+entry requires retirement and new qualification. On withdrawal, replace the
+complete disposition table with `IgnoredVulns = []`; do not leave a comments-only
+policy or delete the required file. An empty policy grants no ignore and still
+requires clean raw findings. Before expiry, the repository maintainer must
+qualify a fixed dependency with that empty policy, or obtain a new explicit
+decision from the authorized owner through accepted ETHOS risk admission. The
+current approval does not authorize an extension. Observe the public npm registry
 with isolated native configuration, cache, and explicit freshness during online
-dependency auditing.
-The registry cache lives in an owned OS temporary directory and is removed
-after the attempt. Retain configuration snapshots, reports, and diagnostics;
+dependency auditing. The registry cache lives in an owned OS temporary directory
+and is removed after the attempt. Retain configuration snapshots, reports, and diagnostics;
 the cache itself is neither evidence nor a CI artifact.
+
+An explicit native executable may be selected with `DDWG_LYCHEE_BIN`,
+`DDWG_VALE_BIN`, or `DDWG_OSV_SCANNER_BIN`. Without one, the consumer prefers its
+verified repository cache, then native PATH. Every selection must still match
+the locked tool version; these paths are execution inputs, not tracked host
+bindings.
+
 This temporary repository boundary must be replaced by accepted ETHOS risk
-admission, not preserved as a private
-second policy. Neither the exception nor this source check certifies the shared
+admission, not preserved as a private second policy. Neither the exception nor
+this source check certifies the shared
 ETHOS product or its release.
 
 ## Runner and Transport Boundaries

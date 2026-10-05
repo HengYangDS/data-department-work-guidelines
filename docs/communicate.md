@@ -28,12 +28,14 @@ State the purpose of the exchange before presenting the detail.
 | Review      | An explanation of the mechanism and what to keep, change, or discard.           |
 
 For an important update, lead with the **conclusion or present state**. Then
-give two or three decisive facts, the impact, a recommendation, and the decision
-needed from whom and by when. A status update names what changed since the
-previous report, not how much activity occurred. If there is no conclusion,
-state which evidence is missing and when it can be obtained. Answer the question
-first, then explain. If no decision is requested, give the next
+give two or three decisive facts, the impact, current risks or blockers, a
+recommendation, and any decision needed from whom and by when. Name the next
 action, its owner and due time, and the condition that will show it is done.
+A status update names what changed since the previous report, not how much
+activity occurred. If there is no conclusion, state which evidence is missing
+and when it can be obtained.
+
+Answer a question first, then explain.
 Say “I don't know” when that is true. Revise a position immediately when new
 evidence overturns it; do not hide the point behind jargon or background.
 
@@ -46,9 +48,9 @@ If a change is necessary, identify it and explain why before answering.
 > hindsight question rather than the one we need. I have kept the file
 > exploratory. I recommend deferring this use. That delays the study but avoids
 > presenting hindsight as point-in-time evidence. We can reconsider when the
-> earlier snapshot and replay evidence are available. Please decide before the
-> planned release window whether to defer this use or obtain the snapshot and
-> rerun the check.”
+> earlier snapshot and replay evidence are available. Release owner, please
+> decide before the planned release window whether to defer this use or obtain
+> the snapshot and rerun the check.”
 
 ## Make Meetings Produce Decisions, Not Transcripts
 
@@ -104,8 +106,10 @@ Link to an existing source of truth rather than copying it.
 
 State the risk or blocker; the facts, impact, and latest safe decision time;
 containment already attempted and its result; and the options, costs,
-recommendation, and person who must decide by when. Replace vague assurances
-with statements that another person can check:
+recommendation, and person who must decide by when.
+
+In any update or escalation, replace vague assurances with statements that
+another person can check:
 
 | Instead of                  | Say                                                                |
 | --------------------------- | ------------------------------------------------------------------ |

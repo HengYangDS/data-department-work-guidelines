@@ -52,7 +52,9 @@ The audit keeps raw findings before applying the
 owns acceptance, the approved expiring development exception, registry
 freshness, and refusal conditions. This audit covers locked repository packages,
 not the npm executable bundled with Node. The offline repository verifier does
-not contact either Forge.
+not contact either Forge, but still refuses an expired disposition. Withdraw
+the exception through the supply contract before expiry; a clean offline
+install does not bypass that boundary.
 
 Vale checks spelling, repeated words, selected technical terms, and diagnosed
 wordy phrases using [native configuration](.config/checks/prose/vale.ini),

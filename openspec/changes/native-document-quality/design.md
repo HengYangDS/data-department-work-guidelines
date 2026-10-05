@@ -361,7 +361,8 @@ including bounded native removal retries. Failure still propagates and success
 cannot precede cleanup. Cancel an unread rejected response body before HTTP
 failure, awaiting native cancellation and retaining a failed cancellation as its
 cause. CLI error rendering retains native causes without repeating streams;
-GitLab download errors intentionally omit credential-bearing transport details.
+Public GitHub download errors retain their native cause. GitLab download errors
+intentionally omit credential-bearing transport details.
 Keep status, success limits, digests, and concurrent output unchanged;
 add no network retry, endpoint fallback, or download abstraction.
 
@@ -406,9 +407,13 @@ identity, and development group; all other findings remain blocking.
 
 Offline scanner fixtures use an undisposed policy and fixed databases. Fixed
 admission fixtures select their review time explicitly; they must not expire
-with the real policy. Live audit admission still uses the current clock and
-rejects an expired disposition. Do not backdate the real scanner or silently
-extend its native expiry.
+with the real policy. Live offline source validation and online audit admission
+use the current clock and reject an expired disposition, including revalidation
+of released source that retains it. Withdrawal keeps the required native policy
+file with `IgnoredVulns = []`; an empty policy grants no ignore. Before expiry,
+the repository maintainer qualifies fixed supply or obtains a new explicit
+decision through accepted ETHOS risk admission. Do not backdate the real scanner
+or silently extend its native expiry.
 
 Changed stable supply, a fix, withdrawn/missing finding, or expiry requires
 retirement and qualification. Observe the public registry with separate native

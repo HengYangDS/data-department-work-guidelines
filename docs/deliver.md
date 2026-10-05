@@ -60,7 +60,7 @@ existing work record so collaborators work from the same commitment.
 | Published or effective | The result reached the target environment or entered use; verify this separately from acceptance. |
 
 Do not rename “executing” as “almost done,” or infer publication from
-verification. A blocked task can contain useful work; the blocked claim remains
+verification. A blocked task can contain useful work; the affected action stays
 blocked until its prerequisite changes.
 Continue independent, authorized work that does not depend on that prerequisite.
 
@@ -72,16 +72,16 @@ what unproved?** Evidence must be current, reviewable, and matched to the
 claim's scope. When evidence is missing, narrow the claim rather than enlarge
 the language.
 
-| What was observed                                | What it does not establish by itself                             |
-| ------------------------------------------------ | ---------------------------------------------------------------- |
-| A draft exists, a command runs, or a test passes | Review, overall correctness, or acceptance.                      |
-| A sample or rehearsal passes                     | Complete correctness or actual execution.                        |
-| A dry-run succeeds                               | The actual action occurred.                                      |
-| A content digest matches                         | The content is semantically correct or fit for its intended use. |
-| A local environment passes                       | A remote, production, or hosted environment passes.              |
-| A change is merged                               | It was published at the agreed destination.                      |
-| A revision is published                          | It took effect, was adopted, or produced the intended outcome.   |
-| An Agent reports completion                      | A member verified and accepted responsibility for the result.    |
+| What was observed                                | What it does not establish by itself                                          |
+| ------------------------------------------------ | ----------------------------------------------------------------------------- |
+| A draft exists, a command runs, or a test passes | Review, overall correctness, or acceptance.                                   |
+| A sample or rehearsal passes                     | Complete correctness or actual execution.                                     |
+| A dry-run succeeds                               | The actual action occurred.                                                   |
+| A content digest matches                         | The content is semantically correct or fit for its intended use.              |
+| A local environment passes                       | A remote, production, or hosted environment passes.                           |
+| A change is merged                               | It was published at the agreed destination.                                   |
+| A revision is published                          | It took effect, was adopted, or produced the intended outcome.                |
+| An Agent reports completion                      | The work is complete or a member verified and accepted responsibility for it. |
 
 Say “complete” only when all conditions hold: the deliverable is at the agreed
 location; every completion criterion is satisfied; current verification

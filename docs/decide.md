@@ -32,7 +32,7 @@ If the subject, authority, or irreversible consequences are unclear, stop the
 affected action and ask an authorized person to decide. **Collecting information
 is not the goal; explain which judgment it could change.**
 
-For important work, make six boundaries explicit: **object** (the system, data,
+For important work, make six boundaries explicit: **subject** (the system, data,
 people, or decision), **scope** (in and out), **time** (fact cutoff and period
 of validity), **responsibility** (task lead, decision owner, reviewer, acceptor,
 and those to inform), **evidence** (what it does and does not establish), and
@@ -101,15 +101,19 @@ checking its applicable boundary.
 
 For one decision, include feasible options, including the status quo. Compare
 them on the same basis: benefit, cost, risk, reversibility, and opportunity
-cost. Prefer an option that removes the main failure mode, can operate with
-actual resources, is observable and recoverable, reduces long-term maintenance
-and manual rescue, and has a clear replacement condition. A recommendation
+cost. Prefer an option that solves the framed problem, removes the main failure
+mode, and operates within current boundaries and resources. It should be
+verifiable, observable, and recoverable, reduce total maintenance and reliance
+on individual memory, repeated coordination, and manual rescue, and have clear
+exit and replacement conditions. Novelty, completeness, or popularity does not
+establish suitability. A recommendation
 states its premises, strongest objection, first step if chosen, and revisit
 trigger. The authorized person decides; a long analysis cannot stand in for
 authorization.
 
-Once a choice is made, record what was decided, by whom, on what date, and why
-in the existing work record. A deadline says when a decision is needed; it
+Once a choice is made, record what was decided, by whom, on what date, and why,
+with its revisit trigger and first action, owner, and completion condition in
+the existing work record. A deadline says when a decision is needed; it
 does not establish when approval occurred.
 
 Give the proposed decision one of these three states:

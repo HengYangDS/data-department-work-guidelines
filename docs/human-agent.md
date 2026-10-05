@@ -41,13 +41,13 @@ boundary.
 > verified. Stop if the earlier snapshot is missing or a production write would
 > be needed; do not approve the data for use.”
 
-| Role             | May do                                                        | Responsibility that remains                                                            |
-| ---------------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| Task lead        | Clarify the goal and boundary; coordinate work and decisions. | Goal, boundary, risk, final judgment, end-to-end result, and escalation.               |
-| Executing member | Decompose, delegate, integrate, and verify.                   | Understand and check Agent output before submission.                                   |
-| Agent            | Search, reason, draft, implement, test, and present options.  | Must not grant itself organizational authority or make commitments on people's behalf. |
-| Reviewer         | Independently check facts, changes, and evidence.             | State findings and limits; review alone does not authorize action.                     |
-| Acceptor         | Confirm agreed completion when authorized.                    | Make the acceptance decision after examining the actual work.                          |
+| Role             | May do                                                               | Retained duty or limit                                                                 |
+| ---------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| Task lead        | Clarify the goal and boundary; coordinate work and decisions.        | Goal, boundary, risk, final judgment, end-to-end result, and escalation.               |
+| Executing member | Decompose, delegate, implement, integrate, and verify.               | Understand and check Agent output before submission.                                   |
+| Agent            | Search, reason, draft, implement, test, review, and present options. | Must not grant itself organizational authority or make commitments on people's behalf. |
+| Reviewer         | Independently check facts, changes, and evidence.                    | State findings and limits; review alone does not authorize action.                     |
+| Acceptor         | Confirm agreed completion when authorized.                           | Make the acceptance decision after examining the actual work.                          |
 
 A task lead may also decide or accept when authorized. The lead's title alone
 grants neither power.
@@ -72,14 +72,16 @@ It must distinguish fact, hypothesis, inference, judgment, decision, and action;
 load only relevant material; and advance in reversible, verifiable steps
 within its authority and agreed scope, without incidental changes. Before
 writing, it must check the target, concurrent work, and
-recovery path. Its output must lead with the conclusion and evidence, then limits
-and next steps.
+recovery path. It must keep the state needed to continue in the existing work
+record, not only in the conversation. Its output must lead with the conclusion
+and evidence, then limits and next steps.
 
 Agent memory, summaries, guesses, and generated content are candidate material.
-Check a source against the original, version, time, and applicable scope, and
-check whether the inputs are complete enough for the decision. Run current checks
-that match the claim and read their complete results before summarizing. Keep the
-command, target, exit status, and decisive output with the producing task;
+The Agent must check a source against the original, version, time, and applicable
+scope, and check whether the inputs are complete enough for the decision. It
+must run current checks that match the claim and read their complete results
+before summarizing. It must keep the command, target, exit status, and decisive
+output with the producing task;
 success excerpts do not replace inspection of warnings, omissions, or failures
 elsewhere in the selected results. Test or review code, analysis, and documents
 in proportion to risk. A member checks the actual work, not just the Agent's

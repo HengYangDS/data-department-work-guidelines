@@ -13,14 +13,15 @@ relations:
 **When to use:** A problem repeats, coaching or review is needed, a template,
 tool, or rule is proposed, or an existing mechanism has become a burden. The aim
 of learning is to find the next failure earlier, judge it more easily, and need
-less manual rescue—not to increase the file count. Do not adopt a new department
-rule without an identifiable failure mode, a bounded trial, a responsible owner,
+less manual rescue, not to increase the file count. Do not adopt a new department
+rule without an observed failure or identifiable recurrence or loss risk,
+a bounded trial, a responsible owner,
 and evidence of net benefit.
 
 ## Start with a Real Failure Mode
 
 Before adding a mechanism, answer: What failure was observed, or which
-recurrence or loss risk below applies? Why were the
+recurrence or loss risk applies? Why were the
 existing boundary, interface, and feedback insufficient? What risk would the new
 method reduce, and what cognitive and maintenance cost would it add? How can it
 be tried on a small scale? What observation would justify keeping it? Who maintains
@@ -151,8 +152,7 @@ When goals conflict,
 priorities drift, resources are short, decisions stall, or interfaces mislead,
 repair the management system before blaming a member's capability. Within the
 stated decision boundaries, the person closest to the facts chooses the method;
-the charter's hard boundaries still apply. Management should not dictate every
-step.
+the charter's hard boundaries still apply.
 
 Members own end-to-end results in their remit and disclose unknowns, risks,
 dependencies, and failures without waiting to be asked. Guideline maintainers

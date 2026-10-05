@@ -36,6 +36,13 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Restore delivery's professional-decision boundary and the requirement for
+  local rules to reference shared guidance. Clarify updates, continuation state,
+  option evaluation, and human/Agent responsibilities.
+- Report the actual npm version after offline installation, retain public
+  download failure causes, and use portable native-tool selector names.
+- Explain offline refusal when the approved dependency exception expires and
+  its valid empty-policy withdrawal; distinguish process from host architecture.
 - Publish verified native tools atomically instead of exposing partial cache
   entries. Keep dependency fixtures independent of the live exception's expiry
   while real audit admission still rejects expired dispositions.

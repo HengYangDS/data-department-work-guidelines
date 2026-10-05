@@ -30,6 +30,20 @@ reason = "Human-approved reviewed development checks only; retain complete raw f
 `;
 const dependencyReviewTime = new Date("2026-10-04T00:00:00Z");
 
+test("withdrawal leaves an explicit native policy with no ignored findings", () => {
+  const policy = ci.parseDependencyPolicy("IgnoredVulns = []\n");
+  assert.deepEqual(Object.keys(policy), ["IgnoredVulns"]);
+  assert.deepEqual(policy.IgnoredVulns, []);
+  const lock = JSON.parse(readText("package-lock.json"));
+  assert.doesNotThrow(() =>
+    ci.validateDependencyInput(lock, policy, new Date("2026-10-18T00:00:00Z")),
+  );
+  assert.throws(
+    () => ci.parseDependencyPolicy("# Removed the only disposition.\n"),
+    /native OSV fields/u,
+  );
+});
+
 test("the bounded native disposition admits only the approved development input", () => {
   const policy = ci.parseDependencyPolicy(dependencyPolicy);
   const lock = JSON.parse(readText("package-lock.json"));

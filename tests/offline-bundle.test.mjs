@@ -984,6 +984,74 @@ test("bundle extraction retains the current executor's ownership", (context) => 
   });
 });
 
+test("the public offline installer reports its actual package-manager version", () => {
+  buildFixture((inputs) => {
+    const built = assembleBundle(inputs);
+    writeFileSync(
+      path.join(inputs.repository, ".config/release/offline-bundle.json"),
+      JSON.stringify(built),
+    );
+    for (const relative of [
+      "tools/ci/offline-bundle.mjs",
+      "tools/ci/gitlab-package.mjs",
+      "tools/docs/runtime.mjs",
+    ]) {
+      const target = path.join(inputs.repository, relative);
+      mkdirSync(path.dirname(target), { recursive: true });
+      copyFileSync(path.join(root, relative), target);
+    }
+    const bootstrap = path.join(
+      inputs.repository,
+      "native-install-fixture.mjs",
+    );
+    writeFileSync(
+      bootstrap,
+      `import childProcess from "node:child_process";
+import { mkdirSync } from "node:fs";
+import { syncBuiltinESMExports } from "node:module";
+import path from "node:path";
+const actual = childProcess.spawnSync;
+childProcess.spawnSync = (command, args, options) => {
+  if (command === process.execPath) {
+    if (path.basename(args[0]) === "npm-cli.js") {
+      if (args[1] === "--version")
+        return { status: 0, stdout: "12.1.0\\n", stderr: "" };
+      if (args[1] === "ci") {
+        mkdirSync(path.join(options.cwd, "node_modules"));
+        return { status: 0, stdout: "", stderr: "" };
+      }
+    }
+    if (path.basename(args[0]) === "install-native.mjs")
+      return { status: 0, stdout: "", stderr: "" };
+  }
+  return actual(command, args, options);
+};
+syncBuiltinESMExports();
+`,
+    );
+    const result = spawnSync(
+      process.execPath,
+      [
+        "--import",
+        bootstrap,
+        "tools/ci/offline-bundle.mjs",
+        "install",
+        "--bundle",
+        inputs.outputPath,
+      ],
+      { cwd: inputs.repository, encoding: "utf8", timeout: 30_000 },
+    );
+    assert.equal(result.error, undefined, result.stderr);
+    assert.equal(result.status, 0, result.stderr);
+    assert.equal(result.stderr, "");
+    assert.equal(
+      result.stdout,
+      `PASS offline install: 4.2.0 ${built.sha256} npm 12.1.0\n`,
+    );
+    assert.ok(existsSync(path.join(inputs.repository, "node_modules")));
+  });
+});
+
 test("installer invokes only the locked offline supply path", () => {
   buildFixture((inputs) => {
     const built = assembleBundle(inputs);
@@ -1179,6 +1247,67 @@ test("an empty npm cache cannot satisfy the actual offline install", () => {
     assert.match(result.stderr, /ENOTCACHED/u);
   } finally {
     rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test("public download errors retain their cause while credential-bearing errors do not", async () => {
+  for (const [acquire, environment, provider, retainedCause] of [
+    [
+      acquireGitHubBundle,
+      { GITHUB_REPOSITORY: "Example/Repository", DDWG_RELEASE_TAG: "v4.2.0" },
+      "GitHub",
+      true,
+    ],
+    [
+      offline.acquireGitLabBundle,
+      {
+        CI_API_V4_URL: "http://gitlab.example.test/api/v4",
+        CI_PROJECT_ID: "42",
+        CI_JOB_TOKEN: "fixture-only",
+        CI_COMMIT_TAG: "v4.2.0",
+        CI_PIPELINE_SOURCE: "api",
+      },
+      "GitLab",
+      false,
+    ],
+  ]) {
+    await buildFixture(async (inputs) => {
+      const built = assembleBundle(inputs);
+      writeFileSync(
+        path.join(inputs.repository, ".config/release/offline-bundle.json"),
+        JSON.stringify(built),
+      );
+      const native = Object.assign(new Error("native transport failed"), {
+        code: "ECONNRESET",
+      });
+      let requests = 0;
+      await assert.rejects(
+        acquire({
+          repository: inputs.repository,
+          environment,
+          fetcher: async () => {
+            requests++;
+            throw native;
+          },
+        }),
+        (error) => {
+          assert.equal(
+            error.message,
+            `${provider} release bundle download failed`,
+          );
+          assert.equal(error.cause, retainedCause ? native : undefined);
+          assert.equal(Object.hasOwn(error, "cause"), retainedCause);
+          return true;
+        },
+      );
+      assert.equal(requests, 1, "transport errors do not cause a retry");
+      assert.deepEqual(
+        readdirSync(
+          path.join(inputs.repository, "build/artifacts/offline-bundle"),
+        ),
+        [],
+      );
+    });
   }
 });
 

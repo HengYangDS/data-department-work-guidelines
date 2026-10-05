@@ -74,7 +74,8 @@ If an authorized request conflicts with verified facts, report the conflict
 and its impact. Do not alter the record or silently act as if either authority
 had resolved the other.
 
-Project rules may refine sources of truth, permissions, and acceptance. If they
+Project rules may refine sources of truth, permissions, and acceptance. They
+should link to these guidelines rather than restate shared rules. If they
 conflict with these guidelines or a higher constraint, expose the conflict and
 its impact for an authorized decision. Do not guess or silently choose the
 convenient rule.

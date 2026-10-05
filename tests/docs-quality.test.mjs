@@ -2272,7 +2272,7 @@ test("verification context binds native workspace capacity without claiming VM i
   assert.ok(Number.isFinite(Date.parse(actual.observedAt)));
   assert.deepEqual(actual.runtime, {
     platform: process.platform,
-    architecture: process.arch,
+    processArchitecture: process.arch,
     hostname: os.hostname(),
     node: process.versions.node,
   });

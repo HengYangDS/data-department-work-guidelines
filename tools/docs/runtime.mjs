@@ -148,7 +148,7 @@ export function workspaceObservation(repository = root) {
     source,
     runtime: {
       platform: process.platform,
-      architecture: process.arch,
+      processArchitecture: process.arch,
       hostname: os.hostname(),
       node: process.versions.node,
     },
@@ -374,7 +374,7 @@ export function nativeToolBinary(tool) {
     `build/runtime/tool-cache/${tool}/${expected}/${process.platform}-${process.arch}/${descriptor.binary}${suffix}`,
   );
   const selected =
-    process.env[`DDWG_${tool.toUpperCase()}_BIN`] ||
+    process.env[`DDWG_${tool.toUpperCase().replaceAll("-", "_")}_BIN`] ||
     (managedFileExists(cached) ? cached : descriptor.binary + suffix);
   const version = run(selected, ["--version"], {
     capture: true,

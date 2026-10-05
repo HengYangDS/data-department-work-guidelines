@@ -167,7 +167,9 @@ The old manifest and installer SHALL retire when their consumers are replaced.
 
 The existing source check SHALL report its real repository, commit and tree,
 tracked-change state, native runtime, and mounted workspace filesystem capacity
-once. Byte counts SHALL use exact integers. Native read failures SHALL propagate.
+once. Runtime architecture SHALL identify the Node process, not infer the host
+or guest architecture. Byte counts SHALL use exact integers. Native read failures
+SHALL propagate.
 This observation SHALL NOT establish VM identity, isolation, throughput, or
 capacity admission, and SHALL require no additional controller or proof gate.
 
