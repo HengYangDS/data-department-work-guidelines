@@ -13,20 +13,21 @@ relations:
 **When to use:** A problem repeats, coaching or review is needed, a template,
 tool, or rule is proposed, or an existing mechanism has become a burden. The aim
 of learning is to find the next failure earlier, judge it more easily, and need
-less manual rescue, not to increase the file count. A new department rule must
-address an observed failure or a specific risk of recurrence or loss. Before
-adoption, it must have a bounded trial, a responsible owner, and evidence of net
-benefit.
+less manual rescue, not to increase the file count. Before admitting a rule,
+template, tool, Agent workflow, or platform mechanism as department practice,
+require an observed failure mode, a bounded trial, a responsible owner, and
+evidence of net benefit.
 
 ## Start with a Real Failure Mode
 
-Before adding a mechanism, answer: What failure was observed, or which
-recurrence or loss risk applies? Why were the
-existing boundary, interface, and feedback insufficient? What risk would the new
-method reduce, and what cognitive and maintenance cost would it add? How can it
-be tried on a small scale? What observation would justify keeping it? Who maintains
-it, when is it reviewed, and what signal triggers revision or retirement? An
-untested preference is not a department rule. Retire a rule that has lost its
+Before admitting a practice, identify the observed failure it addresses.
+Explain why the existing boundary, interface, and feedback are insufficient.
+What risk and complexity would it reduce, and what cognitive and maintenance
+cost would it add? How can it be tried on a small scale, and what
+observation would justify keeping it? Who maintains it, when is it reviewed,
+and what triggers revision or retirement?
+
+An untested preference is not a department rule. Retire a rule that has lost its
 subject, has no user, duplicates a source of truth, or costs more than it
 returns.
 
@@ -34,7 +35,9 @@ Watch small changes without treating one anomaly as a trend: drifting
 definitions, recurring questions, temporary human rescue, expired evidence,
 ambiguous ownership, intermittent failures, and slight delays can be early
 signals of a system defect. Check their pattern, impact, and direction before
-building a remedy. You must leave a reusable asset whenever:
+building a remedy.
+
+You must leave a reusable asset, even before a failure, whenever:
 
 - A problem recurs or affects more than one person, project, or work cycle.
 - An important judgment depends on tacit knowledge held by one or a few people.
@@ -42,8 +45,10 @@ building a remedy. You must leave a reusable asset whenever:
 - Agents will repeat the work.
 
 A reusable asset may be a test, monitor, checklist, decision record, example,
-rule, platform capability, or clearer ownership interface. Choose the lightest
-form sufficient to prevent recurrence. Keep it findable, usable, and maintained
+rule, platform capability, or clearer ownership interface. A task-specific
+prevention asset need not become department practice; if it does, the admission
+conditions above still apply. Choose the lightest form sufficient to prevent
+the failure or its recurrence. Keep it findable, usable, and maintained
 at its existing owner. Link to an existing authority rather than copying it.
 For repeated or high-impact failures, distinguish containment, direct
 correction, and prevention of recurrence.
@@ -79,7 +84,8 @@ Every task must meet the [hard boundaries](charter.md#four-non-negotiable-bounda
 Critical responsibilities should be
 performed independently and reliably. Call a result exceptional only when it
 produces evidenced net benefit, transfers a method, reduces long-term
-complexity, and improves others' capacity.
+complexity, and improves others' capacity. Exceptional performance also shows
+the ability to detect weak structural signals.
 
 If scoring is used, define its levels, observable behavior, and purpose. A score
 expresses delivery risk; it must not label a person or stand for their overall
@@ -149,13 +155,15 @@ micromanagement.
 When goals conflict,
 priorities drift, resources are short, decisions stall, or interfaces mislead,
 repair the management system before blaming a member's capability. Within the
-stated decision boundaries, the person closest to the facts chooses the method;
-the charter's hard boundaries still apply.
+stated decision boundaries, the responsible person closest to the facts chooses
+the method, tools, and implementation path; the charter's hard boundaries still
+apply.
 
 Members own end-to-end results in their remit and disclose unknowns, risks,
 dependencies, and failures without waiting to be asked. Guideline maintainers
-gather conflicts and signs of obsolescence, and state the reason, evidence,
-effective time, and scope for each addition or deletion.
+gather real cases, conflicts, and signs of obsolescence, and state the reason,
+evidence, effective time, and scope for each addition or deletion. Do not add
+rules to mask goal, organizational, or system-design defects.
 
 ## Emergencies and Exceptions
 

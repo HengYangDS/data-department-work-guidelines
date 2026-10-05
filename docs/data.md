@@ -15,6 +15,12 @@ a production pipeline, or allowing a business use. A readable file, attractive
 chart, or promising model signal does not by itself establish that the data may
 be admitted for a specific use. Keep a proposed use exploratory until evidence
 of its meaning, quality, permission, and reproducibility supports that decision.
+Stop a proposed controlled use or production change and escalate when meaning
+or quality is unverified, permission is insufficient, or its
+[recovery path](#ownership-and-change-boundaries) is missing. Before relying on
+a result, recheck key findings and
+[current checks](#move-from-a-signal-to-controlled-use): tests, operational
+observation, and acceptance.
 
 ## Answer Six Questions First
 

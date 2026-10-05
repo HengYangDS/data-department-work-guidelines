@@ -65,9 +65,9 @@ work, not that duty.
 
 ## Execute and Verify
 
-An Agent must first confirm the task, target root, current state, responsible
-person, and applicable local rules, then restate the goal, scope, non-goals, and
-completion condition.
+An Agent must first confirm the task, target, current state, responsible person,
+and applicable local rules; repository work also requires the exact root.
+It must then restate the goal, scope, non-goals, and completion condition.
 It must distinguish fact, hypothesis, inference, judgment, decision, and action;
 load only relevant material; and advance in reversible, verifiable steps
 within its authority and agreed scope, without incidental changes. Before

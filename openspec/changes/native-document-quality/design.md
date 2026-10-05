@@ -360,7 +360,7 @@ Await native asynchronous cleanup of the installer's own extraction stage,
 including bounded native removal retries. Failure still propagates and success
 cannot precede cleanup. Cancel an unread rejected response body before HTTP
 failure, awaiting native cancellation and retaining a failed cancellation as its
-cause. CLI error rendering retains native causes without repeating streams;
+cause. CLI error rendering retains native causes without repeating streams.
 Public GitHub download errors retain their native cause. GitLab download errors
 intentionally omit credential-bearing transport details.
 Keep status, success limits, digests, and concurrent output unchanged;

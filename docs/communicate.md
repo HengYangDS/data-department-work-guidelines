@@ -12,8 +12,10 @@ relations:
 
 **When to use:** When someone needs to understand a fact, make a decision, take
 action, or continue the work. Answer the reader's actual need before recounting
-the entire process. If decisive facts or authority are missing, state the gap;
-test whether an independent reader can identify the basis, limits, and request.
+the entire process. If decisive facts or authority are missing, state the gap
+and clarify or escalate before asking anyone to act. Do not request action
+beyond your authority. Test whether an independent reader can identify the
+basis, limits, and request.
 
 ## Know What the Exchange Must Accomplish
 

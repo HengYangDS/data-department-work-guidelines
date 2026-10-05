@@ -36,6 +36,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Restore data-entry stop and verification cues, accountable method selection,
+  explicit data-change acceptance, and maintainer duties. Keep precautionary
+  prevention separate from admission of department practice.
 - Restore delivery's professional-decision boundary and the requirement for
   local rules to reference shared guidance. Clarify updates, continuation state,
   option evaluation, and human/Agent responsibilities.

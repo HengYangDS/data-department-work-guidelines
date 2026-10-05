@@ -12,7 +12,8 @@ relations:
 
 Read a record when you need the reason for a lasting choice. The
 [task map](../README.md) leads to current working rules; the
-[official Change](../../openspec/README.md) carries change intent and progress.
+[official OpenSpec workspace](../../openspec/README.md) holds Change intent and
+progress.
 
 | Decision                                                             | Question it resolves                                                                    |
 | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |

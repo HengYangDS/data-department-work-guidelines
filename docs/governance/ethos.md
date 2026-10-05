@@ -335,21 +335,27 @@ development group.
 A changed stable release, official fix, withdrawn or missing finding, or expired
 entry requires retirement and new qualification. On withdrawal, replace the
 complete disposition table with `IgnoredVulns = []`; do not leave a comments-only
-policy or delete the required file. An empty policy grants no ignore and still
-requires clean raw findings. Before expiry, the repository maintainer must
+policy or delete the required file. An empty policy grants no ignore: offline
+source verification accepts it, while online audit still requires clean raw
+findings. Before expiry, the repository maintainer must
 qualify a fixed dependency with that empty policy, or obtain a new explicit
 decision from the authorized owner through accepted ETHOS risk admission. The
-current approval does not authorize an extension. Observe the public npm registry
-with isolated native configuration, cache, and explicit freshness during online
+current approval does not authorize an extension. An expired entry fails
+source verification. Removing it grants no ignore; unapproved raw findings still
+block hosted audits. A new decision requires an admitted update to the bounded
+input check; approval alone does not change running policy. Observe the public
+npm registry with isolated native configuration, cache, and explicit freshness
+during online
 dependency auditing. The registry cache lives in an owned OS temporary directory
 and is removed after the attempt. Retain configuration snapshots, reports, and diagnostics;
 the cache itself is neither evidence nor a CI artifact.
 
 An explicit native executable may be selected with `DDWG_LYCHEE_BIN`,
-`DDWG_VALE_BIN`, or `DDWG_OSV_SCANNER_BIN`. Without one, the consumer prefers its
-verified repository cache, then native PATH. Every selection must still match
-the locked tool version; these paths are execution inputs, not tracked host
-bindings.
+`DDWG_VALE_BIN`, or `DDWG_OSV_SCANNER_BIN`. Without one, the consumer selects its
+repository cache entry when present; only a missing entry permits native PATH.
+An invalid cache entry fails instead of falling back. Every selection must still
+match the locked tool version; these paths are execution inputs, not tracked
+host bindings.
 
 This temporary repository boundary must be replaced by accepted ETHOS risk
 admission, not preserved as a private second policy. Neither the exception nor

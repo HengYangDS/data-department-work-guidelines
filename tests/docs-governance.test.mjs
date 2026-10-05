@@ -240,6 +240,27 @@ test("L1 and L2 work records use the full charter boundary at both task routes",
   }
 });
 
+test("data entry routes readers to recovery and current qualification", () => {
+  const relative = "docs/data.md";
+  const source = readFileSync(path.join(root, relative), "utf8");
+  const opening = [...walkMarkdown(markdownTokens(source, relative))].find(
+    (token) =>
+      token.type === "paragraph" &&
+      markdownText(token).startsWith("When to use:"),
+  );
+  assert.ok(opening, "data work needs a visible point-of-use entry");
+  const destinations = markdownLinkDestinations(opening.text);
+  for (const destination of [
+    "#ownership-and-change-boundaries",
+    "#move-from-a-signal-to-controlled-use",
+  ]) {
+    assert.ok(
+      destinations.includes(destination),
+      `data entry needs the current recovery and qualification route: ${destination}`,
+    );
+  }
+});
+
 test("emergency containment has its own section and both risk-entry routes", () => {
   const relative = "docs/evolve.md";
   const source = readFileSync(path.join(root, relative), "utf8");

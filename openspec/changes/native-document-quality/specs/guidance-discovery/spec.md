@@ -4,14 +4,14 @@
 
 ### Requirement: Point-of-use analysis, data, and Agent boundaries
 
-Analysis SHALL partition the whole problem along one axis. Promotion into shared,
-production, or decision use SHALL require meaning, quality, permission and
-reproducibility. Data states SHALL reflect every completion condition; timelines
-SHALL distinguish availability from later queries. Parallel Agents SHALL default
-to read-only work with one integrator. Human responsibility SHALL remain human.
-Agents SHALL report the delivery state after reviewing complete claim-matched
-results. Delivery coordination SHALL NOT replace other owners' professional
-judgments.
+Analysis SHALL partition the whole problem along one axis, tied to the governing
+decision. Promotion into shared, production, or decision use SHALL require meaning,
+quality, permission and reproducibility. Data states SHALL reflect every completion
+condition; historical analysis SHALL distinguish availability from later queries.
+Parallel Agents SHALL default to read-only work with one integrator. Agents SHALL
+review complete current claim-matched results, then report evidence, limits, and
+the delivery state; people SHALL retain responsibility. Delivery coordination
+SHALL NOT replace other owners' professional judgments.
 
 #### Scenario: A verification summary omits a finding
 
@@ -110,7 +110,11 @@ or unknown ownership.
 Local rules SHOULD reference shared guidelines rather than restate them. Every
 important update SHALL name current risks or blockers and its next action,
 responsible actor, deadline, and completion condition, including when it requests
-a decision.
+a decision. Department-practice admission of a rule, template, tool, Agent
+workflow, or platform mechanism SHALL require an observed failure mode, a bounded
+trial, a responsible owner, and evidence of net benefit. Mandatory task-specific
+prevention SHALL NOT wait for an incident; producing its asset SHALL NOT
+automatically standardize it as department practice.
 
 #### Scenario: An unchecked citation accompanies fluent work
 
@@ -356,7 +360,7 @@ system value.
   prevention duty without a recorded failure
 - **THEN** the evolution topic requires the lightest effective prevention in its
   existing owner, without waiting for an incident
-- **AND** formal department-rule admission remains subject to its identifiable
+- **AND** admission as department practice remains subject to its observed
   failure mode, bounded trial, ownership, and net-benefit checks.
 
 #### Scenario: Downstream results do not reach their owner
@@ -436,7 +440,8 @@ Delivery owners SHALL expose priorities and open decisions. Accountability SHALL
 remain mandatory; cross-domain work SHOULD have one task lead, with any departure
 explained. The charter SHALL define interfaces by each side's needs and delivery
 evidence. Shared interfaces SHALL NOT transfer responsibility or authority;
-suitable use SHALL NOT grant permission.
+suitable use SHALL NOT grant permission. Production, shared-asset, and critical
+management-chain changes SHALL have actual acceptance against agreed criteria.
 
 #### Scenario: Coordination substitutes for a domain or governance decision
 

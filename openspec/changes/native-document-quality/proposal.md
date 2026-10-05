@@ -26,7 +26,9 @@ capabilities remain product dependencies.
 - Restore every omitted original duty at its existing task owner. Review full
   original clauses and revised topics, including decision constraints and dates,
   execution costs, data acceptance, communication, human judgment,
-  responsibility, evidence, and event-driven learning. Keep task-start coaching,
+  responsibility, evidence, and event-driven learning. Keep precautionary
+  task-specific prevention assets distinct from the observed-failure threshold
+  for admission as department practice. Keep task-start coaching,
   immediate correction, a justified weekly sample-calibration default, monthly
   mechanism review, and quarterly net-benefit and capability review without a
   universal meeting or all-member report.
