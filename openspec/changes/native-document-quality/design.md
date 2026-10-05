@@ -194,13 +194,19 @@ native-tool manifest, and `.config/release/` owns frozen artifact identity.
 Executable rules stay at their existing implementation owner. The configuration
 README routes readers; it is not another registry or policy.
 
-The shared layout distinguishes `resources/` for program-consumed non-code
-inputs from `assets/` for original media used by readers or the product. Native
-tool settings stay in `.config/`; reproducible output and bounded local work
-stay in ignored `build/` subdirectories. ETHOS's `system/` is its product-specific
-contract carrier, not a required adopter directory. Create a resource or asset
-directory only for actual content with a named consumer, and retain native
-package conventions where they govern loading or distribution.
+Keep original images, diagrams, and media in `assets/` when an actual reader or
+product uses them. Program-consumed non-code inputs may need `resources/`.
+Native settings stay in `.config/`; reproducible renders and bounded local work
+stay in ignored `build/` subdirectories. ETHOS's `system/` carries its machine
+contracts; adopters do not need to copy it. Create directories for real content
+and named consumers, not to complete a template.
+
+Source ownership and package inclusion are separate. A native package may
+project selected canonical files into its resource tree while preserving their
+source hierarchy and loading contract. That publication closure is not another
+source authority or a requirement for a root `resources/` directory. Any
+executable resource remains code governed by the supply and execution boundary.
+Do not keep a source copy or alias after its canonical owner moves.
 
 ETHOS's resource and asset contract is pending integration. Qualify its accepted
 source and installed consumer before moving this repository's supply or bundle

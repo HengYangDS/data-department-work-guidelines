@@ -10,7 +10,7 @@ relations:
 
 # Data Department Work Guidelines: Charter
 
-> **Guideline edition:** v7.0.12
+> **Guideline edition:** v7.0.13
 >
 > This label alone does not establish released content. Working branches may
 > include [Unreleased changes](../CHANGELOG.md#unreleased); use the signed tag

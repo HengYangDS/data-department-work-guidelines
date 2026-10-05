@@ -18,6 +18,11 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
+### Changed
+
+- Upgrade the native TOML formatter to 0.9.0 and refresh compatible npm
+  dependencies without overriding upstream pins.
+
 ### Fixed
 
 - Require every completion condition and current passed verification before a
