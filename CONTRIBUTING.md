@@ -135,7 +135,9 @@ installed product prerequisite for Change admission and proof. The bundle's
 third-party packages retain their own license notices; the repository MIT grant
 covers repository source and documentation, not those packages. Do not claim
 portable offline distribution before the exact asset and full host matrix have
-been observed. Git's native `.gitattributes` rule checks out tracked text with
+been observed. Verification refuses an edition that retains an expired
+dependency disposition; a previously downloaded bundle does not extend that
+disposition. Git's native `.gitattributes` rule checks out tracked text with
 LF even on Windows; do not replace it with a host-specific Git setting. Keep
 `node_modules/` and generated output out of Git.
 

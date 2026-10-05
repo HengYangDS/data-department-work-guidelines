@@ -61,7 +61,7 @@ existing work record so collaborators work from the same commitment.
 
 Do not rename “executing” as “almost done,” or infer publication from
 verification. A blocked task can contain useful work; the affected action stays
-blocked until its prerequisite changes.
+blocked until its prerequisite is satisfied.
 Continue independent, authorized work that does not depend on that prerequisite.
 
 ## Evidence Sets the Limit of the Claim

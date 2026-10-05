@@ -13,10 +13,10 @@ relations:
 **When to use:** A problem repeats, coaching or review is needed, a template,
 tool, or rule is proposed, or an existing mechanism has become a burden. The aim
 of learning is to find the next failure earlier, judge it more easily, and need
-less manual rescue, not to increase the file count. Do not adopt a new department
-rule without an observed failure or identifiable recurrence or loss risk,
-a bounded trial, a responsible owner,
-and evidence of net benefit.
+less manual rescue, not to increase the file count. A new department rule must
+address an observed failure or a specific risk of recurrence or loss. Before
+adoption, it must have a bounded trial, a responsible owner, and evidence of net
+benefit.
 
 ## Start with a Real Failure Mode
 
@@ -75,17 +75,15 @@ Agents. Fluency, effort, or Agent efficiency cannot offset these hard risks:
 - Rhetoric or activity counts in place of reasoning and results.
 - Repeated manual rescue without a mechanism to prevent recurrence.
 
-If scoring is used, define its levels, observable behavior, and purpose. A score
-expresses delivery risk; it must not label a person or stand for their overall
-worth.
-
 Every task must meet the [hard boundaries](charter.md#four-non-negotiable-boundaries).
 Critical responsibilities should be
 performed independently and reliably. Call a result exceptional only when it
 produces evidenced net benefit, transfers a method, reduces long-term
 complexity, and improves others' capacity.
 
-If a five-level review is used, keep its meaning stable:
+If scoring is used, define its levels, observable behavior, and purpose. A score
+expresses delivery risk; it must not label a person or stand for their overall
+worth. If a five-level review is used, keep its meaning stable:
 
 | Level             | Observable delivery risk                                                                         |
 | ----------------- | ------------------------------------------------------------------------------------------------ |

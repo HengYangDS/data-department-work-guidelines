@@ -48,9 +48,9 @@ If a change is necessary, identify it and explain why before answering.
 > hindsight question rather than the one we need. I have kept the file
 > exploratory. I recommend deferring this use. That delays the study but avoids
 > presenting hindsight as point-in-time evidence. We can reconsider when the
-> earlier snapshot and replay evidence are available. Release owner, please
-> decide before the planned release window whether to defer this use or obtain
-> the snapshot and rerun the check.”
+> earlier snapshot and replay evidence are available. Decision owner for this
+> use, please decide before the planned release window whether to defer this use
+> or obtain the snapshot and rerun the check.”
 
 ## Make Meetings Produce Decisions, Not Transcripts
 

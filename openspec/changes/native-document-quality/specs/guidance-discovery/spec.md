@@ -10,7 +10,7 @@ reproducibility. Data states SHALL reflect every completion condition; timelines
 SHALL distinguish availability from later queries. Parallel Agents SHALL default
 to read-only work with one integrator. Human responsibility SHALL remain human.
 Agents SHALL report the delivery state after reviewing complete claim-matched
-results. Delivery coordination SHALL NOT replace domain owners' professional
+results. Delivery coordination SHALL NOT replace other owners' professional
 judgments.
 
 #### Scenario: A verification summary omits a finding

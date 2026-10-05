@@ -112,9 +112,9 @@ trigger. The authorized person decides; a long analysis cannot stand in for
 authorization.
 
 Once a choice is made, record what was decided, by whom, on what date, and why,
-with its revisit trigger and first action, owner, and completion condition in
-the existing work record. A deadline says when a decision is needed; it
-does not establish when approval occurred.
+with its revisit trigger in the existing work record. Record the first action,
+its owner, and its completion condition there too. A deadline says when a
+decision is needed; it does not establish when approval occurred.
 
 Give the proposed decision one of these three states:
 
