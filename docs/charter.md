@@ -45,13 +45,11 @@ belongs in a lasting work system only when its source and time can be
 identified, its meaning explained, its conditions checked, its use bounded, and
 its accountable owner found.
 
-Keep the essential without losing the real: understand the situation and reason
-from evidence.
-First understand what is happening; then use only the structure needed for a
-sound decision and a reliable result. Revise that structure when the evidence
-changes. This is the practical force of the underlying philosophy, not a reason
-to give ordinary engineering objects mystical names. Old approaches, tools,
-documents, and sunk costs do not outrank new facts.
+Understand the situation and reason from evidence. Use the minimum structure
+needed for a sound decision and a reliable result, without forcing reality
+into a single model. Revise it when the evidence changes. Names, tools, and
+models do not define reality. Old approaches, documents, and sunk costs do not
+outrank new facts.
 
 ## Two Kinds of Authority
 
@@ -115,15 +113,19 @@ exists.
 
 Do not call a task L0 merely to avoid a necessary record. Within every level,
 facts, scope, ownership, evidence, and acceptance must remain clear. For a
-cross-domain task, name accountable ownership and the professional interfaces.
-Interfaces may be shared; end-to-end responsibility may not dissolve into “everyone.”
-[Data work](data.md) requires one lead across domains.
+cross-domain task, name accountable ownership and the professional interfaces:
+what each side needs and what evidence accompanies delivery. Interfaces may be
+shared; end-to-end responsibility must not dissolve into “everyone.”
+Accountability remains mandatory. The
+[data topic](data.md#ownership-and-change-boundaries) owns the default lead
+arrangement for cross-domain work.
 
 Keep a concept, role, process, tool, or document only for an irreplaceable
 obligation; otherwise merge it with its owner or remove it. Use the
 [practice-admission test](evolve.md#start-with-a-real-failure-mode) before making
 a method a department rule. Prefer one clear interface or automatic check to
-recurring meetings and reminders when they control the same risk.
+recurring meetings and reminders when they control the same risk. Do not build
+a large platform for a low-risk, occasional problem.
 
 ## From Principle to Action
 

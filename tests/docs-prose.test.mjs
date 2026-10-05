@@ -342,7 +342,6 @@ test("public prose and integrity commands reject the same current-file defect", 
     const required = new Set([
       ".ethos/profile.toml",
       ".gitattributes",
-      ".gitignore",
       "LICENSE",
       "VERSION",
       "package.json",
@@ -360,6 +359,12 @@ test("public prose and integrity commands reject the same current-file defect", 
       mkdirSync(path.dirname(target), { recursive: true });
       cpSync(path.join(root, relative), target);
     }
+    writeFileSync(
+      path.join(directory, ".gitignore"),
+      ["node_modules/", "build/", ".superpowers/", ".worktrees/", ""].join(
+        "\n",
+      ),
+    );
     symlinkSync(
       path.join(root, "node_modules"),
       path.join(directory, "node_modules"),

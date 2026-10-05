@@ -92,8 +92,8 @@ Check the reasoning for correlation presented as causation, a case presented as
 a population, a necessary condition treated as sufficient, a later outcome used
 to infer a unique earlier cause, selective search for supporting evidence,
 criteria changed
-midstream, and an appeal to “best practice” without checking its applicable
-boundary.
+midstream, and an appeal to common sense, experience, or “best practice” without
+checking its applicable boundary.
 
 ## Make the Choice Comparable and Actionable
 

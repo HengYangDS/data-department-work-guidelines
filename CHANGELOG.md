@@ -5,12 +5,8 @@ This file follows
 [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/), and editions
 follow [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html).
 
-`VERSION` retains the released edition between release cuts; release preparation
-sets it to the next edition. Working source may include `Unreleased` changes;
-the version label alone does not identify exact signed-release content. Keep
-upcoming notes under `Unreleased` until the release is cut; only then give the
-edition its actual date. A changelog heading, accepted branch, or CI result is
-not a signed tag or a Forge Release.
+For release states and publication rules, see the
+[release contract](docs/governance/ethos.md#versioned-releases).
 Earlier branch editions had no versioned release tags; their original records
 remain in Git history rather than being relabeled as formal SemVer releases.
 
@@ -18,21 +14,30 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
+### Added
+
+- A lightweight weekly sample-calibration default with explained departures and
+  a revisit time. Keep monthly mechanism review and quarterly net-benefit review
+  separate, without a new all-member meeting or report.
+
 ### Changed
 
 - Upgrade the native TOML formatter to 0.9.0 and refresh compatible npm
-  dependencies without overriding upstream pins.
+  dependencies without adding overrides.
 
 ### Fixed
 
+- Restore the justified single-lead default without weakening accountability;
+  state what each interface needs and which evidence accompanies delivery.
+  Keep model simplification bounded by reality, restore effective recurrence
+  prevention, and clarify Agent stop conditions.
 - Require every completion condition and current passed verification before a
   complete claim. Bind Agent reports and execution to the actual delivery
   state, goal, and agreed scope. Require prevention before the first failure
   when its triggers apply, including key judgments that rely on a few people's
   tacit knowledge, and return downstream feedback to its responsible owner.
 - Keep practice admission at one topic owner and concise official requirements
-  with their existing scenarios. Remove an already-applied deletion delta
-  rather than suppressing official merge diagnostics.
+  with their existing scenarios.
 - Preserve data availability, professional use cases, and permission as distinct
   judgments. Keep each data owner's authority intact and require a non-final
   state when any completion condition is unmet.

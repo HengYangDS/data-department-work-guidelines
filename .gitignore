@@ -1,40 +1,4 @@
-# Host-local editor, agent and worktree state; never repository truth.
-.idea/
-.serena/
-.worktrees/
-.DS_Store
-.superpowers/
+# Reproducible dependencies, generated output, and native local state.
 node_modules/
-
-# Python and local editor/runtime state.
-.venv/
-__pycache__/
-*.py[cod]
-
-# ETHOS local coordination state is host-local.
-.ethos/state/
-
-# Local generated output and caches are not repository truth.
-.cache/
 build/
-
-# Root tool caches and package output are denied residue. Repository-local
-# caches use build/runtime/tool-cache/<tool>/, bounded work uses
-# build/runtime/work/<purpose>/, machine evidence uses build/evidence/ or
-# build/ethos/, and local artifacts use build/artifacts/<kind>/.
-.import_linter_cache/
-.import-linter-cache/
-.pytest_cache/
-.ruff_cache/
-.mypy_cache/
-.tox/
-.nox/
-.uv-cache/
-dist/
-
-# Root coverage and pytest residue may be ignored local cleanup debt, but
-# tracked copies are still generated-artifact topology violations.
-.coverage
-.coverage.*
-coverage.xml
-junit.xml
+.ethos/state/

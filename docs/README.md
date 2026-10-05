@@ -40,5 +40,5 @@ general guidelines.
 [OpenSpec and ETHOS](governance/ethos.md) own repository change authority and
 historical-source recovery and retirement. [Decision records](decisions/README.md)
 keep choices that current rules alone cannot explain. Historical sources provide
-context, not current rules, proof, or retrospective lifecycle certification.
+context, not current rules or proof.
 A readable route and passing repository checks do not prove team adoption.

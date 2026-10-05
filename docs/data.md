@@ -102,9 +102,11 @@ observed use, not this table, establishes adoption.
 | Delivery   | Make priorities, resources, dependencies, risks, and open decisions visible.                                         |
 
 Sharing an interface does not transfer responsibility or grant authority over
-another owner's judgments. Cross-domain data work must have one accountable
-task lead and clear professional interfaces, not an undifferentiated “everyone
-is responsible.”
+another owner's judgments. Cross-domain work should have one accountable task
+lead and clear professional interfaces. Explain any different arrangement;
+accountability remains mandatory. Use the
+[charter's interface contract](charter.md#form-follows-risk) to make each side's
+needs and delivery evidence explicit.
 
 Changes to production, shared assets, or critical management chains require:
 

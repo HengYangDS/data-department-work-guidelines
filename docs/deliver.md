@@ -12,7 +12,9 @@ relations:
 
 **When to use:** Before acting, reporting progress, accepting work, or claiming
 completion. Make the commitment, owner, and completion condition visible first.
-The form may shrink with risk; the chain of trust may not skip a link.
+The form may shrink with risk; the chain of trust may not skip a link. Pause the
+affected action and escalate when authority, the target, or critical facts are
+missing.
 
 > Authorized person and subject → commitment and boundary → bounded action →
 > current evidence → bounded claim → acceptance and learning.

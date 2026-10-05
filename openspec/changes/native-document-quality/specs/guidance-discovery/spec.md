@@ -27,6 +27,8 @@ results.
 - **THEN** the decision topic requires one classification axis, non-overlapping
   parts that together cover the problem, and a link from each part back to the
   decision the analysis supports
+- **AND** the charter's limit against forcing reality into a single model
+  applies
 - **AND THEN** a longer list or polished prose does not substitute for the
   missing model.
 
@@ -302,20 +304,25 @@ or unknown ownership.
 ### Requirement: Feedback combines events and periodic review
 
 Material task transitions SHALL be checked; observed high-risk signals SHALL be
-escalated. The department head or appointed maintainer SHALL review work and
-weak signals at least monthly; maintainers SHALL review rules, tools and
-capability gaps at least quarterly. Reviews SHALL reuse sufficient existing
-carriers and assess mechanisms, not rank people. A single metric SHALL NOT
-represent personal worth; local metrics SHALL NOT represent overall work or
+escalated. During active work, the department head or appointed maintainer SHOULD
+calibrate judgments weekly on one or two real samples in about 30 minutes;
+a different interval SHALL name its reason and revisit time. The same owner
+SHALL review weak signals and mechanisms at least monthly; maintainers SHALL
+review rules, tools and capability gaps at least quarterly. Reviews SHALL reuse
+sufficient existing carriers without an all-member meeting or report, and assess
+mechanisms, not rank people. A single metric SHALL NOT represent personal worth;
+local metrics SHALL NOT represent overall work or
 system value.
 
 #### Scenario: Weak signals accumulate without an incident
 
 - **WHEN** a month passes without a single event that forces a systemic review
 - **THEN** the department head or an appointed guideline maintainer inspects
-  real work and recurring weak signals in an existing carrier, calibrates how
-  the team judges evidence, and decides
-  whether a mechanism needs correction
+  recurring weak signals in an existing carrier and decides whether a mechanism
+  needs correction
+- **AND** weekly default sample calibration remains a separate purpose, uses
+  one or two real samples in about 30 minutes, and permits a justified different
+  interval with a revisit time
 - **AND THEN** a quarterly review tests whether current rules and tools still
   return more value than they cost, without staging a ceremonial new meeting.
 
@@ -353,39 +360,6 @@ system value.
 - **THEN** managers ensure that feedback returns promptly to that owner
 - **AND** a later scheduled review does not substitute for the active feedback
   interface.
-
-### Requirement: Decision framing preserves operational constraints
-
-Problem framing SHALL name time, cost, compliance, technical, and resource
-constraints. Each concept SHALL keep one meaning per discussion. Execution
-plans SHALL name resources, costs, milestones, and checkpoints. Each decision
-SHALL be recorded with its choice, authorized owner, actual date, and basis in
-the existing work record. Analytical conclusions SHALL name confidence, limits,
-and next verification; revision triggers or implementation steps SHALL NOT
-replace that check.
-
-#### Scenario: An analytical conclusion omits its next check
-
-- **WHEN** a supplier-name matching analysis recommends keeping the current
-  method, states confidence and sample limits, and names possible contrary evidence
-  but no next verification action
-- **THEN** the analysis topic requires that next check in the conclusion
-- **AND** an implementation step or revision trigger does not satisfy that
-  verification duty, and no new template or report is required.
-
-#### Scenario: A proposed plan hides a limiting constraint
-
-- **WHEN** a proposal omits a cost, compliance, technical, or resource limit
-  that could change the decision
-- **THEN** the analysis topic requires that limit in the problem frame
-- **AND** the delivery plan makes its cost and intermediate commitments visible.
-
-#### Scenario: A deadline is presented as a decision record
-
-- **WHEN** a record names a future decision deadline or a fact cutoff but omits
-  when the authorized person actually made the choice
-- **THEN** the analysis topic requires the actual decision owner, date, and basis
-- **AND** the deadline does not establish approval or authorize execution.
 
 ### Requirement: Communication and coaching preserve judgment
 
@@ -428,8 +402,8 @@ audience, and detail.
   individual interpretation of its subject, boundary, and success criteria
 - **THEN** the evolution topic requires the responsible member and supervisor
   to align jointly at task start
-- **AND** later monthly sampling does not substitute for that calibration, and
-  no new meeting or approval gate is required.
+- **AND** later weekly sample calibration or monthly review does not replace it
+- **AND** no new meeting or approval gate is required.
 
 #### Scenario: New facts disprove a stated judgment
 
@@ -452,9 +426,11 @@ Domain owners SHALL define meaning, quality, suitable use and judgment.
 Production owners SHALL ensure reliable long-term operation. Platform owners
 SHALL abstract repeated cross-domain capability. Governance owners SHALL make
 admission, permissions, lineage, review, veto and exit work in the workflow.
-Delivery owners SHALL expose priorities and open decisions. Shared interfaces
-SHALL NOT transfer responsibility or authority; suitable use SHALL NOT grant
-permission.
+Delivery owners SHALL expose priorities and open decisions. Accountability SHALL
+remain mandatory; cross-domain work SHOULD have one task lead, with any departure
+explained. The charter SHALL define interfaces by each side's needs and delivery
+evidence. Shared interfaces SHALL NOT transfer responsibility or authority;
+suitable use SHALL NOT grant permission.
 
 #### Scenario: Coordination substitutes for a domain or governance decision
 
@@ -483,31 +459,3 @@ permission.
   treated as an accepted change
 - **AND** tests, a written checklist, or a deployment cannot substitute for it;
   acceptance follows the work's existing authority and does not add a ceremony.
-
-## ADDED Requirements
-
-### Requirement: Governance and decision reading follow the reader's task
-
-Repository governance SHALL route contributors to change authority, publication,
-quality, supply, and runner boundaries without duplicating the executable
-contributor procedure. Its revised presentation SHALL preserve authority,
-obligation strength, permissions, and evidence limits. Decision records SHALL
-retain durable choices and meaningful alternatives, with a reviewable basis and
-revisit condition; transient implementation work SHALL NOT require a DR.
-
-#### Scenario: A contributor needs one governance boundary
-
-- **WHEN** a contributor needs to edit, publish, install offline, or admit a
-  runner
-- **THEN** the governance entry leads to that boundary and its existing
-  procedure
-- **AND** the contributor does not need unrelated implementation detail before
-  identifying the responsible owner and required evidence.
-
-#### Scenario: A review proposes another decision record
-
-- **WHEN** the existing choice or its official Change already explains the
-  rationale, or the proposed record contains a command, task, or release result
-- **THEN** the decision register routes to that owner instead of adding a DR
-- **AND** existing accepted records preserve identity and choice while
-  clarifying their alternatives, consequences, evidence, and revisit conditions.

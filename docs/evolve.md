@@ -33,18 +33,19 @@ Watch small changes without treating one anomaly as a trend: drifting
 definitions, recurring questions, temporary human rescue, expired evidence,
 ambiguous ownership, intermittent failures, and slight delays can be early
 signals of a system defect. Check their pattern, impact, and direction before
-building a remedy. A problem that recurs, crosses people or projects, spans work
-cycles, depends on a key judgment that relies on tacit knowledge held by one or
-a few people, could cause material loss if forgotten, or will be repeated by
-Agents must have
-a reusable prevention mechanism. Choose the lightest effective form in the
-existing owner rather than another report.
+building a remedy. You must leave a reusable asset whenever:
+
+- A problem recurs or affects more than one person, project, or work cycle.
+- An important judgment depends on tacit knowledge held by one or a few people.
+- Forgetting could cause material loss.
+- Agents will repeat the work.
 
 A reusable asset may be a test, monitor, checklist, decision record, example,
 rule, platform capability, or clearer ownership interface. Choose the lightest
-option that can be found, used, and maintained. Link to an existing authority
-rather than copying it. For repeated or high-impact failures, distinguish
-containment, direct correction, and prevention of recurrence.
+form sufficient to prevent recurrence. Keep it findable, usable, and maintained
+at its existing owner. Link to an existing authority rather than copying it.
+For repeated or high-impact failures, distinguish containment, direct
+correction, and prevention of recurrence.
 
 ## Grow Capability Through Real Work
 
@@ -111,16 +112,21 @@ recheck facts, options, and authority at material decisions or changed risk,
 verify at the end, and preserve a handoff when interrupted. Escalate high-risk
 signals when observed; a calendar must not delay containment or a decision.
 
-At least monthly, the department head or an appointed guideline maintainer
-examines a real work sample and accumulated weak signals: recurring failures,
-escaped quality issues, Agent output corrections or misuse, and needless
-coordination. This review must not rank individuals. Use it to calibrate how the
-team judges evidence, find mechanism problems, and
-decide whether a small correction is needed.
-At least quarterly, the guideline maintainer and users review the net benefit
-of current rules, templates, tools, and Agent practices, and assess capability
-gaps. Keep, revise, or retire practices accordingly. L2 work may set a shorter
-task-specific interval at authorization.
+During active work, the department head or appointed guideline maintainer should
+calibrate judgments weekly on one or two real work samples, in about 30 minutes.
+Use an existing review or asynchronous exchange; this adds no all-member meeting
+or report. A different interval needs a reason and a time to revisit it.
+
+At least monthly, the same owner examines accumulated weak signals: recurring
+failures, escaped quality issues, Agent output corrections or misuse, and
+needless coordination. Look for mechanism problems and decide which corrections
+are needed; do not rank individuals. Sample calibration aligns judgment, while
+this review examines how the working system succeeds or fails.
+
+At least quarterly, the guideline maintainer and the people who use those
+practices review the net benefit of current rules, templates, tools, and Agent
+practices, and assess capability gaps. Keep, revise, or retire practices
+accordingly. L2 work may set a shorter task-specific interval at authorization.
 
 Use existing meetings, tickets, and reviews; record each material decision and
 its owner there. Do not create a form or meeting unless existing carriers cannot

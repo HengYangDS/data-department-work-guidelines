@@ -11,9 +11,10 @@ relations:
 # Human–AI Collaboration
 
 **When to use:** When a member delegates search, analysis, drafting, changes,
-tests, or review to an Agent. People set direction and authority; intelligence
-extends capacity. Verify the facts. Decisions and consequences remain human
-responsibilities. An Agent is an executing or reasoning entity, not a source of
+tests, or review to an Agent. Agents extend people's capacity to investigate,
+reason, and act within a delegated boundary. People retain direction,
+authorization, decisions, and responsibility for consequences. An Agent is an
+executing or reasoning entity, not a source of
 organizational authorization. Stop when the target, fact source, responsible
 person, or permission cannot be established; a person checks the actual work and
 evidence before accepting an Agent's result.
@@ -109,15 +110,21 @@ criteria. Do not close, overwrite, or clean up work of unknown ownership.
 
 ## Stop and Handoff
 
-Stop the affected action and escalate when instructions materially conflict; the
-target, fact source, or responsible person cannot be identified; authority is
-insufficient; an action would cross a permission, compliance, security, or data
-boundary; an action is irreversible without authorization or recovery;
-another person's unrecognized or uncommitted work, or work of unknown ownership,
-appears; verification contradicts expectation; evidence has expired; or
-continuing would hide a failure, pollute a source of truth, enlarge harm, or
-require presenting a guess as fact. Stopping the affected action protects that
-boundary; independent authorized work may continue.
+Stop the affected action and escalate if any of these conditions holds:
+
+- Instructions materially conflict, or the target, fact source, or responsible
+  person cannot be identified.
+- Authority is insufficient, the action would cross a permission, compliance,
+  security, or data boundary, or an irreversible action lacks authorization or
+  recovery.
+- Another person's unrecognized or uncommitted work, or work of unknown
+  ownership, appears.
+- Verification contradicts expectation or evidence has expired.
+- Continuing would hide a failure, pollute a source of truth, enlarge harm, or
+  require presenting a guess as fact.
+
+Independent authorized work may continue when it does not depend on the
+stopped action.
 
 A completion report names the [delivery state](deliver.md#name-the-state-not-the-effort)
 reached and the goal, scope, target, version, actual changes, verification method,
@@ -130,4 +137,4 @@ from work that has not been attempted. End with the next responsible person,
 action, and due time; do not write only “follow up.” On interruption, preserve
 state, uncommitted work, attempts and failures, the recovery entry, and retries
 known to be ineffective. Repository Agents also start at the
-[Agent entry](../AGENTS.md); a method pack is not governance authority.
+[Agent entry](../AGENTS.md).

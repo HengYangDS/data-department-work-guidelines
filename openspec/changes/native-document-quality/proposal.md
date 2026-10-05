@@ -26,8 +26,9 @@ capabilities remain product dependencies.
   original clauses and revised topics, including decision constraints and dates,
   execution costs, data acceptance, communication, human judgment,
   responsibility, evidence, and event-driven learning. Keep task-start coaching,
-  immediate correction, monthly evidence calibration, and quarterly net-benefit
-  and capability review without a universal weekly meeting.
+  immediate correction, a justified weekly sample-calibration default, monthly
+  mechanism review, and quarterly net-benefit and capability review without a
+  universal meeting or all-member report.
 - Give Git-selected source one native owner per format and one configuration
   owner per concern. Prettier handles supported code and structured data; dprint
   handles TOML; native Markdown rules handle reader blocks and list structure.
@@ -97,8 +98,9 @@ release identity, and offline bundle change. Department content receives
 semantically reviewed English edits and restored duties, not new approval roles,
 forms, meetings, or an automated claim of equivalence.
 
-The initial contributor/supply transition is a major edition; subsequent
-compatible repairs use patch releases. Published tags and asset bytes remain
+The initial contributor/supply transition is a major edition. The weekly
+sample-calibration default is a compatible addition requiring a minor release;
+compatible fixes use patch releases. Published tags and asset bytes remain
 immutable. A completed historical copy may leave the current tree through this
 admitted Change without certifying its reported execution or rewriting history.
 

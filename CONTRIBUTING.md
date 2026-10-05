@@ -175,15 +175,8 @@ such as `docs(guidance): clarify data-use boundaries`. A breaking change still
 needs explicit compatibility review in the official Change. A well-formed
 subject cannot prove the content is correct.
 
-[`VERSION`](VERSION) retains the released edition between release cuts; release
-preparation sets it to the next edition. Working source may include
-[Unreleased changes](CHANGELOG.md#unreleased); the version label alone does not
-identify the signed release's exact content. `CHANGELOG.md` follows Keep a
-Changelog and SemVer. The private npm manifest carries no duplicate version.
-A changelog heading is not a release:
-only an admitted, signed annotated tag and observed Forge release objects can
-establish versioned publication. Previous untagged branch editions are not
-retroactively presented as tagged releases.
+Follow the [release contract](docs/governance/ethos.md#versioned-releases) for
+version identity, release states, and unchanged historical editions.
 
 For SemVer, the public surface includes normative duties, stable member and
 Agent routes, and documented contributor commands, as defined by the
@@ -205,10 +198,9 @@ one Forge. These checks establish structure and local identity, not whether
 the prose is useful to readers.
 
 Commit the exact source and run ETHOS proof against that HEAD before landing.
-Only `dev`, `main`, and `proposal/*` branches may publish, along with
-ETHOS-admitted signed release tags. Candidate and Work Lane branches remain
-local. Verify local acceptance, each Forge ref and CI run, each Forge Release,
-and actual team use separately; one never proves another.
+Use only [admitted publication refs](docs/governance/ethos.md#source-two-forges-and-actual-use).
+Verify local acceptance, each Forge ref and CI run, and each Forge Release
+separately; one never proves another.
 
 ## Publish a release
 

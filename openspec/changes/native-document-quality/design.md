@@ -87,14 +87,25 @@ another role's responsibility or authority. A missing completion condition
 requires a truthful non-final label; separately qualified limited use does not
 establish a fully qualified asset.
 
-Management cadence retains its purpose without a universal weekly meeting: joint
-task-start calibration, immediate signal-based correction, monthly review by
-the department head or an appointed guideline maintainer with shared evidence
-calibration, and quarterly net-benefit and capability review. The monthly loop
-does not rank individuals; a single metric
-does not measure overall personal worth, work, or system value. Excellence still
-requires transferable method, lower complexity, and stronger capability in
-others together.
+Management cadence separates judgment calibration from mechanism review. Joint
+task-start calibration and immediate signal-based correction remain. During
+active work, the department head or appointed guideline maintainer should
+calibrate weekly on one or two real samples in about 30 minutes, reusing an
+existing review or asynchronous exchange. The interval is a justified default;
+a departure names its reason and revisit time. It is not a universal meeting
+or all-member report. The same owner reviews accumulated weak signals and
+mechanism failures at least monthly, while the maintainer and people using the
+practices review net benefit and capability gaps at least quarterly. The monthly
+loop does not rank individuals; a single metric does not measure overall
+personal worth, work, or system value. Excellence still requires transferable
+method, lower complexity, and stronger capability in others together.
+
+Cross-domain ownership preserves the original distinction: accountability is
+mandatory, while one task lead is the default with explained departures. The
+charter owns the interface contract, including each side's needs and the evidence
+accompanying delivery; the data topic applies it without redefining it. The
+charter also keeps the limit on simplification explicit: a useful model must not
+force reality into a single explanation.
 
 Reusable prevention is required when an issue recurs, affects different people
 or projects, spans work cycles, depends on tacit knowledge, creates material
@@ -587,11 +598,21 @@ a private task schema, local duplicate validator, or default proof gate.
 Qualify this shared contract in the same accepted integration before treating
 guidance or an official parse as enforced admission.
 
-Qualify DDWG, AIGW, and Proxy against the same accepted product source and
-wheel, with each actual installed binding, owned source, exact-HEAD plan/proof,
-and acceptance. Version text, another repository's mixed-language success, or a
-different source-admission selector cannot substitute. Keep useful independent
-work moving while those integration obligations remain open.
+The affected adopters are this repository (DDWG), AIGW CLI (AI client account
+and route management), and Codex Responses Proxy (the local Responses
+compatibility data plane). Qualify them against the same accepted product
+source and wheel, with each actual installed binding, owned source, exact-HEAD
+plan/proof, and acceptance. Version text, another repository's mixed-language
+success, or a different source-admission selector cannot substitute. Keep
+useful independent work moving while those integration obligations remain open.
+
+This joint qualification is an explicit delivery requirement, not a transfer of
+repository ownership. It verifies one shared successor instead of accepting
+three divergent implementations. Each adopter's own Change, Work Lane, task
+ledger, installer, and acceptance evidence retain authority. This Change records
+DDWG integration and consumes the shared product's actual AIGW and Proxy
+qualification evidence; it does not track their broader product work or
+authorize writes in foreign lanes.
 
 ## Risks / Trade-offs
 
@@ -616,6 +637,11 @@ admission or stop independent work. An authorized emergency exception is bounded
 to its authorized effect with preserved cause and immediate
 restoration/acceptance; it cannot patch immutable runtime bytes or manufacture a
 clean proof.
+
+The weekly sample-calibration default is a compatible addition to the published
+monthly mechanism review, not literal equivalence with the original schedule.
+It requires a minor release. Restoring original duties and clarifying their
+wording remain fixes; existing accepted releases are not rewritten.
 
 ## Migration Plan
 
@@ -648,7 +674,7 @@ shared-product acceptance.
 
 The official archive requires completed prerequisite tasks; evidence of its own
 future commit cannot be an earlier checkbox. Those subsequent effects remain
-Goal acceptance and must be observed through their native owners. Do not add a
+post-archive acceptance observed through their native owners. Do not add a
 second ledger, reuse old-HEAD proof, falsely close tasks, or declare the Goal
 complete before publication and retirement are verified.
 

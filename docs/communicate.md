@@ -44,8 +44,11 @@ If a change is necessary, identify it and explain why before answering.
 > The vendor changed earlier values, but we have not verified when those values
 > became knowable. A historical simulation with today's file may answer a
 > hindsight question rather than the one we need. I have kept the file
-> exploratory. Before the planned release window, the decision owner needs to
-> choose: obtain the earlier snapshot and rerun the check, or defer admission.”
+> exploratory. I recommend deferring this use. That delays the study but avoids
+> presenting hindsight as point-in-time evidence. We can reconsider when the
+> earlier snapshot and replay evidence are available. Please decide before the
+> planned release window whether to defer this use or obtain the snapshot and
+> rerun the check.”
 
 ## Make Meetings Produce Decisions, Not Transcripts
 
@@ -79,14 +82,23 @@ both from a different risk preference despite shared reasoning.
    objective and measured, without slogans or pretended depth. Let structure serve
    judgment; do not let a diagram stand in for an argument.
 
-A complex analysis may unfold as “summary and request → subject and boundary →
-facts and unknowns → model and options → trade-offs and limits → action and
-acceptance.” Combine levels for a simple matter; do not force an eleven-section
-template. Before sending, check the title, first screen, sources,
-counterexamples, terminology, and causal chain; a timeline alone does not prove
-cause. Ask whether a reader outside the work can restate the conclusion, basis,
-limits, and next action without filling gaps. Link to an existing source of
-truth rather than copying it.
+Analysis, proposal, and decision documents should follow this order by default:
+
+1. Give the title's subject, purpose, and status, then summarize the conclusion,
+   decisive facts, and requested decision.
+2. Explain the background and problem, then scope, non-goals, and constraints.
+3. Present facts, evidence, and unknowns, then the model and alternative
+   explanations, followed by options and trade-offs.
+4. State the recommendation or decision, then risks, limits, and revisit
+   triggers.
+5. Name the action, responsible person, deadline, and acceptance condition.
+
+Appendices hold only supporting detail. A simple matter may combine steps but
+must keep their logical order. Before sending, check the title, first screen,
+sources, counterexamples, terminology, classification, and causal chain; a
+timeline alone does not prove cause. Ask whether a reader outside the work can
+restate the conclusion, basis, limits, and next action without filling gaps.
+Link to an existing source of truth rather than copying it.
 
 ## Escalate Risk in Four Parts
 

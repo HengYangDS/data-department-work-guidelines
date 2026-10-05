@@ -178,22 +178,10 @@ not every provider must cover every language.
 Repository-authored reports or command output cannot supply the missing native
 evidence. Proof does not create a second lifecycle.
 
-Native Markdown rules enforce the
-[contributor spacing convention](../../CONTRIBUTING.md#verify-the-source).
-Prettier and Markdownlint jointly enforce block spacing. Prettier normalizes
-quoted paragraph separators; the official `remark-lint-list-item-spacing` rule
-checks CommonMark list structure through the lint entry. Run both, or the full
-verifier. Fenced and indented examples, including nested literals, keep
-meaningful blank lines.
-The native TOML formatter preserves data, order, comments, and multiline strings.
-The general text consumer retains English and plain-text checks without another
-raw scan of code or structured data. Shared enforcement remains an ETHOS
-integration obligation, not a second lifecycle or a completed product claim.
-
-The existing test suite runs Vale's official coverage for cases embedded in the
-two native style rules. A rule that loads but no longer matches its diagnosed
-defect fails; real-document tests still check configuration, reader syntax, and
-the public commands. This does not establish factual or semantic accuracy.
+The [source-verification procedure](../../CONTRIBUTING.md#verify-the-source)
+owns format-specific spacing and Vale rule tests. Those checks do not establish
+factual or semantic accuracy. Shared enforcement remains an ETHOS integration
+obligation, not a second lifecycle or a completed product claim.
 
 The [configuration map](../../.config/README.md) separates check policy, native
 supply, and artifact identity. Consumers read their native formats; the

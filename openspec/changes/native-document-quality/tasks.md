@@ -128,7 +128,6 @@
       trigger in the evolution topic. Compare the original and current clauses,
       challenge a single issue spanning cycles under one owner and project,
       preserve the other triggers, and rerun source quality and rendering.
-      Existing excerpt hashes do not establish complete semantic coverage.
 - [x] 2.26 Bound the complete standalone inventory to two workers and remove
       unrelated prerequisites from the OpenSpec environment regression. Preserve
       all discovered cases, real tools, assertions, and deadlines. Prove adverse
@@ -136,8 +135,8 @@
       known prose defects before unrelated setup and batch only independent
       native inputs. Observe tags once while retaining nested invalid-ref,
       strict SemVer, annotation, and ancestry checks. Preserve original v7.0.8
-      and peak-load v7.0.9 timeout evidence; later passes do not disprove
-      saturation risk. Resolve npm admission's native entry once and reuse its
+      and peak-load v7.0.9 timeout evidence. Resolve npm admission's native entry
+      once and reuse its
       existing isolated environment; preserve child status, error, signal, and
       partial streams before checking refusal or permitted effects. Qualify
       full Windows execution without retries, skipped cases, or longer deadlines.
@@ -158,8 +157,7 @@
       rendering cannot satisfy routes; preserve escaped/reference links and one
       stable shared engine. Qualify distinguishing tests, full source, actual
       table rendering, proof, cold install, changed lock/supply, and both Forge
-      matrices without changing published objects. Conversion evidence does not
-      establish whole-document appearance or semantic equivalence.
+      matrices without changing published objects.
 - [x] 2.29 Refresh the existing shell lexer to verified stable 1.12.0. Preserve
       native command/operator grouping, globs, quotation, compound commands,
       ordinary rationale, and non-evaluation cases. Qualify locked resolution,
@@ -226,49 +224,40 @@
       caches, host paths, credentials, or remote supply.
 - [ ] 3.3 Qualify [accepted shared
       ownership](design.md#integrate-accepted-shared-ownership-without-weakening-the-floor)
-      on DDWG, AIGW, and Proxy using the same formally accepted ETHOS source and
-      wheel at actual installed bindings. Exercise all declared native
-      semantics, diagnostic custody, subject applicability, complete test
-      selection, and single-execution controls through exact-HEAD
-      plan/proof/acceptance. Migrate profile, validator, tests, and guidance
-      together; retain two default gates and native prerequisites, then retire
-      superseded descriptor, stream, task-authoring, and local risk assumptions.
-      Verify official task-template diagnostics without a private schema, copied
-      validator, or new default gate. Preserve lexical, cause, warning-reader,
-      and process-error repairs; qualify actual supply and matrices. Retain
-      complete OSV raw/disposition evidence and the expressly approved expiring
-      development-only braces boundary; refuse changed applicability and all
-      other unapproved applicable findings. Replace the temporary repository
-      input guard with accepted product risk admission without a
-      production-security claim. Integrate the accepted resource and asset
-      boundary with actual loading, package inclusion, and offline consumers;
-      retain native configuration ownership and retire superseded paths in the
-      same migration. Create no empty directories or copied product contracts.
+      on its three named adopters using the same accepted ETHOS source and
+      wheel.
+      Verify actual installed bindings, exact-HEAD plan/proof, native semantics,
+      complete test selection, diagnostic custody, subject applicability, and
+      single execution. Migrate the DDWG profile, validators, tests, and guidance
+      in its owned lane; consume AIGW and Proxy qualification from their owners.
+      Retain two default gates and native prerequisites, then retire replaced
+      format, descriptor, stream, task-authoring, risk, and identity glue.
+      Verify official task-template diagnostics and the approved expiring
+      development-only braces disposition through the accepted product owner.
+      Qualify declared resource/asset loading, package inclusion, and offline
+      consumers before retiring old paths. Preserve original failures at their
+      producing evidence owner.
 - [x] 3.4 Publish the major signed SemVer edition independently to GitLab and
       GitHub; verify both exact refs, Releases, downloaded asset hashes, and
       declared source and offline platform jobs.
-- [ ] 3.5 Complete the final requirement/evidence audit and accepted shared
-      quality, risk, task-authoring, history, and adopter integration before
-      official closure. Follow the [migration order](design.md#migration-plan)
-      to publish one coherent compatible successor with frozen source-bound
-      bytes, full local/cold verification, trusted signature, exact-HEAD proof,
-      both source/offline matrices, independent Releases/download hashes, and
-      every declared offline host. Preserve immutable releases, the qualified
-      rollback, the original 62-subsection crosswalk, all topic hashes, and the
-      [complete original-duty
-      contract](design.md#preserve-the-original-work-contract-at-seven-topic-owners).
-      Reconcile references and officially sync every reviewed
-      requirement/scenario only after its acceptance; omitted or unqualified
-      requirements block closure. Audit root entries, documentation, configuration,
-      tools, resources, assets, native bindings, and local output by actual owner
-      and consumer; resolve misplaced or duplicated content without scaffolding
-      or a catch-all archive. Retain raw reviewer snapshots and independent
-      raw-read guards at their producer; attribute edited representations as
-      editorial evidence, not raw results or independently verified execution.
-      Claim neither automated whole-guidance equivalence nor team adoption.
-      This prerequisite must close before archive; subsequent Git effects remain
-      Goal acceptance through the existing migration order, not a premature
-      checkbox or a second ledger.
+- [ ] 3.5 Complete the final requirement/evidence audit against the
+      [original work contract](design.md#preserve-the-original-work-contract-at-seven-topic-owners),
+      all 62 original subsections, five surrounding content groups, current
+      documentation, configuration, and reviewer findings. Qualify the accepted
+      shared quality, risk, task, history, and adopter contracts. Follow the
+      [migration order](design.md#migration-plan) to publish one coherent minor
+      successor with frozen source and bundle, full local and cold verification,
+      trusted signature, exact-HEAD proof, both source/offline matrices, each
+      declared offline host, and independent Release/download hashes. Officially
+      sync every reviewed requirement and scenario only after its acceptance.
+      Verify source-directory ownership and exact retirement through
+      [the declared boundaries](design.md#retire-replaced-source-and-downloads-only-after-absorption).
+      Preserve immutable releases, qualified rollback, original crosswalk and
+      topic hashes, raw review snapshots, independent read guards, and necessary
+      failed receipts at their producers. Distinguish editorial evidence from
+      raw execution; do not claim automated equivalence or team adoption.
+      Confirm archive prerequisites before official closure; verify subsequent
+      archive, Git, publication, and retirement effects through native owners.
 - [x] 3.6 Publish the compatible original-duty correction with fresh local,
       installed ETHOS, signed patch, asset, and both Forge platform evidence;
       preserve the already qualified major release.
@@ -281,8 +270,7 @@
 - [x] 3.9 Qualify and publish the compatible source-link, CI-naming, and reader
       repairs with full source, cold bundle, exact-HEAD proof, signed patch,
       both source/offline matrices, independent downloads, links, and exact
-      aftercare. Preserve older signed objects and notes; provider statistics
-      can lag verified resource retirement.
+      aftercare. Preserve older signed objects and notes.
 - [x] 3.10 Retire superseded download assets independently on both Forges;
       retain the latest qualified release, one qualified rollback, and tool
       packages consumed by retained source. Preserve tags, original notes, and
@@ -299,8 +287,9 @@
       offline platform matrices, independent source and asset hashes, and
       retirement of its owned lane and superseded downloads.
 - [ ] 3.13 Qualify the accepted product's reusable release-history and
-      peer-navigation boundary on every audited affected adopter. Use applicable
-      declared peers and native reference resolution; distinguish missing links,
+      peer-navigation boundary on every audited affected adopter through its
+      own product and repository owners. Use applicable declared peers and
+      native reference resolution; distinguish missing links,
       wrong targets, and unqualified repairs. Verify exact source and installed
       evidence, complete history conservation, accepted Python evidence,
       repaired-baseline contribution admission, original-plan recovery, both
@@ -318,5 +307,4 @@
       cold install, exact-HEAD proof, signed patch, both source/offline
       matrices, and exact download/scratch retirement. Preserve immutable v7.0.7
       and failed GitLab Windows evidence, original tags/notes, current qualified
-      downloads, and rollback; the v7.0.9 qualification does not erase the
-      original failures.
+      downloads, and rollback.
