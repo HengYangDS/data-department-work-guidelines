@@ -74,6 +74,12 @@ unrecognized or unfinished work, unknown task responsibility, unknown fact
 sources, authority gaps, and material irreversible risks remain distinct stops.
 Nonessential presentation preferences do not suspend otherwise authorized work.
 
+Completion is conjunctive: every agreed condition, current passed verification,
+required acceptance, and the actual lifecycle state must hold. Agent reports
+name that delivery state, goal, and scope; partial or deferred outcomes do not
+bypass the gate. Execution stays within both permission and agreed scope,
+without incidental edits.
+
 Data timelines distinguish availability to the relevant user or system from a
 later query. Domain owners define suitable use cases and quality requirements;
 use permission remains a separate authorized judgment. No data role absorbs
@@ -96,6 +102,12 @@ forgetting risk, or invites repeated Agent execution. These are independent
 triggers. Coaching must preserve the member's judgment; management must not
 normalize recurring personal rescue. Correct a disproved position immediately,
 including an already-published claim.
+
+The evolution topic owns the practice-admission test; the charter links to it
+instead of restating a competing test. Prospective tacit-knowledge, forgetting,
+and repeated-work risks can require prevention before an incident. Managers
+ensure results, anomalies, and actual-use effects return promptly to the
+responsible owner. Scheduled review does not replace that active interface.
 
 A work record is the existing ticket, review, discussion, or project document
 that holds the decision and evidence. It does not require a new form or file.
@@ -284,6 +296,13 @@ standard-error behavior. Preserve the native result before refusal and stop
 dependent link checks; an otherwise valid report cannot hide an unapproved
 process warning. Do not change native report formats or rerun tools for cleaner
 output.
+
+Before official synchronization, rebuild every changed capability through the
+official merge and validator. Resolve all diagnostics, including long
+requirement statements, without waivers. Keep concise obligations with their
+existing scenarios; do not drop an actor, permission, or counterexample to
+meet a size check. An already-removed requirement is not a pending deletion:
+retain its original Git evidence and remove the redundant current delta.
 
 The existing process owner retains command identity, native cause, exit status,
 signal, standard output, and standard error on creation failure, timeout, or

@@ -119,15 +119,11 @@ cross-domain task, name accountable ownership and the professional interfaces.
 Interfaces may be shared; end-to-end responsibility may not dissolve into “everyone.”
 [Data work](data.md) requires one lead across domains.
 
-To judge whether a requirement is worth keeping, ask what real error it
-prevents, why existing interfaces are insufficient, what cognitive and
-maintenance costs it adds, and what observation would cause revision or
-retirement. A preference without an identifiable failure mode and revisit
-condition does not become a department rule. Apply the same test to a new
-concept, role, process, tool, or document: if it carries no irreplaceable
-obligation, merge it with its owner or remove it. Prefer one clear interface
-or automatic check to recurring meetings and reminders when they control the
-same risk.
+Keep a concept, role, process, tool, or document only for an irreplaceable
+obligation; otherwise merge it with its owner or remove it. Use the
+[practice-admission test](evolve.md#start-with-a-real-failure-mode) before making
+a method a department rule. Prefer one clear interface or automatic check to
+recurring meetings and reminders when they control the same risk.
 
 ## From Principle to Action
 

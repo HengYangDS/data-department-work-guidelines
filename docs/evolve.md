@@ -13,13 +13,14 @@ relations:
 **When to use:** A problem repeats, coaching or review is needed, a template,
 tool, or rule is proposed, or an existing mechanism has become a burden. The aim
 of learning is to find the next failure earlier, judge it more easily, and need
-less manual rescue—not to increase the file count. Do not adopt a new rule
-without an observed failure, a bounded trial, a responsible owner, and evidence
-of net benefit.
+less manual rescue—not to increase the file count. Do not adopt a new department
+rule without an identifiable failure mode, a bounded trial, a responsible owner,
+and evidence of net benefit.
 
 ## Start with a Real Failure Mode
 
-Before adding a mechanism, answer: What failure was observed? Why were the
+Before adding a mechanism, answer: What failure was observed, or which
+recurrence or loss risk below applies? Why were the
 existing boundary and feedback insufficient? What risk would the new method
 reduce, and what cognitive and maintenance cost would it add? How can it be
 tried on a small scale? What observation would justify keeping it? Who maintains
@@ -33,9 +34,11 @@ definitions, recurring questions, temporary human rescue, expired evidence,
 ambiguous ownership, intermittent failures, and slight delays can be early
 signals of a system defect. Check their pattern, impact, and direction before
 building a remedy. A problem that recurs, crosses people or projects, spans work
-cycles, depends on one person's tacit knowledge, could cause material loss if
-forgotten, or will be repeated by Agents needs a reusable prevention mechanism.
-Choose its lightest effective owner rather than another report.
+cycles, depends on a key judgment that relies on tacit knowledge held by one or
+a few people, could cause material loss if forgotten, or will be repeated by
+Agents must have
+a reusable prevention mechanism. Choose the lightest effective form in the
+existing owner rather than another report.
 
 A reusable asset may be a test, monitor, checklist, decision record, example,
 rule, platform capability, or clearer ownership interface. Choose the lightest
@@ -74,7 +77,8 @@ If scoring is used, define its levels, observable behavior, and purpose. A score
 expresses delivery risk; it must not label a person or stand for their overall
 worth.
 
-Every task must meet the hard boundaries. Critical responsibilities should be
+Every task must meet the [hard boundaries](charter.md#four-non-negotiable-boundaries).
+Critical responsibilities should be
 performed independently and reliably. Call a result exceptional only when it
 produces evidenced net benefit, transfers a method, reduces long-term
 complexity, and improves others' capacity.
@@ -123,8 +127,10 @@ its owner there. Do not create a form or meeting unless existing carriers cannot
 hold the necessary review. No routine “nothing happened” activity report is
 required.
 
-Managers clarify direction, priorities, resources, and cross-domain decisions,
-resolve long-standing open decisions in time for the work to proceed, and show
+Managers clarify direction, priorities, resources, and cross-domain decisions;
+ensure results, anomalies, and actual-use effects return promptly to the
+responsible owner; resolve long-standing open decisions in time for work to
+proceed; and show
 their reasoning with concrete work examples. They protect people who honestly
 expose problems and must not penalize honest uncertainty or make one person's
 repeated rescue the department's normal way of operating. They must not use

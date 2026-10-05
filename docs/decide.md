@@ -75,7 +75,8 @@ so explicitly.
    observation would change the judgment.
 
 For an incident, anomaly, delay, quality problem, or recurring dispute, preserve
-the original symptom and timeline, distinguish affected from unaffected subjects,
+the original symptom and timeline, including changes before it began;
+distinguish affected from unaffected subjects,
 and explain both the direct cause and **why the existing system did not prevent
 or detect it in time**. Separate immediate containment, direct repair, and
 prevention of recurrence. Completing only the first two is not a systemic fix.
@@ -87,9 +88,10 @@ check the original symptom, adjacent paths, and unintended side effects; name
 what was not exercised. In review, distinguish judgments that helped from those
 that failed, and explain why; a fix without changed judgment invites recurrence.
 
-Watch for correlation presented as causation, a case presented as a population,
-a necessary condition treated as sufficient, a later outcome used to infer a
-unique earlier cause, selective search for supporting evidence, criteria changed
+Check the reasoning for correlation presented as causation, a case presented as
+a population, a necessary condition treated as sufficient, a later outcome used
+to infer a unique earlier cause, selective search for supporting evidence,
+criteria changed
 midstream, and an appeal to “best practice” without checking its applicable
 boundary.
 

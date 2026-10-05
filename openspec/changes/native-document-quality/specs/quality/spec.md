@@ -615,14 +615,13 @@ observing the actual consuming npm command.
 
 ### Requirement: Default proof and root binding are distinct
 
-The profile SHALL list exactly `docs-integrity` and `markdown-format` as default
-proof gates. Both SHALL use a repository-relative Node entrypoint without
-executable bits or a POSIX shell. The former SHALL omit formatting; the latter
-owns it, while standalone verification runs it once. Supporting descriptors
-SHALL match only the formally accepted product's default dependency closure;
-quality axes SHALL name their actual verified owner within that closure.
-Installed ETHOS and Git-common hooks SHALL bind the selected worktree and
-enforce admission without a tracked adapter or optional root-binding gate.
+Default proof SHALL contain only `docs-integrity` and `markdown-format` using
+repository-relative Node commands without shell or executable-bit dependencies.
+Integrity SHALL omit formatting; the format gate SHALL own it once per standalone
+verification. Supporting descriptors and quality axes SHALL match accepted
+product dependencies and verified owners. Installed ETHOS and Git-common hooks
+SHALL bind the worktree and enforce admission without a tracked adapter or
+optional root gate.
 
 #### Scenario: Root-binding contract is audited
 
@@ -656,16 +655,14 @@ enforce admission without a tracked adapter or optional root-binding gate.
 
 ### Requirement: Product-owned code evidence accompanies document proof
 
-`docs-integrity` SHALL depend on the product-verified `code-behavior` attempt;
+`docs-integrity` SHALL depend on product-verified `code-behavior`;
 `markdown-format` SHALL conjoin its command with native static diagnostics.
-The behavior and static-analysis axes SHALL name those actual evidence owners.
-All checks SHALL use the same committed tree. Installed product validation SHALL
-reject missing or misdirected evidence without another default gate or private
-lifecycle. Native behavioral execution SHALL use the complete Git-selected test
-inventory once and preserve unapproved warnings. Command output or
-repository-authored reports SHALL NOT prove code correctness. Shared semantic,
-diagnostic, and subject-applicability acceptance SHALL require the formally
-accepted installed contract on each required repository.
+Behavior and static-analysis axes SHALL name those owners for one tree. Native
+tests SHALL run the complete Git-selected inventory once and preserve unapproved
+warnings.
+Accepted installed ETHOS SHALL enforce semantics, diagnostics, and subject
+applicability on each required repository, refusing missing or misdirected
+evidence and authored substitutes.
 
 #### Scenario: Document command passes but native code fails
 
@@ -1025,15 +1022,3 @@ records SHALL NOT gain converters, duplicate copies, or old-path fallback.
   records before npm dependencies exist
 - **THEN** each consumer uses its single required native record directly
 - **AND** no TOML converter, duplicate manifest, or bootstrap parser is added.
-
-## REMOVED Requirements
-
-### Requirement: Offline tool supply is qualified by use, not an npm-major label
-
-**Reason:** Its multiple-npm scenario contradicts the later exact native
-package-manager contract. A second current compatibility policy would make the
-same release accept and reject the same command.
-
-**Migration:** The single native package-manager declaration governs admission.
-Source binding, actual version reporting, offline execution, and the audit limit
-remain under the existing package-manager and complete-bundle requirements.

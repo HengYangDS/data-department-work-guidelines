@@ -20,6 +20,14 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Require every completion condition and current passed verification before a
+  complete claim. Bind Agent reports and execution to the actual delivery
+  state, goal, and agreed scope. Require prevention before the first failure
+  when its triggers apply, including key judgments that rely on a few people's
+  tacit knowledge, and return downstream feedback to its responsible owner.
+- Keep practice admission at one topic owner and concise official requirements
+  with their existing scenarios. Remove an already-applied deletion delta
+  rather than suppressing official merge diagnostics.
 - Preserve data availability, professional use cases, and permission as distinct
   judgments. Keep each data owner's authority intact and require a non-final
   state when any completion condition is unmet.

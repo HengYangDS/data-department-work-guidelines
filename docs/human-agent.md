@@ -69,7 +69,8 @@ and applicable local rules, then restates the goal, scope, non-goals, and
 completion condition.
 It distinguishes fact, hypothesis, inference, judgment, decision, and action;
 loads only relevant material; and advances in reversible, verifiable steps
-within its authority. Before writing, it checks the target, concurrent work, and
+within its authority and agreed scope, without incidental changes. Before
+writing, it checks the target, concurrent work, and
 recovery path. Its output leads with the conclusion and evidence, then limits
 and next steps.
 
@@ -85,8 +86,8 @@ prose summary:
 
 - Confirm the correct authority and current state, true and complete current
   inputs, and clear separation of assumptions, inferences, and judgments.
-- Compare actual changes with the reported scope; inspect counterexamples,
-  risks, non-goals, and uncovered cases.
+- Compare actual changes with the agreed and reported scope; inspect
+  counterexamples, risks, non-goals, and uncovered cases.
 - Confirm that verification actually ran against the current version and
   correct environment, the completion claim stays within its evidence, and
   an authorized person explicitly approved high-risk actions.
@@ -118,11 +119,13 @@ continuing would hide a failure, pollute a source of truth, enlarge harm, or
 require presenting a guess as fact. Stopping the affected action protects that
 boundary; independent authorized work may continue.
 
-A completion report states the outcome (complete, partial, blocked, or
-deferred), target and version, actual changes, verification method, result,
-execution time and environment, and where the evidence can be inspected. Name
-risks, limits, assumptions, unresolved questions, and any acceptance still
-needed. State what remains incomplete and why; distinguish a missing dependency
+A completion report names the [delivery state](deliver.md#name-the-state-not-the-effort)
+reached and the goal, scope, target, version, actual changes, verification method,
+result, execution time and environment, and where the evidence can be inspected.
+Name risks, limits, assumptions, unresolved questions, and any acceptance still
+needed. Partial or deferred work names its affected scope and the state reached;
+neither label replaces a completion check. State what remains incomplete and
+why; distinguish a missing dependency
 from work that has not been attempted. End with the next responsible person,
 action, and due time; do not write only “follow up.” On interruption, preserve
 state, uncommitted work, attempts and failures, the recovery entry, and retries

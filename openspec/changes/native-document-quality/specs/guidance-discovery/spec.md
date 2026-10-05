@@ -4,16 +4,13 @@
 
 ### Requirement: Point-of-use analysis, data, and Agent boundaries
 
-Analysis SHALL divide the whole problem into non-overlapping parts tied to
-the governing decision. Exploratory data or code SHALL NOT enter a shared,
-production, or decision path until meaning, quality, permission, and
-reproducibility are qualified. Parallel Agent work SHALL default to independent
-read-only review with one integrator; reports SHALL expose evidence, limits,
-and human responsibility. Agents SHALL read complete results of current,
-claim-matched checks before summarizing. Data timelines SHALL identify when a
-value became available to the relevant user or system, not merely when it was
-later observed. Data-state labels SHALL reflect every declared completion
-condition.
+Analysis SHALL partition the whole problem along one axis. Promotion into shared,
+production, or decision use SHALL require meaning, quality, permission and
+reproducibility. Data states SHALL reflect every completion condition; timelines
+SHALL distinguish availability from later queries. Parallel Agents SHALL default
+to read-only work with one integrator. Human responsibility SHALL remain human.
+Agents SHALL report the delivery state after reviewing complete claim-matched
+results.
 
 #### Scenario: A verification summary omits a finding
 
@@ -48,6 +45,8 @@ condition.
 - **THEN** the collaboration topic makes the subject, actual changes, current
   verification, evidence location, risks, assumptions, unresolved matters, and
   next responsible actor and time explicit
+- **AND** the report names its goal, scope, and actual delivery state; partial
+  or deferred work does not bypass completion conditions
 - **AND THEN** a member checks the actual authority, inputs, changes, completed
   current-version verification, evidence limits, and follow-up ownership before
   accepting the consequential result; the author's or Agent's account cannot
@@ -281,16 +280,34 @@ or unknown ownership.
 - **AND** a safe reproducer or observation plan and claim-matched regression
   remain necessary without another form, rule store, or meeting.
 
+#### Scenario: A completion claim meets only some conditions
+
+- **WHEN** a deliverable exists but a required check has not run and passed,
+  required acceptance is missing, or another completion condition is unmet
+- **THEN** the delivery topic refuses the complete claim until every condition
+  holds for the actual subject, scope, version, and environment
+- **AND** a nearby lifecycle state or planned check cannot fill the gap;
+  independent authorized work may continue.
+
+#### Scenario: An Agent expands a task through incidental changes
+
+- **WHEN** an Agent has permission to change a repository but adds edits outside
+  the agreed task scope
+- **THEN** the collaboration topic requires action within both authority and
+  scope, without incidental changes
+- **AND** the member checks actual changes against both the agreed and reported
+  scope; general permission, an accurate report, and a small diff do not expand
+  it.
+
 ### Requirement: Feedback combines events and periodic review
 
-Evolution SHALL check material task transitions. The department head or an
-appointed guideline maintainer SHALL review real work and weak signals at least
-monthly; maintainers SHALL review rules, tools, and capability gaps at least
-quarterly. High-risk signals SHALL be escalated
-when observed. Reviews SHALL reuse existing carriers; new forms or meetings
-require proof of insufficiency. No single metric SHALL represent personal worth;
-no local metric SHALL represent overall work or system value. Monthly mechanism
-review SHALL NOT rank people.
+Material task transitions SHALL be checked; observed high-risk signals SHALL be
+escalated. The department head or appointed maintainer SHALL review work and
+weak signals at least monthly; maintainers SHALL review rules, tools and
+capability gaps at least quarterly. Reviews SHALL reuse sufficient existing
+carriers and assess mechanisms, not rank people. A single metric SHALL NOT
+represent personal worth; local metrics SHALL NOT represent overall work or
+system value.
 
 #### Scenario: Weak signals accumulate without an incident
 
@@ -318,6 +335,24 @@ review SHALL NOT rank people.
   judgment
 - **AND** the metric remains available for its stated decision, source, period,
   and boundary; no new evaluator or ranking is required.
+
+#### Scenario: Prevention is needed before the first failure
+
+- **WHEN** a key judgment depends on tacit knowledge held by one or a few people,
+  or material forgetting risk or repeated Agent work triggers a reusable
+  prevention duty without a recorded failure
+- **THEN** the evolution topic requires the lightest effective prevention in its
+  existing owner, without waiting for an incident
+- **AND** formal department-rule admission remains subject to its identifiable
+  failure mode, bounded trial, ownership, and net-benefit checks.
+
+#### Scenario: Downstream results do not reach their owner
+
+- **WHEN** results, anomalies, or actual-use effects remain with a downstream
+  consumer and the responsible owner cannot act on them
+- **THEN** managers ensure that feedback returns promptly to that owner
+- **AND** a later scheduled review does not substitute for the active feedback
+  interface.
 
 ### Requirement: Decision framing preserves operational constraints
 
@@ -355,13 +390,13 @@ replace that check.
 ### Requirement: Communication and coaching preserve judgment
 
 Communication SHALL state its purpose in an objective, measured tone. Meetings
-SHALL refocus drifting discussion on the decision. Deadline risks SHALL name
+SHALL refocus discussion on its decision. Deadline risks SHALL name
 escalation owners and triggers before harm grows. Responsible members and
 supervisors SHALL jointly align on subject, boundary, and success criteria at
-task start.
-Coaching SHALL examine member reasoning, not decide for them. Managers SHALL NOT
-normalize recurring rescue. Agent delegation SHALL name output format,
-destination, audience, and detail.
+task start. Coaching
+SHALL examine member reasoning, not decide for them. Managers SHALL NOT normalize
+recurring rescue. Agent delegation SHALL name output format, destination,
+audience, and detail.
 
 #### Scenario: Fluent delivery hides the purpose or the judgment owner
 
@@ -413,22 +448,22 @@ destination, audience, and detail.
 
 ### Requirement: Data roles retain operational responsibility
 
-Domain owners SHALL define meaning, quality requirements, suitable use cases,
-and professional judgments. A suitable use case SHALL NOT itself establish
-permission. Shared interfaces SHALL NOT transfer another owner's responsibility
-or grant authority over its judgments. Production owners SHALL ensure reliable
-long-term operation. Production, shared-asset, and critical management-chain
-changes SHALL have actual acceptance against agreed criteria.
-Governance owners SHALL make admission, permission, lineage, review, veto, and
-exit controls operate in the workflow. Delivery owners SHALL expose priorities
-and unresolved decisions without assuming authority over the other owners'
-judgments.
+Domain owners SHALL define meaning, quality, suitable use and judgment.
+Production owners SHALL ensure reliable long-term operation. Platform owners
+SHALL abstract repeated cross-domain capability. Governance owners SHALL make
+admission, permissions, lineage, review, veto and exit work in the workflow.
+Delivery owners SHALL expose priorities and open decisions. Shared interfaces
+SHALL NOT transfer responsibility or authority; suitable use SHALL NOT grant
+permission.
 
 #### Scenario: Coordination substitutes for a domain or governance decision
 
 - **WHEN** delivery coordination proposes a use without domain judgment or
   operative governance review and controls
 - **THEN** the data topic identifies the responsible owners and missing decision
+- **AND** domain owners define meaning, quality requirements, suitable use
+  cases, and professional judgments; governance owners make admission,
+  permissions, lineage, review, veto, and exit operate in the workflow
 - **AND** a coordination role cannot grant itself the missing authority.
 
 #### Scenario: One data owner assumes another owner's authority

@@ -80,10 +80,12 @@ the language.
 | A revision is published                          | It took effect, was adopted, or produced the intended outcome.   |
 | An Agent reports completion                      | A member verified and accepted responsibility for the result.    |
 
-Put the deliverable at the agreed location; satisfy each completion criterion;
-name risks, limits, uncovered cases, and follow-up ownership. Reach the
-agreed lifecycle state; a nearby state is not a substitute. Work requiring
-human acceptance is accepted by an authorized person.
+Say “complete” only when all conditions hold: the deliverable is at the agreed
+location; every completion criterion is satisfied; current verification
+matching the claim has run and passed; risks, limits, uncovered cases, and
+follow-up ownership are recorded; and the agreed lifecycle state is reached.
+When human acceptance is required, an authorized person must have accepted
+the result. A nearby state or a planned check does not satisfy this gate.
 
 For L1 and L2 work, leave the material decision, actual result, limits, and
 remaining owner in the existing work record. Without a reviewable record, do

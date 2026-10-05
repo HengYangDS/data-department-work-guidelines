@@ -221,16 +221,13 @@ asset cleanup.
 
 ### Requirement: Active task artifacts remain implementation checklists
 
-Active `tasks.md` artifacts SHALL follow the selected official OpenSpec task
-template: numbered groups, bounded checkbox actions, and completion checks in
-their descriptions. Task state SHALL remain with that checklist; requirements
-and implementation choices SHALL remain with specifications and design.
-Original execution results and review coverage SHALL remain with their
-producing evidence. Tasks MAY reference that evidence but SHALL NOT copy logs,
-checkpoints, debugging narratives, or acceptance reports. Successful official
-checkbox parsing SHALL NOT constitute template conformance. Shared installed
-ETHOS document-quality diagnostics SHALL enforce this boundary through its
-existing command plane without a private task schema or another default gate.
+Active `tasks.md` SHALL follow the official template: numbered groups of bounded
+checkbox actions with completion checks. Tasks SHALL own state; specifications
+and design SHALL own requirements and choices. Execution results, review
+coverage, logs, checkpoints, debugging narratives and acceptance reports SHALL
+stay with their producer, referenced but not copied into tasks. Accepted
+installed ETHOS SHALL enforce this boundary, not parsing alone, without a private
+schema or default gate.
 
 #### Scenario: A parsed checklist contains execution narration
 
