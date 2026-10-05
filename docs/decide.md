@@ -32,7 +32,7 @@ If the subject, authority, or irreversible consequences are unclear, stop the
 affected action and ask an authorized person to decide. **Collecting information
 is not the goal; explain which judgment it could change.**
 
-Make six boundaries explicit when they matter: **object** (the system, data,
+For important work, make six boundaries explicit: **object** (the system, data,
 people, or decision), **scope** (in and out), **time** (fact cutoff and period
 of validity), **responsibility** (task lead, decision owner, reviewer, acceptor,
 and those to inform), **evidence** (what it does and does not establish), and
@@ -78,8 +78,10 @@ For an incident, anomaly, delay, quality problem, or recurring dispute, preserve
 the original symptom and timeline, including changes before it began;
 distinguish affected from unaffected subjects,
 and explain both the direct cause and **why the existing system did not prevent
-or detect it in time**. Separate immediate containment, direct repair, and
-prevention of recurrence. Completing only the first two is not a systemic fix.
+or detect it in time**. Address immediate containment, direct repair, and
+prevention of recurrence as distinct layers. Choose the lightest prevention
+measure sufficient for the risk. Completing only the first two is not a systemic
+fix.
 
 Reproduce the original symptom with recorded inputs and conditions when it is
 safe to do so. If reproduction is unsafe or unavailable, define an observation

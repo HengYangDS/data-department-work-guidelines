@@ -21,9 +21,9 @@ and evidence of net benefit.
 
 Before adding a mechanism, answer: What failure was observed, or which
 recurrence or loss risk below applies? Why were the
-existing boundary and feedback insufficient? What risk would the new method
-reduce, and what cognitive and maintenance cost would it add? How can it be
-tried on a small scale? What observation would justify keeping it? Who maintains
+existing boundary, interface, and feedback insufficient? What risk would the new
+method reduce, and what cognitive and maintenance cost would it add? How can it
+be tried on a small scale? What observation would justify keeping it? Who maintains
 it, when is it reviewed, and what signal triggers revision or retirement? An
 untested preference is not a department rule. Retire a rule that has lost its
 subject, has no user, duplicates a source of truth, or costs more than it
@@ -113,7 +113,8 @@ verify at the end, and preserve a handoff when interrupted. Escalate high-risk
 signals when observed; a calendar must not delay containment or a decision.
 
 During active work, the department head or appointed guideline maintainer should
-calibrate judgments weekly on one or two real work samples, in about 30 minutes.
+calibrate judgments against evidence weekly on one or two real work samples, in
+about 30 minutes.
 Use an existing review or asynchronous exchange; this adds no all-member meeting
 or report. A different interval needs a reason and a time to revisit it.
 
@@ -157,7 +158,7 @@ harm before filling in the record if needed; truth, authority, and
 responsibility remain binding. Record the temporary decision, who made it,
 on which facts and authority, its expiry, takeover owner, and rollback condition.
 Complete verification and review once risk is controlled. Repeated “emergency
-exceptions” are a system problem.
+exceptions” must be handled as a mechanism problem.
 
 Specific rule changes still follow
 [repository governance](governance/ethos.md). Team adoption must be shown

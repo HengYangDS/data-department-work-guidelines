@@ -65,14 +65,14 @@ work, not that duty.
 
 ## Execute and Verify
 
-An Agent first confirms the task, target root, current state, responsible person,
-and applicable local rules, then restates the goal, scope, non-goals, and
+An Agent must first confirm the task, target root, current state, responsible
+person, and applicable local rules, then restate the goal, scope, non-goals, and
 completion condition.
-It distinguishes fact, hypothesis, inference, judgment, decision, and action;
-loads only relevant material; and advances in reversible, verifiable steps
+It must distinguish fact, hypothesis, inference, judgment, decision, and action;
+load only relevant material; and advance in reversible, verifiable steps
 within its authority and agreed scope, without incidental changes. Before
-writing, it checks the target, concurrent work, and
-recovery path. Its output leads with the conclusion and evidence, then limits
+writing, it must check the target, concurrent work, and
+recovery path. Its output must lead with the conclusion and evidence, then limits
 and next steps.
 
 Agent memory, summaries, guesses, and generated content are candidate material.
