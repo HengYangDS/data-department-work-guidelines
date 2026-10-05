@@ -1140,6 +1140,29 @@ export async function acquireGitHubBundle({
 }
 
 export function gitlabBundleRequest(record, environment = process.env) {
+  const candidate = environment.DDWG_OFFLINE_CANDIDATE;
+  if (candidate) {
+    if (
+      !sha256(candidate) ||
+      candidate !== record.sha256 ||
+      environment.CI_COMMIT_TAG ||
+      environment.CI_COMMIT_REF_PROTECTED !== "true" ||
+      !["dev", "main"].includes(environment.CI_COMMIT_BRANCH) ||
+      !["api", "web"].includes(environment.CI_PIPELINE_SOURCE)
+    ) {
+      throw new Error(
+        "GitLab candidate qualification must bind protected source to its frozen bundle digest",
+      );
+    }
+    return projectPackageRequest(
+      {
+        packageName: "offline-qualification",
+        version: `sha256-${candidate}`,
+        fileName: record.fileName,
+      },
+      environment,
+    );
+  }
   if (
     environment.CI_COMMIT_TAG !== `v${record.version}` ||
     !["api", "web"].includes(environment.CI_PIPELINE_SOURCE)

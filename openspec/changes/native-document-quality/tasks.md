@@ -233,6 +233,10 @@
       withdrawal. Before 2026-10-18T00:00:00Z, the repository maintainer must
       qualify fixed supply or obtain a new explicit risk decision; verify that
       expiry still refuses both offline source checks and online audit.
+      Qualify the frozen bundle on actual Linux and Windows Runner job
+      identities through the existing explicit protected-source offline
+      route. Preserve complete results and exact package retirement; do not
+      replay successful source jobs or call a candidate a signed Release.
 
 ## 3. Qualification and publication
 

@@ -140,6 +140,19 @@ The old manifest and installer SHALL retire when their consumers are replaced.
   version, and source binding before admitting the tool
 - **AND** it preserves the destination's host installation and credentials.
 
+#### Scenario: A frozen bundle is qualified before release
+
+- **WHEN** an authorized explicit API or web pipeline selects protected `dev`
+  or `main` and supplies its tracked bundle's SHA-256
+- **THEN** only the existing offline platform jobs execute, using the same
+  project's temporary content-addressed qualification package
+- **AND** acquisition verifies the source-bound record, complete bundle, and
+  exact digest before offline installation and full repository verification
+- **AND** source jobs do not replay, proposal jobs cannot enter this route,
+  and this result does not qualify a signed tag, Release, or network isolation
+- **AND** the caller preserves raw results and deletes the exact temporary
+  package after every selected job has reached a terminal state.
+
 #### Scenario: An accepted native candidate is copied once
 
 - **WHEN** pinned supply and the candidate's native version pass before

@@ -471,6 +471,15 @@ capabilities, exact image/native assets, timeouts, source selection, and
 commands. Minimal wiring to a declared native command is not a business,
 acceptance, installation, or rollback controller.
 
+Before release, an explicit API or web pipeline on protected `dev` or `main`
+may set `DDWG_OFFLINE_CANDIDATE` to the tracked bundle digest. The existing
+offline jobs then fetch `offline-qualification/sha256-DIGEST` from their own
+project, verify the complete frozen bundle, and run offline install plus full
+verification. Source jobs are excluded rather than replayed. No new job,
+release identity, acquisition controller, or host-access route is needed.
+The caller preserves terminal job results and retires that exact temporary
+package; formal tag/Release download qualification remains separate.
+
 Restrict GitLab workflow, source, and offline tag routes to the shared release
 `v*` tag family, excluding slash-containing tags, before tool supply. A matching
 prefix still needs native signed SemVer admission. Keep project locking, tagged-only

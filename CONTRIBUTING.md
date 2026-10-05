@@ -255,6 +255,17 @@ Change authority.
    inspect its attribution and signature, then prove its new OID. Do not
    raw-push around an ETHOS refusal.
 
+   For release-before-tag qualification on GitLab, first accept the source on
+   protected `dev` or `main`. Upload the inspected bundle through the native
+   project Package Registry API as
+   `offline-qualification/sha256-DIGEST/FILE_NAME`, using the actual bundle
+   digest and basename. Start one native API or web pipeline at that exact
+   accepted ref with `DDWG_OFFLINE_CANDIDATE=DIGEST`. It selects only the existing
+   offline platform jobs. Preserve source OID, Runner/manager identity, raw
+   results, and bundle hashes; wait for every job to become terminal before
+   deleting that exact temporary package. Verify its absence. This is candidate
+   qualification, not a substitute for Step 6's signed-release downloads.
+
 4. At the release cut, move the `Unreleased` items into a dated `X.Y.Z`
    Changelog section using the actual date, leave `Unreleased` empty, and update
    both comparison links. Commit that exact source, repeat the required local

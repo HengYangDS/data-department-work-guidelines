@@ -373,6 +373,14 @@ release tags. GitLab applies that boundary to workflow, source, and offline
 rules before tool supply; native release checks still require a valid signed
 SemVer identity.
 
+Before a release cut, an authorized API or web pipeline on protected `dev` or
+`main` may qualify the tracked frozen bundle through the same offline jobs.
+Set `DDWG_OFFLINE_CANDIDATE` to that bundle's exact SHA-256. Acquisition uses
+this project's temporary content-addressed package, verifies the complete
+bundle, and never replays source jobs. This establishes candidate installation
+and verification only, not signed-release delivery or network isolation.
+Preserve all job results, then retire the exact temporary package.
+
 ### Review and Protected Execution
 
 - Proposal and merge-request jobs use review runners. Protected `dev`, `main`,

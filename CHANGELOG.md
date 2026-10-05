@@ -16,6 +16,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Added
 
+- An explicit protected-source GitLab route for qualifying a frozen offline
+  bundle before release. It reuses offline jobs without replaying source checks
+  or treating the temporary qualification package as a signed Release.
 - Report the verification source, native runtime, and mounted workspace capacity
   in existing source-check output. Preserve exact byte counts and read errors;
   this does not qualify VM identity, isolation, or throughput.

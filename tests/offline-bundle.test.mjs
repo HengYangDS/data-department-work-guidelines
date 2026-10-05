@@ -1692,6 +1692,97 @@ test("concurrent successful acquisitions converge without replacing a prior targ
   });
 });
 
+test("GitLab candidate acquisition binds accepted job source to the frozen digest", () => {
+  const bundle = record();
+  const environment = {
+    CI_API_V4_URL: "http://gitlab.example.test/api/v4",
+    CI_PROJECT_ID: "12345",
+    CI_JOB_TOKEN: "fixture-only",
+    CI_COMMIT_BRANCH: "dev",
+    CI_COMMIT_REF_PROTECTED: "true",
+    CI_PIPELINE_SOURCE: "api",
+    DDWG_OFFLINE_CANDIDATE: bundle.sha256,
+  };
+  for (const branch of ["dev", "main"]) {
+    for (const event of ["api", "web"]) {
+      const request = offline.gitlabBundleRequest(bundle, {
+        ...environment,
+        CI_COMMIT_BRANCH: branch,
+        CI_PIPELINE_SOURCE: event,
+      });
+      assert.equal(
+        request.url,
+        `http://gitlab.example.test/api/v4/projects/12345/packages/generic/offline-qualification/sha256-${bundle.sha256}/${bundle.fileName}`,
+      );
+      assert.deepEqual(request.headers, { "JOB-TOKEN": "fixture-only" });
+      assert.equal(request.redirect, "error");
+    }
+  }
+  for (const changed of [
+    { CI_COMMIT_BRANCH: "proposal/review" },
+    { CI_COMMIT_BRANCH: "work/local" },
+    { CI_COMMIT_BRANCH: "candidate/dev" },
+    { CI_COMMIT_REF_PROTECTED: "false" },
+    { CI_COMMIT_REF_PROTECTED: undefined },
+    { CI_COMMIT_TAG: "v4.2.0" },
+    { CI_PIPELINE_SOURCE: "push" },
+    { CI_PIPELINE_SOURCE: "merge_request_event" },
+    { DDWG_OFFLINE_CANDIDATE: digest("other bundle") },
+    { DDWG_OFFLINE_CANDIDATE: "../unbound" },
+  ]) {
+    assert.throws(
+      () => offline.gitlabBundleRequest(bundle, { ...environment, ...changed }),
+      /candidate qualification/u,
+    );
+  }
+});
+
+test("GitLab candidate acquisition verifies exact bytes and retires its download stage", async () => {
+  await buildFixture(async (inputs) => {
+    const built = assembleBundle(inputs);
+    writeFileSync(
+      path.join(inputs.repository, ".config", "release", "offline-bundle.json"),
+      JSON.stringify(built),
+    );
+    const environment = {
+      CI_API_V4_URL: "http://gitlab.example.test/api/v4",
+      CI_PROJECT_ID: "12345",
+      CI_JOB_TOKEN: "fixture-only",
+      CI_COMMIT_BRANCH: "dev",
+      CI_COMMIT_REF_PROTECTED: "true",
+      CI_PIPELINE_SOURCE: "api",
+      DDWG_OFFLINE_CANDIDATE: built.sha256,
+    };
+    let calls = 0;
+    const fetcher = async (url, options) => {
+      calls += 1;
+      assert.equal(
+        url,
+        `http://gitlab.example.test/api/v4/projects/12345/packages/generic/offline-qualification/sha256-${built.sha256}/${built.fileName}`,
+      );
+      assert.deepEqual(options.headers, { "JOB-TOKEN": "fixture-only" });
+      assert.equal(options.redirect, "error");
+      return new Response(readFileSync(inputs.outputPath));
+    };
+    const result = await offline.acquireGitLabBundle({
+      repository: inputs.repository,
+      environment,
+      fetcher,
+    });
+    assert.equal(result.sha256, built.sha256);
+    assert.equal(calls, 1);
+    const directory = path.join(
+      inputs.repository,
+      "build/artifacts/offline-bundle",
+    );
+    assert.deepEqual(readdirSync(directory), [built.fileName]);
+    assert.equal(
+      digest(readFileSync(path.join(directory, built.fileName))),
+      built.sha256,
+    );
+  });
+});
+
 test("GitLab acquisition uses only the same project's pinned release package", async () => {
   assert.equal(typeof offline.gitlabBundleRequest, "function");
   assert.equal(typeof offline.acquireGitLabBundle, "function");

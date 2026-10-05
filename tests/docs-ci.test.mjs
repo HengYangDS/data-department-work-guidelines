@@ -755,18 +755,55 @@ function changedGitLab(jobName, change) {
   return YAML.stringify(pipeline);
 }
 
+test("GitLab candidate qualification selects only the existing offline jobs", () => {
+  const pipeline = YAML.parse(gitlab);
+  const candidate = {
+    if: '$DDWG_OFFLINE_CANDIDATE && $CI_COMMIT_REF_PROTECTED == "true" && ($CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main") && ($CI_PIPELINE_SOURCE == "api" || $CI_PIPELINE_SOURCE == "web")',
+  };
+  const exclude = { if: "$DDWG_OFFLINE_CANDIDATE", when: "never" };
+  assert.deepEqual(pipeline.workflow.rules.slice(0, 2), [candidate, exclude]);
+  assert.deepEqual(pipeline[".offline:verify"].rules.slice(0, 2), [
+    candidate,
+    exclude,
+  ]);
+  for (const system of ["linux", "macos", "windows"]) {
+    for (const suffix of ["", ":review"]) {
+      assert.deepEqual(
+        pipeline[`docs:verify:${system}${suffix}`].rules[0],
+        exclude,
+      );
+    }
+  }
+  assert.doesNotThrow(() => validateCi(github, gitlab, offline));
+  for (const mutate of [
+    (copy) => copy.workflow.rules.shift(),
+    (copy) => copy[".offline:verify"].rules.shift(),
+    (copy) => copy["docs:verify:windows"].rules.shift(),
+    (copy) => {
+      copy[".offline:verify"].rules[0].if = "$DDWG_OFFLINE_CANDIDATE";
+    },
+  ]) {
+    const changed = structuredClone(pipeline);
+    mutate(changed);
+    assert.throws(
+      () => validateCi(github, YAML.stringify(changed), offline),
+      /GitLab/u,
+    );
+  }
+});
+
 test("GitLab version-tag admission matches the GitHub namespace", () => {
   const pipeline = YAML.parse(gitlab);
   const tagRule = "$CI_COMMIT_TAG =~ /^v[^\\/]*$/";
   assert.deepEqual(YAML.parse(github).on.push.tags, ["v*"]);
-  assert.equal(pipeline.workflow.rules[0].if, tagRule);
+  assert.equal(pipeline.workflow.rules[2].if, tagRule);
   for (const system of ["linux", "macos", "windows"]) {
     assert.equal(
-      pipeline[`docs:verify:${system}`].rules[0].if,
+      pipeline[`docs:verify:${system}`].rules[1].if,
       `$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || ${tagRule}`,
     );
   }
-  assert.deepEqual(pipeline[".offline:verify"].rules, [
+  assert.deepEqual(pipeline[".offline:verify"].rules.slice(2), [
     { if: `${tagRule} && $CI_PIPELINE_SOURCE == "web"` },
     { if: `${tagRule} && $CI_PIPELINE_SOURCE == "api"` },
   ]);
@@ -789,12 +826,12 @@ test("GitLab version-tag admission matches the GitHub namespace", () => {
 
 test("the CI contract rejects broader GitLab tag routes", () => {
   for (const [owner, ruleIndex] of [
-    ["workflow", 0],
-    ["docs:verify:linux", 0],
-    ["docs:verify:macos", 0],
-    ["docs:verify:windows", 0],
-    [".offline:verify", 0],
-    [".offline:verify", 1],
+    ["workflow", 2],
+    ["docs:verify:linux", 1],
+    ["docs:verify:macos", 1],
+    ["docs:verify:windows", 1],
+    [".offline:verify", 2],
+    [".offline:verify", 3],
   ]) {
     const pipeline = YAML.parse(gitlab);
     pipeline[owner].rules[ruleIndex].if = pipeline[owner].rules[
@@ -1027,12 +1064,12 @@ test("GitLab native review and protected jobs use separate capabilities", () => 
     const review = pipeline[`docs:verify:${system}:review`];
     assert.ok(review, `${system} review job is missing`);
     assert.notDeepEqual(trusted.tags, review.tags);
-    assert.deepEqual(trusted.rules, [
+    assert.deepEqual(trusted.rules.slice(1), [
       {
         if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG =~ /^v[^\\/]*$/',
       },
     ]);
-    assert.deepEqual(review.rules, [
+    assert.deepEqual(review.rules.slice(1), [
       { if: '$CI_PIPELINE_SOURCE == "merge_request_event"' },
       {
         if: '$CI_COMMIT_BRANCH =~ /^proposal\\// && $CI_PIPELINE_SOURCE == "push"',
@@ -1089,12 +1126,12 @@ test("GitLab Linux review and protected jobs use separate capabilities", () => {
   const offlineJob = pipeline["offline:verify:linux"];
   assert.ok(review, "Linux review job is missing");
   assert.equal(result.gitlabReviewHosts.length, 3);
-  assert.deepEqual(trusted.rules, [
+  assert.deepEqual(trusted.rules.slice(1), [
     {
       if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG =~ /^v[^\\/]*$/',
     },
   ]);
-  assert.deepEqual(review.rules, [
+  assert.deepEqual(review.rules.slice(1), [
     { if: '$CI_PIPELINE_SOURCE == "merge_request_event"' },
     {
       if: '$CI_COMMIT_BRANCH =~ /^proposal\\// && $CI_PIPELINE_SOURCE == "push"',
@@ -1126,7 +1163,7 @@ test("GitLab Linux review and protected jobs use separate capabilities", () => {
 
 test("GitLab suppresses duplicate proposal pushes after an MR opens", () => {
   const pipeline = YAML.parse(gitlab);
-  assert.deepEqual(pipeline.workflow?.rules, [
+  assert.deepEqual(pipeline.workflow?.rules.slice(2), [
     { if: "$CI_COMMIT_TAG =~ /^v[^\\/]*$/" },
     { if: '$CI_PIPELINE_SOURCE == "merge_request_event"' },
     { if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main"' },
@@ -1447,10 +1484,12 @@ test("GitLab offline release CI runs only after a release asset is available", (
   for (const [changed, reason] of [
     [gitlab.replace(/\n\.offline:verify:[\s\S]*$/u, ""), /GitLab offline/u],
     [
-      gitlab.replace(
-        'CI_PIPELINE_SOURCE == "api"',
-        'CI_PIPELINE_SOURCE == "push"',
-      ),
+      changedGitLab(".offline:verify", (_pipeline, job) => {
+        job.rules[3].if = job.rules[3].if.replace(
+          'CI_PIPELINE_SOURCE == "api"',
+          'CI_PIPELINE_SOURCE == "push"',
+        );
+      }),
       /post-publication/u,
     ],
     [
