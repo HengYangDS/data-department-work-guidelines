@@ -137,29 +137,12 @@ been observed. Git's native `.gitattributes` rule checks out tracked text with
 LF even on Windows; do not replace it with a host-specific Git setting. Keep
 `node_modules/` and generated output out of Git.
 
-Git discovery selects tracked and non-ignored candidate source. Native Prettier
-parser detection selects every supported format from that inventory, without
-restricting code to a directory or letting ambient ignore files exempt source.
-A current Markdown file still receives prose and link checks under a normally
-ignored directory name. Official archived Changes keep their historical scope;
-untracked ignored caches are not source.
-
-GitHub's published Release starts its offline host matrix. Its public bundle
-download uses Node directly; it needs neither a Forge CLI nor a credential.
-GitLab's `offline:verify:linux`, `offline:verify:macos`, and
-`offline:verify:windows` jobs run in an explicitly started tag pipeline
-**after** its own package and Release are available. Tag-push `docs:verify:<os>`
-jobs check source; they do not qualify the offline asset. Each job obtains the
-same package through the current project's CI identity, not through GitHub or an
-operator's credentials. Native GitLab runners also need every manifest-pinned
-native asset in this
-project's registry before online source jobs can run; a missing asset is not
-permission to add a GitHub fallback. Proposal and
-merge-request jobs must use project-locked review runners, while protected
-branches and release jobs use separate trusted runners and workspaces. For
-credential transport admission, follow
-[repository governance](docs/governance/ethos.md#runner-and-transport-boundaries),
-not a Runner tag or a registration-only tunnel.
+For source selection and exemptions, follow
+[Quality and local state](docs/governance/ethos.md#quality-and-local-state).
+For review/protected runner separation, platform admission, credential transport,
+and source versus offline jobs, follow
+[Runner and transport boundaries](docs/governance/ethos.md#runner-and-transport-boundaries).
+The release steps below select each Forge's source and offline checks.
 
 ## Commit and release
 
@@ -306,8 +289,9 @@ Change authority.
    `glab ci run --branch vX.Y.Z --repo GROUP/PROJECT` and require the
    `offline:verify:linux`, `offline:verify:macos`, and `offline:verify:windows`
    jobs, not only the tag-push `docs:verify:<os>` jobs. The Windows ARM64 runner
-   may use x64 Node and lychee under emulation; record host and process
-   architecture separately rather than calling it native x86_64 verification.
+   uses x64 Node and the Windows x64 tool set under emulation; record host and
+   process architecture separately rather than calling it native x86_64
+   verification.
 
 6. Download the asset from each Release into a separate empty directory and
    inspect both files against the committed record:

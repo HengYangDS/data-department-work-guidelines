@@ -4,20 +4,22 @@
 
 ### Requirement: Default proof and root binding are distinct
 
-Default proof SHALL contain only `docs-integrity` and `markdown-format` using
-repository-relative Node commands without shell or executable-bit dependencies.
-Integrity SHALL omit formatting; the format gate SHALL own it once per standalone
-verification. Supporting descriptors and quality axes SHALL match accepted
-product dependencies and verified owners. Installed ETHOS and Git-common hooks
-SHALL bind the worktree and enforce admission without a tracked adapter or
-optional root gate.
+The profile SHALL list exactly `docs-integrity` and `markdown-format` as
+default gates and descriptors. Both SHALL use repository-relative Node commands
+without shell or executable-bit dependencies. Integrity SHALL omit formatting;
+the format gate SHALL own it, while standalone verification runs it once.
+Product-native prerequisites and quality axes SHALL belong to the accepted
+ETHOS dependency graph and verified owners, not additional profile descriptors.
+Installed ETHOS and Git-common hooks SHALL bind the worktree and enforce
+admission without a tracked adapter or optional root gate.
 
 #### Scenario: Root-binding contract is audited
 
 - **WHEN** the repository validates `.ethos/profile.toml`
 - **THEN** its accepted typed profile has exactly the two default proof gates
-- **AND** each supporting descriptor is necessary to their actual dependency
-  closure and each quality axis names its verified owner
+  and descriptors
+- **AND** each required native prerequisite and quality axis names its verified
+  owner in the accepted product graph, without another profile descriptor
 - **AND THEN** no optional `repository-root-binding` descriptor is present.
 
 #### Scenario: Root binding is independently exercised
@@ -122,10 +124,10 @@ evidence and authored substitutes.
 ### Requirement: One source-bound native quality supply
 
 One repository-native tool manifest SHALL bind Vale, lychee, and OSV Scanner
-versions, platform archives or raw binaries, digests, sizes, and license
-notices.
-The existing native
-installer and source-bound offline bundle SHALL consume that manifest without
+versions, platform archives or raw binaries, digests, raw-binary sizes, and
+license notices. Every declared platform SHALL supply the complete tool graph.
+The existing native installer and source-bound offline bundle SHALL consume that
+manifest without
 duplicated tool supply. Local verification SHALL never download a missing tool.
 GitLab and GitHub SHALL supply and qualify the frozen release independently.
 The old manifest and installer SHALL retire when their consumers are replaced.

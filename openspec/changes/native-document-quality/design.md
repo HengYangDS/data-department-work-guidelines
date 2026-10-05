@@ -49,90 +49,21 @@ authority, evidence, escalation, and revisit limit. A shorter sentence fails
 review when it removes any of those meanings. Native prose quality and source
 hashes do not establish semantic coverage.
 
-The seven topics retain these responsibilities:
-
-| Owner                  | Duties that must remain explicit                                                                                                                                                             | Failure the wording must exclude                                                                                                 |
-| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| Charter                | Original authority order; lawful and contractual limits; hard risks including unverified citations; correction of an actual breach; risk-scaled acceptance.                                  | Fluent work, reversible overwrite, or effort is treated as permission or proof.                                                  |
-| Analysis               | Stable concepts and decision constraints; evidence confidence and limits; next verification; comparable options; decision owner, actual date, and basis.                                     | A deadline replaces a decision date, a concept changes silently, or a first implementation action substitutes for verification.  |
-| Delivery               | Owner, resources, costs, dependencies, milestones, and checkpoints; material scope/risk changes and their resolution; current claim-matched results; capture before completion.              | A local metric, partial excerpt, or planned check is reported as accepted delivery.                                              |
-| Data                   | Sample-selection bias; historical availability; missingness, delay, conflict, and anomaly impact; professional ownership; working governance controls; actual acceptance.                    | Deployability or written criteria replace accountable production, review, or acceptance.                                         |
-| Communication          | Declared purpose and audience; focused meetings; decision and action owners, deadlines, and completion conditions; escalation; objective expression; title status.                           | A slogan, transcript, maturity-free title, or unowned delay replaces a bounded decision.                                         |
-| Human–AI collaboration | Precise delegated output, destination, audience, and detail; reasonable assumptions when context is not blocking; complete current result inspection; explicit stops; risk-based acceptance. | Standing authorization establishes an unknown responsible person, or known-owner unfinished work is edited without coordination. |
-| Evolution              | Joint task-start coaching; member judgment; immediate correction; reusable prevention; shared evidence calibration; capability and conjunctive net-benefit review.                           | Repeated individual rescue, personal ranking, or a local score replaces improvement of the working mechanism.                    |
-
-Preserve every surrounding original duty, not only the examples in this table.
-The task lead retains goal, boundary, risk, final judgment, and result when
-another person holds decision authority. Project-rule conflicts require
-resolution; the actor cannot dismiss them as immaterial. An Agent may implement
-and verify within delegated scope but cannot grant high-risk approval.
-
-Keep all member result checks, action-authority order, score-label limits,
-honest-problem disclosure protection, data/derivation provenance, and the
-charter-table prohibition. Work of unknown ownership, another person's
-unrecognized or unfinished work, unknown task responsibility, unknown fact
-sources, authority gaps, and material irreversible risks remain distinct stops.
-Nonessential presentation preferences do not suspend otherwise authorized work.
-
-Completion is conjunctive: every agreed condition, current passed verification,
-required acceptance, and the actual lifecycle state must hold. Agent reports
-name that delivery state, goal, and scope; partial or deferred outcomes do not
-bypass the gate. Execution stays within both permission and agreed scope,
-without incidental edits.
-
-Data timelines distinguish availability to the relevant user or system from a
-later query. Domain owners define suitable use cases and quality requirements;
-use permission remains a separate authorized judgment. No data role absorbs
-another role's responsibility or authority. A missing completion condition
-requires a truthful non-final label; separately qualified limited use does not
-establish a fully qualified asset.
-
-Management cadence separates judgment calibration from mechanism review. Joint
-task-start calibration and immediate signal-based correction remain. During
-active work, the department head or appointed guideline maintainer should
-calibrate weekly on one or two real samples in about 30 minutes, reusing an
-existing review or asynchronous exchange. The interval is a justified default;
-a departure names its reason and revisit time. It is not a universal meeting
-or all-member report. The same owner reviews accumulated weak signals and
-mechanism failures at least monthly, while the maintainer and people using the
-practices review net benefit and capability gaps at least quarterly. The monthly
-loop does not rank individuals; a single metric does not measure overall
-personal worth, work, or system value. Excellence still requires transferable
-method, lower complexity, and stronger capability in others together.
-
-Cross-domain ownership preserves the original distinction: accountability is
-mandatory, while one task lead is the default with explained departures. The
-charter owns the interface contract, including each side's needs and the evidence
-accompanying delivery; the data topic applies it without redefining it. The
-charter also keeps the limit on simplification explicit: a useful model must not
-force reality into a single explanation.
-
-Reusable prevention is required when an issue recurs, affects different people
-or projects, spans work cycles, depends on tacit knowledge, creates material
-forgetting risk, or invites repeated Agent execution. These are independent
-triggers. Coaching must preserve the member's judgment; management must not
-normalize recurring personal rescue. Correct a disproved position immediately,
-including an already-published claim.
-
-The evolution topic owns the practice-admission test; the charter links to it
-instead of restating a competing test. Prospective tacit-knowledge, forgetting,
-and repeated-work risks can require prevention before an incident. Managers
-ensure results, anomalies, and actual-use effects return promptly to the
-responsible owner. Scheduled review does not replace that active interface.
-
-A work record is the existing ticket, review, discussion, or project document
-that holds the decision and evidence. It does not require a new form or file.
-Publication means delivery to the agreed destination. Keep product-specific
-governance terms out of member task guidance where ordinary work language
-expresses the same boundary.
+Each duty belongs at its point of use. The charter owns authority and hard
+boundaries; the other six topics own their task-specific judgments and actions.
+The [guidance requirements](specs/guidance-discovery/spec.md) define the full
+observable contract, including cadence, data responsibilities, and adverse
+cases. The task map routes readers to those owners rather than restating their
+rules. This keeps a correction from creating competing policies.
 
 Independent reviews cover fixed source, not a moving summary. Review all
-original numbered subsections, then challenge the revised duties with concrete
-adverse cases. Earlier no-finding judgments remain dated evidence when a later
-counterexample corrects them. A source-based editorial crosswalk is not an
-automated equivalence proof. Keep actual reviewer coverage and failed routes
-with their producing evidence; mark only the corresponding task's observed
-completion. Do not invent a committee quorum or another meaning validator.
+original numbered subsections and surrounding groups, then challenge the revised
+duties with concrete adverse cases. Earlier no-finding judgments remain dated
+evidence when a later counterexample corrects them. A source-based editorial
+crosswalk is not an automated equivalence proof. Keep reviewer coverage and
+failed routes with their producing evidence; mark only the corresponding task's
+observed completion. Do not invent a committee quorum or another meaning
+validator.
 
 ### Give native quality concerns one owner
 
@@ -233,8 +164,10 @@ offline loading together; verify exact bytes and retire the old paths in the
 same migration. Do not copy schemas, add empty scaffolding, keep aliases, or
 move obsolete records into a new directory.
 
-Prettier, Markdownlint, and lychee consume native TOML. Vale requires INI, YAML
-styles, and plain-text vocabulary. The cold installer reads supply and release
+Prettier and lychee read native TOML; Markdownlint and dprint receive parsed
+values through each tool's public configuration interface. Vale requires INI,
+YAML styles, and plain-text
+vocabulary. The cold installer reads supply and release
 JSON before npm dependencies exist. Keep those native formats rather than
 introduce TOML converters, bootstrap parsers, package-embedded policy, ambient
 overrides, or parallel records.
@@ -570,15 +503,16 @@ failed evidence and rollback are not disposable residue.
 
 ### Integrate accepted shared ownership without weakening the floor
 
-Keep `docs-integrity` and `markdown-format` as the only default gates. The
+Keep `docs-integrity` and `markdown-format` as the only default gates and profile
+descriptors. The
 accepted product graph must connect document checks to the actual native
 behavior prerequisite and map static/behavior axes to their real owners.
-Supporting descriptors belong to that dependency closure; they are not extra
-default gates or evidence forwarded through a document command.
+Product-native prerequisites belong to ETHOS's own dependency closure, not
+additional profile descriptors or evidence forwarded through a document command.
 
 Consume the formally accepted schema, not prototype fields or a source-only
 probe. Migrate profile, repository validator, tests, and guidance together.
-Remove superseded descriptor counts, stream-report assumptions, local format
+Remove superseded stream-report assumptions, local format
 glue, risk guards, and history identity implementations only after their
 consumers use the accepted product owner.
 

@@ -36,6 +36,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Keep the prepared minor edition, complete local publication check, supported
+  tool platforms, and Change authority descriptions consistent with their
+  existing contracts.
 - Make emergency containment reachable from the charter and delivery pages.
   Clarify managers' decision boundaries and route review, coaching, and cadence
   questions to their existing topic.

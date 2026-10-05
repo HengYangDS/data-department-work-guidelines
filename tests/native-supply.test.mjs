@@ -347,14 +347,14 @@ test("one supply manifest declares the selected native tools without a retired e
     "osv-scanner",
   ]);
   const vale = manifest.tools.vale;
-  assert.deepEqual(Object.keys(vale.assets).sort(), [
-    "darwin-arm64",
-    "darwin-x64",
-    "linux-arm64",
-    "linux-x64",
-    "win32-arm64",
-    "win32-x64",
-  ]);
+  const platforms = Object.keys(manifest.tools.lychee.assets).sort();
+  for (const [tool, descriptor] of Object.entries(manifest.tools)) {
+    assert.deepEqual(
+      Object.keys(descriptor.assets).sort(),
+      platforms,
+      `${tool} supply must match the complete supported tool graph`,
+    );
+  }
   for (const [key, asset] of Object.entries(vale.assets)) {
     const selected = selectedAsset("vale", ...key.split("-"));
     assert.equal(selected.sha256, asset.sha256);
@@ -381,14 +381,10 @@ test("official OSV supply pins raw binaries and notices for every native host", 
   const descriptor = manifest.tools["osv-scanner"];
   assert.ok(descriptor, "the existing supply owner must declare OSV Scanner");
   assert.equal(descriptor.format, "binary");
-  assert.deepEqual(Object.keys(descriptor.assets).sort(), [
-    "darwin-arm64",
-    "darwin-x64",
-    "linux-arm64",
-    "linux-x64",
-    "win32-arm64",
-    "win32-x64",
-  ]);
+  assert.deepEqual(
+    Object.keys(descriptor.assets).sort(),
+    Object.keys(manifest.tools.lychee.assets).sort(),
+  );
   for (const [key, asset] of Object.entries(descriptor.assets)) {
     const selected = selectedAsset("osv-scanner", ...key.split("-"));
     assert.equal(selected.format, "binary");

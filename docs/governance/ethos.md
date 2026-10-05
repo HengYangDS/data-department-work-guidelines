@@ -37,13 +37,10 @@ procedures. This page defines their authority and acceptance boundaries.
 The compiled Commitment is transient. No private `scope.toml`, tracked claim
 ledger, method-pack plan, or local script supplies a second lifecycle.
 
-Keep `tasks.md` to numbered groups of bounded actions, their completion checks,
-and checkbox state. Specifications own observable requirements; design owns
-implementation choices and migration order. Original results stay with their
-producing tool or evidence record. A task may reference that evidence, but
-must not copy execution logs, checkpoints, or acceptance reports, including
-under an indented checkbox. Successful checkbox parsing alone does not establish
-task-template conformance.
+Follow the [official artifact rules](../../openspec/config.yaml) for task
+structure. Specifications own observable requirements; design owns choices and
+migration order. Original results stay with their producing tool or evidence
+record. Official parsing alone does not prove artifact conformance.
 
 1. **Before writing:** Run the installed ETHOS status command in the intended
    worktree. Follow its verdict, gaps, next action, and continuation. Obtain
@@ -305,8 +302,7 @@ Local source verification remains independent of the network.
 
 The [native policy](../../.config/checks/dependencies/policy.toml) carries only
 the native `IgnoredVulns` fields. Its single human-approved exception is limited
-to
-reviewed development checks using npm `braces` 3.0.3 and expires on 18 October
+to reviewed development checks using npm `braces` 3.0.3 and expires on 18 October
 2026; it is not a production or arbitrary-input waiver. The existing input owner
 checks every matching lock path, raw package identity and development group.
 A changed stable release, official fix, withdrawn or missing finding, or expired
@@ -352,8 +348,10 @@ SemVer identity.
 - Before Linux runner admission, verify the exact OCI digest declared by CI is
   allowed and cached. Native hosts require the declared Node line and exact
   macOS or Windows tool archives in this project's registry; no GitHub fallback
-  is admitted. On Windows ARM64, x64 emulation is functional evidence, not proof
-  of a native x86_64 host.
+  is admitted. Windows ARM64 hosts must use x64 Node and the complete Windows
+  x64 tool set: upstream lychee supplies no Windows ARM64 binary. Record host
+  and process architecture separately. Emulation is functional evidence, not
+  proof of a native x86_64 host.
 - Offline jobs begin at the exact signed tag only after the package and Release
   exist. Tag-push source checks cannot qualify an asset published afterward.
 

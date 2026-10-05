@@ -2,7 +2,7 @@
 tags = ["v*"]
 
 [publication]
-local_verification_command = "node tools/docs/cli.mjs check"
+local_verification_command = "node tools/docs/cli.mjs verify"
 local_installation_command = "npm ci --ignore-scripts"
 
 [[publication.peers]]

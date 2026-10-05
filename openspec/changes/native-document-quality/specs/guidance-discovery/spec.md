@@ -110,7 +110,7 @@ or unknown ownership.
 
 - **WHEN** an analyst presents an unchecked secondhand figure as a fact in an
   otherwise fluent and complete decision memo
-- **THEN** the evolution topic treats the citation as a hard risk
+- **THEN** the charter treats the citation as a hard risk
 - **AND** fluency, effort, and Agent efficiency do not offset it; neither can
   Agent output replace responsibility.
 

@@ -53,6 +53,16 @@ function fixture(run) {
   }
 }
 
+test("publication verification declares the complete local tool graph", () => {
+  const release = parseToml(
+    readFileSync(path.join(root, ".ethos/release.toml"), "utf8"),
+  );
+  assert.equal(
+    release.publication.local_verification_command,
+    "node tools/docs/cli.mjs verify",
+  );
+});
+
 test("profile rejects a third proof gate and an old shell entrypoint", () => {
   fixture((directory) => {
     checkProfile(directory);
