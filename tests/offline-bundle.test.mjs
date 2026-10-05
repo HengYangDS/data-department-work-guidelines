@@ -21,6 +21,7 @@ import { syncBuiltinESMExports } from "node:module";
 import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
+import { pathToFileURL } from "node:url";
 import { gunzipSync } from "node:zlib";
 import { strictVersion } from "../tools/docs/changelog.mjs";
 import * as offline from "../tools/ci/offline-bundle.mjs";
@@ -1002,7 +1003,7 @@ test("the public offline installer reports its actual package-manager version", 
     }
     const bootstrap = path.join(
       inputs.repository,
-      "native-install-fixture.mjs",
+      "native install #fixture.mjs",
     );
     writeFileSync(
       bootstrap,
@@ -1033,7 +1034,7 @@ syncBuiltinESMExports();
       process.execPath,
       [
         "--import",
-        bootstrap,
+        pathToFileURL(bootstrap).href,
         "tools/ci/offline-bundle.mjs",
         "install",
         "--bundle",
