@@ -1,5 +1,11 @@
 import { spawnSync } from "node:child_process";
-import { existsSync, lstatSync, readFileSync, realpathSync } from "node:fs";
+import {
+  existsSync,
+  lstatSync,
+  readFileSync,
+  realpathSync,
+  statfsSync,
+} from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -95,6 +101,43 @@ export function run(command, args = [], options = {}) {
     throw new Error(`${command} emitted warning output:\n${result.stderr}`);
   }
   return capture ? result.stdout : "";
+}
+
+export function workspaceObservation(repository = root) {
+  const target = realpathSync.native(repository);
+  const git = (args) =>
+    run("git", args, { cwd: target, capture: true, rejectStderr: true }).trim();
+  const [commit, tree] = git(["rev-parse", "HEAD", "HEAD^{tree}"]).split(
+    /\r?\n/u,
+  );
+  const source = {
+    commit,
+    tree,
+    trackedChanges: Boolean(
+      git(["status", "--porcelain", "--untracked-files=no"]),
+    ),
+  };
+  const filesystem = statfsSync(target, { bigint: true });
+  return {
+    kind: "repository-verification-context",
+    observedAt: new Date().toISOString(),
+    repository: target,
+    source,
+    runtime: {
+      platform: process.platform,
+      architecture: process.arch,
+      hostname: os.hostname(),
+      node: process.versions.node,
+    },
+    workspaceFilesystem: {
+      unit: "bytes",
+      total: String(filesystem.bsize * filesystem.blocks),
+      free: String(filesystem.bsize * filesystem.bfree),
+      available: String(filesystem.bsize * filesystem.bavail),
+    },
+    limit:
+      "Workspace filesystem only; not VM identity, isolation, or throughput.",
+  };
 }
 
 export function nodeTool(packageName, binName) {

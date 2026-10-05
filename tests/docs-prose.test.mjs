@@ -339,6 +339,27 @@ test("public prose and integrity commands reject the same current-file defect", 
     });
     assert.ifError(initialized.error);
     assert.equal(initialized.status, 0, initialized.stderr);
+    const committed = spawnSync(
+      "git",
+      [
+        "-c",
+        `core.hooksPath=${path.join(directory, ".git", "hooks")}`,
+        "-c",
+        "commit.gpgsign=false",
+        "-c",
+        "user.name=Test",
+        "-c",
+        "user.email=test@example.invalid",
+        "commit",
+        "--allow-empty",
+        "--quiet",
+        "-m",
+        "test: initialize native observation fixture",
+      ],
+      { cwd: directory, encoding: "utf8", timeout: 30_000 },
+    );
+    assert.ifError(committed.error);
+    assert.equal(committed.status, 0, committed.stderr);
     const required = new Set([
       ".ethos/profile.toml",
       ".gitattributes",
@@ -414,6 +435,16 @@ test("public prose and integrity commands reject the same current-file defect", 
         result.stderr,
         /README\.md:\d+:\d+ \[Vale\.Repetition\].*repeated/u,
       );
+      if (command === "check") {
+        const contexts = result.stdout
+          .split("\n")
+          .filter((line) => line.startsWith("INFO "))
+          .map((line) => JSON.parse(line.slice(5)));
+        assert.equal(contexts.length, 1);
+        assert.equal(contexts[0].kind, "repository-verification-context");
+        assert.equal(contexts[0].source.trackedChanges, false);
+        assert.ok(BigInt(contexts[0].workspaceFilesystem.total) > 0n);
+      }
       assert.equal(readFileSync(target, "utf8"), defective);
     }
     writeFileSync(target, original);

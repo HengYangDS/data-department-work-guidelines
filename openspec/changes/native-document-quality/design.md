@@ -136,6 +136,13 @@ completion. Do not invent a committee quorum or another meaning validator.
 
 ### Give native quality concerns one owner
 
+The existing source verifier reports its real repository, commit and tree,
+tracked-change state, native runtime, and mounted workspace capacity once. Use
+Node's native filesystem and OS interfaces, exact integer byte counts, and the existing
+bounded Git executor. Propagate native read errors. This is job-time observation,
+not VM identity, isolation, throughput, or a capacity admission threshold; runner
+qualification remains with its owner. Add no diagnostic controller or proof gate.
+
 Git supplies tracked and non-ignored candidate source. Directory names do not
 waive checks on selected source beneath normally ignored paths; ignored
 untracked state remains excluded. Current prose and link selection preserve the

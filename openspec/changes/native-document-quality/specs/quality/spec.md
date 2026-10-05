@@ -156,3 +156,28 @@ The old manifest and installer SHALL retire when their consumers are replaced.
 - **THEN** installation and verification fail without fetching a substitute,
   borrowing another Forge's identity, or reusing an earlier bundle
 - **AND** only the exact operation's disposable temporary stage is removed.
+
+## ADDED Requirements
+
+### Requirement: Verification reports its native workspace context
+
+The existing source check SHALL report its real repository, commit and tree,
+tracked-change state, native runtime, and mounted workspace filesystem capacity
+once. Byte counts SHALL use exact integers. Native read failures SHALL propagate.
+This observation SHALL NOT establish VM identity, isolation, throughput, or
+capacity admission, and SHALL require no additional controller or proof gate.
+
+#### Scenario: A source check reports its actual workspace
+
+- **WHEN** the existing source check begins in a local or hosted workspace
+- **THEN** one native observation identifies the source, runtime, and total,
+  free, and available bytes of its mounted workspace filesystem
+- **AND** decimal integer strings preserve values beyond floating-point precision
+- **AND** its stated limit excludes VM identity, isolation, and throughput.
+
+#### Scenario: A native filesystem read fails
+
+- **WHEN** the native workspace filesystem read fails
+- **THEN** verification fails with the original error
+- **AND** it does not fabricate a zero-capacity observation or claim runner
+  qualification.

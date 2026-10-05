@@ -215,6 +215,11 @@
       mode, diagnostic count, non-timeout exact text, and once-only execution.
       Verify full source, exact-HEAD proof, cold install, and both matrices
       without assuming startup speed or fabricating progress.
+- [ ] 2.37 Report native source, runtime, and mounted workspace capacity through
+      the existing verifier. Verify exact integer bytes and original read errors,
+      then local checks and both Forge source matrices. Keep VM identity,
+      isolation, and throughput qualification with the runner owner; add no
+      controller, capacity threshold, or proof gate.
 
 ## 3. Qualification and publication
 

@@ -16,6 +16,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Added
 
+- Report the verification source, native runtime, and mounted workspace capacity
+  in existing source-check output. Preserve exact byte counts and read errors;
+  this does not qualify VM identity, isolation, or throughput.
 - A lightweight weekly sample-calibration default, with explained departures and
   a revisit time. Monthly mechanism review and quarterly net-benefit review
   remain separate; no new all-member meeting or report is required.

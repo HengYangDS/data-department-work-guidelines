@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import childProcess from "node:child_process";
+import fs from "node:fs";
 import {
   cpSync,
   existsSync,
@@ -2250,5 +2251,67 @@ test("retired quality owners are absent from current source and dependencies", (
     ".config/checks/markdown/markdownlint-cli2.toml",
   ]) {
     assert.equal(existsSync(path.join(root, name)), false, name);
+  }
+});
+
+test("verification context binds native workspace capacity without claiming VM identity", async () => {
+  const { workspaceObservation } = await import("../tools/docs/runtime.mjs");
+  assert.equal(typeof workspaceObservation, "function");
+  const actual = workspaceObservation();
+  assert.equal(actual.kind, "repository-verification-context");
+  assert.equal(actual.repository, fs.realpathSync.native(root));
+  assert.equal(
+    actual.source.commit,
+    run("git", ["rev-parse", "HEAD"], { capture: true }).trim(),
+  );
+  assert.equal(
+    actual.source.tree,
+    run("git", ["rev-parse", "HEAD^{tree}"], { capture: true }).trim(),
+  );
+  assert.equal(typeof actual.source.trackedChanges, "boolean");
+  assert.ok(Number.isFinite(Date.parse(actual.observedAt)));
+  assert.deepEqual(actual.runtime, {
+    platform: process.platform,
+    architecture: process.arch,
+    hostname: os.hostname(),
+    node: process.versions.node,
+  });
+  assert.equal(actual.workspaceFilesystem.unit, "bytes");
+  assert.ok(BigInt(actual.workspaceFilesystem.total) > 0n);
+  assert.ok(BigInt(actual.workspaceFilesystem.available) >= 0n);
+  assert.match(actual.limit, /workspace filesystem only/iu);
+  assert.match(actual.limit, /not VM identity, isolation, or throughput/iu);
+
+  const original = fs.statfsSync;
+  const blocks = 2n ** 53n + 1n;
+  try {
+    fs.statfsSync = (target, options) => {
+      assert.equal(target, fs.realpathSync.native(root));
+      assert.deepEqual(options, { bigint: true });
+      return { bsize: 4096n, blocks, bfree: blocks - 1n, bavail: blocks - 2n };
+    };
+    syncBuiltinESMExports();
+    const exact = workspaceObservation();
+    assert.deepEqual(exact.workspaceFilesystem, {
+      unit: "bytes",
+      total: String(4096n * blocks),
+      free: String(4096n * (blocks - 1n)),
+      available: String(4096n * (blocks - 2n)),
+    });
+
+    const denied = Object.assign(new Error("native workspace read denied"), {
+      code: "EACCES",
+    });
+    fs.statfsSync = () => {
+      throw denied;
+    };
+    syncBuiltinESMExports();
+    assert.throws(
+      () => workspaceObservation(),
+      (error) => error === denied,
+    );
+  } finally {
+    fs.statfsSync = original;
+    syncBuiltinESMExports();
   }
 });

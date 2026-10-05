@@ -137,6 +137,12 @@ not a login redirect or another Forge's success.
 
 `npm run verify` uses one [portable source entry](../../tools/docs/cli.mjs).
 
+The source check reports its commit, tree, tracked-change state, native runtime,
+and workspace filesystem capacity. Byte counts use exact integers. This observes
+the mounted workspace, not VM identity, isolation, or throughput; a container
+may report its workspace filesystem rather than the guest's root volume. Native
+read failures remain failures, not fabricated zero-capacity observations.
+
 | Concern               | Check                                                                                                              |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | Format and layout     | Prettier for Markdown, code, JSON, and YAML; native dprint TOML formatting; English source and structural spacing. |

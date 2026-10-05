@@ -23,6 +23,7 @@ import {
   gitFiles,
   run,
   validateOpenSpec,
+  workspaceObservation,
 } from "./runtime.mjs";
 
 function testFiles() {
@@ -40,6 +41,7 @@ function runTests() {
 }
 
 async function checkRepository() {
+  console.log(`INFO ${JSON.stringify(workspaceObservation())}`);
   checkConfigurationLayout();
   checkProfile();
   checkLineEndingAttributes();
