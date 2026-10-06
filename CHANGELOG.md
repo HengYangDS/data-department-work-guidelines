@@ -44,6 +44,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Require Linux ARM64 in GitHub source verification alongside Linux x64, macOS,
+  and Windows. Source and offline checks share one declared platform contract;
+  each hosted result still requires actual execution.
 - Validate the requested offline-release tag even when GitHub dispatch starts
   from a branch. Conflicting tags, invalid release inputs, and tags that do not
   identify the verified source now fail the existing release checks.

@@ -887,9 +887,11 @@ test("both providers invoke one verifier on declared hosts", () => {
   assert.equal(result.nodeMajor, 26);
   assert.deepEqual(result.hosts, [
     "ubuntu-latest",
+    "ubuntu-24.04-arm",
     "macos-latest",
     "windows-latest",
   ]);
+  assert.deepEqual(result.hosts, result.offlineHosts);
   assert.deepEqual(result.gitlabHosts, [
     "ci-linux-arm64-container-protected",
     "ci-macos-arm64-shell",
@@ -978,6 +980,30 @@ test("GitHub source verification cannot be skipped or lose a host", () => {
       reason,
       name,
     );
+  }
+});
+
+test("each declared hosted source and offline platform is required", () => {
+  for (const kind of ["source", "offline"]) {
+    for (const host of [
+      "ubuntu-latest",
+      "ubuntu-24.04-arm",
+      "macos-latest",
+      "windows-latest",
+    ]) {
+      const source = YAML.parse(github);
+      const release = YAML.parse(offline);
+      const job = (kind === "source" ? source : release).jobs.verify;
+      job.strategy.matrix.os = job.strategy.matrix.os.filter(
+        (candidate) => candidate !== host,
+      );
+      assert.throws(
+        () =>
+          validateCi(YAML.stringify(source), gitlab, YAML.stringify(release)),
+        /GitHub .* host matrix/u,
+        `${kind}: ${host}`,
+      );
+    }
   }
 });
 

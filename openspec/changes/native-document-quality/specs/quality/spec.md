@@ -131,6 +131,15 @@ manifest without
 duplicated tool supply. Local verification SHALL never download a missing tool.
 GitLab and GitHub SHALL supply and qualify the frozen release independently.
 
+#### Scenario: Source and offline verification cover the declared hosted platforms
+
+- **WHEN** GitHub verifies source or installs the frozen offline bundle
+- **THEN** both workflows use the same declared Linux x64, Linux ARM64, macOS,
+  and Windows hosted selectors and execute the complete repository verifier
+- **AND** an omitted, duplicated, extra, or skipped host fails CI configuration
+  validation; matrix membership alone does not qualify platform execution
+- **AND** each actual job retains its own source, runtime, and result evidence.
+
 #### Scenario: A native tool is supplied offline
 
 - **WHEN** a supported host receives the exact source-bound bundle or a pinned

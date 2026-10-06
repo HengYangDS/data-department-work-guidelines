@@ -248,6 +248,9 @@
       from qualified hosts. Verify focused regressions, full source, cold
       installation, exact-HEAD proof, and both Forge platform matrices; retain
       original failures and every review disposition by reference.
+      Require the same declared Linux x64, Linux ARM64, macOS, and Windows
+      selectors in GitHub source and offline verification; qualify actual jobs
+      separately rather than treating matrix membership as execution evidence.
       Verify explicit offline-release selection from branch dispatch, agreement
       with native Forge tags, and refusal of invalid release inputs or mismatched
       source.

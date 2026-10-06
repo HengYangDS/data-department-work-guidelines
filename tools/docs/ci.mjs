@@ -431,8 +431,7 @@ const workflowRules = [
   },
   { if: "$CI_COMMIT_BRANCH =~ /^proposal\\//" },
 ];
-const hostMatrix = ["ubuntu-latest", "macos-latest", "windows-latest"];
-const offlineHostMatrix = [
+const hostMatrix = [
   "ubuntu-latest",
   "ubuntu-24.04-arm",
   "macos-latest",
@@ -552,7 +551,7 @@ function validateOfflineWorkflow(source, nodeMajor) {
   if (workflow.permissions?.contents !== "read" || !job || job.container) {
     throw new Error("offline verification must use read-only hosted runners");
   }
-  requireHostedJobExecution(job, "offline", offlineHostMatrix);
+  requireHostedJobExecution(job, "offline", hostMatrix);
   const expectedRef = "${{ github.event.release.tag_name || inputs.tag }}";
   if (job.env?.DDWG_RELEASE_TAG !== expectedRef || job.env?.GH_TOKEN) {
     throw new Error("offline verification must bind the exact release tag");
@@ -602,7 +601,7 @@ function validateOfflineWorkflow(source, nodeMajor) {
   if (commands[2]?.run !== verifier || commands.length !== 3) {
     throw new Error("offline verifier must run the full repository check");
   }
-  return offlineHostMatrix;
+  return hostMatrix;
 }
 
 function validateGitLabOffline(gitlab, expectedImage) {
@@ -945,6 +944,6 @@ export function checkCi() {
     readText(".github/workflows/offline-verify.yml"),
   );
   console.log(
-    `PASS CI contract: GitHub ${result.hosts.length} hosted OS; GitLab ${result.gitlabHosts.length} OS with ${result.gitlabReviewHosts.length} separate review selectors; shared ${result.verifier}; hosted execution unverified`,
+    `PASS CI contract: GitHub ${result.hosts.length} hosted platforms; GitLab ${result.gitlabHosts.length} OS with ${result.gitlabReviewHosts.length} separate review selectors; shared ${result.verifier}; hosted execution unverified`,
   );
 }
