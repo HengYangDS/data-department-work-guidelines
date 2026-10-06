@@ -785,7 +785,7 @@ export function validateCi(
   }
   const { nodeMajor } = declaredToolRuntime();
   const imagePattern = new RegExp(
-    `^public\\.ecr\\.aws/docker/library/node:${nodeMajor}-bookworm@sha256:[0-9a-f]{64}$`,
+    `^public\\.ecr\\.aws/docker/library/node:${nodeMajor}-trixie@sha256:[0-9a-f]{64}$`,
     "u",
   );
   const job = github.jobs?.verify;

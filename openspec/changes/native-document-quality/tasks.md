@@ -236,7 +236,8 @@
       inherited-option refusal, native lock resolution, fresh online audit, and
       rebuilt offline supply; do not widen the braces disposition.
       Refresh compatible transitive dependencies and the pinned official Node
-      image. Verify upstream bounds, parser behavior, licenses, install effects,
+      image on its current stable Debian base. Verify upstream bounds, parser
+      behavior, licenses, install effects,
       and raw advisory deltas before rebuilding the source-bound offline bundle.
       Audit actual Node, npm, and native executable components separately from
       the project lock through native extractors. Verify exact artifact and

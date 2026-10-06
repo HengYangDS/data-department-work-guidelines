@@ -1298,7 +1298,7 @@ test("both providers supply tools without a browser installation", () => {
 
 test("GitLab jobs pin the official multiarch Node image by digest", () => {
   const image = gitlab.match(
-    /image: (public\.ecr\.aws\/docker\/library\/node:26-bookworm@sha256:[0-9a-f]{64})/u,
+    /image: (public\.ecr\.aws\/docker\/library\/node:26-trixie@sha256:[0-9a-f]{64})/u,
   )?.[1];
   assert.ok(image, "GitLab Node image is not digest-pinned");
   assert.equal(gitlab.split(`image: ${image}`).length - 1, 1);
@@ -1306,7 +1306,27 @@ test("GitLab jobs pin the official multiarch Node image by digest", () => {
     () =>
       validateCi(
         github,
-        gitlab.replace(image, "public.ecr.aws/docker/library/node:26-bookworm"),
+        gitlab.replace(image, "public.ecr.aws/docker/library/node:26-trixie"),
+        offline,
+      ),
+    /digest-pinned/u,
+  );
+});
+
+test("CI uses the current official Debian base without weakening image pins", () => {
+  const declared = YAML.parse(gitlab).default.image;
+  const digest = declared.slice(declared.indexOf("@sha256:"));
+  const image = `public.ecr.aws/docker/library/node:26-trixie${digest}`;
+  const current = gitlab.replace(declared, image);
+  assert.equal(validateCi(github, current, offline).verifier, "npm run verify");
+  assert.throws(
+    () =>
+      validateCi(
+        github,
+        current.replace(
+          image,
+          `public.ecr.aws/docker/library/node:26-bookworm${digest}`,
+        ),
         offline,
       ),
     /digest-pinned/u,
@@ -1324,10 +1344,7 @@ test("CI runtime follows the declared stable Node line", () => {
   );
   assert.throws(
     () =>
-      validateCi(
-        github,
-        gitlab.replace("node:26-bookworm", "node:22-bookworm"),
-      ),
+      validateCi(github, gitlab.replace("node:26-trixie", "node:22-trixie")),
     /Node 26/u,
   );
 });

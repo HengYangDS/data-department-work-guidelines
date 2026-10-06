@@ -433,6 +433,13 @@ configuration, explicit freshness, and an owned short OS temporary cache. Remove
 that cache after the attempt, including failure; preserve reports and
 configuration, not package-cache residue. Windows checkouts cannot inherit it.
 
+Use the official Node image's current stable Debian base, not a refreshed digest
+of its older distribution. Pin the full `node:<major>-trixie` variant by its
+multi-platform index digest. Native repository checks need Git, which the slim
+variant does not supply. Qualify raw component findings and the exact Runner
+image admission separately. A current base is not a clean audit or installed
+Runner evidence, and image-bundled npm does not qualify the later npm upgrade.
+
 Replace the temporary repository input guard with the accepted ETHOS risk owner
 in the same integration. Do not keep a private schema, duplicate controller,
 filtered npm report, or whole-package exemption. This repository's dependency
