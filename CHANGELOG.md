@@ -47,6 +47,15 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Preserve the original cause when native installation, bundle construction,
+  or cleanup fails. Keep authenticated transport diagnostics safe and refuse
+  concurrent installation before it can remove another attempt's output.
+- Bind release comparisons to adjacent tags and verify selected release metadata
+  against the tagged commit. Prevent CI filters, checkout overrides, or job
+  permissions from silently weakening the declared verification.
+- Check actual source encoding, native Git text attributes, formatter controls,
+  and literal filenames without skipping legitimate code or data examples.
+  Preserve each default proof gate's declared evidence and network boundary.
 - Require Linux ARM64 in GitHub source verification alongside Linux x64, macOS,
   and Windows. Source and offline checks share one declared platform contract;
   each hosted result still requires actual execution.

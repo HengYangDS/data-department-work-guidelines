@@ -267,9 +267,12 @@ Change authority.
    qualification, not a substitute for Step 6's signed-release downloads.
 
 4. At the release cut, move the `Unreleased` items into a dated `X.Y.Z`
-   Changelog section using the actual date, leave `Unreleased` empty, and update
-   both comparison links. Commit that exact source, repeat the required local
-   checks and ETHOS proof, and follow the native acceptance continuation. Use
+   Changelog section using the actual date. Add its explicit History row and
+   both definitions, comparing the previous release tag with the new tag.
+   Leave `Unreleased` empty and advance both of its bases to the new tag.
+   Commit that exact source, repeat the fresh-checkout offline installation,
+   full verification and ETHOS proof from Step 3, and follow the native acceptance
+   continuation. Use
    `ethos publish --json` and its current continuation to publish the admitted
    `dev` and `main` source before creating a tag. Re-read both remote refs and
    require every declared source job to pass on each Forge at this release-cut

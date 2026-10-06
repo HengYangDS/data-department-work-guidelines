@@ -22,10 +22,14 @@ const historyRoutes = {
   github: { comparison: "/compare/", tag: "/releases/tag/" },
 };
 
-function publicationPeers(repository) {
-  return parseToml(
-    readFileSync(path.join(repository, ".ethos", "release.toml"), "utf8"),
-  ).publication?.peers;
+function publicationPeers(
+  repository,
+  source = readFileSync(
+    path.join(repository, ".ethos", "release.toml"),
+    "utf8",
+  ),
+) {
+  return parseToml(source).publication?.peers;
 }
 
 function historyPeers(peers) {
@@ -410,24 +414,23 @@ export function validateChangelog({
   repository = root,
   selectedTag = selectedReleaseTag(),
 } = {}) {
-  const version = readFileSync(path.join(repository, "VERSION"), "utf8").trim();
+  const sources = new Map();
+  const readSource = (relative) => {
+    const bytes = readFileSync(path.join(repository, relative));
+    sources.set(relative, bytes);
+    return bytes.toString("utf8");
+  };
+  const version = readSource("VERSION").trim();
   strictVersion(version);
-  const charter = readFileSync(
-    path.join(repository, "docs", "charter.md"),
-    "utf8",
-  );
+  const charter = readSource("docs/charter.md");
   const editions = [
     ...charter.matchAll(/\*\*Guideline edition:\*\* v([^\s]+)/gu),
   ].map((match) => match[1]);
   if (editions.length !== 1 || editions[0] !== version) {
     throw new Error(`charter edition must match VERSION ${version}`);
   }
-  const packageManifest = JSON.parse(
-    readFileSync(path.join(repository, "package.json"), "utf8"),
-  );
-  const lock = JSON.parse(
-    readFileSync(path.join(repository, "package-lock.json"), "utf8"),
-  );
+  const packageManifest = JSON.parse(readSource("package.json"));
+  const lock = JSON.parse(readSource("package-lock.json"));
   if (
     Object.hasOwn(packageManifest, "version") ||
     Object.hasOwn(lock, "version") ||
@@ -437,10 +440,9 @@ export function validateChangelog({
       "private npm metadata must not carry a second guideline version",
     );
   }
-  const { sections, links } = parseChangelog(
-    readFileSync(path.join(repository, "CHANGELOG.md"), "utf8"),
-    { peers: publicationPeers(repository) },
-  );
+  const { sections, links } = parseChangelog(readSource("CHANGELOG.md"), {
+    peers: publicationPeers(repository, readSource(".ethos/release.toml")),
+  });
   const releases = sections.filter((entry) => entry.version);
   const tags = localTags(repository);
   for (const tagged of tags.keys()) {
@@ -455,13 +457,6 @@ export function validateChangelog({
     ) {
       throw new Error(`untagged historical release: ${entry.version}`);
     }
-  }
-  if (
-    releases.length &&
-    !tags.has(releases[0].version) &&
-    releases[0].version !== version
-  ) {
-    throw new Error("prepared release must identify VERSION");
   }
   const latest = [...tags.keys()].sort(semver.rcompare)[0];
   if (latest && semver.lt(version, latest))
@@ -483,9 +478,17 @@ export function validateChangelog({
       if (destination.target !== `v${label}`) {
         throw new Error(`tag link must identify v${label}`);
       }
+      references.add(`${destination.target}^{commit}`);
       continue;
     }
     const { base, target } = destination;
+    const previous =
+      releases[releases.findIndex((entry) => entry.version === label) + 1];
+    if (label !== "Unreleased" && previous && base !== `v${previous.version}`) {
+      throw new Error(
+        `release comparison must start at previous release v${previous.version}: ${label}`,
+      );
+    }
     if (label === "Unreleased") {
       if (target !== "main") {
         throw new Error("Unreleased comparison must end at main");
@@ -527,6 +530,7 @@ export function validateChangelog({
       throw new Error("tagged release must not contain Unreleased changes");
     references.add(`${selectedTag}^{commit}`);
     references.add("HEAD");
+    for (const relative of sources.keys()) references.add(`HEAD:${relative}`);
   }
   const resolvedCommits = new Map();
   if (references.size) {
@@ -546,13 +550,14 @@ export function validateChangelog({
       throw new Error("native history reference report is incomplete");
     for (const [index, record] of records.entries()) {
       const [oid, type, ...extra] = record.split(" ");
+      const expected = selected[index].startsWith("HEAD:") ? "blob" : "commit";
       if (
         !/^(?:[0-9a-f]{40}|[0-9a-f]{64})$/u.test(oid) ||
-        type !== "commit" ||
+        type !== expected ||
         extra.length
       )
         throw new Error(
-          `native history reference is not a commit: ${selected[index]}: ${record}`,
+          `native history reference is not a ${expected}: ${selected[index]}: ${record}`,
         );
       resolvedCommits.set(selected[index], oid);
     }
@@ -586,6 +591,20 @@ export function validateChangelog({
       throw new Error(
         `selected release tag does not identify HEAD: ${selectedTag}`,
       );
+    for (const [relative, bytes] of sources) {
+      const actual = run("git", ["hash-object", "--no-filters", "--stdin"], {
+        cwd: repository,
+        capture: true,
+        input: bytes,
+        rejectStderr: true,
+        timeout: 20_000,
+      }).trim();
+      if (actual !== resolvedCommits.get(`HEAD:${relative}`)) {
+        throw new Error(
+          `selected release source differs from HEAD: ${relative}`,
+        );
+      }
+    }
   }
   return {
     version,

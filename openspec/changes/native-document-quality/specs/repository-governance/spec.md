@@ -27,3 +27,52 @@ schema or default gate.
 - **THEN** the shared diagnostic accepts meaningful links, inline verification
   commands, and wrapped action text
 - **AND** the official parser remains the owner of task identity and completion.
+
+## MODIFIED Requirements
+
+### Requirement: Changelog navigation offers both declared Forges
+
+Version headings SHALL stay neutral and locally linkable. One unchanged
+Changelog SHALL show explicit GitLab and GitHub history links per section.
+Both SHALL identify the same refs at their official
+`publication.peers[].forge_repository` coordinates with native provider routes.
+Credential-free HTTP or HTTPS SHALL match the deployment. Missing, duplicate,
+unused, mislabeled, wrong-repository, or divergent-ref links SHALL fail offline
+validation; no redirect or per-Forge rewrite is allowed. Every release comparison
+except the oldest SHALL start at its immediately preceding release tag. Native
+Git SHALL resolve every history tag to a commit. Selected-tag validation SHALL
+bind each evaluated Changelog, version, charter, npm metadata and publication
+declaration input to its exact committed bytes, while untagged development
+validation remains available.
+
+#### Scenario: A reader chooses either Forge
+
+- **WHEN** the same Changelog source is rendered on GitLab, GitHub, or locally
+- **THEN** version headings locate sections in that document without choosing
+  an external Forge
+- **AND** each section exposes clearly labeled native history links to both
+  declared repository identities with identical refs.
+
+#### Scenario: A peer link misdirects the reader
+
+- **WHEN** a peer link is missing, duplicated, mislabeled, unused, points to
+  another repository or provider route, includes credentials, or disagrees
+  with the other peer's refs
+- **THEN** the offline repository check rejects the source
+- **AND** an accessible login page or a successful other-peer link does not
+  establish that the intended private comparison exists.
+
+#### Scenario: A release comparison skips its predecessor
+
+- **WHEN** a non-oldest section compares its release tag with any base other
+  than the immediately preceding versioned release
+- **THEN** the Changelog check rejects that incomplete interval
+- **AND** both peer links comparing the adjacent release tags remain valid.
+
+#### Scenario: Selected release metadata differs from the commit
+
+- **WHEN** a selected tag identifies HEAD but an evaluated input differs from
+  that commit's blob
+- **THEN** validation rejects the input with its exact path
+- **AND** native Git owns commit and blob identity; valid committed inputs and
+  untagged development validation remain available.
