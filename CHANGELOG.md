@@ -50,6 +50,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 - Require both Forges' declared verification deadlines, select worktree
   deletions consistently, preserve Git and public download failures, and keep
   unrelated prose fixtures independent of an expiring dependency exception.
+- Keep deleted-repository test fixtures from discovering an enclosing worktree,
+  including during cold offline checks with source-local temporary storage.
 - Restore data-entry stop and verification cues, accountable method selection,
   explicit data-change acceptance, and maintainer duties. Keep precautionary
   prevention separate from admission of department practice.

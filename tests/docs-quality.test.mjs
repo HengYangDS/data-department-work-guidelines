@@ -1592,8 +1592,15 @@ test("native TOML formatting checks literal Git paths and preserves data", () =>
 });
 
 test("Git selection excludes worktree deletions and preserves native failure evidence", (context) => {
-  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-git-selection-"));
+  mkdirSync(path.join(root, "build"), { recursive: true });
+  const directory = mkdtempSync(
+    path.join(root, "build", "ddwg-git-selection-"),
+  );
+  const previousCeiling = process.env.GIT_CEILING_DIRECTORIES;
   try {
+    process.env.GIT_CEILING_DIRECTORIES = fs.realpathSync.native(
+      path.dirname(directory),
+    );
     const initialized = spawnSync("git", ["init", "--quiet", directory], {
       encoding: "utf8",
       timeout: 30_000,
@@ -1621,6 +1628,9 @@ test("Git selection excludes worktree deletions and preserves native failure evi
     assert.throws(() => gitFiles(directory), /git.*exited/u);
     assert.match(diagnostic, /not a git repository/u);
   } finally {
+    if (previousCeiling === undefined)
+      delete process.env.GIT_CEILING_DIRECTORIES;
+    else process.env.GIT_CEILING_DIRECTORIES = previousCeiling;
     rmSync(directory, { recursive: true, force: true });
     assert.equal(existsSync(directory), false);
   }

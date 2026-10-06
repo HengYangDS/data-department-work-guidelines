@@ -228,7 +228,7 @@
       then local checks and both Forge source matrices. Keep VM identity,
       isolation, and throughput qualification with the runner owner; add no
       controller, capacity threshold, or proof gate.
-- [x] 2.38 Resolve the complete fixed-source implementation review at the
+- [ ] 2.38 Resolve the complete fixed-source implementation review at the
       existing installer, bundle, audit, and documentation owners. Publish
       verified native candidates atomically; preserve package-manager failure
       output and the expiring disposition without date-dependent test failures.
@@ -250,6 +250,8 @@
       identities through the existing explicit protected-source offline
       route. Preserve complete results and exact package retirement; do not
       replay successful source jobs or call a candidate a signed Release.
+      Bound the Git-failure fixture's discovery to its own repository, including
+      cold scratch beneath another worktree; preserve native errors and cleanup.
 
 ## 3. Qualification and publication
 
