@@ -8,6 +8,9 @@ The profile SHALL list exactly `docs-integrity` and `markdown-format` as
 default gates and descriptors. Both SHALL use repository-relative Node commands
 without shell or executable-bit dependencies. Integrity SHALL omit formatting;
 the format gate SHALL own it, while standalone verification runs it once.
+The behavior and static-analysis mappings SHALL select their respective gates;
+each descriptor SHALL retain its native kind, evidence class, offline network
+policy, and trust-bearing status.
 Product-native prerequisites and quality axes SHALL belong to the accepted
 ETHOS dependency graph and verified owners, not additional profile descriptors.
 
@@ -42,6 +45,166 @@ ETHOS dependency graph and verified owners, not additional profile descriptors.
   axis names a missing, disconnected, or unverified owner
 - **THEN** the installed product rejects that policy before execution
 - **AND** repository checks do not create a competing graph authority.
+
+#### Scenario: A default gate changes its proof meaning
+
+- **WHEN** the profile swaps a default dimension mapping or changes a gate's
+  native kind, evidence class, offline policy, or trust-bearing status
+- **THEN** the existing profile check rejects that exact contract mismatch
+- **AND** the unchanged two-gate profile remains valid without another gate
+  or a duplicate lifecycle implementation.
+
+### Requirement: Retained source receives format and spacing checks
+
+Native format and Markdown checks SHALL cover Git-selected source, including
+archives. Reader blocks SHALL have one blank line; single-paragraph list peers
+stay adjacent and loose peers consistently separated. Code and data literals
+SHALL retain meaningful spacing. Plain UTF-8 text SHALL receive spacing checks;
+unowned code SHALL fail. Known plain-text identities, extensions and native
+parsers SHALL define text ownership rather than treating every file without a
+filename extension as plain text. Binaries SHALL use effective native Git
+attributes; known text formats SHALL NOT evade checking through that declaration.
+Text source SHALL reject NUL bytes and invalid UTF-8 with its path. Symlinks are
+excluded. Effective native text attributes SHALL select LF on every host.
+Native comment parsers SHALL reject operative formatter suppression without
+rejecting literal examples. Spelling, links, and metadata SHALL cover
+current readers, not promote archives to guidance.
+Native tool inputs SHALL retain the exact selected filename identity, including
+option-like names and names that a line-delimited list cannot represent.
+
+#### Scenario: An archived Markdown file breaks source hygiene
+
+- **WHEN** a tracked or unignored candidate Markdown file under an official
+  Change archive violates Prettier, Markdown lint, or the one-blank-line rule
+- **THEN** the repository verifier fails with the offending file
+- **AND** the archive remains a historical record, not a current reader route
+  or a substitute lifecycle authority.
+
+#### Scenario: Text without a filename extension contains visual padding
+
+- **WHEN** a tracked or unignored candidate UTF-8 text file without a filename
+  extension has consecutive blank lines
+- **THEN** the repository verifier fails with the file and line
+- **AND THEN** binary files and symlinks are not interpreted as prose.
+
+#### Scenario: Code requires literal blank lines
+
+- **WHEN** fenced or indented Markdown code contains meaningful consecutive
+  blank lines, including a nested or longer-fence example
+- **THEN** the existing native spacing rule preserves that literal content
+- **AND** the general text consumer does not reject it through a duplicate
+  raw Markdown spacing scan.
+
+#### Scenario: Structured source contains literal blank lines
+
+- **WHEN** JavaScript strings, YAML scalars, or TOML strings contain meaningful
+  consecutive blank lines
+- **THEN** the native formatter preserves those literal bytes and rejects only
+  structural format defects
+- **AND** the general text consumer does not apply a duplicate raw spacing scan.
+
+#### Scenario: TOML source is selected literally
+
+- **WHEN** Git selects a TOML source path with spaces or glob-like characters
+- **THEN** the formatter checks that exact file through its native public API
+- **AND** ambient exclusion files cannot remove it or change its policy
+- **AND** a syntax error, policy diagnostic, missing plugin, or meaningful-byte
+  change fails qualification rather than silently skipping the source.
+
+#### Scenario: Quoted paragraphs contain visual padding
+
+- **WHEN** ordinary or nested quoted paragraphs contain repeated empty quote
+  lines, or a quote lacks its separator from the preceding paragraph
+- **THEN** the native source format check rejects that exact Git-selected file
+- **AND** formatting restores one structural separator without changing nested
+  code literals or treating the standalone lint command as the full verifier.
+
+#### Scenario: A comment attempts to suppress formatting
+
+- **WHEN** a real native Prettier ignore or range-control comment would exempt
+  a source block from formatting
+- **THEN** native Markdown parsing rejects the control in the existing check
+- **AND** literal code examples and explanatory comments remain valid without
+  a second parser or document-level formatting waiver.
+
+#### Scenario: Wrapped simple list items contain unnecessary gaps
+
+- **WHEN** a list has only single-paragraph items, including wrapped, ordered,
+  task, nested, or quoted items, and a blank line separates peers
+- **THEN** the native list-spacing rule rejects that gap with its source position
+- **AND** document comments and ambient policy cannot waive that check.
+
+#### Scenario: List structure requires separation
+
+- **WHEN** a list item has internally separated paragraphs or blocks, or a
+  fenced example contains literal blank lines
+- **THEN** the native rule preserves literal content and requires one blank line
+  between the genuinely loose list's peer items
+- **AND** tight nested lists, separate lists, heading boundaries, and ordinary
+  paragraph separation retain their structure.
+
+#### Scenario: Reader padding follows a valid code example
+
+- **WHEN** reader blocks have consecutive blank lines outside literal code
+- **THEN** the native Markdown rule rejects the padding at its source location
+- **AND** the valid code example does not hide the reader-layout defect.
+
+#### Scenario: A source without a filename extension has no native owner
+
+- **WHEN** an input without a filename extension is neither a declared plain-text
+  identity nor recognized by its actual repository-relative native parser
+- **THEN** the text check rejects the unowned input
+- **AND** recognized shebang source, ordinary text and structured literals keep
+  their native spacing rules regardless of the caller's working directory.
+
+#### Scenario: Source bytes would bypass English checks
+
+- **WHEN** text source contains NUL, invalid UTF-8, or a binary declaration for
+  a known text format
+- **THEN** the verifier rejects that source with its path
+- **AND** declared binary assets remain reachable without being interpreted
+  as prose, while effective text attributes require LF.
+
+#### Scenario: Native formatting encounters a suppression comment
+
+- **WHEN** a native source parser identifies an operative Prettier suppression
+  comment
+- **THEN** the verifier rejects the control and names its source location
+- **AND** strings, YAML scalars, code examples and ordinary TOML comments remain
+  data; pinned TOML formatting still formats source after those comments.
+
+#### Scenario: Native tools receive literal selected filenames
+
+- **WHEN** a selected source filename resembles a command option or contains
+  a line break
+- **THEN** the existing native tool invocation supplies that exact filename
+  without interpreting it as an option or splitting it into multiple inputs
+- **AND** a formatting defect or broken link still fails, while corrected source
+  passes without restricting valid repository filenames.
+
+### Requirement: Retained repository text uses English
+
+Tracked reader guidance, operations, decisions, changelog, OpenSpec artifacts,
+code comments, and test prose SHALL be English. The validator SHALL reject CJK,
+including supplementary Han scripts, in tracked or unignored candidate text
+with file and line. Human review SHALL assess clarity and faithful translation.
+Git history remains unchanged; translating a tracked archive SHALL NOT certify
+its earlier language or lifecycle retroactively.
+
+#### Scenario: A candidate reintroduces Chinese prose
+
+- **WHEN** a tracked or unignored candidate text contains a CJK character from
+  either the basic or supplementary planes
+- **THEN** the documentation gate fails and identifies its file and line
+- **AND** that check does not claim to assess translation quality.
+
+#### Scenario: An archived artifact is translated
+
+- **WHEN** an archived OpenSpec artifact's present tracked text is translated
+- **THEN** the original Git object remains recoverable and its historical
+  meaning and identifiers remain unchanged
+- **AND THEN** the translated artifact is not treated as fresh proof or as
+  retrospective certification of the original work.
 
 ### Requirement: Product-owned code evidence accompanies document proof
 

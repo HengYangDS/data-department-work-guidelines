@@ -5,6 +5,7 @@ import fs from "node:fs";
 import {
   cpSync,
   existsSync,
+  mkdtempDisposableSync,
   mkdtempSync,
   mkdirSync,
   readFileSync,
@@ -28,6 +29,7 @@ import {
   checkLinks,
   lintMarkdown,
   repositoryFileUri,
+  proseAlerts,
   textViolations,
 } from "../tools/docs/content.mjs";
 import {
@@ -45,6 +47,7 @@ import {
   nodeTool,
   root,
   run,
+  sourceAttributes,
   sourceMarkdown,
 } from "../tools/docs/runtime.mjs";
 
@@ -2103,6 +2106,291 @@ test("English and spacing failures identify a file and line", async () => {
   );
 });
 
+test("English source checks include supplementary Han characters", async () => {
+  assert.match(
+    (await textViolations("docs/example.md", "# Heading\n\u{20000}\n"))[0] ??
+      "",
+    /docs\/example\.md:2: CJK text/u,
+  );
+});
+
+test("native source comment controls cannot suppress formatting while literal examples stay data", async () => {
+  const { format } = await import("prettier");
+  for (const separator of [" ", "\t", "\n"]) {
+    const source = `<!-- prettier-ignore-attribute${separator}class -->\n<div class = 'example'>Read the source.</div>\n`;
+    assert.equal(await format(source, { parser: "html" }), source);
+    assert.match(
+      (await textViolations("fixture.html", source)).join("\n"),
+      /Prettier control comment/u,
+      `native HTML whitespace: ${JSON.stringify(separator)}`,
+    );
+  }
+  assert.equal(
+    await format("<div class = 'example'>Read the source.</div>\n", {
+      parser: "html",
+    }),
+    '<div class="example">Read the source.</div>\n',
+  );
+  for (const [relative, source] of [
+    ["fixture.mjs", "// prettier-ignore\nconst result={ready: true};\n"],
+    ["fixture.ts", "/* prettier-ignore */\nconst result: boolean = true;\n"],
+    ["fixture.yaml", "# prettier-ignore\nready:   true\n"],
+    ["fixture.jsonc", '// prettier-ignore\n{"ready":   true}\n'],
+    ["fixture.css", "/* prettier-ignore */\na{color: red;}\n"],
+    [
+      "fixture.html",
+      "<!-- prettier-ignore-attribute class -->\n<div class='example'>Read the source.</div>\n",
+    ],
+    ["fixture.graphql", "# prettier-ignore\ntype Query { result: String }\n"],
+    ["fixture.hbs", "{{! prettier-ignore }}\n<div>{{value}}</div>\n"],
+  ]) {
+    assert.match(
+      (await textViolations(relative, source)).join("\n"),
+      /Prettier control comment/u,
+      relative,
+    );
+  }
+  for (const [relative, source] of [
+    ["fixture.mjs", 'const message = "// prettier-ignore";\n'],
+    ["fixture.ts", 'const message: string = "/* prettier-ignore */";\n'],
+    ["fixture.yaml", 'message: "# prettier-ignore"\n'],
+    ["fixture.yaml", "message: |\n  # prettier-ignore\n"],
+    ["fixture.jsonc", '{"message": "// prettier-ignore"}\n'],
+    ["fixture.css", 'a::before { content: "/* prettier-ignore */"; }\n'],
+    ["fixture.html", "<p>prettier-ignore</p>\n"],
+    [
+      "fixture.graphql",
+      'type Query { result(message: String = "prettier-ignore"): String }\n',
+    ],
+    ["fixture.hbs", "<p>prettier-ignore</p>\n"],
+    ["fixture.toml", "# dprint-ignore\nkey=   1\n"],
+  ]) {
+    assert.deepEqual(await textViolations(relative, source), [], relative);
+  }
+});
+
+test("only declared plain-text identities bypass native parser ownership", async () => {
+  for (const name of ["Makefile", "Dockerfile", "custom-build"]) {
+    assert.match(
+      (await textViolations(name, "Build the source.\n"))[0] ?? "",
+      /no native formatting owner/u,
+      name,
+    );
+  }
+  for (const name of ["LICENSE", "VERSION", ".gitignore", ".gitattributes"]) {
+    assert.deepEqual(await textViolations(name, "Plain text.\n"), [], name);
+  }
+});
+
+test("parser ownership resolves the source path rather than the caller cwd", async () => {
+  using directory = mkdtempDisposableSync(
+    path.join(os.tmpdir(), "ddwg-parser-owner-"),
+  );
+  cpSync(path.join(root, "tools"), path.join(directory.path, "tools"), {
+    recursive: true,
+  });
+  symlinkSync(
+    path.join(root, "node_modules"),
+    path.join(directory.path, "node_modules"),
+    "junction",
+  );
+  const source =
+    "#!/usr/bin/env node\nconst value = 1;\n\n\nconsole.log(value);\n";
+  writeFileSync(path.join(directory.path, "cli"), source);
+  const module = pathToFileURL(
+    path.join(directory.path, "tools/docs/content.mjs"),
+  ).href;
+  const script = `
+    import assert from "node:assert/strict";
+    const { formatTargets, textViolations } = await import(${JSON.stringify(module)});
+    assert.deepEqual((await formatTargets(["cli"], { fileExtensions: ["toml"], fileNames: [] })).prettier, ["cli"]);
+    assert.deepEqual(await textViolations("cli", ${JSON.stringify(source)}), []);
+  `;
+  const result = spawnSync(
+    process.execPath,
+    ["--input-type=module", "--eval", script],
+    {
+      cwd: root,
+      encoding: "utf8",
+      timeout: 15_000,
+    },
+  );
+  assert.ifError(result.error);
+  assert.equal(result.status, 0, result.stderr);
+});
+
+test("native Git attributes bind complete ordered reports to selected paths", (context) => {
+  const selected = ["README.md", "docs/with space.md"];
+  const nativeSpawn = childProcess.spawnSync;
+  const valid =
+    selected
+      .flatMap((file) => [file, "text", "auto", file, "eol", "lf"])
+      .join("\0") + "\0";
+  let report = valid;
+  const observation = context.mock.method(
+    childProcess,
+    "spawnSync",
+    (command, args, options) => {
+      if (command === "git" && args[0] === "check-attr") {
+        assert.deepEqual(args, ["check-attr", "--stdin", "-z", "text", "eol"]);
+        assert.equal(options.cwd, root);
+        assert.equal(options.input, `${selected.join("\0")}\0`);
+        return { status: 0, stdout: report, stderr: "" };
+      }
+      return nativeSpawn(command, args, options);
+    },
+  );
+  syncBuiltinESMExports();
+  try {
+    assert.deepEqual(
+      [...sourceAttributes(selected)],
+      selected.map((file) => [file, { text: "auto", eol: "lf" }]),
+    );
+    for (const invalid of [
+      valid.slice(0, -1),
+      valid.slice(0, valid.indexOf(selected[1])),
+      valid.replace("README.md", "docs/other.md"),
+      valid.replace("\0text\0", "\0eol\0"),
+    ]) {
+      report = invalid;
+      assert.throws(
+        () => sourceAttributes(selected),
+        /native Git text attribute/u,
+      );
+    }
+  } finally {
+    observation.mock.restore();
+    syncBuiltinESMExports();
+  }
+});
+
+test("native Vale refuses malformed successful reports with their raw diagnosis", (context) => {
+  const nativeSpawn = childProcess.spawnSync;
+  let report = {};
+  const observation = context.mock.method(
+    childProcess,
+    "spawnSync",
+    (command, args, options) => {
+      if (args?.includes("--output=JSON")) {
+        return { status: 0, stdout: JSON.stringify(report), stderr: "" };
+      }
+      return nativeSpawn(command, args, options);
+    },
+  );
+  syncBuiltinESMExports();
+  try {
+    for (const invalid of [
+      { Code: "E201", Text: "fixture runtime diagnosis" },
+      { "README.md": {} },
+      {
+        "README.md": [
+          { Line: 1, Span: [1], Check: "Vale.Repetition", Message: "fixture" },
+        ],
+      },
+      {
+        "README.md": [
+          {
+            Line: 0,
+            Span: [1, 2],
+            Check: "Vale.Repetition",
+            Message: "fixture",
+          },
+        ],
+      },
+    ]) {
+      report = invalid;
+      assert.throws(
+        () => proseAlerts(["README.md"]),
+        (error) =>
+          error.message.includes("native Vale returned an invalid report") &&
+          error.message.includes(JSON.stringify(invalid)),
+      );
+    }
+    report = { "README.md": [] };
+    assert.deepEqual(proseAlerts(["README.md"]), report);
+    report = {
+      "README.md": [
+        { Line: 1, Span: [1, 2], Check: "Vale.Repetition", Message: "fixture" },
+      ],
+    };
+    assert.deepEqual(proseAlerts(["README.md"]), report);
+  } finally {
+    observation.mock.restore();
+    syncBuiltinESMExports();
+  }
+});
+
+test("tracked text refuses invalid UTF-8 and NUL while declared binary assets remain reachable", () => {
+  using directory = mkdtempDisposableSync(
+    path.join(os.tmpdir(), "ddwg-source-bytes-"),
+  );
+  cpSync(path.join(root, "tools"), path.join(directory.path, "tools"), {
+    recursive: true,
+  });
+  symlinkSync(
+    path.join(root, "node_modules"),
+    path.join(directory.path, "node_modules"),
+    "junction",
+  );
+  const initialized = spawnSync("git", ["init", "--quiet", directory.path], {
+    encoding: "utf8",
+    timeout: 10_000,
+  });
+  assert.ifError(initialized.error);
+  assert.equal(initialized.status, 0, initialized.stderr);
+  writeFileSync(path.join(directory.path, ".gitignore"), "node_modules/\n");
+  writeFileSync(
+    path.join(directory.path, ".gitattributes"),
+    "* text=auto eol=lf\nasset.bin -text\n",
+  );
+  writeFileSync(path.join(directory.path, "asset.bin"), Buffer.from([0, 255]));
+  const module = pathToFileURL(
+    path.join(directory.path, "tools/docs/content.mjs"),
+  ).href;
+  const command = [
+    "--input-type=module",
+    "--eval",
+    `const { checkTextLayout } = await import(${JSON.stringify(module)}); await checkTextLayout();`,
+  ];
+  for (const [bytes, message] of [
+    [Buffer.from([0xc3, 0x28]), /README\.md:.*UTF-8/u],
+    [Buffer.from("Readable\0hidden\n"), /README\.md:.*NUL/u],
+  ]) {
+    writeFileSync(path.join(directory.path, "README.md"), bytes);
+    const result = spawnSync(process.execPath, command, {
+      cwd: directory.path,
+      encoding: "utf8",
+      timeout: 15_000,
+    });
+    assert.ifError(result.error);
+    assert.notEqual(result.status, 0, result.stdout);
+    assert.match(result.stderr, message);
+  }
+  writeFileSync(path.join(directory.path, "README.md"), "# Valid source\n");
+  const valid = spawnSync(process.execPath, command, {
+    cwd: directory.path,
+    encoding: "utf8",
+    timeout: 15_000,
+  });
+  assert.ifError(valid.error);
+  assert.equal(valid.status, 0, valid.stderr);
+  writeFileSync(
+    path.join(directory.path, ".gitattributes"),
+    "* text=auto eol=lf\nasset.bin -text\nREADME.md -text\n",
+  );
+  const hidden = spawnSync(process.execPath, command, {
+    cwd: directory.path,
+    encoding: "utf8",
+    timeout: 15_000,
+  });
+  assert.ifError(hidden.error);
+  assert.notEqual(hidden.status, 0);
+  assert.match(
+    hidden.stderr,
+    /README\.md:.*native text owner cannot be declared binary/u,
+  );
+});
+
 test("native spacing checks archived Markdown; other text keeps its own boundary", async () => {
   const file = "openspec/changes/archive/example/spec.md";
   assert.doesNotThrow(() =>
@@ -2123,6 +2411,94 @@ test("native spacing checks archived Markdown; other text keeps its own boundary
       /:3: consecutive blank lines/u,
     );
   }
+});
+
+test("native source tools treat selected filenames as literal inputs", async () => {
+  using directory = mkdtempDisposableSync(
+    path.join(os.tmpdir(), "ddwg-literal-tool-input-"),
+  );
+  writeFileSync(
+    path.join(directory.path, ".gitignore"),
+    "/tools/\n/.config/\n/node_modules/\n/package.json\n",
+  );
+  cpSync(path.join(root, "tools"), path.join(directory.path, "tools"), {
+    recursive: true,
+  });
+  cpSync(path.join(root, ".config"), path.join(directory.path, ".config"), {
+    recursive: true,
+  });
+  cpSync(
+    path.join(root, "package.json"),
+    path.join(directory.path, "package.json"),
+  );
+  symlinkSync(
+    path.join(root, "node_modules"),
+    path.join(directory.path, "node_modules"),
+    "junction",
+  );
+  const initialized = spawnSync("git", ["init", "--quiet", directory.path], {
+    encoding: "utf8",
+    timeout: 10_000,
+  });
+  assert.ifError(initialized.error);
+  assert.equal(initialized.status, 0, initialized.stderr);
+  const source = path.join(directory.path, "--write.md");
+  writeFileSync(source, "# Native Source\n\n-  Item\n");
+  const invoke = (command) =>
+    spawnSync(process.execPath, ["tools/docs/cli.mjs", ...command], {
+      cwd: directory.path,
+      encoding: "utf8",
+      timeout: 30_000,
+    });
+  const unformatted = invoke(["format", "--check"]);
+  assert.ifError(unformatted.error);
+  assert.notEqual(unformatted.status, 0);
+  assert.match(unformatted.stderr, /Code style issues/u);
+  const formatted = invoke(["format"]);
+  assert.ifError(formatted.error);
+  assert.equal(formatted.status, 0, formatted.stderr);
+  const rechecked = invoke(["format", "--check"]);
+  assert.ifError(rechecked.error);
+  assert.equal(rechecked.status, 0, rechecked.stderr);
+  assert.equal(readFileSync(source, "utf8"), "# Native Source\n\n- Item\n");
+
+  const { linkCheckArguments } = await import("../tools/docs/content.mjs");
+  const literalFiles = [
+    process.platform === "win32" ? "--dump.md" : "with\nline.md",
+    "with space.md",
+  ].map((name) => path.join(directory.path, name));
+  const target = path.join(directory.path, "target.md");
+  const list = path.join(directory.path, "files.txt");
+  writeFileSync(target, "# Target\n");
+  writeFileSync(list, `${source}\n`);
+  for (const file of literalFiles)
+    writeFileSync(file, "# Links\n\n[Target](target.md#target)\n");
+  const check = () =>
+    spawnSync(
+      nativeToolBinary("lychee"),
+      linkCheckArguments(list, { literalFiles }),
+      {
+        cwd: directory.path,
+        encoding: "utf8",
+        timeout: 15_000,
+      },
+    );
+  const valid = check();
+  assert.ifError(valid.error);
+  assert.equal(valid.status, 0, valid.stderr);
+  writeFileSync(literalFiles[0], "# Links\n\n[Missing](target.md#absent)\n");
+  const broken = check();
+  assert.ifError(broken.error);
+  assert.notEqual(broken.status, 0);
+  assert.match(`${broken.stdout}${broken.stderr}`, /absent|fragment/iu);
+  const rejected = invoke(["links"]);
+  assert.ifError(rejected.error);
+  assert.notEqual(rejected.status, 0);
+  assert.match(`${rejected.stdout}${rejected.stderr}`, /absent|fragment/iu);
+  writeFileSync(literalFiles[0], "# Links\n\n[Target](target.md#target)\n");
+  const corrected = invoke(["links"]);
+  assert.ifError(corrected.error);
+  assert.equal(corrected.status, 0, corrected.stderr);
 });
 
 test("pinned lychee rejects a broken local fragment", () => {
@@ -2252,6 +2628,67 @@ test("native link policy rejects broken local anchors and makes no network reque
     assert.equal(requests, 0);
   } finally {
     rmSync(directory, { recursive: true, force: true });
+    await new Promise((resolve) => server.close(resolve));
+  }
+});
+
+test("native online link policy actually requests the target and rejects HTTP failures", async () => {
+  const { createServer } = await import("node:http");
+  const { linkCheckArguments } = await import("../tools/docs/content.mjs");
+  let requests = 0;
+  let status = 200;
+  const server = createServer((_request, response) => {
+    requests += 1;
+    response.writeHead(status).end("link fixture");
+  });
+  await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
+  try {
+    using directory = mkdtempDisposableSync(
+      path.join(os.tmpdir(), "ddwg-online-links-"),
+    );
+    const source = path.join(directory.path, "source.md");
+    const list = path.join(directory.path, "files.txt");
+    writeFileSync(
+      source,
+      `# Links\n\n[Remote](http://127.0.0.1:${server.address().port}/)\n`,
+    );
+    writeFileSync(list, `${source}\n`);
+    const check = async () => {
+      const child = childProcess.spawn(
+        nativeToolBinary("lychee"),
+        linkCheckArguments(list, { online: true }),
+        {
+          cwd: root,
+          stdio: ["ignore", "pipe", "pipe"],
+          timeout: 10_000,
+        },
+      );
+      let output = "";
+      child.stdout.on("data", (bytes) => {
+        output += bytes;
+      });
+      child.stderr.on("data", (bytes) => {
+        output += bytes;
+      });
+      const code = await new Promise((resolve, reject) => {
+        child.once("error", reject);
+        child.once("close", resolve);
+      });
+      return { code, output };
+    };
+    const valid = await check();
+    assert.equal(valid.code, 0, valid.output);
+    assert.ok(requests > 0, "online mode made an actual HTTP request");
+    const beforeFailure = requests;
+    status = 404;
+    const invalid = await check();
+    assert.notEqual(invalid.code, 0, invalid.output);
+    assert.ok(
+      requests > beforeFailure,
+      "the failed request reached the target",
+    );
+    assert.match(invalid.output, /404/u);
+  } finally {
     await new Promise((resolve) => server.close(resolve));
   }
 });

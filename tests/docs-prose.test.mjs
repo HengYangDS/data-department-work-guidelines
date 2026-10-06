@@ -425,15 +425,7 @@ test("public prose and integrity commands reject the same current-file defect", 
     for (const command of ["prose", "check"]) {
       const result = spawnSync(
         process.execPath,
-        [
-          "--input-type=module",
-          "--eval",
-          `import { mock } from "node:test";
-           await import("smol-toml");
-           mock.timers.enable({ apis: ["Date"], now: Date.UTC(2026, 9, 18) });
-           process.argv = [process.execPath, "tools/docs/cli.mjs", ${JSON.stringify(command)}];
-           await import("./tools/docs/cli.mjs");`,
-        ],
+        ["tools/docs/cli.mjs", command],
         {
           cwd: directory,
           env: environment,

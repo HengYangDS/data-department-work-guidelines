@@ -28,11 +28,29 @@ import {
   run,
   runNodeTool,
   sourceMarkdown,
+  sourceAttributes,
   temporaryRoot,
 } from "./runtime.mjs";
 
 const requiredMetadata = ["subject", "role", "state", "relations"];
-const cjk = /[\u2e80-\u9fff\uac00-\ud7af\uf900-\ufaff\uff00-\uffef]/u;
+const cjk =
+  /[\p{Script=Han}\u2e80-\u9fff\uac00-\ud7af\uf900-\ufaff\uff00-\uffef]/u;
+const plainTextIdentities = new Set([
+  "LICENSE",
+  "VERSION",
+  ".gitignore",
+  ".gitattributes",
+]);
+const commentTypes = new Set([
+  "Comment",
+  "CommentLine",
+  "CommentBlock",
+  "Line",
+  "Block",
+  "comment",
+  "css-comment",
+  "MustacheCommentStatement",
+]);
 export function nativeTomlFormatter(repository = root) {
   const formatter = createFromBuffer(readFileSync(tomlPlugin.getPath()));
   const policyPath = path.join(repository, ".config/checks/format/toml.toml");
@@ -120,7 +138,8 @@ export async function formatSource({ check = true } = {}) {
       os.devNull,
       "--with-node-modules",
       check ? "--check" : "--write",
-      ...targets.prettier,
+      "--",
+      ...targets.prettier.map(filePath),
     ]);
   }
   const findings = [];
@@ -208,9 +227,38 @@ export function proseAlerts(files = currentMarkdown()) {
     ],
     { capture: true, rejectStderr: true },
   );
-  const alerts = JSON.parse(output);
-  if (!alerts || typeof alerts !== "object" || Array.isArray(alerts))
-    throw new Error("native Vale returned an invalid report");
+  let alerts;
+  try {
+    alerts = JSON.parse(output);
+  } catch (cause) {
+    throw new Error(`native Vale returned an invalid report: ${output}`, {
+      cause,
+    });
+  }
+  const validAlert = (alert) =>
+    alert &&
+    typeof alert === "object" &&
+    !Array.isArray(alert) &&
+    Number.isInteger(alert.Line) &&
+    alert.Line > 0 &&
+    Array.isArray(alert.Span) &&
+    alert.Span.length === 2 &&
+    alert.Span.every((column) => Number.isInteger(column) && column > 0) &&
+    alert.Span[1] >= alert.Span[0] &&
+    typeof alert.Check === "string" &&
+    alert.Check.trim() &&
+    typeof alert.Message === "string" &&
+    alert.Message.trim();
+  if (
+    !alerts ||
+    typeof alerts !== "object" ||
+    Array.isArray(alerts) ||
+    Object.values(alerts).some(
+      (entries) => !Array.isArray(entries) || !entries.every(validAlert),
+    )
+  ) {
+    throw new Error(`native Vale returned an invalid report: ${output}`);
+  }
   return alerts;
 }
 
@@ -334,13 +382,17 @@ export function repositoryFileUri(uri, files) {
   }
 }
 
-export function linkCheckArguments(list, { online = false } = {}) {
+export function linkCheckArguments(
+  list,
+  { online = false, literalFiles = [] } = {},
+) {
   return [
     "--config",
     filePath(".config/checks/links/lychee.toml"),
     ...(online ? ["--offline=false"] : []),
     "--files-from",
     list,
+    ...(literalFiles.length ? ["--", ...literalFiles] : []),
   ];
 }
 
@@ -350,16 +402,25 @@ export function checkLinks({ online = false } = {}) {
   const directory = mkdtempSync(temporaryRoot());
   try {
     const list = path.join(directory, "files.txt");
-    writeFileSync(list, `${files.map(filePath).join("\n")}\n`, "utf8");
+    const sourcePaths = files.map(filePath);
+    const literalFiles = sourcePaths.filter((file) => /[\r\n]/u.test(file));
+    const listedFiles = sourcePaths.filter((file) => !/[\r\n]/u.test(file));
+    writeFileSync(list, `${listedFiles.join("\n")}\n`, "utf8");
     const lychee = nativeToolBinary("lychee");
-    const links = run(lychee, [...linkCheckArguments(list), "--dump"], {
-      capture: true,
-      rejectStderr: true,
-      timeout: 60_000,
-    });
+    const links = run(
+      lychee,
+      ["--dump", ...linkCheckArguments(list, { literalFiles })],
+      {
+        capture: true,
+        rejectStderr: true,
+        timeout: 60_000,
+      },
+    );
     for (const uri of links.split(/\r?\n/u).filter(Boolean))
       repositoryFileUri(uri.trim(), source);
-    run(lychee, linkCheckArguments(list, { online }), { timeout: 90_000 });
+    run(lychee, linkCheckArguments(list, { online, literalFiles }), {
+      timeout: 90_000,
+    });
     console.log(
       `PASS ${online ? "online" : "offline"} links and repository confinement`,
     );
@@ -382,6 +443,59 @@ function blankLineError(relative, source) {
   return "";
 }
 
+async function nativeControlComments(relative, source, parser) {
+  if (
+    !source.includes("prettier-ignore") ||
+    ["markdown", "mdx"].includes(parser)
+  )
+    return [];
+  const owner = ["typescript", "flow", "yaml", "graphql", "glimmer"].includes(
+    parser,
+  )
+    ? parser
+    : ["html", "angular", "lwc", "mjml", "vue"].includes(parser)
+      ? "html"
+      : ["css", "less", "scss"].includes(parser)
+        ? "postcss"
+        : "babel";
+  const { parsers } = await import(`prettier/plugins/${owner}`);
+  const native = parsers[parser];
+  if (!native)
+    throw new Error(`${relative}: no native comment parser for ${parser}`);
+  const pending = [
+    await native.parse(source, { filepath: filePath(relative) }),
+  ];
+  const seen = new Set();
+  const errors = [];
+  while (pending.length) {
+    const node = pending.pop();
+    if (!node || typeof node !== "object" || seen.has(node)) continue;
+    seen.add(node);
+    if (commentTypes.has(node.type ?? node.kind)) {
+      const value = node.value ?? node.text;
+      if (
+        typeof value === "string" &&
+        (value.trim() === "prettier-ignore" ||
+          /^prettier-ignore-attribute(?:\s+(.+))?$/su.test(value.trim()))
+      ) {
+        const line =
+          node.loc?.start?.line ??
+          node.position?.start?.line ??
+          node.source?.start?.line ??
+          node.line ??
+          (node.sourceSpan?.start?.line === undefined
+            ? 1
+            : node.sourceSpan.start.line + 1);
+        errors.push(
+          `${relative}:${line}: remove the Prettier control comment; correct the source or its governed policy`,
+        );
+      }
+    }
+    pending.push(...Object.values(node));
+  }
+  return errors;
+}
+
 export async function textViolations(relative, source) {
   const errors = [];
   if (relative.endsWith(".toml")) {
@@ -395,14 +509,21 @@ export async function textViolations(relative, source) {
     if (cjk.test(line))
       errors.push(`${relative}:${index + 1}: CJK text is not allowed`);
   }
-  const { inferredParser } = await getFileInfo(relative, {
+  const { inferredParser } = await getFileInfo(filePath(relative), {
     ignorePath: [],
     withNodeModules: true,
     resolveConfig: false,
   });
+  if (inferredParser)
+    errors.push(
+      ...(await nativeControlComments(relative, source, inferredParser)),
+    );
   if (!inferredParser && !relative.endsWith(".toml")) {
     const extension = path.extname(relative);
-    if (!["", ".txt", ".ini"].includes(extension)) {
+    if (
+      !plainTextIdentities.has(relative) &&
+      ![".txt", ".ini"].includes(extension)
+    ) {
       errors.push(
         `${relative}: no native formatting owner for this text format`,
       );
@@ -416,15 +537,41 @@ export async function textViolations(relative, source) {
 
 export async function checkTextLayout() {
   const errors = [];
-  for (const relative of gitFiles()) {
+  const files = gitFiles();
+  const attributes = sourceAttributes(files);
+  for (const relative of files) {
     const absolute = filePath(relative);
     if (!existsSync(absolute) || lstatSync(absolute).isSymbolicLink()) continue;
     const bytes = readFileSync(absolute);
-    if (bytes.includes(0)) continue;
+    if (attributes.get(relative).text === "unset") {
+      const { inferredParser } = await getFileInfo(absolute, {
+        ignorePath: [],
+        withNodeModules: true,
+        resolveConfig: false,
+      });
+      if (
+        inferredParser ||
+        path.extname(relative) === ".toml" ||
+        plainTextIdentities.has(relative) ||
+        [".txt", ".ini"].includes(path.extname(relative))
+      ) {
+        errors.push(
+          `${relative}: source with a native text owner cannot be declared binary`,
+        );
+      }
+      continue;
+    }
+    if (bytes.includes(0)) {
+      errors.push(`${relative}: text source contains a NUL byte`);
+      continue;
+    }
     let source;
     try {
       source = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
-    } catch {
+    } catch (error) {
+      errors.push(
+        `${relative}: text source is not valid UTF-8: ${error.message}`,
+      );
       continue;
     }
     errors.push(...(await textViolations(relative, source)));

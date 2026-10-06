@@ -33,6 +33,14 @@ Git selects formatting input; the pinned native formatters identify supported
 formats. Ambient editor and formatter ignore files cannot remove selected source
 from the check. Plain text keeps its one-blank-line ceiling; code or structured
 formats without a native owner fail rather than silently passing.
+Native comment parsers distinguish executable Prettier suppression comments
+from literal examples. Pinned TOML formatting retains ordinary comments and
+formats their following source; no separate comment blacklist is needed.
+The source text boundary checks complete UTF-8 bytes, including supplementary
+Han characters, rather than silently skipping NUL or invalid encoding.
+Git attributes declare binary assets with `-text`; a known text format cannot
+use that declaration to evade its owner. Effective native attributes select LF
+for every text input, independent of host defaults.
 
 The [contributor route](../CONTRIBUTING.md) owns setup and release commands.
 [OpenSpec and ETHOS](../docs/governance/ethos.md) own change and proof admission;
