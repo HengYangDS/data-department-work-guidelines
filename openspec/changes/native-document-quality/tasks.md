@@ -239,6 +239,9 @@
       from qualified hosts. Verify focused regressions, full source, cold
       installation, exact-HEAD proof, and both Forge platform matrices; retain
       original failures and every review disposition by reference.
+      Verify explicit offline-release selection from branch dispatch, agreement
+      with native Forge tags, and refusal of invalid release inputs or mismatched
+      source.
       Cover original-duty findings, actual npm diagnostics, portable native
       selectors, public download causes, and the reachable empty-policy
       withdrawal. Verify the approved trusted-repository development-tool

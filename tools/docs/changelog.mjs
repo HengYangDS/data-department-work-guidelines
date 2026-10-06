@@ -399,9 +399,11 @@ function selectedReleaseTag() {
       ? process.env.GITHUB_REF_NAME || ""
       : "";
   const gitlab = process.env.CI_COMMIT_TAG || "";
-  if (github && gitlab && github !== gitlab)
-    throw new Error("Forge release tag environments disagree");
-  return github || gitlab;
+  const tags = new Set(
+    [process.env.DDWG_RELEASE_TAG, github, gitlab].filter(Boolean),
+  );
+  if (tags.size > 1) throw new Error("Forge release tag environments disagree");
+  return tags.values().next().value || "";
 }
 
 export function validateChangelog({

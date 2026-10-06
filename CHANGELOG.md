@@ -42,6 +42,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Validate the requested offline-release tag even when GitHub dispatch starts
+  from a branch. Conflicting tags, invalid release inputs, and tags that do not
+  identify the verified source now fail the existing release checks.
 - Upgrade the native math renderer so inherited options cannot grant trusted
   rendering. Preserve Markdownlint tokens, ordinary math, and explicit trust
   through the existing consumer without waiving the dependency finding.

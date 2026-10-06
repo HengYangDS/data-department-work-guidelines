@@ -187,6 +187,28 @@ function fixture(run) {
   }
 }
 
+function validateReleaseEnvironment(repository, selection) {
+  const keys = [
+    "DDWG_RELEASE_TAG",
+    "GITHUB_REF_TYPE",
+    "GITHUB_REF_NAME",
+    "CI_COMMIT_TAG",
+  ];
+  const original = keys.map((key) => [key, process.env[key]]);
+  try {
+    for (const key of keys) {
+      if (Object.hasOwn(selection, key)) process.env[key] = selection[key];
+      else delete process.env[key];
+    }
+    return validateChangelog({ repository });
+  } finally {
+    for (const [key, value] of original) {
+      if (value === undefined) delete process.env[key];
+      else process.env[key] = value;
+    }
+  }
+}
+
 test("strict SemVer admits build metadata, not coercions or invalid identifiers", () => {
   for (const version of [
     "4.0.0",
@@ -450,6 +472,109 @@ test("release tags must be annotated and covered by the changelog", () => {
     assert.throws(
       () => validateChangelog({ repository: directory, selectedTag: "v4.0.0" }),
       /does not identify HEAD/u,
+    );
+  });
+});
+
+test("offline dispatch tag activates release validation from a branch", () => {
+  fixture((directory, base) => {
+    const validate = () =>
+      validateReleaseEnvironment(directory, {
+        DDWG_RELEASE_TAG: "v4.0.0",
+        GITHUB_REF_TYPE: "branch",
+        GITHUB_REF_NAME: "main",
+      });
+    const changelog = path.join(directory, "CHANGELOG.md");
+    const release =
+      "## 4.0.0 - 2026-09-25\n\n### Changed\n\n- Released change.\n\n";
+    const prepared = preparedSource(base, release);
+    writeFileSync(changelog, prepared);
+    assert.throws(
+      validate,
+      /selected release tag disagrees with VERSION or changelog/u,
+    );
+    commit(directory, "prepare dispatch release");
+    git(directory, "tag", "v4.0.0");
+    assert.throws(validate, /release tag must be annotated/u);
+    git(directory, "tag", "-d", "v4.0.0");
+    git(directory, "tag", "-a", "v4.0.0", "-m", "fixture release");
+    assert.equal(validate().tagCount, 1);
+    writeFileSync(changelog, source(base, release, "v4.0.0", "v4.0.0"));
+    assert.throws(validate, /Unreleased changes/u);
+    writeFileSync(changelog, prepared);
+    writeFileSync(path.join(directory, "later"), "later\n");
+    commit(directory, "later dispatch source");
+    assert.throws(validate, /selected release tag does not identify HEAD/u);
+  });
+});
+
+test("release environment selectors agree across dispatch and native tags", () => {
+  fixture((directory, base) => {
+    writeFileSync(
+      path.join(directory, "CHANGELOG.md"),
+      preparedSource(
+        base,
+        "## 4.0.0 - 2026-09-25\n\n### Changed\n\n- Released change.\n\n",
+      ),
+    );
+    commit(directory, "prepare selected release");
+    git(directory, "tag", "-a", "v4.0.0", "-m", "fixture release");
+    for (const selection of [
+      { DDWG_RELEASE_TAG: "v4.0.0" },
+      { GITHUB_REF_TYPE: "tag", GITHUB_REF_NAME: "v4.0.0" },
+      { CI_COMMIT_TAG: "v4.0.0" },
+      {
+        DDWG_RELEASE_TAG: "v4.0.0",
+        GITHUB_REF_TYPE: "tag",
+        GITHUB_REF_NAME: "v4.0.0",
+        CI_COMMIT_TAG: "v4.0.0",
+      },
+    ]) {
+      assert.equal(
+        validateReleaseEnvironment(directory, selection).tagCount,
+        1,
+      );
+    }
+    for (const selection of [
+      {
+        DDWG_RELEASE_TAG: "v4.0.0",
+        GITHUB_REF_TYPE: "tag",
+        GITHUB_REF_NAME: "v4.0.1",
+      },
+      { DDWG_RELEASE_TAG: "v4.0.0", CI_COMMIT_TAG: "v4.0.1" },
+      {
+        GITHUB_REF_TYPE: "tag",
+        GITHUB_REF_NAME: "v4.0.0",
+        CI_COMMIT_TAG: "v4.0.1",
+      },
+    ]) {
+      assert.throws(
+        () => validateReleaseEnvironment(directory, selection),
+        /Forge release tag environments disagree/u,
+      );
+    }
+  });
+});
+
+test("offline release input refuses branches and nonrelease references", () => {
+  fixture((directory) => {
+    for (const tag of ["main", "docs/snapshot", "4.0.0", "v4.0.1"]) {
+      assert.throws(
+        () =>
+          validateReleaseEnvironment(directory, {
+            DDWG_RELEASE_TAG: tag,
+            GITHUB_REF_TYPE: "branch",
+            GITHUB_REF_NAME: "main",
+          }),
+        /selected release tag disagrees with VERSION or changelog/u,
+      );
+    }
+    assert.equal(
+      validateReleaseEnvironment(directory, {
+        GITHUB_REF_TYPE: "branch",
+        GITHUB_REF_NAME: "main",
+      }).version,
+      "4.0.0",
     );
   });
 });
