@@ -1238,6 +1238,14 @@ test("a delivered directory alias must also resolve to repository source", () =>
   }
 });
 
+test("native Markdown preserves delimiter flanking and ordinary emphasis", () => {
+  assert.equal(micromark("a*_*"), "<p>a*_*</p>");
+  assert.equal(
+    micromark("*review* and **acceptance**"),
+    "<p><em>review</em> and <strong>acceptance</strong></p>",
+  );
+});
+
 test("native math keeps Markdownlint tokens and inline/display rendering", async () => {
   const require = createRequire(import.meta.url);
   const mathEntry = createRequire(require.resolve("markdownlint/sync")).resolve(

@@ -260,6 +260,11 @@ unsupported. Git's native `.gitattributes` keeps tracked text at LF on every OS.
 | GitHub source CI     | Uses pinned official upstream assets.                            |
 | Offline installation | Uses the source-bound bundle and no replacement download.        |
 
+The project-lock audit covers repository dependencies, not components bundled
+inside Node, npm, or native executables. Audit the actual supplied artifacts
+separately before toolchain acceptance. A newer version or a clean project lock
+does not dispose of a runtime finding or extend an existing exception.
+
 The [supply manifest](../../.config/supply/native.json) pins Vale and lychee
 archives and official OSV Scanner binaries by platform and SHA-256. Raw binaries
 also have exact byte limits. Explicit CI download and a supplied `--asset` file

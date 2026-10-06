@@ -31,8 +31,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 - Permit distribution of the offline development tools for trusted-repository
   checks under the approved exception's original expiry. Production use and
   arbitrary untrusted inputs remain outside its scope.
-- Update the native TOML formatter to 0.9.0 and compatible npm dependencies
-  without adding overrides.
+- Update the native TOML formatter to 0.9.0 and compatible npm dependencies,
+  with explicit pins for the audited Markdown parser and terminal-width fixes.
+- Refresh the digest-pinned official Node 26 CI image on its supported Debian
+  base.
 - Shorten active OpenSpec Change documents and simplify governance navigation.
   Change tasks remain bounded implementation checklists; decision records hold
   durable rationale.

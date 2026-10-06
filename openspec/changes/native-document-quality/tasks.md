@@ -235,6 +235,12 @@
       Qualify patched KaTeX through the existing Markdownlint and math consumers,
       inherited-option refusal, native lock resolution, fresh online audit, and
       rebuilt offline supply; do not widen the braces disposition.
+      Refresh compatible transitive dependencies and the pinned official Node
+      image. Verify upstream bounds, parser behavior, licenses, install effects,
+      and raw advisory deltas before rebuilding the source-bound offline bundle.
+      Audit actual package-manager and runtime components separately from the
+      project lock; retain raw findings and require their own applicable
+      disposition or official remediation before toolchain acceptance.
       Exercise the actual download size boundary and distinguish supplied ABIs
       from qualified hosts. Verify focused regressions, full source, cold
       installation, exact-HEAD proof, and both Forge platform matrices; retain

@@ -16,7 +16,7 @@ stages:
   - verify
 
 default:
-  image: public.ecr.aws/docker/library/node:26-bookworm@sha256:2aaae6d91f99fee84cfc92da9b52c22a185752d247746052bbc3f961e44478c6
+  image: public.ecr.aws/docker/library/node:26-bookworm@sha256:f4cd193a112038791e2c2cb2c6ebd93f73d7c03aca0f855cb4f6ad7dd40d475c
 
 .docs:source-supply:
   before_script: &docs-source-supply
