@@ -1,5 +1,6 @@
 import { existsSync, lstatSync, readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
+import { isDeepStrictEqual } from "node:util";
 import { parse as parseShell } from "shell-quote";
 import { parse as parseToml } from "smol-toml";
 import { documentMetadata, nativeTomlFormatter } from "./content.mjs";
@@ -23,6 +24,8 @@ import {
   readText,
   root,
   run,
+  gitFiles,
+  sourceAttributes,
 } from "./runtime.mjs";
 
 const requiredSections = [
@@ -510,6 +513,19 @@ export function checkProfile(repository = root) {
       "profile proof floor must have exactly docs-integrity and markdown-format",
     );
   }
+  if (
+    !isDeepStrictEqual(
+      { ...profile.proof.code_correctness_map },
+      {
+        behavior: "docs-integrity",
+        "static-analysis": "markdown-format",
+      },
+    )
+  ) {
+    throw new Error(
+      "profile proof dimensions must select their native document gates",
+    );
+  }
   const commands = [
     ["node", "tools/docs/cli.mjs", "check"],
     ["node", "tools/docs/cli.mjs", "format", "--check"],
@@ -517,6 +533,10 @@ export function checkProfile(repository = root) {
   const verificationProviders = [
     ["ethos.adapters.gates.code_quality:behavior_report"],
     ["ethos.adapters.gates.code_quality:static_report"],
+  ];
+  const evidence = [
+    { kind: "test", evidence_class: "proof" },
+    { kind: "lint", evidence_class: "contract" },
   ];
   for (const [index, gate] of profile.proof.gates.entries()) {
     if (JSON.stringify(gate.command) !== JSON.stringify(commands[index])) {
@@ -532,6 +552,16 @@ export function checkProfile(repository = root) {
     ) {
       throw new Error(
         `profile ${gate.id} lacks its native verification provider`,
+      );
+    }
+    if (
+      gate.kind !== evidence[index].kind ||
+      gate.evidence_class !== evidence[index].evidence_class ||
+      gate.network_policy !== "offline" ||
+      gate.trust_bearing !== true
+    ) {
+      throw new Error(
+        `profile ${gate.id} must preserve its native document gate contract`,
       );
     }
   }
@@ -586,9 +616,17 @@ export function checkLicense(repository = root) {
   console.log("PASS singular MIT license and metadata");
 }
 
-export function checkLineEndingAttributes(source = readText(".gitattributes")) {
-  if (source !== "* text=auto eol=lf\n") {
+export function checkLineEndingAttributes(repository = root) {
+  const files = gitFiles(repository);
+  if (!files.includes(".gitattributes")) {
     throw new Error("Git must check out tracked text with LF on every host");
+  }
+  for (const [relative, { text, eol }] of sourceAttributes(files, repository)) {
+    if (text !== "unset" && (!["auto", "set"].includes(text) || eol !== "lf")) {
+      throw new Error(
+        `${relative}: Git must check out tracked text with LF on every host`,
+      );
+    }
   }
   console.log("PASS Git text checkout: LF on every host");
 }

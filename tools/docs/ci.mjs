@@ -7,6 +7,7 @@ import {
   writeFileSync,
 } from "node:fs";
 import path from "node:path";
+import { isDeepStrictEqual } from "node:util";
 import { parse as parseToml } from "smol-toml";
 import YAML from "yaml";
 import { validateLockSupply } from "../ci/offline-bundle.mjs";
@@ -327,6 +328,16 @@ function requireStep(steps, prefix) {
 }
 
 function requireHostedJobExecution(job, kind, hosts) {
+  if (job.permissions !== undefined) {
+    throw new Error(
+      `GitHub ${kind} job must inherit read-only workflow permissions`,
+    );
+  }
+  if (kind === "source" && job.env !== undefined) {
+    throw new Error(
+      "GitHub source job cannot override the execution environment",
+    );
+  }
   if (job["timeout-minutes"] !== verificationMinutes[kind]) {
     throw new Error(
       `GitHub ${kind} timeout must be ${verificationMinutes[kind]} minutes`,
@@ -367,17 +378,29 @@ function requireHostedJobExecution(job, kind, hosts) {
 function validateOfflineWorkflow(source, nodeMajor) {
   const workflow = parseYaml(source, "GitHub offline workflow");
   if (
-    workflow.on?.workflow_dispatch?.inputs?.tag?.required !== true ||
-    workflow.on?.workflow_dispatch?.inputs?.tag?.type !== "string" ||
-    JSON.stringify(workflow.on?.release?.types) !==
-      JSON.stringify(["published"])
+    !isDeepStrictEqual(workflow.on, {
+      workflow_dispatch: {
+        inputs: {
+          tag: {
+            description: "Signed release tag (vX.Y.Z)",
+            required: true,
+            type: "string",
+          },
+        },
+      },
+      release: { types: ["published"] },
+    })
   ) {
     throw new Error(
       "offline verification requires a published release trigger",
     );
   }
   const job = workflow.jobs?.verify;
-  if (workflow.permissions?.contents !== "read" || !job || job.container) {
+  if (
+    !isDeepStrictEqual(workflow.permissions, { contents: "read" }) ||
+    !job ||
+    job.container
+  ) {
     throw new Error("offline verification must use read-only hosted runners");
   }
   requireHostedJobExecution(job, "offline", hostMatrix);
@@ -396,8 +419,10 @@ function validateOfflineWorkflow(source, nodeMajor) {
   const checkout = requireStep(steps, "actions/checkout");
   const setupNode = requireStep(steps, "actions/setup-node");
   if (
-    checkout.step.with?.ref !== expectedRef ||
-    checkout.step.with?.["fetch-depth"] !== 0
+    !isDeepStrictEqual(checkout.step.with, {
+      ref: expectedRef,
+      "fetch-depth": 0,
+    })
   ) {
     throw new Error(
       "offline release checkout must use full history and the exact tag",
@@ -453,6 +478,11 @@ function validateGitLabOffline(gitlab, expectedImage) {
     String(job.variables?.GIT_DEPTH) !== "0"
   ) {
     throw new Error("GitLab offline verification needs the declared runner");
+  }
+  if (!isDeepStrictEqual(job.variables, { GIT_DEPTH: "0" })) {
+    throw new Error(
+      "GitLab offline variables must preserve only full-history selection",
+    );
   }
   const expectedRules = [
     candidateRule,
@@ -618,17 +648,20 @@ export function validateCi(
   );
   const job = github.jobs?.verify;
   if (
-    JSON.stringify(github.on?.push?.branches) !==
-      JSON.stringify(["dev", "main", "proposal/**"]) ||
-    JSON.stringify(github.on?.push?.tags) !== JSON.stringify(["v*"]) ||
-    JSON.stringify(github.on?.pull_request?.branches) !==
-      JSON.stringify(["dev", "main"])
+    !isDeepStrictEqual(github.on, {
+      push: { branches: ["dev", "main", "proposal/**"], tags: ["v*"] },
+      pull_request: { branches: ["dev", "main"] },
+    })
   ) {
     throw new Error(
       "GitHub source triggers must cover accepted and proposal branches, pull requests, and version tags",
     );
   }
-  if (!job || job.container || github.permissions?.contents !== "read") {
+  if (
+    !job ||
+    job.container ||
+    !isDeepStrictEqual(github.permissions, { contents: "read" })
+  ) {
     throw new Error(
       "GitHub verification must use a read-only hosted job without a container",
     );
@@ -643,8 +676,10 @@ export function validateCi(
     }
   }
   const checkout = requireStep(steps, "actions/checkout");
-  if (checkout.step.with?.["fetch-depth"] !== 0) {
-    throw new Error("GitHub must fetch full history and release tags");
+  if (!isDeepStrictEqual(checkout.step.with, { "fetch-depth": 0 })) {
+    throw new Error(
+      "GitHub source checkout must use full history and the triggering repository ref",
+    );
   }
   const setupNode = requireStep(steps, "actions/setup-node");
   if (checkout.index >= setupNode.index) {
@@ -654,33 +689,6 @@ export function validateCi(
     throw new Error(`GitHub Node ${nodeMajor} is missing`);
   }
   const packageManager = requirePackageManagerSetup(steps, setupNode.index);
-  const commands = steps.map((step) => step.run?.trim()).filter(Boolean);
-  const install = commands.indexOf("npm ci --ignore-scripts");
-  const audit = commands.indexOf(auditCommand);
-  const auditSupply = commands.indexOf(
-    "node tools/ci/install-native.mjs osv-scanner --download",
-  );
-  const supply = commands.indexOf(
-    "node tools/ci/install-native.mjs lychee --download",
-  );
-  const proseSupply = commands.indexOf(
-    "node tools/ci/install-native.mjs vale --download",
-  );
-  const verify = commands.indexOf(verifier);
-  if (!(
-    install >= 0 &&
-    packageManager <
-      steps.findIndex((step) => step.run === "npm ci --ignore-scripts") &&
-    install < auditSupply &&
-    auditSupply < audit &&
-    audit < supply &&
-    supply < proseSupply &&
-    proseSupply < verify
-  )) {
-    throw new Error(
-      "GitHub dependency audit, supply, and common verification are out of order",
-    );
-  }
   const evidenceStep = requireStep(steps, "actions/upload-artifact");
   if (
     evidenceStep.step.if !== "always()" ||
@@ -691,6 +699,41 @@ export function validateCi(
     throw new Error(
       "GitHub must preserve complete dependency evidence on every result",
     );
+  const expectedSequence = [
+    checkout.step.uses,
+    setupNode.step.uses,
+    steps.find((step) => step.id === "npm-version").run,
+    steps[packageManager].run,
+    "npm ci --ignore-scripts",
+    "node tools/ci/install-native.mjs osv-scanner --download",
+    auditCommand,
+    evidenceStep.step.uses,
+    "node tools/ci/install-native.mjs lychee --download",
+    "node tools/ci/install-native.mjs vale --download",
+    verifier,
+  ];
+  if (
+    !isDeepStrictEqual(
+      steps.map((step) => step.uses ?? step.run),
+      expectedSequence,
+    )
+  ) {
+    throw new Error(
+      "GitHub source execution sequence must preserve dependency audit, supply, and common verification exactly",
+    );
+  }
+  if (
+    steps.some(
+      (step) =>
+        step.env !== undefined ||
+        step.shell !== undefined ||
+        step["working-directory"] !== undefined,
+    )
+  ) {
+    throw new Error(
+      "GitHub source steps cannot override the execution environment",
+    );
+  }
   const gitlabJob = gitlab[".docs:verify"];
   if (
     JSON.stringify(gitlabJob?.artifacts) !==
@@ -720,8 +763,10 @@ export function validateCi(
       `GitLab verification must use a digest-pinned Node ${nodeMajor} image and declared container runner capability`,
     );
   }
-  if (String(gitlabJob.variables?.GIT_DEPTH) !== "0") {
-    throw new Error("GitLab must fetch full history and release tags");
+  if (!isDeepStrictEqual(gitlabJob.variables, { GIT_DEPTH: "0" })) {
+    throw new Error(
+      "GitLab variables must preserve only full history and release tags",
+    );
   }
   const before = sourceSupply(gitlabJob);
   if (

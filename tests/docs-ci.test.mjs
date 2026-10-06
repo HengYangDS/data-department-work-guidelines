@@ -121,7 +121,7 @@ test("actual native audit preserves findings without blocking delivery", () => {
     mkdirSync(path.join(directory, ".config/checks/dependencies"), {
       recursive: true,
     });
-    // Native scanner fixtures must not inherit the live exception's expiry.
+    // Native scanner fixtures expose every finding through the same policy.
     writeFileSync(
       path.join(directory, ci.dependencyPolicyPath),
       "IgnoredVulns = []\n",
@@ -1071,18 +1071,12 @@ test("GitLab jobs pin the official multiarch Node image by digest", () => {
 
 test("CI uses the current official Debian base without weakening image pins", () => {
   const declared = YAML.parse(gitlab).default.image;
-  const digest = declared.slice(declared.indexOf("@sha256:"));
-  const image = `public.ecr.aws/docker/library/node:26-trixie${digest}`;
-  const current = gitlab.replace(declared, image);
-  assert.equal(validateCi(github, current, offline).verifier, "npm run verify");
+  assert.equal(validateCi(github, gitlab, offline).verifier, "npm run verify");
   assert.throws(
     () =>
       validateCi(
         github,
-        current.replace(
-          image,
-          `public.ecr.aws/docker/library/node:26-bookworm${digest}`,
-        ),
+        gitlab.replace(declared, declared.replace("-trixie@", "-bookworm@")),
         offline,
       ),
     /digest-pinned/u,
@@ -1250,6 +1244,133 @@ test("offline release CI runs the source-pinned bundle on four hosted systems", 
     ],
   ]) {
     assert.throws(() => validateCi(github, gitlab, changed), reason);
+  }
+});
+
+test("Forge verification triggers remain complete and cannot filter material changes", () => {
+  for (const [source, edits, expected] of [
+    [
+      github,
+      [
+        (workflow) => {
+          workflow.on.push["paths-ignore"] = ["**/*.md"];
+        },
+        (workflow) => {
+          workflow.on.pull_request_target = {};
+        },
+      ],
+      /GitHub source triggers/u,
+    ],
+    [
+      offline,
+      [
+        (workflow) => {
+          workflow.on.push = { branches: ["dev"] };
+        },
+        (workflow) => {
+          workflow.on.release["paths-ignore"] = ["**"];
+        },
+      ],
+      /published release trigger/u,
+    ],
+  ]) {
+    for (const edit of edits) {
+      const workflow = YAML.parse(source);
+      edit(workflow);
+      assert.throws(
+        () =>
+          validateCi(
+            source === github ? YAML.stringify(workflow) : github,
+            gitlab,
+            source === offline ? YAML.stringify(workflow) : offline,
+          ),
+        expected,
+      );
+    }
+  }
+  assert.doesNotThrow(() => validateCi(github, gitlab, offline));
+});
+
+test("hosted verification cannot enlarge workflow or job token permissions", () => {
+  for (const source of [github, offline]) {
+    for (const edit of [
+      (workflow) => {
+        workflow.permissions["id-token"] = "write";
+      },
+      (workflow) => {
+        workflow.jobs.verify.permissions = { contents: "write" };
+      },
+    ]) {
+      const workflow = YAML.parse(source);
+      edit(workflow);
+      assert.throws(
+        () =>
+          validateCi(
+            source === github ? YAML.stringify(workflow) : github,
+            gitlab,
+            source === offline ? YAML.stringify(workflow) : offline,
+          ),
+        /read-only/u,
+      );
+    }
+  }
+});
+
+test("hosted source verification stays on the selected repository and exact execution journey", () => {
+  for (const source of [github, offline]) {
+    const workflow = YAML.parse(source);
+    workflow.jobs.verify.steps[0].with.repository = "Other/Repository";
+    assert.throws(
+      () =>
+        validateCi(
+          source === github ? YAML.stringify(workflow) : github,
+          gitlab,
+          source === offline ? YAML.stringify(workflow) : offline,
+        ),
+      /checkout|full history/u,
+    );
+  }
+  for (const edit of [
+    (workflow) => {
+      workflow.jobs.verify.steps[0].with.ref = "main";
+    },
+    (workflow) => {
+      workflow.jobs.verify.steps.splice(2, 0, {
+        run: "node -e 'process.exit(0)'",
+      });
+    },
+    (workflow) => {
+      workflow.jobs.verify.steps.at(-1).env = {
+        NODE_OPTIONS: "--require ./other.mjs",
+      };
+    },
+    (workflow) => {
+      workflow.jobs.verify.steps.at(-1)["working-directory"] = "other";
+    },
+    (workflow) => {
+      workflow.jobs.verify.steps.at(-1).shell = "bash";
+    },
+    (workflow) => {
+      workflow.jobs.verify.env = { NODE_OPTIONS: "--require ./other.mjs" };
+    },
+  ]) {
+    const workflow = YAML.parse(github);
+    edit(workflow);
+    assert.throws(
+      () => validateCi(YAML.stringify(workflow), gitlab, offline),
+      /checkout|execution|environment|sequence/u,
+    );
+  }
+});
+
+test("GitLab verification owner variables cannot override native execution or supply", () => {
+  for (const owner of [".docs:verify", ".offline:verify"]) {
+    const pipeline = YAML.parse(gitlab);
+    pipeline[owner].variables.NPM_CONFIG_REGISTRY = "http://other.example.test";
+    assert.throws(
+      () => validateCi(github, YAML.stringify(pipeline), offline),
+      /variables/u,
+    );
   }
 });
 

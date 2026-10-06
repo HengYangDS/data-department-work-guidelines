@@ -341,6 +341,40 @@ export function sourceMarkdown(files = gitFiles()) {
   return files.filter((relative) => relative.endsWith(".md"));
 }
 
+export function sourceAttributes(files = gitFiles(), repository = root) {
+  if (!files.length) return new Map();
+  const output = run("git", ["check-attr", "--stdin", "-z", "text", "eol"], {
+    cwd: repository,
+    capture: true,
+    input: `${files.join("\0")}\0`,
+    rejectStderr: true,
+    timeout: 30_000,
+  });
+  const fields = output.split("\0");
+  if (fields.pop() !== "" || fields.length !== files.length * 6) {
+    throw new Error("native Git text attribute report is incomplete");
+  }
+  const attributes = new Map();
+  for (const [index, relative] of files.entries()) {
+    const [textPath, textName, text, eolPath, eolName, eol] = fields.slice(
+      index * 6,
+      index * 6 + 6,
+    );
+    if (
+      textPath !== relative ||
+      eolPath !== relative ||
+      textName !== "text" ||
+      eolName !== "eol"
+    ) {
+      throw new Error(
+        `native Git text attributes do not identify selected source: ${relative}`,
+      );
+    }
+    attributes.set(relative, { text, eol });
+  }
+  return attributes;
+}
+
 export function currentMarkdown(files = gitFiles()) {
   return sourceMarkdown(files).filter(
     (relative) => !relative.startsWith("openspec/changes/archive/"),

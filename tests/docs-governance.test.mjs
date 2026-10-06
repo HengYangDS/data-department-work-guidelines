@@ -13,7 +13,7 @@ import {
 import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
-import { parse as parseToml } from "smol-toml";
+import { parse as parseToml, stringify as stringifyToml } from "smol-toml";
 import * as governance from "../tools/docs/governance.mjs";
 import {
   checkLineEndingAttributes,
@@ -110,6 +110,42 @@ test("profile requires product-owned native evidence on both document gates", ()
       () => checkProfile(directory),
       /native verification provider/u,
     );
+  });
+});
+
+test("profile preserves the dimensions and trust boundary of its native gates", () => {
+  fixture((directory) => {
+    const file = path.join(directory, ".ethos", "profile.toml");
+    const original = parseToml(readFileSync(file, "utf8"));
+    assert.doesNotThrow(() => checkProfile(directory));
+    const changes = [
+      (profile) => {
+        profile.proof.code_correctness_map.behavior = "markdown-format";
+      },
+      (profile) => {
+        profile.proof.gates[0].kind = "lint";
+      },
+      (profile) => {
+        profile.proof.gates[1].network_policy = "online";
+      },
+      (profile) => {
+        profile.proof.gates[0].trust_bearing = false;
+      },
+      (profile) => {
+        profile.proof.gates[0].evidence_class = "contract";
+      },
+    ];
+    for (const change of changes) {
+      const altered = structuredClone(original);
+      change(altered);
+      writeFileSync(file, stringifyToml(altered));
+      assert.throws(
+        () => checkProfile(directory),
+        /proof dimensions|native document gate contract/u,
+      );
+    }
+    writeFileSync(file, stringifyToml(original));
+    assert.doesNotThrow(() => checkProfile(directory));
   });
 });
 
@@ -557,10 +593,38 @@ test("native commit policy rejects unscoped or vague subjects", () => {
 
 test("Git checkout normalizes text independently of host autocrlf", () => {
   assert.doesNotThrow(() => checkLineEndingAttributes());
-  assert.throws(
-    () => checkLineEndingAttributes("* text=auto\n"),
-    /LF on every host/u,
-  );
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-checkout-text-"));
+  try {
+    const initialized = spawnSync("git", ["init", "--quiet", directory], {
+      encoding: "utf8",
+      timeout: 10_000,
+    });
+    assert.ifError(initialized.error);
+    assert.equal(initialized.status, 0, initialized.stderr);
+    const attributes = path.join(directory, ".gitattributes");
+    writeFileSync(path.join(directory, "README.md"), "# Text source\n");
+    writeFileSync(path.join(directory, "asset.bin"), Buffer.from([0, 255]));
+    writeFileSync(attributes, "* text=auto eol=lf\nasset.bin -text\n");
+    assert.doesNotThrow(() => checkLineEndingAttributes(directory));
+    writeFileSync(attributes, "* text=auto\n");
+    assert.throws(
+      () => checkLineEndingAttributes(directory),
+      /LF on every host/u,
+    );
+    writeFileSync(attributes, "* text=auto eol=lf\nREADME.md eol=crlf\n");
+    assert.throws(
+      () => checkLineEndingAttributes(directory),
+      /README\.md.*LF on every host/u,
+    );
+    writeFileSync(
+      attributes,
+      "* text=auto eol=lf\nREADME.md -text\nasset.bin -text\n",
+    );
+    assert.doesNotThrow(() => checkLineEndingAttributes(directory));
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+    assert.equal(existsSync(directory), false);
+  }
 });
 
 test("configuration has separate native concern owners", () => {
@@ -581,8 +645,10 @@ function configurationFixture(run) {
   }
 }
 
-test("offline configuration has no advisory expiry and cannot hide findings", (context) => {
-  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-config-expiry-"));
+test("offline configuration exposes all advisory findings", () => {
+  const directory = mkdtempSync(
+    path.join(os.tmpdir(), "ddwg-config-advisories-"),
+  );
   try {
     cpSync(path.join(root, ".config"), path.join(directory, ".config"), {
       recursive: true,
@@ -591,23 +657,16 @@ test("offline configuration has no advisory expiry and cannot hide findings", (c
       path.join(root, "package-lock.json"),
       path.join(directory, "package-lock.json"),
     );
-    context.mock.timers.enable({
-      apis: ["Date"],
-      now: Date.UTC(2026, 9, 17, 23, 59, 59, 999),
-    });
-    assert.doesNotThrow(() => governance.checkConfigurationLayout(directory));
-    context.mock.timers.tick(1);
     assert.doesNotThrow(() => governance.checkConfigurationLayout(directory));
     writeFileSync(
       path.join(directory, ".config/checks/dependencies/policy.toml"),
-      '[[IgnoredVulns]]\nid = "OSV-EXAMPLE"\nignoreUntil = 2099-01-01\nreason = "Obsolete delivery exemption"\n',
+      '[[IgnoredVulns]]\nid = "OSV-EXAMPLE"\nreason = "Hidden finding"\n',
     );
     assert.throws(
       () => governance.checkConfigurationLayout(directory),
       /expose all findings/u,
     );
   } finally {
-    context.mock.timers.reset();
     rmSync(directory, { recursive: true, force: true });
     assert.equal(existsSync(directory), false);
   }
