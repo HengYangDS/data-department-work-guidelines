@@ -22,6 +22,7 @@ import {
 import {
   managedFileExists,
   nativeToolBinary,
+  reportError,
   root,
 } from "../tools/docs/runtime.mjs";
 
@@ -51,6 +52,18 @@ test("official supply declares exactly the supported platform assets", () => {
     () => selectedAsset("lychee", "win32", "arm64"),
     /unsupported/u,
   );
+});
+
+test("native tool identities must name declared manifest entries", () => {
+  for (const tool of ["constructor", "toString", "missing-tool"]) {
+    const expected = `unknown native tool: ${tool}`;
+    for (const select of [selectedAsset, nativeToolBinary]) {
+      assert.throws(
+        () => select(tool),
+        (error) => error.message === expected,
+      );
+    }
+  }
 });
 
 test("explicit native tool selectors use portable names and retain version admission", (context) => {
@@ -94,6 +107,25 @@ test("explicit native tool selectors use portable names and retain version admis
     }
     mock.mock.restore();
     syncBuiltinESMExports();
+  }
+});
+
+test("native assets validate every declared size before supply effects", () => {
+  for (const tool of ["lychee", "osv-scanner"]) {
+    const selected = selectedAsset(tool);
+    const pin = manifest.tools[tool].assets[selected.key];
+    const original = { ...pin };
+    try {
+      for (const size of ["unbounded", -1, 64 * 1024 * 1024 + 1]) {
+        pin.size = size;
+        assert.throws(() => selectedAsset(tool), /format|size/u);
+      }
+      pin.size = 32;
+      assert.equal(selectedAsset(tool).size, 32);
+    } finally {
+      if (Object.hasOwn(original, "size")) pin.size = original.size;
+      else delete pin.size;
+    }
   }
 });
 
@@ -162,6 +194,27 @@ test("GitLab package request stays on its own CI API with header-only identity",
   assert.doesNotMatch(request.url, /fixture-only|github\.com/u);
 });
 
+test("GitLab package URLs preserve the exact origin and supported API prefix", () => {
+  const asset = selectedAsset("lychee", "linux", "arm64");
+  for (const api of [
+    "http://gitlab.example.test/api/v4",
+    "https://gitlab.example.test/team/api/v4/",
+  ]) {
+    const request = gitlabPackageRequest("lychee", asset, {
+      CI_API_V4_URL: api,
+      CI_PROJECT_ID: "42",
+      CI_JOB_TOKEN: "fixture-only",
+    });
+    const expected = new URL(api);
+    const actual = new URL(request.url);
+    assert.equal(actual.origin, expected.origin);
+    assert.equal(
+      actual.pathname,
+      `${expected.pathname.replace(/\/+$/u, "")}/projects/42/packages/generic/lychee/0.24.2/${asset.name}`,
+    );
+  }
+});
+
 test("GitLab package request refuses missing or untrusted CI inputs", () => {
   const asset = selectedAsset("lychee", "linux", "arm64");
   const valid = {
@@ -173,9 +226,12 @@ test("GitLab package request refuses missing or untrusted CI inputs", () => {
     { CI_API_V4_URL: "" },
     { CI_API_V4_URL: "https://user:pass@gitlab.example.test/api/v4" },
     { CI_API_V4_URL: "https://gitlab.example.test/other" },
+    { CI_API_V4_URL: "http://gitlab.example.test//api/v4" },
     { CI_API_V4_URL: "ftp://gitlab.example.test/api/v4" },
     { CI_PROJECT_ID: "42/other" },
     { CI_JOB_TOKEN: "" },
+    { CI_JOB_TOKEN: "fixture\u0000only" },
+    { CI_JOB_TOKEN: "fixture\u0100only" },
   ]) {
     assert.throws(() =>
       gitlabPackageRequest("lychee", asset, { ...valid, ...changed }),
@@ -209,8 +265,16 @@ test("authenticated package download refuses redirects before forwarding identit
 });
 
 test("native asset streaming admits the exact size and refuses one extra byte", async (context) => {
-  let bytes = Buffer.from("bounded");
-  const asset = { size: bytes.length };
+  const admitted = Buffer.from("bounded");
+  let bytes = admitted;
+  const asset = { size: admitted.length };
+  const original = Object.assign(
+    new Error("fixture-only cancellation failed"),
+    {
+      code: "ECONNRESET",
+    },
+  );
+  let cancellationFails = false;
   let cancellations = 0;
   context.mock.method(
     globalThis,
@@ -224,16 +288,39 @@ test("native asset streaming admits the exact size and refuses one extra byte", 
           },
           cancel() {
             cancellations++;
+            if (cancellationFails) throw original;
           },
         }),
       ),
   );
-  const request = { url: "https://fixture.invalid/asset" };
-  bytes = Buffer.concat([bytes, Buffer.from("!")]);
-  await assert.rejects(downloadAsset(request, asset), /size limit/u);
-  assert.equal(cancellations, 1);
-  bytes = bytes.subarray(0, asset.size);
-  assert.deepEqual(await downloadAsset(request, asset), bytes);
+  for (const authenticated of [false, true]) {
+    const request = {
+      url: "https://fixture.invalid/asset",
+      ...(authenticated
+        ? { headers: { "JOB-TOKEN": "fixture-only" }, redirect: "error" }
+        : {}),
+    };
+    bytes = Buffer.concat([admitted, Buffer.from("!")]);
+    cancellationFails = false;
+    await assert.rejects(downloadAsset(request, asset), /size limit/u);
+    cancellationFails = true;
+    await assert.rejects(downloadAsset(request, asset), (error) => {
+      assert.equal(
+        error.message,
+        "native tool download exceeds the size limit",
+      );
+      if (authenticated) {
+        assert.notEqual(error.cause, original);
+        assert.equal(error.cause.code, "ECONNRESET");
+        assert.doesNotMatch(error.cause.message, /fixture-only/u);
+        assert.equal(Object.hasOwn(error.cause, "cause"), false);
+      } else assert.equal(error.cause, original);
+      return true;
+    });
+    bytes = admitted;
+    assert.deepEqual(await downloadAsset(request, asset), admitted);
+  }
+  assert.equal(cancellations, 4, "each rejected stream is disposed once");
 });
 
 test("native transport errors follow the public and authenticated cause boundary", async (context) => {
@@ -255,13 +342,114 @@ test("native transport errors follow the public and authenticated cause boundary
       }),
       (error) => {
         assert.equal(error.message, "native tool download failed");
-        assert.equal(error.cause, authenticated ? undefined : cause);
-        assert.equal(Object.hasOwn(error, "cause"), !authenticated);
+        if (authenticated) {
+          assert.notEqual(error.cause, cause);
+          assert.equal(error.cause.code, "ECONNRESET");
+          assert.doesNotMatch(error.cause.message, /native transport failed/u);
+        } else {
+          assert.equal(error.cause, cause);
+        }
         return true;
       },
     );
   }
   assert.equal(requests, 2, "transport failures do not trigger retries");
+});
+
+test("native body-stream and response-disposal errors preserve safe context without exposing authenticated causes", async (context) => {
+  const original = Object.assign(
+    new Error("fixture-only authenticated body failed"),
+    { code: "UND_ERR_BODY_TIMEOUT" },
+  );
+  let response;
+  let requests = 0;
+  context.mock.method(globalThis, "fetch", async () => {
+    requests++;
+    return response;
+  });
+  for (const authenticated of [false, true]) {
+    const request = {
+      url: "https://fixture.invalid/asset",
+      ...(authenticated
+        ? { headers: { "JOB-TOKEN": "fixture-only" }, redirect: "error" }
+        : {}),
+    };
+    for (const phase of ["body", "dispose"]) {
+      response =
+        phase === "body"
+          ? new Response(
+              new ReadableStream({
+                start(controller) {
+                  controller.enqueue(Buffer.from("partial bytes"));
+                },
+                pull(controller) {
+                  controller.error(original);
+                },
+              }),
+            )
+          : new Response(
+              new ReadableStream({
+                cancel() {
+                  throw original;
+                },
+              }),
+              { status: 500 },
+            );
+      await assert.rejects(downloadAsset(request), (error) => {
+        assert.equal(
+          error.message,
+          phase === "body"
+            ? "native tool download body failed"
+            : "native tool download failed: HTTP 500",
+        );
+        if (authenticated) {
+          assert.notEqual(error.cause, original);
+          assert.equal(error.cause.code, "UND_ERR_BODY_TIMEOUT");
+          assert.doesNotMatch(error.cause.message, /fixture-only/u);
+          assert.equal(Object.hasOwn(error.cause, "cause"), false);
+        } else assert.equal(error.cause, original);
+        return true;
+      });
+    }
+  }
+  assert.equal(
+    requests,
+    4,
+    "body and disposal failures do not trigger retries",
+  );
+});
+
+test("real authenticated redirects are refused without forwarding identity", async () => {
+  const requests = [];
+  const server = createServer((request, response) => {
+    requests.push({ path: request.url, token: request.headers["job-token"] });
+    response.writeHead(302, { Location: "/outside" });
+    response.end();
+  });
+  await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
+  try {
+    const request = gitlabPackageRequest("lychee", selectedAsset("lychee"), {
+      CI_API_V4_URL: `http://127.0.0.1:${server.address().port}/api/v4`,
+      CI_PROJECT_ID: "42",
+      CI_JOB_TOKEN: "fixture-only",
+    });
+    await assert.rejects(downloadAsset(request), (error) => {
+      assert.match(error.cause?.message ?? "", /redirect refused/u);
+      assert.doesNotMatch(
+        `${error.message} ${error.cause?.message}`,
+        /fixture-only/u,
+      );
+      return true;
+    });
+    assert.equal(requests.length, 1);
+    assert.notEqual(requests[0].path, "/outside");
+    assert.equal(requests[0].token, "fixture-only");
+  } finally {
+    server.closeAllConnections();
+    await new Promise((resolve, reject) =>
+      server.close((error) => (error ? reject(error) : resolve())),
+    );
+  }
 });
 
 test("rejected native downloads await response disposal and retain its failure", async (context) => {
@@ -427,7 +615,12 @@ test("persistent native installer cleanup errors remain failures", async (contex
   try {
     await assert.rejects(
       install({ tool: "lychee", downloadSource: "github" }),
-      (error) => error === failure,
+      (error) => {
+        assert.ok(error instanceof SuppressedError);
+        assert.equal(error.error, failure);
+        assert.match(error.suppressed.message, /HTTP 503/u);
+        return true;
+      },
     );
     assert.match(path.basename(temporary), /^\.install-/u);
     assert.equal(fs.existsSync(temporary), true);
@@ -437,6 +630,23 @@ test("persistent native installer cleanup errors remain failures", async (contex
     if (temporary)
       await fsPromises.rm(temporary, { recursive: true, force: true });
   }
+});
+
+test("native suppressed failures retain primary and cleanup diagnostics", (context) => {
+  const lines = [];
+  context.mock.method(console, "error", (line) => lines.push(line));
+  const primary = new Error("native tool download failed: HTTP 503");
+  const cleanup = Object.assign(new Error("stage removal failed"), {
+    code: "EPERM",
+  });
+  reportError(
+    new SuppressedError(cleanup, primary, "installation and cleanup failed"),
+  );
+  assert.deepEqual(lines, [
+    "installation and cleanup failed",
+    primary.message,
+    "EPERM: stage removal failed",
+  ]);
 });
 
 test("one supply manifest declares the selected native tools without a retired entry", () => {

@@ -12,7 +12,10 @@ import {
 import { rm } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { projectPackageRequest } from "./gitlab-package.mjs";
+import {
+  packageTransportFailure,
+  projectPackageRequest,
+} from "./gitlab-package.mjs";
 import {
   filePath,
   managedFileExists,
@@ -30,8 +33,10 @@ export function selectedAsset(
   architecture = process.arch,
 ) {
   const key = `${platform}-${architecture}`;
+  if (!Object.hasOwn(manifest.tools, tool)) {
+    throw new Error(`unknown native tool: ${tool}`);
+  }
   const descriptor = manifest.tools[tool];
-  if (!descriptor) throw new Error(`unknown native tool: ${tool}`);
   const asset = descriptor.assets[key];
   if (!asset || !/^[0-9a-f]{64}$/u.test(asset.sha256)) {
     throw new Error(`unsupported or unpinned ${tool} platform: ${key}`);
@@ -39,7 +44,7 @@ export function selectedAsset(
   const format = descriptor.format ?? "archive";
   if (
     !["archive", "binary"].includes(format) ||
-    (format === "binary" &&
+    ((format === "binary" || asset.size !== undefined) &&
       (!Number.isSafeInteger(asset.size) ||
         asset.size <= 0 ||
         asset.size > 64 * 1024 * 1024))
@@ -136,17 +141,16 @@ export async function downloadAsset(request, asset = {}) {
       signal: AbortSignal.timeout(90_000),
     });
   } catch (error) {
-    throw new Error(
-      "native tool download failed",
-      request.headers ? undefined : { cause: error },
-    );
+    throw new Error("native tool download failed", {
+      cause: request.headers ? packageTransportFailure(error) : error,
+    });
   }
   if (!response.ok) {
     let cause;
     try {
       await response.body?.cancel();
     } catch (error) {
-      cause = error;
+      cause = request.headers ? packageTransportFailure(error) : error;
     }
     throw new Error(
       `native tool download failed: HTTP ${response.status}`,
@@ -157,12 +161,22 @@ export async function downloadAsset(request, asset = {}) {
   const limit = asset.size ?? 32 * 1024 * 1024;
   const chunks = [];
   let size = 0;
-  for await (const chunk of response.body) {
-    size += chunk.length;
-    if (size > limit)
-      throw new Error("native tool download exceeds the size limit");
-    chunks.push(chunk);
+  try {
+    for await (const chunk of response.body) {
+      size += chunk.length;
+      if (size > limit) break;
+      chunks.push(chunk);
+    }
+  } catch (error) {
+    throw new Error(
+      size > limit
+        ? "native tool download exceeds the size limit"
+        : "native tool download body failed",
+      { cause: request.headers ? packageTransportFailure(error) : error },
+    );
   }
+  if (size > limit)
+    throw new Error("native tool download exceeds the size limit");
   return Buffer.concat(chunks);
 }
 
@@ -205,6 +219,7 @@ export async function install({
   }
   mkdirSync(directory, { recursive: true });
   const temporary = mkdtempSync(path.join(directory, ".install-"));
+  let primaryFailure;
   try {
     const archive = path.join(temporary, selected.name);
     const bytes = assetFile
@@ -268,13 +283,27 @@ export async function install({
       throw new Error(`installed ${tool} failed verification`);
     }
     return target;
+  } catch (error) {
+    primaryFailure = error;
+    throw error;
   } finally {
-    await rm(temporary, {
-      recursive: true,
-      force: true,
-      maxRetries: 10,
-      retryDelay: 200,
-    });
+    try {
+      await rm(temporary, {
+        recursive: true,
+        force: true,
+        maxRetries: 10,
+        retryDelay: 200,
+      });
+    } catch (cleanup) {
+      if (primaryFailure !== undefined) {
+        throw new SuppressedError(
+          cleanup,
+          primaryFailure,
+          `native installation and stage cleanup failed: ${temporary}`,
+        );
+      }
+      throw cleanup;
+    }
   }
 }
 

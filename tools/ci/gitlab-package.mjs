@@ -26,7 +26,8 @@ export function projectPackageRequest(
     api.password ||
     api.search ||
     api.hash ||
-    !apiPath.endsWith("/api/v4")
+    !apiPath.endsWith("/api/v4") ||
+    apiPath.includes("//")
   ) {
     throw new Error("GitLab CI API URL is not a trusted API base");
   }
@@ -35,7 +36,7 @@ export function projectPackageRequest(
   if (!/^\d+$/u.test(projectId ?? "")) {
     throw new Error("GitLab CI project ID is missing or invalid");
   }
-  if (!token || /[\r\n]/u.test(token)) {
+  if (typeof token !== "string" || !/^[\x21-\x7e]+$/u.test(token)) {
     throw new Error("GitLab CI job token is missing or invalid");
   }
   if (!/^[a-z][a-z0-9-]*$/u.test(packageName ?? "")) {
@@ -52,9 +53,40 @@ export function projectPackageRequest(
     encodeURIComponent(version),
     encodeURIComponent(fileName),
   ].join("/");
+  const url = new URL(api.href);
+  url.pathname = route;
   return {
-    url: new URL(route, api.origin).href,
+    url: url.href,
     headers: { "JOB-TOKEN": token },
     redirect: "error",
   };
+}
+
+export function packageTransportFailure(error) {
+  const descriptions = {
+    ENOTFOUND: "name resolution failed",
+    EAI_AGAIN: "name resolution unavailable",
+    ECONNREFUSED: "connection refused",
+    ECONNRESET: "connection reset",
+    ETIMEDOUT: "connection timed out",
+    UND_ERR_CONNECT_TIMEOUT: "connection timed out",
+    UND_ERR_HEADERS_TIMEOUT: "response headers timed out",
+    UND_ERR_BODY_TIMEOUT: "response body timed out",
+    UND_ERR_SOCKET: "connection closed",
+  };
+  const code = error?.cause?.code ?? error?.code;
+  if (Object.hasOwn(descriptions, code)) {
+    return Object.assign(new Error(`package transport ${descriptions[code]}`), {
+      code,
+    });
+  }
+  if (["AbortError", "TimeoutError"].includes(error?.name)) {
+    return new Error(
+      `package transport ${error.name === "TimeoutError" ? "timed out" : "aborted"}`,
+    );
+  }
+  if (error?.cause?.message === "unexpected redirect") {
+    return new Error("authenticated package redirect refused");
+  }
+  return new Error("authenticated package transport failed");
 }

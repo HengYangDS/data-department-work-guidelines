@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
 import childProcess from "node:child_process";
+import fs from "node:fs";
 import {
   appendFileSync,
   copyFileSync,
@@ -1362,7 +1363,7 @@ test("an empty npm cache cannot satisfy the actual offline install", () => {
   }
 });
 
-test("public download errors retain their cause while credential-bearing errors do not", async () => {
+test("public downloads retain native causes; authenticated downloads expose only safe categories", async () => {
   for (const [acquire, environment, provider, retainedCause] of [
     [
       acquireGitHubBundle,
@@ -1407,8 +1408,16 @@ test("public download errors retain their cause while credential-bearing errors 
             error.message,
             `${provider} release bundle download failed`,
           );
-          assert.equal(error.cause, retainedCause ? native : undefined);
-          assert.equal(Object.hasOwn(error, "cause"), retainedCause);
+          if (retainedCause) {
+            assert.equal(error.cause, native);
+          } else {
+            assert.notEqual(error.cause, native);
+            assert.equal(error.cause.code, "ECONNRESET");
+            assert.doesNotMatch(
+              error.cause.message,
+              /native transport failed|fixture-only/u,
+            );
+          }
           return true;
         },
       );
@@ -1419,6 +1428,116 @@ test("public download errors retain their cause while credential-bearing errors 
         ),
         [],
       );
+    });
+  }
+});
+
+test("offline body-stream failures retain download context and authenticated classification without output", async () => {
+  for (const [acquire, environment, provider] of [
+    [
+      acquireGitHubBundle,
+      { GITHUB_REPOSITORY: "Example/Repository", DDWG_RELEASE_TAG: "v4.2.0" },
+      "GitHub",
+    ],
+    [
+      offline.acquireGitLabBundle,
+      {
+        CI_API_V4_URL: "http://gitlab.example.test/api/v4",
+        CI_PROJECT_ID: "42",
+        CI_JOB_TOKEN: "fixture-only",
+        CI_COMMIT_TAG: "v4.2.0",
+        CI_PIPELINE_SOURCE: "api",
+      },
+      "GitLab",
+    ],
+  ]) {
+    await buildFixture(async (inputs) => {
+      const built = assembleBundle(inputs);
+      writeFileSync(
+        path.join(inputs.repository, ".config/release/offline-bundle.json"),
+        JSON.stringify(built),
+      );
+      for (const phase of ["body", "dispose", "missing", "size-cancel"]) {
+        const original = Object.assign(
+          new Error("fixture-only authenticated body failed"),
+          { code: "ECONNRESET" },
+        );
+        let requests = 0;
+        let cancellations = 0;
+        await assert.rejects(
+          acquire({
+            repository: inputs.repository,
+            environment,
+            fetcher: async () => {
+              requests++;
+              if (phase === "missing") return new Response(null);
+              if (phase === "size-cancel") {
+                const chunk = Buffer.alloc(1024 * 1024, 65);
+                return new Response(
+                  new ReadableStream({
+                    pull(controller) {
+                      controller.enqueue(chunk);
+                    },
+                    cancel() {
+                      cancellations++;
+                      throw original;
+                    },
+                  }),
+                );
+              }
+              return phase === "body"
+                ? new Response(
+                    new ReadableStream({
+                      start(controller) {
+                        controller.enqueue(Buffer.from("partial bytes"));
+                      },
+                      pull(controller) {
+                        controller.error(original);
+                      },
+                    }),
+                  )
+                : new Response(
+                    new ReadableStream({
+                      cancel() {
+                        throw original;
+                      },
+                    }),
+                    { status: 500 },
+                  );
+            },
+          }),
+          (error) => {
+            assert.equal(
+              error.message,
+              phase === "size-cancel"
+                ? `${provider} release bundle exceeds the size limit`
+                : phase === "body"
+                  ? `${provider} release bundle download body failed`
+                  : phase === "dispose"
+                    ? `${provider} release bundle download failed: HTTP 500`
+                    : `${provider} release bundle download returned no body`,
+            );
+            if (phase !== "missing") {
+              if (provider === "GitLab") {
+                assert.notEqual(error.cause, original);
+                assert.equal(error.cause.code, "ECONNRESET");
+                assert.doesNotMatch(error.cause.message, /fixture-only/u);
+                assert.equal(Object.hasOwn(error.cause, "cause"), false);
+              } else assert.equal(error.cause, original);
+            }
+            return true;
+          },
+        );
+        assert.equal(requests, 1);
+        if (phase === "size-cancel") assert.equal(cancellations, 1);
+        assert.deepEqual(
+          readdirSync(
+            path.join(inputs.repository, "build/artifacts/offline-bundle"),
+          ),
+          [],
+        );
+        assert.equal(existsSync(inputs.outputPath), true);
+      }
     });
   }
 });
@@ -1513,7 +1632,10 @@ test("GitHub acquisition uses the exact public asset without a CLI or credential
 test("public GitHub acquisition fails closed and removes only its failed output", async () => {
   for (const [fetcher, expected] of [
     [async () => new Response("missing", { status: 404 }), /HTTP 404/u],
-    [async () => new Response(null, { status: 200 }), /download failed/u],
+    [
+      async () => new Response(null, { status: 200 }),
+      /download returned no body/u,
+    ],
     [
       async () => {
         throw new Error("network failed");
@@ -1623,7 +1745,11 @@ test("rejected Forge downloads await response disposal without publishing output
           (error) =>
             error.message ===
               `${provider} release bundle download failed: HTTP 500` &&
-            error.cause === cleanupFailure &&
+            (provider === "GitLab" && cleanupFailure !== undefined
+              ? error.cause !== cleanupFailure &&
+                error.cause?.message ===
+                  "authenticated package transport failed"
+              : error.cause === cleanupFailure) &&
             Object.hasOwn(error, "cause") === (cleanupFailure !== undefined),
         );
         assert.equal(requests, 1);
@@ -2057,7 +2183,7 @@ test("npm CLI is a JavaScript entrypoint on POSIX and Windows layouts", () => {
         pathValue: directory,
         npmExecPath: null,
       }),
-      cli,
+      realpathSync(cli),
     );
   } finally {
     rmSync(directory, { recursive: true, force: true });
@@ -2126,6 +2252,313 @@ test("npm entrypoint follows its native execution and Windows prefix authority",
     );
   } finally {
     rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test("npm resolution skips non-launcher directories and refuses a broken selected launcher", () => {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-npm-selection-"));
+  try {
+    const stale = path.join(directory, "stale");
+    const selected = path.join(directory, "selected");
+    for (const location of [stale, selected]) {
+      const cli = path.join(location, "node_modules/npm/bin/npm-cli.js");
+      mkdirSync(path.dirname(cli), { recursive: true });
+      writeFileSync(cli, "fixture");
+    }
+    const selectedCli = path.join(selected, "node_modules/npm/bin/npm-cli.js");
+    writeFileSync(path.join(selected, "npm.cmd"), "fixture");
+    assert.equal(
+      npmCliPath({
+        platform: "win32",
+        pathValue: [stale, selected].join(path.delimiter),
+        npmExecPath: null,
+      }),
+      realpathSync(selectedCli),
+    );
+    for (const [platform, launcher] of [
+      ["win32", "npm.cmd"],
+      ["linux", "npm"],
+    ]) {
+      mkdirSync(path.join(stale, launcher));
+      if (launcher === "npm") {
+        writeFileSync(path.join(selected, launcher), "fixture", {
+          mode: 0o755,
+        });
+      }
+      assert.equal(
+        npmCliPath({
+          platform,
+          pathValue: [stale, selected].join(path.delimiter),
+          npmExecPath: null,
+        }),
+        realpathSync(selectedCli),
+      );
+      rmSync(path.join(stale, launcher), { recursive: true });
+    }
+    rmSync(path.join(stale, "node_modules"), { recursive: true });
+    writeFileSync(path.join(stale, "npm.cmd"), "broken fixture");
+    assert.throws(
+      () =>
+        npmCliPath({
+          platform: "win32",
+          pathValue: [stale, selected].join(path.delimiter),
+          npmExecPath: null,
+        }),
+      /selected npm launcher.*entrypoint/u,
+    );
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test("concurrent offline installs refuse before effects across processes and release their reservation", () => {
+  buildFixture((inputs) => {
+    const built = assembleBundle(inputs);
+    const originalFailure = new Error(
+      "first install deliberately failed before npm ci",
+    );
+    const marker = path.join(inputs.repository, "second-installer-effect");
+    let second;
+    assert.throws(
+      () =>
+        installBundle({
+          bundlePath: inputs.outputPath,
+          record: built,
+          repository: inputs.repository,
+          commandRunner: () => {
+            second = spawnSync(
+              process.execPath,
+              [
+                "--input-type=module",
+                "-e",
+                `
+import { installBundle } from ${JSON.stringify(pathToFileURL(path.join(root, "tools/ci/offline-bundle.mjs")).href)};
+import { writeFileSync, mkdirSync } from "node:fs";
+import path from "node:path";
+try {
+  installBundle({
+    bundlePath: ${JSON.stringify(inputs.outputPath)},
+    record: ${JSON.stringify(built)},
+    repository: ${JSON.stringify(inputs.repository)},
+    commandRunner: (_command, args) => {
+      writeFileSync(${JSON.stringify(marker)}, "second attempt reached npm");
+      if (args[1] === "--version") return "12.2.0\\n";
+      if (args[1] === "ci") mkdirSync(path.join(${JSON.stringify(inputs.repository)}, "node_modules"));
+      throw new Error("unreserved second install reached mutation");
+    },
+  });
+  process.exitCode = 40;
+} catch (error) {
+  console.log(error.message);
+  process.exitCode = /offline installation already in progress/.test(error.message) ? 41 : 42;
+}
+`,
+              ],
+              { encoding: "utf8", timeout: 30_000 },
+            );
+            throw originalFailure;
+          },
+        }),
+      (error) => error === originalFailure,
+    );
+    assert.equal(second.error, undefined, second.stderr);
+    assert.equal(second.status, 41, second.stdout + second.stderr);
+    assert.equal(existsSync(marker), false);
+    assert.equal(
+      existsSync(path.join(inputs.repository, "node_modules")),
+      false,
+    );
+    assert.deepEqual(
+      readdirSync(path.join(inputs.repository, "build/runtime")),
+      [],
+    );
+    assert.throws(
+      () =>
+        installBundle({
+          bundlePath: inputs.outputPath,
+          record: built,
+          repository: inputs.repository,
+          commandRunner: () => {
+            throw originalFailure;
+          },
+        }),
+      (error) => error === originalFailure,
+    );
+    assert.deepEqual(
+      readdirSync(path.join(inputs.repository, "build/runtime")),
+      [],
+    );
+  });
+});
+
+test("offline builder publishes exclusively without changing another attempt's archive", (context) => {
+  buildFixture((inputs) => {
+    const originalSpawn = childProcess.spawnSync;
+    const priorBytes = Buffer.from("another attempt owns this output");
+    const replacement = context.mock.method(
+      childProcess,
+      "spawnSync",
+      (command, args, options) => {
+        if (command === "tar" && args.includes("-czf")) {
+          writeFileSync(inputs.outputPath, priorBytes, { flag: "wx" });
+        }
+        return originalSpawn(command, args, options);
+      },
+    );
+    syncBuiltinESMExports();
+    try {
+      assert.throws(
+        () => assembleBundle(inputs),
+        /offline bundle output already exists/u,
+      );
+      assert.deepEqual(readFileSync(inputs.outputPath), priorBytes);
+    } finally {
+      replacement.mock.restore();
+      syncBuiltinESMExports();
+    }
+  });
+});
+
+test("offline temporary cleanup preserves the primary failure at each existing owner", async (context) => {
+  const owners = [
+    ["build", "ddwg-bundle-build-", (inputs) => assembleBundle(inputs)],
+    [
+      "verify",
+      "ddwg-bundle-check-",
+      (inputs, built) =>
+        offline.verifyBundle({
+          bundlePath: inputs.outputPath,
+          record: built,
+          repository: inputs.repository,
+        }),
+    ],
+    [
+      "install",
+      "ddwg-bundle-install-",
+      (inputs, built, primary) =>
+        installBundle({
+          bundlePath: inputs.outputPath,
+          record: built,
+          repository: inputs.repository,
+          commandRunner: () => {
+            throw primary;
+          },
+        }),
+    ],
+    [
+      "prime",
+      "ddwg-bundle-prime-",
+      (inputs) => offline.buildReleaseBundle(inputs),
+    ],
+    [
+      "acquire",
+      ".acquire-",
+      (inputs, _built, primary) =>
+        acquireGitHubBundle({
+          repository: inputs.repository,
+          environment: {
+            GITHUB_REPOSITORY: "Example/Repository",
+            DDWG_RELEASE_TAG: "v4.2.0",
+          },
+          fetcher: async () => {
+            throw primary;
+          },
+        }),
+    ],
+  ];
+  for (const [owner, prefix, operation] of owners) {
+    await buildFixture(async (inputs) => {
+      const built = assembleBundle(inputs);
+      writeFileSync(
+        path.join(inputs.repository, ".config/release/offline-bundle.json"),
+        JSON.stringify(built),
+      );
+      if (owner === "build") unlinkSync(inputs.outputPath);
+      if (owner === "prime")
+        writeFileSync(
+          path.join(inputs.repository, "package-lock.json"),
+          JSON.stringify({
+            lockfileVersion: 3,
+            packages: {
+              "": {},
+              "node_modules/fixture": {
+                resolved:
+                  "https://registry.npmjs.org/fixture/-/fixture-1.0.0.tgz",
+                integrity: "sha512-Zml4dHVyZQ==",
+              },
+            },
+          }),
+        );
+      const primary = new Error(`${owner} primary fixture failure`);
+      const cleanup = new Error(`${owner} temporary cleanup fixture failure`);
+      const originalSpawn = childProcess.spawnSync;
+      const originalRm = fs.rmSync;
+      const originalTemp = fs.mkdtempSync;
+      const originalDisposable = fs.mkdtempDisposableSync;
+      const owned = [];
+      const mocks = [
+        context.mock.method(fs, "mkdtempSync", (input, options) => {
+          const value = originalTemp(input, options);
+          if (path.basename(String(input)).startsWith(prefix))
+            owned.push(value);
+          return value;
+        }),
+        context.mock.method(fs, "rmSync", (target, options) => {
+          if (owned.includes(String(target))) throw cleanup;
+          return originalRm(target, options);
+        }),
+        context.mock.method(fs, "mkdtempDisposableSync", (input, options) => {
+          const resource = originalDisposable(input, options);
+          if (!path.basename(String(input)).startsWith(prefix)) return resource;
+          owned.push(resource.path);
+          return {
+            path: resource.path,
+            remove: resource.remove,
+            [Symbol.dispose]() {
+              resource[Symbol.dispose]();
+              throw cleanup;
+            },
+          };
+        }),
+        context.mock.method(
+          childProcess,
+          "spawnSync",
+          (command, args, options) => {
+            if (
+              (command === "tar" &&
+                args.some((arg) => ["-czf", "-xf"].includes(arg))) ||
+              command === process.execPath
+            )
+              return { error: primary, status: null, stdout: "", stderr: "" };
+            return originalSpawn(command, args, options);
+          },
+        ),
+      ];
+      syncBuiltinESMExports();
+      try {
+        await assert.rejects(
+          async () => operation(inputs, built, primary),
+          (error) => {
+            assert.ok(
+              error instanceof SuppressedError,
+              `${owner}: ${error.message}`,
+            );
+            assert.equal(error.error, cleanup);
+            assert.ok(
+              error.suppressed === primary ||
+                error.suppressed.cause === primary,
+              `${owner}: missing original failure`,
+            );
+            return true;
+          },
+        );
+      } finally {
+        for (const mocked of mocks) mocked.mock.restore();
+        syncBuiltinESMExports();
+        for (const target of owned)
+          originalRm(target, { recursive: true, force: true });
+      }
+    });
   }
 });
 

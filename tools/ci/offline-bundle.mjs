@@ -5,7 +5,7 @@ import {
   lstatSync,
   linkSync,
   mkdirSync,
-  mkdtempSync,
+  mkdtempDisposableSync,
   readFileSync,
   readdirSync,
   realpathSync,
@@ -17,7 +17,10 @@ import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
-import { projectPackageRequest } from "./gitlab-package.mjs";
+import {
+  packageTransportFailure,
+  projectPackageRequest,
+} from "./gitlab-package.mjs";
 import {
   declaredToolRuntime,
   managedFileExists,
@@ -297,73 +300,77 @@ export function assembleBundle({
   const cache = path.join(cacheDirectory, "_cacache");
   const cacheFileCount = assertRegularTree(cache);
   if (!cacheFileCount) throw new Error("offline bundle cache is empty");
-  const stage = mkdtempSync(path.join(os.tmpdir(), "ddwg-bundle-build-"));
-  let created = false;
-  try {
-    const stagedCache = path.join(stage, "npm-cache", "_cacache");
-    mkdirSync(path.dirname(stagedCache), { recursive: true });
-    cpSync(cache, stagedCache, { recursive: true, force: false });
-    const tools = {};
-    for (const [tool, descriptor] of Object.entries(native.tools)) {
-      const stagedAssets = path.join(stage, "native", tool);
-      const stagedLicenses = path.join(stage, "licenses", tool);
-      mkdirSync(stagedAssets, { recursive: true });
-      mkdirSync(stagedLicenses, { recursive: true });
-      const assets = {};
-      for (const [platform, asset] of Object.entries(descriptor.assets)) {
-        const input = pinnedFile(
-          path.join(assetDirectory, tool),
-          asset.name,
-          asset.sha256,
-          "asset",
-        );
-        copyFileSync(input, path.join(stagedAssets, asset.name));
-        assets[platform] = { name: asset.name, sha256: asset.sha256 };
-      }
-      const licenses = {};
-      for (const [name, license] of Object.entries(descriptor.licenses)) {
-        const input = pinnedFile(
-          path.join(licenseDirectory, tool),
-          name,
-          license.sha256,
-          "license",
-        );
-        copyFileSync(input, path.join(stagedLicenses, name));
-        licenses[name] = license.sha256;
-      }
-      tools[tool] = { assets, licenses };
+  mkdirSync(path.dirname(archive), { recursive: true });
+  using building = mkdtempDisposableSync(
+    path.join(path.dirname(archive), "ddwg-bundle-build-"),
+  );
+  const stage = path.join(building.path, "contents");
+  mkdirSync(stage);
+  const candidate = path.join(building.path, fileName);
+  const stagedCache = path.join(stage, "npm-cache", "_cacache");
+  mkdirSync(path.dirname(stagedCache), { recursive: true });
+  cpSync(cache, stagedCache, { recursive: true, force: false });
+  const tools = {};
+  for (const [tool, descriptor] of Object.entries(native.tools)) {
+    const stagedAssets = path.join(stage, "native", tool);
+    const stagedLicenses = path.join(stage, "licenses", tool);
+    mkdirSync(stagedAssets, { recursive: true });
+    mkdirSync(stagedLicenses, { recursive: true });
+    const assets = {};
+    for (const [platform, asset] of Object.entries(descriptor.assets)) {
+      const input = pinnedFile(
+        path.join(assetDirectory, tool),
+        asset.name,
+        asset.sha256,
+        "asset",
+      );
+      copyFileSync(input, path.join(stagedAssets, asset.name));
+      assets[platform] = { name: asset.name, sha256: asset.sha256 };
     }
-    const manifest = {
-      schemaVersion: 4,
-      ...source,
-      cacheFileCount,
-      tools,
-    };
-    writeFileSync(
-      path.join(stage, "manifest.json"),
-      `${JSON.stringify(manifest, null, 2)}\n`,
-    );
-    mkdirSync(path.dirname(archive), { recursive: true });
-    created = true;
-    run("tar", ["--no-xattrs", "-czf", archive, "-C", stage, "."], {
-      timeout: 90_000,
-      env: { ...process.env, COPYFILE_DISABLE: "1" },
-      rejectStderr: true,
-    });
-    const record = {
-      schemaVersion: 4,
-      ...source,
-      fileName,
-      sha256: digestBytes(readFileSync(archive)),
-    };
-    inspectBundle(archive, record, source, native);
-    return record;
-  } catch (error) {
-    if (created) rmSync(archive, { force: true });
-    throw error;
-  } finally {
-    rmSync(stage, { recursive: true, force: true });
+    const licenses = {};
+    for (const [name, license] of Object.entries(descriptor.licenses)) {
+      const input = pinnedFile(
+        path.join(licenseDirectory, tool),
+        name,
+        license.sha256,
+        "license",
+      );
+      copyFileSync(input, path.join(stagedLicenses, name));
+      licenses[name] = license.sha256;
+    }
+    tools[tool] = { assets, licenses };
   }
+  const manifest = {
+    schemaVersion: 4,
+    ...source,
+    cacheFileCount,
+    tools,
+  };
+  writeFileSync(
+    path.join(stage, "manifest.json"),
+    `${JSON.stringify(manifest, null, 2)}\n`,
+  );
+  run("tar", ["--no-xattrs", "-czf", candidate, "-C", stage, "."], {
+    timeout: 90_000,
+    env: { ...process.env, COPYFILE_DISABLE: "1" },
+    rejectStderr: true,
+  });
+  const record = {
+    schemaVersion: 4,
+    ...source,
+    fileName,
+    sha256: digestBytes(readFileSync(candidate)),
+  };
+  inspectBundle(candidate, record, source, native);
+  try {
+    linkSync(candidate, archive);
+  } catch (error) {
+    if (error.code === "EEXIST") {
+      throw new Error("offline bundle output already exists", { cause: error });
+    }
+    throw error;
+  }
+  return record;
 }
 
 function sameNames(directory, expected) {
@@ -485,17 +492,19 @@ export function npmCliPath({
   const launchers =
     platform === "win32" ? ["npm.cmd", "npm.exe", "npm"] : ["npm"];
   for (const directory of directories) {
+    let selectedLauncher;
     for (const name of launchers) {
       const launcher = path.join(directory, name);
       if (!pathExists(launcher)) continue;
       const resolved = realpathSync(launcher);
-      if (
-        path.basename(resolved) === "npm-cli.js" &&
-        lstatSync(resolved).isFile()
-      ) {
+      if (!lstatSync(resolved).isFile()) continue;
+      if (path.basename(resolved) === "npm-cli.js") {
         return resolved;
       }
+      selectedLauncher = launcher;
+      break;
     }
+    if (!selectedLauncher) continue;
     for (const candidate of [
       path.join(directory, "node_modules", "npm", "bin", "npm-cli.js"),
       path.join(
@@ -536,9 +545,12 @@ export function npmCliPath({
             }
           }
         }
-        return path.resolve(candidate);
+        return realpathSync(candidate);
       }
     }
+    throw new Error(
+      "selected npm launcher has no supported JavaScript entrypoint",
+    );
   }
   throw new Error("supported npm JavaScript entrypoint is unavailable");
 }
@@ -584,6 +596,30 @@ export function installBundle({
   if (Number.parseInt(process.versions.node, 10) !== record.nodeMajor) {
     throw new Error(`offline bundle requires Node ${record.nodeMajor}`);
   }
+  const runtime = path.join(repository, "build/runtime");
+  const reservation = path.join(runtime, ".offline-install");
+  managedFileExists(path.join(runtime, ".parent-check"), repository);
+  mkdirSync(runtime, { recursive: true });
+  using ownership = new DisposableStack();
+  try {
+    mkdirSync(reservation);
+  } catch (error) {
+    if (error.code === "EEXIST") {
+      throw new Error(
+        "offline installation already in progress; preserve its reservation",
+        { cause: error },
+      );
+    }
+    throw error;
+  }
+  ownership.defer(() =>
+    rmSync(reservation, {
+      recursive: true,
+      force: true,
+      maxRetries: 10,
+      retryDelay: 200,
+    }),
+  );
   const nodeModules = path.join(repository, "node_modules");
   if (pathExists(nodeModules)) {
     throw new Error(
@@ -611,66 +647,70 @@ export function installBundle({
     },
   );
   inspectBundle(archive, record, source, native);
-  const temporary = mkdtempSync(path.join(os.tmpdir(), "ddwg-bundle-install-"));
-  let startedNpmInstall = false;
-  try {
-    run("tar", ["-xf", archive, "--no-same-owner", "-C", temporary], {
-      rejectStderr: true,
-      timeout: 90_000,
-    });
-    validateExtractedBundle(temporary, repository);
-    const cacheDirectory = path.join(temporary, "npm-cache");
-    const env = isolatedNpmEnvironment(temporary, cacheDirectory);
-    const npmCli = npmCliPath();
-    const npmVersion = commandRunner(process.execPath, [npmCli, "--version"], {
-      cwd: repository,
-      env,
-      capture: true,
-      timeout: 10_000,
-    }).trim();
-    startedNpmInstall = true;
+  using extracted = mkdtempDisposableSync(
+    path.join(os.tmpdir(), "ddwg-bundle-install-"),
+  );
+  const temporary = extracted.path;
+  run("tar", ["-xf", archive, "--no-same-owner", "-C", temporary], {
+    rejectStderr: true,
+    timeout: 90_000,
+  });
+  validateExtractedBundle(temporary, repository);
+  const cacheDirectory = path.join(temporary, "npm-cache");
+  const env = isolatedNpmEnvironment(temporary, cacheDirectory);
+  const npmCli = npmCliPath();
+  const npmVersion = commandRunner(process.execPath, [npmCli, "--version"], {
+    cwd: repository,
+    env,
+    capture: true,
+    timeout: 10_000,
+  }).trim();
+  let completed = false;
+  using npmOutput = new DisposableStack();
+  npmOutput.defer(() => {
+    if (!completed)
+      rmSync(nodeModules, {
+        recursive: true,
+        force: true,
+        maxRetries: 10,
+        retryDelay: 200,
+      });
+  });
+  commandRunner(
+    process.execPath,
+    [
+      npmCli,
+      "ci",
+      "--offline",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund",
+      "--cache",
+      cacheDirectory,
+    ],
+    { cwd: repository, env, timeout: 120_000 },
+  );
+  if (!pathExists(nodeModules)) {
+    throw new Error("offline npm install returned without node_modules");
+  }
+  for (const { tool, asset, target } of installations) {
+    const assetPath = path.join(temporary, "native", tool, asset.name);
     commandRunner(
       process.execPath,
       [
-        npmCli,
-        "ci",
-        "--offline",
-        "--ignore-scripts",
-        "--no-audit",
-        "--no-fund",
-        "--cache",
-        cacheDirectory,
+        path.join(repository, "tools", "ci", "install-native.mjs"),
+        tool,
+        "--asset",
+        assetPath,
       ],
-      { cwd: repository, env, timeout: 120_000 },
+      { cwd: repository, timeout: 90_000 },
     );
-    if (!pathExists(nodeModules)) {
-      throw new Error("offline npm install returned without node_modules");
+    if (!managedFileExists(target, repository)) {
+      throw new Error(`native install returned without managed ${tool}`);
     }
-    for (const { tool, asset, target } of installations) {
-      const assetPath = path.join(temporary, "native", tool, asset.name);
-      commandRunner(
-        process.execPath,
-        [
-          path.join(repository, "tools", "ci", "install-native.mjs"),
-          tool,
-          "--asset",
-          assetPath,
-        ],
-        { cwd: repository, timeout: 90_000 },
-      );
-      if (!managedFileExists(target, repository)) {
-        throw new Error(`native install returned without managed ${tool}`);
-      }
-    }
-    return { version: source.version, sha256: record.sha256, npmVersion };
-  } catch (error) {
-    if (startedNpmInstall) {
-      rmSync(nodeModules, { recursive: true, force: true });
-    }
-    throw error;
-  } finally {
-    rmSync(temporary, { recursive: true, force: true });
   }
+  completed = true;
+  return { version: source.version, sha256: record.sha256, npmVersion };
 }
 
 export function validateLockSupply(lock) {
@@ -886,58 +926,57 @@ export function buildReleaseBundle({
     readFileSync(path.join(repository, "package-lock.json"), "utf8"),
   );
   const packageCount = validateLockSupply(lock);
-  const temporary = mkdtempSync(path.join(os.tmpdir(), "ddwg-bundle-prime-"));
-  try {
-    const online = path.join(temporary, "online");
-    const offline = path.join(temporary, "offline");
-    const cacheDirectory = path.join(temporary, "cache");
-    for (const checkout of [online, offline]) {
-      mkdirSync(checkout);
-      for (const name of ["package.json", "package-lock.json"]) {
-        copyFileSync(path.join(repository, name), path.join(checkout, name));
-      }
+  using priming = mkdtempDisposableSync(
+    path.join(os.tmpdir(), "ddwg-bundle-prime-"),
+  );
+  const temporary = priming.path;
+  const online = path.join(temporary, "online");
+  const offline = path.join(temporary, "offline");
+  const cacheDirectory = path.join(temporary, "cache");
+  for (const checkout of [online, offline]) {
+    mkdirSync(checkout);
+    for (const name of ["package.json", "package-lock.json"]) {
+      copyFileSync(path.join(repository, name), path.join(checkout, name));
     }
-    mkdirSync(cacheDirectory);
-    const onlineEnv = isolatedNpmEnvironment(temporary, cacheDirectory, {
-      offline: false,
-    });
-    const npmVersion = boundedNpm(["--version"], {
-      cwd: online,
-      env: onlineEnv,
-      timeout: 10_000,
-    });
-    boundedNpm(["ci", "--ignore-scripts", "--no-audit", "--no-fund"], {
-      cwd: online,
-      env: onlineEnv,
-    });
-    const licensedPackageCount = checkPackageLicenses(online, lock);
-    if (licensedPackageCount !== packageCount) {
-      throw new Error("offline package license inventory is incomplete");
-    }
-    const offlineEnv = { ...onlineEnv, npm_config_offline: "true" };
-    boundedNpm(
-      ["ci", "--offline", "--ignore-scripts", "--no-audit", "--no-fund"],
-      {
-        cwd: offline,
-        env: offlineEnv,
-        timeout: 90_000,
-      },
-    );
-    return {
-      record: assembleBundle({
-        repository,
-        cacheDirectory,
-        assetDirectory,
-        licenseDirectory,
-        outputPath,
-      }),
-      packageCount,
-      licensedPackageCount,
-      npmVersion,
-    };
-  } finally {
-    rmSync(temporary, { recursive: true, force: true });
   }
+  mkdirSync(cacheDirectory);
+  const onlineEnv = isolatedNpmEnvironment(temporary, cacheDirectory, {
+    offline: false,
+  });
+  const npmVersion = boundedNpm(["--version"], {
+    cwd: online,
+    env: onlineEnv,
+    timeout: 10_000,
+  });
+  boundedNpm(["ci", "--ignore-scripts", "--no-audit", "--no-fund"], {
+    cwd: online,
+    env: onlineEnv,
+  });
+  const licensedPackageCount = checkPackageLicenses(online, lock);
+  if (licensedPackageCount !== packageCount) {
+    throw new Error("offline package license inventory is incomplete");
+  }
+  const offlineEnv = { ...onlineEnv, npm_config_offline: "true" };
+  boundedNpm(
+    ["ci", "--offline", "--ignore-scripts", "--no-audit", "--no-fund"],
+    {
+      cwd: offline,
+      env: offlineEnv,
+      timeout: 90_000,
+    },
+  );
+  return {
+    record: assembleBundle({
+      repository,
+      cacheDirectory,
+      assetDirectory,
+      licenseDirectory,
+      outputPath,
+    }),
+    packageCount,
+    licensedPackageCount,
+    npmVersion,
+  };
 }
 
 export function readBundleRecord(repository = root) {
@@ -955,17 +994,16 @@ export function verifyBundle({ bundlePath, record, repository = root }) {
     sourceIdentity(repository),
     readNativeSupply(repository),
   );
-  const temporary = mkdtempSync(path.join(os.tmpdir(), "ddwg-bundle-check-"));
-  try {
-    run("tar", ["-xf", archive, "--no-same-owner", "-C", temporary], {
-      rejectStderr: true,
-      timeout: 90_000,
-    });
-    validateExtractedBundle(temporary, repository);
-    return { version: record.version, sha256: record.sha256 };
-  } finally {
-    rmSync(temporary, { recursive: true, force: true });
-  }
+  using checking = mkdtempDisposableSync(
+    path.join(os.tmpdir(), "ddwg-bundle-check-"),
+  );
+  const temporary = checking.path;
+  run("tar", ["-xf", archive, "--no-same-owner", "-C", temporary], {
+    rejectStderr: true,
+    timeout: 90_000,
+  });
+  validateExtractedBundle(temporary, repository);
+  return { version: record.version, sha256: record.sha256 };
 }
 
 async function cli(argv) {
@@ -1063,33 +1101,44 @@ async function downloadBundle(request, target, fetcher, provider) {
       signal: AbortSignal.timeout(90_000),
     });
   } catch (error) {
-    throw new Error(
-      `${provider} release bundle download failed`,
-      provider === "GitLab" ? undefined : { cause: error },
-    );
+    throw new Error(`${provider} release bundle download failed`, {
+      cause: provider === "GitLab" ? packageTransportFailure(error) : error,
+    });
   }
-  if (!response.ok || !response.body) {
+  if (!response.ok) {
     let cause;
     try {
       await response.body?.cancel();
     } catch (error) {
-      cause = error;
+      cause = provider === "GitLab" ? packageTransportFailure(error) : error;
     }
     throw new Error(
       `${provider} release bundle download failed: HTTP ${response.status}`,
       cause === undefined ? undefined : { cause },
     );
   }
+  if (!response.body) {
+    throw new Error(`${provider} release bundle download returned no body`);
+  }
   const limit = 512 * 1024 * 1024;
   const chunks = [];
   let size = 0;
-  for await (const chunk of response.body) {
-    size += chunk.length;
-    if (size > limit) {
-      throw new Error(`${provider} release bundle exceeds the size limit`);
+  try {
+    for await (const chunk of response.body) {
+      size += chunk.length;
+      if (size > limit) break;
+      chunks.push(chunk);
     }
-    chunks.push(chunk);
+  } catch (error) {
+    throw new Error(
+      size > limit
+        ? `${provider} release bundle exceeds the size limit`
+        : `${provider} release bundle download body failed`,
+      { cause: provider === "GitLab" ? packageTransportFailure(error) : error },
+    );
   }
+  if (size > limit)
+    throw new Error(`${provider} release bundle exceeds the size limit`);
   writeFileSync(target, Buffer.concat(chunks), { flag: "wx" });
 }
 
@@ -1105,21 +1154,18 @@ async function acquireBundle({
   if (managedFileExists(target, repository))
     return verifyBundle({ bundlePath: target, record, repository });
   mkdirSync(directory, { recursive: true });
-  const temporary = mkdtempSync(path.join(directory, ".acquire-"));
+  using acquiring = mkdtempDisposableSync(path.join(directory, ".acquire-"));
+  const temporary = acquiring.path;
   const staged = path.join(temporary, record.fileName);
+  await downloadBundle(request, staged, fetcher, provider);
+  const verified = verifyBundle({ bundlePath: staged, record, repository });
   try {
-    await downloadBundle(request, staged, fetcher, provider);
-    const verified = verifyBundle({ bundlePath: staged, record, repository });
-    try {
-      linkSync(staged, target);
-    } catch (error) {
-      if (error.code !== "EEXIST") throw error;
-      return verifyBundle({ bundlePath: target, record, repository });
-    }
-    return verified;
-  } finally {
-    rmSync(temporary, { recursive: true, force: true });
+    linkSync(staged, target);
+  } catch (error) {
+    if (error.code !== "EEXIST") throw error;
+    return verifyBundle({ bundlePath: target, record, repository });
   }
+  return verified;
 }
 
 export async function acquireGitHubBundle({

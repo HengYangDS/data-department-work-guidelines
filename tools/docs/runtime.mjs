@@ -60,14 +60,16 @@ export function assertNodeRuntime(version = process.versions.node) {
 }
 
 export function reportError(error) {
-  let observed = error instanceof Error ? error.message : String(error);
-  console.error(observed);
-  const seen = new Set([error]);
-  let cause = error instanceof Error ? error.cause : undefined;
-  while (cause !== undefined && !seen.has(cause)) {
-    seen.add(cause);
-    const message = cause instanceof Error ? cause.message : String(cause);
-    const code = cause instanceof Error ? cause.code : undefined;
+  const pending = [error];
+  const seen = new Set();
+  let observed = "";
+  while (pending.length) {
+    const current = pending.pop();
+    if (seen.has(current)) continue;
+    seen.add(current);
+    const message =
+      current instanceof Error ? current.message : String(current);
+    const code = current instanceof Error ? current.code : undefined;
     const detail =
       typeof code === "string" && !message.includes(code)
         ? message
@@ -78,7 +80,12 @@ export function reportError(error) {
       console.error(detail);
       observed += `\n${detail}`;
     }
-    cause = cause instanceof Error ? cause.cause : undefined;
+    if (current instanceof Error && current.cause !== undefined) {
+      pending.push(current.cause);
+    }
+    if (current instanceof SuppressedError) {
+      pending.push(current.error, current.suppressed);
+    }
   }
 }
 
@@ -369,8 +376,10 @@ export function managedFileExists(target, repository = root) {
 
 export function nativeToolBinary(tool) {
   const manifest = readNativeSupply();
+  if (!Object.hasOwn(manifest.tools, tool)) {
+    throw new Error(`unknown native tool: ${tool}`);
+  }
   const descriptor = manifest.tools[tool];
-  if (!descriptor) throw new Error(`unknown native tool: ${tool}`);
   const expected = descriptor.version;
   const suffix = process.platform === "win32" ? ".exe" : "";
   const cached = filePath(
