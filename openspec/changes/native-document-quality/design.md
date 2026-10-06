@@ -391,60 +391,42 @@ installs locked npm packages online to prime its cache, but never acquires
 missing native assets or notices implicitly. Its bounded npm execution uses the
 existing native executor so errors, warnings, and partial output remain visible.
 
-### Keep native dependency findings and their disposition distinct
+### Keep native findings separate from delivery acceptance
 
-OSV Scanner owns raw findings and native disposition. Preserve an undisposed
-scan separately because ignored IDs and aliases disappear from disposition
-output, even with `--all-vulns`. Both Forges retain original lock, policy
-snapshots, reports, standard streams, and exit statuses on success or failure. A
-later clean scan cannot clear an unapproved raw finding.
+OSV Scanner owns one complete raw scan with an explicit native policy that
+ignores no findings. Preserve the exact lock, policy, report, standard streams,
+and exit status on success or failure. Findings are non-blocking delivery
+evidence, not grounds for a waiver, a separate Change, or another controller.
+The latest human instruction supersedes the earlier advisory-based release
+holds; it does not relabel those historical approvals as fixes.
 
-The sole expressly approved exception is development npm `braces` 3.0.3 in
-reviewed checks, expiring on 18 October 2026. It is not a fix, a production
-waiver, or authorization for arbitrary inputs. Use only native `IgnoredVulns`
-fields. The existing input boundary checks every matching lock path, raw package
-identity, and development group; all other findings remain blocking.
+The existing audit verifies complete development-only input, report provenance,
+and agreement between finding counts and the scanner's native status. It
+rejects failed scans, malformed reports, and input drift without hiding output.
+Remove the temporary braces identity guard, exemption expiry, public-registry
+withdrawal check, and filtered second scan together. Offline validation has no
+advisory-based expiry. Existing immutable evidence remains at its producer;
+maintenance follows new findings and available fixes without delaying delivery.
 
-The human approved formal development-tool distribution on 6 October 2026,
-limited to trusted-repository checks and the original expiry. This authorizes
-that distribution, not a renewal, production use, or arbitrary untrusted input.
-
-For the separate KaTeX inherited-option finding, the native math extension
-selects a patched renderer through an exact npm override. Keep the official
-parser and renderer, not a vendor patch or second implementation. Qualify the
-actual Markdownlint tokens, inline and display math, explicit trust, and refusal
-of inherited renderer settings. Native npm generates the lock; current advisory
-evidence and the rebuilt offline bundle qualify its adoption. This does not
-widen the braces disposition.
-
-Offline scanner fixtures use an undisposed policy and fixed databases. Fixed
-admission fixtures select their review time explicitly; they must not expire
-with the real policy. Live offline source validation and online audit admission
-use the current clock and reject an expired disposition, including revalidation
-of released source that retains it. Withdrawal keeps the required native policy
-file with `IgnoredVulns = []`; an empty policy grants no ignore. Before expiry,
-the repository maintainer qualifies fixed supply or obtains a new explicit
-decision through accepted ETHOS risk admission. Do not backdate the real scanner
-or silently extend its native expiry.
-
-Changed stable supply, a fix, withdrawn/missing finding, or expiry requires
-retirement and qualification. Observe the public registry with separate native
-configuration, explicit freshness, and an owned short OS temporary cache. Remove
-that cache after the attempt, including failure; preserve reports and
-configuration, not package-cache residue. Windows checkouts cannot inherit it.
+For the KaTeX inherited-option finding, the native math extension selects the
+patched renderer through an exact npm override. Keep the official parser and
+renderer. Qualify actual Markdownlint tokens, inline and display math, explicit
+trust, and refusal of inherited renderer settings. Native npm generates the
+lock; functionality, resolved identities, licenses, and source-bound offline
+supply still require acceptance.
 
 Use the official Node image's current stable Debian base, not a refreshed digest
 of its older distribution. Pin the full `node:<major>-trixie` variant by its
 multi-platform index digest. Native repository checks need Git, which the slim
-variant does not supply. Qualify raw component findings and the exact Runner
-image admission separately. A current base is not a clean audit or installed
-Runner evidence, and image-bundled npm does not qualify the later npm upgrade.
+variant does not supply. Retain component findings separately from exact Runner
+image admission; a current base is not a clean audit or installed Runner proof.
+Image-bundled npm does not qualify the later npm upgrade.
 
-Replace the temporary repository input guard with the accepted ETHOS risk owner
-in the same integration. Do not keep a private schema, duplicate controller,
-filtered npm report, or whole-package exemption. This repository's dependency
-audit does not qualify the npm executable bundled with Node, shared ETHOS, or
-its formal release.
+This repository's audit covers its lock, not components bundled inside npm,
+Node, native tools, or ETHOS. Preserve that boundary and report missing coverage.
+Artifact authenticity, complete bytes, checksums, credentials, actual function,
+and target-platform qualification remain required. Do not keep or recreate the
+removed private risk-admission mechanism when shared ownership is integrated.
 
 ### Keep both publication peers complete and coherent
 

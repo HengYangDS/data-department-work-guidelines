@@ -23,85 +23,33 @@ const github = readText(".github/workflows/docs-verify.yml");
 const gitlab = readText(".gitlab-ci.yml");
 const offline = readText(".github/workflows/offline-verify.yml");
 
-const dependencyPolicy = `[[IgnoredVulns]]
-id = "GHSA-vfj7-8cjw-p6xm"
-ignoreUntil = 2026-10-18
-reason = "Human-approved reviewed development checks only; retain complete raw findings."
-`;
-const dependencyReviewTime = new Date("2026-10-04T00:00:00Z");
+const dependencyPolicy = "IgnoredVulns = []\n";
 
-test("withdrawal leaves an explicit native policy with no ignored findings", () => {
-  const policy = ci.parseDependencyPolicy("IgnoredVulns = []\n");
+test("native audit exposes every finding and preserves development-only supply", () => {
+  const policy = ci.parseDependencyPolicy(dependencyPolicy);
   assert.deepEqual(Object.keys(policy), ["IgnoredVulns"]);
   assert.deepEqual(policy.IgnoredVulns, []);
   const lock = JSON.parse(readText("package-lock.json"));
-  assert.doesNotThrow(() =>
-    ci.validateDependencyInput(lock, policy, new Date("2026-10-18T00:00:00Z")),
-  );
-  assert.throws(
-    () => ci.parseDependencyPolicy("# Removed the only disposition.\n"),
-    /native OSV fields/u,
-  );
-});
-
-test("the bounded native disposition admits only the approved development input", () => {
-  const policy = ci.parseDependencyPolicy(dependencyPolicy);
-  const lock = JSON.parse(readText("package-lock.json"));
-  const current = new Date("2026-10-04T00:00:00Z");
-  assert.doesNotThrow(() => ci.validateDependencyInput(lock, policy, current));
-  for (const mutate of [
-    (copy) => {
-      copy.packages["node_modules/braces"].dev = false;
-    },
-    (copy) => {
-      copy.packages["node_modules/braces"].version = "3.0.4";
-    },
-    (copy) => {
-      delete copy.packages["node_modules/braces"];
-    },
-    (copy) => {
-      copy.packages["node_modules/other/node_modules/braces"] = {
-        ...copy.packages["node_modules/braces"],
-        dev: false,
-      };
-    },
-  ]) {
-    const changed = structuredClone(lock);
-    mutate(changed);
-    assert.throws(
-      () => ci.validateDependencyInput(changed, policy, current),
-      /approved|development|braces/u,
-    );
-  }
-  assert.throws(
-    () =>
-      ci.validateDependencyInput(
-        lock,
-        policy,
-        new Date("2026-10-18T00:00:00Z"),
-      ),
-    /expired/u,
-  );
+  assert.doesNotThrow(() => ci.validateDependencyInput(lock));
+  const changed = structuredClone(lock);
+  delete changed.packages["node_modules/braces"];
+  assert.doesNotThrow(() => ci.validateDependencyInput(changed));
+  changed.packages["node_modules/prettier"].dev = false;
+  assert.throws(() => ci.validateDependencyInput(changed), /development-only/u);
   for (const invalid of [
-    dependencyPolicy.replace("GHSA-vfj7-8cjw-p6xm", "OSV-OTHER"),
-    `${dependencyPolicy}\nscope = { name = "braces" }\n`,
-    `${dependencyPolicy}\n[[PackageOverrides]]\nignore = true\n`,
-  ]) {
+    "# No explicit scanner policy.\n",
+    '[[IgnoredVulns]]\nid = "OSV-EXAMPLE"\nignoreUntil = 2099-01-01\nreason = "Obsolete delivery exemption"\n',
+    "IgnoredVulns = []\n[[PackageOverrides]]\nignore = true\n",
+  ])
     assert.throws(
       () => ci.parseDependencyPolicy(invalid),
-      /native|approved|policy/u,
+      /expose all findings/u,
     );
-  }
 });
 
 test("native raw evidence must cover the exact input and retain every finding", () => {
-  const policy = ci.parseDependencyPolicy(dependencyPolicy);
   const lock = JSON.parse(readText("package-lock.json"));
-  const identities = ci.validateDependencyInput(
-    lock,
-    policy,
-    new Date("2026-10-04T00:00:00Z"),
-  );
+  const identities = ci.validateDependencyInput(lock);
   const report = {
     results: [
       {
@@ -120,13 +68,9 @@ test("native raw evidence must cover the exact input and retain every finding", 
     { id: "GHSA-vfj7-8cjw-p6xm", aliases: ["CVE-2026-93687"] },
     { id: "OSV-UNRELATED" },
   ];
-  assert.deepEqual(
-    ci.validateDependencyEvidence(report, identities, policy, 1),
-    {
-      findings: 2,
-      approvedFindings: 1,
-    },
-  );
+  assert.deepEqual(ci.validateDependencyEvidence(report, identities, 1), {
+    findings: 2,
+  });
   assert.equal(
     braces.vulnerabilities.length,
     2,
@@ -150,23 +94,23 @@ test("native raw evidence must cover the exact input and retain every finding", 
     (copy) => {
       copy.results[0].packages.find(
         (entry) => entry.package.name === "braces",
-      ).vulnerabilities = [];
+      ).vulnerabilities = [{ id: "" }];
     },
   ]) {
     const changed = structuredClone(report);
     mutate(changed);
     assert.throws(
-      () => ci.validateDependencyEvidence(changed, identities, policy, 1),
+      () => ci.validateDependencyEvidence(changed, identities, 1),
       /native|approved|input|finding/u,
     );
   }
   assert.throws(
-    () => ci.validateDependencyEvidence(report, identities, policy, 0),
+    () => ci.validateDependencyEvidence(report, identities, 0),
     /exit|native/u,
   );
 });
 
-test("actual native audit retains undisposed raw findings and blocks advisory inputs", () => {
+test("actual native audit preserves findings without blocking delivery", () => {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-native-osv-"));
   // Fixed native OSV database archives, produced by the official ZIP format.
   const databases = [
@@ -212,37 +156,39 @@ test("actual native audit retains undisposed raw findings and blocks advisory in
       repository: directory,
       offline: true,
       environment,
-      now: dependencyReviewTime,
     });
     const raw = JSON.parse(
       readFileSync(path.join(accepted.evidence, "raw.json"), "utf8"),
     );
     const rawBytes = readFileSync(path.join(accepted.evidence, "raw.json"));
-    const decision = JSON.parse(
-      readFileSync(path.join(accepted.evidence, "decision.json"), "utf8"),
-    );
     assert.equal(raw.results[0].packages[0].vulnerabilities, undefined);
-    assert.equal(decision.results[0].packages[0].vulnerabilities, undefined);
     assert.deepEqual(
       JSON.parse(
         readFileSync(path.join(accepted.evidence, "execution.json"), "utf8"),
       ).execution.map((entry) => entry.status),
-      [0, 0],
+      [0],
     );
     for (const database of databases) {
       writeFileSync(
         path.join(directory, "cache/osv-scalibr/npm/all.zip"),
         Buffer.from(database, "base64"),
       );
-      assert.throws(
-        () =>
-          ci.auditDependencies({
-            repository: directory,
-            offline: true,
-            environment,
-            now: dependencyReviewTime,
-          }),
-        /unapproved dependency findings/u,
+      let observed;
+      assert.doesNotThrow(() => {
+        observed = ci.auditDependencies({
+          repository: directory,
+          offline: true,
+          environment,
+        });
+      }, "advisory findings are evidence, not a delivery gate");
+      assert.ok(observed.findingCount > 0);
+      const retained = JSON.parse(
+        readFileSync(path.join(observed.evidence, "raw.json"), "utf8"),
+      );
+      assert.equal(
+        retained.results[0].packages[0].vulnerabilities.length,
+        observed.findingCount,
+        "every native finding must remain in the original report",
       );
     }
     assert.deepEqual(
@@ -320,14 +266,13 @@ test("native audit refusal retains malformed, warning, failure and timeout outpu
           ci.auditDependencies({
             repository: directory,
             offline: true,
-            now: dependencyReviewTime,
           }),
         /native|ENOENT|JSON|Unexpected/u,
       );
       assert.equal(
         calls,
         before + 1,
-        "failed raw execution cannot reach disposition",
+        "failed scan retains one complete attempt",
       );
     }
     const evidenceRoot = path.join(directory, "build/evidence/dependencies");
@@ -374,23 +319,17 @@ test("native audit refusal retains malformed, warning, failure and timeout outpu
   }
 });
 
-test("an unapproved raw finding cannot disappear between native scans", (context) => {
+test("one native audit retains all findings without a filtered second scan", (context) => {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-audit-findings-"));
   const actual = childProcess.spawnSync;
   const lock = JSON.parse(readText("package-lock.json"));
-  const policy = ci.parseDependencyPolicy(dependencyPolicy);
-  const identities = ci.validateDependencyInput(
-    lock,
-    policy,
-    new Date("2026-10-04T00:00:00Z"),
-  );
+  const identities = ci.validateDependencyInput(lock);
   const reports = [];
   const mock = context.mock.method(
     childProcess,
     "spawnSync",
     (command, args, options) => {
       if (args[0] !== "scan") return actual(command, args, options);
-      const raw = reports.length === 0;
       const report = {
         results: [
           {
@@ -401,10 +340,10 @@ test("an unapproved raw finding cannot disappear between native scans", (context
             packages: [...identities.values()].map((identity) => ({
               package: identity,
               dependency_groups: ["dev"],
-              ...(raw && identity.name === "braces"
+              ...(identity.name === "braces"
                 ? {
                     vulnerabilities: [
-                      { id: "GHSA-vfj7-8cjw-p6xm" },
+                      { id: "OSV-EXAMPLE" },
                       { id: "OSV-UNRELATED" },
                     ],
                   }
@@ -414,11 +353,17 @@ test("an unapproved raw finding cannot disappear between native scans", (context
         ],
       };
       reports.push(report);
+      assert.ok(args.includes("--no-ignore"));
+      assert.ok(args.includes("--all-vulns"));
+      assert.equal(
+        readFileSync(args[args.indexOf("--config") + 1], "utf8"),
+        dependencyPolicy,
+      );
       writeFileSync(
         args[args.indexOf("--output-file") + 1],
         JSON.stringify(report),
       );
-      return { status: raw ? 1 : 0, stdout: "", stderr: "" };
+      return { status: 1, stdout: "", stderr: "" };
     },
   );
   syncBuiltinESMExports();
@@ -433,239 +378,30 @@ test("an unapproved raw finding cannot disappear between native scans", (context
     writeFileSync(
       path.join(directory, "package-lock.json"),
       JSON.stringify(lock),
-    );
-    assert.throws(
-      () =>
-        ci.auditDependencies({
-          repository: directory,
-          offline: true,
-          now: dependencyReviewTime,
-        }),
-      /unapproved dependency findings/u,
-    );
-    assert.equal(
-      reports.length,
-      2,
-      "both original native reports must be retained",
-    );
-    const evidenceRoot = path.join(directory, "build/evidence/dependencies");
-    const [scan] = readdirSync(evidenceRoot);
-    const evidence = path.join(evidenceRoot, scan);
-    for (const [index, mode] of ["raw", "decision"].entries()) {
-      assert.equal(
-        readFileSync(path.join(evidence, `${mode}.json`), "utf8"),
-        JSON.stringify(reports[index]),
-      );
-    }
-    assert.deepEqual(
-      JSON.parse(
-        readFileSync(path.join(evidence, "execution.json"), "utf8"),
-      ).execution.map((entry) => entry.status),
-      [1, 0],
-    );
-  } finally {
-    mock.mock.restore();
-    syncBuiltinESMExports();
-    rmSync(directory, { recursive: true, force: true });
-  }
-});
-
-test("stable withdrawal observes the public registry without ambient npm policy", (context) => {
-  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-audit-registry-"));
-  const actual = childProcess.spawnSync;
-  const lock = JSON.parse(readText("package-lock.json"));
-  const policy = ci.parseDependencyPolicy(dependencyPolicy);
-  const identities = ci.validateDependencyInput(
-    lock,
-    policy,
-    new Date("2026-10-04T00:00:00Z"),
-  );
-  const observations = [];
-  let version = "3.0.3";
-  let registryFailure = false;
-  let scans = 0;
-  const environment = {
-    ...process.env,
-    npm_config_registry: "https://mirror.invalid",
-    NPM_CONFIG_OFFLINE: "true",
-    npm_config_prefer_offline: "true",
-    npm_config_cache: path.join(directory, "ambient-cache"),
-    NPM_TOKEN: "fixture-only",
-    NODE_AUTH_TOKEN: "fixture-only",
-  };
-  const mock = context.mock.method(
-    childProcess,
-    "spawnSync",
-    (command, args, options) => {
-      if (args[1] === "view") {
-        mkdirSync(options.env.npm_config_cache, { recursive: true });
-        writeFileSync(
-          path.join(options.env.npm_config_cache, "retained-cache"),
-          "disposable native cache",
-        );
-        observations.push({
-          args,
-          options,
-          configs: ["npm_config_userconfig", "npm_config_globalconfig"].map(
-            (key) => readFileSync(options.env[key], "utf8"),
-          ),
-        });
-        if (registryFailure)
-          return {
-            status: 127,
-            stdout: "partial registry result",
-            stderr: "native registry diagnostic",
-          };
-        return { status: 0, stdout: JSON.stringify(version), stderr: "" };
-      }
-      if (args[0] !== "scan") return actual(command, args, options);
-      const raw = scans++ % 2 === 0;
-      writeFileSync(
-        args[args.indexOf("--output-file") + 1],
-        JSON.stringify({
-          results: [
-            {
-              source: {
-                type: "lockfile",
-                path: path.join(directory, "package-lock.json"),
-              },
-              packages: [...identities.values()].map((identity) => ({
-                package: identity,
-                dependency_groups: ["dev"],
-                ...(raw && identity.name === "braces"
-                  ? { vulnerabilities: [{ id: "GHSA-vfj7-8cjw-p6xm" }] }
-                  : {}),
-              })),
-            },
-          ],
-        }),
-      );
-      return { status: raw ? 1 : 0, stdout: "", stderr: "" };
-    },
-  );
-  syncBuiltinESMExports();
-  try {
-    mkdirSync(path.join(directory, path.dirname(ci.dependencyPolicyPath)), {
-      recursive: true,
-    });
-    writeFileSync(
-      path.join(directory, ci.dependencyPolicyPath),
-      dependencyPolicy,
-    );
-    writeFileSync(
-      path.join(directory, "package-lock.json"),
-      JSON.stringify(lock),
-    );
-    writeFileSync(
-      path.join(directory, ".npmrc"),
-      "registry=https://mirror.invalid\noffline=true\n",
     );
     const accepted = ci.auditDependencies({
       repository: directory,
-      environment,
-      now: dependencyReviewTime,
+      offline: true,
     });
-    const { args, options, configs } = observations[0];
-    for (const argument of [
-      "--registry=https://registry.npmjs.org",
-      "--offline=false",
-      "--prefer-online=true",
-      "--prefer-offline=false",
-      "--fetch-retries=0",
-    ])
-      assert.ok(
-        args.includes(argument),
-        `official observation requires ${argument}`,
-      );
-    assert.notEqual(
-      options.cwd,
-      directory,
-      "repository npm policy cannot influence the observation",
-    );
-    assert.equal(args[args.indexOf("--prefix") + 1], options.cwd);
-    assert.equal(options.env.npm_config_registry, undefined);
-    assert.equal(options.env.NPM_CONFIG_OFFLINE, undefined);
-    assert.equal(options.env.npm_config_offline, "false");
-    assert.equal(options.env.NPM_TOKEN, undefined);
-    assert.equal(options.env.NODE_AUTH_TOKEN, undefined);
-    assert.notEqual(options.env.npm_config_cache, environment.npm_config_cache);
-    assert.deepEqual(configs, ["", ""]);
+    assert.equal(accepted.findingCount, 2);
     assert.equal(
-      existsSync(options.cwd),
+      reports.length,
+      1,
+      "no filtering or duplicate scan is permitted",
+    );
+    assert.equal(
+      readFileSync(path.join(accepted.evidence, "raw.json"), "utf8"),
+      JSON.stringify(reports[0]),
+    );
+    assert.equal(
+      existsSync(path.join(accepted.evidence, "decision.json")),
       false,
-      "successful observation must retire its native cache and config stage",
     );
-    for (const name of ["empty-user.npmrc", "empty-global.npmrc"]) {
-      assert.equal(
-        readFileSync(path.join(accepted.evidence, name), "utf8"),
-        "",
-      );
-    }
-    const execution = JSON.parse(
-      readFileSync(path.join(accepted.evidence, "execution.json"), "utf8"),
-    );
-    assert.deepEqual(execution.execution[0].command.slice(1), args);
-    version = "3.0.4";
-    assert.throws(
-      () =>
-        ci.auditDependencies({
-          repository: directory,
-          environment,
-          now: dependencyReviewTime,
-        }),
-      /official stable braces changed/u,
-    );
-    assert.equal(scans, 2, "changed upstream cannot reach another native scan");
-    assert.equal(observations.length, 2);
-    assert.equal(
-      existsSync(observations[1].options.cwd),
-      false,
-      "upstream withdrawal must also retire its native stage",
-    );
-    const evidenceRoot = path.join(directory, "build/evidence/dependencies");
-    const retained = readdirSync(evidenceRoot).map((name) =>
-      readFileSync(
-        path.join(evidenceRoot, name, "stable-version.stdout"),
-        "utf8",
-      ),
-    );
-    assert.ok(retained.includes(JSON.stringify("3.0.4")));
-    registryFailure = true;
-    assert.throws(
-      () =>
-        ci.auditDependencies({
-          repository: directory,
-          environment,
-          now: dependencyReviewTime,
-        }),
-      /official stable version observation failed/u,
-    );
-    assert.equal(
-      scans,
-      2,
-      "failed registry observation cannot reach native scans",
-    );
-    assert.equal(
-      existsSync(observations[2].options.cwd),
-      false,
-      "native failure must retire its cache stage",
-    );
-    const failures = readdirSync(evidenceRoot).map((name) => ({
-      stdout: readFileSync(
-        path.join(evidenceRoot, name, "stable-version.stdout"),
-        "utf8",
-      ),
-      stderr: readFileSync(
-        path.join(evidenceRoot, name, "stable-version.stderr"),
-        "utf8",
-      ),
-    }));
-    assert.ok(
-      failures.some(
-        (entry) =>
-          entry.stdout === "partial registry result" &&
-          entry.stderr === "native registry diagnostic",
-      ),
+    assert.deepEqual(
+      JSON.parse(
+        readFileSync(path.join(accepted.evidence, "execution.json"), "utf8"),
+      ).execution.map((entry) => entry.status),
+      [1],
     );
   } finally {
     mock.mock.restore();
@@ -674,17 +410,12 @@ test("stable withdrawal observes the public registry without ambient npm policy"
   }
 });
 
-test("native audit refuses an input changed after raw evidence before disposition", (context) => {
+test("native audit refuses input drift after scanning", (context) => {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-audit-drift-"));
   const actual = childProcess.spawnSync;
   let calls = 0;
   const lock = JSON.parse(readText("package-lock.json"));
-  const policy = ci.parseDependencyPolicy(dependencyPolicy);
-  const identities = ci.validateDependencyInput(
-    lock,
-    policy,
-    new Date("2026-10-04T00:00:00Z"),
-  );
+  const identities = ci.validateDependencyInput(lock);
   const mock = context.mock.method(
     childProcess,
     "spawnSync",
@@ -737,11 +468,10 @@ test("native audit refuses an input changed after raw evidence before dispositio
         ci.auditDependencies({
           repository: directory,
           offline: true,
-          now: dependencyReviewTime,
         }),
       /inputs changed/u,
     );
-    assert.equal(calls, 1, "stale input cannot reach the native disposition");
+    assert.equal(calls, 1, "input drift cannot trigger another scan");
   } finally {
     mock.mock.restore();
     syncBuiltinESMExports();

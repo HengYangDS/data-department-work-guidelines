@@ -265,9 +265,11 @@ inside Node, npm, or native executables. Audit each supplied artifact's digest,
 platform, and component inventory through native extractors. Missing or empty
 inventory leaves coverage unproved. Keep raw findings and binary-symbol results
 separately; symbols do not prove that a runtime entry can trigger a finding.
-Toolchain acceptance requires complete applicable coverage and disposition. A
-newer version or a clean project lock does not dispose of a runtime finding or
-extend an existing exception.
+Supply-chain advisories do not block delivery. Preserve complete reports,
+disclose unproved coverage, and follow fixes through the existing maintenance
+owner. A newer version or a clean project lock does not resolve a runtime
+finding. Authenticity, hashes, functionality, and actual platform acceptance
+remain required; a failed scanner must not be reported as a clean audit.
 
 The [supply manifest](../../.config/supply/native.json) pins Vale and lychee
 archives and official OSV Scanner binaries by platform and SHA-256. Raw binaries
@@ -317,52 +319,23 @@ Release CI bootstraps Node and npm and downloads the exact asset before the
 offline step. The subsequent install and source checks need no remote supply;
 the whole hosted job is not a network-isolation test. Qualify cold local use
 separately with a fresh HOME, no inherited configuration or cache, and denied
-remote connections. Fixed audit fixtures use a declared test time. Live input
-validation uses the current clock in both offline source checks and online
-audits; an expired disposition blocks `verify`, `docs-integrity`, and ETHOS
-proof, including revalidation of a released edition that retains that policy.
+remote connections. Historical advisory-expiry dates do not block source
+verification, offline installation, or delivery.
 
 Bundled packages and native tools keep their upstream notices; this
-repository's MIT license does not relicense them. Both hosted planes audit
-all locked repository dependencies during online supply. OSV Scanner owns the
-native finding and disposition results. Keep the undisposed raw report, source
-lock and policy snapshots, standard output, standard error, and exit statuses
-separately from the decision result; the latter removes ignored findings,
-even with `--all-vulns`. Both CI planes retain complete audit evidence on failure.
-An unavailable, incomplete, warning-bearing, changed-input, or unapproved finding
-blocks execution. A passing later scan cannot clear an unapproved raw finding.
-The audit does not qualify the npm executable bundled with Node.
-Local source verification remains independent of the network.
+repository's MIT license does not relicense them. Both hosted planes audit all
+locked repository dependencies during online supply. OSV Scanner runs one
+complete scan with the [native policy](../../.config/checks/dependencies/policy.toml),
+which ignores no findings. Keep its exact lock and policy snapshots, raw report,
+standard streams, and exit status. Advisories remain non-blocking delivery
+evidence and feed the existing maintenance owner; no filtered second scan or
+private exemption is needed.
 
-The [native policy](../../.config/checks/dependencies/policy.toml) carries only
-the native `IgnoredVulns` fields. Its single human-approved exception is limited
-to reviewed development checks using npm `braces` 3.0.3 and expires at
-2026-10-18T00:00:00Z; it is not a production or arbitrary-input waiver. The
-existing input owner checks every matching lock path, raw package identity and
-development group.
-
-On 6 October 2026, the repository maintainer approved distributing the offline
-development tools for trusted-repository checks under this original expiry.
-Distribution does not renew the exception or permit production use or arbitrary
-untrusted input.
-
-A changed stable release, official fix, withdrawn or missing finding, or expired
-entry requires retirement and new qualification. On withdrawal, replace the
-complete disposition table with `IgnoredVulns = []`; do not leave a comments-only
-policy or delete the required file. An empty policy grants no ignore: offline
-source verification accepts it, while online audit still requires clean raw
-findings. Before expiry, the repository maintainer must
-qualify a fixed dependency with that empty policy, or obtain a new explicit
-decision from the authorized owner through accepted ETHOS risk admission. The
-current approval does not authorize an extension. An expired entry fails
-source verification. Removing it grants no ignore; unapproved raw findings still
-block hosted audits. A new decision requires an admitted update to the bounded
-input check; approval alone does not change running policy. Observe the public
-npm registry with isolated native configuration, cache, and explicit freshness
-during online
-dependency auditing. The registry cache lives in an owned OS temporary directory
-and is removed after the attempt. Retain configuration snapshots, reports, and diagnostics;
-the cache itself is neither evidence nor a CI artifact.
+An unavailable scanner, malformed or incomplete report, warning-bearing
+execution, or changed input remains a failure. Retain complete evidence and do
+not call a failed scan clean. Source verification remains independent of the
+network. Its input and artifact checks still protect authenticity, hashes,
+credentials, actual functionality, and target-platform acceptance.
 
 An explicit native executable may be selected with `DDWG_LYCHEE_BIN`,
 `DDWG_VALE_BIN`, or `DDWG_OSV_SCANNER_BIN`. Without one, the consumer selects its
@@ -371,9 +344,8 @@ An invalid cache entry fails instead of falling back. Every selection must still
 match the locked tool version; these paths are execution inputs, not tracked
 host bindings.
 
-This temporary repository boundary must be replaced by accepted ETHOS risk
-admission, not preserved as a private second policy. Neither the exception nor
-this source check certifies the shared
+The removed temporary advisory guard must not return as a second policy.
+This repository audit does not certify the shared
 ETHOS product or its release.
 
 ## Runner and Transport Boundaries

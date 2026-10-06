@@ -581,7 +581,7 @@ function configurationFixture(run) {
   }
 }
 
-test("offline configuration refuses expiry and admits an explicit withdrawal", (context) => {
+test("offline configuration has no advisory expiry and cannot hide findings", (context) => {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-config-expiry-"));
   try {
     cpSync(path.join(root, ".config"), path.join(directory, ".config"), {
@@ -597,15 +597,15 @@ test("offline configuration refuses expiry and admits an explicit withdrawal", (
     });
     assert.doesNotThrow(() => governance.checkConfigurationLayout(directory));
     context.mock.timers.tick(1);
-    assert.throws(
-      () => governance.checkConfigurationLayout(directory),
-      /expired/u,
-    );
+    assert.doesNotThrow(() => governance.checkConfigurationLayout(directory));
     writeFileSync(
       path.join(directory, ".config/checks/dependencies/policy.toml"),
-      "IgnoredVulns = []\n",
+      '[[IgnoredVulns]]\nid = "OSV-EXAMPLE"\nignoreUntil = 2099-01-01\nreason = "Obsolete delivery exemption"\n',
     );
-    assert.doesNotThrow(() => governance.checkConfigurationLayout(directory));
+    assert.throws(
+      () => governance.checkConfigurationLayout(directory),
+      /expose all findings/u,
+    );
   } finally {
     context.mock.timers.reset();
     rmSync(directory, { recursive: true, force: true });

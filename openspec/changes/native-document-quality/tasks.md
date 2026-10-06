@@ -196,8 +196,9 @@
       into the DDWG profile, validators, tests, and guidance in its owned lane.
       Retain two default gates and native prerequisites; retire replaced format,
       descriptor, stream, task-authoring, risk, and identity glue in the same migration.
-      Verify official task-template diagnostics and the approved expiring
-      development-only braces disposition through the accepted product owner.
+      Verify official task-template diagnostics and the current non-blocking
+      advisory contract through the accepted product owner; keep raw reports,
+      complete inputs, diagnostics, and artifact-integrity obligations.
       Qualify declared resource/asset loading, package inclusion, and offline
       consumers before retiring old paths. Verify [native
       formatting boundaries](design.md#give-native-quality-concerns-one-owner)
@@ -231,10 +232,12 @@
 - [ ] 2.38 Resolve the complete fixed-source implementation review at the
       existing installer, bundle, audit, and documentation owners. Publish
       verified native candidates atomically; preserve package-manager failure
-      output and the expiring disposition without date-dependent test failures.
+      output and complete non-blocking advisory evidence without private
+      exemptions, date-dependent gates, or duplicate scans.
       Qualify patched KaTeX through the existing Markdownlint and math consumers,
       inherited-option refusal, native lock resolution, fresh online audit, and
-      rebuilt offline supply; do not widen the braces disposition.
+      rebuilt offline supply; preserve raw findings without advisory-based
+      installation or delivery holds.
       Refresh compatible transitive dependencies and the pinned official Node
       image on its current stable Debian base. Verify upstream bounds, parser
       behavior, licenses, install effects,
@@ -242,8 +245,9 @@
       Audit actual Node, npm, and native executable components separately from
       the project lock through native extractors. Verify exact artifact and
       platform coverage, retain raw and binary-symbol evidence separately, and
-      require applicable disposition or official remediation before toolchain
-      acceptance.
+      disclose findings and missing coverage without delaying delivery.
+      Authenticity, checksums, functionality, and platform acceptance remain
+      required.
       Exercise the actual download size boundary and distinguish supplied ABIs
       from qualified hosts. Verify focused regressions, full source, cold
       installation, exact-HEAD proof, and both Forge platform matrices; retain
@@ -255,10 +259,10 @@
       with native Forge tags, and refusal of invalid release inputs or mismatched
       source.
       Cover original-duty findings, actual npm diagnostics, portable native
-      selectors, public download causes, and the reachable empty-policy
-      withdrawal. Verify the approved trusted-repository development-tool
-      distribution scope, unchanged expiry, and refusal of both offline source
-      checks and online audit at expiry. Keep the maintainer's ongoing
+      selectors, public download causes, and the explicit no-ignore native
+      policy. Verify one complete non-blocking scan and continued rejection of
+      scanner failures, malformed reports, and input drift. Keep the maintainer's
+      ongoing
       [risk obligation](../../../docs/governance/ethos.md#tool-supply-and-offline-execution)
       separate from this fixed-source acceptance.
       Qualify the frozen bundle on actual Linux and Windows Runner job

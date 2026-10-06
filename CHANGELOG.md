@@ -28,9 +28,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
-- Permit distribution of the offline development tools for trusted-repository
-  checks under the approved exception's original expiry. Production use and
-  arbitrary untrusted inputs remain outside its scope.
+- Treat supply-chain advisories as non-blocking delivery evidence. Preserve one
+  complete native scan, retain failures and reports, and remove temporary
+  advisory exemptions, expiry gates, and duplicate filtering. Artifact integrity
+  and actual platform acceptance remain required.
 - Update the native TOML formatter to 0.9.0 and compatible npm dependencies,
   with explicit pins for the audited Markdown parser and terminal-width fixes.
 - Refresh the digest-pinned official Node 26 CI image on its supported Debian
@@ -57,7 +58,7 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   only updates and escalations. Keep the rule in the communication topic.
 - Require both Forges' declared verification deadlines, select worktree
   deletions consistently, preserve Git and public download failures, and keep
-  unrelated prose fixtures independent of an expiring dependency exception.
+  unrelated prose fixtures independent of advisory review dates.
 - Keep deleted-repository test fixtures from discovering an enclosing worktree,
   including during cold offline checks with source-local temporary storage.
 - Restore data-entry stop and verification cues, accountable method selection,
@@ -68,11 +69,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   option evaluation, and human/Agent responsibilities.
 - Report the actual npm version after offline installation, retain public
   download failure causes, and use portable native-tool selector names.
-- Explain offline refusal when the approved dependency exception expires and
-  its valid empty-policy withdrawal; distinguish process from host architecture.
+- Distinguish process from host architecture; retain actual offline input and
+  runtime evidence without an advisory-expiry gate.
 - Publish verified native tools atomically instead of exposing partial cache
-  entries. Keep dependency fixtures independent of the live exception's expiry
-  while real audit admission still rejects expired dispositions.
+  entries. Keep dependency fixtures independent of advisory review dates.
 - Preserve package-manager output and native error causes, and test the actual
   release-download size limit. Distinguish supplied ABIs and hosted offline
   steps from host qualification and network isolation.

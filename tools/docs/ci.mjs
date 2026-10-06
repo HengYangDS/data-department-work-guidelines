@@ -4,19 +4,12 @@ import {
   mkdtempSync,
   readFileSync,
   realpathSync,
-  rmSync,
   writeFileSync,
 } from "node:fs";
 import path from "node:path";
-import os from "node:os";
-import semver from "semver";
-import { parse as parseToml, stringify as stringifyToml } from "smol-toml";
+import { parse as parseToml } from "smol-toml";
 import YAML from "yaml";
-import {
-  isolatedNpmEnvironment,
-  npmCliPath,
-  validateLockSupply,
-} from "../ci/offline-bundle.mjs";
+import { validateLockSupply } from "../ci/offline-bundle.mjs";
 import {
   declaredToolRuntime,
   managedFileExists,
@@ -26,67 +19,32 @@ import {
 } from "./runtime.mjs";
 
 export const dependencyPolicyPath = ".config/checks/dependencies/policy.toml";
-const approvedDependency = {
-  id: "GHSA-vfj7-8cjw-p6xm",
-  ecosystem: "npm",
-  name: "braces",
-  version: "3.0.3",
-  group: "dev",
-};
-
-// Temporary repository input boundary for the human-approved exception.
-// Native OSV owns finding disposition; ETHOS will own reusable risk admission.
 export function parseDependencyPolicy(source) {
   const policy = parseToml(source);
   if (
-    Object.keys(policy).some((key) => key !== "IgnoredVulns") ||
+    Object.keys(policy).join(",") !== "IgnoredVulns" ||
     !Array.isArray(policy.IgnoredVulns) ||
-    policy.IgnoredVulns.length > 1
+    policy.IgnoredVulns.length !== 0
   )
     throw new Error(
-      "dependency policy must use only the approved native OSV fields",
+      "native OSV policy must expose all findings without ignores",
     );
-  for (const entry of policy.IgnoredVulns) {
-    if (
-      Object.keys(entry).sort().join(",") !== "id,ignoreUntil,reason" ||
-      entry.id !== approvedDependency.id ||
-      !(entry.ignoreUntil instanceof Date) ||
-      !Number.isFinite(entry.ignoreUntil.getTime()) ||
-      entry.ignoreUntil.getTime() > Date.UTC(2026, 9, 18) ||
-      typeof entry.reason !== "string" ||
-      !entry.reason.trim()
-    )
-      throw new Error(
-        "dependency policy exceeds the approved native disposition",
-      );
-  }
   return policy;
 }
 
-export function validateDependencyInput(lock, policy, now = new Date()) {
+export function validateDependencyInput(lock) {
   validateLockSupply(lock);
   const identities = new Map();
-  let approvedPaths = 0;
   for (const [location, entry] of Object.entries(lock.packages)) {
     if (!location) continue;
     const name = entry.name ?? location.split("node_modules/").at(-1);
-    const identity = { name, version: entry.version, ecosystem: "npm" };
     if (entry.dev !== true)
       throw new Error(`dependency input is not development-only: ${location}`);
-    identities.set(`${name}@${entry.version}`, identity);
-    if (policy.IgnoredVulns.length && name === approvedDependency.name) {
-      if (entry.version !== approvedDependency.version)
-        throw new Error(`approved braces version changed: ${location}`);
-      approvedPaths++;
-    }
-  }
-  if (policy.IgnoredVulns.length) {
-    if (policy.IgnoredVulns[0].ignoreUntil.getTime() <= now.getTime())
-      throw new Error("approved dependency disposition has expired");
-    if (!approvedPaths)
-      throw new Error(
-        "approved braces input is absent; retire the disposition",
-      );
+    identities.set(`${name}@${entry.version}`, {
+      name,
+      version: entry.version,
+      ecosystem: "npm",
+    });
   }
   return identities;
 }
@@ -94,7 +52,6 @@ export function validateDependencyInput(lock, policy, now = new Date()) {
 export function validateDependencyEvidence(
   report,
   identities,
-  policy,
   exitCode,
   repository = root,
 ) {
@@ -119,7 +76,6 @@ export function validateDependencyEvidence(
     throw new Error("native dependency report names a different input");
   const seen = new Set();
   let findings = 0;
-  let approvedFindings = 0;
   for (const entry of result.packages) {
     const identity = entry.package;
     const key = `${identity?.name}@${identity?.version}`;
@@ -141,246 +97,119 @@ export function validateDependencyEvidence(
       if (typeof finding.id !== "string" || !finding.id.trim())
         throw new Error("native dependency report has an invalid finding");
       findings++;
-      if (
-        [finding.id, ...(finding.aliases ?? [])].includes(approvedDependency.id)
-      ) {
-        if (
-          identity.name !== approvedDependency.name ||
-          identity.version !== approvedDependency.version ||
-          finding.withdrawn ||
-          (finding.affected ?? []).some((affected) =>
-            (affected.ranges ?? []).some((range) =>
-              (range.events ?? []).some((event) => event.fixed),
-            ),
-          )
-        )
-          throw new Error(
-            "approved dependency finding is changed, withdrawn, or fixed",
-          );
-        approvedFindings++;
-      }
     }
   }
   if (seen.size !== identities.size)
     throw new Error("native dependency report omits input identities");
   if (exitCode !== (findings ? 1 : 0))
     throw new Error("native dependency report disagrees with its exit status");
-  if (policy.IgnoredVulns.length && !approvedFindings)
-    throw new Error("approved raw finding is absent; retire the disposition");
-  return {
-    findings,
-    approvedFindings: policy.IgnoredVulns.length ? approvedFindings : 0,
-  };
+  return { findings };
 }
 
 export function auditDependencies({
   repository = root,
   offline = false,
   environment = process.env,
-  now = new Date(),
 } = {}) {
   const policySource = readFileSync(
     path.join(repository, dependencyPolicyPath),
     "utf8",
   );
-  const policy = parseDependencyPolicy(policySource);
+  parseDependencyPolicy(policySource);
   const lockSource = readFileSync(
     path.join(repository, "package-lock.json"),
     "utf8",
   );
-  let identities;
+  const identities = validateDependencyInput(JSON.parse(lockSource));
   const binary = nativeToolBinary("osv-scanner");
   const evidenceRoot = path.join(repository, "build/evidence/dependencies");
   managedFileExists(path.join(evidenceRoot, "boundary-check"), repository);
   mkdirSync(evidenceRoot, { recursive: true });
   const evidence = mkdtempSync(path.join(evidenceRoot, "scan-"));
   writeFileSync(path.join(evidence, "policy.toml"), policySource);
-  writeFileSync(
-    path.join(evidence, "raw-policy.toml"),
-    stringifyToml({ IgnoredVulns: [] }),
-  );
   writeFileSync(path.join(evidence, "package-lock.json"), lockSource);
-  const execution = [];
-  const assertInputs = () => {
-    if (
-      readFileSync(path.join(repository, "package-lock.json"), "utf8") !==
-        lockSource ||
-      readFileSync(path.join(repository, dependencyPolicyPath), "utf8") !==
-        policySource
-    )
-      throw new Error(
-        "dependency audit inputs changed during native execution",
-      );
-  };
-  const execute = (mode) => {
-    const output = path.join(evidence, `${mode}.json`);
-    const args = [
-      "scan",
-      "source",
-      ...(offline ? ["--offline"] : []),
-      "--no-ignore",
-      "--config",
-      path.join(evidence, mode === "raw" ? "raw-policy.toml" : "policy.toml"),
-      "--lockfile",
-      path.join(repository, "package-lock.json"),
-      "--format",
-      "json",
-      "--all-packages",
-      "--all-vulns",
-      "--output-file",
-      output,
-      "--verbosity",
-      "warn",
-    ];
-    const result = spawnSync(binary, args, {
-      cwd: repository,
-      env: environment,
-      stdio: ["ignore", "pipe", "pipe"],
-      encoding: "utf8",
-      timeout: 60_000,
-      maxBuffer: 16 * 1024 * 1024,
-    });
-    writeFileSync(path.join(evidence, `${mode}.stdout`), result.stdout ?? "");
-    writeFileSync(path.join(evidence, `${mode}.stderr`), result.stderr ?? "");
-    execution.push({
-      command: [binary, ...args],
-      status: result.status,
-      signal: result.signal,
-      error: result.error?.message,
-    });
-    writeFileSync(
-      path.join(evidence, "execution.json"),
-      JSON.stringify(
-        { time: new Date().toISOString(), offline, execution },
-        null,
-        2,
-      ) + "\n",
-    );
-    if (
-      result.error ||
-      ![0, 1].includes(result.status) ||
-      result.stderr ||
-      result.stdout
-    )
-      throw new Error(
-        `native ${mode} audit failed; complete output retained at ${evidence}`,
-      );
-    return {
-      report: JSON.parse(readFileSync(output, "utf8")),
-      status: result.status,
-    };
-  };
-  identities = validateDependencyInput(JSON.parse(lockSource), policy, now);
-  assertInputs();
-  if (!offline && policy.IgnoredVulns.length) {
-    const temporary = mkdtempSync(path.join(os.tmpdir(), "ddwg-npm-view-"));
-    try {
-      const registryArgs = [
-        npmCliPath(),
-        "view",
-        approvedDependency.name,
-        "version",
-        "--json",
-        "--registry=https://registry.npmjs.org",
-        "--offline=false",
-        "--prefer-online=true",
-        "--prefer-offline=false",
-        "--fetch-retries=0",
-        "--prefix",
-        temporary,
-      ];
-      const registry = spawnSync(process.execPath, registryArgs, {
-        cwd: temporary,
-        env: isolatedNpmEnvironment(
-          temporary,
-          path.join(temporary, "npm-cache"),
+  const output = path.join(evidence, "raw.json");
+  const args = [
+    "scan",
+    "source",
+    ...(offline ? ["--offline"] : []),
+    "--no-ignore",
+    "--config",
+    path.join(evidence, "policy.toml"),
+    "--lockfile",
+    path.join(repository, "package-lock.json"),
+    "--format",
+    "json",
+    "--all-packages",
+    "--all-vulns",
+    "--output-file",
+    output,
+    "--verbosity",
+    "warn",
+  ];
+  const result = spawnSync(binary, args, {
+    cwd: repository,
+    env: environment,
+    stdio: ["ignore", "pipe", "pipe"],
+    encoding: "utf8",
+    timeout: 60_000,
+    maxBuffer: 16 * 1024 * 1024,
+  });
+  writeFileSync(path.join(evidence, "raw.stdout"), result.stdout ?? "");
+  writeFileSync(path.join(evidence, "raw.stderr"), result.stderr ?? "");
+  writeFileSync(
+    path.join(evidence, "execution.json"),
+    JSON.stringify(
+      {
+        time: new Date().toISOString(),
+        offline,
+        execution: [
           {
-            offline: false,
-            environment,
+            command: [binary, ...args],
+            status: result.status,
+            signal: result.signal,
+            error: result.error?.message,
           },
-        ),
-        stdio: ["ignore", "pipe", "pipe"],
-        encoding: "utf8",
-        timeout: 15_000,
-        maxBuffer: 1024 * 1024,
-      });
-      for (const name of ["empty-user.npmrc", "empty-global.npmrc"]) {
-        writeFileSync(
-          path.join(evidence, name),
-          readFileSync(path.join(temporary, name)),
-        );
-      }
-      writeFileSync(
-        path.join(evidence, "stable-version.stdout"),
-        registry.stdout ?? "",
-      );
-      writeFileSync(
-        path.join(evidence, "stable-version.stderr"),
-        registry.stderr ?? "",
-      );
-      execution.push({
-        command: [process.execPath, ...registryArgs],
-        status: registry.status,
-        signal: registry.signal,
-        error: registry.error?.message,
-      });
-      writeFileSync(
-        path.join(evidence, "execution.json"),
-        JSON.stringify(
-          { time: new Date().toISOString(), offline, execution },
-          null,
-          2,
-        ) + "\n",
-      );
-      if (registry.error || registry.status !== 0 || registry.stderr)
-        throw new Error(
-          `official stable version observation failed; evidence ${evidence}`,
-        );
-      const result = JSON.parse(registry.stdout);
-      const versions = Array.isArray(result) ? result : [result];
-      if (
-        versions.length !== 1 ||
-        !semver.valid(versions[0]) ||
-        versions[0] !== approvedDependency.version
-      )
-        throw new Error(
-          "official stable braces changed; retire and requalify the disposition",
-        );
-    } finally {
-      rmSync(temporary, {
-        recursive: true,
-        force: true,
-        maxRetries: 10,
-        retryDelay: 200,
-      });
-    }
-  }
-  const raw = execute("raw");
-  assertInputs();
-  const { findings: findingCount, approvedFindings } =
-    validateDependencyEvidence(
-      raw.report,
-      identities,
-      policy,
-      raw.status,
-      repository,
-    );
-  const decided = execute("decision");
-  assertInputs();
-  validateDependencyEvidence(
-    decided.report,
-    identities,
-    { IgnoredVulns: [] },
-    decided.status,
-    repository,
+        ],
+      },
+      null,
+      2,
+    ) + "\n",
   );
-  if (decided.status !== 0 || findingCount !== approvedFindings)
+  if (
+    result.error ||
+    ![0, 1].includes(result.status) ||
+    result.stderr ||
+    result.stdout
+  )
     throw new Error(
-      `unapproved dependency findings block execution; full raw evidence: ${evidence}`,
+      `native raw audit failed; complete output retained at ${evidence}`,
     );
-  assertInputs();
+  if (
+    readFileSync(path.join(repository, "package-lock.json"), "utf8") !==
+      lockSource ||
+    readFileSync(path.join(repository, dependencyPolicyPath), "utf8") !==
+      policySource
+  )
+    throw new Error(
+      `dependency audit inputs changed during native execution; evidence ${evidence}`,
+    );
+  let findingCount;
+  try {
+    ({ findings: findingCount } = validateDependencyEvidence(
+      JSON.parse(readFileSync(output, "utf8")),
+      identities,
+      result.status,
+      repository,
+    ));
+  } catch (cause) {
+    throw new Error(
+      `native dependency report is invalid: ${cause.message}; evidence ${evidence}`,
+      { cause },
+    );
+  }
   console.log(
-    `PASS native dependency audit: ${identities.size} identities; ${findingCount} raw findings; evidence ${path.relative(repository, evidence)}`,
+    `${findingCount ? "REPORT" : "PASS"} native dependency audit: ${identities.size} identities; ${findingCount} raw findings; advisory findings do not block delivery; evidence ${path.relative(repository, evidence)}`,
   );
   return { evidence, findingCount };
 }

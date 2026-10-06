@@ -46,15 +46,14 @@ negative tests. `npm run prose` runs the same locked spelling, prose, and
 terminology checks without the rest of the verification graph. Run
 `node tools/docs/cli.mjs audit` separately when online before source acceptance;
 both hosted CI planes require it and retain its evidence even on failure.
-The audit keeps raw findings before applying the
-[native disposition](.config/checks/dependencies/policy.toml). The
-[supply and audit contract](docs/governance/ethos.md#tool-supply-and-offline-execution)
-owns acceptance, the approved expiring development exception, registry
-freshness, and refusal conditions. This audit covers locked repository packages,
-not the npm executable bundled with Node. The offline repository verifier does
-not contact either Forge, but still refuses an expired disposition. Withdraw
-the exception through the supply contract before expiry; a clean offline
-install does not bypass that boundary.
+The audit runs once with an explicit
+[native policy](.config/checks/dependencies/policy.toml) that ignores no findings.
+Advisories are non-blocking delivery evidence; retain them for maintenance under
+the [supply contract](docs/governance/ethos.md#tool-supply-and-offline-execution).
+Failed scans, malformed reports, and mismatched input remain failures, not clean
+audit results. The audit covers locked repository packages, not components
+bundled with Node or npm. Offline verification contacts neither Forge and has
+no advisory-based expiry gate.
 
 Vale checks spelling, repeated words, selected technical terms, and diagnosed
 wordy phrases using [native configuration](.config/checks/prose/vale.ini),
@@ -135,9 +134,8 @@ installed product prerequisite for Change admission and proof. The bundle's
 third-party packages retain their own license notices; the repository MIT grant
 covers repository source and documentation, not those packages. Do not claim
 portable offline distribution before the exact asset and full host matrix have
-been observed. Verification refuses an edition that retains an expired
-dependency disposition; a previously downloaded bundle does not extend that
-disposition. Git's native `.gitattributes` rule checks out tracked text with
+been observed. Advisory findings remain visible without blocking installation
+or delivery. Git's native `.gitattributes` rule checks out tracked text with
 LF even on Windows; do not replace it with a host-specific Git setting. Keep
 `node_modules/` and generated output out of Git.
 

@@ -183,7 +183,122 @@ GitLab and GitHub SHALL supply and qualify the frozen release independently.
   borrowing another Forge's identity, or reusing an earlier bundle
 - **AND** only the exact operation's disposable temporary stage is removed.
 
+## REMOVED Requirements
+
+### Requirement: Tool supply and portability require executed checks
+
+**Reason**: The latest human direction retires advisory-based delivery holds,
+private exemptions, expiry gates, and duplicate filtering. The old requirement
+includes those acceptance rules and is replaced deliberately rather than
+silently dropping scenarios from a MODIFIED block.
+
+**Migration**: Use the added native-tool supply requirement below. Preserve
+complete original evidence, actual execution, artifact integrity, platform
+qualification, and maintenance ownership. Historical approvals remain historical;
+they are not retroactively certified as fixes.
+
 ## ADDED Requirements
+
+### Requirement: Native tool supply is verified across platforms
+
+CI SHALL verify native-tool digests and audit all locked dependencies online
+with OSV Scanner, separately from offline source checks. One complete raw
+report SHALL retain all findings as non-blocking delivery evidence. Public checks
+SHALL avoid POSIX shells and host paths; each claimed OS SHALL execute the full
+graph. Current command
+examples SHALL be checked against the installed CLI. GitLab jobs SHALL name
+purpose and platform; hidden phase templates SHALL own common steps.
+
+#### Scenario: An upstream download returns a rejected response
+
+- **WHEN** a native-tool or either Forge's release download returns a rejected
+  HTTP response with an unread body
+- **THEN** its existing owner awaits native body cancellation before returning
+  failure and retains the HTTP status and any original cleanup error
+- **AND** it performs no automatic retry or fallback and publishes no unverified
+  output; a concurrent verified target remains unchanged.
+
+#### Scenario: A native audit times out before or after output
+
+- **WHEN** the audit's native process exceeds its unchanged deadline, whether
+  or not it emits output first
+- **THEN** the original attempt's command, streams, status, signal, and error
+  remain in its own evidence and execution reports failure
+- **AND** validation does not assume startup latency, synthesize progress,
+  replay the attempt, or extend the deadline.
+
+#### Scenario: Verification job names omit the platform
+
+- **WHEN** a GitLab source or offline verification job has a platform-less name,
+  a duplicated old alias, or an incorrect shared parent
+- **THEN** the existing CI validator rejects the configuration
+- **AND** all declared jobs inherit their hidden phase owner without changing
+  runner capabilities, rules, or verification commands.
+- **AND** jobs use `docs:verify:<os>` or `offline:verify:<os>` for `linux`,
+  `macos`, and `windows`, with `:review` for source review; no runnable shared
+  owner or platform-specific parent substitutes for the hidden phase template.
+
+#### Scenario: Windows verification events share a finite executor
+
+- **WHEN** Windows review, protected-source, and offline verification jobs
+  become eligible for the same project's finite executor
+- **THEN** they declare one stable native project-scoped resource group,
+  independent of the event and ref
+- **AND** the existing CI contract rejects missing or divergent reservations
+- **AND** separate runner identities and ref admission remain unchanged
+- **AND** all discovered tests and existing deadlines remain mandatory;
+  the reservation does not prove isolation from another project.
+
+#### Scenario: A command was retired by its product
+
+- **WHEN** a current instruction names a command absent from the installed
+  public CLI
+- **THEN** release review against the installed CLI reports the stale
+  instruction
+- **AND THEN** a valid link or formatted code block does not hide it.
+- **AND** parsed prose alone cannot establish command validity.
+
+#### Scenario: Prose or native dependency execution fails
+
+- **WHEN** a current Markdown file contains a misspelling
+- **THEN** the locked spelling check rejects it without a local waiver.
+- **WHEN** the native dependency scanner fails or provides incomplete or
+  inconsistent evidence
+- **THEN** the audit reports failure without claiming a clean scan
+- **AND** both Forges preserve complete raw reports and execution output.
+
+#### Scenario: Advisory findings remain non-blocking evidence
+
+- **WHEN** one native scanner report covers the complete declared input and
+  agrees with its native exit status
+- **THEN** the audit retains all findings without blocking delivery
+- **AND** no advisory ignore, filtered second scan, private waiver, or expiry
+  gate changes source verification or installation
+- **AND** artifact authenticity, checksums, functionality, and actual platform
+  acceptance remain required.
+
+#### Scenario: Offline checks run after a former advisory expiry
+
+- **WHEN** the declared tools and source pass their actual integrity and
+  functionality checks
+- **THEN** a historical advisory-expiry date does not block offline verification
+- **AND** scanner coverage and runtime acceptance remain separate claims.
+
+#### Scenario: A fresh supported host runs the full graph
+
+- **WHEN** a maintainer installs the declared locked dependencies on a claimed
+  host OS and invokes the single repository check
+- **THEN** format, lint, links, and repository-specific validations run without
+  a POSIX shell or a host-specific absolute path
+- **AND THEN** missing tools fail visibly rather than being downloaded or
+  silently skipped.
+- **AND** banning `.sh` files alone does not establish portability.
+
+#### Scenario: Windows checks out the same text bytes
+
+- **WHEN** Git checks out tracked text on a host with CRLF defaults
+- **THEN** the repository's native `.gitattributes` rule selects LF
+- **AND THEN** the same formatting check evaluates the same text bytes.
 
 ### Requirement: Verification reports its native workspace context
 
