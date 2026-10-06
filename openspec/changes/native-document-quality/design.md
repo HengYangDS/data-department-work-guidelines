@@ -405,6 +405,10 @@ waiver, or authorization for arbitrary inputs. Use only native `IgnoredVulns`
 fields. The existing input boundary checks every matching lock path, raw package
 identity, and development group; all other findings remain blocking.
 
+The human approved formal development-tool distribution on 6 October 2026,
+limited to trusted-repository checks and the original expiry. This authorizes
+that distribution, not a renewal, production use, or arbitrary untrusted input.
+
 For the separate KaTeX inherited-option finding, the native math extension
 selects a patched renderer through an exact npm override. Keep the official
 parser and renderer, not a vendor patch or second implementation. Qualify the

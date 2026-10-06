@@ -28,6 +28,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Permit distribution of the offline development tools for trusted-repository
+  checks under the approved exception's original expiry. Production use and
+  arbitrary untrusted inputs remain outside its scope.
 - Update the native TOML formatter to 0.9.0 and compatible npm dependencies
   without adding overrides.
 - Shorten active OpenSpec Change documents and simplify governance navigation.

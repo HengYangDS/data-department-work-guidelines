@@ -241,9 +241,11 @@
       original failures and every review disposition by reference.
       Cover original-duty findings, actual npm diagnostics, portable native
       selectors, public download causes, and the reachable empty-policy
-      withdrawal. Before 2026-10-18T00:00:00Z, the repository maintainer must
-      qualify fixed supply or obtain a new explicit risk decision; verify that
-      expiry still refuses both offline source checks and online audit.
+      withdrawal. Verify the approved trusted-repository development-tool
+      distribution scope, unchanged expiry, and refusal of both offline source
+      checks and online audit at expiry. Keep the maintainer's ongoing
+      [risk obligation](../../../docs/governance/ethos.md#tool-supply-and-offline-execution)
+      separate from this fixed-source acceptance.
       Qualify the frozen bundle on actual Linux and Windows Runner job
       identities through the existing explicit protected-source offline
       route. Preserve complete results and exact package retirement; do not

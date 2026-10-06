@@ -332,6 +332,11 @@ to reviewed development checks using npm `braces` 3.0.3 and expires at
 existing input owner checks every matching lock path, raw package identity and
 development group.
 
+On 6 October 2026, the repository maintainer approved distributing the offline
+development tools for trusted-repository checks under this original expiry.
+Distribution does not renew the exception or permit production use or arbitrary
+untrusted input.
+
 A changed stable release, official fix, withdrawn or missing finding, or expired
 entry requires retirement and new qualification. On withdrawal, replace the
 complete disposition table with `IgnoredVulns = []`; do not leave a comments-only

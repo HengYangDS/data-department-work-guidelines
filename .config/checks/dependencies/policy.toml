@@ -5,4 +5,4 @@
 [[IgnoredVulns]]
 id = "GHSA-vfj7-8cjw-p6xm"
 ignoreUntil = 2026-10-18
-reason = "Human-approved 2026-10-04: reviewed development checks only; retain complete raw findings, bounded native execution and all other gates. Not production or arbitrary untrusted input."
+reason = "Human-approved 2026-10-04 development checks and 2026-10-06 development-tool distribution: trusted repositories only; retain complete raw findings, bounded native execution and all other gates. Not production or arbitrary untrusted input. Original expiry unchanged."
