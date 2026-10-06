@@ -228,7 +228,7 @@
       then local checks and both Forge source matrices. Keep VM identity,
       isolation, and throughput qualification with the runner owner; add no
       controller, capacity threshold, or proof gate.
-- [x] 2.38 Resolve the complete fixed-source implementation review at the
+- [ ] 2.38 Resolve the complete fixed-source implementation review at the
       existing installer, bundle, audit, and documentation owners. Publish
       verified native candidates atomically; preserve package-manager failure
       output and the expiring disposition without date-dependent test failures.

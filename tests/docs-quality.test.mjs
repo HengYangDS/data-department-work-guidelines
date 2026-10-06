@@ -341,7 +341,7 @@ test("official OpenSpec findings and report identity cannot be reduced to totals
   assert.equal(result.stderr, "");
 });
 
-test("real official OpenSpec informational findings block source verification", () => {
+test("real official OpenSpec diagnostics block source verification", () => {
   const directory = mkdtempSync(
     path.join(os.tmpdir(), "ddwg-openspec-report-"),
   );
@@ -406,7 +406,7 @@ test("real official OpenSpec informational findings block source verification", 
       const script = `
         import assert from "node:assert/strict";
         const { validateOpenSpec } = await import(${JSON.stringify(pathToFileURL(runtime).href)});
-        ${finding ? "assert.throws(validateOpenSpec, /spec:fixture.*requirements\\[0\\].*\\[INFO\\].*very long/u);" : "assert.doesNotThrow(validateOpenSpec);"}
+        ${finding ? "assert.throws(validateOpenSpec, /exited 1/u);" : "assert.doesNotThrow(validateOpenSpec);"}
       `;
       const result = spawnSync(
         process.execPath,
@@ -421,6 +421,18 @@ test("real official OpenSpec informational findings block source verification", 
       assert.ifError(result.error);
       assert.equal(result.status, 0, result.stderr + result.stdout);
       assert.equal(result.stderr, "");
+      if (finding) {
+        const report = JSON.parse(result.stdout);
+        assert.equal(report.items.length, 1);
+        assert.equal(report.items[0].id, "fixture");
+        assert.equal(report.items[0].type, "spec");
+        assert.equal(report.items[0].valid, false);
+        assert.equal(report.items[0].issues.length, 1);
+        assert.equal(report.items[0].issues[0].level, "WARNING");
+        assert.equal(report.items[0].issues[0].path, "requirements[0]");
+        assert.match(report.items[0].issues[0].message, /very long/u);
+        assert.equal(report.summary.totals.failed, 1);
+      }
       assert.equal(readFileSync(spec, "utf8"), before);
     }
   } finally {
