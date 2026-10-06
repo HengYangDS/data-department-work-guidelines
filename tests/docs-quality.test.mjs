@@ -2444,9 +2444,15 @@ test("native source tools treat selected filenames as literal inputs", async () 
   assert.equal(initialized.status, 0, initialized.stderr);
   const source = path.join(directory.path, "--write.md");
   writeFileSync(source, "# Native Source\n\n-  Item\n");
+  const lychee = nativeToolBinary("lychee");
+  const environment = {
+    ...process.env,
+    DDWG_LYCHEE_BIN: /[/\\]/u.test(lychee) ? path.resolve(lychee) : lychee,
+  };
   const invoke = (command) =>
     spawnSync(process.execPath, ["tools/docs/cli.mjs", ...command], {
       cwd: directory.path,
+      env: environment,
       encoding: "utf8",
       timeout: 30_000,
     });
@@ -2475,7 +2481,7 @@ test("native source tools treat selected filenames as literal inputs", async () 
     writeFileSync(file, "# Links\n\n[Target](target.md#target)\n");
   const check = () =>
     spawnSync(
-      nativeToolBinary("lychee"),
+      environment.DDWG_LYCHEE_BIN,
       linkCheckArguments(list, { literalFiles }),
       {
         cwd: directory.path,
