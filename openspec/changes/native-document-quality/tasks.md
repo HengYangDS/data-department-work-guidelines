@@ -238,9 +238,11 @@
       Refresh compatible transitive dependencies and the pinned official Node
       image. Verify upstream bounds, parser behavior, licenses, install effects,
       and raw advisory deltas before rebuilding the source-bound offline bundle.
-      Audit actual package-manager and runtime components separately from the
-      project lock; retain raw findings and require their own applicable
-      disposition or official remediation before toolchain acceptance.
+      Audit actual Node, npm, and native executable components separately from
+      the project lock through native extractors. Verify exact artifact and
+      platform coverage, retain raw and binary-symbol evidence separately, and
+      require applicable disposition or official remediation before toolchain
+      acceptance.
       Exercise the actual download size boundary and distinguish supplied ABIs
       from qualified hosts. Verify focused regressions, full source, cold
       installation, exact-HEAD proof, and both Forge platform matrices; retain

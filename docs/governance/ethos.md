@@ -261,9 +261,13 @@ unsupported. Git's native `.gitattributes` keeps tracked text at LF on every OS.
 | Offline installation | Uses the source-bound bundle and no replacement download.        |
 
 The project-lock audit covers repository dependencies, not components bundled
-inside Node, npm, or native executables. Audit the actual supplied artifacts
-separately before toolchain acceptance. A newer version or a clean project lock
-does not dispose of a runtime finding or extend an existing exception.
+inside Node, npm, or native executables. Audit each supplied artifact's digest,
+platform, and component inventory through native extractors. Missing or empty
+inventory leaves coverage unproved. Keep raw findings and binary-symbol results
+separately; symbols do not prove that a runtime entry can trigger a finding.
+Toolchain acceptance requires complete applicable coverage and disposition. A
+newer version or a clean project lock does not dispose of a runtime finding or
+extend an existing exception.
 
 The [supply manifest](../../.config/supply/native.json) pins Vale and lychee
 archives and official OSV Scanner binaries by platform and SHA-256. Raw binaries
