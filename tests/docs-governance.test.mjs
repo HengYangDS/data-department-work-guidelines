@@ -581,6 +581,38 @@ function configurationFixture(run) {
   }
 }
 
+test("offline configuration refuses expiry and admits an explicit withdrawal", (context) => {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-config-expiry-"));
+  try {
+    cpSync(path.join(root, ".config"), path.join(directory, ".config"), {
+      recursive: true,
+    });
+    cpSync(
+      path.join(root, "package-lock.json"),
+      path.join(directory, "package-lock.json"),
+    );
+    context.mock.timers.enable({
+      apis: ["Date"],
+      now: Date.UTC(2026, 9, 17, 23, 59, 59, 999),
+    });
+    assert.doesNotThrow(() => governance.checkConfigurationLayout(directory));
+    context.mock.timers.tick(1);
+    assert.throws(
+      () => governance.checkConfigurationLayout(directory),
+      /expired/u,
+    );
+    writeFileSync(
+      path.join(directory, ".config/checks/dependencies/policy.toml"),
+      "IgnoredVulns = []\n",
+    );
+    assert.doesNotThrow(() => governance.checkConfigurationLayout(directory));
+  } finally {
+    context.mock.timers.reset();
+    rmSync(directory, { recursive: true, force: true });
+    assert.equal(existsSync(directory), false);
+  }
+});
+
 test("configuration rejects mixed ownership, code, duplicates and local state", () => {
   for (const relative of [
     ".config/tools/native.json",

@@ -18,7 +18,8 @@
       transitive dependency, configuration, adapter, command, and test
       interface.
 - [x] 2.2 Extend the current installer and bundle owners without retaining a
-      second command, manifest, or installer for the same concern.
+      second command, manifest, or installer for the same concern. Verify the
+      native supply and cold-install tests and the resolved source interfaces.
 - [x] 2.3 Apply human English editing to all seven task topics. Compare every
       original duty, actor, condition, permission, authority, and evidence limit
       with the [complete original work
@@ -190,8 +191,15 @@
       Keep future archive-path controls and verify source, recovery, proof, cold
       install, and native integration without a history directory or
       compatibility lifecycle.
-- [ ] 2.33 Integrate formally accepted ETHOS format and spacing ownership, then
-      retire superseded local glue in the same migration. Verify [native
+- [ ] 2.33 Integrate [formally accepted shared
+      ownership](design.md#integrate-accepted-shared-ownership-without-weakening-the-floor)
+      into the DDWG profile, validators, tests, and guidance in its owned lane.
+      Retain two default gates and native prerequisites; retire replaced format,
+      descriptor, stream, task-authoring, risk, and identity glue in the same migration.
+      Verify official task-template diagnostics and the approved expiring
+      development-only braces disposition through the accepted product owner.
+      Qualify declared resource/asset loading, package inclusion, and offline
+      consumers before retiring old paths. Verify [native
       formatting boundaries](design.md#give-native-quality-concerns-one-owner)
       with code/data literals, tight and loose lists, quote structure, dprint
       TOML, syntax, policy, supply, and meaningful-byte controls. Preserve
@@ -224,6 +232,9 @@
       existing installer, bundle, audit, and documentation owners. Publish
       verified native candidates atomically; preserve package-manager failure
       output and the expiring disposition without date-dependent test failures.
+      Qualify patched KaTeX through the existing Markdownlint and math consumers,
+      inherited-option refusal, native lock resolution, fresh online audit, and
+      rebuilt offline supply; do not widen the braces disposition.
       Exercise the actual download size boundary and distinguish supplied ABIs
       from qualified hosts. Verify focused regressions, full source, cold
       installation, exact-HEAD proof, and both Forge platform matrices; retain
@@ -250,18 +261,25 @@
       wheel.
       Verify actual installed bindings, exact-HEAD plan/proof, native semantics,
       complete test selection, diagnostic custody, subject applicability, and
-      single execution. Migrate the DDWG profile, validators, tests, and guidance
-      in its owned lane; consume AIGW and Proxy qualification from their owners.
-      Retain two default gates and native prerequisites, then retire replaced
-      format, descriptor, stream, task-authoring, risk, and identity glue.
-      Verify official task-template diagnostics and the approved expiring
-      development-only braces disposition through the accepted product owner.
-      Qualify declared resource/asset loading, package inclusion, and offline
-      consumers before retiring old paths. Preserve original failures at their
-      producing evidence owner.
+      single execution. Consume the DDWG migration from 2.33 and AIGW and Proxy
+      qualification from their owners. Confirm accepted task-template, risk,
+      resource/asset, package, and offline consumers before treating shared
+      integration as complete. Preserve original failures at their producing
+      evidence owner.
 - [x] 3.4 Publish the major signed SemVer edition independently to GitLab and
       GitHub; verify both exact refs, Releases, downloaded asset hashes, and
       declared source and offline platform jobs.
+- [ ] 3.13 Qualify the accepted product's reusable release-history and
+      peer-navigation boundary on every audited affected adopter through its
+      own product and repository owners. Use applicable declared peers and
+      native reference resolution; distinguish missing links,
+      wrong targets, and unqualified repairs. Verify exact source and installed
+      evidence, complete history conservation, accepted Python evidence,
+      repaired-baseline contribution admission, original-plan recovery, both
+      Forge execution, and protected acceptance before retiring superseded
+      identity code. Preserve existing receipts and original failures; do not
+      substitute a hard-coded SHA, HEAD, private provider, or
+      conservation/ancestry waiver.
 - [ ] 3.5 Complete the final requirement/evidence audit against the
       [original work contract](design.md#preserve-the-original-work-contract-at-seven-topic-owners),
       all 62 original subsections, five surrounding content groups, current
@@ -272,14 +290,14 @@
       trusted signature, exact-HEAD proof, both source/offline matrices, each
       declared offline host, and independent Release/download hashes. Officially
       sync every reviewed requirement and scenario only after its acceptance.
-      Verify source-directory ownership and exact retirement through
-      [the declared boundaries](design.md#retire-replaced-source-and-downloads-only-after-absorption).
+      Verify source-directory ownership and retirement of earlier absorbed
+      resources through [the declared boundaries](design.md#retire-replaced-source-and-downloads-only-after-absorption).
       Preserve immutable releases, qualified rollback, original crosswalk and
       topic hashes, raw review snapshots, independent read guards, and necessary
       failed receipts at their producers. Distinguish editorial evidence from
       raw execution; do not claim automated equivalence or team adoption.
-      Confirm archive prerequisites before official closure; verify subsequent
-      archive, Git, publication, and retirement effects through native owners.
+      Confirm archive prerequisites before official closure. Post-archive
+      acceptance follows the existing migration order and native owners.
 - [x] 3.6 Publish the compatible original-duty correction with fresh local,
       installed ETHOS, signed patch, asset, and both Forge platform evidence;
       preserve the already qualified major release.
@@ -308,17 +326,6 @@
       exact-HEAD installed proof, a signed patch, both declared source and
       offline platform matrices, independent source and asset hashes, and
       retirement of its owned lane and superseded downloads.
-- [ ] 3.13 Qualify the accepted product's reusable release-history and
-      peer-navigation boundary on every audited affected adopter through its
-      own product and repository owners. Use applicable declared peers and
-      native reference resolution; distinguish missing links,
-      wrong targets, and unqualified repairs. Verify exact source and installed
-      evidence, complete history conservation, accepted Python evidence,
-      repaired-baseline contribution admission, original-plan recovery, both
-      Forge execution, and protected acceptance before retiring superseded
-      identity code. Preserve existing receipts and original failures; do not
-      substitute a hard-coded SHA, HEAD, private provider, or
-      conservation/ancestry waiver.
 - [x] 3.14 Qualify and publish compatible plain-language, cross-cycle, and
       offline-supply repairs with source-bound bundle, cold install, proof,
       trusted signed patch, both source/offline matrices, independent downloads,

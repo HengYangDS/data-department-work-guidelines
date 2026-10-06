@@ -39,6 +39,14 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Upgrade the native math renderer so inherited options cannot grant trusted
+  rendering. Preserve Markdownlint tokens, ordinary math, and explicit trust
+  through the existing consumer without waiving the dependency finding.
+- Restore the ban on vague assurances across answers and meeting records, not
+  only updates and escalations. Keep the rule in the communication topic.
+- Require both Forges' declared verification deadlines, select worktree
+  deletions consistently, preserve Git and public download failures, and keep
+  unrelated prose fixtures independent of an expiring dependency exception.
 - Restore data-entry stop and verification cues, accountable method selection,
   explicit data-change acceptance, and maintainer duties. Keep precautionary
   prevention separate from admission of department practice.

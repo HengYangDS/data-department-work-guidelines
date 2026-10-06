@@ -110,8 +110,10 @@ State the risk or blocker; the facts, impact, and latest safe decision time;
 containment already attempted and its result; and the options, costs,
 recommendation, and person who must decide by when.
 
-In any update or escalation, replace vague assurances with statements that
-another person can check:
+## Replace Vague Assurances with Checkable Statements
+
+In updates, answers, meeting records, and escalations, replace vague assurances
+with statements that another person can check:
 
 | Instead of                  | Say                                                                |
 | --------------------------- | ------------------------------------------------------------------ |

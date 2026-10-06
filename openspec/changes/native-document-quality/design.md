@@ -405,6 +405,14 @@ waiver, or authorization for arbitrary inputs. Use only native `IgnoredVulns`
 fields. The existing input boundary checks every matching lock path, raw package
 identity, and development group; all other findings remain blocking.
 
+For the separate KaTeX inherited-option finding, the native math extension
+selects a patched renderer through an exact npm override. Keep the official
+parser and renderer, not a vendor patch or second implementation. Qualify the
+actual Markdownlint tokens, inline and display math, explicit trust, and refusal
+of inherited renderer settings. Native npm generates the lock; current advisory
+evidence and the rebuilt offline bundle qualify its adoption. This does not
+widen the braces disposition.
+
 Offline scanner fixtures use an undisposed policy and fixed databases. Fixed
 admission fixtures select their review time explicitly; they must not expire
 with the real policy. Live offline source validation and online audit admission

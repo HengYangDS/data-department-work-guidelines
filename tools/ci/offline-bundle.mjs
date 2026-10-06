@@ -590,7 +590,27 @@ export function installBundle({
       "node_modules already exists; preserve or remove it explicitly",
     );
   }
-  inspectBundle(archive, record, source, readNativeSupply(repository));
+  const native = readNativeSupply(repository);
+  const platform = `${process.platform}-${process.arch}`;
+  const installations = Object.entries(native.tools).map(
+    ([tool, descriptor]) => {
+      const asset = descriptor.assets[platform];
+      if (!asset)
+        throw new Error(
+          `offline bundle does not support ${tool} on ${platform}`,
+        );
+      const target = path.join(
+        repository,
+        "build/runtime/tool-cache",
+        tool,
+        descriptor.version,
+        platform,
+        descriptor.binary + (process.platform === "win32" ? ".exe" : ""),
+      );
+      return { tool, asset, target };
+    },
+  );
+  inspectBundle(archive, record, source, native);
   const temporary = mkdtempSync(path.join(os.tmpdir(), "ddwg-bundle-install-"));
   let startedNpmInstall = false;
   try {
@@ -626,14 +646,7 @@ export function installBundle({
     if (!pathExists(nodeModules)) {
       throw new Error("offline npm install returned without node_modules");
     }
-    const native = readNativeSupply(repository);
-    const platform = `${process.platform}-${process.arch}`;
-    for (const [tool, descriptor] of Object.entries(native.tools)) {
-      const asset = descriptor.assets[platform];
-      if (!asset)
-        throw new Error(
-          `offline bundle does not support ${tool} on ${platform}`,
-        );
+    for (const { tool, asset, target } of installations) {
       const assetPath = path.join(temporary, "native", tool, asset.name);
       commandRunner(
         process.execPath,
@@ -645,6 +658,9 @@ export function installBundle({
         ],
         { cwd: repository, timeout: 90_000 },
       );
+      if (!managedFileExists(target, repository)) {
+        throw new Error(`native install returned without managed ${tool}`);
+      }
     }
     return { version: source.version, sha256: record.sha256, npmVersion };
   } catch (error) {

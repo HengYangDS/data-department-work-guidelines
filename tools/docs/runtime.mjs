@@ -306,25 +306,28 @@ export function validateOpenSpec() {
   console.log(`PASS official OpenSpec: ${passed} items`);
 }
 
-export function gitFiles() {
-  const output = spawnSync(
+export function gitFiles(repository = root) {
+  const output = run(
     "git",
     ["ls-files", "--cached", "--others", "--exclude-standard", "-z"],
     {
-      cwd: root,
-      encoding: "buffer",
+      cwd: repository,
+      capture: true,
+      rejectStderr: true,
       timeout: 30_000,
-      maxBuffer: 16 * 1024 * 1024,
     },
   );
-  if (output.error || output.status !== 0) {
-    throw new Error(
-      "could not inventory tracked and candidate repository files",
-    );
-  }
-  return [
-    ...new Set(output.stdout.toString("utf8").split("\0").filter(Boolean)),
-  ].sort();
+  return [...new Set(output.split("\0").filter(Boolean))]
+    .filter((relative) => {
+      try {
+        lstatSync(path.join(repository, relative));
+        return true;
+      } catch (error) {
+        if (["ENOENT", "ENOTDIR"].includes(error.code)) return false;
+        throw error;
+      }
+    })
+    .sort();
 }
 
 export function sourceMarkdown(files = gitFiles()) {

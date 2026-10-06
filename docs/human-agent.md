@@ -41,13 +41,13 @@ boundary.
 > verified. Stop if the earlier snapshot is missing or a production write would
 > be needed; do not approve the data for use.”
 
-| Role             | May do                                                               | Retained duty or limit                                                                 |
-| ---------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| Task lead        | Clarify the goal and boundary; coordinate work and decisions.        | Goal, boundary, risk, final judgment, end-to-end result, and escalation.               |
-| Executing member | Decompose, delegate, implement, integrate, and verify.               | Understand and check Agent output before submission.                                   |
-| Agent            | Search, reason, draft, implement, test, review, and present options. | Must not grant itself organizational authority or make commitments on people's behalf. |
-| Reviewer         | Independently check facts, changes, and evidence.                    | State findings and limits; review alone does not authorize action.                     |
-| Acceptor         | Confirm agreed completion when authorized.                           | Make the acceptance decision after examining the actual work.                          |
+| Role             | May do                                                                    | Retained duty or limit                                                                 |
+| ---------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| Task lead        | Clarify the goal and boundary; coordinate work, resources, and decisions. | Goal, boundary, risk, final judgment, end-to-end result, and escalation.               |
+| Executing member | Decompose, delegate, implement, integrate, and verify.                    | Understand and check Agent output before submission.                                   |
+| Agent            | Search, reason, draft, implement, test, review, and present options.      | Must not grant itself organizational authority or make commitments on people's behalf. |
+| Reviewer         | Independently check facts, changes, and evidence.                         | State findings and limits; review alone does not authorize action.                     |
+| Acceptor         | Confirm agreed completion when authorized.                                | Make the acceptance decision after examining the actual work.                          |
 
 A task lead may also decide or accept when authorized. The lead's title alone
 grants neither power.

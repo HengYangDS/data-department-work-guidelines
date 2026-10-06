@@ -387,6 +387,7 @@ export function auditDependencies({
 
 const verifier = "npm run verify";
 const auditCommand = "node tools/docs/cli.mjs audit";
+const verificationMinutes = { source: 20, offline: 25 };
 const gitlabLinuxProtectedCapability = "ci-linux-arm64-container-protected";
 const gitlabLinuxReviewCapability = "ci-linux-arm64-container";
 const gitlabNativeCapabilities = [
@@ -498,6 +499,11 @@ function requireStep(steps, prefix) {
 }
 
 function requireHostedJobExecution(job, kind, hosts) {
+  if (job["timeout-minutes"] !== verificationMinutes[kind]) {
+    throw new Error(
+      `GitHub ${kind} timeout must be ${verificationMinutes[kind]} minutes`,
+    );
+  }
   const strategy = job.strategy ?? {};
   const matrix = strategy.matrix ?? {};
   if (
@@ -602,8 +608,10 @@ function validateOfflineWorkflow(source, nodeMajor) {
 function validateGitLabOffline(gitlab, expectedImage) {
   const job = gitlab[".offline:verify"];
   if (!job) throw new Error("GitLab offline verification owner is missing");
-  if (job.timeout !== "25m") {
-    throw new Error("GitLab offline timeout must match its 25m peer");
+  if (job.timeout !== `${verificationMinutes.offline}m`) {
+    throw new Error(
+      `GitLab offline timeout must match its ${verificationMinutes.offline}m peer`,
+    );
   }
   if (
     job.image !== undefined ||
@@ -864,8 +872,10 @@ export function validateCi(
       "GitLab must preserve complete dependency evidence on every result",
     );
   const gitlabImage = gitlab.default?.image;
-  if (gitlabJob && gitlabJob.timeout !== "20m") {
-    throw new Error("GitLab source timeout must match its 20m peer");
+  if (gitlabJob && gitlabJob.timeout !== `${verificationMinutes.source}m`) {
+    throw new Error(
+      `GitLab source timeout must match its ${verificationMinutes.source}m peer`,
+    );
   }
   if (
     !gitlabJob ||

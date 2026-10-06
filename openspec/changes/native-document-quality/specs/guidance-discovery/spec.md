@@ -6,12 +6,10 @@
 
 Analysis SHALL partition the whole problem along one axis, tied to the governing
 decision. Promotion into shared, production, or decision use SHALL require meaning,
-quality, permission and reproducibility. Data states SHALL reflect every completion
-condition; historical analysis SHALL distinguish availability from later queries.
-Parallel Agents SHALL default to read-only work with one integrator. Agents SHALL
-review complete current claim-matched results, then report evidence, limits, and
-the delivery state; people SHALL retain responsibility. Delivery coordination
-SHALL NOT replace other owners' professional judgments.
+quality, permission and reproducibility. Agents SHALL review complete current
+claim-matched results, then report evidence, limits, and the delivery state;
+people SHALL retain responsibility. Delivery coordination SHALL NOT replace
+other owners' professional judgments.
 
 #### Scenario: A verification summary omits a finding
 
@@ -67,10 +65,10 @@ SHALL NOT replace other owners' professional judgments.
 #### Scenario: Parallel Agents inspect one task
 
 - **WHEN** independent Agent subtasks are assigned in parallel
-- **THEN** research and review default to read-only work with explicit scope
+- **THEN** parallel Agents SHALL default to read-only work with explicit scope
   and stop conditions
-- **AND THEN** one integrator owns the combined result, and a person remains
-  responsible for consequential acceptance.
+- **AND THEN** one integrator SHALL own the combined result, and a person SHALL
+  remain responsible for consequential acceptance.
 
 #### Scenario: Shared Agent work lacks coordination or known ownership
 
@@ -82,18 +80,20 @@ SHALL NOT replace other owners' professional judgments.
 
 #### Scenario: A later query is presented as historical availability
 
-- **WHEN** a researcher can query a revised historical value now but cannot
-  establish when the relevant user or system could first access it
-- **THEN** the data topic separates availability from the later query time
-- **AND** the researcher cannot use that query alone to establish point-in-time
-  validity; exploratory work may continue within the stated evidence limit.
+- **WHEN** a researcher analyzes historical data
+- **THEN** historical analysis SHALL distinguish first availability to the
+  relevant user or system from a later query time
+- **AND** a query of a revised value cannot alone establish point-in-time
+  validity; when first availability is unknown, exploratory work may continue
+  within that stated evidence limit.
 
 #### Scenario: A data-state label hides an unmet completion condition
 
-- **WHEN** a dataset meets some completion conditions but lacks operational
-  observation, identifiable ownership, or another required condition
-- **THEN** the data topic requires an exploratory, temporary, limited-use, or
-  awaiting-verification label rather than a fully qualified asset label
+- **WHEN** a member or Agent assigns or reports the state of a dataset
+- **THEN** data states SHALL reflect every completion condition
+- **AND** the data topic requires an exploratory, temporary, limited-use, or
+  awaiting-verification label, not a fully qualified asset label, when
+  operational observation, identifiable ownership, or another condition is missing
 - **AND** a limited use needs its own evidence and permission; deployment or
   permission for that use does not satisfy the missing condition.
 
@@ -103,18 +103,8 @@ Entry and seven topics SHALL retain hard boundaries, risk-scaled minimums, six
 task boundaries, work states, evidence limits, and learning triggers. Problem
 resolution, tested bounded judgment, and future system improvement SHALL remain
 distinct. Topics SHALL expose start, stop, and verification cues without a root
-monolith or duplicate cards. Agents SHALL stop affected actions and escalate for
-an unidentified task owner, another person's unrecognized or uncommitted work,
-or unknown ownership.
-
-Local rules SHOULD reference shared guidelines rather than restate them. Every
-important update SHALL name current risks or blockers and its next action,
-responsible actor, deadline, and completion condition, including when it requests
-a decision. Department-practice admission of a rule, template, tool, Agent
-workflow, or platform mechanism SHALL require an observed failure mode, a bounded
-trial, a responsible owner, and evidence of net benefit. Mandatory task-specific
-prevention SHALL NOT wait for an incident; producing its asset SHALL NOT
-automatically standardize it as department practice.
+monolith or duplicate cards. Practice admission SHALL remain evidence-based and
+distinct from mandatory task-specific prevention.
 
 #### Scenario: An unchecked citation accompanies fluent work
 
@@ -142,10 +132,11 @@ automatically standardize it as department practice.
 
 #### Scenario: A project rule conflicts with department guidance
 
-- **WHEN** a project rule conflicts with these guidelines or a higher constraint,
-  even if the person considers the difference minor
-- **THEN** the charter requires exposing the conflict and its impact for an
-  authorized decision before acting
+- **WHEN** a member authors, applies, or reviews a local project rule
+- **THEN** local rules SHOULD reference shared guidelines rather than restate them
+- **AND** a conflict with these guidelines or a higher constraint requires
+  exposing the conflict and its impact for an authorized decision before acting,
+  even when the person considers the difference minor
 - **AND** guessing or choosing the convenient rule does not resolve the conflict.
 
 #### Scenario: A high-risk task enters the route
@@ -168,17 +159,26 @@ automatically standardize it as department practice.
 
 #### Scenario: A result is called complete
 
-- **WHEN** a member or Agent reports a deliverable
-- **THEN** the delivery topic distinguishes executing, verified, accepted, and
-  published or effective states
+- **WHEN** a member or Agent gives an important update, reports a deliverable,
+  or requests a work decision
+- **THEN** every important update SHALL name current risks or blockers and its
+  next action, responsible actor, deadline, and completion condition, including
+  when it requests a decision
+- **AND** the delivery topic distinguishes executing, verified, accepted, and
+  published or effective states for reported deliverables
 - **AND THEN** the claim does not outrun its current subject-bound evidence.
 
 #### Scenario: High-impact work lacks necessary prevention
 
-- **WHEN** high-impact or repeated work passes its immediate checks but the
-  necessary test, monitor, rule, or recovery path is still missing
-- **THEN** the delivery topic prohibits calling the work complete before leaving
-  that improvement with its existing owner
+- **WHEN** a rule, template, tool, Agent workflow, or platform mechanism is
+  proposed for department-practice admission, or a task triggers mandatory prevention
+- **THEN** department-practice admission of a rule, template, tool, Agent
+  workflow, or platform mechanism SHALL require an observed failure mode, a
+  bounded trial, a responsible owner, and evidence of net benefit
+- **AND** mandatory task-specific prevention SHALL NOT wait for an incident;
+  producing its asset SHALL NOT automatically standardize it as department practice
+- **AND** high-impact or repeated work cannot be called complete while its
+  necessary test, monitor, rule, or recovery path is missing from its existing owner
 - **AND** an extra report or evidence directory does not satisfy that condition.
 
 #### Scenario: Repeated weak signals appear
@@ -253,8 +253,8 @@ automatically standardize it as department practice.
 - **WHEN** standing read-only permission and verified datasets establish a safe
   task, but its request identifies no responsible person and no foreign work is
   encountered
-- **THEN** the collaboration topic requires stopping the affected action and
-  seeking that person
+- **THEN** Agents SHALL stop the affected action and escalate to identify the
+  accountable task owner; the collaboration topic requires seeking that person
 - **AND** general permission does not establish task accountability; no new
   role, approval gate, or report is required.
 
@@ -262,16 +262,16 @@ automatically standardize it as department practice.
 
 - **WHEN** an Agent encounters another person's uncommitted work, even when its
   owner and purpose are known
-- **THEN** the collaboration topic requires stopping the affected action and
-  escalation
+- **THEN** Agents SHALL stop the affected action and escalate; recognizing
+  another person's work does not bypass that requirement
 - **AND** recognizing the work does not authorize overwriting, cleaning, or
   continuing the affected action.
 
 #### Scenario: Work ownership cannot be established
 
 - **WHEN** encountered work has unknown ownership
-- **THEN** the collaboration topic requires stopping the affected action and
-  escalation, while preserving that work
+- **THEN** Agents SHALL stop the affected action and escalate for unknown
+  ownership, while preserving that work
 - **AND** the Agent does not infer disposal or editing authority from a clean
   accepted branch or its own task.
 
@@ -315,41 +315,43 @@ automatically standardize it as department practice.
 
 Material task transitions SHALL be checked; observed high-risk signals SHALL be
 escalated. During active work, the department head or appointed maintainer SHOULD
-calibrate judgments weekly on one or two real samples in about 30 minutes;
-a different interval SHALL name its reason and revisit time. The same owner
-SHALL review weak signals and mechanisms at least monthly; maintainers SHALL
-review rules, tools and capability gaps at least quarterly. Reviews SHALL reuse
-sufficient existing carriers without an all-member meeting or report, and assess
-mechanisms, not rank people. A single metric SHALL NOT represent personal worth;
-local metrics SHALL NOT represent overall work or
-system value.
+calibrate judgments weekly and SHALL review weak signals and mechanisms at least
+monthly. Maintainers SHALL review rules, tools and capability gaps at least
+quarterly. Reviews SHALL reuse sufficient existing carriers, assess mechanisms
+rather than rank people, and respect each metric's limits.
 
 #### Scenario: Weak signals accumulate without an incident
 
-- **WHEN** a month passes without a single event that forces a systemic review
-- **THEN** the department head or an appointed guideline maintainer inspects
-  recurring weak signals in an existing carrier and decides whether a mechanism
-  needs correction
-- **AND** weekly default sample calibration remains a separate purpose, uses
+- **WHEN** weekly sample calibration, monthly mechanism review, or quarterly
+  practice and capability review is due during active work
+- **THEN** the department head or appointed maintainer SHALL inspect weak
+  signals and mechanisms at least monthly, even without an incident, and decide
+  whether a mechanism needs correction
+- **AND** the weekly sample-calibration default remains a separate purpose, uses
   one or two real samples in about 30 minutes, and permits a justified different
   interval with a revisit time
-- **AND THEN** a quarterly review tests whether current rules and tools still
-  return more value than they cost, without staging a ceremonial new meeting.
+- **AND** a different interval SHALL name its reason and revisit time
+- **AND THEN** the guideline maintainer and people using the practices SHALL
+  review current rules, templates, tools, Agent practices, and capability gaps
+  for net benefit at least quarterly
+- **AND** weekly, monthly, and quarterly reviews SHALL reuse sufficient existing
+  carriers without an all-member meeting or report.
 
 #### Scenario: A routine metric is used to rank people
 
-- **WHEN** a manager uses individual Agent-correction counts in monthly review
+- **WHEN** a manager uses a metric in individual feedback or review, including
+  Agent-correction counts
 - **THEN** the evolution topic keeps the review focused on mechanism problems
   rather than ranking people
-- **AND** a single metric cannot represent anyone's overall worth, while
+- **AND** a single metric SHALL NOT represent personal worth, while
   case-based feedback and coaching remain available.
 
 #### Scenario: A local data metric stands for whole-system value
 
-- **WHEN** a pipeline's record-count metric is presented as the overall value of
-  a data asset or service without its use, quality, or cost boundaries
-- **THEN** the evolution topic prohibits using the local metric for that overall
-  judgment
+- **WHEN** a local metric is used to assess work or system value, including a
+  pipeline's record count
+- **THEN** local metrics SHALL NOT represent overall work or system value; the
+  evolution topic requires the use, quality, and cost boundaries of that judgment
 - **AND** the metric remains available for its stated decision, source, period,
   and boundary; no new evaluator or ranking is required.
 
@@ -434,23 +436,23 @@ audience, and detail.
 
 Domain owners SHALL define meaning, quality, suitable use and judgment.
 Production owners SHALL ensure reliable long-term operation. Platform owners
-SHALL abstract repeated cross-domain capability. Governance owners SHALL make
-admission, permissions, lineage, review, veto and exit work in the workflow.
-Delivery owners SHALL expose priorities and open decisions. Accountability SHALL
-remain mandatory; cross-domain work SHOULD have one task lead, with any departure
-explained. The charter SHALL define interfaces by each side's needs and delivery
-evidence. Shared interfaces SHALL NOT transfer responsibility or authority;
-suitable use SHALL NOT grant permission. Production, shared-asset, and critical
-management-chain changes SHALL have actual acceptance against agreed criteria.
+SHALL abstract repeated cross-domain capability. Governance owners SHALL operate
+admission, permissions, lineage, review, veto and exit in the workflow. Delivery
+owners SHALL expose priorities and open decisions. Shared interfaces SHALL NOT
+transfer responsibility or authority; suitable use SHALL NOT grant permission.
+Owners SHALL be accountable.
 
 #### Scenario: Coordination substitutes for a domain or governance decision
 
-- **WHEN** delivery coordination proposes a use without domain judgment or
-  operative governance review and controls
-- **THEN** the data topic identifies the responsible owners and missing decision
+- **WHEN** cross-domain work is coordinated or data owners share an interface
+- **THEN** cross-domain work SHOULD have one task lead, with any departure explained
+- **AND** the charter SHALL define shared interfaces by each side's needs and
+  delivery evidence
 - **AND** domain owners define meaning, quality requirements, suitable use
   cases, and professional judgments; governance owners make admission,
   permissions, lineage, review, veto, and exit operate in the workflow
+- **AND** when coordination proposes a use without domain judgment or operative
+  governance controls, the data topic identifies the owners and missing decision
 - **AND** a coordination role cannot grant itself the missing authority.
 
 #### Scenario: One data owner assumes another owner's authority
@@ -464,9 +466,10 @@ management-chain changes SHALL have actual acceptance against agreed criteria.
 
 #### Scenario: Data-change criteria are defined but never accepted
 
-- **WHEN** a production, shared-asset, or critical management-chain change
-  defines acceptance criteria but has no actual acceptance against them
-- **THEN** the data topic requires that acceptance before the result can be
+- **WHEN** a production, shared-asset, or critical management-chain change is
+  proposed, executed, or reported
+- **THEN** production, shared-asset, and critical management-chain changes SHALL
+  have actual acceptance against agreed criteria before the result can be
   treated as an accepted change
 - **AND** tests, a written checklist, or a deployment cannot substitute for it;
   acceptance follows the work's existing authority and does not add a ceremony.

@@ -40,6 +40,9 @@
   },
   "overrides": {
     "micromark": "$micromark",
-    "micromark-extension-gfm-table": "$micromark-extension-gfm-table"
+    "micromark-extension-gfm-table": "$micromark-extension-gfm-table",
+    "micromark-extension-math": {
+      "katex": "0.19.0"
+    }
   }
 }

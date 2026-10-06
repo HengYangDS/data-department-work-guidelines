@@ -10,8 +10,6 @@ without shell or executable-bit dependencies. Integrity SHALL omit formatting;
 the format gate SHALL own it, while standalone verification runs it once.
 Product-native prerequisites and quality axes SHALL belong to the accepted
 ETHOS dependency graph and verified owners, not additional profile descriptors.
-Installed ETHOS and Git-common hooks SHALL bind the worktree and enforce
-admission without a tracked adapter or optional root gate.
 
 #### Scenario: Root-binding contract is audited
 
@@ -24,9 +22,10 @@ admission without a tracked adapter or optional root gate.
 
 #### Scenario: Root binding is independently exercised
 
-- **WHEN** a contributor runs the installed ETHOS command from an owned
-  worktree and its Git-common hook protocol evaluates a staged path
-- **THEN** both resolve that selected worktree and apply current admission
+- **WHEN** a contributor invokes installed ETHOS or its Git-common hook
+  protocol evaluates work in a selected worktree
+- **THEN** installed ETHOS and Git-common hooks SHALL bind the selected worktree
+  and enforce current admission without a tracked adapter or optional root gate
 - **AND THEN** no repository shell adapter or optional gate changes the default
   proof floor.
 
@@ -50,8 +49,7 @@ admission without a tracked adapter or optional root gate.
 prerequisite; `markdown-format` SHALL conjoin its command with native static
 diagnostics.
 Behavior and static-analysis axes SHALL name those owners for one tree. Native
-tests SHALL run the complete Git-selected inventory once and preserve unapproved
-warnings.
+tests SHALL run the complete Git-selected inventory once.
 Accepted installed ETHOS SHALL enforce semantics, diagnostics, and subject
 applicability on each required repository, refusing missing or misdirected
 evidence and authored substitutes.
@@ -91,9 +89,11 @@ evidence and authored substitutes.
 
 #### Scenario: Native reports omit an unapproved warning
 
-- **WHEN** the native test stream emits an unapproved warning that its selected
-  reports omit
-- **THEN** documentation and completion claims identify the diagnostic gap
+- **WHEN** native tests emit an unapproved warning, whether or not their
+  selected reports include it
+- **THEN** native tests SHALL preserve the original warning
+- **AND** documentation and completion claims identify any omission from the
+  selected reports
 - **AND** the passing report does not close the shared warning-handling
   obligation or authorize a repository-private replacement.
 
@@ -130,14 +130,14 @@ The existing native installer and source-bound offline bundle SHALL consume that
 manifest without
 duplicated tool supply. Local verification SHALL never download a missing tool.
 GitLab and GitHub SHALL supply and qualify the frozen release independently.
-The old manifest and installer SHALL retire when their consumers are replaced.
 
 #### Scenario: A native tool is supplied offline
 
 - **WHEN** a supported host receives the exact source-bound bundle or a pinned
-  local archive
+  local archive, or consumers migrate to a replacement manifest or installer
 - **THEN** the installer verifies its digest, safe archive members, executable
   version, and source binding before admitting the tool
+- **AND** the old manifest and installer SHALL retire when their consumers are replaced
 - **AND** it preserves the destination's host installation and credentials.
 
 #### Scenario: A frozen bundle is qualified before release

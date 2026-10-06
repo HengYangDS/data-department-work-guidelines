@@ -807,20 +807,6 @@ test("GitLab version-tag admission matches the GitHub namespace", () => {
     { if: `${tagRule} && $CI_PIPELINE_SOURCE == "web"` },
     { if: `${tagRule} && $CI_PIPELINE_SOURCE == "api"` },
   ]);
-  for (const [tag, admitted] of [
-    ["v7.0.4", true],
-    ["v7.1.0-rc.1", true],
-    ["v", true],
-    ["vfoo", true],
-    ["v7.0.4/topic", false],
-    ["v7/review", false],
-    ["v/7.0.4", false],
-    ["release-7.0.4", false],
-    ["candidate/dev", false],
-    ["", false],
-  ]) {
-    assert.equal(/^v[^/]*$/u.test(tag), admitted, tag);
-  }
   assert.doesNotThrow(() => validateCi(github, gitlab, offline));
 });
 
@@ -936,6 +922,25 @@ test("GitHub source CI rejects missing or extra branch routes", () => {
     () => validateCi(YAML.stringify(broader), gitlab, offline),
     /GitHub source triggers/u,
   );
+});
+
+test("both Forge source and offline jobs retain one bounded deadline", () => {
+  assert.doesNotThrow(() => validateCi(github, gitlab, offline));
+  for (const kind of ["source", "offline"]) {
+    for (const minutes of [undefined, 0, 360]) {
+      const source = YAML.parse(github);
+      const release = YAML.parse(offline);
+      const job = (kind === "source" ? source : release).jobs.verify;
+      if (minutes === undefined) delete job["timeout-minutes"];
+      else job["timeout-minutes"] = minutes;
+      assert.throws(
+        () =>
+          validateCi(YAML.stringify(source), gitlab, YAML.stringify(release)),
+        /GitHub .* timeout/u,
+        `${kind}: ${minutes}`,
+      );
+    }
+  }
 });
 
 test("GitHub source verification cannot be skipped or lose a host", () => {

@@ -14,11 +14,14 @@ import {
 } from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { syncBuiltinESMExports } from "node:module";
+import { createRequire, syncBuiltinESMExports } from "node:module";
 import { test } from "node:test";
 import { pathToFileURL } from "node:url";
+import { Parser } from "htmlparser2";
+import { micromark } from "micromark";
 import { parse as parseShell } from "shell-quote";
 import { parse as parseToml } from "smol-toml";
+import { markdownTokens, walkMarkdown } from "../tools/docs/markdown.mjs";
 import {
   documentMetadata,
   formatSource,
@@ -1223,6 +1226,93 @@ test("a delivered directory alias must also resolve to repository source", () =>
   }
 });
 
+test("native math keeps Markdownlint tokens and inline/display rendering", async () => {
+  const require = createRequire(import.meta.url);
+  const mathEntry = createRequire(require.resolve("markdownlint/sync")).resolve(
+    "micromark-extension-math",
+  );
+  const { math, mathHtml } = await import(pathToFileURL(mathEntry).href);
+  const source = "# Mathematics\n\nInline $x^2$.\n\n$$\nx^2 + y^2 = z^2\n$$\n";
+  assert.deepEqual(
+    [...walkMarkdown(markdownTokens(source))]
+      .filter((token) => ["mathText", "mathFlow"].includes(token.type))
+      .map((token) => token.type),
+    ["mathText", "mathFlow"],
+  );
+  assert.doesNotThrow(() =>
+    lintMarkdown({ files: [], strings: { "mathematics.md": source } }),
+  );
+  const classes = new Set();
+  new Parser({
+    onopentag(_name, attributes) {
+      for (const name of (attributes.class ?? "").split(/\s+/u))
+        classes.add(name);
+    },
+  }).end(
+    micromark(source, { extensions: [math()], htmlExtensions: [mathHtml()] }),
+  );
+  for (const name of ["math-inline", "math-display", "katex", "katex-display"])
+    assert.equal(classes.has(name), true, name);
+});
+
+test("native math admits only explicitly owned trusted renderer settings", async () => {
+  const require = createRequire(import.meta.url);
+  const mathEntry = createRequire(require.resolve("markdownlint/sync")).resolve(
+    "micromark-extension-math",
+  );
+  const renderer = createRequire(mathEntry)("katex");
+  const { math, mathHtml } = await import(pathToFileURL(mathEntry).href);
+  const expression = "\\href{https://example.org}{x}";
+  const destinations = (html) => {
+    const found = [];
+    new Parser({
+      onopentag(_name, attributes) {
+        if (attributes.href !== undefined) found.push(attributes.href);
+      },
+    }).end(html);
+    return found;
+  };
+  const renderMath = (options) =>
+    micromark(`$${expression}$`, {
+      extensions: [math()],
+      htmlExtensions: [mathHtml(options)],
+    });
+
+  assert.deepEqual(destinations(renderMath()), []);
+  assert.deepEqual(
+    destinations(
+      renderer.renderToString(expression, Object.create({ trust: true })),
+    ),
+    [],
+  );
+  assert.equal(
+    destinations(renderMath({ trust: true })).includes("https://example.org"),
+    true,
+  );
+
+  const original = Object.getOwnPropertyDescriptor(Object.prototype, "trust");
+  try {
+    Object.defineProperty(Object.prototype, "trust", {
+      configurable: true,
+      writable: true,
+      value: true,
+    });
+    assert.deepEqual(destinations(renderMath()), []);
+    assert.deepEqual(destinations(renderMath({ trust: false })), []);
+    assert.equal(
+      destinations(renderMath({ trust: true })).includes("https://example.org"),
+      true,
+    );
+  } finally {
+    if (original) Object.defineProperty(Object.prototype, "trust", original);
+    else delete Object.prototype.trust;
+  }
+  assert.deepEqual(
+    Object.getOwnPropertyDescriptor(Object.prototype, "trust"),
+    original,
+  );
+});
+
 test("Markdown spacing preserves fenced and indented literal content", async () => {
   for (const source of [
     "# Example\n\n```text\nfirst\n\n\nsecond\n```\n",
@@ -1495,6 +1585,41 @@ test("native TOML formatting checks literal Git paths and preserves data", () =>
     assert.equal(diagnostic.status, 1, diagnostic.stderr);
     assert.match(diagnostic.stderr, /unknownNativeOption/u);
     assert.equal(readFileSync(file, "utf8"), retained);
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+    assert.equal(existsSync(directory), false);
+  }
+});
+
+test("Git selection excludes worktree deletions and preserves native failure evidence", (context) => {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-git-selection-"));
+  try {
+    const initialized = spawnSync("git", ["init", "--quiet", directory], {
+      encoding: "utf8",
+      timeout: 30_000,
+    });
+    assert.ifError(initialized.error);
+    assert.equal(initialized.status, 0, initialized.stderr);
+    writeFileSync(path.join(directory, "README.md"), "# Source\n");
+    writeFileSync(path.join(directory, "removed.md"), "# Removed\n");
+    const indexed = spawnSync("git", ["add", "--", "README.md", "removed.md"], {
+      cwd: directory,
+      encoding: "utf8",
+      timeout: 30_000,
+    });
+    assert.ifError(indexed.error);
+    assert.equal(indexed.status, 0, indexed.stderr);
+    rmSync(path.join(directory, "removed.md"));
+    writeFileSync(path.join(directory, "candidate.md"), "# Candidate\n");
+    assert.deepEqual(gitFiles(directory), ["README.md", "candidate.md"]);
+    rmSync(path.join(directory, ".git"), { recursive: true });
+    let diagnostic = "";
+    context.mock.method(process.stderr, "write", (chunk) => {
+      diagnostic += chunk;
+      return true;
+    });
+    assert.throws(() => gitFiles(directory), /git.*exited/u);
+    assert.match(diagnostic, /not a git repository/u);
   } finally {
     rmSync(directory, { recursive: true, force: true });
     assert.equal(existsSync(directory), false);

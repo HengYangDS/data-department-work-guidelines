@@ -128,11 +128,19 @@ function verifiedCached(target, selected) {
 }
 
 export async function downloadAsset(request, asset = {}) {
-  const response = await fetch(request.url, {
-    headers: request.headers,
-    redirect: request.redirect ?? "follow",
-    signal: AbortSignal.timeout(90_000),
-  });
+  let response;
+  try {
+    response = await fetch(request.url, {
+      headers: request.headers,
+      redirect: request.redirect ?? "follow",
+      signal: AbortSignal.timeout(90_000),
+    });
+  } catch (error) {
+    throw new Error(
+      "native tool download failed",
+      request.headers ? undefined : { cause: error },
+    );
+  }
   if (!response.ok) {
     let cause;
     try {

@@ -622,6 +622,7 @@ function buildFixture(run) {
     writeFileSync(path.join(licenseDirectory, "vale", "LICENSE"), valeLicense);
     const lychee = {
       version: "0.24.2",
+      binary: "lychee",
       assets: { [platform]: { name: assetName, sha256: digest(asset) } },
       licenses,
     };
@@ -633,6 +634,7 @@ function buildFixture(run) {
           lychee,
           vale: {
             version: "3.23.0",
+            binary: "vale",
             assets: {
               [platform]: { name: valeAssetName, sha256: digest(valeAsset) },
             },
@@ -968,6 +970,21 @@ test("bundle extraction retains the current executor's ownership", (context) => 
           if (args[1] === "ci") {
             mkdirSync(path.join(inputs.repository, "node_modules"));
           }
+          if (path.basename(args[0]) === "install-native.mjs") {
+            const descriptor = readNativeSupply(inputs.repository).tools[
+              args[1]
+            ];
+            const target = path.join(
+              inputs.repository,
+              "build/runtime/tool-cache",
+              args[1],
+              descriptor.version,
+              `${process.platform}-${process.arch}`,
+              descriptor.binary + (process.platform === "win32" ? ".exe" : ""),
+            );
+            mkdirSync(path.dirname(target), { recursive: true });
+            writeFileSync(target, "verified native fixture");
+          }
           return "";
         },
       });
@@ -1008,7 +1025,7 @@ test("the public offline installer reports its actual package-manager version", 
     writeFileSync(
       bootstrap,
       `import childProcess from "node:child_process";
-import { mkdirSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { syncBuiltinESMExports } from "node:module";
 import path from "node:path";
 const actual = childProcess.spawnSync;
@@ -1022,8 +1039,16 @@ childProcess.spawnSync = (command, args, options) => {
         return { status: 0, stdout: "", stderr: "" };
       }
     }
-    if (path.basename(args[0]) === "install-native.mjs")
+    if (path.basename(args[0]) === "install-native.mjs") {
+      const tool = args[1];
+      const native = JSON.parse(readFileSync(path.join(options.cwd, ".config/supply/native.json"), "utf8"));
+      const descriptor = native.tools[tool];
+      const target = path.join(options.cwd, "build/runtime/tool-cache", tool, descriptor.version,
+        process.platform + "-" + process.arch, descriptor.binary + (process.platform === "win32" ? ".exe" : ""));
+      mkdirSync(path.dirname(target), { recursive: true });
+      writeFileSync(target, "verified native fixture");
       return { status: 0, stdout: "", stderr: "" };
+    }
   }
   return actual(command, args, options);
 };
@@ -1081,6 +1106,22 @@ test("installer invokes only the locked offline supply path", () => {
           options.env.npm_config_userconfig,
           options.env.npm_config_globalconfig,
         );
+      }
+      if (
+        command === process.execPath &&
+        path.basename(args[0]) === "install-native.mjs"
+      ) {
+        const descriptor = readNativeSupply(inputs.repository).tools[args[1]];
+        const target = path.join(
+          inputs.repository,
+          "build/runtime/tool-cache",
+          args[1],
+          descriptor.version,
+          `${process.platform}-${process.arch}`,
+          descriptor.binary + (process.platform === "win32" ? ".exe" : ""),
+        );
+        mkdirSync(path.dirname(target), { recursive: true });
+        writeFileSync(target, "verified native fixture");
       }
       return "";
     };
@@ -1144,6 +1185,76 @@ test("installer invokes only the locked offline supply path", () => {
           },
         }),
       /node_modules/u,
+    );
+  });
+});
+
+test("offline installation refuses an unsupported tool ABI before package-manager effects", () => {
+  buildFixture((inputs) => {
+    const native = readNativeSupply(inputs.repository);
+    const platform = `${process.platform}-${process.arch}`;
+    const otherPlatform =
+      platform === "linux-arm64" ? "win32-x64" : "linux-arm64";
+    native.tools.lychee.assets[otherPlatform] =
+      native.tools.lychee.assets[platform];
+    delete native.tools.lychee.assets[platform];
+    writeFileSync(
+      path.join(inputs.repository, ".config/supply/native.json"),
+      JSON.stringify(native),
+    );
+    const built = assembleBundle(inputs);
+    const calls = [];
+    assert.throws(
+      () =>
+        installBundle({
+          bundlePath: inputs.outputPath,
+          record: built,
+          repository: inputs.repository,
+          commandRunner: (command, args, options) => {
+            calls.push({ command, args });
+            if (args[1] === "--version") return "12.1.0\n";
+            if (args[1] === "ci")
+              mkdirSync(path.join(options.cwd, "node_modules"));
+            return "";
+          },
+        }),
+      /offline bundle does not support lychee/u,
+    );
+    assert.deepEqual(calls, []);
+    assert.equal(
+      existsSync(path.join(inputs.repository, "node_modules")),
+      false,
+    );
+  });
+});
+
+test("offline installation requires the managed native output after a successful child", () => {
+  buildFixture((inputs) => {
+    const built = assembleBundle(inputs);
+    const installedTools = [];
+    assert.throws(
+      () =>
+        installBundle({
+          bundlePath: inputs.outputPath,
+          record: built,
+          repository: inputs.repository,
+          commandRunner: (command, args, options) => {
+            if (path.basename(args[0]) === "npm-cli.js") {
+              if (args[1] === "--version") return "12.1.0\n";
+              if (args[1] === "ci")
+                mkdirSync(path.join(options.cwd, "node_modules"));
+            } else if (path.basename(args[0]) === "install-native.mjs") {
+              installedTools.push(args[1]);
+            }
+            return "";
+          },
+        }),
+      /native install returned without managed lychee/u,
+    );
+    assert.deepEqual(installedTools, ["lychee"]);
+    assert.equal(
+      existsSync(path.join(inputs.repository, "node_modules")),
+      false,
     );
   });
 });

@@ -111,8 +111,9 @@ states its premises, strongest objection, first step if chosen, and revisit
 trigger. The authorized person decides; a long analysis cannot stand in for
 authorization.
 
-Once a choice is made, record what was decided, by whom, on what date, and why,
-with its revisit trigger in the existing work record. Record the first action,
+Once a choice is made, use the [decision-document order](communicate.md#write-for-fidelity-clarity-and-elegance)
+and record what was decided, by whom, on what date, and why, with its revisit
+trigger in the existing work record. Record the first action,
 its owner, and its completion condition there too. A deadline says when a
 decision is needed; it does not establish when approval occurred.
 

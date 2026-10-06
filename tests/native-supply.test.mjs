@@ -208,6 +208,62 @@ test("authenticated package download refuses redirects before forwarding identit
   assert.equal(calls.length, 2);
 });
 
+test("native asset streaming admits the exact size and refuses one extra byte", async (context) => {
+  let bytes = Buffer.from("bounded");
+  const asset = { size: bytes.length };
+  let cancellations = 0;
+  context.mock.method(
+    globalThis,
+    "fetch",
+    async () =>
+      new Response(
+        new ReadableStream({
+          start(controller) {
+            controller.enqueue(bytes);
+            if (bytes.length === asset.size) controller.close();
+          },
+          cancel() {
+            cancellations++;
+          },
+        }),
+      ),
+  );
+  const request = { url: "https://fixture.invalid/asset" };
+  bytes = Buffer.concat([bytes, Buffer.from("!")]);
+  await assert.rejects(downloadAsset(request, asset), /size limit/u);
+  assert.equal(cancellations, 1);
+  bytes = bytes.subarray(0, asset.size);
+  assert.deepEqual(await downloadAsset(request, asset), bytes);
+});
+
+test("native transport errors follow the public and authenticated cause boundary", async (context) => {
+  const cause = Object.assign(new Error("native transport failed"), {
+    code: "ECONNRESET",
+  });
+  let requests = 0;
+  context.mock.method(globalThis, "fetch", async () => {
+    requests++;
+    throw cause;
+  });
+  for (const authenticated of [false, true]) {
+    await assert.rejects(
+      downloadAsset({
+        url: "https://fixture.invalid/asset",
+        ...(authenticated
+          ? { headers: { "JOB-TOKEN": "fixture-only" }, redirect: "error" }
+          : {}),
+      }),
+      (error) => {
+        assert.equal(error.message, "native tool download failed");
+        assert.equal(error.cause, authenticated ? undefined : cause);
+        assert.equal(Object.hasOwn(error, "cause"), !authenticated);
+        return true;
+      },
+    );
+  }
+  assert.equal(requests, 2, "transport failures do not trigger retries");
+});
+
 test("rejected native downloads await response disposal and retain its failure", async (context) => {
   let response;
   let requests = 0;
