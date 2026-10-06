@@ -1,3 +1,3 @@
-# Native OSV input for one complete, undisposed scan.
+# Native OSV input for one complete scan with no ignored findings.
 # Advisory findings remain visible and do not block delivery.
 IgnoredVulns = []

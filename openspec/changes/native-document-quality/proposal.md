@@ -53,10 +53,11 @@ capabilities remain product dependencies.
   OSV Scanner. Verify exact supply and complete notices, refuse linked managed
   paths, keep concurrent verified targets, and retain executor ownership. Cancel
   rejected response bodies before failure and retain cleanup causes.
-- Replace npm audit with native OSV raw and disposition scans. Retain complete
-  failure evidence on both Forges and enforce only the approved, expiring
-  development exception. Retire the temporary repository input guard when
-  the accepted ETHOS risk owner replaces it.
+- Replace npm audit with one complete native OSV scan. Preserve all findings
+  without advisory-based delivery holds; reject failed or malformed scans and
+  input drift. Retire private exemptions, expiry gates, and duplicate filtering
+  together. Keep required failure evidence with its producer until its named
+  consumer releases it.
 - Keep local verification independent of remote supply. GitLab and GitHub each
   supply and publish the same qualified source and offline bytes independently.
   Give runnable CI jobs symmetric purpose/platform names, restrict tag routes

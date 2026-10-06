@@ -48,7 +48,9 @@ record. Official parsing alone does not prove artifact conformance.
 2. **Before acceptance:** Run the repository checks and changed-source plan.
    Commit with the trusted signer, then execute full proof against that exact
    commit's OID. Installed Git-common hooks enforce commit and push admission;
-   tracked copies or raw Git operations cannot substitute for them.
+   tracked copies or raw Git operations cannot substitute for them. For online
+   publication, also apply the
+   [dependency-scan boundary](#tool-supply-and-offline-execution).
 3. **Before closure:** Complete every declared task and observe each required
    delivery. A Change may reach `dev` with delivery still outstanding. Archive
    officially only when its obligations are met.
@@ -72,7 +74,7 @@ including updates and distribution when GitLab is unavailable. Source updates
 still require native ETHOS admission and GitHub's actual source checks. Verify
 the selected object, exact remote ref, and required jobs for that operation;
 GitHub cannot supply GitLab's missing result. Qualified releases remain available
-from GitHub, while a new dual-Forge edition still requires
+from GitHub, while every new edition still requires
 [both release-cut checks](#versioned-releases). To claim an outage update,
 observe native ETHOS publication during that outage, then read back the ref and
 jobs. Configuration or an older green run does not prove it. Do not raw-push
@@ -166,20 +168,18 @@ lifecycle.
 The profile has exactly two default gates: `docs-integrity` and
 `markdown-format`. Their repository-relative commands retain separate behavior
 and formatting responsibilities. ETHOS independently obtains native Node test
-evidence through its behavior provider. The currently installed static provider
-checks JavaScript syntax; it can miss a reachable undefined identifier whose
-syntax is valid. A passing syntax check therefore does not establish semantic
-correctness. Native Node tests can also emit an unapproved warning that is absent
-from the selected test and coverage reports, allowing the installed provider to
-pass without settling it. These are limits of the current proof mechanism, not
-permission to ignore semantic defects or warnings.
+evidence through its behavior provider. A syntax-only static provider can miss a
+reachable undefined identifier whose syntax is valid; passing syntax therefore
+does not establish semantic correctness. Native Node tests can also emit an
+unapproved warning absent from the selected test and coverage reports. A
+provider that reads only those reports may pass without settling the warning.
+Neither limitation permits ignoring semantic defects or warnings.
 
 Each of the two gates requires both its document command and product-owned
 verifier to pass for the committed tree. That result alone does not complete the
-shared quality obligation. The required ETHOS quality upgrade is not yet
-available as a formally accepted installed contract for this repository. Static
-semantics, unapproved-warning handling, and each code subject's applicable
-obligations remain open until that integration is qualified. Different native
+shared quality obligation. Until the formally accepted ETHOS quality integration
+is installed and qualified, static semantics, unapproved-warning handling, and
+each code subject's applicable obligations remain open. Different native
 scopes may jointly cover a property when the accepted contract permits it;
 not every provider must cover every language.
 Repository-authored reports or command output cannot supply the missing native
@@ -332,9 +332,11 @@ evidence and feed the existing maintenance owner; no filtered second scan or
 private exemption is needed.
 
 An unavailable scanner, malformed or incomplete report, warning-bearing
-execution, or changed input remains a failure. Retain complete evidence and do
-not call a failed scan clean. Source verification remains independent of the
-network. Its input and artifact checks still protect authenticity, hashes,
+execution, or changed input remains a failure. Online supply or publication
+qualification remains open until a complete valid scan covers the selected
+inputs. A report with findings is not clean, but the findings do not hold
+delivery. Retain complete evidence. Source verification remains independent of
+the network. Its input and artifact checks still protect authenticity, hashes,
 credentials, actual functionality, and target-platform acceptance.
 
 An explicit native executable may be selected with `DDWG_LYCHEE_BIN`,
@@ -415,9 +417,13 @@ confirms it. The [contributor route](../../CONTRIBUTING.md) owns this aftercare.
 
 `build/`, `node_modules/`, leases, and caches are local state, not repository
 truth. Evidence stays with its producer and claim; no root evidence folder is
-required. Classify active state, durable evidence, foreign work, and disposable
-residue before cleanup. Remove only proved-disposable owned resources, then
-verify their absence and the preservation of what must remain.
+required. Required raw failure reports and job results have a named consumer,
+exact source binding, and release condition. A later success does not make them
+disposable. Before retiring their workspace, transfer unique evidence to its
+existing durable owner and verify the complete bytes; local `build/` is not a
+permanent archive. Classify active state, durable evidence, foreign work, and
+disposable residue before cleanup. Remove only proved-disposable owned
+resources, then verify their absence and the preservation of what must remain.
 
 Observe each selected revision in its actual environment before reporting remote
 delivery, ETHOS parity, or team use. Do not stage a team task or recruit a

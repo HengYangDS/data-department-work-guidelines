@@ -31,7 +31,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 - Treat supply-chain advisories as non-blocking delivery evidence. Preserve one
   complete native scan, retain failures and reports, and remove temporary
   advisory exemptions, expiry gates, and duplicate filtering. Artifact integrity
-  and actual platform acceptance remain required.
+  and actual platform acceptance remain required. Clarify online scan
+  qualification and required failure-evidence custody; align the active Change
+  proposal with this policy.
 - Update the native TOML formatter to 0.9.0 and compatible npm dependencies,
   with explicit pins for the audited Markdown parser and terminal-width fixes.
 - Refresh the digest-pinned official Node 26 CI image on its supported Debian

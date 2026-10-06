@@ -3,9 +3,9 @@ name = "root"
 path = "."
 domains = ["repository"]
 
-# This repository is initialized with a local ETHOS train. `main` remains the
-# release-facing branch; `dev` is the accepted local root; `candidate/dev`
-# gathers proven work before an explicit accepted-root closeout.
+# The native ETHOS train keeps `main` release-facing and `dev` as the accepted
+# root. Both may publish under protected admission; `candidate/dev` gathers
+# proven work locally before explicit accepted-root closeout.
 [branch_roles]
 release_branch = "main"
 accepted_branch = "dev"

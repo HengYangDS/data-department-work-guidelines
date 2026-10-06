@@ -44,8 +44,10 @@ native prose and terminology, decision and navigation boundaries, the official
 OpenSpec workspace, the changelog/version contract, CI declarations, and
 negative tests. `npm run prose` runs the same locked spelling, prose, and
 terminology checks without the rest of the verification graph. Run
-`node tools/docs/cli.mjs audit` separately when online before source acceptance;
-both hosted CI planes require it and retain its evidence even on failure.
+`node tools/docs/cli.mjs audit` separately when online before publication.
+Both hosted CI planes apply the
+[dependency-scan boundary](docs/governance/ethos.md#tool-supply-and-offline-execution)
+and retain the complete result, including failures.
 The audit runs once with an explicit
 [native policy](.config/checks/dependencies/policy.toml) that ignores no findings.
 Advisories are non-blocking delivery evidence; retain them for maintenance under
