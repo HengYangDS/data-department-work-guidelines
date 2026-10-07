@@ -5,6 +5,9 @@ explained, checked, and used within clear limits. These guidelines help us
 separate facts, responsibility, action, and evidence. They do not require every
 task to fill out the same form.
 
+This is a documentation repository. Members and Agents can read and use the
+guidelines without installing software.
+
 **Start with your work question:** the [documentation map](docs/README.md)
 leads to the applicable rule and its limits. You do not need to read every
 topic first.

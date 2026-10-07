@@ -247,8 +247,9 @@ replaces official archival and its subsequent proof and publication.
 ## Tool Supply and Offline Execution
 
 These tools serve repository maintainers and CI. Reading or using the guidelines
-requires no installation. The offline bundle supplies quality-check tools;
-ETHOS is a separate governance dependency, not part of the guidelines.
+requires no installation. The offline bundle is an optional maintenance toolkit
+for quality checks without remote supply. It does not install the guidelines.
+ETHOS is a separate governance dependency; the toolkit does not include it.
 
 [`package.json`](../../package.json) declares the Node line and the sole exact
 npm version through native `devEngines.packageManager`. npm rejects a mismatch

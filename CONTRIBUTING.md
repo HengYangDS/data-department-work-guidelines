@@ -1,5 +1,8 @@
 # Contributing
 
+This guide is for maintainers who change, check, or publish the repository.
+Reading or applying the guidelines requires no software installation.
+
 Start with the [task map](docs/README.md), then edit the single current owner of
 the rule. [Repository governance](docs/governance/ethos.md) explains the Change,
 Work Lane, proof, version, and publication boundaries. Even editorial tracked
@@ -116,9 +119,13 @@ H1 after one blank line as the first visible block. Copy a current page's
 carrier rather than inventing a sidecar. The repository check guards this
 reading order; the installed ETHOS registry owns metadata meaning.
 
-For a release with the matching source-pinned bundle already on the machine,
-start from a fresh checkout with Node 26, the declared npm, and Git. The offline
-installer never downloads or upgrades a package manager:
+## Use the offline maintenance toolkit
+
+The optional offline maintenance toolkit prepares the same checks for a machine
+without remote supply. It does not install the guidelines or include ETHOS.
+With the matching source-pinned bundle already on the machine, start from a
+fresh checkout with Node 26, the declared npm, and Git. The offline installer
+never downloads or upgrades a package manager:
 
 ```text
 node tools/ci/offline-bundle.mjs inspect --bundle PATH

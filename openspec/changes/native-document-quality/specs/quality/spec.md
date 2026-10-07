@@ -286,6 +286,11 @@ evidence and authored substitutes.
 
 ### Requirement: One source-bound native quality supply
 
+The guidelines SHALL remain directly readable by members and Agents without
+installing a repository package. Native tools and the optional offline bundle
+serve maintainers and CI; neither SHALL be described as installing the
+guidelines. ETHOS remains a separate governance prerequisite.
+
 One repository-native tool manifest SHALL bind Vale, lychee, and OSV Scanner
 versions, platform archives or raw binaries, digests, raw-binary sizes, and
 license notices. Archive and extracted executable digests SHALL be distinct;
@@ -295,6 +300,14 @@ The existing native installer and source-bound offline bundle SHALL consume that
 manifest without
 duplicated tool supply. Local verification SHALL never download a missing tool.
 GitLab and GitHub SHALL supply and qualify the frozen release independently.
+
+#### Scenario: Reading guidelines needs no maintenance-tool installation
+
+- **WHEN** a member or Agent needs to read or apply the guidelines
+- **THEN** the repository entry directs them to current documentation without
+  requiring tool installation
+- **AND** the contributor route distinguishes optional offline maintenance tools
+  from the document edition and separately installed ETHOS.
 
 #### Scenario: Source and offline verification cover the declared hosted platforms
 

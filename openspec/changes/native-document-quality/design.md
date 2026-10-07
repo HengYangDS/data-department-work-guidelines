@@ -323,6 +323,11 @@ there is no custom ancestry graph, history cache, or relaxed deadline.
 
 ### Supply exact tools without a second installation plane
 
+The guidelines are directly readable; members and Agents need no repository
+software installation. The optional offline bundle is a maintenance toolkit
+for quality checks, not an installable guideline product. ETHOS remains a
+separate installed governance dependency.
+
 The existing native manifest owns versions, host/ABI assets, sizes, digests,
 version output, and original notices for Vale, lychee, and OSV Scanner. Native
 raw binaries and archives use that same supply owner. The bundle carries the
