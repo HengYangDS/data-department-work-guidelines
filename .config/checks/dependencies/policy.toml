@@ -1,3 +1,7 @@
-# Native OSV input for one complete scan with no ignored findings.
-# Advisory findings remain visible and do not block delivery.
-IgnoredVulns = []
+# Native OSV disposition for the exact human-approved development finding.
+# The audit retains a complete raw scan before accepting this bounded entry.
+# Replace with IgnoredVulns = [] when the finding is fixed or no longer applies.
+[[IgnoredVulns]]
+id = "GHSA-vfj7-8cjw-p6xm"
+ignoreUntil = 2026-10-18
+reason = "Human-approved 2026-10-05 development checks and 2026-10-06 development-tool distribution: braces 3.0.3 in trusted repositories only, until 2026-10-18 00:00 UTC. Preserve complete findings. Not production, arbitrary untrusted input, other packages or other findings."

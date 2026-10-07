@@ -645,7 +645,7 @@ function configurationFixture(run) {
   }
 }
 
-test("offline configuration exposes all advisory findings", () => {
+test("offline configuration preserves the exact development disposition", () => {
   const directory = mkdtempSync(
     path.join(os.tmpdir(), "ddwg-config-advisories-"),
   );
@@ -664,7 +664,23 @@ test("offline configuration exposes all advisory findings", () => {
     );
     assert.throws(
       () => governance.checkConfigurationLayout(directory),
-      /expose all findings/u,
+      /approved.*OSV/u,
+    );
+    cpSync(
+      path.join(root, ".config/checks/dependencies/policy.toml"),
+      path.join(directory, ".config/checks/dependencies/policy.toml"),
+    );
+    const lock = JSON.parse(
+      readFileSync(path.join(directory, "package-lock.json"), "utf8"),
+    );
+    lock.packages["node_modules/braces"].version = "3.0.4";
+    writeFileSync(
+      path.join(directory, "package-lock.json"),
+      JSON.stringify(lock),
+    );
+    assert.throws(
+      () => governance.checkConfigurationLayout(directory),
+      /approved dependency artifact/u,
     );
   } finally {
     rmSync(directory, { recursive: true, force: true });

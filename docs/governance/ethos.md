@@ -265,11 +265,11 @@ inside Node, npm, or native executables. Audit each supplied artifact's digest,
 platform, and component inventory through native extractors. Missing or empty
 inventory leaves coverage unproved. Keep raw findings and binary-symbol results
 separately; symbols do not prove that a runtime entry can trigger a finding.
-Supply-chain advisories do not block delivery. Preserve complete reports,
-disclose unproved coverage, and follow fixes through the existing maintenance
-owner. A newer version or a clean project lock does not resolve a runtime
-finding. Authenticity, hashes, functionality, and actual platform acceptance
-remain required; a failed scanner must not be reported as a clean audit.
+Known findings require a fix or an explicit approval for the actual artifact,
+use, and period. A clean project lock does not resolve a runtime finding.
+Preserve complete reports and disclose missing coverage. Authenticity, hashes,
+functionality, and actual platform acceptance remain required; a failed scanner
+is not a clean audit.
 
 The [supply manifest](../../.config/supply/native.json) pins Vale and lychee
 archives and official OSV Scanner binaries by platform and SHA-256. Raw binaries
@@ -319,25 +319,41 @@ Release CI bootstraps Node and npm and downloads the exact asset before the
 offline step. The subsequent install and source checks need no remote supply;
 the whole hosted job is not a network-isolation test. Qualify cold local use
 separately with a fresh HOME, no inherited configuration or cache, and denied
-remote connections. Historical advisory-expiry dates do not block source
-verification, offline installation, or delivery.
+remote connections. Source checks do not contact an advisory service. They do
+not renew an approval or authorize later installation and distribution.
 
 Bundled packages and native tools keep their upstream notices; this
 repository's MIT license does not relicense them. Both hosted planes audit all
-locked repository dependencies during online supply. OSV Scanner runs one
-complete scan with the [native policy](../../.config/checks/dependencies/policy.toml),
-which ignores no findings. Keep its exact lock and policy snapshots, raw report,
-standard streams, and exit status. Advisories remain non-blocking delivery
-evidence and feed the existing maintenance owner; no filtered second scan or
-private exemption is needed.
+locked repository dependencies during online supply. OSV Scanner produces one
+complete raw report without filtering. Keep the exact lock and
+[native policy](../../.config/checks/dependencies/policy.toml), report, standard
+streams, and exit status. The existing input owner then checks the exact
+approved development finding; it never runs a filtered second scan.
 
-An unavailable scanner, malformed or incomplete report, warning-bearing
-execution, or changed input remains a failure. Online supply or publication
-qualification remains open until a complete valid scan covers the selected
-inputs. A report with findings is not clean, but the findings do not hold
-delivery. Retain complete evidence. Source verification remains independent of
-the network. Its input and artifact checks still protect authenticity, hashes,
-credentials, actual functionality, and target-platform acceptance.
+An unapproved finding, expired approval, unavailable scanner, malformed or
+incomplete report, warning-bearing execution, or changed input fails
+qualification. Retire a disposition when the finding disappears, is withdrawn,
+has an official fix, or its stable release changes, then qualify the changed
+inputs again. Online qualification observes that release through the public npm
+registry with isolated native configuration, a fresh cache, and explicit online
+freshness; its original output and status stay with the raw scan. A report
+accepted under an approval still contains a known finding and must not be called
+clean.
+
+The current human approvals are separate:
+
+| Subject                                                                                                                          | Approved use                                                                                                  | End of approval                                                     |
+| -------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| npm `braces` 3.0.3, `GHSA-vfj7-8cjw-p6xm`, exact locked bytes                                                                    | Development checks and tool distribution for trusted repositories; no production or arbitrary untrusted input | 2026-10-18 00:00 UTC                                                |
+| The pinned official Node 26 Trixie image, index digest `sha256:39cff0f037088f0d8faf3e5a3ca055d653a15b66faaba8af3daf72f0102f375f` | Controlled development CI only                                                                                | This exact artifact and use; any change needs renewed qualification |
+| The exact Vale 3.24.0, OSV Scanner 2.6.0, and npm 12.2.0 tool group with its hash-bound offline bundle                           | Trusted local and controlled development CI; distribution of that development bundle                          | 2026-10-18 00:00 UTC                                                |
+
+These approvals do not cover other findings, artifacts, repositories, or uses.
+The project-lock audit does not enforce image or native-tool approvals; those
+remain separate artifact qualification. Accepted ETHOS risk admission must
+consume the actual approved subjects before the bounded repository compatibility
+is retired. Source verification remains network-independent and is not risk
+approval for the shared product or its release.
 
 An explicit native executable may be selected with `DDWG_LYCHEE_BIN`,
 `DDWG_VALE_BIN`, or `DDWG_OSV_SCANNER_BIN`. Without one, the consumer selects its
@@ -346,9 +362,10 @@ An invalid cache entry fails instead of falling back. Every selection must still
 match the locked tool version; these paths are execution inputs, not tracked
 host bindings.
 
-The removed temporary advisory guard must not return as a second policy.
-This repository audit does not certify the shared
-ETHOS product or its release.
+Keep the current approval check at the existing dependency input owner until
+formally accepted ETHOS risk admission covers its native subjects. Migrate that
+consumer and remove the compatibility check in the same change; do not keep
+parallel policy implementations.
 
 ## Runner and Transport Boundaries
 

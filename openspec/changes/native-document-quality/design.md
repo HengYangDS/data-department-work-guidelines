@@ -391,22 +391,39 @@ installs locked npm packages online to prime its cache, but never acquires
 missing native assets or notices implicitly. Its bounded npm execution uses the
 existing native executor so errors, warnings, and partial output remain visible.
 
-### Keep native findings separate from delivery acceptance
+### Bind risk approval to the actual subject
 
-OSV Scanner owns one complete raw scan with an explicit native policy that
-ignores no findings. Preserve the exact lock, policy, report, standard streams,
-and exit status on success or failure. Findings are non-blocking delivery
-evidence, not grounds for a waiver, a separate Change, or another controller.
-The latest human instruction supersedes the earlier advisory-based release
-holds; it does not relabel those historical approvals as fixes.
+OSV Scanner owns one complete raw scan. Preserve the exact lock, native policy,
+report, standard streams, and exit status on success or failure. The scanner
+receives an empty disposition for raw collection; the existing input owner
+checks the original report against the exact approved development finding.
+Unapproved findings, expiry, failed scans, malformed reports, and input drift
+remain failures. No filtered second scan or blanket waiver is admitted.
 
-The existing audit verifies complete development-only input, report provenance,
-and agreement between finding counts and the scanner's native status. It
-rejects failed scans, malformed reports, and input drift without hiding output.
-Remove the temporary braces identity guard, exemption expiry, public-registry
-withdrawal check, and filtered second scan together. Offline validation has no
-advisory-based expiry. Existing immutable evidence remains at its producer;
-maintenance follows new findings and available fixes without delaying delivery.
+The human approved three distinct subjects: exact npm `braces` 3.0.3 development
+checks and distribution; one digest-bound Node Trixie image for controlled
+development CI; and the pinned Vale, OSV Scanner, and npm tool group with its
+hash-bound development bundle. The braces and tool-group approvals end at
+2026-10-18 00:00 UTC. These are not production or cross-repository approvals.
+The image and native tools need their own artifact evidence; the project-lock
+scan cannot qualify them.
+
+Until a formally accepted and installed ETHOS successor exposes the actual
+subject contract, keep this bounded compatibility at the existing input owner.
+It binds the braces version and integrity to development-only paths, checks the
+native finding identity, and rejects expired, withdrawn, fixed, or absent
+findings until the disposition is retired. Validate the native object fields
+actually used by this decision without duplicating the OSV schema. Online
+qualification also observes the public npm stable release with the existing
+native npm entrypoint, isolated configuration, fresh cache, and explicit online
+freshness. Preserve its command, configuration, streams, and status with the
+unfiltered scan. If the stable release changes, retire the disposition and
+qualify the inputs again.
+A clean report with no disposition remains valid after an old expiry. Source
+checks do not renew artifact use or distribution authority. Migrate the actual
+consumer, qualify the accepted
+product behavior, and remove the compatibility in the same integration. No
+private risk schema, extra gate, or permanent second policy is introduced.
 
 For the KaTeX inherited-option finding, the native math extension selects the
 patched renderer through an exact npm override. Keep the official parser and

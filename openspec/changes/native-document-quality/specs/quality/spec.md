@@ -346,31 +346,17 @@ GitLab and GitHub SHALL supply and qualify the frozen release independently.
   borrowing another Forge's identity, or reusing an earlier bundle
 - **AND** only the exact operation's disposable temporary stage is removed.
 
-## REMOVED Requirements
-
 ### Requirement: Tool supply and portability require executed checks
-
-**Reason**: The latest human direction retires advisory-based delivery holds,
-private exemptions, expiry gates, and duplicate filtering. The old requirement
-includes those acceptance rules and is replaced deliberately rather than
-silently dropping scenarios from a MODIFIED block.
-
-**Migration**: Use the added native-tool supply requirement below. Preserve
-complete original evidence, actual execution, artifact integrity, platform
-qualification, and maintenance ownership. Historical approvals remain historical;
-they are not retroactively certified as fixes.
-
-## ADDED Requirements
-
-### Requirement: Native tool supply is verified across platforms
 
 CI SHALL verify native-tool digests and audit all locked dependencies online
 with OSV Scanner, separately from offline source checks. One complete raw
-report SHALL retain all findings as non-blocking delivery evidence. Public checks
-SHALL avoid POSIX shells and host paths; each claimed OS SHALL execute the full
-graph. Current command
-examples SHALL be checked against the installed CLI. GitLab jobs SHALL name
-purpose and platform; hidden phase templates SHALL own common steps.
+report SHALL retain all findings before exact development approval is evaluated.
+Unapproved findings and expired approvals SHALL fail qualification. Project
+locks, CI images, and native executables SHALL remain separate risk subjects.
+Public checks SHALL avoid POSIX shells and host paths; each claimed OS SHALL
+execute the full graph. Current command examples SHALL be checked against the
+installed CLI. GitLab jobs SHALL name purpose and platform; hidden phase
+templates SHALL own common steps.
 
 #### Scenario: An upstream download returns a rejected response
 
@@ -421,31 +407,48 @@ purpose and platform; hidden phase templates SHALL own common steps.
 - **AND THEN** a valid link or formatted code block does not hide it.
 - **AND** parsed prose alone cannot establish command validity.
 
-#### Scenario: Prose or native dependency execution fails
+#### Scenario: Prose or dependency supply fails
 
 - **WHEN** a current Markdown file contains a misspelling
 - **THEN** the locked spelling check rejects it without a local waiver.
-- **WHEN** the native dependency scanner fails or provides incomplete or
-  inconsistent evidence
-- **THEN** the audit reports failure without claiming a clean scan
-- **AND** both Forges preserve complete raw reports and execution output.
+- **WHEN** the native dependency audit reports an unapproved advisory, fails,
+  provides malformed or incomplete evidence, emits warnings, or observes drift
+- **THEN** each hosted job fails before running the repository verifier
+- **AND** both Forges preserve complete raw findings and execution output.
 
-#### Scenario: Advisory findings remain non-blocking evidence
+#### Scenario: The approved native disposition is scoped and expires
 
-- **WHEN** one native scanner report covers the complete declared input and
-  agrees with its native exit status
-- **THEN** the audit retains all findings without blocking delivery
-- **AND** no advisory ignore, filtered second scan, private waiver, or expiry
-  gate changes source verification or installation
-- **AND** artifact authenticity, checksums, functionality, and actual platform
-  acceptance remain required.
+- **WHEN** the exact human-approved native OSV entry is active
+- **THEN** the existing input owner admits only npm `braces` 3.0.3 with its
+  approved integrity in development paths, before 2026-10-18 00:00 UTC
+- **AND** one unfiltered raw scan retains approved and unapproved findings;
+  any unrelated finding remains blocking
+- **AND** online qualification observes the public npm stable release through
+  isolated native configuration and a fresh cache with explicit online freshness;
+  its original command, configuration, output, and status remain with the raw scan
+- **WHEN** input bytes, finding subjects, or the stable release change, the
+  finding disappears, is withdrawn, has an official fix, or the entry expires
+- **THEN** qualification fails until the stale disposition is retired and the
+  changed inputs are qualified again
+- **AND** no package-wide ignore, private schema, filtered second scan, or
+  cross-repository waiver replaces that boundary.
 
-#### Scenario: Offline checks run after a former advisory expiry
+#### Scenario: Native tools and the CI image need their own approval
 
-- **WHEN** the declared tools and source pass their actual integrity and
-  functionality checks
-- **THEN** a historical advisory-expiry date does not block offline verification
-- **AND** scanner coverage and runtime acceptance remain separate claims.
+- **WHEN** a supplied native tool, npm runtime, or CI image has a known finding
+- **THEN** qualification requires its actual component report and exact human
+  approval for the artifact, use, and period
+- **AND** the project-lock approval cannot authorize another subject; accepted
+  ETHOS risk admission must qualify the actual consumer before the bounded
+  repository compatibility is removed.
+
+#### Scenario: Clean source checks do not renew an expired approval
+
+- **WHEN** local source checks run after an earlier approval date
+- **THEN** they remain network-independent and do not grant artifact use or
+  distribution authority
+- **AND** a clean native audit with no stale disposition remains valid; retained
+  approval evidence is not relabeled as a fix.
 
 #### Scenario: A fresh supported host runs the full graph
 
@@ -462,6 +465,8 @@ purpose and platform; hidden phase templates SHALL own common steps.
 - **WHEN** Git checks out tracked text on a host with CRLF defaults
 - **THEN** the repository's native `.gitattributes` rule selects LF
 - **AND THEN** the same formatting check evaluates the same text bytes.
+
+## ADDED Requirements
 
 ### Requirement: Verification reports its native workspace context
 

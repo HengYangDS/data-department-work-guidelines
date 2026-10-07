@@ -48,14 +48,14 @@ terminology checks without the rest of the verification graph. Run
 Both hosted CI planes apply the
 [dependency-scan boundary](docs/governance/ethos.md#tool-supply-and-offline-execution)
 and retain the complete result, including failures.
-The audit runs once with an explicit
-[native policy](.config/checks/dependencies/policy.toml) that ignores no findings.
-Advisories are non-blocking delivery evidence; retain them for maintenance under
-the [supply contract](docs/governance/ethos.md#tool-supply-and-offline-execution).
-Failed scans, malformed reports, and mismatched input remain failures, not clean
-audit results. The audit covers locked repository packages, not components
-bundled with Node or npm. Offline verification contacts neither Forge and has
-no advisory-based expiry gate.
+The audit preserves one complete raw scan before applying the exact development
+approval in the [native policy](.config/checks/dependencies/policy.toml).
+Unapproved findings, expired approvals, failed scans, malformed reports, and
+changed inputs fail qualification. The
+[supply contract](docs/governance/ethos.md#tool-supply-and-offline-execution)
+separates project dependencies from approved CI images and native tools. Local
+source checks remain network-independent; they do not grant permission to use
+an artifact outside its approved scope or after its expiry.
 
 Vale checks spelling, repeated words, selected technical terms, and diagnosed
 wordy phrases using [native configuration](.config/checks/prose/vale.ini),

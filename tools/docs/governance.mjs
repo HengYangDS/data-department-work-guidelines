@@ -466,7 +466,7 @@ export function checkConfigurationLayout(repository = root) {
     );
   }
   nativeTomlFormatter(repository);
-  parseDependencyPolicy(
+  const dependencyPolicy = parseDependencyPolicy(
     readFileSync(path.join(repository, dependencyPolicyPath), "utf8"),
   );
   if (existsSync(path.join(repository, "package-lock.json")))
@@ -474,6 +474,7 @@ export function checkConfigurationLayout(repository = root) {
       JSON.parse(
         readFileSync(path.join(repository, "package-lock.json"), "utf8"),
       ),
+      dependencyPolicy,
     );
   const vale = JSON.parse(
     run(

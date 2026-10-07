@@ -52,5 +52,6 @@ OpenSpec
 Prettier
 SemVer
 Taplo
+Trixie
 Vale
 Wasm
