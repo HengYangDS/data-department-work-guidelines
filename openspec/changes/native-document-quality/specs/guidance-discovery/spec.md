@@ -382,7 +382,9 @@ supervisors SHALL jointly align on subject, boundary, and success criteria at
 task start. Coaching
 SHALL examine member reasoning, not decide for them. Managers SHALL NOT normalize
 recurring rescue. Agent delegation SHALL name output format, destination,
-audience, and detail.
+audience, and detail. Before sending, authors SHALL test whether cutting a third
+of the wording improves clarity while preserving facts, reasoning, limits, and
+responsibilities; the exercise SHALL NOT impose a deletion quota.
 
 #### Scenario: Fluent delivery hides the purpose or the judgment owner
 
@@ -392,6 +394,14 @@ audience, and detail.
 - **THEN** the communication and evolution topics require a clear purpose,
   measured expression, and preserved member judgment
 - **AND** recurring intervention requires a management-system correction.
+
+#### Scenario: A shorter draft removes information needed to act
+
+- **WHEN** an author tries cutting a third of a draft before sending it
+- **THEN** the communication topic asks whether the shorter version is clearer
+  and still preserves the facts, reasoning, limits, and responsibilities
+- **AND** the author keeps necessary wording when further cuts would lose
+  meaning, even if less than a third can be removed.
 
 #### Scenario: A draft decision could be mistaken for acceptance
 

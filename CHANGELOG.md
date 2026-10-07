@@ -65,6 +65,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 - Upgrade the native math renderer so inherited options cannot grant trusted
   rendering. Preserve Markdownlint tokens, ordinary math, and explicit trust
   through the existing consumer without waiving the dependency finding.
+- Restore the one-third editing exercise without a deletion quota or loss of
+  facts, reasoning, limits, or responsibilities.
 - Restore the ban on vague assurances across answers and meeting records, not
   only updates and escalations. Keep the rule in the communication topic.
 - Require both Forges' declared verification deadlines, select worktree

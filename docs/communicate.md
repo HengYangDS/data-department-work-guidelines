@@ -104,6 +104,11 @@ timeline alone does not prove cause. Ask whether a reader outside the work can
 restate the conclusion, basis, limits, and next action without filling gaps.
 Link to an existing source of truth rather than copying it.
 
+As an editing exercise, try cutting a third of the wording. Keep the shorter
+version only if it is clearer and preserves the facts, reasoning, limits, and
+responsibilities. The fraction is a prompt to question every sentence, not a
+deletion quota.
+
 ## Escalate Risk in Four Parts
 
 State the risk or blocker; the facts, impact, and latest safe decision time;

@@ -25,7 +25,9 @@
       with the [complete original work
       contract](design.md#preserve-the-original-work-contract-at-seven-topic-owners).
       Keep each duty at one topic owner and verify no lost meaning through
-      fixed-source editorial review and source quality checks. Preserve narrower
+      fixed-source editorial review and source quality checks. Retain the
+      original one-third editing exercise without a deletion quota or loss of
+      facts, reasoning, limits, or responsibilities. Preserve narrower
       original responsibilities, not every reviewer suggestion, without another
       report, parser, evaluator, meeting, approval, or meaning gate.
 - [x] 2.4 Reconcile package, current OpenSpec, contribution, governance, CI,
