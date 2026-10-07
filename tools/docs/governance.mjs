@@ -21,7 +21,6 @@ import {
   nativeSupplyPath,
   nativeToolBinary,
   offlineBundleRecordPath,
-  readText,
   root,
   run,
   gitFiles,

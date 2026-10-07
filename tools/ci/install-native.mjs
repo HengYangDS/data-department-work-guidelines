@@ -18,7 +18,6 @@ import {
 } from "./gitlab-package.mjs";
 import {
   assertNativeBinaryDigest,
-  filePath,
   managedFileExists,
   managedToolPath,
   readNativeSupply,
@@ -221,94 +220,76 @@ export async function install({
     );
   }
   mkdirSync(directory, { recursive: true });
+  await using stage = new AsyncDisposableStack();
   const temporary = mkdtempSync(path.join(directory, ".install-"));
-  let primaryFailure;
-  try {
-    const archive = path.join(temporary, selected.name);
-    const bytes = assetFile
-      ? readFileSync(path.resolve(assetFile))
-      : await downloadAsset(request, selected);
-    assertAssetDigest(bytes, selected);
-    writeFileSync(archive, bytes);
-    let candidate = archive;
-    if (selected.format === "archive") {
-      safeArchiveEntries(
-        run("tar", ["-tf", archive], {
-          capture: true,
-          rejectStderr: true,
-          timeout: 30_000,
-        }),
-        run("tar", ["-tvf", archive], {
-          capture: true,
-          rejectStderr: true,
-          timeout: 30_000,
-        }),
-      );
-      const extracted = path.join(temporary, "extracted");
-      mkdirSync(extracted);
-      run("tar", ["-xf", archive, "--no-same-owner", "-C", extracted], {
+  stage.defer(() =>
+    rm(temporary, {
+      recursive: true,
+      force: true,
+      maxRetries: 10,
+      retryDelay: 200,
+    }),
+  );
+  const archive = path.join(temporary, selected.name);
+  const bytes = assetFile
+    ? readFileSync(path.resolve(assetFile))
+    : await downloadAsset(request, selected);
+  assertAssetDigest(bytes, selected);
+  writeFileSync(archive, bytes);
+  let candidate = archive;
+  if (selected.format === "archive") {
+    safeArchiveEntries(
+      run("tar", ["-tf", archive], {
+        capture: true,
         rejectStderr: true,
         timeout: 30_000,
-      });
-      const candidates = binaryFiles(extracted, binaryName);
-      if (candidates.length !== 1)
-        throw new Error(`${tool} archive has ${candidates.length} binaries`);
-      candidate = candidates[0];
-    }
-    const verifiedBytes = readFileSync(candidate);
-    assertNativeBinaryDigest(verifiedBytes, selected, tool);
-    if (process.platform !== "win32") chmodSync(candidate, 0o755);
-    const version = run(candidate, ["--version"], {
-      capture: true,
+      }),
+      run("tar", ["-tvf", archive], {
+        capture: true,
+        rejectStderr: true,
+        timeout: 30_000,
+      }),
+    );
+    const extracted = path.join(temporary, "extracted");
+    mkdirSync(extracted);
+    run("tar", ["-xf", archive, "--no-same-owner", "-C", extracted], {
       rejectStderr: true,
-      timeout: 10_000,
-    }).trim();
-    if (version !== selected.versionOutput)
-      throw new Error(`${tool} binary version mismatch: ${version}`);
-    let published = true;
-    try {
-      linkSync(candidate, target);
-    } catch (error) {
-      if (error.code !== "EEXIST") throw error;
-      published = false;
-    }
-    if (
-      !managedFileExists(target) ||
-      !readFileSync(target).equals(verifiedBytes)
-    )
-      throw new Error(`installed ${tool} published bytes failed verification`);
-    if (published) {
-      if (
-        process.platform !== "win32" &&
-        (lstatSync(target).mode & 0o777) !== 0o755
-      )
-        throw new Error(`installed ${tool} published mode failed verification`);
-    } else if (!verifiedCached(target, selected)) {
-      throw new Error(`installed ${tool} failed verification`);
-    }
-    return target;
-  } catch (error) {
-    primaryFailure = error;
-    throw error;
-  } finally {
-    try {
-      await rm(temporary, {
-        recursive: true,
-        force: true,
-        maxRetries: 10,
-        retryDelay: 200,
-      });
-    } catch (cleanup) {
-      if (primaryFailure !== undefined) {
-        throw new SuppressedError(
-          cleanup,
-          primaryFailure,
-          `native installation and stage cleanup failed: ${temporary}`,
-        );
-      }
-      throw cleanup;
-    }
+      timeout: 30_000,
+    });
+    const candidates = binaryFiles(extracted, binaryName);
+    if (candidates.length !== 1)
+      throw new Error(`${tool} archive has ${candidates.length} binaries`);
+    candidate = candidates[0];
   }
+  const verifiedBytes = readFileSync(candidate);
+  assertNativeBinaryDigest(verifiedBytes, selected, tool);
+  if (process.platform !== "win32") chmodSync(candidate, 0o755);
+  const version = run(candidate, ["--version"], {
+    capture: true,
+    rejectStderr: true,
+    timeout: 10_000,
+  }).trim();
+  if (version !== selected.versionOutput)
+    throw new Error(`${tool} binary version mismatch: ${version}`);
+  let published = true;
+  try {
+    linkSync(candidate, target);
+  } catch (error) {
+    if (error.code !== "EEXIST") throw error;
+    published = false;
+  }
+  if (!managedFileExists(target) || !readFileSync(target).equals(verifiedBytes))
+    throw new Error(`installed ${tool} published bytes failed verification`);
+  if (published) {
+    if (
+      process.platform !== "win32" &&
+      (lstatSync(target).mode & 0o777) !== 0o755
+    )
+      throw new Error(`installed ${tool} published mode failed verification`);
+  } else if (!verifiedCached(target, selected)) {
+    throw new Error(`installed ${tool} failed verification`);
+  }
+  return target;
 }
 
 if (
