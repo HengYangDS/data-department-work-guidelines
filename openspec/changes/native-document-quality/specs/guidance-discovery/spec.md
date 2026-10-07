@@ -365,6 +365,26 @@ rather than rank people, and respect each metric's limits.
 - **AND** admission as department practice remains subject to its observed
   failure mode, bounded trial, ownership, and net-benefit checks.
 
+#### Scenario: A data incident needs immediate containment
+
+- **WHEN** a data error, production failure, or permission breach threatens
+  downstream work and completing a record first would delay containment
+- **THEN** the task lead contains the affected data flow or use within existing
+  authority and notifies its responsible data or production owner
+- **AND** inputs and versions needed to establish impact and verify a correction
+  remain available
+- **AND** a response beyond current authority is escalated to the decision owner;
+  urgency does not grant permission or make an uncertain result reliable
+- **AND** truth, accountable responsibility, and permission and compliance limits
+  remain binding throughout the response
+- **AND** the temporary decision records its maker, facts, authority, expiry,
+  takeover owner, and rollback condition once the immediate risk is controlled
+- **AND** verification covers affected data and dependent uses, and records and
+  cause review are completed; repeated exceptions become a mechanism problem
+- **AND** organizational safeguards for members who expose problems remain
+  distinct from data-incident containment; no ungrounded physical-safety scenario
+  is introduced.
+
 #### Scenario: Downstream results do not reach their owner
 
 - **WHEN** results, anomalies, or actual-use effects remain with a downstream

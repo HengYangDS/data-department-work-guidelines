@@ -167,12 +167,22 @@ rules to mask goal, organizational, or system-design defects.
 
 ## Emergencies and Exceptions
 
-In an emergency, protect people, data, production, and compliance first. Contain
-harm before filling in the record if needed; truth, authority, and
-responsibility remain binding. Record the temporary decision, who made it,
-on which facts and authority, its expiry, takeover owner, and rollback condition.
-Complete verification and review once risk is controlled. Repeated “emergency
-exceptions” must be handled as a mechanism problem.
+When a data error, production failure, or permission breach threatens downstream
+work, the task lead contains the affected data flow or use and notifies the
+responsible data or production owner. Preserve the inputs and versions needed to
+establish the impact and verify a correction. Stay within existing authority;
+if the response needs further permission, escalate to the decision owner.
+The [hard boundaries](charter.md#four-non-negotiable-boundaries) still apply:
+report known facts and uncertainty honestly, keep responsibility explicit, and
+observe permission and compliance limits. Urgency does not make an uncertain
+result reliable or grant authority to act.
+
+Contain the impact before completing the record when recording first would delay
+the response. Record who decided what, the facts and authority they used, the
+measure's expiry, takeover owner, and rollback condition. Once risk is
+controlled, verify the correction on affected data and dependent uses, complete
+the record, and review the cause. Repeated emergency exceptions must be handled
+as a mechanism problem.
 
 Specific rule changes still follow
 [repository governance](governance/ethos.md). Team adoption must be shown

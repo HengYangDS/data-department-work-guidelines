@@ -297,7 +297,7 @@ test("data entry routes readers to recovery and current qualification", () => {
   }
 });
 
-test("emergency containment has its own section and both risk-entry routes", () => {
+test("emergency containment routes to hard boundaries and both risk entries", () => {
   const relative = "docs/evolve.md";
   const source = readFileSync(path.join(root, relative), "utf8");
   const tokens = markdownTokens(source, relative);
@@ -315,15 +315,17 @@ test("emergency containment has its own section and both risk-entry routes", () 
     heading + 1,
     following < 0 ? undefined : following,
   );
-  const paragraph = [...walkMarkdown(section)].find(
-    (token) =>
-      token.type === "paragraph" &&
-      markdownText(token).startsWith("In an emergency,"),
+  assert.ok(
+    [...walkMarkdown(section)].some(
+      (token) => token.type === "paragraph" && markdownText(token).trim(),
+    ),
+    "containment duties must remain under their heading",
   );
-  assert.ok(paragraph, "containment duties must remain under their heading");
-  assert.match(
-    markdownText(paragraph).replace(/\s+/gu, " "),
-    /truth, authority, and responsibility remain binding/u,
+  assert.ok(
+    markdownLinkDestinations(
+      section.map((token) => token.text).join("\n"),
+    ).includes("charter.md#four-non-negotiable-boundaries"),
+    "urgency must retain the canonical truth, authority, and accountability boundaries",
   );
   for (const entry of ["docs/charter.md", "docs/deliver.md"]) {
     assert.ok(

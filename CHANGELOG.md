@@ -45,6 +45,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Ground emergency guidance in affected data flows, production, and permissions,
+  with clear containment, escalation, and correction checks. Preserve the
+  separate management duty to support members who honestly expose problems.
 - Give Markdown spacing one owner: native formatting, with byte-exact examples
   preserved and independent non-spacing checks retained. Remove the competing
   list-spacing rule and unused dependencies.

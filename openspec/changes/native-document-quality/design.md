@@ -56,6 +56,15 @@ observable contract, including cadence, data responsibilities, and adverse
 cases. The task map routes readers to those owners rather than restating their
 rules. This keeps a correction from creating competing policies.
 
+Ground operational guidance in quantitative data work and stated department
+responsibilities. An illustrative example explains a condition; it does not
+establish a real incident or authorize work outside that remit. Incident
+containment addresses invalid downstream results, data-production failures,
+permissions, and compliance. Organizational protection for members who expose
+problems is a different management duty. Do not carry a generic physical-safety
+scenario into data incident response merely because it appeared in earlier text.
+This is a correction to the current scope, not certification of the old wording.
+
 Independent reviews cover fixed source, not a moving summary. Review all
 original numbered subsections and surrounding groups, then challenge the revised
 duties with concrete adverse cases. Earlier no-finding judgments remain dated
