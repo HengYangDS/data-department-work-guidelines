@@ -24,10 +24,12 @@ and generated release record remain JSON so the offline installer can validate
 them before npm dependencies exist. Do not add converters, duplicate records,
 or old-path fallbacks.
 
-The dependency policy uses the native OSV schema and ignores no findings.
-The audit verifies the complete development-only lock input and preserves the
-scanner report. Advisories inform maintenance; they do not block delivery or
-create a private risk-admission mechanism.
+The dependency policy uses native OSV fields for one exact, expiring development
+approval. The audit retains the complete unfiltered report and rejects
+unapproved findings, expired approvals, and stale dispositions. Image and
+native-tool approvals have separate subjects and qualification. Replace the
+current compatibility check when accepted ETHOS covers those native subjects;
+do not keep a second policy implementation.
 
 Git selects formatting input; the pinned native formatters identify supported
 formats. Ambient editor and formatter ignore files cannot remove selected source
