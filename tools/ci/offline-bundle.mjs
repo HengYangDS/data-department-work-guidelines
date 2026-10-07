@@ -24,6 +24,7 @@ import {
 import {
   declaredToolRuntime,
   managedFileExists,
+  managedToolPath,
   nativeSupplyPath,
   offlineBundleRecordPath,
   readNativeSupply,
@@ -635,14 +636,7 @@ export function installBundle({
         throw new Error(
           `offline bundle does not support ${tool} on ${platform}`,
         );
-      const target = path.join(
-        repository,
-        "build/runtime/tool-cache",
-        tool,
-        descriptor.version,
-        platform,
-        descriptor.binary + (process.platform === "win32" ? ".exe" : ""),
-      );
+      const target = managedToolPath(tool, platform, repository);
       return { tool, asset, target };
     },
   );

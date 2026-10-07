@@ -481,17 +481,35 @@ function nativeExecutablePath(selected) {
   throw new Error(`native executable not found: ${selected}`);
 }
 
+export function managedToolPath(
+  tool,
+  platform = `${process.platform}-${process.arch}`,
+  repository = root,
+) {
+  const manifest = readNativeSupply(repository);
+  if (!Object.hasOwn(manifest.tools, tool))
+    throw new Error(`unknown native tool: ${tool}`);
+  const descriptor = manifest.tools[tool];
+  if (!Object.hasOwn(descriptor.assets, platform))
+    throw new Error(`unsupported ${tool} platform: ${platform}`);
+  return path.join(
+    repository,
+    "build/runtime/tool-cache",
+    tool,
+    descriptor.version,
+    platform,
+    descriptor.binary + (platform.startsWith("win32-") ? ".exe" : ""),
+  );
+}
+
 export function nativeToolBinary(tool) {
   const manifest = readNativeSupply();
   if (!Object.hasOwn(manifest.tools, tool)) {
     throw new Error(`unknown native tool: ${tool}`);
   }
   const descriptor = manifest.tools[tool];
-  const expected = descriptor.version;
   const suffix = process.platform === "win32" ? ".exe" : "";
-  const cached = filePath(
-    `build/runtime/tool-cache/${tool}/${expected}/${process.platform}-${process.arch}/${descriptor.binary}${suffix}`,
-  );
+  const cached = managedToolPath(tool);
   const selected = nativeExecutablePath(
     process.env[`DDWG_${tool.toUpperCase().replaceAll("-", "_")}_BIN`] ||
       (managedFileExists(cached) ? cached : descriptor.binary + suffix),
@@ -530,7 +548,7 @@ export function nativeToolBinary(tool) {
   }).trim();
   if (version !== descriptor.versionOutput) {
     throw new Error(
-      `${tool} version mismatch: expected ${expected}, got ${version}`,
+      `${tool} version mismatch: expected ${descriptor.version}, got ${version}`,
     );
   }
   return selected;

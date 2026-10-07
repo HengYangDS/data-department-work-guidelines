@@ -20,6 +20,7 @@ import {
   assertNativeBinaryDigest,
   filePath,
   managedFileExists,
+  managedToolPath,
   readNativeSupply,
   reportError,
   root,
@@ -210,10 +211,8 @@ export async function install({
         ? gitlabPackageRequest(tool, selected)
         : null;
   const binaryName = selected.binaryName;
-  const directory = filePath(
-    `build/runtime/tool-cache/${tool}/${selected.version}/${selected.key}`,
-  );
-  const target = path.join(directory, binaryName);
+  const target = managedToolPath(tool, selected.key);
+  const directory = path.dirname(target);
   const cached = managedFileExists(target);
   if (!assetFile && !request) {
     if (cached && verifiedCached(target, selected)) return target;

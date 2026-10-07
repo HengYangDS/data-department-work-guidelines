@@ -405,13 +405,17 @@ checks the original report against the exact approved development finding.
 Unapproved findings, expiry, failed scans, malformed reports, and input drift
 remain failures. No filtered second scan or blanket waiver is admitted.
 
-The human approved three distinct subjects: exact npm `braces` 3.0.3 development
+The human approved four separate subjects: exact npm `braces` 3.0.3 development
 checks and distribution; one digest-bound Node Trixie image for controlled
-development CI; and the pinned Vale, OSV Scanner, and npm tool group with its
-hash-bound development bundle. The braces and tool-group approvals end at
+development CI; the pinned Vale, OSV Scanner, and npm tool group with its
+hash-bound development bundle; and the five pinned Lychee 0.24.2 platform assets
+for trusted local checks, controlled development CI, and identical assets in the
+offline maintenance toolkit. The braces, tool-group, and Lychee approvals end at
 2026-10-18 00:00 UTC. These are not production or cross-repository approvals.
 The image and native tools need their own artifact evidence; the project-lock
-scan cannot qualify them.
+scan cannot qualify them. Lychee source-lock vulnerability and maintenance
+advisories, including aliases, are not a complete shipped-binary inventory.
+Retain its full reports, asset hashes, and actual platform qualification.
 
 Until a formally accepted and installed ETHOS successor exposes the actual
 subject contract, keep this bounded compatibility at the existing input owner.

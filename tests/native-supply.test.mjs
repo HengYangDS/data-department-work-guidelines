@@ -22,6 +22,7 @@ import {
 } from "../tools/ci/install-native.mjs";
 import {
   managedFileExists,
+  managedToolPath,
   nativeToolBinary,
   reportError,
   root,
@@ -53,6 +54,26 @@ test("official supply declares exactly the supported platform assets", () => {
     () => selectedAsset("lychee", "win32", "arm64"),
     /unsupported/u,
   );
+});
+
+test("all native consumers share the declared managed path", () => {
+  for (const [tool, descriptor] of Object.entries(manifest.tools)) {
+    for (const platform of Object.keys(descriptor.assets)) {
+      assert.equal(
+        managedToolPath(tool, platform),
+        path.join(
+          root,
+          "build/runtime/tool-cache",
+          tool,
+          descriptor.version,
+          platform,
+          descriptor.binary + (platform.startsWith("win32-") ? ".exe" : ""),
+        ),
+      );
+    }
+  }
+  assert.throws(() => managedToolPath("constructor"), /unknown native tool/u);
+  assert.throws(() => managedToolPath("lychee", "win32-arm64"), /unsupported/u);
 });
 
 test("native tool identities must name declared manifest entries", () => {

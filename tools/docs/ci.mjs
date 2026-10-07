@@ -170,16 +170,23 @@ export function validateDependencyEvidence(
       ) {
         // Inspect only native fields used by this exact disposition. The scanner
         // owns the report; this boundary cannot reinterpret another subject.
-        if (finding.affected !== undefined && !Array.isArray(finding.affected))
+        if (!Array.isArray(finding.affected) || !finding.affected.length)
           throw new Error("approved finding has invalid affected subjects");
-        for (const affected of finding.affected ?? []) {
+        for (const affected of finding.affected) {
           if (
             !isNativeObject(affected) ||
-            (affected.package !== undefined &&
-              (!isNativeObject(affected.package) ||
-                affected.package.ecosystem !== approvedDependency.ecosystem ||
-                affected.package.name !== approvedDependency.name)) ||
-            (affected.ranges !== undefined && !Array.isArray(affected.ranges))
+            !isNativeObject(affected.package) ||
+            affected.package.ecosystem !== approvedDependency.ecosystem ||
+            affected.package.name !== approvedDependency.name ||
+            (affected.ranges !== undefined &&
+              !Array.isArray(affected.ranges)) ||
+            (affected.versions !== undefined &&
+              (!Array.isArray(affected.versions) ||
+                affected.versions.some(
+                  (version) => typeof version !== "string" || !version.trim(),
+                ))) ||
+            (!affected.ranges?.length &&
+              !affected.versions?.includes(approvedDependency.version))
           )
             throw new Error(
               "approved finding subject changed; retire the disposition",
@@ -187,13 +194,26 @@ export function validateDependencyEvidence(
           for (const range of affected.ranges ?? []) {
             if (
               !isNativeObject(range) ||
-              (range.events !== undefined && !Array.isArray(range.events))
+              range.type !== "SEMVER" ||
+              !Array.isArray(range.events) ||
+              !range.events.some(
+                (event) =>
+                  isNativeObject(event) &&
+                  typeof event.introduced === "string" &&
+                  event.introduced.trim(),
+              )
             )
               throw new Error(
                 "approved finding has invalid native range events",
               );
-            for (const event of range.events ?? []) {
-              if (!isNativeObject(event))
+            for (const event of range.events) {
+              if (
+                !isNativeObject(event) ||
+                !["introduced", "fixed", "last_affected", "limit"].some(
+                  (field) =>
+                    typeof event[field] === "string" && event[field].trim(),
+                )
+              )
                 throw new Error(
                   "approved finding has an invalid native range event",
                 );
@@ -646,7 +666,7 @@ function validateOfflineWorkflow(source, nodeMajor) {
   const setupNode = requireStep(steps, "actions/setup-node");
   if (
     !isDeepStrictEqual(checkout.step.with, {
-      ref: expectedRef,
+      ref: `refs/tags/${expectedRef}`,
       "fetch-depth": 0,
     })
   ) {

@@ -354,13 +354,18 @@ clean.
 
 The current human approvals are separate:
 
-| Subject                                                                                                                          | Approved use                                                                                                  | End of approval                                                     |
-| -------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| npm `braces` 3.0.3, `GHSA-vfj7-8cjw-p6xm`, exact locked bytes                                                                    | Development checks and tool distribution for trusted repositories; no production or arbitrary untrusted input | 2026-10-18 00:00 UTC                                                |
-| The pinned official Node 26 Trixie image, index digest `sha256:39cff0f037088f0d8faf3e5a3ca055d653a15b66faaba8af3daf72f0102f375f` | Controlled development CI only                                                                                | This exact artifact and use; any change needs renewed qualification |
-| The exact Vale 3.24.0, OSV Scanner 2.6.0, and npm 12.2.0 tool group with its hash-bound offline bundle                           | Trusted local and controlled development CI; distribution of that development bundle                          | 2026-10-18 00:00 UTC                                                |
+| Subject                                                                                                                          | Approved use                                                                                                                                         | End of approval                                                     |
+| -------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| npm `braces` 3.0.3, `GHSA-vfj7-8cjw-p6xm`, exact locked bytes                                                                    | Development checks and tool distribution for trusted repositories; no production or arbitrary untrusted input                                        | 2026-10-18 00:00 UTC                                                |
+| The pinned official Node 26 Trixie image, index digest `sha256:39cff0f037088f0d8faf3e5a3ca055d653a15b66faaba8af3daf72f0102f375f` | Controlled development CI only                                                                                                                       | This exact artifact and use; any change needs renewed qualification |
+| The exact Vale 3.24.0, OSV Scanner 2.6.0, and npm 12.2.0 tool group with its hash-bound offline bundle                           | Trusted local and controlled development CI; distribution of that development bundle                                                                 | 2026-10-18 00:00 UTC                                                |
+| Lychee 0.24.2, the five exact platform assets in the [native supply manifest](../../.config/supply/native.json)                  | Trusted local checks, controlled development CI, and identical assets in the offline maintenance toolkit; no production or arbitrary untrusted input | 2026-10-18 00:00 UTC                                                |
 
 These approvals do not cover other findings, artifacts, repositories, or uses.
+Lychee source-lock reports include vulnerability and maintenance advisories,
+including aliases. They do not establish its complete shipped-binary component
+inventory. Retain the full reports, pinned hashes, and actual platform evidence;
+the approval does not waive them.
 The project-lock audit does not enforce image or native-tool approvals; those
 remain separate artifact qualification. Accepted ETHOS risk admission must
 consume the actual approved subjects before the bounded repository compatibility

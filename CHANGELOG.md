@@ -30,7 +30,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 - Preserve one complete native dependency scan and evaluate only the exact,
   expiring development approval. Keep project dependencies, the approved CI
-  image, and the pinned native-tool group under their separate scopes.
+  image, the pinned native-tool group, and the separately approved Lychee assets
+  under their exact scopes.
 - Update the native TOML formatter to 0.9.0 and compatible npm dependencies,
   with explicit pins for the audited Markdown parser and terminal-width fixes.
 - Refresh the digest-pinned official Node 26 CI image on its supported Debian
@@ -45,8 +46,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 ### Fixed
 
 - Correct an unreleased policy that treated every supply-chain advisory as
-  approved. Reject unrelated findings, changed artifacts, expired approvals,
-  and stale dispositions; retain the original scan and failure output.
+  approved. Reject unrelated or incomplete findings, changed artifacts, expired
+  approvals, and stale dispositions; retain the original scan and failure output.
 - Preserve the original cause when native installation, bundle construction,
   or cleanup fails. Keep authenticated transport diagnostics safe and refuse
   concurrent installation before it can remove another attempt's output.
@@ -60,8 +61,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   and Windows. Source and offline checks share one declared platform contract;
   each hosted result still requires actual execution.
 - Validate the requested offline-release tag even when GitHub dispatch starts
-  from a branch. Conflicting tags, invalid release inputs, and tags that do not
-  identify the verified source now fail the existing release checks.
+  from a branch. Use an explicit tag reference, not a same-name branch.
+  Conflicting tags, invalid inputs, and tags that do not identify the verified
+  source fail the existing release checks.
 - Upgrade the native math renderer so inherited options cannot grant trusted
   rendering. Preserve Markdownlint tokens, ordinary math, and explicit trust
   through the existing consumer without waiving the dependency finding.

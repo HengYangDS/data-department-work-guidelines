@@ -29,6 +29,15 @@ ignoreUntil = 2026-10-18
 reason = "Human-approved braces 3.0.3 in trusted development checks only."
 `;
 const dependencyReviewTime = new Date("2026-10-07T00:00:00Z");
+const approvedFinding = () => ({
+  id: "GHSA-vfj7-8cjw-p6xm",
+  affected: [
+    {
+      package: { ecosystem: "npm", name: "braces" },
+      ranges: [{ type: "SEMVER", events: [{ introduced: "0" }] }],
+    },
+  ],
+});
 
 test("native disposition cannot widen the approved development artifact", () => {
   const policy = ci.parseDependencyPolicy(dependencyPolicy);
@@ -149,7 +158,7 @@ test("exact disposition preserves raw findings and rejects unapproved or expired
           package: identity,
           dependency_groups: ["dev"],
           ...(identity.name === "braces"
-            ? { vulnerabilities: [{ id: "GHSA-vfj7-8cjw-p6xm" }] }
+            ? { vulnerabilities: [approvedFinding()] }
             : {}),
         })),
       },
@@ -302,6 +311,39 @@ test("native disposition rejects malformed subject, range, and event objects", (
       dependencyReviewTime,
     );
   assert.deepEqual(validate(report), { findings: 1, approvedFindings: 1 });
+  const explicitVersion = structuredClone(report);
+  const affected = explicitVersion.results[0].packages.find(
+    (entry) => entry.package.name === "braces",
+  ).vulnerabilities[0].affected[0];
+  delete affected.ranges;
+  affected.versions = ["3.0.3"];
+  assert.deepEqual(validate(explicitVersion), {
+    findings: 1,
+    approvedFindings: 1,
+  });
+  affected.versions = ["2.0.0"];
+  assert.throws(() => validate(explicitVersion), /subject/u);
+  for (const removeEvidence of [
+    (finding) => delete finding.affected,
+    (finding) => (finding.affected = []),
+    (finding) => delete finding.affected[0].package,
+    (finding) => delete finding.affected[0].ranges,
+    (finding) => (finding.affected[0].ranges = []),
+    (finding) => delete finding.affected[0].ranges[0].events,
+    (finding) => (finding.affected[0].ranges[0].events = []),
+    (finding) => delete finding.affected[0].ranges[0].type,
+    (finding) => (finding.affected[0].ranges[0].events = [{}]),
+    (finding) =>
+      (finding.affected[0].ranges[0].events = [{ last_affected: "3.0.3" }]),
+  ]) {
+    const changed = structuredClone(report);
+    removeEvidence(
+      changed.results[0].packages.find(
+        (entry) => entry.package.name === "braces",
+      ).vulnerabilities[0],
+    );
+    assert.throws(() => validate(changed), /native|finding|subject/u);
+  }
   for (const affected of [
     true,
     [],
@@ -388,7 +430,7 @@ test("online native approval observes the stable public release in isolation", (
                 package: identity,
                 dependency_groups: ["dev"],
                 ...(identity.name === "braces"
-                  ? { vulnerabilities: [{ id: "GHSA-vfj7-8cjw-p6xm" }] }
+                  ? { vulnerabilities: [approvedFinding()] }
                   : {}),
               })),
             },
@@ -937,7 +979,7 @@ test("native audit refuses input drift after scanning", (context) => {
         package: identity,
         dependency_groups: ["dev"],
         ...(identity.name === "braces"
-          ? { vulnerabilities: [{ id: "GHSA-vfj7-8cjw-p6xm" }] }
+          ? { vulnerabilities: [approvedFinding()] }
           : {}),
       }));
       writeFileSync(
@@ -1699,6 +1741,23 @@ test("GitLab Linux capabilities are exact and role-specific", () => {
       jobName,
     );
   }
+});
+
+test("offline release checkout names the tag namespace explicitly", () => {
+  const workflow = YAML.parse(offline);
+  const job = workflow.jobs.verify;
+  const checkout = job.steps.find((step) =>
+    step.uses?.startsWith("actions/checkout@"),
+  );
+  checkout.with.ref = `refs/tags/${job.env.DDWG_RELEASE_TAG}`;
+  assert.doesNotThrow(() =>
+    validateCi(github, gitlab, YAML.stringify(workflow)),
+  );
+  checkout.with.ref = job.env.DDWG_RELEASE_TAG;
+  assert.throws(
+    () => validateCi(github, gitlab, YAML.stringify(workflow)),
+    /exact tag/u,
+  );
 });
 
 test("offline release CI runs the source-pinned bundle on four hosted systems", () => {
