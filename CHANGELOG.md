@@ -45,6 +45,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Restore fidelity, clarity, and elegance as writing aims: faithful meaning,
+  accurate understanding conveyed fluently, and expressive beauty with aesthetic
+  judgment and artistic and cultural refinement.
+  Keep editorial techniques as applications rather than definitions.
 - Ground emergency guidance in affected data flows, production, and permissions,
   with clear containment, escalation, and correction checks. Preserve the
   separate management duty to support members who honestly expose problems.

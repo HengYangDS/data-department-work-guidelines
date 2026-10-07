@@ -395,7 +395,12 @@ rather than rank people, and respect each metric's limits.
 
 ### Requirement: Communication and coaching preserve judgment
 
-Communication SHALL state its purpose in an objective, measured tone. Meetings
+Writing SHALL preserve intended meaning without distortion, start from accurate
+understanding and convey it clearly and fluently, and pursue expressive beauty
+through aesthetic judgment, taste, and artistic and cultural refinement suited
+to its subject and audience. Editorial techniques SHALL serve those aims without
+replacing their meanings. Communication SHALL state its purpose in an objective,
+measured tone. Meetings
 SHALL refocus discussion on its decision. Deadline risks SHALL name
 escalation owners and triggers before harm grows. Responsible members and
 supervisors SHALL jointly align on subject, boundary, and success criteria at
@@ -405,6 +410,19 @@ recurring rescue. Agent delegation SHALL name output format, destination,
 audience, and detail. Before sending, authors SHALL test whether cutting a third
 of the wording improves clarity while preserving facts, reasoning, limits, and
 responsibilities; the exercise SHALL NOT impose a deletion quota.
+
+#### Scenario: An editing technique is mistaken for the writing standard
+
+- **WHEN** an author treats removing filler, using precise words, or keeping a
+  measured tone as the complete meaning of elegance
+- **THEN** the communication topic states fidelity as faithful meaning, clarity
+  as accurate understanding conveyed clearly and fluently, and elegance as
+  expressive beauty with aesthetic judgment, taste, and artistic and cultural
+  refinement
+- **AND** revision attends to sentence rhythm, transitions, and fitting form
+  while preserving actors, conditions, responsibilities, evidence, and limits
+- **AND** source checks or a shorter draft do not establish aesthetic quality
+  or semantic equivalence.
 
 #### Scenario: Fluent delivery hides the purpose or the judgment owner
 

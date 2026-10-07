@@ -30,6 +30,8 @@
       facts, reasoning, limits, or responsibilities. Preserve narrower
       original responsibilities, not every reviewer suggestion, without another
       report, parser, evaluator, meeting, approval, or meaning gate.
+      State fidelity, clarity, and elegance in their full meanings; preserve
+      aesthetic intent rather than substituting editorial techniques.
       Ground scenarios and emergency responses in quantitative data work; keep
       employee-management safeguards distinct from incident containment.
 - [x] 2.4 Reconcile package, current OpenSpec, contribution, governance, CI,

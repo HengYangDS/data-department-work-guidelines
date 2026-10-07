@@ -73,18 +73,26 @@ both from a different risk preference despite shared reasoning.
 
 ## Write for Fidelity, Clarity, and Elegance
 
-1. **Fidelity:** Give facts their sources. Separate facts, hypotheses,
-   judgments, and decisions. Do not hide counterexamples, uncertainty, failure,
-   or limits.
-2. **Clarity:** Let the title identify the subject and purpose. For analysis,
+1. **Fidelity:** Preserve the intended meaning without distortion. Keep actors,
+   conditions, responsibilities, and limits intact. Give facts their sources.
+   Separate facts, hypotheses, judgments, and decisions. Do not hide
+   counterexamples, uncertainty, failure, or limits.
+2. **Clarity:** Begin with accurate understanding, then convey the meaning
+   clearly and fluently so the reader can understand it and act. Let the title
+   identify the subject and purpose. For analysis,
    proposal, and decision documents, also name their status in the title.
    Give the conclusion, decision request, or reason no conclusion is available
    on the first screen. Make one main point per paragraph, define important
    terms at first use, and leave reasoning and next steps actionable.
-3. **Elegance:** Remove formulaic filler, repetition, and decoration that add no
-   information. Choose precise verbs and concrete nouns. Keep the tone
-   objective and measured, without slogans or pretended depth. Let structure serve
+3. **Elegance:** Bring aesthetic judgment, taste, and artistic and cultural
+   refinement to expression. Give the writing beauty and a cultivated style
+   suited to its subject and audience. Shape sentence rhythm, transitions, and
+   visual form with care. Choose precise verbs and concrete nouns. Remove
+   formulaic filler, repetition, and empty decoration. Keep the tone objective
+   and measured, without slogans or pretended depth. Let structure serve
    judgment; do not let a diagram stand in for an argument.
+
+These editing practices apply the three aims; they do not define their limits.
 
 Analysis, proposal, and decision documents should follow this order by default:
 

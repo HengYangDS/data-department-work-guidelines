@@ -65,6 +65,17 @@ problems is a different management duty. Do not carry a generic physical-safety
 scenario into data incident response merely because it appeared in earlier text.
 This is a correction to the current scope, not certification of the old wording.
 
+State the core meanings of fidelity, clarity, and elegance before their
+applications. Fidelity preserves intended meaning without distortion; clarity
+begins with accurate understanding and conveys it clearly and fluently; elegance
+concerns expressive beauty, aesthetic judgment, taste, and artistic and cultural
+refinement suited to the subject and audience. Precision, restraint, concise
+wording, and visual structure are techniques, not substitute definitions. The
+inherited restriction of elegance to accuracy and restraint must yield to the
+user's explicit aesthetic requirement. This corrects the guidance rather than
+certifying the old wording as complete. Do not add philosophical definitions or
+concepts absent from the guidance; source checks cannot certify aesthetic quality.
+
 Independent reviews cover fixed source, not a moving summary. Review all
 original numbered subsections and surrounding groups, then challenge the revised
 duties with concrete adverse cases. Earlier no-finding judgments remain dated
