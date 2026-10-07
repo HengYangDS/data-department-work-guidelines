@@ -9,23 +9,28 @@
       "assets": {
         "darwin-arm64": {
           "name": "lychee-aarch64-apple-darwin.tar.gz",
-          "sha256": "c9d3740ea2d891854d37116c9fba840f37b6e7c89d330e7db84ac333631c4977"
+          "sha256": "c9d3740ea2d891854d37116c9fba840f37b6e7c89d330e7db84ac333631c4977",
+          "binarySha256": "af111b5890746a863e60b4929720ab383337843ed15b701515871aa6e8817c2b"
         },
         "darwin-x64": {
           "name": "lychee-x86_64-apple-darwin.tar.gz",
-          "sha256": "887503a9cff667d322b8d0892b40bf49976eb9507af8483220a3706cdad55978"
+          "sha256": "887503a9cff667d322b8d0892b40bf49976eb9507af8483220a3706cdad55978",
+          "binarySha256": "db236f940ad0dbe02b8c3e12ac0f7b7dcae15be02bb5fb1868def5026b5e01e7"
         },
         "linux-arm64": {
           "name": "lychee-aarch64-unknown-linux-gnu.tar.gz",
-          "sha256": "91a7bd65685da41b90ccb9bc867a3d649a7818042dae04ff405e55a25bddee4c"
+          "sha256": "91a7bd65685da41b90ccb9bc867a3d649a7818042dae04ff405e55a25bddee4c",
+          "binarySha256": "7674d743f60997b0f2c6d6dbf4e02b50b311d8fe6c0051b11ad085c3f244e98a"
         },
         "linux-x64": {
           "name": "lychee-x86_64-unknown-linux-gnu.tar.gz",
-          "sha256": "1f4e0ef7f6554a6ed33dd7ac144fb2e1bbed98598e7af973042fc5cd43951c9a"
+          "sha256": "1f4e0ef7f6554a6ed33dd7ac144fb2e1bbed98598e7af973042fc5cd43951c9a",
+          "binarySha256": "87e6e75195df5753f08c53b5c0a13694b8328edd8df009914ae9e29b5000162d"
         },
         "win32-x64": {
           "name": "lychee-x86_64-pc-windows-msvc.zip",
-          "sha256": "32975d1493ee1a975d6bb41e4fb56fe419cb442ded628bb772ba2e614acfacad"
+          "sha256": "32975d1493ee1a975d6bb41e4fb56fe419cb442ded628bb772ba2e614acfacad",
+          "binarySha256": "2d15a3f78ac680103720b0c59667dc6f1da7de35f7e9c95171bdf4b76fb6829b"
         }
       },
       "licenses": {
@@ -51,23 +56,28 @@
       "assets": {
         "darwin-arm64": {
           "name": "vale_3.24.0_macOS_arm64.tar.gz",
-          "sha256": "87b513f26499f6657c15cf7175ba5b058a7c1ff2bb2d4e07265db2dd43451e44"
+          "sha256": "87b513f26499f6657c15cf7175ba5b058a7c1ff2bb2d4e07265db2dd43451e44",
+          "binarySha256": "c790563403d9b8cd874c57b605b63c9ca932a3f6ce0ad85b9abe5cb0e5cc2f34"
         },
         "darwin-x64": {
           "name": "vale_3.24.0_macOS_64-bit.tar.gz",
-          "sha256": "eeb39e86f1daac27cc2a77fef3af1824d50559bdc22329fb25fb921c80c79472"
+          "sha256": "eeb39e86f1daac27cc2a77fef3af1824d50559bdc22329fb25fb921c80c79472",
+          "binarySha256": "910902cf5664f8b8f03b0f633e6b8a8493bbc2d68fd5c54760ddc26871e683df"
         },
         "linux-arm64": {
           "name": "vale_3.24.0_Linux_arm64.tar.gz",
-          "sha256": "104cbd349279e50c4cb40adb70adf345d93cc4a3a0191f9e68bdccb97086b582"
+          "sha256": "104cbd349279e50c4cb40adb70adf345d93cc4a3a0191f9e68bdccb97086b582",
+          "binarySha256": "0eb06850594c26a47365f00bd781057f30a8d6dffcebf79c82739ea816d351ed"
         },
         "linux-x64": {
           "name": "vale_3.24.0_Linux_64-bit.tar.gz",
-          "sha256": "867534ddb678abca7f214bc4706ead0922bd5252ffe8035fc227013f66c8b214"
+          "sha256": "867534ddb678abca7f214bc4706ead0922bd5252ffe8035fc227013f66c8b214",
+          "binarySha256": "edfdfd7c78eacd42153b502eb8da96347940e573364c77ed34285780322cf78b"
         },
         "win32-x64": {
           "name": "vale_3.24.0_Windows_64-bit.zip",
-          "sha256": "3a8884774973b6f2826877e1c6388a5feae4704ef88a9a9c912c77ce186990f3"
+          "sha256": "3a8884774973b6f2826877e1c6388a5feae4704ef88a9a9c912c77ce186990f3",
+          "binarySha256": "ecc1c85a83c384154e6bb1ea2f8ae16b67ccea505746ca0053155d03394719ce"
         }
       },
       "licenses": {

@@ -17,6 +17,7 @@ import {
   projectPackageRequest,
 } from "./gitlab-package.mjs";
 import {
+  assertNativeBinaryDigest,
   filePath,
   managedFileExists,
   readNativeSupply,
@@ -50,6 +51,8 @@ export function selectedAsset(
         asset.size > 64 * 1024 * 1024))
   )
     throw new Error(`invalid ${tool} asset format or size: ${key}`);
+  if (format === "archive" && !/^[0-9a-f]{64}$/u.test(asset.binarySha256 ?? ""))
+    throw new Error(`unpinned ${tool} binary digest: ${key}`);
   return {
     ...asset,
     format,
@@ -119,6 +122,7 @@ function binaryFiles(directory, name) {
 
 function verifiedCached(target, selected) {
   if (!managedFileExists(target)) return false;
+  assertNativeBinaryDigest(readFileSync(target), selected, selected.tool);
   const version = run(target, ["--version"], {
     capture: true,
     rejectStderr: true,
@@ -252,8 +256,9 @@ export async function install({
         throw new Error(`${tool} archive has ${candidates.length} binaries`);
       candidate = candidates[0];
     }
-    if (process.platform !== "win32") chmodSync(candidate, 0o755);
     const verifiedBytes = readFileSync(candidate);
+    assertNativeBinaryDigest(verifiedBytes, selected, tool);
+    if (process.platform !== "win32") chmodSync(candidate, 0o755);
     const version = run(candidate, ["--version"], {
       capture: true,
       rejectStderr: true,

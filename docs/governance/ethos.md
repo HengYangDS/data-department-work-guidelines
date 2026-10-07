@@ -246,6 +246,10 @@ replaces official archival and its subsequent proof and publication.
 
 ## Tool Supply and Offline Execution
 
+These tools serve repository maintainers and CI. Reading or using the guidelines
+requires no installation. The offline bundle supplies quality-check tools;
+ETHOS is a separate governance dependency, not part of the guidelines.
+
 [`package.json`](../../package.json) declares the Node line and the sole exact
 npm version through native `devEngines.packageManager`. npm rejects a mismatch
 before installation and repository scripts. Ephemeral CI acquires that declared
@@ -301,6 +305,13 @@ verified target, never overwrite or remove it.
 
 Native-tool publication links the complete verified candidate atomically within
 its cache directory. An interrupted copy cannot create a partial final entry.
+Archive and extracted executable digests are pinned separately; raw binaries
+use their asset digest. Installation and managed-cache reuse check the actual
+executable bytes before starting its version command. A matching version alone
+does not admit altered bytes.
+PATH names and direct selectors resolve to an actual native file before
+admission, including quoted Windows search paths and native executable suffixes.
+An unresolved selection fails without starting a different command.
 Existing entries retain their bytes and permissions; an invalid entry remains
 a failure rather than being overwritten. Package-manager failures and native
 causes remain visible in CLI output without repeating command streams.
@@ -359,8 +370,13 @@ An explicit native executable may be selected with `DDWG_LYCHEE_BIN`,
 `DDWG_VALE_BIN`, or `DDWG_OSV_SCANNER_BIN`. Without one, the consumer selects its
 repository cache entry when present; only a missing entry permits native PATH.
 An invalid cache entry fails instead of falling back. Every selection must still
-match the locked tool version; these paths are execution inputs, not tracked
-host bindings.
+match the locked tool version. PATH names resolve to the actual executable;
+selecting the managed entry explicitly does not bypass its byte check. An
+entry elsewhere in managed tool storage cannot impersonate the selected tool,
+version, and platform. An
+independently owned host installation retains native version admission rather
+than being required to match another distributor's executable bytes. These
+paths are execution inputs, not tracked host bindings.
 
 Keep the current approval check at the existing dependency input owner until
 formally accepted ETHOS risk admission covers its native subjects. Migrate that

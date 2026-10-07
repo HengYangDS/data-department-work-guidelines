@@ -288,7 +288,9 @@ evidence and authored substitutes.
 
 One repository-native tool manifest SHALL bind Vale, lychee, and OSV Scanner
 versions, platform archives or raw binaries, digests, raw-binary sizes, and
-license notices. Every declared platform SHALL supply the complete tool graph.
+license notices. Archive and extracted executable digests SHALL be distinct;
+raw executables SHALL reuse their asset digest. Every declared platform SHALL
+supply the complete tool graph.
 The existing native installer and source-bound offline bundle SHALL consume that
 manifest without
 duplicated tool supply. Local verification SHALL never download a missing tool.
@@ -307,7 +309,8 @@ GitLab and GitHub SHALL supply and qualify the frozen release independently.
 
 - **WHEN** a supported host receives the exact source-bound bundle or a pinned
   local archive, or consumers migrate to a replacement manifest or installer
-- **THEN** the installer verifies its digest, safe archive members, executable
+- **THEN** the installer verifies its asset and executable digests before
+  execution, safe archive members, executable
   version, and source binding before admitting the tool
 - **AND** the old manifest and installer SHALL retire when their consumers are replaced
 - **AND** it preserves the destination's host installation and credentials.
@@ -337,6 +340,23 @@ GitLab and GitHub SHALL supply and qualify the frozen release independently.
   and its existing mode; changed published bytes fail
 - **AND** actual installed consumers still run with unchanged deadlines, while
   the installer's own temporary stage is removed before completion.
+
+#### Scenario: A managed executable changes after installation
+
+- **WHEN** a managed native executable is selected through its default cache,
+  explicit path, or a PATH name that resolves to that cache
+- **THEN** its bytes SHALL match the selected platform's pinned executable
+  digest before any version or other tool command starts
+- **AND** changed bytes or missing byte identity SHALL fail without execution
+  or fallback; a matching version string SHALL not override that failure
+- **AND** a different path within managed tool storage SHALL not impersonate
+  the selected tool, version, and platform
+- **AND** PATH names and direct selectors SHALL identify the actual native file
+  before admission, including quoted Windows paths and native executable
+  suffixes; an unresolved selector SHALL fail without execution or fallback
+- **AND** unchanged cache bytes SHALL remain usable with native version
+  admission, while independently owned host tools retain their own byte
+  authority and the repository's locked version requirement.
 
 #### Scenario: Native supply is incomplete or changed
 

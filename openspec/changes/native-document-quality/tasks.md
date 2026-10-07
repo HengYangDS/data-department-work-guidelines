@@ -235,6 +235,9 @@
       output and complete raw advisory evidence. Reject unapproved findings,
       expired approvals, and stale dispositions without duplicate scans or a
       private risk schema.
+      Pin extracted native executable bytes; reject changed managed caches
+      before execution, including explicit paths and PATH selections. Preserve
+      independently owned host tool admission and valid-cache reuse.
       Qualify patched KaTeX through the existing Markdownlint and math consumers,
       inherited-option refusal, native lock resolution, fresh online audit, and
       rebuilt offline supply; preserve raw findings and require a fix or an

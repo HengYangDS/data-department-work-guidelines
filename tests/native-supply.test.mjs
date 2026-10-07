@@ -10,6 +10,7 @@ import path from "node:path";
 import { syncBuiltinESMExports } from "node:module";
 import { test } from "node:test";
 import { setTimeout as delay } from "node:timers/promises";
+import { pathToFileURL } from "node:url";
 import {
   assertAssetDigest,
   downloadAsset,
@@ -67,6 +68,9 @@ test("native tool identities must name declared manifest entries", () => {
 });
 
 test("explicit native tool selectors use portable names and retain version admission", (context) => {
+  const directory = fs.mkdtempSync(
+    path.join(os.tmpdir(), "ddwg-native-selector-"),
+  );
   const actual = childProcess.spawnSync;
   const saved = new Map();
   let expected;
@@ -89,10 +93,11 @@ test("explicit native tool selectors use portable names and retain version admis
       const key = `DDWG_${tool.toUpperCase().replaceAll("-", "_")}_BIN`;
       saved.set(key, process.env[key]);
       expected = path.join(
-        os.tmpdir(),
-        "ddwg-native-selector",
-        descriptor.binary,
+        directory,
+        descriptor.binary + (process.platform === "win32" ? ".exe" : ""),
       );
+      fs.writeFileSync(expected, "independently owned tool fixture");
+      if (process.platform !== "win32") fs.chmodSync(expected, 0o755);
       process.env[key] = expected;
       version = descriptor.versionOutput;
       assert.equal(nativeToolBinary(tool), expected, tool);
@@ -107,6 +112,77 @@ test("explicit native tool selectors use portable names and retain version admis
     }
     mock.mock.restore();
     syncBuiltinESMExports();
+    fs.rmSync(directory, { recursive: true, force: true });
+    assert.equal(fs.existsSync(directory), false);
+  }
+});
+
+test("explicit native selectors preserve filesystem path semantics", (context) => {
+  const directory = fs.mkdtempSync(
+    path.join(os.tmpdir(), "ddwg-native-filesystem-selector-"),
+  );
+  const descriptor = manifest.tools.vale;
+  const filename =
+    descriptor.binary + (process.platform === "win32" ? ".exe" : "");
+  const binary = path.join(directory, filename);
+  const originalSelection = process.env.DDWG_VALE_BIN;
+  let expected = binary;
+  let executions = 0;
+  const spawn = context.mock.method(
+    childProcess,
+    "spawnSync",
+    (command, args) => {
+      assert.equal(command, expected);
+      assert.deepEqual(args, ["--version"]);
+      executions += 1;
+      return { status: 0, stdout: descriptor.versionOutput, stderr: "" };
+    },
+  );
+  syncBuiltinESMExports();
+  try {
+    fs.writeFileSync(binary, "independently owned executable fixture");
+    if (process.platform !== "win32") fs.chmodSync(binary, 0o755);
+    process.env.DDWG_VALE_BIN = binary + path.sep;
+    assert.throws(() => nativeToolBinary("vale"), /not found/u);
+    assert.equal(
+      executions,
+      0,
+      "a directory-qualified file cannot be executed",
+    );
+    process.env.DDWG_VALE_BIN = binary;
+    assert.equal(nativeToolBinary("vale"), binary);
+    if (process.platform !== "win32") {
+      const target = path.join(directory, "target");
+      fs.mkdirSync(path.join(target, "nested"), { recursive: true });
+      fs.writeFileSync(
+        path.join(target, filename),
+        "filesystem-resolved fixture",
+      );
+      fs.chmodSync(path.join(target, filename), 0o755);
+      fs.symlinkSync(
+        path.join(target, "nested"),
+        path.join(directory, "alias"),
+      );
+      expected = directory + "/alias/../" + filename;
+      assert.equal(
+        fs.readFileSync(expected, "utf8"),
+        "filesystem-resolved fixture",
+      );
+      process.env.DDWG_VALE_BIN = expected;
+      assert.equal(nativeToolBinary("vale"), expected);
+      assert.equal(
+        executions,
+        2,
+        "the native path must not select the lexical sibling",
+      );
+    }
+  } finally {
+    if (originalSelection === undefined) delete process.env.DDWG_VALE_BIN;
+    else process.env.DDWG_VALE_BIN = originalSelection;
+    spawn.mock.restore();
+    syncBuiltinESMExports();
+    fs.rmSync(directory, { recursive: true, force: true });
+    assert.equal(fs.existsSync(directory), false);
   }
 });
 
@@ -858,6 +934,226 @@ test("an invalid supply source cannot reuse a cached native tool", async () => {
   );
 });
 
+test("managed cached binaries verify bytes before version execution", async () => {
+  const directory = fs.realpathSync.native(
+    fs.mkdtempSync(path.join(os.tmpdir(), "ddwg-native-integrity-")),
+  );
+  try {
+    const runtime = path.join(directory, "tools/docs/runtime.mjs");
+    const installer = path.join(directory, "tools/ci/install-native.mjs");
+    for (const relative of [
+      "tools/docs/runtime.mjs",
+      "tools/ci/install-native.mjs",
+      "tools/ci/gitlab-package.mjs",
+    ]) {
+      const destination = path.join(directory, relative);
+      fs.mkdirSync(path.dirname(destination), { recursive: true });
+      fs.copyFileSync(path.join(root, relative), destination);
+    }
+    const descriptor = manifest.tools.vale;
+    const key = `${process.platform}-${process.arch}`;
+    const target = path.join(
+      directory,
+      "build/runtime/tool-cache/vale",
+      descriptor.version,
+      key,
+      descriptor.binary + (process.platform === "win32" ? ".exe" : ""),
+    );
+    const fixture = JSON.parse(JSON.stringify(manifest));
+    const trusted = Buffer.from("trusted native fixture bytes");
+    fixture.tools.vale.assets[key].binarySha256 = createHash("sha256")
+      .update(trusted)
+      .digest("hex");
+    const supply = path.join(directory, ".config/supply/native.json");
+    fs.mkdirSync(path.dirname(supply), { recursive: true });
+    fs.writeFileSync(supply, JSON.stringify(fixture));
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.writeFileSync(target, "changed binary with the same reported version");
+    if (process.platform !== "win32") fs.chmodSync(target, 0o755);
+    const result = spawnSync(
+      process.execPath,
+      [
+        "--input-type=module",
+        "-e",
+        `import assert from "node:assert/strict";
+        import fs from "node:fs";
+        import childProcess from "node:child_process";
+        import { pathToFileURL } from "node:url";
+        import { syncBuiltinESMExports } from "node:module";
+        const target = process.env.DDWG_FIXTURE_TARGET;
+        const commandName = process.env.DDWG_FIXTURE_COMMAND;
+        const expectedVersion = process.env.DDWG_FIXTURE_VERSION;
+        let executions = 0;
+        childProcess.spawnSync = (command, args) => {
+          assert.ok(command === target || command === commandName || command === target + ".unbound");
+          assert.deepEqual(args, ["--version"]);
+          executions += 1;
+          return { status: 0, stdout: expectedVersion, stderr: "" };
+        };
+        syncBuiltinESMExports();
+        const runtime = await import(pathToFileURL(process.env.DDWG_FIXTURE_RUNTIME));
+        const installer = await import(pathToFileURL(process.env.DDWG_FIXTURE_INSTALLER));
+        assert.throws(() => runtime.nativeToolBinary("vale"), /binary digest mismatch/);
+        await assert.rejects(installer.install({ tool: "vale" }), /binary digest mismatch/);
+        process.env.DDWG_VALE_BIN = target;
+        assert.throws(() => runtime.nativeToolBinary("vale"), /binary digest mismatch/);
+        process.env.DDWG_VALE_BIN = commandName;
+        process.env.PATH = process.env.DDWG_FIXTURE_PATH;
+        assert.throws(() => runtime.nativeToolBinary("vale"), /binary digest mismatch/);
+        const misplaced = target + ".unbound";
+        fs.writeFileSync(misplaced, "unbound managed bytes");
+        if (process.platform !== "win32") fs.chmodSync(misplaced, 0o755);
+        process.env.DDWG_VALE_BIN = misplaced;
+        assert.throws(() => runtime.nativeToolBinary("vale"), /managed.*identity/);
+        delete process.env.DDWG_VALE_BIN;
+        assert.equal(executions, 0, "changed cache must not execute");
+        fs.writeFileSync(target, "trusted native fixture bytes");
+        assert.equal(runtime.nativeToolBinary("vale"), target);
+        assert.equal(await installer.install({ tool: "vale" }), target);
+        assert.equal(executions, 2, "valid cache still checks its native version");
+        process.env.DDWG_VALE_BIN = commandName;
+        assert.equal(runtime.nativeToolBinary("vale"), target);
+        delete process.env.DDWG_VALE_BIN;
+        assert.equal(executions, 3, "PATH selection binds the same valid executable");
+        const supply = process.env.DDWG_FIXTURE_SUPPLY;
+        const manifest = JSON.parse(fs.readFileSync(supply, "utf8"));
+        delete manifest.tools.vale.assets[process.env.DDWG_FIXTURE_KEY].binarySha256;
+        fs.writeFileSync(supply, JSON.stringify(manifest));
+        assert.throws(() => runtime.nativeToolBinary("vale"), /unpinned.*binary/);
+        delete installer.manifest.tools.vale.assets[process.env.DDWG_FIXTURE_KEY].binarySha256;
+        await assert.rejects(installer.install({ tool: "vale" }), /unpinned.*binary/);
+        assert.equal(executions, 3, "missing byte identity must not execute");`,
+      ],
+      {
+        cwd: directory,
+        encoding: "utf8",
+        timeout: 10_000,
+        env: {
+          ...process.env,
+          DDWG_VALE_BIN: "",
+          DDWG_FIXTURE_TARGET: target,
+          DDWG_FIXTURE_COMMAND: path.basename(target),
+          DDWG_FIXTURE_PATH: path.dirname(target),
+          DDWG_FIXTURE_VERSION: descriptor.versionOutput,
+          DDWG_FIXTURE_RUNTIME: runtime,
+          DDWG_FIXTURE_INSTALLER: installer,
+          DDWG_FIXTURE_SUPPLY: supply,
+          DDWG_FIXTURE_KEY: key,
+        },
+      },
+    );
+    assert.equal(result.error, undefined);
+    assert.equal(result.status, 0, result.stderr);
+  } finally {
+    fs.rmSync(directory, { recursive: true, force: true });
+    assert.equal(fs.existsSync(directory), false);
+  }
+});
+
+test("Windows native selection binds quoted paths and direct suffixes before execution", async (context) => {
+  const directory = fs.realpathSync.native(
+    fs.mkdtempSync(path.join(os.tmpdir(), "ddwg-native-windows-lookup-")),
+  );
+  const runtimePath = path.join(directory, "tools/docs/runtime.mjs");
+  const target = path.join(
+    directory,
+    "build/runtime/tool-cache/vale",
+    manifest.tools.vale.version,
+    "win32-x64/vale.exe",
+  );
+  const fixture = JSON.parse(JSON.stringify(manifest));
+  const trusted = Buffer.from("trusted Windows native fixture bytes");
+  fixture.tools.vale.assets["win32-x64"].binarySha256 = createHash("sha256")
+    .update(trusted)
+    .digest("hex");
+  const originalPlatform = Object.getOwnPropertyDescriptor(process, "platform");
+  const originalArch = Object.getOwnPropertyDescriptor(process, "arch");
+  const originalPath = process.env.PATH;
+  const originalSelection = process.env.DDWG_VALE_BIN;
+  let executions = 0;
+  let expected = target;
+  const spawn = context.mock.method(
+    childProcess,
+    "spawnSync",
+    (command, args) => {
+      assert.equal(command, expected);
+      assert.deepEqual(args, ["--version"]);
+      executions += 1;
+      return {
+        status: 0,
+        stdout: fixture.tools.vale.versionOutput,
+        stderr: "",
+      };
+    },
+  );
+  syncBuiltinESMExports();
+  try {
+    fs.mkdirSync(path.dirname(runtimePath), { recursive: true });
+    fs.copyFileSync(path.join(root, "tools/docs/runtime.mjs"), runtimePath);
+    const supply = path.join(directory, ".config/supply/native.json");
+    fs.mkdirSync(path.dirname(supply), { recursive: true });
+    fs.writeFileSync(supply, JSON.stringify(fixture));
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.writeFileSync(
+      target,
+      "altered native bytes with unchanged version output",
+    );
+    Object.defineProperty(process, "platform", {
+      ...originalPlatform,
+      value: "win32",
+    });
+    Object.defineProperty(process, "arch", { ...originalArch, value: "x64" });
+    process.env.PATH = '"' + path.dirname(target) + '"';
+    process.env.DDWG_VALE_BIN = "vale.exe";
+    const runtime = await import(pathToFileURL(runtimePath));
+    assert.throws(
+      () => runtime.nativeToolBinary("vale"),
+      /binary digest mismatch/u,
+    );
+    assert.equal(
+      executions,
+      0,
+      "quoted managed PATH must not bypass byte admission",
+    );
+    fs.writeFileSync(target, trusted);
+    assert.equal(runtime.nativeToolBinary("vale"), target);
+    process.env.DDWG_VALE_BIN = target.slice(0, -4);
+    assert.equal(runtime.nativeToolBinary("vale"), target);
+    assert.equal(
+      executions,
+      2,
+      "both valid selectors start the same verified file",
+    );
+    process.env.DDWG_VALE_BIN = "absent-native-file.exe";
+    assert.throws(() => runtime.nativeToolBinary("vale"), /not found/u);
+    assert.equal(
+      executions,
+      2,
+      "unresolved selectors must not start an unbound command",
+    );
+    expected = path.join(directory, "..com");
+    fs.writeFileSync(expected, "independently owned single-dot lookup fixture");
+    process.env.DDWG_VALE_BIN = ".";
+    assert.throws(() => runtime.nativeToolBinary("vale"), /not found/u);
+    assert.equal(
+      executions,
+      2,
+      "the native single-dot refusal must precede startup",
+    );
+  } finally {
+    Object.defineProperty(process, "platform", originalPlatform);
+    Object.defineProperty(process, "arch", originalArch);
+    if (originalPath === undefined) delete process.env.PATH;
+    else process.env.PATH = originalPath;
+    if (originalSelection === undefined) delete process.env.DDWG_VALE_BIN;
+    else process.env.DDWG_VALE_BIN = originalSelection;
+    spawn.mock.restore();
+    syncBuiltinESMExports();
+    fs.rmSync(directory, { recursive: true, force: true });
+    assert.equal(fs.existsSync(directory), false);
+  }
+});
+
 test("managed files stay inside their selected repository boundary", () => {
   const temporary = fs.mkdtempSync(
     path.join(os.tmpdir(), "ddwg-managed-file-"),
@@ -1006,6 +1302,7 @@ test("a supplied install never changes the mode of an existing cache entry", asy
   const bytes = Buffer.from("fixture-pinned-asset");
   const descriptor = manifest.tools.vale.assets[selected.key];
   const originalDigest = descriptor.sha256;
+  const originalBinaryDigest = descriptor.binarySha256;
   const actualRead = fs.readFileSync;
   const actualEntries = fs.readdirSync;
   const actualStat = fs.lstatSync;
@@ -1081,6 +1378,7 @@ test("a supplied install never changes the mode of an existing cache entry", asy
     }),
   ];
   descriptor.sha256 = createHash("sha256").update(bytes).digest("hex");
+  descriptor.binarySha256 = descriptor.sha256;
   syncBuiltinESMExports();
   try {
     assert.equal(await install({ tool: "vale", assetFile: asset }), target);
@@ -1091,6 +1389,7 @@ test("a supplied install never changes the mode of an existing cache entry", asy
     assert.equal(executions[1], target);
   } finally {
     descriptor.sha256 = originalDigest;
+    descriptor.binarySha256 = originalBinaryDigest;
     for (const mock of mocks) mock.mock.restore();
     syncBuiltinESMExports();
   }
