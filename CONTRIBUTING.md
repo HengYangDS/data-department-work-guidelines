@@ -3,36 +3,39 @@
 This guide is for maintainers who change, check, or publish the repository.
 Reading or applying the guidelines requires no software installation.
 
-Start with the [task map](docs/README.md), then edit the single current owner of
-the rule. [Repository governance](docs/governance/ethos.md) explains the Change,
-Work Lane, proof, version, and publication boundaries. Even editorial tracked
-edits need an owned Work Lane. A method-pack plan or decision record is not a
-Change.
-
-From the intended worktree, run `ethos status --json` and follow its current
-result. Request `ethos lane prewrite` for the exact paths before writing. Keep
-progress in the official Change's `tasks.md`, not in another repository ledger.
-The installed Git-common ETHOS hooks enforce commit and push admission; this
-repository does not maintain a competing hook implementation.
+Find the rule's owner through the [task map](docs/README.md). Before editing,
+read [repository governance](docs/governance/ethos.md), run the installed
+`ethos status --json` in the intended Work Lane, and obtain passing
+`ethos lane prewrite` admission for the exact paths. Keep progress in the selected
+official Change's `tasks.md`. The installed Git-common hooks enforce commit and
+push admission; a method-pack plan or decision record grants neither.
 
 ## Verify the source
 
-Use Node 26 and the npm version declared by `devEngines.packageManager` in
-[`package.json`](package.json). Install npm through the destination's existing
-Node installation owner before running repository commands. npm checks its
-native declaration before `install`, `ci`, and `run`; do not disable it with
-`--force` or a policy override. Version matching is a prerequisite, not proof of
-correct source. Install the locked dependencies with `npm ci --ignore-scripts`.
-Use the Vale, lychee, and OSV Scanner versions pinned in the
-[native supply manifest](.config/supply/native.json), through your platform's
-existing installation owner or the repository-local installer. To install
-previously supplied assets, run each tool through the same entry:
+Use the Node line and exact npm version declared in
+[`package.json`](package.json). Prepare them through the destination's existing
+installation owner; do not bypass npm admission with `--force` or an override.
+Install locked dependencies with `npm ci --ignore-scripts`.
+
+Use the Vale, lychee, and OSV Scanner versions in the
+[native supply manifest](.config/supply/native.json). Your existing installation
+owner may supply them. To install already supplied assets in the repository's
+managed cache, use:
 
 ```text
 node tools/ci/install-native.mjs vale --asset VALE_ARCHIVE
 node tools/ci/install-native.mjs lychee --asset LYCHEE_ARCHIVE
 node tools/ci/install-native.mjs osv-scanner --asset OSV_BINARY
 ```
+
+The verifier selects `DDWG_VALE_BIN`, `DDWG_LYCHEE_BIN`, or
+`DDWG_OSV_SCANNER_BIN` first, then an existing managed-cache entry, and only
+then PATH when that entry is absent. Set the relevant selector to use an
+existing host installation instead of the cache. A selected invalid binary
+fails; the verifier does not silently fall back. Managed binaries must match
+the pinned platform bytes before startup. The host installation owner remains
+responsible for external binary provenance; both routes require the declared
+exact version.
 
 Then run:
 
@@ -41,95 +44,35 @@ npm run verify
 ethos plan --changed --json
 ```
 
-`npm run verify` checks Markdown, code, JSON, YAML, and native TOML formatting,
-Markdown lint, metadata, offline links and fragments, English text, spelling,
-native prose and terminology, decision and navigation boundaries, the official
-OpenSpec workspace, the changelog/version contract, CI declarations, and
-negative tests. `npm run prose` runs the same locked spelling, prose, and
-terminology checks without the rest of the verification graph. Run
-`node tools/docs/cli.mjs audit` separately when online before publication.
-Both hosted CI planes apply the
-[dependency-scan boundary](docs/governance/ethos.md#tool-supply-and-offline-execution)
-and retain the complete result, including failures.
-The audit preserves one complete raw scan before applying the exact development
-approval in the [native policy](.config/checks/dependencies/policy.toml).
-Unapproved findings, expired approvals, failed scans, malformed reports, and
-changed inputs fail qualification. The
-[supply contract](docs/governance/ethos.md#tool-supply-and-offline-execution)
-separates project dependencies from approved CI images and native tools. Local
-source checks remain network-independent; they do not grant permission to use
-an artifact outside its approved scope or after its expiry.
+The complete verifier checks format, Markdown, English prose and terms, local
+links and fragments, metadata, navigation, decisions, configuration, CI,
+SemVer/Changelog, official OpenSpec, and the regression suite. It downloads
+nothing. Before online publication, also run `node tools/docs/cli.mjs audit` and
+retain its complete result under the
+[supply boundary](docs/governance/ethos.md#tool-supply-and-offline-execution).
 
-Vale checks spelling, repeated words, selected technical terms, and diagnosed
-wordy phrases using [native configuration](.config/checks/prose/vale.ini),
-[concise-expression rules](.config/checks/prose/styles/Plain/Concise.yml), and
-[reviewed vocabulary](.config/checks/prose/styles/config/vocabularies/Department/accept.txt).
-The selected substitutions target demonstrated needless phrases; this edition
-does not inherit the old broad stop-word blacklist. In particular, authority,
-feasibility, uncertainty, and meaningful passive constructions retain their
-meaning. A technical vocabulary entry must name a real term, not suppress a
-finding wholesale.
+| When you need to                 | Command                        |
+| -------------------------------- | ------------------------------ |
+| Format the selected source       | `npm run format`               |
+| Check formatting without writing | `npm run format -- --check`    |
+| Check non-spacing Markdown rules | `node tools/docs/cli.mjs lint` |
+| Check spelling, prose, and terms | `npm run prose`                |
 
-The two native style rules carry their own test cases. The existing test suite
-runs Vale's official rule-test coverage as well as real-document checks; loading
-a rule without exercising a defect is insufficient. Keep the cases beside the
-rule rather than introducing another prose-test pipeline.
+Follow the [configuration map](.config/README.md) for spacing, native rules, and
+byte-exact examples. Review meaning at the [communication](docs/communicate.md)
+and relevant task owner: a passing style check cannot establish factual accuracy,
+semantic fidelity, or reader understanding.
 
-The [configuration map](.config/README.md) identifies the single policy owner
-for each check. Prettier and lychee read native TOML directly; Markdownlint
-and dprint receive parsed concern-local values through their public
-configuration interfaces. Vale uses its required native INI, YAML, and
-vocabulary files. Repository commands select those owners explicitly, without
-ambient editor configuration, format conversion, or duplicated package policy.
-
-Paragraphs, headings, lists, quotes, link labels, and table cells are reader
-text. Code spans, fenced commands, and URL destinations retain their syntax. The
-checker never rewrites a file. Repository configuration controls the rules;
-actual Vale control comments fail native Markdown lint, including controls in
-nested content. Use the formatter's native ignore control only to preserve a
-byte-exact example, not to waive ordinary source hygiene. Literal code, escaped
-examples, and ordinary comments remain valid. A passing style check does not
-prove factual accuracy, semantic fidelity, or reader understanding. Review at the
-[communication](docs/communicate.md) and task owners.
-
-Blank lines separate meaning; they are not visual padding.
-
-| Source structure                                             | Spacing                                                                                                                  |
-| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
-| Document-level blocks, including front matter                | One blank line between adjacent blocks; no edge padding; one final newline.                                              |
-| Soft-wrapped paragraphs, table rows, and front-matter fields | Keep their lines contiguous.                                                                                             |
-| A list and its nested blocks                                 | Preserve tight structure; retain one semantic separator in loose or multi-paragraph items. Do not make every item loose. |
-| One quoted block                                             | Keep separator lines at the current quote depth; separate independent quotes with one ordinary blank line.               |
-| Code and embedded languages                                  | Use their native syntax and formatter; preserve byte-exact examples with native ignore.                                  |
-
-Prettier owns Markdown spacing for both `npm run format` and
-`npm run format -- --check`, on the same Git-selected inputs. A second pass must
-leave the output unchanged. Markdownlint checks non-spacing quality; it does not
-overrule formatter-accepted containers or maintain another spacing policy.
-
-Run both `npm run format -- --check` and `node tools/docs/cli.mjs lint`, or the
-full `npm run verify`. Formatting and non-spacing lint have distinct jobs:
-Prettier owns layout; Markdownlint checks headings, links, and source syntax.
-Tests verify their agreement, literal preservation, and unchanged second passes.
-
-Prettier owns supported code, JSON, and YAML; dprint owns TOML through its public
-Wasm API and concern-local policy. Neither applies a raw blank-line scan to
-literal strings. TOML formatting must retain parsed data, key and array order,
-comments, and multiline-string bytes. Plain text without a structural owner
-keeps the single-blank-line ceiling. Unsupported code formats fail explicitly.
-
-For `docs/` pages, keep ETHOS metadata in the leading HTML comment and put the
-H1 after one blank line as the first visible block. Copy a current page's
-carrier rather than inventing a sidecar. The repository check guards this
-reading order; the installed ETHOS registry owns metadata meaning.
+For `docs/` pages, copy a current page's leading ETHOS HTML metadata comment.
+Leave one blank line before the H1, the first visible block. The repository
+check guards reading order; ETHOS owns metadata meaning. Keep `node_modules/`
+and generated output out of Git.
 
 ## Use the offline maintenance toolkit
 
-The optional offline maintenance toolkit prepares the same checks for a machine
-without remote supply. It does not install the guidelines or include ETHOS.
-With the matching source-pinned bundle already on the machine, start from a
-fresh checkout with Node 26, the declared npm, and Git. The offline installer
-never downloads or upgrades a package manager:
+For checks without remote supply, transfer the matching source-bound bundle to a
+fresh checkout with the declared Node, npm, and Git. The optional toolkit does
+not install the guidelines or include ETHOS:
 
 ```text
 node tools/ci/offline-bundle.mjs inspect --bundle PATH
@@ -137,71 +80,32 @@ node tools/ci/offline-bundle.mjs install --bundle PATH
 npm run verify
 ```
 
-The installer verifies the bundle before extraction, uses `npm ci --offline` and
-the same pinned native asset paths, and never downloads a missing tool.
-Archive extraction keeps the current executor's ownership; the packaging
-machine's account identity grants no permission on the destination.
-Obtain the bundle from either Forge while online or transfer it separately;
-acquisition and offline execution are different claims. ETHOS is a separate
-installed product prerequisite for Change admission and proof. The bundle's
-third-party packages retain their own license notices; the repository MIT grant
-covers repository source and documentation, not those packages. Do not claim
-portable offline distribution before the exact asset and full host matrix have
-been observed. The
-[supply contract](docs/governance/ethos.md#tool-supply-and-offline-execution)
-also applies to offline installation and distribution: unresolved findings need
-a fix or an applicable, unexpired approval for the exact artifact and use.
-Git's native `.gitattributes` rule checks out tracked text with LF even on
-Windows; do not replace it with a host-specific Git setting. Keep
-`node_modules/` and generated output out of Git.
+The installer checks the bundle before extraction, uses `npm ci --offline`, and
+never downloads a missing tool or upgrades npm. Extraction uses the destination
+executor's ownership. Third-party notices remain intact; the repository's MIT
+grant does not relicense those packages.
 
-For source selection and exemptions, follow
-[Quality and local state](docs/governance/ethos.md#quality-and-local-state).
-For review/protected runner separation, platform admission, credential transport,
-and source versus offline jobs, follow
-[Runner and transport boundaries](docs/governance/ethos.md#runner-and-transport-boundaries).
-The release steps below select each Forge's source and offline checks.
+Install ETHOS separately for Change admission and proof. Follow the
+[supply contract](docs/governance/ethos.md#tool-supply-and-offline-execution) for
+artifact risk and full platform qualification, and
+[quality and local state](docs/governance/ethos.md#quality-and-local-state) for
+source selection. Acquiring an asset online does not prove offline execution.
+Git's tracked `.gitattributes` supplies LF on Windows too; do not replace it with
+a host-specific setting.
 
 ## Commit and release
 
-New commits, including official archive commits, require a trusted SSH
-signature. Configure your clone's local author, committer, public signing-key
-path, and protected external trust anchor using your own identity. Do not copy
-another host's path or store credentials here. Inspect the exact commit's
-signature and attribution before acceptance.
+Configure your clone's author, committer, public SSH signing-key path, and
+protected external trust anchor using your own identity. Do not copy host paths
+or put credentials in source. New commits, including archive commits, require a
+trusted signature; inspect attribution and signature before acceptance.
 
 Use a scoped
-[Conventional Commit](https://www.conventionalcommits.org/en/v1.0.0/) subject
-such as `docs(guidance): clarify data-use boundaries`. A breaking change still
-needs explicit compatibility review in the official Change. A well-formed
-subject cannot prove the content is correct.
-
-Follow the [release contract](docs/governance/ethos.md#versioned-releases) for
-version identity, release states, and unchanged historical editions.
-
-For SemVer, the public surface includes normative duties, stable member and
-Agent routes, and documented contributor commands, as defined by the
-[repository-governance specification](openspec/specs/repository-governance/spec.md#requirement-version-identity-follows-semver-compatibility).
-An incompatible change increments major; a compatible addition or deprecation
-increments minor; a compatible fix increments patch. Judge the actual interface
-change, not the commit label or the reason a new command was needed.
-
-The changelog check accepts the official `[YANKED]` heading marker and the six
-standard categories in any order, without duplicates. The oldest tagged release
-may link directly to its exact tag; later releases use comparisons. Keep version
-headings neutral and include one `History: GitLab · GitHub` row per section,
-with each platform name linked through a version-and-provider reference.
-Both links must identify the same refs at the corresponding `forge_repository`
-in [the official release declaration](.ethos/release.toml). Use GitLab's
-`/-/compare/` or `/-/tags/` route and GitHub's `/compare/` or `/releases/tag/`
-route. Do not infer a web URL from an SSH remote or rewrite the Changelog for
-one Forge. These checks establish structure and local identity, not whether
-the prose is useful to readers.
-
-Commit the exact source and run ETHOS proof against that HEAD before landing.
-Use only [admitted publication refs](docs/governance/ethos.md#source-two-forges-and-actual-use).
-Verify local acceptance, each Forge ref and CI run, and each Forge Release
-separately; one never proves another.
+[Conventional Commit](https://www.conventionalcommits.org/en/v1.0.0/) subject,
+for example `docs(guidance): clarify data-use boundaries`. Judge compatibility
+from the actual public rule, route, or contributor-command change, not its label.
+The [release contract](docs/governance/ethos.md#versioned-releases) defines SemVer,
+Changelog structure, signed tags, and independent Forge acceptance.
 
 ## Publish a release
 

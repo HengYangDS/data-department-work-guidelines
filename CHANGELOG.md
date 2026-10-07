@@ -38,7 +38,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   base.
 - Shorten active OpenSpec Change documents and simplify governance navigation.
   Change tasks remain bounded implementation checklists; decision records hold
-  durable rationale.
+  durable rationale. Separate contributor procedures, governance boundaries,
+  and native configuration guidance without repeating their policy or changing
+  release order.
 - Reduce repeated native-tool and Git observations and keep test fixtures focused
   on their declared inputs. Retain complete source validation, every distinct
   ancestry check, source-selection controls, policy, deadlines, and diagnostics.

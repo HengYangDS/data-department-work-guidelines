@@ -24,27 +24,53 @@ and generated release record remain JSON so the offline installer can validate
 them before npm dependencies exist. Do not add converters, duplicate records,
 or old-path fallbacks.
 
-The dependency policy uses native OSV fields for one exact, expiring development
-approval. The audit retains the complete unfiltered report and rejects
-unapproved findings, expired approvals, and stale dispositions. Image and
-native-tool approvals have separate subjects and qualification. Replace the
-current compatibility check when accepted ETHOS covers those native subjects;
-do not keep a second policy implementation.
+## Source layout and rule changes
 
-Git selects formatting input; the pinned native formatters identify supported
-formats. Ambient editor and formatter ignore files cannot remove selected source
-from the check. Plain text keeps its one-blank-line ceiling; code or structured
-formats without a native owner fail rather than silently passing.
-Use each native formatter's ignore control only to preserve byte-exact examples.
-Markdownlint does not reject that control or add a second spacing verdict.
-Pinned TOML formatting retains ordinary comments and formats their following
-source; no separate comment blacklist is needed.
-The source text boundary checks complete UTF-8 bytes, including supplementary
-Han characters, rather than silently skipping NUL or invalid encoding.
-Git attributes declare binary assets with `-text`; a known text format cannot
-use that declaration to evade its owner. Effective native attributes select LF
-for every text input, independent of host defaults.
+Git selects tracked and non-ignored candidate inputs; native formatters select
+supported formats. Commands bind the declared configuration explicitly. Ambient
+editor settings and ignore files cannot remove owned source from checks. Use
+native ignore controls only for byte-exact examples, not ordinary hygiene.
+Checks never rewrite source; `npm run format` is the explicit writing operation.
 
-The [contributor route](../CONTRIBUTING.md) owns setup and release commands.
-[OpenSpec and ETHOS](../docs/governance/ethos.md) own change and proof admission;
-this directory is not another governance registry.
+Prettier owns Markdown spacing on identical fix/check inputs. Its second pass
+must be unchanged. Markdownlint owns non-spacing checks and cannot veto
+formatter-accepted containers or native ignore controls.
+
+| Structure                                              | Canonical layout                                                                                |
+| ------------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
+| Adjacent document-level blocks, including front matter | One blank line; no edge padding; one final newline.                                             |
+| Soft-wrapped paragraphs, table rows, metadata fields   | Contiguous lines within the same group.                                                         |
+| Lists and nested blocks                                | Keep tight containers tight; preserve one semantic separator in loose or multi-paragraph items. |
+| Quotes                                                 | Keep separators at their quote depth; one ordinary blank line between independent quotes.       |
+| Code and embedded languages                            | Native syntax and formatter; byte-exact examples use native ignore.                             |
+
+Prettier formats supported code, JSON, and YAML. Native dprint TOML formatting
+preserves parsed values, key/array order, comments, and multiline-string bytes;
+raw blank-line checks do not apply to literal strings. Plain text without a
+structural owner retains the one-blank-line ceiling. Unsupported code formats
+fail rather than silently pass.
+
+Text checks read complete UTF-8, including supplementary Han characters, and
+reject invalid encoding or NUL. Effective Git attributes select LF regardless of
+host defaults. `-text` declares binary assets, not an exemption for known text.
+
+Vale checks reader text in paragraphs, headings, lists, quotes, link labels, and
+table cells. Code spans, fences, and URL destinations retain syntax. Vocabulary
+entries must name real terms; native rules target diagnosed needless phrases
+without erasing authority, feasibility, uncertainty, or meaningful passive voice.
+Keep each rule's cases beside it; the existing suite runs native Vale rule tests
+and real-document checks. Actual Vale control comments fail Markdownlint even
+when nested; literal examples, escaped controls, and ordinary comments remain
+valid. These checks cannot judge factual accuracy, semantic fidelity, or
+understanding.
+
+The native OSV policy applies one exact, expiring development disposition to the
+complete raw project scan. Artifact approval and online qualification follow the
+[supply boundary](../docs/governance/ethos.md#tool-supply-and-offline-execution).
+Replace the compatibility check when the accepted installed ETHOS subject
+contract is qualified; do not retain a second risk implementation.
+
+[Contributing](../CONTRIBUTING.md) owns setup, fix/check, and release commands.
+[OpenSpec and ETHOS](../docs/governance/ethos.md) own change and proof admission.
+This page explains the declared native configurations; it adds no separate
+registry or policy.

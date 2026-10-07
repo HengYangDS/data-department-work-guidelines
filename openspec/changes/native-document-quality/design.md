@@ -161,8 +161,13 @@ grant without fabricating a sidecar or claiming general safety.
 
 `.config/checks/` owns native check policy, `.config/supply/` owns the single
 native-tool manifest, and `.config/release/` owns frozen artifact identity.
-Executable rules stay at their existing implementation owner. The configuration
-README routes readers; it is not another registry or policy.
+Executable rules stay at their existing implementation owner. Contributing owns
+setup, fix/check, commit, and release procedures; governance owns authority and
+acceptance limits. The configuration README explains the declared native rules,
+including spacing and prose controls. Link to these owners rather than repeat
+policy or implementation details in each route; this adds no registry, rule, or
+progress ledger. Preserve existing anchors and release-step dependencies during
+editing, then review complete before/after source for lost obligations.
 
 Keep original images, diagrams, and media in `assets/` when an actual reader or
 product uses them. Program-consumed non-code inputs may need `resources/`.
