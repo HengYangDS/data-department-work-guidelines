@@ -106,10 +106,10 @@ need no CLI2 glob/discovery layer; preserve native filenames, line numbers, rule
 IDs, details, duplicate-heading rules, and width checks.
 
 Native Markdown tokens identify actual quality-control comments, DR structure,
-and license sections. Reject real Vale and Prettier suppression controls,
-including nested or wrapped comments, without rejecting code or explanatory
-prose. The shared implementation has one owner; the prose caller does not copy
-its parser.
+and license sections. Reject real Vale suppression controls, including nested
+or wrapped comments, without rejecting code or explanatory prose. Native
+formatter ignore controls may preserve byte-exact examples. The shared
+implementation has one owner; the prose caller does not copy its parser.
 
 Prettier's public file-information and configuration interfaces select supported
 Git source regardless of usual code directories or ambient ignore files.
@@ -119,14 +119,13 @@ owns TOML through its public formatter interface. Keep exact locked supply,
 syntax/configuration diagnostics, comments, key/array order, and meaningful
 multiline bytes. Missing supply cannot fall back to a raw scan.
 
-Use one reader-block separator. Single-paragraph list peers stay tight even when
-their text wraps; peers with internally separated paragraphs or blocks use one
-consistent gap. Tight lists, their nesting, and their fences stay contiguous;
-a fence alone does not make a list loose. Native MD031 requires separation
-outside lists; `list_items = false` preserves tight fences. Separate-list
-boundaries retain their meaning. Prettier handles quote separators; Markdownlint
-and the official `remark-lint-list-item-spacing` rule handle the remaining
-structure. Stock MD012 alone cannot enforce quote or list looseness.
+Use one reader-block separator. Treat a list as one parsed container: preserve
+tight items and nested blocks, and retain one semantic separator in loose or
+multi-paragraph items without making every item loose. A fence alone does not
+make a list loose. Separate-list boundaries retain their meaning. Prettier alone
+owns Markdown spacing, including quote separators and container layout; native
+Markdown lint retains non-spacing checks without overruled formatting or a
+second spacing verdict.
 
 Keep the general text owner's English and justified plain-text hygiene. Remove
 duplicate raw scans of Markdown, source code, and structured data. Meaningful
@@ -309,6 +308,15 @@ sample, ambient-ignore counterexample, literal, archive input, and force-tracked
 source remains selected. Force-track the formatting fixture's observed Markdown
 TOML policy so its unchanged-byte assertion still exercises a selected source.
 Native Git inventory assertions bind each fixture to its declared inputs.
+
+Prettier alone owns Markdown spacing for fix and check on the same Git-selected
+inputs. Preserve its parsed containers: tight lists remain tight; loose or
+multi-paragraph items keep one semantic separator. Verify the public commands
+and an unchanged second fix pass, including nested quotes and byte-exact examples
+protected by native ignore. Markdownlint retains non-spacing checks, not a second
+spacing verdict. Remove the replaced remark bridge, its unused dependencies, and
+the formatter-comment vetoes in the same migration. Vale comment controls remain
+invalid because they suppress the governed prose checks, not formatting.
 
 Each formatting attempt creates one fresh native TOML formatter for file matching
 and output. Standalone target discovery retains its native default acquisition;

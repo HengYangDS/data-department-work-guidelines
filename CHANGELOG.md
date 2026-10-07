@@ -45,6 +45,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Give Markdown spacing one owner: native formatting, with byte-exact examples
+  preserved and independent non-spacing checks retained. Remove the competing
+  list-spacing rule and unused dependencies.
 - Accept tight-list fences at the native format fixed point without adding
   padding; retain separation around top-level fences and within loose lists.
 - Correct an unreleased policy that treated every supply-chain advisory as

@@ -204,8 +204,10 @@
       controller, capacity threshold, or proof gate.
 - [ ] 2.38 Qualify the [fixed-source repairs](design.md#supply-exact-tools-without-a-second-installation-plane).
       Resolve the review at existing installer, bundle, audit, and documentation
-      owners. Verify tight-list fences at the native format fixed point while
-      retaining top-level fence separation and genuine loose-list checks.
+      owners. Verify one native Markdown spacing owner on identical fix/check
+      inputs and an unchanged second pass. Remove the replaced spacing rule,
+      suppression vetoes, and unused dependencies; preserve non-spacing checks,
+      tight containers, semantic loose-item separators, and byte-exact examples.
       Verify the
       [supply](design.md#supply-exact-tools-without-a-second-installation-plane),
       [risk](design.md#bind-risk-approval-to-the-actual-subject),

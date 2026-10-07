@@ -1,8 +1,13 @@
-MD032 = true
-MD058 = true
-
-[MD012]
-maximum = 1
+# Prettier owns source spacing and container layout. These native rule groups
+# must not supply another spacing verdict on formatter-accepted source.
+whitespace = false
+blank_lines = false
+indentation = false
+MD019 = false
+MD021 = false
+MD023 = false
+MD058 = false
+MD060 = false
 
 [MD013]
 line_length = 80
@@ -10,15 +15,5 @@ code_blocks = false
 tables = false
 headings = false
 
-[MD022]
-lines_above = 1
-lines_below = 1
-
 [MD024]
 siblings_only = true
-
-[MD031]
-list_items = false
-
-[list-item-spacing]
-checkBlanks = true

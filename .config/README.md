@@ -10,7 +10,7 @@ duplicate formatting policy in `package.json`.
 | ------------------------- | ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
 | Source formatting         | [Prettier policy](checks/format/prettier.toml)                          | Markdown, code, JSON, and YAML; literal content keeps its spacing.                      |
 | TOML formatting           | [dprint policy](checks/format/toml.toml)                                | Official dprint Wasm formatter; parsed TOML options enter its public configuration API. |
-| Markdown policy           | [Markdown and remark options](checks/markdown/markdownlint.toml)        | Markdownlint core and remark list-spacing options over Git-selected source.             |
+| Markdown policy           | [Non-spacing Markdown rules](checks/markdown/markdownlint.toml)         | Markdownlint over Git-selected source; Prettier alone owns Markdown spacing.            |
 | Prose and terms           | [Vale configuration](checks/prose/vale.ini), its styles, and vocabulary | Vale; the INI file selects its adjacent native YAML styles.                             |
 | Link checking             | [Lychee TOML](checks/links/lychee.toml)                                 | Lychee; only the explicit online operation changes offline mode.                        |
 | Dependency findings       | [Native OSV policy](checks/dependencies/policy.toml)                    | OSV Scanner; complete raw findings and one exact, expiring development disposition.     |
@@ -35,9 +35,10 @@ Git selects formatting input; the pinned native formatters identify supported
 formats. Ambient editor and formatter ignore files cannot remove selected source
 from the check. Plain text keeps its one-blank-line ceiling; code or structured
 formats without a native owner fail rather than silently passing.
-Native comment parsers distinguish executable Prettier suppression comments
-from literal examples. Pinned TOML formatting retains ordinary comments and
-formats their following source; no separate comment blacklist is needed.
+Use each native formatter's ignore control only to preserve byte-exact examples.
+Markdownlint does not reject that control or add a second spacing verdict.
+Pinned TOML formatting retains ordinary comments and formats their following
+source; no separate comment blacklist is needed.
 The source text boundary checks complete UTF-8 bytes, including supplementary
 Han characters, rather than silently skipping NUL or invalid encoding.
 Git attributes declare binary assets with `-text`; a known text format cannot

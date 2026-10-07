@@ -1350,24 +1350,29 @@ test("Markdown spacing preserves fenced and indented literal content", async () 
   }
 });
 
-test("Markdown spacing rejects reader padding after literal content", async () => {
+test("native formatting rejects reader padding without changing literal content", async () => {
+  const { check, format } = await import("prettier");
   const source = "# Example\n\n```text\nfirst\n\n\nsecond\n```\n\n\nOutside.\n";
-  assert.throws(
-    () => lintMarkdown({ files: [], strings: { "fixture.md": source } }),
-    /fixture\.md:10 \[MD012\]/u,
+  const options = { parser: "markdown" };
+  assert.equal(await check(source, options), false);
+  const formatted = await format(source, options);
+  assert.equal(
+    formatted,
+    "# Example\n\n```text\nfirst\n\n\nsecond\n```\n\nOutside.\n",
   );
+  assert.equal(await check(formatted, options), true);
   assert.deepEqual(await textViolations("fixture.md", source), []);
 });
 
-test("one blank line is allowed; visual padding is not", () => {
-  assert.doesNotThrow(() =>
-    lintMarkdown({ files: [], strings: { "fixture.md": "# A\n\nText\n" } }),
-  );
-  assert.throws(
-    () =>
-      lintMarkdown({ files: [], strings: { "fixture.md": "# A\n\n\nText\n" } }),
-    /fixture\.md:3 \[MD012\]/u,
-  );
+test("native formatting owns one structural separator and its fixed point", async () => {
+  const { check, format } = await import("prettier");
+  const options = { parser: "markdown" };
+  const source = "\n# A\n\n\nText\n\n";
+  assert.equal(await check(source, options), false);
+  const formatted = await format(source, options);
+  assert.equal(formatted, "# A\n\nText\n");
+  assert.equal(await check(formatted, options), true);
+  assert.equal(await format(formatted, options), formatted);
 });
 
 test("Markdown fences preserve tight lists at the native format fixed point", async () => {
@@ -1395,23 +1400,24 @@ test("Markdown fences preserve tight lists at the native format fixed point", as
   }
 });
 
-test("Markdown fences outside lists require reader-block separation", () => {
+test("native formatting separates fences outside list containers", async () => {
+  const { check, format } = await import("prettier");
   for (const body of [
     "Text.\n```text\nexample\n```\n",
     "```text\nexample\n```\nText.\n",
   ]) {
-    assert.throws(
-      () =>
-        lintMarkdown({
-          files: [],
-          strings: { "spacing.md": `# Spacing\n\n${body}` },
-        }),
-      /spacing\.md:\d+ \[MD031\]/u,
+    const source = `# Spacing\n\n${body}`;
+    assert.equal(await check(source, { parser: "markdown" }), false);
+    const formatted = await format(source, { parser: "markdown" });
+    assert.equal(await check(formatted, { parser: "markdown" }), true);
+    assert.doesNotThrow(() =>
+      lintMarkdown({ files: [], strings: { "spacing.md": formatted } }),
     );
   }
 });
 
-test("Markdown list spacing rejects gaps between single-paragraph items", () => {
+test("Markdown lint accepts native list containers without a second spacing verdict", async () => {
+  const { format } = await import("prettier");
   for (const body of [
     "- First.\n\n- Second.\n",
     "- First with a wrapped\n  paragraph.\n\n- Second.\n",
@@ -1419,16 +1425,19 @@ test("Markdown list spacing rejects gaps between single-paragraph items", () => 
     "- [x] First.\n\n- [ ] Second.\n",
     "> - First.\n>\n> - Second.\n",
     "- Parent.\n  - First.\n\n  - Second.\n",
-    "<!-- markdownlint-disable list-item-spacing -->\n\n- First.\n\n- Second.\n",
-    "<!-- remark-lint: disable list-item-spacing -->\n\n- First.\n\n- Second.\n",
+    "- First.\n\n  Separate paragraph.\n- Second.\n",
+    "- First.\n  ```text\n  example\n  ```\n- Second.\n",
   ]) {
-    assert.throws(
+    const formatted = await format(`# Spacing\n\n${body}`, {
+      parser: "markdown",
+    });
+    assert.equal(await format(formatted, { parser: "markdown" }), formatted);
+    assert.doesNotThrow(
       () =>
         lintMarkdown({
           files: [],
-          strings: { "spacing.md": `# Spacing\n\n${body}` },
+          strings: { "spacing.md": formatted },
         }),
-      /spacing\.md:\d+ \[list-item-spacing\]/u,
       body,
     );
   }
@@ -1453,15 +1462,32 @@ test("Markdown list spacing preserves meaningful block and literal boundaries", 
   }
 });
 
-test("Markdown list spacing rejects inconsistent genuinely loose lists", () => {
+test("native formatting reconciles genuinely loose lists without a lint veto", async () => {
+  const { format } = await import("prettier");
   const source = "# Spacing\n\n- First.\n\n  Separate paragraph.\n- Second.\n";
-  assert.throws(
-    () => lintMarkdown({ files: [], strings: { "spacing.md": source } }),
-    /spacing\.md:\d+ \[list-item-spacing\]/u,
+  const formatted = await format(source, { parser: "markdown" });
+  assert.equal(
+    formatted,
+    "# Spacing\n\n- First.\n\n  Separate paragraph.\n\n- Second.\n",
+  );
+  assert.doesNotThrow(() =>
+    lintMarkdown({ files: [], strings: { "spacing.md": formatted } }),
   );
 });
 
-test("document comments cannot waive native Markdown formatting", () => {
+test("native formatter controls can protect byte-exact Markdown examples", async () => {
+  const { format } = await import("prettier");
+  for (const source of [
+    "<!-- prettier-ignore -->\n#  Spacing\n",
+    "<!-- prettier-ignore -->\n#  Spacing  #\n",
+    "# Spacing\n\n<!-- prettier-ignore -->\n\n| first |second|\n| --- | --- |\n| input |output|\n",
+  ]) {
+    const formatted = await format(source, { parser: "markdown" });
+    assert.equal(await format(formatted, { parser: "markdown" }), formatted);
+    assert.doesNotThrow(() =>
+      lintMarkdown({ files: [], strings: { "exact.md": formatted } }),
+    );
+  }
   for (const control of [
     "<!-- prettier-ignore -->",
     "<!-- prettier-ignore-start -->",
@@ -1472,9 +1498,8 @@ test("document comments cannot waive native Markdown formatting", () => {
       `# Spacing\n\n> ${control}\n>\n> First.\n`,
       `# Spacing\n\n- ${control}\n  First.\n`,
     ]) {
-      assert.throws(
-        () => lintMarkdown({ files: [], strings: { "spacing.md": source } }),
-        /Remove the.*control comment/u,
+      assert.doesNotThrow(() =>
+        lintMarkdown({ files: [], strings: { "spacing.md": source } }),
       );
     }
     for (const source of [
@@ -1842,9 +1867,7 @@ test("Markdown lint checks literal Git source without a glob or ambient policy",
     writeFileSync(file, paddedList);
     const listResult = invoke();
     assert.ifError(listResult.error);
-    assert.equal(listResult.status, 1, listResult.stderr);
-    assert.match(listResult.stderr, /list-item-spacing/u);
-    assert.ok(listResult.stderr.includes(source), listResult.stderr);
+    assert.equal(listResult.status, 0, listResult.stderr);
     assert.equal(readFileSync(file, "utf8"), paddedList);
     const literals = [
       "# Example\n\n```text\nfirst\n\n\nsecond\n```\n",
@@ -1871,8 +1894,15 @@ test("Markdown lint checks literal Git source without a glob or ambient policy",
     writeFileSync(file, `${literals[0]}\n\nOutside.\n`);
     const padded = invoke();
     assert.ifError(padded.error);
-    assert.equal(padded.status, 1, padded.stderr);
-    assert.match(padded.stderr, /MD012/u);
+    assert.equal(padded.status, 0, padded.stderr);
+    const formatCheck = spawnSync(
+      process.execPath,
+      ["tools/docs/cli.mjs", "format", "--check"],
+      { cwd: directory, encoding: "utf8", timeout: 10_000 },
+    );
+    assert.ifError(formatCheck.error);
+    assert.equal(formatCheck.status, 1, formatCheck.stderr);
+    assert.ok(formatCheck.stderr.includes(source), formatCheck.stderr);
     writeFileSync(
       file,
       "# Example\n\n<!-- markdownlint-disable MD013 -->\n\n" +
@@ -2014,6 +2044,15 @@ test("native formatting policy preserves prose and ignores ambient editor settin
     writeFileSync(ignored, ignoredSource);
     const literals = new Map([
       ["literal.md", "# Report\n\n> ```text\n> first\n>\n>\n> second\n> ```\n"],
+      [
+        "byte-exact.md",
+        "# Report\n\n<!-- prettier-ignore -->\n```js\nconst value={ready:true}\n```\n",
+      ],
+      ["byte-exact-heading.md", "<!-- prettier-ignore -->\n#  Report\n"],
+      [
+        "byte-exact-table.md",
+        "# Report\n\n<!-- prettier-ignore -->\n| first |second|\n| --- | --- |\n| input |output|\n",
+      ],
       ["literal.mjs", "export const literal = `first\n\n\nsecond`;\n"],
       ["literal.yaml", "literal: |\n  first\n\n\n  second\n"],
     ]);
@@ -2098,6 +2137,36 @@ test("native formatting policy preserves prose and ignores ambient editor settin
     );
     assert.ifError(repaired.error);
     assert.equal(repaired.status, 0, repaired.stderr);
+    const inventory = spawnSync("git", ["ls-files", "-z"], {
+      cwd: directory,
+      encoding: "utf8",
+      timeout: 10_000,
+    });
+    assert.ifError(inventory.error);
+    assert.equal(inventory.status, 0, inventory.stderr);
+    const selected = inventory.stdout.split("\0").filter(Boolean);
+    const firstPass = new Map(
+      selected.map((relative) => [
+        relative,
+        readFileSync(path.join(directory, relative)),
+      ]),
+    );
+    const secondPass = spawnSync(
+      process.execPath,
+      ["tools/docs/cli.mjs", "format"],
+      { cwd: directory, encoding: "utf8", timeout: 30_000 },
+    );
+    assert.ifError(secondPass.error);
+    assert.equal(secondPass.status, 0, secondPass.stderr);
+    for (const [relative, bytes] of firstPass)
+      assert.deepEqual(readFileSync(path.join(directory, relative)), bytes);
+    const nonSpacing = spawnSync(
+      process.execPath,
+      ["tools/docs/cli.mjs", "lint"],
+      { cwd: directory, encoding: "utf8", timeout: 10_000 },
+    );
+    assert.ifError(nonSpacing.error);
+    assert.equal(nonSpacing.status, 0, nonSpacing.stderr);
   } finally {
     rmSync(directory, { recursive: true, force: true });
     assert.equal(existsSync(directory), false);
@@ -2132,18 +2201,16 @@ test("the public check command rejects incomplete-mode waivers", () => {
   assert.match(result.stderr, /check accepts no arguments/u);
 });
 
-test("English and spacing failures identify a file and line", async () => {
+test("English failures identify a file and line; formatting owns spacing", async () => {
   assert.match(
     (await textViolations("docs/example.md", "# Heading\n\u4e2d\u6587\n"))[0],
     /docs\/example\.md:2/u,
   );
-  assert.throws(
-    () =>
-      lintMarkdown({
-        files: [],
-        strings: { "docs/example.md": "# Heading\n\n\nText\n" },
-      }),
-    /docs\/example\.md:3 \[MD012\]/u,
+  assert.doesNotThrow(() =>
+    lintMarkdown({
+      files: [],
+      strings: { "docs/example.md": "# Heading\n\n\nText\n" },
+    }),
   );
 });
 
@@ -2155,14 +2222,14 @@ test("English source checks include supplementary Han characters", async () => {
   );
 });
 
-test("native source comment controls cannot suppress formatting while literal examples stay data", async () => {
+test("native formatter controls preserve byte-exact examples at their own parser", async () => {
   const { format } = await import("prettier");
   for (const separator of [" ", "\t", "\n"]) {
     const source = `<!-- prettier-ignore-attribute${separator}class -->\n<div class = 'example'>Read the source.</div>\n`;
     assert.equal(await format(source, { parser: "html" }), source);
-    assert.match(
-      (await textViolations("fixture.html", source)).join("\n"),
-      /Prettier control comment/u,
+    assert.deepEqual(
+      await textViolations("fixture.html", source),
+      [],
       `native HTML whitespace: ${JSON.stringify(separator)}`,
     );
   }
@@ -2185,11 +2252,7 @@ test("native source comment controls cannot suppress formatting while literal ex
     ["fixture.graphql", "# prettier-ignore\ntype Query { result: String }\n"],
     ["fixture.hbs", "{{! prettier-ignore }}\n<div>{{value}}</div>\n"],
   ]) {
-    assert.match(
-      (await textViolations(relative, source)).join("\n"),
-      /Prettier control comment/u,
-      relative,
-    );
+    assert.deepEqual(await textViolations(relative, source), [], relative);
   }
   for (const [relative, source] of [
     ["fixture.mjs", 'const message = "// prettier-ignore";\n'],
@@ -2433,18 +2496,17 @@ test("tracked text refuses invalid UTF-8 and NUL while declared binary assets re
 });
 
 test("native spacing checks archived Markdown; other text keeps its own boundary", async () => {
+  const { check, format } = await import("prettier");
   const file = "openspec/changes/archive/example/spec.md";
   assert.doesNotThrow(() =>
     lintMarkdown({ files: [], strings: { [file]: "# Example\n\nText.\n" } }),
   );
-  assert.throws(
-    () =>
-      lintMarkdown({
-        files: [],
-        strings: { [file]: "# Example\n\n\nText.\n" },
-      }),
-    /:3 \[MD012\]/u,
-  );
+  const source = "# Example\n\n\nText.\n";
+  const options = { filepath: file };
+  assert.equal(await check(source, options), false);
+  const formatted = await format(source, options);
+  assert.equal(formatted, "# Example\n\nText.\n");
+  assert.equal(await check(formatted, options), true);
   for (const name of ["LICENSE", ".config/README.txt", ".config/example.ini"]) {
     assert.deepEqual(await textViolations(name, "First\n\nSecond\n"), []);
     assert.match(

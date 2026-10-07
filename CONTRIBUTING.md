@@ -85,28 +85,32 @@ ambient editor configuration, format conversion, or duplicated package policy.
 Paragraphs, headings, lists, quotes, link labels, and table cells are reader
 text. Code spans, fenced commands, and URL destinations retain their syntax. The
 checker never rewrites a file. Repository configuration controls the rules;
-actual Vale or Prettier control comments fail native Markdown lint, including
-controls in nested content. Literal code, escaped examples, and ordinary
-comments remain valid. A passing style check does not prove factual accuracy,
-semantic fidelity, or reader understanding. Review those at the
+actual Vale control comments fail native Markdown lint, including controls in
+nested content. Use the formatter's native ignore control only to preserve a
+byte-exact example, not to waive ordinary source hygiene. Literal code, escaped
+examples, and ordinary comments remain valid. A passing style check does not
+prove factual accuracy, semantic fidelity, or reader understanding. Review at the
 [communication](docs/communicate.md) and task owners.
 
 Blank lines separate meaning; they are not visual padding.
 
-| Source structure                                                         | Spacing                                                      | Enforced by                                                         |
-| ------------------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------------- |
-| Headings, paragraphs, complete lists, tables, quotes, or fenced examples | One blank line between blocks; never repeated empty lines.   | Prettier and Markdownlint.                                          |
-| Single-paragraph list items, including wrapped text and task checkboxes  | No blank line between peer items.                            | Official `remark-lint-list-item-spacing` with `checkBlanks = true`. |
-| A list with internally separated paragraphs or blocks                    | One blank line between peer items consistently.              | The same native list rule.                                          |
-| Tight list items, nested lists, and their fences                         | Keep the list tight; a fence alone does not make it loose.   | Prettier and Markdownlint with `MD031.list_items = false`.          |
-| Quoted paragraphs                                                        | One empty `>` line; nested quotes follow the same structure. | Prettier.                                                           |
-| Code and data literals                                                   | Preserve meaningful blank lines inside the literal.          | The format's native owner.                                          |
+| Source structure                                             | Spacing                                                                                                                  |
+| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| Document-level blocks, including front matter                | One blank line between adjacent blocks; no edge padding; one final newline.                                              |
+| Soft-wrapped paragraphs, table rows, and front-matter fields | Keep their lines contiguous.                                                                                             |
+| A list and its nested blocks                                 | Preserve tight structure; retain one semantic separator in loose or multi-paragraph items. Do not make every item loose. |
+| One quoted block                                             | Keep separator lines at the current quote depth; separate independent quotes with one ordinary blank line.               |
+| Code and embedded languages                                  | Use their native syntax and formatter; preserve byte-exact examples with native ignore.                                  |
+
+Prettier owns Markdown spacing for both `npm run format` and
+`npm run format -- --check`, on the same Git-selected inputs. A second pass must
+leave the output unchanged. Markdownlint checks non-spacing quality; it does not
+overrule formatter-accepted containers or maintain another spacing policy.
 
 Run both `npm run format -- --check` and `node tools/docs/cli.mjs lint`, or the
-full `npm run verify`. Neither check replaces the other: Prettier handles quote
-structure but preserves a simple list's unnecessary gaps; the official list
-rule rejects those gaps. Tests cover that distinction and literal preservation.
-Source wrapping does not make a paragraph a multi-block list item.
+full `npm run verify`. Formatting and non-spacing lint have distinct jobs:
+Prettier owns layout; Markdownlint checks headings, links, and source syntax.
+Tests verify their agreement, literal preservation, and unchanged second passes.
 
 Prettier owns supported code, JSON, and YAML; dprint owns TOML through its public
 Wasm API and concern-local policy. Neither applies a raw blank-line scan to

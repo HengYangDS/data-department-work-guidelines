@@ -446,15 +446,28 @@ export function checkConfigurationLayout(repository = root) {
   );
   if (
     Object.keys(markdown).some(
-      (name) => !/^MD\d{3}$/u.test(name) && name !== "list-item-spacing",
+      (name) =>
+        ![
+          "whitespace",
+          "blank_lines",
+          "indentation",
+          "MD019",
+          "MD021",
+          "MD023",
+          "MD058",
+          "MD060",
+          "MD013",
+          "MD024",
+        ].includes(name),
     ) ||
-    markdown.MD032 !== true ||
-    markdown.MD058 !== true ||
-    markdown.MD012?.maximum !== 1 ||
-    markdown.MD022?.lines_above !== 1 ||
-    markdown.MD022?.lines_below !== 1 ||
-    markdown.MD031?.list_items !== false ||
-    markdown["list-item-spacing"]?.checkBlanks !== true ||
+    markdown.whitespace !== false ||
+    markdown.blank_lines !== false ||
+    markdown.indentation !== false ||
+    markdown.MD019 !== false ||
+    markdown.MD021 !== false ||
+    markdown.MD023 !== false ||
+    markdown.MD058 !== false ||
+    markdown.MD060 !== false ||
     markdown.MD013?.line_length !== 80 ||
     markdown.MD013?.code_blocks !== false ||
     markdown.MD013?.tables !== false ||

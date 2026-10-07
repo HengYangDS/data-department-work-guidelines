@@ -57,18 +57,22 @@ ETHOS dependency graph and verified owners, not additional profile descriptors.
 ### Requirement: Retained source receives format and spacing checks
 
 Native format and Markdown checks SHALL cover Git-selected source, including
-archives. Reader blocks SHALL have one blank line; single-paragraph list peers
-stay adjacent and loose peers consistently separated. Tight lists, their nesting,
-and their fences SHALL remain contiguous. Code and data literals SHALL retain
-meaningful spacing. Plain UTF-8 text SHALL receive spacing checks;
+archives. Prettier SHALL be the sole Markdown spacing formatter for fix and
+check, on identical declared inputs, with unchanged second-pass output.
+Adjacent document-level blocks SHALL have exactly one blank line. A list SHALL
+retain tight items and nested blocks, with one semantic separator in loose or
+multi-paragraph items rather than making every item loose. Tight lists, their
+nesting, and their fences SHALL remain contiguous. Code and data literals SHALL
+retain meaningful spacing. Plain UTF-8 text SHALL receive spacing checks;
 unowned code SHALL fail. Known plain-text identities, extensions and native
 parsers SHALL define text ownership rather than treating every file without a
 filename extension as plain text. Binaries SHALL use effective native Git
 attributes; known text formats SHALL NOT evade checking through that declaration.
 Text source SHALL reject NUL bytes and invalid UTF-8 with its path. Symlinks are
 excluded. Effective native text attributes SHALL select LF on every host.
-Native comment parsers SHALL reject operative formatter suppression without
-rejecting literal examples. Spelling, links, and metadata SHALL cover
+Native formatter ignore controls MAY protect byte-exact examples. Other lint
+SHALL NOT supply a duplicate spacing verdict or reject formatter-accepted
+container structure. Spelling, links, and metadata SHALL cover
 current readers, not promote archives to guidance.
 Native tool inputs SHALL retain the exact selected filename identity, including
 option-like names and names that a line-delimited list cannot represent.
@@ -122,24 +126,27 @@ option-like names and names that a line-delimited list cannot represent.
 
 #### Scenario: A comment attempts to suppress formatting
 
-- **WHEN** a real native Prettier ignore or range-control comment would exempt
-  a source block from formatting
-- **THEN** native Markdown parsing rejects the control in the existing check
-- **AND** literal code examples and explanatory comments remain valid without
-  a second parser or document-level formatting waiver.
+- **WHEN** a byte-exact example uses its formatter's native ignore control
+- **THEN** the native formatter preserves that example through fix, check,
+  and a second fix pass
+- **AND** non-spacing Markdown rules still apply without a suppression blacklist
+  or second spacing parser.
 
 #### Scenario: Wrapped simple list items contain unnecessary gaps
 
-- **WHEN** a list has only single-paragraph items, including wrapped, ordered,
-  task, nested, or quoted items, and a blank line separates peers
-- **THEN** the native list-spacing rule rejects that gap with its source position
-- **AND** document comments and ambient policy cannot waive that check.
+- **WHEN** wrapped, ordered, task, nested, or quoted list items have repeated
+  blank lines outside literal content
+- **THEN** native format check rejects the source and formatting reconciles its
+  container separators
+- **AND** Markdown lint accepts the fixed point without a second spacing verdict
+- **AND** ambient ignore files cannot remove Git-selected inputs from either
+  formatter invocation.
 
 #### Scenario: List structure requires separation
 
 - **WHEN** a list item has internally separated paragraphs or blocks
-- **THEN** the native rule preserves literal content and requires one blank line
-  between the genuinely loose list's peer items
+- **THEN** the native formatter preserves literal content and reconciles
+  semantic loose-item separators
 - **AND** tight nested lists, separate lists, heading boundaries, and ordinary
   paragraph separation retain their structure.
 
@@ -155,7 +162,7 @@ option-like names and names that a line-delimited list cannot represent.
 #### Scenario: Reader padding follows a valid code example
 
 - **WHEN** reader blocks have consecutive blank lines outside literal code
-- **THEN** the native Markdown rule rejects the padding at its source location
+- **THEN** the native format check rejects the selected source file
 - **AND** the valid code example does not hide the reader-layout defect.
 
 #### Scenario: A source without a filename extension has no native owner
@@ -176,11 +183,10 @@ option-like names and names that a line-delimited list cannot represent.
 
 #### Scenario: Native formatting encounters a suppression comment
 
-- **WHEN** a native source parser identifies an operative Prettier suppression
-  comment
-- **THEN** the verifier rejects the control and names its source location
-- **AND** strings, YAML scalars, code examples and ordinary TOML comments remain
-  data; pinned TOML formatting still formats source after those comments.
+- **WHEN** a native formatter ignore control protects a byte-exact example
+- **THEN** fix and check preserve the example without a competing spacing veto
+- **AND** non-spacing checks remain active; strings, YAML scalars, and ordinary
+  TOML comments retain their data and native formatting behavior.
 
 #### Scenario: Native tools receive literal selected filenames
 

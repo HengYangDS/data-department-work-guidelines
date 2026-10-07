@@ -17,7 +17,7 @@ import { isDeepStrictEqual } from "node:util";
 import { parse as parseToml } from "smol-toml";
 import YAML from "yaml";
 import { lint, readConfig } from "markdownlint/sync";
-import { listItemSpacing, noQualityControl } from "./markdown.mjs";
+import { noQualityControl } from "./markdown.mjs";
 import {
   currentMarkdown,
   filePath,
@@ -40,16 +40,6 @@ const plainTextIdentities = new Set([
   "VERSION",
   ".gitignore",
   ".gitattributes",
-]);
-const commentTypes = new Set([
-  "Comment",
-  "CommentLine",
-  "CommentBlock",
-  "Line",
-  "Block",
-  "comment",
-  "css-comment",
-  "MustacheCommentStatement",
 ]);
 export function nativeTomlFormatter(repository = root) {
   const formatter = createFromBuffer(readFileSync(tomlPlugin.getPath()));
@@ -181,7 +171,7 @@ export function lintMarkdown({ files = sourceMarkdown(), strings } = {}) {
     strings,
     config,
     noInlineConfig: true,
-    customRules: [noQualityControl, listItemSpacing],
+    customRules: [noQualityControl],
   });
   const findings = Object.entries(results).flatMap(([file, errors]) =>
     errors.map(
@@ -443,59 +433,6 @@ function blankLineError(relative, source) {
   return "";
 }
 
-async function nativeControlComments(relative, source, parser) {
-  if (
-    !source.includes("prettier-ignore") ||
-    ["markdown", "mdx"].includes(parser)
-  )
-    return [];
-  const owner = ["typescript", "flow", "yaml", "graphql", "glimmer"].includes(
-    parser,
-  )
-    ? parser
-    : ["html", "angular", "lwc", "mjml", "vue"].includes(parser)
-      ? "html"
-      : ["css", "less", "scss"].includes(parser)
-        ? "postcss"
-        : "babel";
-  const { parsers } = await import(`prettier/plugins/${owner}`);
-  const native = parsers[parser];
-  if (!native)
-    throw new Error(`${relative}: no native comment parser for ${parser}`);
-  const pending = [
-    await native.parse(source, { filepath: filePath(relative) }),
-  ];
-  const seen = new Set();
-  const errors = [];
-  while (pending.length) {
-    const node = pending.pop();
-    if (!node || typeof node !== "object" || seen.has(node)) continue;
-    seen.add(node);
-    if (commentTypes.has(node.type ?? node.kind)) {
-      const value = node.value ?? node.text;
-      if (
-        typeof value === "string" &&
-        (value.trim() === "prettier-ignore" ||
-          /^prettier-ignore-attribute(?:\s+(.+))?$/su.test(value.trim()))
-      ) {
-        const line =
-          node.loc?.start?.line ??
-          node.position?.start?.line ??
-          node.source?.start?.line ??
-          node.line ??
-          (node.sourceSpan?.start?.line === undefined
-            ? 1
-            : node.sourceSpan.start.line + 1);
-        errors.push(
-          `${relative}:${line}: remove the Prettier control comment; correct the source or its governed policy`,
-        );
-      }
-    }
-    pending.push(...Object.values(node));
-  }
-  return errors;
-}
-
 export async function textViolations(relative, source) {
   const errors = [];
   if (relative.endsWith(".toml")) {
@@ -514,10 +451,6 @@ export async function textViolations(relative, source) {
     withNodeModules: true,
     resolveConfig: false,
   });
-  if (inferredParser)
-    errors.push(
-      ...(await nativeControlComments(relative, source, inferredParser)),
-    );
   if (!inferredParser && !relative.endsWith(".toml")) {
     const extension = path.extname(relative);
     if (
