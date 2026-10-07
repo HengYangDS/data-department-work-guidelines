@@ -1370,6 +1370,47 @@ test("one blank line is allowed; visual padding is not", () => {
   );
 });
 
+test("Markdown fences preserve tight lists at the native format fixed point", async () => {
+  const { format } = await import("prettier");
+  const config = parseToml(
+    readFileSync(
+      path.join(root, ".config/checks/format/prettier.toml"),
+      "utf8",
+    ),
+  );
+  for (const body of [
+    "- First.\n  ```text\n  example\n  ```\n- Second.\n",
+    "- [x] First.\n  ```text\n  example\n  ```\n- [ ] Second.\n",
+    "- Parent.\n  - First.\n    ```text\n    example\n    ```\n  - Second.\n",
+    "> - First.\n>   ```text\n>   example\n>   ```\n> - Second.\n",
+  ]) {
+    const source = `# Spacing\n\n${body}`;
+    assert.equal(
+      await format(source, { ...config, parser: "markdown" }),
+      source,
+    );
+    assert.doesNotThrow(() =>
+      lintMarkdown({ files: [], strings: { "spacing.md": source } }),
+    );
+  }
+});
+
+test("Markdown fences outside lists require reader-block separation", () => {
+  for (const body of [
+    "Text.\n```text\nexample\n```\n",
+    "```text\nexample\n```\nText.\n",
+  ]) {
+    assert.throws(
+      () =>
+        lintMarkdown({
+          files: [],
+          strings: { "spacing.md": `# Spacing\n\n${body}` },
+        }),
+      /spacing\.md:\d+ \[MD031\]/u,
+    );
+  }
+});
+
 test("Markdown list spacing rejects gaps between single-paragraph items", () => {
   for (const body of [
     "- First.\n\n- Second.\n",

@@ -18,7 +18,7 @@ lines_below = 1
 siblings_only = true
 
 [MD031]
-list_items = true
+list_items = false
 
 [list-item-spacing]
 checkBlanks = true

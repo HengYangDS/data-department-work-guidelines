@@ -58,8 +58,9 @@ ETHOS dependency graph and verified owners, not additional profile descriptors.
 
 Native format and Markdown checks SHALL cover Git-selected source, including
 archives. Reader blocks SHALL have one blank line; single-paragraph list peers
-stay adjacent and loose peers consistently separated. Code and data literals
-SHALL retain meaningful spacing. Plain UTF-8 text SHALL receive spacing checks;
+stay adjacent and loose peers consistently separated. Tight lists, their nesting,
+and their fences SHALL remain contiguous. Code and data literals SHALL retain
+meaningful spacing. Plain UTF-8 text SHALL receive spacing checks;
 unowned code SHALL fail. Known plain-text identities, extensions and native
 parsers SHALL define text ownership rather than treating every file without a
 filename extension as plain text. Binaries SHALL use effective native Git
@@ -136,12 +137,20 @@ option-like names and names that a line-delimited list cannot represent.
 
 #### Scenario: List structure requires separation
 
-- **WHEN** a list item has internally separated paragraphs or blocks, or a
-  fenced example contains literal blank lines
+- **WHEN** a list item has internally separated paragraphs or blocks
 - **THEN** the native rule preserves literal content and requires one blank line
   between the genuinely loose list's peer items
 - **AND** tight nested lists, separate lists, heading boundaries, and ordinary
   paragraph separation retain their structure.
+
+#### Scenario: A tight list contains a fenced example
+
+- **WHEN** a tight list item contains a fence without surrounding blank lines,
+  including a nested, task, or quoted list
+- **THEN** native formatting preserves that fixed point and native lint
+  accepts it
+- **AND** fences outside lists still require reader-block separation; a fence
+  alone does not make a list loose.
 
 #### Scenario: Reader padding follows a valid code example
 

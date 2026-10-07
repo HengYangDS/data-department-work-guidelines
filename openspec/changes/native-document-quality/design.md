@@ -121,10 +121,12 @@ multiline bytes. Missing supply cannot fall back to a raw scan.
 
 Use one reader-block separator. Single-paragraph list peers stay tight even when
 their text wraps; peers with internally separated paragraphs or blocks use one
-consistent gap. Tight nested lists and separate-list boundaries retain their
-native meaning. Prettier handles quote separators; Markdownlint and the official
-`remark-lint-list-item-spacing` rule handle the remaining structure. Stock MD012
-alone cannot enforce quote or list looseness.
+consistent gap. Tight lists, their nesting, and their fences stay contiguous;
+a fence alone does not make a list loose. Native MD031 requires separation
+outside lists; `list_items = false` preserves tight fences. Separate-list
+boundaries retain their meaning. Prettier handles quote separators; Markdownlint
+and the official `remark-lint-list-item-spacing` rule handle the remaining
+structure. Stock MD012 alone cannot enforce quote or list looseness.
 
 Keep the general text owner's English and justified plain-text hygiene. Remove
 duplicate raw scans of Markdown, source code, and structured data. Meaningful

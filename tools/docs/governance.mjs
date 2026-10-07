@@ -453,7 +453,7 @@ export function checkConfigurationLayout(repository = root) {
     markdown.MD012?.maximum !== 1 ||
     markdown.MD022?.lines_above !== 1 ||
     markdown.MD022?.lines_below !== 1 ||
-    markdown.MD031?.list_items !== true ||
+    markdown.MD031?.list_items !== false ||
     markdown["list-item-spacing"]?.checkBlanks !== true ||
     markdown.MD013?.line_length !== 80 ||
     markdown.MD013?.code_blocks !== false ||

@@ -98,7 +98,7 @@ Blank lines separate meaning; they are not visual padding.
 | Headings, paragraphs, complete lists, tables, quotes, or fenced examples | One blank line between blocks; never repeated empty lines.   | Prettier and Markdownlint.                                          |
 | Single-paragraph list items, including wrapped text and task checkboxes  | No blank line between peer items.                            | Official `remark-lint-list-item-spacing` with `checkBlanks = true`. |
 | A list with internally separated paragraphs or blocks                    | One blank line between peer items consistently.              | The same native list rule.                                          |
-| Nested lists without internal paragraph separation                       | Keep the list tight.                                         | The same native list rule.                                          |
+| Tight list items, nested lists, and their fences                         | Keep the list tight; a fence alone does not make it loose.   | Prettier and Markdownlint with `MD031.list_items = false`.          |
 | Quoted paragraphs                                                        | One empty `>` line; nested quotes follow the same structure. | Prettier.                                                           |
 | Code and data literals                                                   | Preserve meaningful blank lines inside the literal.          | The format's native owner.                                          |
 

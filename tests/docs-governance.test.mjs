@@ -758,7 +758,7 @@ test("configuration cannot disable or replace native Markdown policy", () => {
     policy.replace("MD058 = true", "MD058 = false"),
     policy.replace("maximum = 1", "maximum = 2"),
     policy.replace("lines_above = 1", "lines_above = 0"),
-    policy.replace("list_items = true", "list_items = false"),
+    policy.replace("list_items = false", "list_items = true"),
     policy.replace("checkBlanks = true", "checkBlanks = false"),
     policy.replace("[list-item-spacing]\ncheckBlanks = true\n", ""),
   ]) {

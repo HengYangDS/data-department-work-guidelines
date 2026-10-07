@@ -204,7 +204,9 @@
       controller, capacity threshold, or proof gate.
 - [ ] 2.38 Qualify the [fixed-source repairs](design.md#supply-exact-tools-without-a-second-installation-plane).
       Resolve the review at existing installer, bundle, audit, and documentation
-      owners. Verify the
+      owners. Verify tight-list fences at the native format fixed point while
+      retaining top-level fence separation and genuine loose-list checks.
+      Verify the
       [supply](design.md#supply-exact-tools-without-a-second-installation-plane),
       [risk](design.md#bind-risk-approval-to-the-actual-subject),
       [execution](design.md#preserve-native-execution-and-complete-validation-evidence),

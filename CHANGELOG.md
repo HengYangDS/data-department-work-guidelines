@@ -45,6 +45,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Accept tight-list fences at the native format fixed point without adding
+  padding; retain separation around top-level fences and within loose lists.
 - Correct an unreleased policy that treated every supply-chain advisory as
   approved. Reject unrelated or incomplete findings, changed artifacts, expired
   approvals, and stale dispositions; retain the original scan and failure output.
