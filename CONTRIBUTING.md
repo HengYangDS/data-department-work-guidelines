@@ -136,9 +136,12 @@ installed product prerequisite for Change admission and proof. The bundle's
 third-party packages retain their own license notices; the repository MIT grant
 covers repository source and documentation, not those packages. Do not claim
 portable offline distribution before the exact asset and full host matrix have
-been observed. Advisory findings remain visible without blocking installation
-or delivery. Git's native `.gitattributes` rule checks out tracked text with
-LF even on Windows; do not replace it with a host-specific Git setting. Keep
+been observed. The
+[supply contract](docs/governance/ethos.md#tool-supply-and-offline-execution)
+also applies to offline installation and distribution: unresolved findings need
+a fix or an applicable, unexpired approval for the exact artifact and use.
+Git's native `.gitattributes` rule checks out tracked text with LF even on
+Windows; do not replace it with a host-specific Git setting. Keep
 `node_modules/` and generated output out of Git.
 
 For source selection and exemptions, follow
