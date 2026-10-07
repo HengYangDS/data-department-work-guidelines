@@ -283,7 +283,9 @@ Each test establishes its own filesystem prerequisites. Source-link fixtures
 create their ignored parent; concurrent-install fixtures model the regular
 exclusive-copy target; format/lint fixtures carry the source Git ignore policy.
 Native filesystem resolution compares Windows short aliases without waiving
-wrong-root rejection or registering dependency junctions as source.
+wrong-root rejection or registering dependency junctions as source. Git-failure
+fixtures confine discovery to their own repository, even in cold scratch beneath
+another worktree; preserve their native errors and cleanup.
 
 The complete discovered standalone test inventory uses two workers and the
 existing outer deadline. Batch only independent native inputs; reject known
@@ -361,6 +363,12 @@ installed target without changing its mode. The actual audit, prose, and link
 consumers still execute the installed tool. This reduces redundant startup; it
 does not prove historical host-pressure causality or admit skipped checks.
 
+Managed-cache selection verifies pinned executable bytes before running explicit
+paths or PATH selections. Valid caches remain reusable, while independently
+managed host tools retain their own admission. Each declared download size is a
+positive bounded integer; the actual stream accepts that size and rejects one
+extra byte.
+
 Await native asynchronous cleanup of the installer's own extraction stage,
 including bounded native removal retries. Failure still propagates and success
 cannot precede cleanup. Cancel an unread rejected response body before HTTP
@@ -395,6 +403,14 @@ installation; they do not prove network isolation. The builder deliberately
 installs locked npm packages online to prime its cache, but never acquires
 missing native assets or notices implicitly. Its bounded npm execution uses the
 existing native executor so errors, warnings, and partial output remain visible.
+
+Resolve fixed-source review findings at the existing installer, bundle, audit,
+and documentation owners, retaining every disposition and original failure by
+reference. Qualify focused regressions, full source, cold installation,
+exact-HEAD proof, both Forge source/offline matrices, and the actual Linux and
+Windows Runner jobs. Retire qualification packages only after jobs are terminal
+and their complete results are preserved. Source qualification is not a signed
+Release.
 
 ### Bind risk approval to the actual subject
 
@@ -448,11 +464,17 @@ variant does not supply. Retain component findings separately from exact Runner
 image admission; a current base is not a clean audit or installed Runner proof.
 Image-bundled npm does not qualify the later npm upgrade.
 
-This repository's audit covers its lock, not components bundled inside npm,
-Node, native tools, or ETHOS. Preserve that boundary and report missing coverage.
-Artifact authenticity, complete bytes, checksums, credentials, actual function,
-and target-platform qualification remain required. Do not keep or recreate the
-removed private risk-admission mechanism when shared ownership is integrated.
+The project-lock audit does not cover components bundled inside npm, Node,
+native tools, or ETHOS. Audit actual Node, npm, and native executable components
+separately with native extractors. Retain raw component and binary-symbol
+reports separately; name missing coverage. Qualify each exact approval by
+artifact, use, period, and producing evidence. Artifact authenticity, complete
+bytes, checksums, credentials, actual function, and target-platform qualification
+remain required.
+
+Check upstream bounds, parser behavior, licenses, install effects, and raw
+advisory deltas before rebuilding supply. Do not keep or recreate the removed
+private risk-admission mechanism when shared ownership is integrated.
 
 ### Keep both publication peers complete and coherent
 
@@ -460,6 +482,12 @@ Local verification/install are independent of either remote. GitLab is the
 organization publication plane; GitHub is an independent complete repository and
 CI/CD plane. Each must qualify its own source, Release object, downloaded bytes,
 and declared offline hosts. One plane's success supplies no result to the other.
+
+GitHub source and offline jobs select the same Linux x64, Linux ARM64, macOS,
+and Windows hosts. Actual job results qualify each host; matrix membership is
+not execution evidence. Branch dispatch explicitly selects a signed SemVer
+release tag matching native Forge tags, events, and source. Invalid inputs or
+mismatched source fail before acquisition.
 
 GitHub source updates may proceed through native admission and that peer's
 actual checks while GitLab is unavailable; qualified releases remain
@@ -488,7 +516,12 @@ applicable declared peers and native reference semantics, including shadowed
 definitions. Distinguish a missing link from a wrong target and an owner
 notification from a correction. A repaired Forge-event baseline needs accepted
 native history/publication relations; no hard-coded SHA, HEAD substitution,
-private provider, or ancestry waiver supplies acceptance.
+private provider, or ancestry waiver supplies acceptance. Each audited affected
+adopter qualifies the accepted source and installed contracts through its own
+owners. Preserve complete history conservation, accepted Python evidence,
+repaired-baseline contribution admission, and original-plan recovery. Require
+both Forge execution and protected acceptance before retiring superseded
+identity code; retain original receipts and failures.
 
 ### Schedule platform capacity without changing trust
 
