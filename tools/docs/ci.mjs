@@ -490,11 +490,13 @@ function validateWindowsDiagnostic(gitlab) {
     tags: ["ci-windows-arm64-review"],
     before_script: [
       "node -p \"JSON.stringify({kind:'windows-runtime-observation',node:process.versions.node,architecture:process.arch,executable:process.execPath,platform:process.platform,hostname:require('node:os').hostname()})\"",
-      "Get-Command node,npm,winget,mise,fnm,nvm -CommandType Application,ExternalScript -ErrorAction SilentlyContinue | Select-Object Name,Source,Version | ConvertTo-Json -Compress",
+      "Get-Command node,npm,mise -CommandType Application,ExternalScript -ErrorAction Stop | Select-Object Name,Source,Version | ConvertTo-Json -Compress",
+      "mise --version",
+      "mise ls node --json",
       "Get-CimInstance Win32_Service -Filter \"Name LIKE 'gitlab%'\" | Select-Object Name,StartName,State,ProcessId | ConvertTo-Json -Compress",
       "Get-Process gitlab-runner -ErrorAction SilentlyContinue | Select-Object Id,Path | ConvertTo-Json -Compress",
-      "Get-ItemProperty 'HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*','HKLM:\\Software\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*','HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*' -ErrorAction SilentlyContinue | Where-Object DisplayName -Like 'Node.js*' | Select-Object DisplayName,DisplayVersion,Publisher,InstallLocation,PSChildName | ConvertTo-Json -Compress",
-      "Get-Item 'C:\\Program Files\\nodejs','C:\\Program Files (x86)\\nodejs' -ErrorAction SilentlyContinue | Select-Object FullName,LinkType,Target | ConvertTo-Json -Compress",
+      "'HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall','HKLM:\\Software\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall','HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall' | Where-Object { Test-Path -LiteralPath $_ } | Get-ChildItem -ErrorAction Stop | Get-ItemProperty -ErrorAction Stop | Where-Object DisplayName -Like 'Node.js*' | Select-Object DisplayName,DisplayVersion,Publisher,InstallLocation,PSChildName | ConvertTo-Json -Compress",
+      "Get-Item 'C:\\Program Files\\DDWG-Node26-x64' -ErrorAction Stop | Select-Object FullName,LinkType,Target | ConvertTo-Json -Compress",
       nativeSourceSupply,
     ],
     rules: [
