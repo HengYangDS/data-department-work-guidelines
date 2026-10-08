@@ -253,7 +253,7 @@
       diagnostics and fixture cleanup without changing Git or host policy.
       Retain complete original and successor evidence under Attestation
       `687f62fa93ec131cc70507c98f309e54c5e30ea2429da22a60798e19f67bd52a`.
-- [ ] 2.44 Correct the obsolete-source preservation premise in this active
+- [x] 2.44 Correct the obsolete-source preservation premise in this active
       proposal, design, and guidance contract. Review all seven current topics
       for applicable authority, current purpose, actionable conditions, and
       proportionate cognitive and maintenance cost, not just correspondence
@@ -262,6 +262,8 @@
       retired root monolith. Preserve binding current duties, completed task
       evidence, and immutable history. Verify the actual edited source, reading
       paths, native checks, and source-bound proof before closing this task.
+      Evidence: native editorial Attestation
+      `940f164cc44b311fb62486e1d889bcefc2a67e0d453982d29ea8bb65dd970135`.
 
 ## 3. Qualification and publication
 
