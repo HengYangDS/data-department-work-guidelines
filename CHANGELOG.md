@@ -104,7 +104,7 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   accurate understanding conveyed fluently, and expressive beauty with aesthetic
   judgment and artistic and cultural refinement.
   Keep editorial techniques as applications rather than definitions.
-- Ground emergency guidance in affected data, production, downstream use,
+- Ground emergency guidance in affected people, data, production, downstream use,
   permissions, and compliance. Name discoverer containment, responsible-person
   follow-through, escalation, and correction checks. Preserve the separate
   management duty to support members who honestly expose problems.

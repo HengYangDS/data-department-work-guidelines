@@ -180,9 +180,9 @@ rules to mask goal, organizational, or system-design defects.
 ## Emergencies and Exceptions
 
 When a data error, production failure, or permission or compliance breach
-threatens data, production, downstream use, or compliance, whoever discovers it
-takes containment steps within their existing authority and notifies the
-responsible data or production owner.
+threatens people, data, production, downstream use, or compliance, whoever
+discovers it takes containment steps within their existing authority and
+notifies the responsible data or production owner.
 The person responsible for the affected work, usually the task lead, owns the
 response and follow-through. Preserve the inputs and versions needed to
 establish the impact and verify a correction. If the response needs further
