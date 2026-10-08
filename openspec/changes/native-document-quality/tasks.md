@@ -265,8 +265,10 @@
       GitHub; verify both exact refs, Releases, downloaded asset hashes, and
       declared source and offline platform jobs.
 - [ ] 3.5 Complete the final audit against the [original work contract](design.md#preserve-the-original-work-contract-at-seven-topic-owners),
-      all 62 original subsections, five surrounding groups, current source, and
-      resolved review findings. Require tasks 2.33, 2.38, 3.3, and 3.13, then complete
+      all 62 original subsections, five surrounding groups, and chapter
+      introductions and diagrams outside them. Compare the complete original
+      text with current source and resolve every review finding. Require tasks
+      2.33, 2.38, 3.3, and 3.13, then complete
       the pre-archive [migration plan](design.md#migration-plan): frozen minor
       release, cold/platform checks, signed publication, official spec sync, and
       qualified retirement. Preserve unique evidence and clause dispositions

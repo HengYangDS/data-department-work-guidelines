@@ -64,6 +64,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Restore the shared data-quality remit across acquisition, production, analysis,
+  data science, platform, infrastructure, governance, and delivery. Feedback
+  revisits value, meaning, and quality without granting a new use.
 - Supply Git isolation with an owned empty configuration file rather than
   Node's null-device path, which Windows Git cannot read as configuration.
 - Verify failed Git selection against the same native attempt's status and

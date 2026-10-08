@@ -116,6 +116,17 @@ distinct from mandatory task-specific prevention. Latest verified facts SHALL
 outrank loyalty to prior approaches, tools, identities, documents, or sunk costs.
 A Blocked report SHALL name the prerequisite gap, its impact, and the escalation.
 
+#### Scenario: Numbered clauses omit an original chapter introduction
+
+- **WHEN** the original work contract is compared with the seven revised topics
+- **THEN** the review SHALL cover the complete original text, including chapter
+  introductions, diagrams, action cards, templates, and final checks outside
+  numbered subsections
+- **AND** actor, action, obligation strength, permission, condition, authority,
+  evidence, escalation, and revisit limits SHALL be compared at the topic owner
+- **AND** a heading count, byte-matched excerpt, refreshed hash, or passing
+  source check cannot by itself establish semantic fidelity.
+
 #### Scenario: A reading map could be mistaken for authority
 
 - **WHEN** a topic presents a working-loop, data-use, or human–AI diagram
@@ -559,6 +570,24 @@ admission, permissions, lineage, review, veto and exit in the workflow. Delivery
 owners SHALL expose priorities and open decisions. Shared interfaces SHALL NOT
 transfer responsibility or authority; suitable use SHALL NOT grant permission.
 Owners SHALL be accountable.
+
+#### Scenario: Work is performed outside data production
+
+- **WHEN** a department member or delegated Agent acquires information, analyzes
+  or models data, performs data science, operates a platform or infrastructure,
+  governs a product, or delivers operational work
+- **THEN** the data-quality topic SHALL apply its shared requirements across
+  those activities and data production
+- **AND** each role's professional responsibility and action authority remain
+  distinct under that common contract.
+
+#### Scenario: Feedback challenges the reason for using data
+
+- **WHEN** observed use challenges the value hypothesis, data meaning, or
+  quality assessment
+- **THEN** feedback SHALL revisit those judgments through exploration
+- **AND** continued or changed use requires matching evidence and authorization;
+  feedback does not grant a new use.
 
 #### Scenario: Coordination substitutes for a domain or governance decision
 

@@ -22,6 +22,12 @@ a result, recheck key findings and
 [current checks](#move-from-a-signal-to-controlled-use): tests, operational
 observation, and acceptance.
 
+These requirements apply to information acquisition, data production,
+analysis and modeling, data science, platform engineering, infrastructure,
+product governance, and operational delivery. The
+[ownership boundaries](#ownership-and-change-boundaries) keep each role
+accountable within that shared contract.
+
 ## Answer Six Questions First
 
 | Question                | What must be known                                                              |
@@ -61,8 +67,9 @@ explanations, and conclusions the data cannot support.
 
 ## Move from a Signal to Controlled Use
 
-Each stage answers a different question. The review path returns new evidence
-to exploration; it does not grant permission for a new use.
+Each stage answers a different question. Feedback returns new evidence to
+exploration to revisit value, meaning, and quality; it does not grant
+permission for a new use.
 
 ```mermaid
 ---

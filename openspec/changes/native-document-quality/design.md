@@ -44,10 +44,14 @@ whole-guidance equivalence, historical execution, or actual team use.
 ### Preserve the original work contract at seven topic owners
 
 Read the original clause and the complete revised topic before accepting a
-rewrite. Compare actor, action, obligation strength, permission, condition,
+rewrite, including chapter introductions, diagrams, action cards, templates,
+and final checks outside numbered subsections. Compare actor, action,
+obligation strength, permission, condition,
 authority, evidence, escalation, and revisit limit. A shorter sentence fails
 review when it removes any of those meanings. Native prose quality and source
-hashes do not establish semantic coverage.
+hashes do not establish semantic coverage. Verify the complete original text
+and its clause dispositions; counting headings or numbered subsections does
+not establish that the whole source was reviewed.
 
 Each duty belongs at its point of use. The charter owns authority and hard
 boundaries; the other six topics own their task-specific judgments and actions.
@@ -55,6 +59,13 @@ The [guidance requirements](specs/guidance-discovery/spec.md) define the full
 observable contract, including cadence, data responsibilities, and adverse
 cases. The task map routes readers to those owners rather than restating their
 rules. This keeps a correction from creating competing policies.
+
+The common data-quality contract covers acquisition, production, analysis and
+modeling, data science, platform engineering, infrastructure, product governance,
+and operational delivery. Preserve each role's responsibility; the shared
+contract is not a transfer of professional judgment or authority. Feedback
+revisits the value hypothesis, data meaning, and quality assessment without
+granting a new use.
 
 Ground operational guidance in quantitative data work and stated department
 responsibilities. An illustrative example explains a condition; it does not
