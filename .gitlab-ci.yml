@@ -26,6 +26,27 @@ default:
     - node tools/ci/install-native.mjs lychee --gitlab-package
     - node tools/ci/install-native.mjs vale --gitlab-package
 
+# Temporary read-only runtime diagnosis for task 2.38; remove before final freeze.
+docs:diagnose:windows:review:
+  extends: .docs:verify
+  resource_group: windows-verification
+  inherit:
+    default: false
+  tags:
+    - ci-windows-arm64-review
+  before_script:
+    - 'node -p "JSON.stringify({kind:''windows-runtime-observation'',node:process.versions.node,architecture:process.arch,executable:process.execPath,platform:process.platform,hostname:require(''node:os'').hostname()})"'
+    - "Get-Command node,npm,winget,mise,fnm,nvm -CommandType Application,ExternalScript -ErrorAction SilentlyContinue | Select-Object Name,Source,Version | ConvertTo-Json -Compress"
+    - 'Get-CimInstance Win32_Service -Filter "Name LIKE ''gitlab%''" | Select-Object Name,StartName,State,ProcessId | ConvertTo-Json -Compress'
+    - "Get-Process gitlab-runner -ErrorAction SilentlyContinue | Select-Object Id,Path | ConvertTo-Json -Compress"
+    - 'Get-ItemProperty ''HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*'',''HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*'',''HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*'' -ErrorAction SilentlyContinue | Where-Object DisplayName -Like ''Node.js*'' | Select-Object DisplayName,DisplayVersion,Publisher,InstallLocation,PSChildName | ConvertTo-Json -Compress'
+    - 'Get-Item ''C:\Program Files\nodejs'',''C:\Program Files (x86)\nodejs'' -ErrorAction SilentlyContinue | Select-Object FullName,LinkType,Target | ConvertTo-Json -Compress'
+    - *docs-source-supply
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /^proposal\// && $CI_PIPELINE_SOURCE == "push"'
+      when: manual
+      allow_failure: true
+
 .docs:verify:
   stage: verify
   timeout: 20m

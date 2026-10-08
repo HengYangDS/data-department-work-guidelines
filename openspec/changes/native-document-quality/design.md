@@ -545,6 +545,10 @@ Release.
 For task 2.38, a temporary manual proposal-only Windows review job may run
 Node's native CPU and synchronous-filesystem profiling on the two existing
 process/file-heavy regressions, then inherit the unchanged complete verifier.
+It may instead inspect the selected Node/npm executable, native installation
+registration, and Runner service identity to resolve a diagnosed runtime mismatch.
+This observation is read-only: do not enumerate credentials, change installation,
+alter service accounts or VM isolation, or infer native execution from host labels.
 Reuse the review identity, locked tool supply, and project resource group.
 Preserve raw profiles and the failed full-verification trace; a diagnostic
 result grants no proof or protected acceptance. Remove this optional job and
