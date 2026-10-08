@@ -178,6 +178,28 @@ requires no installer or host imports; its native Wasm API supplies the complete
 original MIT notice. Verify that notice against the locked identity and complete
 grant without fabricating a sidecar or claiming general safety.
 
+### Make reading maps compact without hiding relationships
+
+Keep editable Mermaid fenced in its canonical topic; renders belong to ignored
+`build/`. The working loop, controlled data use, and human–AI delegation have
+different visual emphasis but preserve every node, directed relation, and
+condition. Numbered loop stages support reading order without making the map
+an authorization, acceptance, or team-outcome claim.
+
+Use a compact two-column block layout with headings above quieter descriptions.
+Emphasize judgment, use admission, and retained human responsibility rather than
+giving every step the same visual weight. Place short return labels beside their
+arrows using label-relative spacing; do not translate the whole edge or enlarge
+all cards to accommodate one condition. Inspect actual renders for clipped
+labels, arrows, collisions, and readability at desktop and narrow widths.
+
+Native Mermaid block output has no accessible SVG title or description. Each
+map therefore has a descriptively titled, same-section Markdown text equivalent
+stating its full order, return, conditions, and authority limits. Do not claim
+SVG labeling or screen-reader acceptance from those source words. Verify the
+rendered text route separately; where native SVG metadata exists, retain it.
+No vendor patch, private renderer, or diagram-only route is introduced.
+
 ### Keep configuration with its consumer
 
 `.config/checks/` owns native check policy, `.config/supply/` owns the single

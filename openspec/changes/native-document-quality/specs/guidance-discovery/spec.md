@@ -131,7 +131,12 @@ A Blocked report SHALL name the prerequisite gap, its impact, and the escalation
 
 - **WHEN** a topic presents a working-loop, data-use, or human–AI diagram
 - **THEN** its editable Mermaid source stays beside the topic's authoritative rules
-- **AND** accessible titles and descriptions state the path and its conditions
+- **AND** a descriptively titled, same-section text equivalent states every stage,
+  directed relation, return condition, and authority limit without relying on
+  diagram rendering
+- **AND** native accessible SVG titles and descriptions are retained where the
+  grammar supplies them; text alternatives do not establish missing SVG labeling
+  or screen-reader acceptance
 - **AND** every directed relation and condition preserves the topic's meaning
 - **AND** the rendered diagram is inspected at the actual reading width
 - **AND** a diagram, available route, or Agent report cannot establish permission,

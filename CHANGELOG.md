@@ -18,9 +18,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 - Share native Git exclusions for editor state and Finder metadata across
   contributor clones, without hiding guideline source.
-- Add accessible Mermaid reading maps for the working loop, controlled data
-  use, and human–AI responsibility. Each stays beside its rule owner; a diagram
-  does not grant authority or establish acceptance.
+- Add compact Mermaid reading maps for the working loop, controlled data use,
+  and human–AI responsibility, with complete titled text equivalents. Each stays
+  beside its rule owner; a diagram does not grant authority or establish
+  acceptance. Native block output does not supply SVG titles or descriptions.
 - An explicit protected-source GitLab route for qualifying a frozen offline
   bundle before release. It reuses offline jobs without replaying source checks
   or treating the temporary qualification package as a signed Release.

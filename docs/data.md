@@ -67,39 +67,51 @@ explanations, and conclusions the data cannot support.
 
 ## Move from a Signal to Controlled Use
 
-Each stage answers a different question. Feedback returns new evidence to
-exploration to revisit value, meaning, and quality; it does not grant
-permission for a new use.
+**Controlled-use map:** Opportunity → Explore → Reproduce → Produce → Admit use
+→ Review. Ask, in order, whether investigation is worthwhile, what the data is,
+whether the judgment repeats, whether it can run reliably, whether this use is
+authorized, and whether continued use holds. New evidence or changed use returns
+to Explore to revisit value, meaning, and quality. Production and feedback do
+not grant permission for a new use.
 
 ```mermaid
 ---
 config:
   theme: base
   look: classic
-  htmlLabels: false
+  htmlLabels: true
   fontFamily: "system-ui, sans-serif"
   themeVariables:
     fontFamily: "system-ui, sans-serif"
     fontSize: "16px"
-    primaryColor: "#f3f6f8"
-    primaryTextColor: "#182b3a"
+    primaryColor: "#fbfaf7"
+    primaryTextColor: "#28373b"
     primaryBorderColor: "#657e91"
-    lineColor: "#657e91"
-  flowchart:
-    nodeSpacing: 24
-    rankSpacing: 28
-    padding: 12
-    wrappingWidth: 280
+    lineColor: "#627a75"
+  themeCSS: |
+    .nodeLabel { font-size: 14px; line-height: 1.35; }
+    .nodeLabel b { font-size: 16px; font-weight: 600; }
+    .nodeLabel small { font-size: 11px; font-weight: 500; letter-spacing: 0.75px; }
+    .edgeLabel { font-size: 12px; line-height: 1.25; }
+    .edgeLabel .label { transform-box: fill-box; transform: translate(8px, -50%); }
+  block:
+    padding: 24
 ---
-flowchart TB
-    accTitle: From a data opportunity to controlled use and review
-    accDescr: Opportunity leads to exploration, repetition, production, use admission, and feedback. Feedback can reopen exploration; production alone does not authorize use.
-    O["Opportunity<br/>Worth investigating?"] --> X["Explore<br/>What is the data?"]
-    X --> R["Reproduce<br/>Does the judgment repeat?"]
-    R --> P["Produce<br/>Can it run reliably?"]
-    P --> A["Admit use<br/>Is this use authorized?"]
-    A --> F["Review<br/>Does continued use hold?"]
+block-beta
+    columns 2
+    O("<small>01</small>&nbsp; <b>Opportunity</b><br/>Worth investigating?"):2
+    X("<small>02</small>&nbsp; <b>Explore</b><br/>What is<br/>the data?") R("<small>03</small>&nbsp; <b>Reproduce</b><br/>Does the<br/>judgment repeat?")
+    F("<small>06</small>&nbsp; <b>Review</b><br/>Does continued<br/>use hold?") P("<small>04</small>&nbsp; <b>Produce</b><br/>Can it run<br/>reliably?")
+    A("<small>05</small>&nbsp; <b>Admit use</b><br/>Is this use authorized?"):2
+    O --> X
+    X --> R
+    R --> P
+    P --> A
+    A --> F
     F -. "New evidence<br/>or changed use" .-> X
+    classDef default fill:none,stroke:none,color:#28373b
+    class A principal
+    classDef principal fill:#283f42,stroke:#283f42,color:#ffffff,stroke-width:1px
 ```
 
 Stages may be combined; the judgments may not disappear.

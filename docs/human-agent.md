@@ -65,38 +65,60 @@ work, not that duty.
 
 ## Execute and Verify
 
-The person defines the delegation and checks the actual result. An Agent's
-report does not itself satisfy the acceptance conditions.
+**Delegation and acceptance map:** A person retains direction, authority, and
+responsibility. They define scope, stop conditions, and acceptance; the Agent
+inspects, reasons, and acts, then returns the source, result, and limits as
+evidence. Examine the actual work against the acceptance conditions:
+
+- **No:** Review within the delegation boundary.
+- **Yes:** An authorized acceptor accepts, records the result, and hands it off.
+
+Delegation and acceptance neither expand permission nor transfer responsibility.
+An Agent's report does not itself satisfy the acceptance conditions.
 
 ```mermaid
 ---
 config:
   theme: base
   look: classic
-  htmlLabels: false
+  htmlLabels: true
   fontFamily: "system-ui, sans-serif"
   themeVariables:
     fontFamily: "system-ui, sans-serif"
     fontSize: "16px"
-    primaryColor: "#f3f6f8"
-    primaryTextColor: "#182b3a"
+    primaryColor: "#fbfaf7"
+    primaryTextColor: "#28373b"
     primaryBorderColor: "#657e91"
-    lineColor: "#657e91"
-  flowchart:
-    nodeSpacing: 24
-    rankSpacing: 28
-    padding: 12
-    wrappingWidth: 280
+    lineColor: "#627a75"
+  themeCSS: |
+    .nodeLabel { font-size: 14px; line-height: 1.35; }
+    .nodeLabel b { font-size: 16px; font-weight: 600; }
+    .nodeLabel small { font-size: 11px; font-weight: 500; letter-spacing: 0.75px; }
+    .edgeLabel { font-size: 12px; line-height: 1.25; }
+    .edgeLabel .label { transform-box: fill-box; transform: translate(8px, -50%); }
+    .edgeLabel .label[data-id$="-V-C"] { transform: translate(8px, -100%); }
+  block:
+    padding: 24
 ---
-flowchart TB
-    accTitle: Delegated capability with retained human responsibility
-    accDescr: A person defines the task boundary. The Agent investigates and acts within it, then returns evidence. An authorized person checks the actual work. Unmet conditions return to review within the boundary; acceptance never expands permission or transfers responsibility.
-    H["Person<br/>Direction · authority · responsibility"] --> B["Delegation<br/>Scope · stop · acceptance"]
-    B --> A["Agent<br/>Inspect · reason · act"]
-    A --> E["Evidence<br/>Source · result · limits"]
-    E --> V{"Acceptance<br/>conditions met?"}
-    V -- "No: review<br/>within the boundary" --> B
-    V -- "Yes: authorized<br/>acceptor" --> C["Accept<br/>Record · hand off"]
+block-beta
+    columns 2
+    H("<b>Person</b><br/>Direction · authority · responsibility"):2
+    B("<b>Delegation</b><br/>Scope · stop<br/>acceptance") A("<b>Agent</b><br/>Inspect · reason<br/>act")
+    V("<b>Acceptance</b><br/>conditions met?") E("<b>Evidence</b><br/>Source · result<br/>limits")
+    C("<b>Accept</b><br/>Record · hand off"):2
+    H --> B
+    B --> A
+    A --> E
+    E --> V
+    V -- "No: review within<br/>the boundary" --> B
+    V -- "Yes: authorized<br/>acceptor" --> C
+    classDef default fill:none,stroke:none,color:#28373b
+    classDef authority fill:#edf3f1,stroke:#648a80,color:#234b42,stroke-width:1px
+    classDef accepted fill:#f5f3ee,stroke:#b4aa95,color:#474134,stroke-width:1px
+    class B authority
+    class H principal
+    class C accepted
+    classDef principal fill:#283f42,stroke:#283f42,color:#ffffff,stroke-width:1px
 ```
 
 An Agent must first confirm the task, target, current state, responsible person,

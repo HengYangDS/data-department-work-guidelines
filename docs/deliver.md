@@ -28,38 +28,50 @@ Urgent containment follows [emergencies and exceptions](evolve.md#emergencies-an
 
 ## The Working Loop
 
-The six stages organize the work; they do not replace the duties above.
-New evidence or changed risk may require an earlier judgment to be revisited.
+**Working-loop map:** Frame the subject, outcome, and limits → analyze facts,
+the model, and alternatives → decide within authority → execute bounded action
+→ verify current evidence → learn what to retain, revise, or retire. New evidence
+or changed risk returns to Frame. The six stages organize the work; they do not
+replace the duties above.
 
 ```mermaid
 ---
 config:
   theme: base
   look: classic
-  htmlLabels: false
+  htmlLabels: true
   fontFamily: "system-ui, sans-serif"
   themeVariables:
     fontFamily: "system-ui, sans-serif"
     fontSize: "16px"
-    primaryColor: "#f3f6f8"
-    primaryTextColor: "#182b3a"
+    primaryColor: "#fbfaf7"
+    primaryTextColor: "#28373b"
     primaryBorderColor: "#657e91"
-    lineColor: "#657e91"
-  flowchart:
-    nodeSpacing: 24
-    rankSpacing: 28
-    padding: 12
-    wrappingWidth: 280
+    lineColor: "#627a75"
+  themeCSS: |
+    .nodeLabel { font-size: 14px; line-height: 1.35; }
+    .nodeLabel b { font-size: 16px; font-weight: 600; }
+    .nodeLabel small { font-size: 11px; font-weight: 500; letter-spacing: 0.75px; }
+    .edgeLabel { font-size: 12px; line-height: 1.25; }
+    .edgeLabel .label { transform-box: fill-box; transform: translate(8px, -50%); }
+  block:
+    padding: 24
 ---
-flowchart TB
-    accTitle: From a framed problem to a verified result and learning
-    accDescr: Frame, analyze, decide, execute, verify, and learn in order. New evidence or changed risk returns the work to framing.
-    F["Frame<br/>Subject · outcome · limits"] --> A["Analyze<br/>Facts · model · alternatives"]
-    A --> D["Decide<br/>Authorized choice"]
-    D --> E["Execute<br/>Bounded action"]
-    E --> V["Verify<br/>Current evidence"]
-    V --> L["Learn<br/>Retain · revise · retire"]
+block-beta
+    columns 2
+    F("<small>01</small>&nbsp; <b>Frame</b><br/>Subject · outcome<br/>limits") A("<small>02</small>&nbsp; <b>Analyze</b><br/>Facts · model<br/>alternatives")
+    L("<small>06</small>&nbsp; <b>Learn</b><br/>Retain · revise<br/>retire") D("<small>03</small>&nbsp; <b>Decide</b><br/>Authorized choice")
+    V("<small>05</small>&nbsp; <b>Verify</b><br/>Current evidence") E("<small>04</small>&nbsp; <b>Execute</b><br/>Bounded action")
+    F --> A
+    A --> D
+    D --> E
+    E --> V
+    V --> L
     L -. "New evidence<br/>or changed risk" .-> F
+    classDef default fill:none,stroke:none,color:#28373b
+    classDef authority fill:#edf3f1,stroke:#648a80,color:#234b42,stroke-width:1px
+    class D authority
+    class V authority
 ```
 
 ## Before Acting

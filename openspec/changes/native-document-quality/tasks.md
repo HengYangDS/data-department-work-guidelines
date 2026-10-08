@@ -229,7 +229,9 @@
 - [ ] 2.40 Render the working-loop, data-use, and human–AI responsibility maps
       from their canonical topic sources. Verify every relationship and condition,
       inspect legibility at desktop and narrow reading widths, and exercise the
-      member and Agent routes. Preserve the editorial audit and failed routes;
+      member and Agent routes, including the complete same-section text equivalent.
+      Verify condition labels beside visible arrows without source-only SVG or
+      screen-reader claims. Preserve the editorial audit and failed routes;
       source syntax and screenshots alone do not prove adoption or team benefit.
 - [x] 2.41 Share editor and Finder exclusions through native Git policy. Verify
       a fresh repository without ambient or Git-common exclusions, preserve
