@@ -527,6 +527,21 @@ fresh HOME, separate empty user/global npm configuration files, and a clean
 environment establish cold execution. Deny remote connections; permit only local
 connections required by the real HTTP regression.
 
+GitLab shell jobs use original Mise with a project-owned configuration under
+`.config/supply/` and its native six-platform runtime lock. Native read-only
+templates obtain the Node compatibility line and exact npm version from
+`package.json`; the npm backend checks the selected archive's SHA-512 before
+installation. Select the configuration with the native project filename setting,
+not its global config override. Run supply and verification commands through
+`mise exec --locked`. Late native tool-path evaluation places the selected npm
+ahead of Node's bundled npm, respecting the Windows native prefix layout.
+This is process-scoped tool selection, not a new installer or a machine PATH,
+service-account, or VM-isolation change. Keep existing review and protected
+identities separate and preserve the complete verifier and project resource.
+Cold checks receive already supplied tools; they neither install Mise nor
+acquire a missing runtime. Qualify the actual Windows ARM64 process and all
+tool combinations before claiming platform acceptance.
+
 This is a qualification environment, not an effect of npm configuration alone.
 Hosted jobs install Node/npm and acquire their exact asset before offline
 installation; they do not prove network isolation. The builder deliberately

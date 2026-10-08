@@ -210,8 +210,11 @@
 - [ ] 2.38 Qualify the [fixed-source repairs](design.md#supply-exact-tools-without-a-second-installation-plane).
       Resolve findings at the installer, bundle, audit, and documentation owners.
       Inspect and reconcile the actual Windows Node/npm installation owner,
-      runtime architecture, and service binding without changing isolation;
-      retire any temporary read-only diagnosis before the final freeze.
+      runtime architecture, and service binding without changing isolation.
+      Select Node and npm through native locked Mise commands in every shell
+      job; qualify selection, checksum refusal, missing-lock refusal, and
+      manifest/lock mismatch without changing machine PATH or Runner identity.
+      Retire any temporary read-only diagnosis before the final freeze.
       Verify the [format](design.md#give-native-quality-concerns-one-owner),
       [risk](design.md#bind-risk-approval-to-the-actual-subject), and
       [execution](design.md#preserve-native-execution-and-complete-validation-evidence)

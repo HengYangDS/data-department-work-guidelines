@@ -17,6 +17,14 @@ Use the Node line and exact npm version declared in
 installation owner; do not bypass npm admission with `--force` or an override.
 Install locked dependencies with `npm ci --ignore-scripts`.
 
+GitLab's macOS and Windows jobs use the existing Mise installation with the
+[project runtime configuration](.config/supply/mise.toml) and its
+[native lock](.config/supply/mise.lock). Mise installs selected versions under
+its native data directory and scopes their PATH to each command. The jobs do
+not modify the host's npm, Runner service, or isolation. Runtime preparation
+is separate from offline verification: the offline installer never supplies
+missing Node or npm.
+
 Use the Vale, lychee, and OSV Scanner versions in the
 [native supply manifest](.config/supply/native.json). Your existing installation
 owner may supply them. To install already supplied assets in the repository's

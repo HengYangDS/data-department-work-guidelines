@@ -26,6 +26,25 @@ default:
     - node tools/ci/install-native.mjs lychee --gitlab-package
     - node tools/ci/install-native.mjs vale --gitlab-package
 
+.docs:native-runtime:
+  variables: &native-runtime
+    MISE_OVERRIDE_CONFIG_FILENAMES: .config/supply/mise.toml
+    MISE_CONFIG_DIR: "$CI_PROJECT_DIR/build/runtime/work/mise-config"
+    MISE_CEILING_PATHS: "$CI_PROJECT_DIR/.."
+    MISE_TRUSTED_CONFIG_PATHS: "$CI_PROJECT_DIR/.config/supply/mise.toml"
+    MISE_YES: "1"
+  before_script: &native-runtime-supply
+    - mise install --locked --jobs=1
+
+.docs:native-source-supply:
+  before_script: &native-source-supply
+    - *native-runtime-supply
+    - mise exec --locked -- npm ci --ignore-scripts
+    - mise exec --locked -- node tools/ci/install-native.mjs osv-scanner --gitlab-package
+    - mise exec --locked -- node tools/docs/cli.mjs audit
+    - mise exec --locked -- node tools/ci/install-native.mjs lychee --gitlab-package
+    - mise exec --locked -- node tools/ci/install-native.mjs vale --gitlab-package
+
 # Temporary read-only runtime diagnosis for task 2.38; remove before final freeze.
 docs:diagnose:windows:review:
   extends: .docs:verify
@@ -86,7 +105,10 @@ docs:verify:macos:
   extends: .docs:verify
   inherit:
     default: false
-  before_script: *docs-source-supply
+  variables: *native-runtime
+  before_script: *native-source-supply
+  script:
+    - mise exec --locked -- npm run verify
   tags:
     - ci-macos-arm64-shell
   rules:
@@ -97,7 +119,10 @@ docs:verify:macos:review:
   extends: .docs:verify
   inherit:
     default: false
-  before_script: *docs-source-supply
+  variables: *native-runtime
+  before_script: *native-source-supply
+  script:
+    - mise exec --locked -- npm run verify
   tags:
     - ci-macos-arm64-review
   rules:
@@ -110,7 +135,10 @@ docs:verify:windows:
   extends: .docs:verify
   inherit:
     default: false
-  before_script: *docs-source-supply
+  variables: *native-runtime
+  before_script: *native-source-supply
+  script:
+    - mise exec --locked -- npm run verify
   tags:
     - ci-windows-arm64-shell
   rules:
@@ -122,7 +150,10 @@ docs:verify:windows:review:
   extends: .docs:verify
   inherit:
     default: false
-  before_script: *docs-source-supply
+  variables: *native-runtime
+  before_script: *native-source-supply
+  script:
+    - mise exec --locked -- npm run verify
   tags:
     - ci-windows-arm64-review
   rules:
@@ -157,7 +188,12 @@ offline:verify:macos:
   extends: .offline:verify
   inherit:
     default: false
-  before_script: []
+  variables: *native-runtime
+  before_script: *native-runtime-supply
+  script:
+    - mise exec --locked -- node tools/ci/offline-bundle.mjs acquire-gitlab
+    - mise exec --locked -- node tools/ci/offline-bundle.mjs install
+    - mise exec --locked -- npm run verify
   tags:
     - ci-macos-arm64-shell
 
@@ -166,6 +202,11 @@ offline:verify:windows:
   extends: .offline:verify
   inherit:
     default: false
-  before_script: []
+  variables: *native-runtime
+  before_script: *native-runtime-supply
+  script:
+    - mise exec --locked -- node tools/ci/offline-bundle.mjs acquire-gitlab
+    - mise exec --locked -- node tools/ci/offline-bundle.mjs install
+    - mise exec --locked -- npm run verify
   tags:
     - ci-windows-arm64-shell

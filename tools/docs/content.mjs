@@ -41,6 +41,7 @@ const plainTextIdentities = new Set([
   ".gitignore",
   ".gitattributes",
 ]);
+const nativeGeneratedToml = new Set([".config/supply/mise.lock"]);
 export function nativeTomlFormatter(repository = root) {
   const formatter = createFromBuffer(readFileSync(tomlPlugin.getPath()));
   const policyPath = path.join(repository, ".config/checks/format/toml.toml");
@@ -435,7 +436,8 @@ function blankLineError(relative, source) {
 
 export async function textViolations(relative, source) {
   const errors = [];
-  if (relative.endsWith(".toml")) {
+  const toml = relative.endsWith(".toml") || nativeGeneratedToml.has(relative);
+  if (toml) {
     try {
       parseToml(source);
     } catch (error) {
@@ -451,7 +453,7 @@ export async function textViolations(relative, source) {
     withNodeModules: true,
     resolveConfig: false,
   });
-  if (!inferredParser && !relative.endsWith(".toml")) {
+  if (!inferredParser && !toml) {
     const extension = path.extname(relative);
     if (
       !plainTextIdentities.has(relative) &&
