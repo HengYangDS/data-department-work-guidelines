@@ -18,9 +18,6 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 - Share native Git exclusions for editor state and Finder metadata across
   contributor clones, without hiding guideline source.
-- Make human–Agent delegation and acceptance visible in one native sequence
-  diagram, with the complete text equivalent beside its rule owner. A diagram
-  does not grant authority or establish acceptance.
 - An explicit protected-source GitLab route for qualifying a frozen offline
   bundle before release. It reuses offline jobs without replaying source checks
   or treating the temporary qualification package as a signed Release.
@@ -37,9 +34,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   treating earlier wording as current authority or a restoration target.
 - Align both Forges on the same signed commit graph, including governed merges,
   while retaining protected branches, required checks, and signature enforcement.
-- Replace duplicated working-loop and data-use diagrams with an ordered list
-  and the existing decision table. Preserve every stage and return condition;
-  remove custom diagram CSS and disconnected block layouts.
+- Replace duplicated working-loop, data-use, and human–Agent diagrams with
+  ordered steps and the existing decision and role tables. Preserve every stage,
+  relationship, return condition, and authority limit; remove custom diagram CSS
+  and disconnected block layouts.
 - Refresh the source and offline Node setup action to 7.1.0. Both workflows
   use one explicit Node version input without automatic package-manager caching.
 - Preserve timing-based decision deferral and make clear that routine tasks need

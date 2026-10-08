@@ -131,20 +131,23 @@ A Blocked report SHALL name the prerequisite gap, its impact, and the escalation
 - **AND** a heading count, byte-matched excerpt, refreshed hash, or passing
   source check cannot by itself establish semantic fidelity.
 
-#### Scenario: A reading map could be mistaken for authority
+#### Scenario: A compact reading form preserves the work
 
-- **WHEN** a topic presents a working-loop, data-use, or human–AI diagram
-- **THEN** its editable Mermaid source stays beside the topic's authoritative rules
-- **AND** a descriptively titled, same-section text equivalent states every stage,
-  directed relation, return condition, and authority limit without relying on
-  diagram rendering
-- **AND** native accessible SVG titles and descriptions are retained where the
-  grammar supplies them; text alternatives do not establish missing SVG labeling
-  or screen-reader acceptance
-- **AND** every directed relation and condition preserves the topic's meaning
-- **AND** the rendered diagram is inspected at the actual reading width
-- **AND** a diagram, available route, or Agent report cannot establish permission,
-  acceptance, adoption, or improved team outcomes.
+- **WHEN** a topic summarizes the working loop, data-use decisions, or human–AI
+  collaboration
+- **THEN** it SHALL use the clearest reading form for the question: ordered steps,
+  a decision table, or a diagram that makes relationships easier to understand
+- **AND** every stage, actor, directed relation, return condition, and authority
+  limit SHALL remain explicit at the topic owner without relying on rendering
+- **AND** any diagram SHALL keep its editable source and a complete same-section
+  text equivalent beside the authoritative rules
+- **AND** native accessible SVG titles and descriptions SHALL be retained where
+  the grammar supplies them; text alternatives do not establish missing SVG
+  labeling or screen-reader acceptance
+- **AND** the complete rendered section SHALL be inspected at the actual desktop
+  reading width
+- **AND** a reading form, available route, or Agent report cannot establish
+  permission, acceptance, adoption, or improved team outcomes.
 
 #### Scenario: A familiar approach conflicts with new facts
 

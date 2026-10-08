@@ -186,19 +186,21 @@ use decisions beside their evidence. Neither needs a second diagram that
 repeats the same sequence. Retain every stage, return condition, judgment, and
 authority limit when removing those duplicated views.
 
-Human–Agent collaboration has a different reading problem: who delegates, who
-executes, who returns evidence, and who accepts. Use one native Mermaid sequence
-in that topic to distinguish those roles and the unmet/met acceptance branches.
-People retain direction, authority, and responsibility; an authorized acceptor
-may be the task lead when authorized. The diagram does not create another role,
-permission, or acceptance ceremony.
+Human–Agent collaboration needs a clear account of who delegates, executes,
+returns evidence, checks the work, and accepts it. The role table defines each
+person's powers and retained duties. Four ordered steps explain the handoff and
+the unmet/met acceptance branches without repeating the table as a sequence
+diagram. People retain direction, authority, and responsibility; an authorized
+acceptor may be the task lead when authorized. The reading form creates no new
+role, permission, or acceptance ceremony.
 
-Keep the editable fence beside the authoritative rules and its complete text
-equivalent. Use native grammar and theme rather than private CSS, translated
-labels, or manually positioned arrows. Retain native SVG titles and descriptions;
-inspect the complete render and actual peer reading routes without inferring
-screen-reader acceptance or improved team outcomes. Derived review artifacts
-belong to ignored `build/`, not a second published diagram source.
+Use a diagram only when its relationships are clearer than the corresponding
+steps or table. Keep any editable diagram source beside its authoritative rules
+and complete text equivalent; use native grammar rather than private CSS or
+manually positioned arrows. Inspect the complete rendered section and actual
+peer reading routes at desktop widths without inferring screen-reader acceptance
+or improved team outcomes. Derived review artifacts belong to ignored `build/`,
+not a second published diagram source.
 
 ### Keep configuration with its consumer
 

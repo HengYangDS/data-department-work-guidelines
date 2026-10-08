@@ -65,44 +65,20 @@ work, not that duty.
 
 ## Execute and Verify
 
-**Delegation and acceptance:** A person retains direction, authority, and
-responsibility. They define scope, stop conditions, and acceptance; the Agent
-inspects, reasons, and acts, then returns the source, result, and limits as
-evidence. Examine the actual work against the acceptance conditions:
+1. **Set the boundary.** The delegating member defines scope, stop conditions,
+   and acceptance criteria.
+2. **Do the work and return evidence.** The Agent inspects, reasons, and acts
+   within that scope, then returns the source, result, and limits to the member.
+3. **Check the actual work.** The member checks the result and submits the
+   actual work and evidence for acceptance. An authorized acceptor examines
+   them against the agreed conditions.
+4. **Accept or return for review.** If the conditions are unmet, return the work
+   for review within the delegation boundary. If they are met, the authorized
+   acceptor accepts, records the result, and hands it off.
 
-- **No:** Review within the delegation boundary.
-- **Yes:** An authorized acceptor accepts, records the result, and hands it off.
-
-Delegation and acceptance neither expand permission nor transfer responsibility.
-An Agent's report does not itself satisfy the acceptance conditions.
-
-```mermaid
----
-config:
-  theme: neutral
-  sequence:
-    mirrorActors: false
----
-sequenceDiagram
-    accTitle: Delegation and acceptance
-    accDescr: A person defines scope, stop conditions, and acceptance criteria. The Agent returns the source, result, and limits of bounded work. An authorized acceptor examines the actual work and evidence. Unmet conditions return to review within the delegation boundary; acceptance is recorded and handed off. People retain direction, authority, and responsibility.
-    participant P as Person
-    participant A as Agent
-    participant R as Authorized acceptor
-    P->>A: Scope, stop conditions, acceptance criteria
-    activate A
-    A->>A: Inspect, reason, act within scope
-    A-->>P: Source, result, limits
-    deactivate A
-    P->>R: Actual work and evidence
-    R->>R: Examine acceptance conditions
-    alt Conditions not met
-        R-->>P: Review within the delegation boundary
-    else Conditions met
-        R-->>P: Accept, record, hand off
-    end
-    Note over P,R: People retain direction, authority, and responsibility
-```
+People retain direction, authority, and responsibility throughout. Neither
+delegation nor acceptance expands permission or transfers responsibility.
+An Agent's report cannot substitute for examination of the actual work.
 
 An Agent must first confirm the task, target, current state, responsible person,
 and applicable local rules; repository work also requires the exact root.
