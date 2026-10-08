@@ -214,7 +214,8 @@
       Select Node and npm through native locked Mise commands in every shell
       job; qualify selection, checksum refusal, missing-lock refusal, and
       manifest/lock mismatch without changing machine PATH or Runner identity.
-      Retire any temporary read-only diagnosis before the final freeze.
+      Verify retirement of temporary diagnosis and preservation of its evidence
+      before the final freeze.
       Verify the [format](design.md#give-native-quality-concerns-one-owner),
       [risk](design.md#bind-risk-approval-to-the-actual-subject), and
       [execution](design.md#preserve-native-execution-and-complete-validation-evidence)
@@ -223,9 +224,7 @@
       with pinned compatible tools and actual architecture observations. Preserve
       findings and runner failures; retire replaced rules, unused dependencies,
       and terminal qualification packages through their declared owners.
-      Preserve same-source Windows diagnostic evidence; retire its temporary
-      manual review job, CI validator, and dedicated test before the final
-      freeze. Refresh immutable CI action pins from official stable
+      Refresh immutable CI action pins from official stable
       releases, verify the explicit Node setup contract and real refusal cases,
       and preserve complete upstream finding reports and selected-route limits.
 

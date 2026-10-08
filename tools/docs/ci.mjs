@@ -478,42 +478,6 @@ const gitlabNativeCapabilities = [
     review: "ci-windows-arm64-review",
   },
 ];
-const windowsDiagnosticName = "docs:diagnose:windows:review";
-
-function validateWindowsDiagnostic(gitlab) {
-  const job = gitlab[windowsDiagnosticName];
-  if (job === undefined) return;
-  const expected = {
-    extends: ".docs:verify",
-    resource_group: gitlab["docs:verify:windows"]?.resource_group,
-    inherit: { default: false },
-    tags: ["ci-windows-arm64-review"],
-    before_script: [
-      "node -p \"JSON.stringify({kind:'windows-runtime-observation',node:process.versions.node,architecture:process.arch,executable:process.execPath,platform:process.platform,hostname:require('node:os').hostname()})\"",
-      "Get-Command node,npm,mise -CommandType Application,ExternalScript -ErrorAction Stop | Select-Object Name,Source,Version | ConvertTo-Json -Compress",
-      "mise --version",
-      "mise ls node --json",
-      "Get-CimInstance Win32_Service -Filter \"Name LIKE 'gitlab%'\" | Select-Object Name,StartName,State,ProcessId | ConvertTo-Json -Compress",
-      "Get-Process gitlab-runner -ErrorAction SilentlyContinue | Select-Object Id,Path | ConvertTo-Json -Compress",
-      "'HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall','HKLM:\\Software\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall','HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall' | Where-Object { Test-Path -LiteralPath $_ } | Get-ChildItem -ErrorAction Stop | Get-ItemProperty -ErrorAction Stop | Where-Object DisplayName -Like 'Node.js*' | Select-Object DisplayName,DisplayVersion,Publisher,InstallLocation,PSChildName | ConvertTo-Json -Compress",
-      "Get-Item 'C:\\Program Files\\DDWG-Node26-x64' -ErrorAction Stop | Select-Object FullName,LinkType,Target | ConvertTo-Json -Compress",
-      nativeSourceSupply,
-    ],
-    rules: [
-      {
-        if: '$CI_COMMIT_BRANCH =~ /^proposal\\// && $CI_PIPELINE_SOURCE == "push"',
-        when: "manual",
-        allow_failure: true,
-      },
-    ],
-  };
-  if (!isDeepStrictEqual(job, expected)) {
-    throw new Error(
-      "GitLab Windows runtime diagnosis must preserve its exact read-only commands, review scope, reservation, and full verifier",
-    );
-  }
-}
-
 const candidateRule = {
   if: '$DDWG_OFFLINE_CANDIDATE && $CI_COMMIT_REF_PROTECTED == "true" && ($CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main") && ($CI_PIPELINE_SOURCE == "api" || $CI_PIPELINE_SOURCE == "web")',
 };
@@ -919,7 +883,6 @@ export function validateCi(
     throw new Error("GitLab default must contain only the pinned image");
   }
   const admittedGitLabKeys = new Set([
-    windowsDiagnosticName,
     "workflow",
     "stages",
     "default",
@@ -1131,7 +1094,6 @@ export function validateCi(
     validateGitLabOffline(gitlab, gitlabImage),
     ...validateGitLabNativeJobs(gitlab, "offline:verify", "offline", "offline"),
   ];
-  validateWindowsDiagnostic(gitlab);
   return {
     hosts: hostMatrix,
     offlineHosts: validateOfflineWorkflow(offlineSource, nodeMajor),
