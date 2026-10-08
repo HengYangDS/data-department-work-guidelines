@@ -118,12 +118,16 @@ A Blocked report SHALL name the prerequisite gap, its impact, and the escalation
 
 #### Scenario: Numbered clauses omit an original chapter introduction
 
-- **WHEN** the original work contract is compared with the seven revised topics
+- **WHEN** the retired guidelines are used to check the seven current topics
 - **THEN** the review SHALL cover the complete original text, including chapter
   introductions, diagrams, action cards, templates, and final checks outside
   numbered subsections
 - **AND** actor, action, obligation strength, permission, condition, authority,
   evidence, escalation, and revisit limits SHALL be compared at the topic owner
+- **AND** each replacement, change, or removal SHALL have an explicit disposition
+  grounded in current instructions, verified facts, and department needs
+- **AND** retired text SHALL NOT become current authority or a restoration target
+  merely because it appeared in the earlier source
 - **AND** a heading count, byte-matched excerpt, refreshed hash, or passing
   source check cannot by itself establish semantic fidelity.
 

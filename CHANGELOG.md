@@ -33,6 +33,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Use retired guidelines to find omissions and justify changed duties, without
+  treating earlier wording as current authority or a restoration target.
 - Align both Forges on the same signed commit graph, including governed merges,
   while retaining protected branches, required checks, and signature enforcement.
 - Replace duplicated working-loop and data-use diagrams with an ordered list

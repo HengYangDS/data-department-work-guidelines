@@ -41,17 +41,18 @@ whole-guidance equivalence, historical execution, or actual team use.
 
 ## Decisions
 
-### Preserve the original work contract at seven topic owners
+### Review original duties at seven topic owners
 
-Read the original clause and the complete revised topic before accepting a
-rewrite, including chapter introductions, diagrams, action cards, templates,
-and final checks outside numbered subsections. Compare actor, action,
-obligation strength, permission, condition,
-authority, evidence, escalation, and revisit limit. A shorter sentence fails
-review when it removes any of those meanings. Native prose quality and source
-hashes do not establish semantic coverage. Verify the complete original text
-and its clause dispositions; counting headings or numbered subsections does
-not establish that the whole source was reviewed.
+Use the retired source to find omissions; it is not current authority or a
+restoration target. Read each original clause and the complete current topic,
+including chapter introductions, diagrams, action cards, templates, and final
+checks outside numbered subsections. Compare actor, action, obligation strength,
+permission, condition, authority, evidence, escalation, and revisit limit. Keep
+applicable duties intact. Explain every replacement, change, or removal in its
+existing clause disposition from current instructions, verified facts, and
+department needs. Unexplained loss fails review. Native prose quality, source
+hashes, and heading counts establish neither semantic coverage nor a complete
+review.
 
 Each duty belongs at its point of use. The charter owns authority and hard
 boundaries; the other six topics own their task-specific judgments and actions.

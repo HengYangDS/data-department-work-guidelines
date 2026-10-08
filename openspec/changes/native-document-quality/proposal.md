@@ -8,10 +8,11 @@ parser, license reader, supply, and configuration consumers behind. The same
 source also contained compressed department duties, duplicated policy, and
 navigation that could pass without giving readers a usable route.
 
-This Change replaces those owners together, restores the original obligations at
-their seven task topics, and qualifies the delivered source rather than the
-appearance of a tool migration. Shared ETHOS quality, risk, and history
-capabilities remain product dependencies.
+This Change replaces those owners together, puts applicable department duties at
+their seven task topics, and qualifies the delivered source. Review the retired
+guidelines for omissions and justify changed or removed duties against current
+instructions, verified facts, and department needs. Shared ETHOS quality, risk,
+and history capabilities remain product dependencies.
 
 ## What Changes
 
@@ -23,8 +24,10 @@ capabilities remain product dependencies.
   commands.
 - Remove Markdownlint CLI2's redundant selection layer while keeping
   the native core, diagnostics, TOML policy, and all distinguishing cases.
-- Restore every omitted original duty at its existing task owner. Review full
-  original clauses and revised topics, including decision constraints and dates,
+- Review the complete retired source for omissions. Keep applicable duties at
+  their task owners and explain each changed, replaced, or removed requirement.
+  Do not restore old prose, formats, or workflows by default. Compare original
+  clauses and revised topics, including decision constraints and dates,
   execution costs, data acceptance, communication, human judgment,
   responsibility, evidence, and event-driven learning. Keep precautionary
   task-specific prevention assets distinct from the observed-failure threshold

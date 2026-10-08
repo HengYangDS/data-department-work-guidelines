@@ -22,13 +22,14 @@
       native supply and cold-install tests and the resolved source interfaces.
 - [x] 2.3 Apply human English editing to all seven task topics. Compare every
       original duty, actor, condition, permission, authority, and evidence limit
-      with the [complete original work
-      contract](design.md#preserve-the-original-work-contract-at-seven-topic-owners).
-      Keep each duty at one topic owner and verify no lost meaning through
+      with the [original-duty
+      review](design.md#review-original-duties-at-seven-topic-owners).
+      Keep each applicable duty at one topic owner, account for justified changes
+      or removals, and verify no unexplained loss through
       fixed-source editorial review and source quality checks. Retain the
       original one-third editing exercise without a deletion quota or loss of
       facts, reasoning, limits, or responsibilities. Preserve narrower
-      original responsibilities, not every reviewer suggestion, without another
+      applicable responsibilities, not every reviewer suggestion, without another
       report, parser, evaluator, meeting, approval, or meaning gate.
       State fidelity, clarity, and elegance in their full meanings; preserve
       aesthetic intent rather than substituting editorial techniques.
@@ -267,10 +268,10 @@
 - [x] 3.4 Publish the major signed SemVer edition independently to GitLab and
       GitHub; verify both exact refs, Releases, downloaded asset hashes, and
       declared source and offline platform jobs.
-- [ ] 3.5 Complete the final audit against the [original work contract](design.md#preserve-the-original-work-contract-at-seven-topic-owners),
-      all 62 original subsections, five surrounding groups, and chapter
-      introductions and diagrams outside them. Compare the complete original
-      text with current source and resolve every review finding. Require tasks
+- [ ] 3.5 Complete the [original-duty review](design.md#review-original-duties-at-seven-topic-owners):
+      compare all 62 original subsections, five surrounding groups, and chapter
+      introductions and diagrams outside them with current source. Explain every
+      justified change or removal and resolve every review finding. Require tasks
       2.33, 2.38, 3.3, and 3.13, then complete
       the pre-archive [migration plan](design.md#migration-plan): frozen minor
       release, cold/platform checks, signed publication, official spec sync, and
