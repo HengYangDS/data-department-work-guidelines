@@ -67,12 +67,14 @@ explanations, and conclusions the data cannot support.
 
 ## Move from a Signal to Controlled Use
 
-Use the stages below in order. They may be combined, but their judgments may
-not disappear. New evidence or changed use returns to Exploration to revisit
-value, meaning, and quality. Production and feedback do not grant permission
-for a new use.
+Use the questions below for the intended use, not as a mandatory pipeline.
+Research need not become production; production needs its operational
+safeguards. Admission precedes use that requires permission, even when
+production evidence is gathered earlier. Revisit the affected value, meaning,
+or quality judgment when facts or use change. Neither deployment nor feedback
+authorizes a new use.
 
-| Stage        | Decision                          | Typical basis                                                          |
+| Question     | Decision                          | Typical basis                                                          |
 | ------------ | --------------------------------- | ---------------------------------------------------------------------- |
 | Opportunity  | Is evaluation worthwhile?         | Business question, value hypothesis, source, and information boundary. |
 | Exploration  | What is the data?                 | Samples, meaning, timeline, quality profile, and alternative sources.  |

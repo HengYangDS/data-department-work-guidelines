@@ -82,14 +82,17 @@ An Agent's report cannot substitute for examination of the actual work.
 
 An Agent must first confirm the task, target, current state, responsible person,
 and applicable local rules; repository work also requires the exact root.
-It must then restate the goal, scope, non-goals, and completion condition.
+It must make the goal, scope, non-goals, and completion condition clear. Restate
+them when needed to resolve ambiguity or keep collaborators aligned; a simple
+task does not need a separate recital of an already clear request.
 It must distinguish fact, hypothesis, inference, judgment, decision, and action;
 build the [smallest sufficient model](decide.md#use-the-smallest-sufficient-model)
 before expanding detail; load only relevant material; and advance in reversible,
 verifiable steps within its authority and agreed scope, without incidental
 changes. Before writing, it must check the target, concurrent work, and recovery
-path. It must keep the state needed to continue in the existing work
-record, not only in the conversation. Its output must lead with the conclusion
+path. For extended or interrupted work, it must keep the state needed to continue
+in the existing work record. A low-risk task may close in one exchange under the
+[charter](charter.md#form-follows-risk). Its output must lead with the conclusion
 and evidence, then limits and next steps.
 
 Agent memory, summaries, guesses, and generated content are candidate

@@ -153,6 +153,15 @@ A Blocked report SHALL name the prerequisite gap, its impact, and the escalation
 - **AND** binding applicable duties and hard boundaries SHALL remain intact;
   immutable historical text and evidence SHALL not be rewritten.
 
+#### Scenario: A useful practice has an alternative
+
+- **WHEN** a concept, role, process, tool, or document serves a current duty or
+  produces evidenced net benefit, but another approach could also serve it
+- **THEN** the charter SHALL assess purpose, applicable authority, and total
+  cost rather than require the practice to be unique
+- **AND** a clearer, lower-cost existing owner SHOULD carry the duty when
+  consolidation provides that benefit.
+
 #### Scenario: A compact reading form preserves the work
 
 - **WHEN** a topic summarizes the working loop, data-use decisions, or human–AI
@@ -243,8 +252,8 @@ A Blocked report SHALL name the prerequisite gap, its impact, and the escalation
 - **THEN** every important update SHALL name current risks or blockers and its
   next action, responsible actor, deadline, and completion condition, including
   when it requests a decision
-- **AND** the delivery topic distinguishes executing, verified, accepted, and
-  published or effective states for reported deliverables
+- **AND** the delivery topic distinguishes executing, verified, accepted,
+  published, and effective or in-use states for reported deliverables
 - **AND THEN** the claim does not outrun its current subject-bound evidence.
 
 #### Scenario: High-impact work lacks necessary prevention
@@ -511,6 +520,30 @@ reader's understanding, judgment, or action while preserving facts, reasoning,
 limits, responsibilities, and expressive quality. An editing fraction or fixed
 document shape SHALL NOT become a writing standard.
 
+#### Scenario: A discussion clarifies the problem without a decision
+
+- **WHEN** a discussion improves the shared model but no option is approved
+- **THEN** communication SHALL name what became clearer and the remaining
+  question without treating that understanding as approval or resolution
+- **AND** an important update SHALL provide the decisive facts needed for its
+  conclusion, not a fixed count of facts.
+
+#### Scenario: A simple delegation is already clear
+
+- **WHEN** a low-risk request already makes its goal, scope, and completion
+  condition clear
+- **THEN** an Agent SHALL confirm the applicable boundary without a separate
+  recital or another work record solely to demonstrate compliance
+- **AND** extended or interrupted work SHALL retain the state needed for
+  continuation in its existing work record.
+
+#### Scenario: Published guidance has not entered use
+
+- **WHEN** a revision reaches its agreed publication destination but actual use
+  has not been observed
+- **THEN** the delivery topic SHALL distinguish publication from effective or
+  in-use state, and neither SHALL establish improved team outcomes.
+
 #### Scenario: A decision waits for the right time rather than more evidence
 
 - **WHEN** an option has sufficient information but a timing condition prevents
@@ -612,6 +645,16 @@ admission, permissions, lineage, review, veto and exit in the workflow. Delivery
 owners SHALL expose priorities and open decisions. Shared interfaces SHALL NOT
 transfer responsibility or authority; suitable use SHALL NOT grant permission.
 Owners SHALL be accountable.
+
+#### Scenario: Research does not need a production feed
+
+- **WHEN** a proposed use is a bounded research study rather than an operational
+  feed
+- **THEN** the data topic SHALL qualify meaning, quality, permission,
+  reproducibility, and the research claim without requiring production operation
+- **AND** any later promotion into production SHALL require matching operational
+  safeguards and authorization before that use begins
+- **AND** the data-use questions SHALL NOT impose a mandatory linear pipeline.
 
 #### Scenario: Work is performed outside data production
 

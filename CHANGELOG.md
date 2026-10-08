@@ -31,6 +31,11 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   retired drafts are comparison inputs, not a restoration baseline.
 - Let problem models represent interacting causes and cross-cutting constraints;
   decision readiness does not imply approval.
+- Qualify data for its intended use rather than force research through a
+  production pipeline. Distinguish publication from observed use.
+- Keep practices for a current duty or evidenced benefit, without demanding that
+  each be unique. Let discussions clarify a model without pretending a decision
+  was made; avoid fixed fact counts and redundant Agent recitals.
 - Make writing serve the reader without a required deletion fraction or fixed
   arrangement. Keep meaning, limits, responsibility, and expressive quality.
 - Preserve periodic calibration, mechanism review, and practice and capability

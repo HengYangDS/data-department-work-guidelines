@@ -57,19 +57,21 @@ existing work record so collaborators work from the same commitment.
 
 ## Name the State, Not the Effort
 
-| State                  | What it permits you to say                                                                        |
-| ---------------------- | ------------------------------------------------------------------------------------------------- |
-| Unframed               | The problem, scope, or completion condition is still missing.                                     |
-| Planned                | A route and owner exist; execution has not happened.                                              |
-| Executing              | Work is under way; the result has not passed verification.                                        |
-| Blocked                | A prerequisite prevents the affected action; name the gap, its impact, and the escalation.        |
-| Awaiting verification  | The deliverable exists, but the agreed checks have not passed.                                    |
-| Verified               | Checks passed for a stated subject, version, environment, and limit.                              |
-| Accepted               | An authorized acceptor confirmed the agreed result.                                               |
-| Published or effective | The result reached the target environment or entered use; verify this separately from acceptance. |
+| State                 | What it permits you to say                                                                 |
+| --------------------- | ------------------------------------------------------------------------------------------ |
+| Unframed              | The problem, scope, or completion condition is still missing.                              |
+| Planned               | A route and owner exist; execution has not happened.                                       |
+| Executing             | Work is under way; the result has not passed verification.                                 |
+| Blocked               | A prerequisite prevents the affected action; name the gap, its impact, and the escalation. |
+| Awaiting verification | The deliverable exists, but the agreed checks have not passed.                             |
+| Verified              | Checks passed for a stated subject, version, environment, and limit.                       |
+| Accepted              | An authorized acceptor confirmed the agreed result.                                        |
+| Published             | The result reached the agreed publication destination; use remains unproved.               |
+| Effective or in use   | The result operates or is used at the agreed target; state what was observed.              |
 
-Do not rename “executing” as “almost done,” or infer publication from
-verification. A blocked task can contain useful work; the affected action stays
+Do not rename “executing” as “almost done,” infer publication from verification,
+or infer actual use from publication. A blocked task can contain useful work;
+the affected action stays
 blocked until its prerequisite is satisfied.
 Continue independent, authorized work that does not depend on that prerequisite.
 

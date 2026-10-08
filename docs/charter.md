@@ -122,8 +122,9 @@ Accountability remains mandatory. The
 [data topic](data.md#ownership-and-change-boundaries) owns the default lead
 arrangement for cross-domain work.
 
-Keep a concept, role, process, tool, or document only for an irreplaceable
-obligation; otherwise merge it with its owner or remove it. Use the
+Keep a concept, role, process, tool, or document when it serves a current
+obligation or produces evidenced net benefit. Combine or retire it when another
+owner can carry the same duty more clearly at lower cost. Use the
 [practice-admission test](evolve.md#admit-practices-and-prevent-recurrence) before
 making a method a department rule. Prefer one clear interface or automatic check
 to recurring meetings and reminders when they control the same risk. Do not build

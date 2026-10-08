@@ -30,9 +30,9 @@ State the purpose of the exchange before presenting the detail.
 | Review      | An explanation of the mechanism and what to keep, change, or discard.           |
 
 For an important update, lead with the **conclusion or present state**. Then
-give two or three decisive facts, the impact, current risks or blockers, a
-recommendation, and any decision needed from whom and by when. Name the next
-action, its owner and due time, and the condition that will show it is done.
+give the decisive facts needed for that conclusion, the impact, current risks or
+blockers, a recommendation, and any decision needed from whom and by when. Name
+the next action, its owner and due time, and the condition that shows completion.
 A status update names what changed since the previous report, not how much
 activity occurred. If there is no conclusion, state which evidence is missing
 and when it can be obtained.
@@ -64,8 +64,9 @@ options. When the discussion drifts, return to the question that needs a
 decision. Locate disagreement in facts,
 inference, values, resources, or authority. Afterward, keep only the conclusion,
 basis, decision, actions, open points, and risks. Each decision and action has
-an owner, deadline, and completion criterion. Without a decision or action, do
-not call the problem advanced.
+an owner, deadline, and completion criterion. A discussion may improve the shared
+model without reaching a decision; name that change and the remaining question.
+Do not present understanding as approval or activity as resolution.
 
 Challenge propositions, evidence, and costs, not personalities or motives.
 Distinguish disagreement about a fact from disagreement about an inference, and
