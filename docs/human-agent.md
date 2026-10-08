@@ -65,6 +65,40 @@ work, not that duty.
 
 ## Execute and Verify
 
+The person defines the delegation and checks the actual result. An Agent's
+report does not itself satisfy the acceptance conditions.
+
+```mermaid
+---
+config:
+  theme: base
+  look: classic
+  htmlLabels: false
+  fontFamily: "system-ui, sans-serif"
+  themeVariables:
+    fontFamily: "system-ui, sans-serif"
+    fontSize: "16px"
+    primaryColor: "#f3f6f8"
+    primaryTextColor: "#182b3a"
+    primaryBorderColor: "#657e91"
+    lineColor: "#657e91"
+  flowchart:
+    nodeSpacing: 24
+    rankSpacing: 28
+    padding: 12
+    wrappingWidth: 280
+---
+flowchart TB
+    accTitle: Delegated capability with retained human responsibility
+    accDescr: A person defines the task boundary. The Agent investigates and acts within it, then returns evidence. An authorized person checks the actual work. Unmet conditions return to review within the boundary; acceptance never expands permission or transfers responsibility.
+    H["Person<br/>Direction · authority · responsibility"] --> B["Delegation<br/>Scope · stop · acceptance"]
+    B --> A["Agent<br/>Inspect · reason · act"]
+    A --> E["Evidence<br/>Source · result · limits"]
+    E --> V{"Acceptance<br/>conditions met?"}
+    V -- "No: review<br/>within the boundary" --> B
+    V -- "Yes: authorized<br/>acceptor" --> C["Accept<br/>Record · hand off"]
+```
+
 An Agent must first confirm the task, target, current state, responsible person,
 and applicable local rules; repository work also requires the exact root.
 It must then restate the goal, scope, non-goals, and completion condition.

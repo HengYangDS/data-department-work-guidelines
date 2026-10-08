@@ -2,3 +2,8 @@
 node_modules/
 build/
 .ethos/state/
+
+# Shared editor state and Finder metadata are not repository source.
+.idea/
+.serena/
+.DS_Store

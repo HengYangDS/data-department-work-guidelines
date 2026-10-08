@@ -2,6 +2,19 @@
 
 ## ADDED Requirements
 
+### Requirement: Contributor exclusions travel with source
+
+Tracked native Git ignore policy SHALL exclude untracked editor state and Finder
+metadata in a fresh clone without ambient or Git-common exclusions. Tracked
+guidance SHALL remain selected; local exclusions SHALL NOT establish portability.
+
+#### Scenario: A contributor opens a fresh clone in an editor
+
+- **WHEN** editor state or Finder metadata appears in a fresh repository using
+  its tracked ignore policy and no personal exclusions
+- **THEN** native Git excludes those untracked files and retains tracked guidance
+- **AND** the repository adds no controller or quality gate for that selection.
+
 ### Requirement: Active task artifacts remain implementation checklists
 
 Active `tasks.md` SHALL follow the official template: numbered groups of bounded

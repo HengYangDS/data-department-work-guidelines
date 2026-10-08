@@ -61,6 +61,40 @@ explanations, and conclusions the data cannot support.
 
 ## Move from a Signal to Controlled Use
 
+Each stage answers a different question. The review path returns new evidence
+to exploration; it does not grant permission for a new use.
+
+```mermaid
+---
+config:
+  theme: base
+  look: classic
+  htmlLabels: false
+  fontFamily: "system-ui, sans-serif"
+  themeVariables:
+    fontFamily: "system-ui, sans-serif"
+    fontSize: "16px"
+    primaryColor: "#f3f6f8"
+    primaryTextColor: "#182b3a"
+    primaryBorderColor: "#657e91"
+    lineColor: "#657e91"
+  flowchart:
+    nodeSpacing: 24
+    rankSpacing: 28
+    padding: 12
+    wrappingWidth: 280
+---
+flowchart TB
+    accTitle: From a data opportunity to controlled use and review
+    accDescr: Opportunity leads to exploration, repetition, production, use admission, and feedback. Feedback can reopen exploration; production alone does not authorize use.
+    O["Opportunity<br/>Worth investigating?"] --> X["Explore<br/>What is the data?"]
+    X --> R["Reproduce<br/>Does the judgment repeat?"]
+    R --> P["Produce<br/>Can it run reliably?"]
+    P --> A["Admit use<br/>Is this use authorized?"]
+    A --> F["Review<br/>Does continued use hold?"]
+    F -. "New evidence<br/>or changed use" .-> X
+```
+
 Stages may be combined; the judgments may not disappear.
 
 | Stage        | Decision                          | Typical basis                                                          |

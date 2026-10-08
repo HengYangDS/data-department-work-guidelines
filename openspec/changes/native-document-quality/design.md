@@ -179,6 +179,11 @@ policy or implementation details in each route; this adds no registry, rule, or
 progress ledger. Preserve existing anchors and release-step dependencies during
 editing, then review complete before/after source for lost obligations.
 
+Native `.gitignore` owns shared editor and Finder exclusions. A fresh repository
+with isolated Git configuration and an empty `info/exclude` must exclude those
+untracked files while preserving tracked guidance. Do not treat this host's
+Git-common exclusions as contributor policy or add another selector.
+
 Keep original images, diagrams, and media in `assets/` when an actual reader or
 product uses them. Program-consumed non-code inputs may need `resources/`.
 Native settings stay in `.config/`; reproducible renders and bounded local work

@@ -116,6 +116,16 @@ distinct from mandatory task-specific prevention. Latest verified facts SHALL
 outrank loyalty to prior approaches, tools, identities, documents, or sunk costs.
 A Blocked report SHALL name the prerequisite gap, its impact, and the escalation.
 
+#### Scenario: A reading map could be mistaken for authority
+
+- **WHEN** a topic presents a working-loop, data-use, or human–AI diagram
+- **THEN** its editable Mermaid source stays beside the topic's authoritative rules
+- **AND** accessible titles and descriptions state the path and its conditions
+- **AND** every directed relation and condition preserves the topic's meaning
+- **AND** the rendered diagram is inspected at the actual reading width
+- **AND** a diagram, available route, or Agent report cannot establish permission,
+  acceptance, adoption, or improved team outcomes.
+
 #### Scenario: A familiar approach conflicts with new facts
 
 - **WHEN** new verified facts contradict a familiar approach, tool, identity,

@@ -26,6 +26,42 @@ for the required record and safeguards, using the existing ticket, review, or
 project document.
 Urgent containment follows [emergencies and exceptions](evolve.md#emergencies-and-exceptions).
 
+## The Working Loop
+
+The six stages organize the work; they do not replace the duties above.
+New evidence or changed risk may require an earlier judgment to be revisited.
+
+```mermaid
+---
+config:
+  theme: base
+  look: classic
+  htmlLabels: false
+  fontFamily: "system-ui, sans-serif"
+  themeVariables:
+    fontFamily: "system-ui, sans-serif"
+    fontSize: "16px"
+    primaryColor: "#f3f6f8"
+    primaryTextColor: "#182b3a"
+    primaryBorderColor: "#657e91"
+    lineColor: "#657e91"
+  flowchart:
+    nodeSpacing: 24
+    rankSpacing: 28
+    padding: 12
+    wrappingWidth: 280
+---
+flowchart TB
+    accTitle: From a framed problem to a verified result and learning
+    accDescr: Frame, analyze, decide, execute, verify, and learn in order. New evidence or changed risk returns the work to framing.
+    F["Frame<br/>Subject · outcome · limits"] --> A["Analyze<br/>Facts · model · alternatives"]
+    A --> D["Decide<br/>Authorized choice"]
+    D --> E["Execute<br/>Bounded action"]
+    E --> V["Verify<br/>Current evidence"]
+    V --> L["Learn<br/>Retain · revise · retire"]
+    L -. "New evidence<br/>or changed risk" .-> F
+```
+
 ## Before Acting
 
 | Question                         | Minimum answer                                                                 |

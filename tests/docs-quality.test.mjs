@@ -1874,6 +1874,68 @@ test("native TOML formatting checks literal Git paths and preserves data", () =>
   }
 });
 
+test("shared Git excludes editor state without hiding guidance source", () => {
+  using workspace = mkdtempDisposableSync(
+    path.join(os.tmpdir(), "ddwg-shared-ignore-"),
+  );
+  const directory = workspace.path;
+  const home = path.join(directory, "home");
+  mkdirSync(home);
+  const environment = {
+    ...process.env,
+    HOME: home,
+    USERPROFILE: home,
+    XDG_CONFIG_HOME: home,
+    GIT_CONFIG_NOSYSTEM: "1",
+    GIT_CONFIG_SYSTEM: os.devNull,
+    GIT_CONFIG_GLOBAL: os.devNull,
+    GIT_CONFIG_COUNT: "0",
+  };
+  const git = (arguments_) => {
+    const result = spawnSync("git", arguments_, {
+      cwd: directory,
+      env: environment,
+      encoding: "utf8",
+      timeout: 10_000,
+    });
+    assert.ifError(result.error);
+    assert.equal(result.status, 0, result.stderr);
+    return result.stdout;
+  };
+  git(["init", "--quiet"]);
+  writeFileSync(
+    path.join(directory, ".gitignore"),
+    readFileSync(path.join(root, ".gitignore")),
+  );
+  writeFileSync(path.join(directory, ".git/info/exclude"), "");
+  const local = [
+    ".idea/workspace.xml",
+    ".serena/cache/record.json",
+    ".DS_Store",
+    "docs/.DS_Store",
+  ];
+  for (const name of [...local, "docs/decide.md"]) {
+    mkdirSync(path.dirname(path.join(directory, name)), { recursive: true });
+    writeFileSync(path.join(directory, name), "fixture\n");
+  }
+  git(["add", "--", ".gitignore", "docs/decide.md"]);
+  const ignored = git(["check-ignore", "--verbose", "--", ...local])
+    .trimEnd()
+    .split("\n");
+  assert.equal(ignored.length, local.length);
+  for (const [index, line] of ignored.entries()) {
+    assert.ok(line.startsWith(".gitignore:"), line);
+    assert.ok(line.endsWith(`\t${local[index]}`), line);
+  }
+  assert.deepEqual(
+    git(["ls-files", "--cached", "--others", "--exclude-standard", "-z"])
+      .split("\0")
+      .filter(Boolean)
+      .sort(),
+    [".gitignore", "docs/decide.md"],
+  );
+});
+
 test("Git selection excludes worktree deletions and preserves native failure evidence", (context) => {
   mkdirSync(path.join(root, "build"), { recursive: true });
   const directory = mkdtempSync(

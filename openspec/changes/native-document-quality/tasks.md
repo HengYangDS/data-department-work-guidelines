@@ -217,10 +217,19 @@
       findings and runner failures; retire replaced rules, unused dependencies,
       and terminal qualification packages through their declared owners.
 
-- [ ] 2.39 Isolate native-cache rejection fixtures from inherited explicit
+- [x] 2.39 Isolate native-cache rejection fixtures from inherited explicit
       tool selectors. Preserve selector precedence and the caller's environment;
       verify the original selector-dependent failure, both rejection paths,
       the full native contribution command, and committed-source ETHOS proof.
+- [ ] 2.40 Render the working-loop, data-use, and human–AI responsibility maps
+      from their canonical topic sources. Verify every relationship and condition,
+      inspect legibility at desktop and narrow reading widths, and exercise the
+      member and Agent routes. Preserve the editorial audit and failed routes;
+      source syntax and screenshots alone do not prove adoption or team benefit.
+- [ ] 2.41 Share editor and Finder exclusions through native Git policy. Verify
+      a fresh repository without ambient or Git-common exclusions, preserve
+      tracked guidance selection, and run full source checks, committed-source
+      proof, and cold verification.
 
 ## 3. Qualification and publication
 
