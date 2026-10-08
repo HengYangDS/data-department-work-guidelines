@@ -1125,12 +1125,24 @@ test("temporary Windows runtime diagnosis preserves read-only scope and mandator
     validateCi(github, YAML.stringify(without), offline),
   );
   assert.equal(pipeline[name].script, undefined);
+  assert.deepEqual(pipeline[name].before_script.slice(1, 4), [
+    "Get-Command node,npm,mise -CommandType Application,ExternalScript -ErrorAction Stop | Select-Object Name,Source,Version | ConvertTo-Json -Compress",
+    "mise --version",
+    "mise ls node --json",
+  ]);
+  assert.equal(
+    pipeline[name].before_script[6],
+    "'HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall','HKLM:\\Software\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall','HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall' | Where-Object { Test-Path -LiteralPath $_ } | Get-ChildItem -ErrorAction Stop | Get-ItemProperty -ErrorAction Stop | Where-Object DisplayName -Like 'Node.js*' | Select-Object DisplayName,DisplayVersion,Publisher,InstallLocation,PSChildName | ConvertTo-Json -Compress",
+  );
   assert.deepEqual(pipeline[".docs:verify"].script, ["npm run verify"]);
   assert.deepEqual(pipeline[".docs:verify"].variables, { GIT_DEPTH: "0" });
   for (const change of [
     (job) => (job.tags = ["ci-windows-arm64-shell"]),
     (job) => (job.resource_group = "unreserved-diagnosis"),
     (job) => (job.rules[0].if = '$CI_COMMIT_BRANCH == "main"'),
+    (job) =>
+      (job.before_script[1] =
+        "Get-Command node,npm,winget,mise,fnm,nvm -ErrorAction SilentlyContinue"),
     (job) => (job.before_script[0] = "npm install --global node"),
     (job) => (job.script = ["echo passed"]),
   ]) {
