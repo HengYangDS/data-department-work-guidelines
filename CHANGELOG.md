@@ -33,6 +33,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Align both Forges on the same signed commit graph, including governed merges,
+  while retaining protected branches, required checks, and signature enforcement.
 - Replace duplicated working-loop and data-use diagrams with an ordered list
   and the existing decision table. Preserve every stage and return condition;
   remove custom diagram CSS and disconnected block layouts.

@@ -41,6 +41,22 @@ schema or default gate.
   commands, and wrapped action text
 - **AND** the official parser remains the owner of task identity and completion.
 
+### Requirement: Publication peers preserve the governed commit graph
+
+GitLab and GitHub SHALL retain the same signed commit graph, including governed
+merge commits. Fast-forward acceptance SHALL advance refs without rewriting
+accepted parent provenance. Both `dev` and `main` SHALL remain protected with
+required source checks and trusted signatures; force pushes and deletions SHALL
+remain prohibited. Provider-specific history rules SHALL admit that graph.
+
+#### Scenario: A governed integration reaches both peers
+
+- **WHEN** an exact signed integration contains a merge commit and passes the
+  declared proof and source checks
+- **THEN** both peers accept the same commit graph without squashing, rewriting
+  accepted history, or bypassing the required checks
+- **AND** publication is verified through each exact ref and actual source jobs.
+
 ## MODIFIED Requirements
 
 ### Requirement: Changelog navigation offers both declared Forges

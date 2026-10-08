@@ -80,6 +80,14 @@ Publish only `dev`, `main`, `proposal/*`, and ETHOS-admitted signed release tags
 [release declaration](../../.ethos/release.toml) own admission without operator
 keys or host paths.
 
+Both Forges retain the same signed commit graph, including governed merge
+commits. Fast-forward acceptance advances a ref to a descendant; it does not
+require a single-parent history. Do not squash or rewrite accepted history to
+satisfy one peer's configuration. Keep `dev` and `main` protected, require the
+declared source checks and trusted signatures, and forbid force pushes and
+deletions. Remote history rules must admit the repository's governed graph;
+GitHub's linear-history requirement is incompatible with this contract.
+
 ## Versioned Releases
 
 [`VERSION`](../../VERSION) holds the released identity between release cuts and

@@ -637,6 +637,19 @@ into a new release field. Preserve the intentional HTTP deployment and keep
 source bytes identical rather than add host detection, redirects, or
 Forge-specific rewrites.
 
+Preserve one signed commit graph on both peers. Native contribution merges keep
+parent provenance; `accepted_ff` advances accepted and release refs to that
+already proved descendant. It does not impose linear history. GitHub's
+single-parent restriction conflicted with GitLab's merge policy and rejected an
+otherwise admitted signed integration. Correct that property through its native
+branch-protection API while preserving required checks, trusted signatures,
+administrator enforcement, and the prohibition on force pushes and deletions.
+Do not rewrite the already accepted graph, waive source checks, or make a
+temporary protection bypass. Qualify each exact protected ref and its actual CI
+after the correction. A future incompatible remote rule must be reconciled with
+its repository-owned contract before publication, not discovered by repeated
+pushes. Shared forge-policy parity belongs in ETHOS, not a new local controller.
+
 Reusable peer-navigation and repaired-history admission belong in ETHOS. Consume
 applicable declared peers and native reference semantics, including shadowed
 definitions. Distinguish a missing link from a wrong target and an owner

@@ -308,9 +308,12 @@
 - [ ] 3.13 Qualify accepted [release-history and peer-navigation contracts](design.md#keep-both-publication-peers-complete-and-coherent)
       on every audited affected adopter through its own owners. Verify declared
       peers, conserved history, accepted Python evidence, repaired-baseline
-      admission, original-plan recovery, and installed bindings. Require both
-      Forge jobs and protected acceptance before retiring superseded identity
-      code; retain original receipts.
+      admission, original-plan recovery, and installed bindings. Reconcile native
+      merge history with both peers' branch protection; preserve required checks,
+      signatures, administrator enforcement, and refusal of force pushes and
+      deletions. Verify the same exact signed graph and actual protected jobs on
+      each peer before retiring superseded identity code; retain original
+      refusals and partial-effect receipts.
 - [x] 3.14 Qualify and publish compatible plain-language, cross-cycle, and
       offline-supply repairs with source-bound bundle, cold install, proof,
       trusted signed patch, both source/offline matrices, independent downloads,
