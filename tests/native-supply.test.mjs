@@ -302,7 +302,7 @@ test("print-spec is read-only and selects this host", () => {
   );
   assert.equal(result.status, 0, result.stderr);
   const spec = JSON.parse(result.stdout);
-  assert.equal(spec.key, `${process.platform}-${process.arch}`);
+  assert.equal(spec.key, selectedAsset("lychee").key);
   assert.equal(spec.sha256, manifest.tools.lychee.assets[spec.key].sha256);
 });
 
@@ -1003,7 +1003,7 @@ test("managed cached binaries verify bytes before version execution", async () =
       fs.copyFileSync(path.join(root, relative), destination);
     }
     const descriptor = manifest.tools.vale;
-    const key = `${process.platform}-${process.arch}`;
+    const key = selectedAsset("vale").key;
     const target = path.join(
       directory,
       "build/runtime/tool-cache/vale",
