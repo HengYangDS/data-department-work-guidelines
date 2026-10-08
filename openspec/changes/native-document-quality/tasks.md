@@ -230,6 +230,10 @@
       a fresh repository without ambient or Git-common exclusions, preserve
       tracked guidance selection, and run full source checks, committed-source
       proof, and cold verification.
+- [ ] 2.42 Bind failed Git selection to the same native child's failure status
+      and complete diagnostic without a language assumption or replay. Preserve
+      the localized cold failure, then verify the focused regression, full
+      source, exact committed proof, and cold successor.
 
 ## 3. Qualification and publication
 

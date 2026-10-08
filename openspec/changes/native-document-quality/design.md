@@ -328,6 +328,11 @@ wrong-root rejection or registering dependency junctions as source. Git-failure
 fixtures confine discovery to their own repository, even in cold scratch beneath
 another worktree; preserve their native errors and cleanup.
 
+Git-failure assertions observe the same native child result. Require its failure
+status and complete unchanged diagnostic, not language-specific wording. Do not
+force a locale, rerun Git for a comparison, or discard standard error. Retain
+the original localized cold-verification failure.
+
 The complete discovered standalone test inventory uses two workers and the
 existing outer deadline. Batch only independent native inputs; reject known
 source defects before unrelated prerequisites, while valid source still runs the

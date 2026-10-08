@@ -62,6 +62,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Verify failed Git selection against the same native attempt's status and
+  complete diagnostic, without assuming an English locale or replaying Git.
 - Isolate managed-cache rejection fixtures from explicit host tool selectors.
   The contribution checks now exercise the intended cache boundary without
   changing the contributor's selected tools.

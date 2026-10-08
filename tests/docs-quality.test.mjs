@@ -1970,8 +1970,29 @@ test("Git selection excludes worktree deletions and preserves native failure evi
       diagnostic += chunk;
       return true;
     });
-    assert.throws(() => gitFiles(directory), /git.*exited/u);
-    assert.match(diagnostic, /not a git repository/u);
+    const nativeSpawn = childProcess.spawnSync;
+    let nativeResult;
+    const observation = context.mock.method(
+      childProcess,
+      "spawnSync",
+      (command, args, options) => {
+        nativeResult = nativeSpawn(command, args, options);
+        return nativeResult;
+      },
+    );
+    syncBuiltinESMExports();
+    try {
+      assert.throws(() => gitFiles(directory), /git.*exited/u);
+      assert.equal(observation.mock.callCount(), 1);
+      assert.ifError(nativeResult.error);
+      assert.equal(nativeResult.status, 128);
+      assert.equal(nativeResult.signal, null);
+      assert.notEqual(nativeResult.stderr, "");
+      assert.equal(diagnostic, nativeResult.stderr);
+    } finally {
+      observation.mock.restore();
+      syncBuiltinESMExports();
+    }
   } finally {
     if (previousCeiling === undefined)
       delete process.env.GIT_CEILING_DIRECTORIES;
