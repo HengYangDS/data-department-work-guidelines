@@ -243,10 +243,10 @@ Change authority.
    `true`, `ref` to be `vX.Y.Z`, `sha` to be the proved commit, and `source` to
    be `api` or `web`. A mismatch is not release qualification. Require the
    `offline:verify:linux`, `offline:verify:macos`, and `offline:verify:windows`
-   jobs, not only the tag-push `docs:verify:<os>` jobs. The Windows ARM64 runner
-   uses x64 Node and the Windows x64 tool set under emulation; record host and
-   process architecture separately rather than calling it native x86_64
-   verification.
+   jobs, not only the tag-push `docs:verify:<os>` jobs. Apply the
+   [Windows ARM64 supply boundary](docs/governance/ethos.md#tool-supply-and-offline-execution)
+   for architecture observations and managed-asset selection evidence. Do not
+   call an ARM64 host running x64 tools native x86_64 verification.
 
 6. Download the asset from each Release into a separate empty directory and
    inspect both files against the committed record:

@@ -96,7 +96,7 @@ option-like names and names that a line-delimited list cannot represent.
 
 - **WHEN** fenced or indented Markdown code contains meaningful consecutive
   blank lines, including a nested or longer-fence example
-- **THEN** the existing native spacing rule preserves that literal content
+- **THEN** the native formatter preserves that literal content
 - **AND** the general text consumer does not reject it through a duplicate
   raw Markdown spacing scan.
 
@@ -126,11 +126,12 @@ option-like names and names that a line-delimited list cannot represent.
 
 #### Scenario: A comment attempts to suppress formatting
 
-- **WHEN** a byte-exact example uses its formatter's native ignore control
+- **WHEN** a native formatter ignore comment exempts a byte-exact example
 - **THEN** the native formatter preserves that example through fix, check,
   and a second fix pass
 - **AND** non-spacing Markdown rules still apply without a suppression blacklist
-  or second spacing parser.
+  or second spacing parser; strings, YAML scalars, and ordinary TOML comments
+  retain their data and native formatting behavior.
 
 #### Scenario: Wrapped simple list items contain unnecessary gaps
 
@@ -180,13 +181,6 @@ option-like names and names that a line-delimited list cannot represent.
 - **THEN** the verifier rejects that source with its path
 - **AND** declared binary assets remain reachable without being interpreted
   as prose, while effective text attributes require LF.
-
-#### Scenario: Native formatting encounters a suppression comment
-
-- **WHEN** a native formatter ignore control protects a byte-exact example
-- **THEN** fix and check preserve the example without a competing spacing veto
-- **AND** non-spacing checks remain active; strings, YAML scalars, and ordinary
-  TOML comments retain their data and native formatting behavior.
 
 #### Scenario: Native tools receive literal selected filenames
 
@@ -333,14 +327,36 @@ GitLab and GitHub SHALL supply and qualify the frozen release independently.
   validation; matrix membership alone does not qualify platform execution
 - **AND** each actual job retains its own source, runtime, and result evidence.
 
+#### Scenario: Standalone tests avoid unrelated quality startup
+
+- **WHEN** the public test command selects the complete Git-discovered test inventory
+- **THEN** the CLI loads only its invocation dependencies before native test execution
+- **AND** it preserves two workers, the 180-second outer deadline, every selected
+  test, and original process failures
+- **AND** full verification still executes all declared repository checks; this
+  dependency change does not qualify runner capacity or isolation.
+
+#### Scenario: Windows ARM64 runs native Node and compatible x64 tools
+
+- **WHEN** Node runs natively on Windows ARM64 and a tool has no pinned ARM64
+  asset
+- **THEN** the existing installer, managed-cache verifier, and offline bundle
+  select the same pinned Windows x64 asset without copying its manifest entry
+- **AND** a declared ARM64 tool asset takes precedence; absent compatible supply
+  fails before package-manager or tool execution
+- **AND** asset and executable digests, exact versions, ownership, and complete
+  verification remain required; selection tests alone do not prove platform
+  execution or timeout recovery.
+
 #### Scenario: A native tool is supplied offline
 
 - **WHEN** a supported host receives the exact source-bound bundle or a pinned
-  local archive, or consumers migrate to a replacement manifest or installer
-- **THEN** the installer verifies its asset and executable digests before
-  execution, safe archive members, executable
-  version, and source binding before admitting the tool
-- **AND** the old manifest and installer SHALL retire when their consumers are replaced
+  local archive
+- **THEN** the installer verifies source binding, asset digests, and safe archive
+  members before extraction, then the executable digest before running its exact
+  version check
+- **AND** tool admission requires that version check to pass
+- **AND** a replaced manifest or installer retires after verified consumer migration
 - **AND** it preserves the destination's host installation and credentials.
 
 #### Scenario: A frozen bundle is qualified before release
@@ -518,16 +534,16 @@ templates SHALL own common steps.
 
 ### Requirement: Verification reports its native workspace context
 
-The source check SHALL emit one complete JSON context before validation or
-inherited child output. It SHALL identify the real repository, commit, tree,
-tracked changes, Node runtime, and exact mounted-filesystem byte counts. Read or
-write errors SHALL fail with their native diagnosis. The context SHALL NOT
-qualify VM identity, isolation, throughput, or capacity admission or add a
-controller or gate.
+Both `check` and `verify` SHALL emit one complete JSON context before validation,
+formatting, or inherited child output. It SHALL identify the real repository,
+commit, tree, tracked changes, Node version, platform, process architecture,
+observed host name, and exact mounted-filesystem byte counts. Read or write errors
+SHALL fail with their native diagnosis. The context SHALL NOT qualify VM identity,
+isolation, throughput, or capacity admission or add a controller or gate.
 
 #### Scenario: A source check reports its actual workspace
 
-- **WHEN** the existing source check begins in a local or hosted workspace
+- **WHEN** `check` or `verify` begins in a local or hosted workspace
 - **THEN** one native observation identifies the source, runtime, and total,
   free, and available bytes of its mounted workspace filesystem
 - **AND** decimal integer strings preserve values beyond floating-point precision
@@ -536,8 +552,8 @@ controller or gate.
 
 #### Scenario: A child inherits a pipe with a pending context record
 
-- **WHEN** a context record exceeds the pipe buffer before a synchronous child
-  starts
+- **WHEN** a context record exceeds the pipe buffer before a synchronous
+  validation or formatter child starts
 - **THEN** the complete context remains one valid JSON line before child output
 - **AND** child output is not inserted into that line or merged with standard
   error.
@@ -545,7 +561,8 @@ controller or gate.
 #### Scenario: The context output consumer closes its pipe
 
 - **WHEN** the context write fails because its output consumer is closed
-- **THEN** verification stops before validation with the native write error
+- **THEN** both commands stop before validation or formatting with the native
+  write error
 - **AND** no unhandled stream error replaces the existing diagnosis.
 
 #### Scenario: A native filesystem read fails

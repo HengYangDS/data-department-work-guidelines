@@ -20,13 +20,10 @@ missing.
 > current evidence → bounded claim → acceptance and learning.
 
 These duties can share one work record; each step does not need its own
-document. Low-risk, local, reversible work may close in one exchange. For
-L1 and L2 work, use a reviewable record in the existing ticket, review, or
-project document under the [charter's risk levels](charter.md#form-follows-risk).
-High-risk work also follows the charter's
-[L2 minimum](charter.md#form-follows-risk):
-a written decision, explicit authorization, a rollback or degradation path,
-independent review, and human acceptance.
+document. [L0 work](charter.md#form-follows-risk) may close in one exchange.
+For L1 and L2 work, follow the [charter's risk levels](charter.md#form-follows-risk)
+for the required record and safeguards, using the existing ticket, review, or
+project document.
 Urgent containment follows [emergencies and exceptions](evolve.md#emergencies-and-exceptions).
 
 ## Before Acting
@@ -53,7 +50,7 @@ existing work record so collaborators work from the same commitment.
 | Unframed               | The problem, scope, or completion condition is still missing.                                     |
 | Planned                | A route and owner exist; execution has not happened.                                              |
 | Executing              | Work is under way; the result has not passed verification.                                        |
-| Blocked                | A prerequisite prevents the affected action; name the gap and escalation.                         |
+| Blocked                | A prerequisite prevents the affected action; name the gap, its impact, and the escalation.        |
 | Awaiting verification  | The deliverable exists, but the agreed checks have not passed.                                    |
 | Verified               | Checks passed for a stated subject, version, environment, and limit.                              |
 | Accepted               | An authorized acceptor confirmed the agreed result.                                               |

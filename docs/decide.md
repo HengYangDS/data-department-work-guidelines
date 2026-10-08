@@ -20,10 +20,11 @@ answer against shared criteria, counterexamples, and stated limits.
 
 In the existing ticket, discussion, or proposal, answer: Who must decide what,
 and by when? What is the subject, who is affected, and what are the present
-state, target, non-goals, and constraints? Which facts are known, and which
-unknowns matter? Who owns the work, who has authority to decide, and who accepts
-it? A low-risk matter may need one conversation; L1 and L2 work needs a
-reviewable record under the [charter's risk levels](charter.md#form-follows-risk).
+state, comparison baseline, target, success criteria, non-goals, and
+constraints? Which facts are known, and which unknowns matter? Who owns the
+work, who has authority to decide, and who accepts it? A low-risk matter may
+need one conversation; L1 and L2 work needs a reviewable record under the
+[charter's risk levels](charter.md#form-follows-risk).
 
 Name the time, cost, compliance, technical, and resource constraints. A target
 without those limits is not an executable commitment.
@@ -90,26 +91,24 @@ check the original symptom, adjacent paths, and unintended side effects; name
 what was not exercised. In review, distinguish judgments that helped from those
 that failed, and explain why; a fix without changed judgment invites recurrence.
 
-Check the reasoning for correlation presented as causation, a case presented as
-a population, a necessary condition treated as sufficient, a later outcome used
-to infer a unique earlier cause, selective search for supporting evidence,
-criteria changed
-midstream, and an appeal to common sense, experience, or “best practice” without
-checking its applicable boundary.
+Check the reasoning for correlation presented as causation, a case presented
+as a population, a necessary condition treated as sufficient, a later outcome
+used to infer a unique earlier cause, selective search for supporting
+evidence, criteria changed midstream, and an appeal to common sense,
+experience, or “best practice” without checking its applicable boundary.
 
 ## Make the Choice Comparable and Actionable
 
 For one decision, include feasible options, including the status quo. Compare
 them on the same basis: benefit, cost, risk, reversibility, and opportunity
-cost. Prefer an option that solves the framed problem, removes the main failure
-mode, and operates within current boundaries and resources. It should be
-verifiable, observable, and recoverable, reduce total maintenance and reliance
-on individual memory, repeated coordination, and manual rescue, and have clear
-exit and replacement conditions. Novelty, completeness, or popularity does not
-establish suitability. A recommendation
-states its premises, strongest objection, first step if chosen, and revisit
-trigger. The authorized person decides; a long analysis cannot stand in for
-authorization.
+cost. Prefer an option that solves the framed problem, removes the main
+failure mode, and operates within current boundaries and resources. It should
+be verifiable, observable, and recoverable, reduce total maintenance and
+reliance on individual memory, repeated coordination, and manual rescue, and
+have clear exit and replacement conditions. Novelty, completeness, or
+popularity does not establish suitability. A recommendation states its
+premises, strongest objection, first step if chosen, and revisit trigger. The
+authorized person decides; a long analysis cannot stand in for authorization.
 
 Once a choice is made, use the [decision-document order](communicate.md#write-for-fidelity-clarity-and-elegance)
 and record what was decided, by whom, on what date, and why, with its revisit
@@ -119,11 +118,11 @@ decision is needed; it does not establish when approval occurred.
 
 Give the proposed decision one of these three states:
 
-| State    | Say and do                                                           |
-| -------- | -------------------------------------------------------------------- |
-| Ready    | Premises hold; record the decision and first step.                   |
-| Blocked  | Name the unacceptable gap, owner, and condition for release.         |
-| Deferred | Name the missing information, how to obtain it, and when to revisit. |
+| State    | Say and do                                                                                |
+| -------- | ----------------------------------------------------------------------------------------- |
+| Ready    | Premises hold; record the decision and first step.                                        |
+| Blocked  | Name the unacceptable gap, owner, and condition for release.                              |
+| Deferred | Name the missing information or timing condition, how to resolve it, and when to revisit. |
 
 “Agreed in principle,” “keep looking,” and “continue progressing” are not
 decisions. Correct a conclusion when new facts overturn it rather than

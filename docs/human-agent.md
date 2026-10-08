@@ -14,10 +14,10 @@ relations:
 tests, or review to an Agent. Agents extend people's capacity to investigate,
 reason, and act within a delegated boundary. People retain direction,
 authorization, decisions, and responsibility for consequences. An Agent is an
-executing or reasoning entity, not a source of
-organizational authorization. Stop when the target, fact source, responsible
-person, or permission cannot be established; a person checks the actual work and
-evidence before accepting an Agent's result.
+executing or reasoning entity, not a source of organizational authorization.
+Stop when the target, fact source, responsible person, or permission cannot be
+established; a person checks the actual work and evidence before accepting an
+Agent's result.
 
 ## Delegate a Boundary, Not a Pile of Context
 
@@ -69,23 +69,23 @@ An Agent must first confirm the task, target, current state, responsible person,
 and applicable local rules; repository work also requires the exact root.
 It must then restate the goal, scope, non-goals, and completion condition.
 It must distinguish fact, hypothesis, inference, judgment, decision, and action;
-load only relevant material; and advance in reversible, verifiable steps
-within its authority and agreed scope, without incidental changes. Before
-writing, it must check the target, concurrent work, and
-recovery path. It must keep the state needed to continue in the existing work
+build the [smallest sufficient model](decide.md#use-the-smallest-sufficient-model)
+before expanding detail; load only relevant material; and advance in reversible,
+verifiable steps within its authority and agreed scope, without incidental
+changes. Before writing, it must check the target, concurrent work, and recovery
+path. It must keep the state needed to continue in the existing work
 record, not only in the conversation. Its output must lead with the conclusion
 and evidence, then limits and next steps.
 
-Agent memory, summaries, guesses, and generated content are candidate material.
-The Agent must check a source against the original, version, time, and applicable
-scope, and check whether the inputs are complete enough for the decision. It
-must run current checks that match the claim and read their complete results
-before summarizing. It must keep the command, target, exit status, and decisive
-output with the producing task;
-success excerpts do not replace inspection of warnings, omissions, or failures
-elsewhere in the selected results. Test or review code, analysis, and documents
-in proportion to risk. A member checks the actual work, not just the Agent's
-prose summary:
+Agent memory, summaries, guesses, and generated content are candidate
+material. The Agent must check a source against the original, version, time,
+and applicable scope, and check whether the inputs are complete enough for the
+decision. It must run current checks that match the claim and read their
+complete results before summarizing. It must keep the command, target, exit
+status, and decisive output with the producing task; success excerpts do not
+replace inspection of warnings, omissions, or failures elsewhere in the
+selected results. Test or review code, analysis, and documents in proportion
+to risk. A member checks the actual work, not just the Agent's prose summary:
 
 - Confirm the correct authority and current state, true and complete current
   inputs, and clear separation of assumptions, inferences, and judgments.
@@ -128,15 +128,17 @@ Stop the affected action and escalate if any of these conditions holds:
 Independent authorized work may continue when it does not depend on the
 stopped action.
 
-A completion report names the [delivery state](deliver.md#name-the-state-not-the-effort)
-reached and the goal, scope, target, version, actual changes, verification method,
-result, execution time and environment, and where the evidence can be inspected.
-Name risks, limits, assumptions, unresolved questions, and any acceptance still
-needed. Partial or deferred work names its affected scope and the state reached;
-neither label replaces a completion check. State what remains incomplete and
-why; distinguish a missing dependency
-from work that has not been attempted. End with the next responsible person,
-action, and due time; do not write only “follow up.” On interruption, preserve
-state, uncommitted work, attempts and failures, the recovery entry, and retries
-known to be ineffective. Repository Agents also start at the
-[Agent entry](../AGENTS.md).
+A completion report names the [delivery
+state](deliver.md#name-the-state-not-the-effort) reached and the goal, scope,
+target, version, actual changes, verification method, result, execution time
+and environment, and where the evidence can be inspected. Name risks, limits,
+assumptions, unresolved questions, and any acceptance still needed. Partial
+work names its affected scope and the delivery state reached.
+[Deferral](decide.md#make-the-choice-comparable-and-actionable) is a decision
+state; record its resolving action and revisit time as that topic requires.
+Neither label replaces a completion check. State what remains incomplete and
+why; distinguish a missing dependency from work that has not been attempted.
+End with the next responsible person, action, and due time; do not write only
+“follow up.” On interruption, preserve state, uncommitted work, attempts and
+failures, the recovery entry, and retries known to be ineffective. Repository
+Agents also start at the [Agent entry](../AGENTS.md).

@@ -76,6 +76,15 @@ user's explicit aesthetic requirement. This corrects the guidance rather than
 certifying the old wording as complete. Do not add philosophical definitions or
 concepts absent from the guidance; source checks cannot certify aesthetic quality.
 
+Preserve the reason a decision waits: missing information and a timing condition
+are different gaps, and each needs a resolution action and revisit time. Review
+should expect every task to meet its commitment and hard boundaries, not require
+an exceptional outcome from every task. Keep these duties at the decision and
+evolution topics rather than adding another checklist or review ceremony.
+Problem framing states the comparison baseline. Agent execution builds the
+smallest sufficient model before expanding detail; neither a vague present-state
+label nor a longer list substitutes for these original duties.
+
 Independent reviews cover fixed source, not a moving summary. Review all
 original numbered subsections and surrounding groups, then challenge the revised
 duties with concrete adverse cases. Earlier no-finding judgments remain dated
@@ -88,7 +97,8 @@ validator.
 ### Give native quality concerns one owner
 
 The existing source verifier reports its real repository, commit and tree,
-tracked-change state, native runtime, and mounted workspace capacity once. Use
+tracked-change state, Node version, platform, process architecture, observed
+host name, and mounted workspace capacity once. Use
 Node's native filesystem and OS interfaces, exact integer byte counts, and the existing
 bounded Git executor. Propagate native read errors. This is job-time observation,
 not VM identity, isolation, throughput, or a capacity admission threshold; runner
@@ -319,6 +329,14 @@ source defects before unrelated prerequisites, while valid source still runs the
 full graph. Narrow telemetry tests call the real invocation owner rather than
 repeat unrelated repository setup. No case or assertion is dropped.
 
+Load quality modules at their selected command, not at every CLI startup. The
+test entry discovers all standalone tests through native Git without loading
+unrelated document, formatter, CI, or bundle checks first. Complete verification
+still executes every declared check and the same test inventory. This removes
+unnecessary startup dependencies; it does not prove a runner is quiet or repair
+resource contention. Qualify hosted timing separately with the original failures
+and unchanged worker count and deadline.
+
 The public prose/integrity regression uses a compact native Git repository,
 the actual executable and policy bytes, and positive source with complete local
 links. It exercises both commands, ignored and force-tracked source, every
@@ -360,6 +378,14 @@ there is no custom ancestry graph, history cache, or relaxed deadline.
 
 ### Supply exact tools without a second installation plane
 
+Select the native tool asset independently of the Node process architecture.
+Prefer a declared exact-platform asset; on Windows ARM64 only, use a declared
+pinned x64 tool when no ARM64 asset exists. One selection function at the existing
+runtime owner serves the installer, managed-cache identity, and offline bundle.
+Do not duplicate asset pins or claim a new native ARM64 binary. The host's native
+Node may launch x64 tools under Windows emulation; actual source and offline jobs
+must qualify that combination and timeout behavior before it is accepted.
+
 The guidelines are directly readable; members and Agents need no repository
 software installation. The optional offline bundle is a maintenance toolkit
 for quality checks, not an installable guideline product. ETHOS remains a
@@ -373,7 +399,9 @@ edition, Node major, full package manifest, lock, and native supply.
 
 Supply and host qualification are distinct. The manifest carries macOS x64
 assets, but the declared CI matrices do not execute that ABI. Windows ARM64
-runner acceptance records the x64 Node process and complete x64 tool graph.
+runner acceptance records the actual host, Node-process, and tool
+architectures, and qualifies their combination under the [tool-supply
+boundary](../../../docs/governance/ethos.md#tool-supply-and-offline-execution).
 
 Local installed or locally supplied verification needs no remote service. GitLab
 uses its own project registry and CI identity; GitHub uses its independent
@@ -633,12 +661,12 @@ failed evidence and rollback are not disposable residue.
 
 ### Integrate accepted shared ownership without weakening the floor
 
-Keep `docs-integrity` and `markdown-format` as the only default gates and profile
-descriptors. The
-accepted product graph must connect document checks to the actual native
-behavior prerequisite and map static/behavior axes to their real owners.
-Product-native prerequisites belong to ETHOS's own dependency closure, not
-additional profile descriptors or evidence forwarded through a document command.
+Keep `docs-integrity` and `markdown-format` as the only default gates and
+profile descriptors. The accepted product graph must connect document checks
+to the actual native behavior prerequisite and map static/behavior axes to
+their real owners. Product-native prerequisites belong to ETHOS's own
+dependency closure, not additional profile descriptors or evidence forwarded
+through a document command.
 
 Consume the formally accepted schema, not prototype fields or a source-only
 probe. Migrate profile, repository validator, tests, and guidance together.

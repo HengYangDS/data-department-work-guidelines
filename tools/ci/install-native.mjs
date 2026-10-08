@@ -20,6 +20,7 @@ import {
   assertNativeBinaryDigest,
   managedFileExists,
   managedToolPath,
+  nativeToolPlatform,
   readNativeSupply,
   reportError,
   root,
@@ -33,10 +34,7 @@ export function selectedAsset(
   platform = process.platform,
   architecture = process.arch,
 ) {
-  const key = `${platform}-${architecture}`;
-  if (!Object.hasOwn(manifest.tools, tool)) {
-    throw new Error(`unknown native tool: ${tool}`);
-  }
+  const key = nativeToolPlatform(tool, `${platform}-${architecture}`, manifest);
   const descriptor = manifest.tools[tool];
   const asset = descriptor.assets[key];
   if (!asset || !/^[0-9a-f]{64}$/u.test(asset.sha256)) {

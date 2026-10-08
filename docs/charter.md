@@ -40,16 +40,15 @@ judgment or outcomes more reliable.
 A task should resolve the problem, test the judgment and its limits, and leave
 the system better able to recognize or handle the next occurrence. These are
 three distinct outcomes, not three required reports. Data work converts
-real-world signals into reliable judgments, data assets, and actions. A result
-belongs in a lasting work system only when its source and time can be
-identified, its meaning explained, its conditions checked, its use bounded, and
-its accountable owner found.
+real-world signals into reliable judgments, data assets, and actions. Before a
+result enters a lasting work system, apply the
+[data-admission conditions](data.md#ownership-and-change-boundaries).
 
 Understand the situation and reason from evidence. Use the minimum structure
 needed for a sound decision and a reliable result, without forcing reality
 into a single model. Revise it when the evidence changes. Names, tools, and
-models do not define reality. Old approaches, documents, and sunk costs do not
-outrank new facts.
+models do not define reality. Old approaches, tools, identities, documents, and
+sunk costs do not outrank new facts.
 
 ## Two Kinds of Authority
 
@@ -125,9 +124,9 @@ arrangement for cross-domain work.
 
 Keep a concept, role, process, tool, or document only for an irreplaceable
 obligation; otherwise merge it with its owner or remove it. Use the
-[practice-admission test](evolve.md#start-with-a-real-failure-mode) before making
-a method a department rule. Prefer one clear interface or automatic check to
-recurring meetings and reminders when they control the same risk. Do not build
+[practice-admission test](evolve.md#admit-practices-and-prevent-recurrence) before
+making a method a department rule. Prefer one clear interface or automatic check
+to recurring meetings and reminders when they control the same risk. Do not build
 a large platform for a low-risk, occasional problem.
 
 ## From Principle to Action

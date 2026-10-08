@@ -25,6 +25,7 @@ import {
   declaredToolRuntime,
   managedFileExists,
   managedToolPath,
+  nativeToolPlatform,
   nativeSupplyPath,
   offlineBundleRecordPath,
   readNativeSupply,
@@ -631,12 +632,9 @@ export function installBundle({
   const platform = `${process.platform}-${process.arch}`;
   const installations = Object.entries(native.tools).map(
     ([tool, descriptor]) => {
-      const asset = descriptor.assets[platform];
-      if (!asset)
-        throw new Error(
-          `offline bundle does not support ${tool} on ${platform}`,
-        );
-      const target = managedToolPath(tool, platform, repository);
+      const selectedPlatform = nativeToolPlatform(tool, platform, native);
+      const asset = descriptor.assets[selectedPlatform];
+      const target = managedToolPath(tool, selectedPlatform, repository);
       return { tool, asset, target };
     },
   );

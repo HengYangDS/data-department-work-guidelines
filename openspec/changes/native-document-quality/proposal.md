@@ -33,9 +33,10 @@ capabilities remain product dependencies.
   mechanism review, and quarterly net-benefit and capability review without a
   universal meeting or all-member report.
 - Give Git-selected source one native owner per format and one configuration
-  owner per concern. Prettier handles supported code and structured data; dprint
-  handles TOML; native Markdown rules handle reader blocks and list structure.
-  Preserve meaningful literal bytes, comments, order, and nesting.
+  owner per concern. Prettier owns Markdown spacing and container layout on
+  identical fix/check inputs, and handles supported code and structured data;
+  dprint owns TOML. Markdownlint owns non-spacing document checks. Preserve
+  meaningful literal bytes, comments, order, and nesting.
 - Keep configuration under checks, supply, or release according to its consumer.
   Use TOML where the native tool accepts it; retain Vale's required INI/YAML and
   dependency-free bootstrap JSON without converters or duplicate manifests.

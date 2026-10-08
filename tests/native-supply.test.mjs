@@ -23,6 +23,7 @@ import {
 import {
   managedFileExists,
   managedToolPath,
+  nativeToolPlatform,
   nativeToolBinary,
   reportError,
   root,
@@ -50,10 +51,37 @@ test("official supply declares exactly the supported platform assets", () => {
     assert.match(license.sha256, /^[0-9a-f]{64}$/u);
     assert.match(license.source, /lychee-v0\.24\.2/u);
   }
-  assert.throws(
-    () => selectedAsset("lychee", "win32", "arm64"),
-    /unsupported/u,
-  );
+  assert.equal(selectedAsset("lychee", "win32", "arm64").key, "win32-x64");
+});
+
+test("Windows ARM64 Node selects pinned compatible tools without duplicating assets", () => {
+  for (const [tool, descriptor] of Object.entries(manifest.tools)) {
+    const selected = selectedAsset(tool, "win32", "arm64");
+    assert.equal(selected.key, "win32-x64", tool);
+    assert.equal(selected.name, descriptor.assets["win32-x64"].name, tool);
+    assert.equal(selected.sha256, descriptor.assets["win32-x64"].sha256, tool);
+    assert.equal(
+      managedToolPath(tool, "win32-arm64"),
+      managedToolPath(tool, "win32-x64"),
+      tool,
+    );
+    const native = structuredClone(manifest);
+    native.tools[tool].assets["win32-arm64"] = { name: "native asset fixture" };
+    assert.equal(
+      nativeToolPlatform(tool, "win32-arm64", native),
+      "win32-arm64",
+    );
+    delete native.tools[tool].assets["win32-x64"];
+    delete native.tools[tool].assets["win32-arm64"];
+    assert.throws(
+      () => nativeToolPlatform(tool, "win32-arm64", native),
+      /unsupported/u,
+    );
+    assert.throws(
+      () => selectedAsset(tool, "linux", "riscv64"),
+      /unsupported/u,
+    );
+  }
 });
 
 test("all native consumers share the declared managed path", () => {
@@ -73,7 +101,10 @@ test("all native consumers share the declared managed path", () => {
     }
   }
   assert.throws(() => managedToolPath("constructor"), /unknown native tool/u);
-  assert.throws(() => managedToolPath("lychee", "win32-arm64"), /unsupported/u);
+  assert.throws(
+    () => managedToolPath("lychee", "win32-riscv64"),
+    /unsupported/u,
+  );
 });
 
 test("native tool identities must name declared manifest entries", () => {
@@ -1123,33 +1154,43 @@ test("Windows native selection binds quoted paths and direct suffixes before exe
       ...originalPlatform,
       value: "win32",
     });
-    Object.defineProperty(process, "arch", { ...originalArch, value: "x64" });
     process.env.PATH = '"' + path.dirname(target) + '"';
-    process.env.DDWG_VALE_BIN = "vale.exe";
     const runtime = await import(pathToFileURL(runtimePath));
-    assert.throws(
-      () => runtime.nativeToolBinary("vale"),
-      /binary digest mismatch/u,
-    );
+    for (const architecture of ["x64", "arm64"]) {
+      Object.defineProperty(process, "arch", {
+        ...originalArch,
+        value: architecture,
+      });
+      const before = executions;
+      fs.writeFileSync(
+        target,
+        "altered native bytes with unchanged version output",
+      );
+      process.env.DDWG_VALE_BIN = "vale.exe";
+      assert.throws(
+        () => runtime.nativeToolBinary("vale"),
+        /binary digest mismatch/u,
+      );
+      assert.equal(
+        executions,
+        before,
+        "quoted managed PATH must not bypass byte admission",
+      );
+      fs.writeFileSync(target, trusted);
+      assert.equal(runtime.nativeToolBinary("vale"), target);
+      process.env.DDWG_VALE_BIN = target.slice(0, -4);
+      assert.equal(runtime.nativeToolBinary("vale"), target);
+    }
     assert.equal(
       executions,
-      0,
-      "quoted managed PATH must not bypass byte admission",
-    );
-    fs.writeFileSync(target, trusted);
-    assert.equal(runtime.nativeToolBinary("vale"), target);
-    process.env.DDWG_VALE_BIN = target.slice(0, -4);
-    assert.equal(runtime.nativeToolBinary("vale"), target);
-    assert.equal(
-      executions,
-      2,
-      "both valid selectors start the same verified file",
+      4,
+      "x64 and ARM64 Node selectors start the same verified compatible file",
     );
     process.env.DDWG_VALE_BIN = "absent-native-file.exe";
     assert.throws(() => runtime.nativeToolBinary("vale"), /not found/u);
     assert.equal(
       executions,
-      2,
+      4,
       "unresolved selectors must not start an unbound command",
     );
     expected = path.join(directory, "..com");
@@ -1158,7 +1199,7 @@ test("Windows native selection binds quoted paths and direct suffixes before exe
     assert.throws(() => runtime.nativeToolBinary("vale"), /not found/u);
     assert.equal(
       executions,
-      2,
+      4,
       "the native single-dot refusal must precede startup",
     );
   } finally {

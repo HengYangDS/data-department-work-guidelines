@@ -67,8 +67,6 @@ understanding.
 The native OSV policy applies one exact, expiring development disposition to the
 complete raw project scan. Artifact approval and online qualification follow the
 [supply boundary](../docs/governance/ethos.md#tool-supply-and-offline-execution).
-Replace the compatibility check when the accepted installed ETHOS subject
-contract is qualified; do not retain a second risk implementation.
 
 [Contributing](../CONTRIBUTING.md) owns setup, fix/check, and release commands.
 [OpenSpec and ETHOS](../docs/governance/ethos.md) own change and proof admission.
