@@ -461,50 +461,6 @@ export function auditDependencies({
   return { evidence, findingCount, approvedFindings };
 }
 
-const windowsDiagnosticName = "docs:diagnose:windows:review";
-
-function validateWindowsDiagnostic(gitlab) {
-  const job = gitlab[windowsDiagnosticName];
-  if (job === undefined) return;
-  const expected = {
-    extends: ".docs:verify",
-    resource_group: gitlab["docs:verify:windows"]?.resource_group,
-    inherit: { default: false },
-    tags: ["ci-windows-arm64-review"],
-    variables: {
-      NODE_OPTIONS:
-        '--cpu-prof --cpu-prof-dir="${CI_PROJECT_DIR}/build/evidence/windows-native-profile" --cpu-prof-interval=10000',
-    },
-    before_script: [
-      "node -e \"require('node:fs').mkdirSync('build/evidence/windows-native-profile',{recursive:true})\"",
-      nativeSourceSupply,
-      "node -e \"console.log(JSON.stringify({kind:'native-test-profile',node:process.version,architecture:process.arch,executable:process.execPath,pid:process.pid,platform:process.platform,hostname:require('node:os').hostname(),usage:process.resourceUsage()}))\"",
-      "node --trace-event-categories=node.fs.sync,node.bootstrap --trace-event-file-pattern='build/evidence/windows-native-profile/prose-${pid}-${rotation}.json' --test --test-concurrency=2 --test-timeout=180000 --test-name-pattern=\"^public prose and integrity commands reject the same current-file defect$\" tests/docs-prose.test.mjs",
-      "node --trace-event-categories=node.fs.sync,node.bootstrap --trace-event-file-pattern='build/evidence/windows-native-profile/configuration-${pid}-${rotation}.json' --test --test-concurrency=2 --test-timeout=180000 --test-name-pattern=\"^configuration rejects mixed ownership, code, duplicates and local state$\" tests/docs-governance.test.mjs",
-    ],
-    artifacts: {
-      when: "always",
-      expire_in: "7 days",
-      paths: [
-        "build/evidence/dependencies/",
-        "build/evidence/windows-native-profile/",
-      ],
-    },
-    rules: [
-      {
-        if: '$CI_COMMIT_BRANCH =~ /^proposal\\// && $CI_PIPELINE_SOURCE == "push"',
-        when: "manual",
-        allow_failure: true,
-      },
-    ],
-  };
-  if (!isDeepStrictEqual(job, expected)) {
-    throw new Error(
-      "GitLab Windows diagnosis must retain native profiling, manual proposal review, evidence and its shared executor",
-    );
-  }
-}
-
 const verifier = "npm run verify";
 const auditCommand = "node tools/docs/cli.mjs audit";
 const verificationMinutes = { source: 20, offline: 25 };
@@ -907,7 +863,6 @@ export function validateCi(
     "default",
     ".docs:source-supply",
     ".docs:verify",
-    windowsDiagnosticName,
     "docs:verify:linux",
     "docs:verify:linux:review",
     ".offline:verify",
@@ -1094,7 +1049,6 @@ export function validateCi(
     validateGitLabOffline(gitlab, gitlabImage),
     ...validateGitLabNativeJobs(gitlab, "offline:verify", "offline", "offline"),
   ];
-  validateWindowsDiagnostic(gitlab);
   return {
     hosts: hostMatrix,
     offlineHosts: validateOfflineWorkflow(offlineSource, nodeMajor),

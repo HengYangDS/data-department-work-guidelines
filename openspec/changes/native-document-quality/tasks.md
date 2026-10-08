@@ -216,9 +216,9 @@
       with pinned compatible tools and actual architecture observations. Preserve
       findings and runner failures; retire replaced rules, unused dependencies,
       and terminal qualification packages through their declared owners.
-      Measure the same-source Windows native test processes through a temporary
-      manual review job; retain raw profiles and remove its CI wiring before
-      the final freeze. Refresh immutable CI action pins from official stable
+      Preserve same-source Windows diagnostic evidence; retire its temporary
+      manual review job, CI validator, and dedicated test before the final
+      freeze. Refresh immutable CI action pins from official stable
       releases, verify the explicit Node setup contract and real refusal cases,
       and preserve complete upstream finding reports and selected-route limits.
 

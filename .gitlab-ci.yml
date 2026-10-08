@@ -26,33 +26,6 @@ default:
     - node tools/ci/install-native.mjs lychee --gitlab-package
     - node tools/ci/install-native.mjs vale --gitlab-package
 
-# Temporary native throughput diagnosis for task 2.38; remove before final freeze.
-docs:diagnose:windows:review:
-  extends: .docs:verify
-  resource_group: windows-verification
-  inherit:
-    default: false
-  tags:
-    - ci-windows-arm64-review
-  variables:
-    NODE_OPTIONS: '--cpu-prof --cpu-prof-dir="${CI_PROJECT_DIR}/build/evidence/windows-native-profile" --cpu-prof-interval=10000'
-  before_script:
-    - 'node -e "require(''node:fs'').mkdirSync(''build/evidence/windows-native-profile'',{recursive:true})"'
-    - *docs-source-supply
-    - 'node -e "console.log(JSON.stringify({kind:''native-test-profile'',node:process.version,architecture:process.arch,executable:process.execPath,pid:process.pid,platform:process.platform,hostname:require(''node:os'').hostname(),usage:process.resourceUsage()}))"'
-    - 'node --trace-event-categories=node.fs.sync,node.bootstrap --trace-event-file-pattern=''build/evidence/windows-native-profile/prose-${pid}-${rotation}.json'' --test --test-concurrency=2 --test-timeout=180000 --test-name-pattern="^public prose and integrity commands reject the same current-file defect$" tests/docs-prose.test.mjs'
-    - 'node --trace-event-categories=node.fs.sync,node.bootstrap --trace-event-file-pattern=''build/evidence/windows-native-profile/configuration-${pid}-${rotation}.json'' --test --test-concurrency=2 --test-timeout=180000 --test-name-pattern="^configuration rejects mixed ownership, code, duplicates and local state$" tests/docs-governance.test.mjs'
-  artifacts:
-    when: always
-    expire_in: 7 days
-    paths:
-      - build/evidence/dependencies/
-      - build/evidence/windows-native-profile/
-  rules:
-    - if: '$CI_COMMIT_BRANCH =~ /^proposal\// && $CI_PIPELINE_SOURCE == "push"'
-      when: manual
-      allow_failure: true
-
 .docs:verify:
   stage: verify
   timeout: 20m
