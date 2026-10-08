@@ -1878,17 +1878,20 @@ test("shared Git excludes editor state without hiding guidance source", () => {
   using workspace = mkdtempDisposableSync(
     path.join(os.tmpdir(), "ddwg-shared-ignore-"),
   );
-  const directory = workspace.path;
-  const home = path.join(directory, "home");
+  const directory = path.join(workspace.path, "repository");
+  const home = path.join(workspace.path, "home");
+  mkdirSync(directory);
   mkdirSync(home);
+  const emptyConfig = path.join(home, "gitconfig");
+  writeFileSync(emptyConfig, "");
   const environment = {
     ...process.env,
     HOME: home,
     USERPROFILE: home,
     XDG_CONFIG_HOME: home,
     GIT_CONFIG_NOSYSTEM: "1",
-    GIT_CONFIG_SYSTEM: os.devNull,
-    GIT_CONFIG_GLOBAL: os.devNull,
+    GIT_CONFIG_SYSTEM: emptyConfig,
+    GIT_CONFIG_GLOBAL: emptyConfig,
     GIT_CONFIG_COUNT: "0",
   };
   const git = (arguments_) => {

@@ -62,6 +62,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Supply Git isolation with an owned empty configuration file rather than
+  Node's null-device path, which Windows Git cannot read as configuration.
 - Verify failed Git selection against the same native attempt's status and
   complete diagnostic, without assuming an English locale or replaying Git.
 - Isolate managed-cache rejection fixtures from explicit host tool selectors.

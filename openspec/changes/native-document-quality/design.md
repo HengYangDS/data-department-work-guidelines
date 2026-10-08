@@ -323,6 +323,8 @@ cause from an assertion that lost the process result.
 Each test establishes its own filesystem prerequisites. Source-link fixtures
 create their ignored parent; concurrent-install fixtures model the regular
 exclusive-copy target; format/lint fixtures carry the source Git ignore policy.
+Git configuration isolation supplies an owned regular empty file, not a
+runtime-specific null device that another native consumer may not accept.
 Native filesystem resolution compares Windows short aliases without waiving
 wrong-root rejection or registering dependency junctions as source. Git-failure
 fixtures confine discovery to their own repository, even in cold scratch beneath
