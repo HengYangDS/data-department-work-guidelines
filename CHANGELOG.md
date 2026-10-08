@@ -18,10 +18,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 - Share native Git exclusions for editor state and Finder metadata across
   contributor clones, without hiding guideline source.
-- Add compact Mermaid reading maps for the working loop, controlled data use,
-  and human–AI responsibility, with complete titled text equivalents. Each stays
-  beside its rule owner; a diagram does not grant authority or establish
-  acceptance. Native block output does not supply SVG titles or descriptions.
+- Make human–Agent delegation and acceptance visible in one native sequence
+  diagram, with the complete text equivalent beside its rule owner. A diagram
+  does not grant authority or establish acceptance.
 - An explicit protected-source GitLab route for qualifying a frozen offline
   bundle before release. It reuses offline jobs without replaying source checks
   or treating the temporary qualification package as a signed Release.
@@ -34,6 +33,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Replace duplicated working-loop and data-use diagrams with an ordered list
+  and the existing decision table. Preserve every stage and return condition;
+  remove custom diagram CSS and disconnected block layouts.
 - Refresh the source and offline Node setup action to 7.1.0. Both workflows
   use one explicit Node version input without automatic package-manager caching.
 - Preserve timing-based decision deferral and make clear that routine tasks need

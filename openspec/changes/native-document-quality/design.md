@@ -178,27 +178,26 @@ requires no installer or host imports; its native Wasm API supplies the complete
 original MIT notice. Verify that notice against the locked identity and complete
 grant without fabricating a sidecar or claiming general safety.
 
-### Make reading maps compact without hiding relationships
+### Choose the reading form by the question
 
-Keep editable Mermaid fenced in its canonical topic; renders belong to ignored
-`build/`. The working loop, controlled data use, and human–AI delegation have
-different visual emphasis but preserve every node, directed relation, and
-condition. Numbered loop stages support reading order without making the map
-an authorization, acceptance, or team-outcome claim.
+An ordered list explains the working loop. The existing data-stage table puts
+use decisions beside their evidence. Neither needs a second diagram that
+repeats the same sequence. Retain every stage, return condition, judgment, and
+authority limit when removing those duplicated views.
 
-Use a compact two-column block layout with headings above quieter descriptions.
-Emphasize judgment, use admission, and retained human responsibility rather than
-giving every step the same visual weight. Place short return labels beside their
-arrows using label-relative spacing; do not translate the whole edge or enlarge
-all cards to accommodate one condition. Inspect actual renders for clipped
-labels, arrows, collisions, and readability at desktop and narrow widths.
+Human–Agent collaboration has a different reading problem: who delegates, who
+executes, who returns evidence, and who accepts. Use one native Mermaid sequence
+in that topic to distinguish those roles and the unmet/met acceptance branches.
+People retain direction, authority, and responsibility; an authorized acceptor
+may be the task lead when authorized. The diagram does not create another role,
+permission, or acceptance ceremony.
 
-Native Mermaid block output has no accessible SVG title or description. Each
-map therefore has a descriptively titled, same-section Markdown text equivalent
-stating its full order, return, conditions, and authority limits. Do not claim
-SVG labeling or screen-reader acceptance from those source words. Verify the
-rendered text route separately; where native SVG metadata exists, retain it.
-No vendor patch, private renderer, or diagram-only route is introduced.
+Keep the editable fence beside the authoritative rules and its complete text
+equivalent. Use native grammar and theme rather than private CSS, translated
+labels, or manually positioned arrows. Retain native SVG titles and descriptions;
+inspect the complete render and actual peer reading routes without inferring
+screen-reader acceptance or improved team outcomes. Derived review artifacts
+belong to ignored `build/`, not a second published diagram source.
 
 ### Keep configuration with its consumer
 

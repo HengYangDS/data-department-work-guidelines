@@ -67,54 +67,10 @@ explanations, and conclusions the data cannot support.
 
 ## Move from a Signal to Controlled Use
 
-**Controlled-use map:** Opportunity → Explore → Reproduce → Produce → Admit use
-→ Review. Ask, in order, whether investigation is worthwhile, what the data is,
-whether the judgment repeats, whether it can run reliably, whether this use is
-authorized, and whether continued use holds. New evidence or changed use returns
-to Explore to revisit value, meaning, and quality. Production and feedback do
-not grant permission for a new use.
-
-```mermaid
----
-config:
-  theme: base
-  look: classic
-  htmlLabels: true
-  fontFamily: "system-ui, sans-serif"
-  themeVariables:
-    fontFamily: "system-ui, sans-serif"
-    fontSize: "16px"
-    primaryColor: "#fbfaf7"
-    primaryTextColor: "#28373b"
-    primaryBorderColor: "#657e91"
-    lineColor: "#627a75"
-  themeCSS: |
-    .nodeLabel { font-size: 14px; line-height: 1.35; }
-    .nodeLabel b { font-size: 16px; font-weight: 600; }
-    .nodeLabel small { font-size: 11px; font-weight: 500; letter-spacing: 0.75px; }
-    .edgeLabel { font-size: 12px; line-height: 1.25; }
-    .edgeLabel .label { transform-box: fill-box; transform: translate(8px, -50%); }
-  block:
-    padding: 24
----
-block-beta
-    columns 2
-    O("<small>01</small>&nbsp; <b>Opportunity</b><br/>Worth investigating?"):2
-    X("<small>02</small>&nbsp; <b>Explore</b><br/>What is<br/>the data?") R("<small>03</small>&nbsp; <b>Reproduce</b><br/>Does the<br/>judgment repeat?")
-    F("<small>06</small>&nbsp; <b>Review</b><br/>Does continued<br/>use hold?") P("<small>04</small>&nbsp; <b>Produce</b><br/>Can it run<br/>reliably?")
-    A("<small>05</small>&nbsp; <b>Admit use</b><br/>Is this use authorized?"):2
-    O --> X
-    X --> R
-    R --> P
-    P --> A
-    A --> F
-    F -. "New evidence<br/>or changed use" .-> X
-    classDef default fill:none,stroke:none,color:#28373b
-    class A principal
-    classDef principal fill:#283f42,stroke:#283f42,color:#ffffff,stroke-width:1px
-```
-
-Stages may be combined; the judgments may not disappear.
+Use the stages below in order. They may be combined, but their judgments may
+not disappear. New evidence or changed use returns to Exploration to revisit
+value, meaning, and quality. Production and feedback do not grant permission
+for a new use.
 
 | Stage        | Decision                          | Typical basis                                                          |
 | ------------ | --------------------------------- | ---------------------------------------------------------------------- |

@@ -226,13 +226,14 @@
       tool selectors. Preserve selector precedence and the caller's environment;
       verify the original selector-dependent failure, both rejection paths,
       the full native contribution command, and committed-source ETHOS proof.
-- [ ] 2.40 Render the working-loop, data-use, and human–AI responsibility maps
-      from their canonical topic sources. Verify every relationship and condition,
-      inspect legibility at desktop and narrow reading widths, and exercise the
-      member and Agent routes, including the complete same-section text equivalent.
-      Verify condition labels beside visible arrows without source-only SVG or
-      screen-reader claims. Preserve the editorial audit and failed routes;
-      source syntax and screenshots alone do not prove adoption or team benefit.
+- [ ] 2.40 Qualify the working-loop list, controlled-use table, and human–Agent
+      sequence at their canonical topics. Preserve every stage, relationship,
+      return condition, and authority limit while retiring duplicated block
+      diagrams and custom styling. Inspect the native sequence render and member
+      and Agent routes at actual desktop reading widths, including the complete
+      same-section text equivalent. Preserve the editorial audit and failed
+      routes; source syntax and screenshots alone do not prove adoption, team
+      benefit, or screen-reader acceptance.
 - [x] 2.41 Share editor and Finder exclusions through native Git policy. Verify
       a fresh repository without ambient or Git-common exclusions, preserve
       tracked guidance selection, and run full source checks, committed-source

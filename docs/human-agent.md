@@ -65,7 +65,7 @@ work, not that duty.
 
 ## Execute and Verify
 
-**Delegation and acceptance map:** A person retains direction, authority, and
+**Delegation and acceptance:** A person retains direction, authority, and
 responsibility. They define scope, stop conditions, and acceptance; the Agent
 inspects, reasons, and acts, then returns the source, result, and limits as
 evidence. Examine the actual work against the acceptance conditions:
@@ -79,46 +79,29 @@ An Agent's report does not itself satisfy the acceptance conditions.
 ```mermaid
 ---
 config:
-  theme: base
-  look: classic
-  htmlLabels: true
-  fontFamily: "system-ui, sans-serif"
-  themeVariables:
-    fontFamily: "system-ui, sans-serif"
-    fontSize: "16px"
-    primaryColor: "#fbfaf7"
-    primaryTextColor: "#28373b"
-    primaryBorderColor: "#657e91"
-    lineColor: "#627a75"
-  themeCSS: |
-    .nodeLabel { font-size: 14px; line-height: 1.35; }
-    .nodeLabel b { font-size: 16px; font-weight: 600; }
-    .nodeLabel small { font-size: 11px; font-weight: 500; letter-spacing: 0.75px; }
-    .edgeLabel { font-size: 12px; line-height: 1.25; }
-    .edgeLabel .label { transform-box: fill-box; transform: translate(8px, -50%); }
-    .edgeLabel .label[data-id$="-V-C"] { transform: translate(8px, -100%); }
-  block:
-    padding: 24
+  theme: neutral
+  sequence:
+    mirrorActors: false
 ---
-block-beta
-    columns 2
-    H("<b>Person</b><br/>Direction · authority · responsibility"):2
-    B("<b>Delegation</b><br/>Scope · stop<br/>acceptance") A("<b>Agent</b><br/>Inspect · reason<br/>act")
-    V("<b>Acceptance</b><br/>conditions met?") E("<b>Evidence</b><br/>Source · result<br/>limits")
-    C("<b>Accept</b><br/>Record · hand off"):2
-    H --> B
-    B --> A
-    A --> E
-    E --> V
-    V -- "No: review within<br/>the boundary" --> B
-    V -- "Yes: authorized<br/>acceptor" --> C
-    classDef default fill:none,stroke:none,color:#28373b
-    classDef authority fill:#edf3f1,stroke:#648a80,color:#234b42,stroke-width:1px
-    classDef accepted fill:#f5f3ee,stroke:#b4aa95,color:#474134,stroke-width:1px
-    class B authority
-    class H principal
-    class C accepted
-    classDef principal fill:#283f42,stroke:#283f42,color:#ffffff,stroke-width:1px
+sequenceDiagram
+    accTitle: Delegation and acceptance
+    accDescr: A person defines scope, stop conditions, and acceptance criteria. The Agent returns the source, result, and limits of bounded work. An authorized acceptor examines the actual work and evidence. Unmet conditions return to review within the delegation boundary; acceptance is recorded and handed off. People retain direction, authority, and responsibility.
+    participant P as Person
+    participant A as Agent
+    participant R as Authorized acceptor
+    P->>A: Scope, stop conditions, acceptance criteria
+    activate A
+    A->>A: Inspect, reason, act within scope
+    A-->>P: Source, result, limits
+    deactivate A
+    P->>R: Actual work and evidence
+    R->>R: Examine acceptance conditions
+    alt Conditions not met
+        R-->>P: Review within the delegation boundary
+    else Conditions met
+        R-->>P: Accept, record, hand off
+    end
+    Note over P,R: People retain direction, authority, and responsibility
 ```
 
 An Agent must first confirm the task, target, current state, responsible person,
