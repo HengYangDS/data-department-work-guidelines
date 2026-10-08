@@ -226,14 +226,22 @@
       inspect legibility at desktop and narrow reading widths, and exercise the
       member and Agent routes. Preserve the editorial audit and failed routes;
       source syntax and screenshots alone do not prove adoption or team benefit.
-- [ ] 2.41 Share editor and Finder exclusions through native Git policy. Verify
+- [x] 2.41 Share editor and Finder exclusions through native Git policy. Verify
       a fresh repository without ambient or Git-common exclusions, preserve
       tracked guidance selection, and run full source checks, committed-source
       proof, and cold verification.
-- [ ] 2.42 Bind failed Git selection to the same native child's failure status
+      Verified at `d600bed`: full and cold source checks both passed 312 cases.
+      Complete original failures and acceptance are retained in native
+      Attestation `28a9c0d556e978dd6afbad8f733dbdd47f18bc1ff410c6128da8efa8b31361f6`;
+      exact-HEAD proof and candidate landing remain separately bound there.
+- [x] 2.42 Bind failed Git selection to the same native child's failure status
       and complete diagnostic without a language assumption or replay. Preserve
       the localized cold failure, then verify the focused regression, full
       source, exact committed proof, and cold successor.
+      The localized RED and same-attempt GREEN are retained in the same native
+      Attestation. Source `d600bed` passed cold verification without remotes,
+      inherited configuration, credentials, or managed-tool cache. This closes
+      the local test repair, not shared integration or hosted acceptance.
 
 ## 3. Qualification and publication
 
