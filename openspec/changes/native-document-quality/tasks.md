@@ -226,7 +226,7 @@
       tool selectors. Preserve selector precedence and the caller's environment;
       verify the original selector-dependent failure, both rejection paths,
       the full native contribution command, and committed-source ETHOS proof.
-- [ ] 2.40 Qualify the working-loop list, controlled-use table, and human–Agent
+- [x] 2.40 Qualify the working-loop list, controlled-use table, and human–Agent
       sequence at their canonical topics. Preserve every stage, relationship,
       return condition, and authority limit while retiring duplicated block
       diagrams and custom styling. Inspect the native sequence render and member
