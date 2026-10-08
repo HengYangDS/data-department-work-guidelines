@@ -218,7 +218,9 @@
       and terminal qualification packages through their declared owners.
       Measure the same-source Windows native test processes through a temporary
       manual review job; retain raw profiles and remove its CI wiring before
-      the final freeze.
+      the final freeze. Refresh immutable CI action pins from official stable
+      releases, verify the explicit Node setup contract and real refusal cases,
+      and preserve complete upstream finding reports and selected-route limits.
 
 - [x] 2.39 Isolate native-cache rejection fixtures from inherited explicit
       tool selectors. Preserve selector precedence and the caller's environment;

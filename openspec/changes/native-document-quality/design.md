@@ -390,6 +390,15 @@ there is no custom ancestry graph, history cache, or relaxed deadline.
 
 ### Supply exact tools without a second installation plane
 
+Source and offline workflows configure Node through one explicit version input.
+They resolve the latest stable release in the declared major and disable
+automatic package-manager caching.
+The existing CI owner rejects alternative version-file inputs and undeclared
+setup options. Require an immutable upstream action commit, then read and install
+npm from its native declaration; an action's interpreter is not the selected
+project runtime. Preserve complete upstream advisory evidence and assess the
+actual configured path rather than treating a newer action as vulnerability-free.
+
 Select the native tool asset independently of the Node process architecture.
 Prefer a declared exact-platform asset; on Windows ARM64 only, use a declared
 pinned x64 tool when no ARM64 asset exists. One selection function at the existing

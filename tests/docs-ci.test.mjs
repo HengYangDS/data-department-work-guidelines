@@ -1808,7 +1808,7 @@ test("offline release CI runs the source-pinned bundle on four hosted systems", 
     [offline.replace("fetch-depth: 0", "fetch-depth: 1"), /full history/u],
     [
       offline.replace(
-        "actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+        /actions\/setup-node@[0-9a-f]{40}/u,
         "actions/setup-node@main",
       ),
       /not pinned/u,
@@ -2027,6 +2027,7 @@ test("Node setup avoids npm before native package-manager supply", () => {
       () => (setup.with["package-manager-cache"] = true),
       () => (setup.with.cache = "npm"),
       () => (setup.with["check-latest"] = false),
+      () => (setup.with["node-version-file"] = "unowned.toml"),
     ]) {
       setup.with = {
         "node-version": 26,

@@ -571,9 +571,13 @@ const nativeSourceSupply = [
 function requirePackageManagerSetup(steps, setupNode) {
   const setup = steps[setupNode]?.with;
   if (
+    !isDeepStrictEqual(Object.keys(setup ?? {}).sort(), [
+      "check-latest",
+      "node-version",
+      "package-manager-cache",
+    ]) ||
     setup?.["package-manager-cache"] !== false ||
-    setup?.["check-latest"] !== true ||
-    setup?.cache !== undefined
+    setup?.["check-latest"] !== true
   ) {
     throw new Error(
       "Node setup must resolve the latest declared runtime without invoking npm",

@@ -33,6 +33,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Refresh the source and offline Node setup action to 7.1.0. Both workflows
+  use one explicit Node version input without automatic package-manager caching.
 - Preserve timing-based decision deferral and make clear that routine tasks need
   their agreed outcome, not an exceptional result every time.
 - Make the comparison baseline explicit when framing a problem and require

@@ -327,6 +327,16 @@ GitLab and GitHub SHALL supply and qualify the frozen release independently.
   validation; matrix membership alone does not qualify platform execution
 - **AND** each actual job retains its own source, runtime, and result evidence.
 
+#### Scenario: Node setup consumes one explicit runtime input
+
+- **WHEN** source or offline CI configures the project Node runtime
+- **THEN** the existing CI owner requires the declared major, latest-release
+  resolution, and disabled automatic package-manager caching as its only inputs
+- **AND** an alternative version-file input or undeclared setup option fails
+  configuration validation before hosted execution
+- **AND** the action commit and subsequent native npm declaration remain separate
+  supply inputs; a new action version does not establish an advisory-free artifact.
+
 #### Scenario: Standalone tests avoid unrelated quality startup
 
 - **WHEN** the public test command selects the complete Git-discovered test inventory
