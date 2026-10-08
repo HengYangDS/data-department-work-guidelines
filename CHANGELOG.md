@@ -24,12 +24,21 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 - Report the verification source, native runtime, and mounted workspace capacity
   in existing source-check output. Preserve exact byte counts and read errors;
   this does not qualify VM identity, isolation, or throughput.
-- A lightweight weekly sample-calibration default, with explained departures and
-  a revisit time. Monthly mechanism review and quarterly net-benefit review
-  remain separate; no new all-member meeting or report is required.
 
 ### Changed
 
+- Review current rules against applicable authority, work needs, and their cost;
+  retired drafts are comparison inputs, not a restoration baseline.
+- Let problem models represent interacting causes and cross-cutting constraints;
+  decision readiness does not imply approval.
+- Make writing serve the reader without a required deletion fraction or fixed
+  arrangement. Keep meaning, limits, responsibility, and expressive quality.
+- Preserve periodic calibration, mechanism review, and practice and capability
+  assessment with purpose, ownership, and actionable results. Weekly, monthly,
+  and quarterly defaults allow justified interval changes, not a fixed sample
+  count or meeting length.
+- Target supervisor coaching and reusable prevention at actual need and risk,
+  without another approval for routine work or a new file for repetition alone.
 - Use retired guidelines to find omissions and justify changed duties, without
   treating earlier wording as current authority or a restoration target.
 - Align both Forges on the same signed commit graph, including governed merges,

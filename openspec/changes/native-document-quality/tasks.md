@@ -253,6 +253,15 @@
       diagnostics and fixture cleanup without changing Git or host policy.
       Retain complete original and successor evidence under Attestation
       `687f62fa93ec131cc70507c98f309e54c5e30ea2429da22a60798e19f67bd52a`.
+- [ ] 2.44 Correct the obsolete-source preservation premise in this active
+      proposal, design, and guidance contract. Review all seven current topics
+      for applicable authority, current purpose, actionable conditions, and
+      proportionate cognitive and maintenance cost, not just correspondence
+      with the retired source. Resolve omissions and obsolete rules through
+      justified dispositions at the existing review owner; never restore the
+      retired root monolith. Preserve binding current duties, completed task
+      evidence, and immutable history. Verify the actual edited source, reading
+      paths, native checks, and source-bound proof before closing this task.
 
 ## 3. Qualification and publication
 
@@ -269,12 +278,14 @@
 - [x] 3.4 Publish the major signed SemVer edition independently to GitLab and
       GitHub; verify both exact refs, Releases, downloaded asset hashes, and
       declared source and offline platform jobs.
-- [ ] 3.5 Complete the [original-duty review](design.md#review-original-duties-at-seven-topic-owners):
+- [ ] 3.5 Complete the [current-duty and retired-source review](design.md#review-original-duties-at-seven-topic-owners):
       compare all 62 original subsections, five surrounding groups, and chapter
       introductions and diagrams outside them with current source. Explain every
-      justified change or removal and resolve every review finding. Require tasks
-      2.33, 2.38, 3.3, and 3.13, then complete
-      the pre-archive [migration plan](design.md#migration-plan): frozen minor
+      justified change or removal, assess the fitness of the current topics,
+      and resolve every review finding. Require tasks
+      2.33, 2.38, 2.40, 2.44, 3.3, and 3.13, then complete
+      the pre-archive [migration plan](design.md#migration-plan): a frozen release
+      classified against the currently effective contract,
       release, cold/platform checks, signed publication, official spec sync, and
       qualified retirement. Preserve unique evidence and clause dispositions
       without an equivalence claim; verify archive prerequisites without claiming

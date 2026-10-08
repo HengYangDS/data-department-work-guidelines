@@ -60,10 +60,11 @@ so explicitly.
 
 1. Define the central concepts and subjects. Keep one meaning for each concept
    within the same discussion, then identify causal, dependency, constraint, and
-   feedback relationships. Divide along one consistent axis so the parts do not
-   overlap, together cover the problem, and each return to the decision the
-   analysis must support. A long list or polished prose cannot substitute for
-   that model.
+   feedback relationships. Choose a useful way to divide the problem and explain
+   how the parts connect to the decision. Show material gaps, shared causes, and
+   cross-cutting constraints; do not force interacting parts into non-overlapping
+   boxes or count the same effect twice. A long list or polished prose cannot
+   substitute for that model.
 2. Attach source and time to important facts; state how each unknown affects the
    decision. Separate observation from explanation.
 3. Offer falsifiable hypotheses. Check counterexamples, the baseline, and the
@@ -116,11 +117,12 @@ trigger in the existing work record. Record the first action,
 its owner, and its completion condition there too. A deadline says when a
 decision is needed; it does not establish when approval occurred.
 
-Give the proposed decision one of these three states:
+When a proposal cannot yet proceed, distinguish its decision readiness from the
+state of execution:
 
 | State    | Say and do                                                                                |
 | -------- | ----------------------------------------------------------------------------------------- |
-| Ready    | Premises hold; record the decision and first step.                                        |
+| Ready    | Ready for the authorized owner's decision, not approved or accepted.                      |
 | Blocked  | Name the unacceptable gap, owner, and condition for release.                              |
 | Deferred | Name the missing information or timing condition, how to resolve it, and when to revisit. |
 

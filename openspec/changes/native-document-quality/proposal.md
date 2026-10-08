@@ -31,10 +31,12 @@ and history capabilities remain product dependencies.
   execution costs, data acceptance, communication, human judgment,
   responsibility, evidence, and event-driven learning. Keep precautionary
   task-specific prevention assets distinct from the observed-failure threshold
-  for admission as department practice. Keep task-start coaching,
-  immediate correction, a justified weekly sample-calibration default, monthly
-  mechanism review, and quarterly net-benefit and capability review without a
-  universal meeting or all-member report.
+  for admission as department practice. Keep task-start clarity, coaching where
+  it is needed, and immediate correction. Preserve weekly, monthly, and quarterly
+  review purposes with explicit outputs and justified interval changes rather
+  than fixed sample counts or meeting lengths. Remove the mandatory editing
+  fraction, rigid decomposition, and extra supervisor step for routine work
+  without weakening quality or authority boundaries or adding all-member reports.
 - Give Git-selected source one native owner per format and one configuration
   owner per concern. Prettier owns Markdown spacing and container layout on
   identical fix/check inputs, and handles supported code and structured data;
@@ -95,8 +97,9 @@ None.
 
 - `quality`: one executable owner per concern, native diagnostics and source
   selection, source-bound supply, complete retirement, and real adverse cases.
-- `guidance-discovery`: usable task routes and the complete original
-  work-quality obligations at their existing topic owners.
+- `guidance-discovery`: usable task routes and applicable work-quality duties,
+  reviewed for current purpose, authority, executable conditions, and
+  proportionate cost at their existing topic owners.
 - `repository-governance`: native change authority, independent Forge
   publication, coherent release identity, and bounded truthful retirement.
 
@@ -104,14 +107,17 @@ None.
 
 The document tools, tests, native policy, npm lock, CI, contributor guidance,
 release identity, and offline bundle change. Department content receives
-semantically reviewed English edits and restored duties, not new approval roles,
+semantically reviewed English edits and justified corrections, replacements, or
+retirement of rules, not preservation of every early clause, new approval roles,
 forms, meetings, or an automated claim of equivalence.
 
-The initial contributor/supply transition is a major edition. The weekly
-sample-calibration default is a compatible addition requiring a minor release;
-compatible fixes use patch releases. Published tags and asset bytes remain
-immutable. A completed historical copy may leave the current tree through this
-admitted Change without certifying its reported execution or rewriting history.
+The initial contributor/supply transition is a major edition. Classify later
+changes against the currently effective contract: compatible fixes use patch
+releases, compatible additions use minor releases, and breaking changes require
+a major release. Retired wording does not establish compatibility. Published
+tags and asset bytes remain immutable. A completed historical copy may leave
+the current tree through this admitted Change without certifying its reported
+execution or rewriting history.
 
 OpenSpec and ETHOS retain lifecycle, admission, proof, acceptance, and
 publication authority. There is no private scope, duplicate lifecycle, tracked

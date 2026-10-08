@@ -4,8 +4,9 @@
 
 ### Requirement: Point-of-use analysis, data, and Agent boundaries
 
-Analysis SHALL partition the whole problem along one axis, tied to the governing
-decision. Promotion into shared, production, or decision use SHALL require meaning,
+Analysis SHALL choose a useful decomposition tied to the governing decision and
+make material gaps, relationships, and cross-cutting constraints explicit.
+Promotion into shared, production, or decision use SHALL require meaning,
 quality, permission and reproducibility. Agents SHALL review complete current
 claim-matched results, then report evidence, limits, and the delivery state;
 people SHALL retain responsibility. Delivery coordination SHALL NOT replace
@@ -31,13 +32,20 @@ other owners' professional judgments.
 #### Scenario: An analysis is split into parts
 
 - **WHEN** a member decomposes a material problem before proposing options
-- **THEN** the decision topic requires one classification axis, non-overlapping
-  parts that together cover the problem, and a link from each part back to the
-  decision the analysis supports
+- **THEN** the decision topic requires a useful decomposition, a link from each
+  part back to the decision, and explicit material gaps, shared causes, and
+  cross-cutting constraints without double-counting an effect
 - **AND** the charter's limit against forcing reality into a single model
   applies
 - **AND THEN** a longer list or polished prose does not substitute for the
   missing model.
+
+#### Scenario: Decision readiness is mistaken for approval
+
+- **WHEN** a proposal has sufficient evidence and options for a decision
+- **THEN** its readiness SHALL NOT establish approval or acceptance
+- **AND** the authorized decision owner SHALL decide separately before an action
+  that requires that approval proceeds.
 
 #### Scenario: Exploratory work enters a shared path
 
@@ -130,6 +138,20 @@ A Blocked report SHALL name the prerequisite gap, its impact, and the escalation
   merely because it appeared in the earlier source
 - **AND** a heading count, byte-matched excerpt, refreshed hash, or passing
   source check cannot by itself establish semantic fidelity.
+
+#### Scenario: A current topic inherits an obsolete rule
+
+- **WHEN** a rule, model, form, review schedule, or writing technique remains in
+  a current topic from an earlier draft
+- **THEN** the review SHALL assess its applicable authority, current work
+  purpose, actionable conditions, and cognitive and maintenance cost against
+  current instructions, verified facts, and department needs
+- **AND** the rule SHALL be kept, clarified, merged, replaced, or retired with a
+  justified disposition at the existing review owner
+- **AND** neither its earlier presence nor the current topic layout SHALL
+  establish that it is valid or mandatory
+- **AND** binding applicable duties and hard boundaries SHALL remain intact;
+  immutable historical text and evidence SHALL not be rewritten.
 
 #### Scenario: A compact reading form preserves the work
 
@@ -248,7 +270,8 @@ A Blocked report SHALL name the prerequisite gap, its impact, and the escalation
 #### Scenario: One issue spans work cycles
 
 - **WHEN** one unresolved issue affects successive work cycles under the same
-  owner and project, without recurring or meeting another prevention trigger
+  owner and project and creates material error, loss, repeated rescue, or
+  coordination risk, without meeting another prevention trigger
 - **THEN** the evolution topic still requires reusable prevention through the
   lightest effective existing owner
 - **AND** a work record alone does not satisfy that duty, and no new report,
@@ -275,7 +298,7 @@ A Blocked report SHALL name the prerequisite gap, its impact, and the escalation
 - **WHEN** recurring work depends on one person's rescue
 - **THEN** the evolution topic assigns managers responsibility to prevent that
   dependency from becoming the normal operating model
-- **AND** monthly and quarterly review do not delay a necessary correction.
+- **AND** a scheduled review does not delay a necessary correction.
 - **AND WHEN** a supervisor coaches a member through a consequential task
 - **THEN** the coaching examines the member's reasoning rather than deciding the
   conclusion for them.
@@ -371,29 +394,31 @@ A Blocked report SHALL name the prerequisite gap, its impact, and the escalation
 ### Requirement: Feedback combines events and periodic review
 
 Material task transitions SHALL be checked; observed high-risk signals SHALL be
-escalated. During active work, the department head or appointed maintainer SHOULD
-calibrate judgments weekly. That owner SHALL review weak signals and mechanisms
-at least monthly. Maintainers SHALL review rules, tools and capability gaps at
-least quarterly. Reviews SHALL reuse sufficient existing carriers, assess mechanisms
-rather than rank people, and respect each metric's limits. Managers SHALL resolve
-cross-domain conflicts and long-standing open decisions in time for work to
-proceed.
+escalated. The department head or appointed maintainer SHALL own periodic review
+of judgment, mechanisms, and the net benefit of practices and capability
+development. Weekly calibration, monthly mechanism review, and quarterly
+practice and capability review SHALL be the active-work defaults. That owner MAY
+adjust an interval from work volume, risk, change, and feedback quality, with a
+reason and next review time in an existing work record; all three purposes SHALL
+remain covered. Reviews SHALL reuse sufficient existing carriers, assess
+mechanisms rather than rank people, and respect each metric's limits. Managers
+SHALL resolve cross-domain conflicts and long-standing open decisions in time for
+work to proceed.
 
 #### Scenario: Weak signals accumulate without an incident
 
-- **WHEN** weekly sample calibration is due during active work, or monthly
-  mechanism review or quarterly practice and capability review is due
-- **THEN** the department head or appointed maintainer SHOULD calibrate judgments
-  weekly on one or two real samples in about
-  30 minutes
-- **AND** a different weekly interval SHALL name its reason and revisit time
-- **AND** that owner SHALL inspect weak signals and mechanisms at least monthly,
-  even without an incident, and decide whether a mechanism needs correction
-- **AND THEN** the guideline maintainer and people using the practices SHALL
-  review current rules, templates, tools, Agent practices, and capability gaps
-  for net benefit at least quarterly
-- **AND** weekly, monthly, and quarterly reviews SHALL reuse sufficient existing
-  carriers without an all-member meeting or report.
+- **WHEN** periodic review is due or observed gaps require it
+- **THEN** the responsible owner SHALL inspect real work samples and accumulated
+  weak signals with the people who use the practices
+- **AND** the review SHALL distinguish judgment calibration, mechanism
+  correction, and net-benefit and capability assessment, with an actionable result
+- **AND** any adjusted interval SHALL preserve those purposes and be revisited
+  when work volume, risk, change, or feedback quality changes
+- **AND** a trial or high-risk task SHALL be reviewed before its evidence or
+  authorization expires; an urgent signal SHALL NOT wait for that review
+- **AND** sufficient existing carriers SHALL be reused without a fixed sample
+  count, meeting duration, or additional all-member meeting or report
+- **AND** stricter applicable review requirements SHALL remain in force.
 
 #### Scenario: A routine metric is used to rank people
 
@@ -416,10 +441,12 @@ proceed.
 #### Scenario: Prevention is needed before the first failure
 
 - **WHEN** a key judgment depends on tacit knowledge held by one or a few people,
-  or material forgetting risk or repeated Agent work triggers a reusable
-  prevention duty without a recorded failure
+  or forgetting or repeated Agent work creates material error, loss, repeated
+  rescue, or coordination risk without a recorded failure
 - **THEN** the evolution topic requires the lightest effective prevention in its
   existing owner, without waiting for an incident
+- **AND** improving or linking sufficient existing prevention SHALL be preferred
+  to creating another asset; repetition alone SHALL NOT require another file
 - **AND** admission as department practice remains subject to its observed
   failure mode, bounded trial, ownership, and net-benefit checks.
 
@@ -472,14 +499,17 @@ to its subject and audience. Editorial techniques SHALL serve those aims without
 replacing their meanings. Communication SHALL state its purpose in an objective,
 measured tone. Meetings SHALL refocus discussion on its decision. Deadline risks
 SHALL name escalation owners and triggers before harm grows. Responsible members
-and supervisors SHALL jointly align on subject, boundary, and success criteria
-at task start. Coaching SHALL examine member reasoning, not decide for them.
+SHALL confirm subject, boundary, and success criteria with the existing task
+owner. Supervisors SHALL coach that reasoning in capability-building work;
+routine work within an established mandate SHALL NOT require an extra supervisor
+approval. Coaching SHALL examine member reasoning, not decide for them.
 Managers SHALL demonstrate judgment and communication through concrete work
 examples, not only abstract requirements, and SHALL NOT normalize recurring
 rescue. Agent delegation SHALL name output format, destination, audience, and
-detail. Before sending, authors SHALL test whether cutting a third of the
-wording improves clarity while preserving facts, reasoning, limits, and
-responsibilities; the exercise SHALL NOT impose a deletion quota.
+detail. Before sending, authors SHALL remove wording that does not serve the
+reader's understanding, judgment, or action while preserving facts, reasoning,
+limits, responsibilities, and expressive quality. An editing fraction or fixed
+document shape SHALL NOT become a writing standard.
 
 #### Scenario: A decision waits for the right time rather than more evidence
 
@@ -521,11 +551,11 @@ responsibilities; the exercise SHALL NOT impose a deletion quota.
 
 #### Scenario: A shorter draft removes information needed to act
 
-- **WHEN** an author tries cutting a third of a draft before sending it
+- **WHEN** an author shortens or reorganizes a draft before sending it
 - **THEN** the communication topic asks whether the shorter version is clearer
   and still preserves the facts, reasoning, limits, and responsibilities
-- **AND** the author keeps necessary wording when further cuts would lose
-  meaning, even if less than a third can be removed.
+- **AND** the author keeps necessary wording and a useful arrangement when
+  further cuts or a fixed shape would lose meaning or expressive quality.
 
 #### Scenario: A draft decision could be mistaken for acceptance
 
@@ -555,7 +585,7 @@ responsibilities; the exercise SHALL NOT impose a deletion quota.
   individual interpretation of its subject, boundary, and success criteria
 - **THEN** the evolution topic requires the responsible member and supervisor
   to align jointly at task start
-- **AND** later weekly sample calibration or monthly review does not replace it
+- **AND** later periodic review does not replace that shared understanding
 - **AND** no new meeting or approval gate is required.
 
 #### Scenario: New facts disprove a stated judgment

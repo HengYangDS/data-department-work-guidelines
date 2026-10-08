@@ -8,9 +8,9 @@ across CSpell, textlint, write-good, and local terminology rules. Textlint also
 parsed decision content and license sections, so replacing the prose command
 alone could not retire it.
 
-The original guideline blob is `ce3d090be258e65534781769e3e2fd5ab7439ef8`. Its
+The retired guideline blob is `ce3d090be258e65534781769e3e2fd5ab7439ef8`. Its
 numbered duties, actor and authority boundaries, qualifications, and evidence
-limits are the semantic baseline. The prior comparison
+limits are comparison inputs, not current authority. The prior comparison
 ([GitLab][baseline-review-gitlab] · [GitHub][baseline-review-github]) is an
 index to those clauses, not certification of equivalence.
 
@@ -26,7 +26,9 @@ unchanged.
 
 ## Goals / Non-Goals
 
-Deliver useful English work guidance without losing an original obligation. Give
+Deliver useful English work guidance grounded in applicable instructions,
+verified facts, and current department needs. Retain binding duties and justify
+changes or removals; preserving every earlier clause is not the goal. Give
 each quality concern one native executable owner, each configuration one
 semantic owner, and local/offline execution a complete source-bound supply.
 Publish coherent signed source and frozen bytes independently on both Forges.
@@ -53,6 +55,15 @@ existing clause disposition from current instructions, verified facts, and
 department needs. Unexplained loss fails review. Native prose quality, source
 hashes, and heading counts establish neither semantic coverage nor a complete
 review.
+
+Review the current topics for substantive fitness, not just correspondence with
+the retired text. A duty needs applicable authority, a current work purpose,
+clear conditions and actions, and proportionate cognitive and maintenance cost.
+Keep, clarify, merge, replace, or retire it on that basis. The seven-topic layout
+does not establish that its contents are sound. A model, form, review schedule,
+or writing technique does not become mandatory because an early draft used it.
+Keep the disposition at the existing review owner rather than adding another
+policy or progress ledger.
 
 Each duty belongs at its point of use. The charter owns authority and hard
 boundaries; the other six topics own their task-specific judgments and actions.
@@ -816,10 +827,11 @@ to its authorized effect with preserved cause and immediate
 restoration/acceptance; it cannot patch immutable runtime bytes or manufacture a
 clean proof.
 
-The weekly sample-calibration default is a compatible addition to the published
-monthly mechanism review, not literal equivalence with the original schedule.
-It requires a minor release. Restoring original duties and clarifying their
-wording remain fixes; existing accepted releases are not rewritten.
+Classify the final release against the currently effective contract, not the
+retired draft. Clarifying a binding duty or fixing a proved omission may be a
+compatible fix; adding or changing a duty requires its own compatibility
+assessment. The presence of old wording does not establish that assessment.
+Existing accepted releases are not rewritten.
 
 ## Migration Plan
 
@@ -827,8 +839,10 @@ wording remain fixes; existing accepted releases are not rewritten.
    and establish a distinguishing regression.
 2. Repair owner, tests, guidance, and current references together; migrate
    consumers before retiring duplicate implementation or configuration.
-3. Review the full original-duty and reading boundary; preserve every task ID
-   and commitment while consolidating existing artifacts.
+3. Review the fitness of every current topic and the complete retired-source
+   comparison. Resolve omissions and obsolete rules through justified
+   dispositions; preserve task identities and applicable commitments while
+   consolidating existing artifacts.
 4. Integrate formally accepted shared quality, formatting, risk, and history
    contracts. Qualify DDWG, AIGW, and Proxy at their actual installed bindings.
 5. Freeze one compatible final source and bundle. Run local checks, cold

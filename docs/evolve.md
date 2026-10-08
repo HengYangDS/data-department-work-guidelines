@@ -37,7 +37,8 @@ ambiguous ownership, intermittent failures, and slight delays can be early
 signals of a system defect. Check their pattern, impact, and direction before
 building a remedy.
 
-You must leave a reusable asset, even before a failure, whenever:
+Leave reusable prevention when any of these conditions creates a material risk
+of error, loss, repeated rescue, or coordination cost, even before a failure:
 
 - A problem of the same kind recurs or affects more than one person, project, or
   work cycle.
@@ -46,8 +47,10 @@ You must leave a reusable asset, even before a failure, whenever:
 - Agents will repeat the work.
 
 A reusable asset may be a test, monitor, checklist, decision record, example,
-rule, platform capability, or clearer ownership interface. A task-specific
-prevention asset need not become department practice; if it does, the admission
+rule, platform capability, or clearer ownership interface. Improve or link an
+existing asset before creating another; repetition alone does not require a new
+file. A task-specific prevention asset need not become department practice; if
+it does, the admission
 conditions above still apply. Choose the lightest form sufficient to prevent
 the failure or its recurrence. Keep it findable, usable, and maintained
 at its existing owner. Link to an existing authority rather than copying it.
@@ -56,8 +59,11 @@ correction, and prevention of recurrence.
 
 ## Grow Capability Through Real Work
 
-At the start of a task, the responsible member and supervisor align on subject,
-boundary, and success criteria. At important decisions, examine facts,
+The responsible member confirms the subject, boundary, and success criteria
+with the existing task owner. In capability-building work, a supervisor coaches
+that reasoning and checks the shared understanding. Routine work within an
+established mandate does not need another supervisor approval. At important
+decisions, examine facts,
 hypotheses, options, and risks. After delivery, choose the most consequential
 gap in reasoning or expression and agree on an observable improvement for the
 next task. Keep a few successful and failed examples with reasons. Move
@@ -122,22 +128,27 @@ recheck facts, options, and authority at material decisions or changed risk,
 verify at the end, and preserve a handoff when interrupted. Escalate high-risk
 signals when observed; a calendar must not delay containment or a decision.
 
-During active work, the department head or appointed guideline maintainer
-should calibrate judgments against evidence weekly on one or two real work
-samples, in about 30 minutes. Use an existing review or asynchronous exchange;
-this adds no all-member meeting or report. A different interval needs a reason
-and a time to revisit it.
+Maintain a regular review rhythm, not just a response to incidents. The
+department head or appointed guideline maintainer owns it. Use these defaults
+during active work:
 
-At least monthly, the same owner examines accumulated weak signals: recurring
-failures, escaped quality issues, Agent output corrections or misuse, and
-needless coordination. Look for mechanism problems and decide which corrections
-are needed; do not rank individuals. Sample calibration aligns judgment, while
-this review examines how the working system succeeds or fails.
+| Review                          | Default interval | Required result                                                                                                                                                            |
+| ------------------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Calibrate judgment              | Weekly           | Compare real work samples against evidence and criteria; correct a misunderstanding or identify a coaching need.                                                           |
+| Review mechanisms               | Monthly          | Examine recurring failures, weak signals, escaped quality issues, Agent misuse, and needless coordination; decide the correction, owner, and next action.                  |
+| Review practices and capability | Quarterly        | With the people using the practices, assess rules, templates, tools, and Agent workflows for net benefit; keep, revise, or retire them and identify capability priorities. |
 
-At least quarterly, the guideline maintainer and the people who use those
-practices review the net benefit of current rules, templates, tools, and Agent
-practices, and assess capability gaps. Keep, revise, or retire practices
-accordingly. L2 work may set a shorter task-specific interval at authorization.
+The owner may adjust an interval for work volume, risk, the speed of change, and
+the quality of existing feedback. Record the reason and next review time in an
+existing work record; revisit the choice when those conditions change. Preserve
+all three review purposes rather than silently dropping periodic review. A
+trial or high-risk task needs a review point before its evidence or
+authorization expires; an urgent signal must not wait for it.
+
+Use enough real samples and time to resolve the review question, not a fixed
+sample count or meeting length. Combine reviews when useful, but distinguish
+whether the decision concerns judgment, a failing mechanism, or a practice that
+no longer earns its cost. A stricter applicable review requirement still holds.
 
 Use existing meetings, tickets, and reviews; record each material decision and
 its owner there. Do not create a form or meeting unless existing carriers cannot

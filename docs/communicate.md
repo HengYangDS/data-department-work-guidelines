@@ -105,17 +105,19 @@ Analysis, proposal, and decision documents should follow this order by default:
    triggers.
 5. Name the action, responsible person, deadline, and acceptance condition.
 
-Appendices hold only supporting detail. A simple matter may combine steps but
-must keep their logical order. Before sending, check the title, first screen,
+Appendices hold only supporting detail. Combine or reorder these parts when the
+reader's decision needs it; keep the conclusion, basis, limits, and requested
+action easy to find. Before sending, check the title, first screen,
 sources, counterexamples, terminology, classification, and causal chain; a
 timeline alone does not prove cause. Ask whether a reader outside the work can
 restate the conclusion, basis, limits, and next action without filling gaps.
 Link to an existing source of truth rather than copying it.
 
-As an editing exercise, try cutting a third of the wording. Keep the shorter
-version only if it is clearer and preserves the facts, reasoning, limits, and
-responsibilities. The fraction is a prompt to question every sentence, not a
-deletion quota.
+Revise every sentence that does not help the reader understand, judge, or act.
+Combine repetition and remove filler; keep examples, qualifications, and
+transitions that carry meaning. Keep a shorter version only if it preserves the
+facts, reasoning, limits, responsibilities, and expressive quality. No deletion
+fraction or fixed document shape is a writing standard.
 
 ## Escalate Risk in Four Parts
 
