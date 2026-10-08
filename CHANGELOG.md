@@ -47,6 +47,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Isolate managed-cache rejection fixtures from explicit host tool selectors.
+  The contribution checks now exercise the intended cache boundary without
+  changing the contributor's selected tools.
 - Complete the structured verification context before child tools write output.
   Keep standard output and error separate; failed writes stop verification
   before any check runs.

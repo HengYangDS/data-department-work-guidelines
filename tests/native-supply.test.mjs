@@ -1216,6 +1216,12 @@ test("managed files stay inside their selected repository boundary", () => {
 });
 
 test("managed native caches reject links and non-regular entries before execution", async (context) => {
+  const originalSelection = process.env.DDWG_VALE_BIN;
+  delete process.env.DDWG_VALE_BIN;
+  context.after(() => {
+    if (originalSelection === undefined) delete process.env.DDWG_VALE_BIN;
+    else process.env.DDWG_VALE_BIN = originalSelection;
+  });
   const selected = selectedAsset("vale");
   const target = path.join(
     root,
@@ -1265,6 +1271,12 @@ test("managed native caches reject links and non-regular entries before executio
 });
 
 test("managed cache parent aliases fail before staging or execution", async (context) => {
+  const originalSelection = process.env.DDWG_VALE_BIN;
+  delete process.env.DDWG_VALE_BIN;
+  context.after(() => {
+    if (originalSelection === undefined) delete process.env.DDWG_VALE_BIN;
+    else process.env.DDWG_VALE_BIN = originalSelection;
+  });
   const selected = selectedAsset("vale");
   const directory = path.join(
     root,

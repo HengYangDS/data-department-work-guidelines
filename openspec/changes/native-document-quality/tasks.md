@@ -222,6 +222,11 @@
       findings and dispositions; retire qualification packages after terminal
       jobs.
 
+- [ ] 2.39 Isolate native-cache rejection fixtures from inherited explicit
+      tool selectors. Preserve selector precedence and the caller's environment;
+      verify the original selector-dependent failure, both rejection paths,
+      the full native contribution command, and committed-source ETHOS proof.
+
 ## 3. Qualification and publication
 
 - [x] 3.1 Freeze source and a source-bound offline bundle; run format, lint,
