@@ -216,6 +216,9 @@
       with pinned compatible tools and actual architecture observations. Preserve
       findings and runner failures; retire replaced rules, unused dependencies,
       and terminal qualification packages through their declared owners.
+      Measure the same-source Windows native test processes through a temporary
+      manual review job; retain raw profiles and remove its CI wiring before
+      the final freeze.
 
 - [x] 2.39 Isolate native-cache rejection fixtures from inherited explicit
       tool selectors. Preserve selector precedence and the caller's environment;

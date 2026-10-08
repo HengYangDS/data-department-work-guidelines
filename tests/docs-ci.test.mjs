@@ -1114,6 +1114,39 @@ test("the CI contract rejects broader GitLab tag routes", () => {
   }
 });
 
+test("temporary Windows diagnosis preserves mandatory verification and native review custody", () => {
+  const name = "docs:diagnose:windows:review";
+  const pipeline = YAML.parse(gitlab);
+  assert.ok(pipeline[name]);
+  const contract = validateCi(github, gitlab, offline);
+  const without = structuredClone(pipeline);
+  delete without[name];
+  assert.doesNotThrow(() =>
+    validateCi(github, YAML.stringify(without), offline),
+  );
+  assert.deepEqual(pipeline[".docs:verify"].script, [contract.verifier]);
+  assert.deepEqual(pipeline[".docs:verify"].variables, { GIT_DEPTH: "0" });
+  assert.equal(pipeline[name].script, undefined);
+  for (const change of [
+    (job) => (job.tags = ["ci-windows-arm64-shell"]),
+    (job) => (job.resource_group = "diagnostic-only"),
+    (job) => (job.rules[0].when = "always"),
+    (job) => (job.rules[0].if = '$CI_COMMIT_BRANCH == "main"'),
+    (job) => delete job.rules[0].allow_failure,
+    (job) => (job.variables.NODE_OPTIONS += " --require=unowned.mjs"),
+    (job) => (job.before_script[3] = "node --test tests/docs-prose.test.mjs"),
+    (job) => (job.script = []),
+    (job) => (job.artifacts.when = "on_success"),
+  ]) {
+    const changed = structuredClone(pipeline);
+    change(changed[name]);
+    assert.throws(
+      () => validateCi(github, YAML.stringify(changed), offline),
+      /GitLab Windows diagnosis/u,
+    );
+  }
+});
+
 test("GitLab runnable verification jobs name their phase and platform", () => {
   const pipeline = YAML.parse(gitlab);
   const jobs = Object.keys(pipeline).filter((name) =>
