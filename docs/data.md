@@ -74,7 +74,7 @@ production evidence is gathered earlier. Revisit the affected value, meaning,
 or quality judgment when facts or use change. Neither deployment nor feedback
 authorizes a new use.
 
-| Question     | Decision                          | Typical basis                                                          |
+| Concern      | Decision                          | Typical basis                                                          |
 | ------------ | --------------------------------- | ---------------------------------------------------------------------- |
 | Opportunity  | Is evaluation worthwhile?         | Business question, value hypothesis, source, and information boundary. |
 | Exploration  | What is the data?                 | Samples, meaning, timeline, quality profile, and alternative sources.  |
@@ -97,12 +97,13 @@ use within those conditions, not a label inferred from deployment.
 prices after a correction. A researcher wants to backtest a strategy: simulate
 decisions that would have been made before the correction. The question is not
 only whether today's series is accurate, but what was knowable at each decision
-time.
+time. Research admission and production admission answer different questions:
+the operational feed checks apply only if that feed is proposed.
 
 | Gate            | Evidence to obtain                                                             | Stop if missing                               |
 | --------------- | ------------------------------------------------------------------------------ | --------------------------------------------- |
 | Research claim  | Earlier snapshot, availability time, and correction history.                   | Do not call the backtest point-in-time valid. |
-| Production feed | Replayable inputs and outputs, tests, monitoring, access review, and recovery. | Keep the file exploratory.                    |
+| Production feed | Replayable inputs and outputs, tests, monitoring, access review, and recovery. | Do not promote it to an operational feed.     |
 | Use admission   | Domain meaning, permissions and veto, authorized decision, and acceptance.     | Do not infer permission from deployment.      |
 
 An Agent may locate snapshots, compare revisions, or run replay checks within
