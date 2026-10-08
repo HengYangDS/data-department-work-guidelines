@@ -518,13 +518,12 @@ templates SHALL own common steps.
 
 ### Requirement: Verification reports its native workspace context
 
-The existing source check SHALL report its real repository, commit and tree,
-tracked-change state, native runtime, and mounted workspace filesystem capacity
-once. Runtime architecture SHALL identify the Node process, not infer the host
-or guest architecture. Byte counts SHALL use exact integers. Native read failures
-SHALL propagate.
-This observation SHALL NOT establish VM identity, isolation, throughput, or
-capacity admission, and SHALL require no additional controller or proof gate.
+The source check SHALL emit one complete JSON context before validation or
+inherited child output. It SHALL identify the real repository, commit, tree,
+tracked changes, Node runtime, and exact mounted-filesystem byte counts. Read or
+write errors SHALL fail with their native diagnosis. The context SHALL NOT
+qualify VM identity, isolation, throughput, or capacity admission or add a
+controller or gate.
 
 #### Scenario: A source check reports its actual workspace
 
@@ -532,7 +531,22 @@ capacity admission, and SHALL require no additional controller or proof gate.
 - **THEN** one native observation identifies the source, runtime, and total,
   free, and available bytes of its mounted workspace filesystem
 - **AND** decimal integer strings preserve values beyond floating-point precision
+- **AND** runtime architecture identifies the Node process, not the host or guest
 - **AND** its stated limit excludes VM identity, isolation, and throughput.
+
+#### Scenario: A child inherits a pipe with a pending context record
+
+- **WHEN** a context record exceeds the pipe buffer before a synchronous child
+  starts
+- **THEN** the complete context remains one valid JSON line before child output
+- **AND** child output is not inserted into that line or merged with standard
+  error.
+
+#### Scenario: The context output consumer closes its pipe
+
+- **WHEN** the context write fails because its output consumer is closed
+- **THEN** verification stops before validation with the native write error
+- **AND** no unhandled stream error replaces the existing diagnosis.
 
 #### Scenario: A native filesystem read fails
 

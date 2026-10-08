@@ -42,7 +42,16 @@ function runTests() {
 }
 
 async function checkRepository() {
-  console.log(`INFO ${JSON.stringify(workspaceObservation())}`);
+  // Finish this record before synchronous children inherit the same stream.
+  let onWriteError;
+  await new Promise((resolve, reject) => {
+    onWriteError = reject;
+    process.stdout.once("error", onWriteError);
+    process.stdout.write(
+      `INFO ${JSON.stringify(workspaceObservation())}\n`,
+      (error) => (error ? reject(error) : resolve()),
+    );
+  }).finally(() => process.stdout.off("error", onWriteError));
   checkConfigurationLayout();
   checkProfile();
   checkLineEndingAttributes();

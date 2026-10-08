@@ -47,6 +47,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Complete the structured verification context before child tools write output.
+  Keep standard output and error separate; failed writes stop verification
+  before any check runs.
 - Use the configured full GitLab repository URL in release commands and read
   back the exact pipeline's project, tag, commit, and source. Clarify frozen
   bundle reuse at a Changelog-only cut and rebuilding after package changes.
