@@ -179,7 +179,9 @@ Change authority.
    `offline-qualification/sha256-DIGEST/FILE_NAME`, using the actual bundle
    digest and basename. Start one native API or web pipeline at that exact
    accepted ref with `DDWG_OFFLINE_CANDIDATE=DIGEST`. It selects only the existing
-   offline platform jobs. Preserve source OID, Runner/manager identity, raw
+   offline platform jobs. Read back the pipeline and require its `sha` to match
+   the accepted OID; a branch name alone does not bind the run.
+   Preserve source OID, Runner/manager identity, raw
    results, and bundle hashes; wait for every job to become terminal before
    deleting that exact temporary package. Verify its absence. This is candidate
    qualification, not a substitute for Step 6's signed-release downloads.
@@ -188,9 +190,14 @@ Change authority.
    Changelog section using the actual date. Add its explicit History row and
    both definitions, comparing the previous release tag with the new tag.
    Leave `Unreleased` empty and advance both of its bases to the new tag.
-   Commit that exact source, repeat the fresh-checkout offline installation,
-   full verification and ETHOS proof from Step 3, and follow the native acceptance
-   continuation. Use
+   Commit that exact source. A Changelog-only cut can reuse the frozen bundle
+   when all declared supply inputs remain identical; a package recipe change
+   requires a new build and record. After committing, inspect `BUNDLE_PATH`
+   against that checkout's record before installation. Keep that exact
+   inspected file and digest for
+   both uploads, not an earlier checkout's qualification alone.
+   Repeat the fresh-checkout offline installation, full verification, and ETHOS
+   proof from Step 3, and follow the native acceptance continuation. Use
    `ethos publish --json` and its current continuation to publish the admitted
    `dev` and `main` source before creating a tag. Re-read both remote refs and
    require every declared source job to pass on each Forge at this release-cut
@@ -202,7 +209,10 @@ Change authority.
    identify the configured API scheme, host, or port. Set `GITLAB_HOST` in the
    caller's environment to the configured API host and port, not the SSH port.
    Check that `glab auth status` shows the administrator-supplied API scheme and
-   port, then verify `glab repo view GROUP/PROJECT`. For unattended calls, set
+   port. Throughout these commands, `GITLAB_REPOSITORY_URL` means the full
+   configured repository URL, including its HTTP or HTTPS scheme and API port.
+   Verify `glab repo view GITLAB_REPOSITORY_URL --output json` identifies this
+   project's path and project ID. For unattended calls, set
    `GH_PROMPT_DISABLED=1` or `GLAB_NO_PROMPT=1` as applicable, close stdin, and
    enforce a caller-owned deadline; stop on authentication failure.
 
@@ -213,17 +223,25 @@ Change authority.
 
    ```text
    gh release create vX.Y.Z BUNDLE_PATH --verify-tag --notes-file RELEASE_NOTES_FILE --repo OWNER/REPO
-   glab release create vX.Y.Z BUNDLE_PATH --use-package-registry --package-name release-assets --no-update --notes-file RELEASE_NOTES_FILE --repo GROUP/PROJECT
+   glab release create vX.Y.Z BUNDLE_PATH --use-package-registry --package-name release-assets --no-update --notes-file RELEASE_NOTES_FILE --repo GITLAB_REPOSITORY_URL
    ```
 
-   `glab` must target this project's configured API host and port; use the full
-   configured repository URL when a short repository name loses that endpoint.
-   Its `release-assets` generic package is what GitLab's post-publication job
+   GitLab's `release-assets` generic package is what its post-publication job
    obtains. GitHub's Release starts the
    [offline workflow](.github/workflows/offline-verify.yml) on `ubuntu-latest`,
    `ubuntu-24.04-arm`, `macos-latest`, and `windows-latest`. After the
-   GitLab package and Release exist, start a tag pipeline with
-   `glab ci run --branch vX.Y.Z --repo GROUP/PROJECT` and require the
+   GitLab package and Release exist, start one native pipeline and read back
+   the returned pipeline ID:
+
+   ```text
+   glab ci run --branch vX.Y.Z --repo GITLAB_REPOSITORY_URL
+   glab ci get --pipeline-id PIPELINE_ID --output json --repo GITLAB_REPOSITORY_URL
+   ```
+
+   `--branch` accepts a branch or reference; its name does not prove a tag run.
+   Require the returned project ID to match this repository, `tag` to be
+   `true`, `ref` to be `vX.Y.Z`, `sha` to be the proved commit, and `source` to
+   be `api` or `web`. A mismatch is not release qualification. Require the
    `offline:verify:linux`, `offline:verify:macos`, and `offline:verify:windows`
    jobs, not only the tag-push `docs:verify:<os>` jobs. The Windows ARM64 runner
    uses x64 Node and the Windows x64 tool set under emulation; record host and
@@ -235,7 +253,7 @@ Change authority.
 
    ```text
    gh release download vX.Y.Z --repo OWNER/REPO --pattern BUNDLE_NAME --dir GITHUB_DIR
-   glab release download vX.Y.Z --repo GROUP/PROJECT --asset-name BUNDLE_NAME --dir GITLAB_DIR
+   glab release download vX.Y.Z --repo GITLAB_REPOSITORY_URL --asset-name BUNDLE_NAME --dir GITLAB_DIR
    node tools/ci/offline-bundle.mjs inspect --bundle GITHUB_ASSET
    node tools/ci/offline-bundle.mjs inspect --bundle GITLAB_ASSET
    ```

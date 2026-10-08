@@ -25,6 +25,7 @@ import { test } from "node:test";
 import { pathToFileURL } from "node:url";
 import { gunzipSync } from "node:zlib";
 import { strictVersion } from "../tools/docs/changelog.mjs";
+import { markdownTokens, walkMarkdown } from "../tools/docs/markdown.mjs";
 import * as offline from "../tools/ci/offline-bundle.mjs";
 import {
   acquireGitHubBundle,
@@ -1304,6 +1305,18 @@ test("tracked bundle identity rejects source drift", () => {
     );
     writeFileSync(recordPath, JSON.stringify(built));
     assert.deepEqual(readBundleRecord(inputs.repository), built);
+    writeFileSync(
+      path.join(inputs.repository, "CHANGELOG.md"),
+      "# Changelog\n\n## 4.2.0 - 2026-10-08\n\n### Fixed\n\n- Clarify release qualification.\n",
+    );
+    assert.deepEqual(readBundleRecord(inputs.repository), built);
+    const packagePath = path.join(inputs.repository, "package.json");
+    const packageBytes = readFileSync(packagePath);
+    const manifest = JSON.parse(packageBytes);
+    manifest.scripts = { ...manifest.scripts, test: "node --test" };
+    writeFileSync(packagePath, JSON.stringify(manifest));
+    assert.throws(() => readBundleRecord(inputs.repository), /source/u);
+    writeFileSync(packagePath, packageBytes);
     writeFileSync(path.join(inputs.repository, "package-lock.json"), "altered");
     assert.throws(() => readBundleRecord(inputs.repository), /source/u);
   });
@@ -2599,6 +2612,32 @@ test("release route requires both Forge source matrices before tagging", () => {
   const source = guide.indexOf("require every declared source job to pass");
   const tag = guide.indexOf("Only then sign an annotated");
   assert.ok(source >= 0 && tag > source);
+});
+
+test("release route binds GitLab commands and exact pipeline readback", () => {
+  const guide = readFileSync(path.join(root, "CONTRIBUTING.md"), "utf8");
+  const commands = [...walkMarkdown(markdownTokens(guide, "CONTRIBUTING.md"))]
+    .filter((node) => ["codeFlowValue", "codeTextData"].includes(node.type))
+    .map((node) => node.text.trim().split(/\s+/u))
+    .filter(([executable]) => executable === "glab");
+  assert.ok(commands.length > 0);
+  for (const command of commands) {
+    if (command[1] === "auth") continue;
+    const repository =
+      command[1] === "repo" && command[2] === "view"
+        ? command[3]
+        : command[command.indexOf("--repo") + 1];
+    assert.equal(repository, "GITLAB_REPOSITORY_URL", command.join(" "));
+  }
+  assert.ok(
+    commands.some(
+      (command) =>
+        command[1] === "ci" &&
+        command[2] === "get" &&
+        command[command.indexOf("--pipeline-id") + 1] === "PIPELINE_ID" &&
+        command[command.indexOf("--output") + 1] === "json",
+    ),
+  );
 });
 
 test("npm owns exact package-manager admission without duplicate fields", () => {

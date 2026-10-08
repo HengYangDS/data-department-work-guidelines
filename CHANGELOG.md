@@ -47,6 +47,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Use the configured full GitLab repository URL in release commands and read
+  back the exact pipeline's project, tag, commit, and source. Clarify frozen
+  bundle reuse at a Changelog-only cut and rebuilding after package changes.
 - Restore fidelity, clarity, and elegance as writing aims: faithful meaning,
   accurate understanding conveyed fluently, and expressive beauty with aesthetic
   judgment and artistic and cultural refinement.
