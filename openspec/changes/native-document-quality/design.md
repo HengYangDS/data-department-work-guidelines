@@ -485,6 +485,16 @@ Windows Runner jobs. Retire qualification packages only after jobs are terminal
 and their complete results are preserved. Source qualification is not a signed
 Release.
 
+For task 2.38, a temporary manual proposal-only Windows review job may run
+Node's native CPU and synchronous-filesystem profiling on the two existing
+process/file-heavy regressions, then inherit the unchanged complete verifier.
+Reuse the review identity, locked tool supply, and project resource group.
+Preserve raw profiles and the failed full-verification trace; a diagnostic
+result grants no proof or protected acceptance. Remove this optional job and
+its validation branch before the final freeze, after evidence has a declared
+owner. Do not add a controller, change VM isolation, raise deadlines, or replace
+real public-command regressions with mocks.
+
 ### Bind risk approval to the actual subject
 
 OSV Scanner owns one complete raw scan. Preserve the exact lock, native policy,

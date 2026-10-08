@@ -451,6 +451,15 @@ templates SHALL own common steps.
   `macos`, and `windows`, with `:review` for source review; no runnable shared
   owner or platform-specific parent substitutes for the hidden phase template.
 
+#### Scenario: Temporary diagnosis cannot replace verification
+
+- **WHEN** a temporary Windows profiling job is explicitly started on a proposal
+- **THEN** it uses the existing review identity, native profiling, locked supply,
+  and shared Windows resource group, and retains original profiles on failure
+- **AND** mandatory source verification keeps its full discovered test set and
+  existing deadline; diagnostic results do not authorize acceptance
+- **AND** its optional CI wiring is removed before final release qualification.
+
 #### Scenario: Windows verification events share a finite executor
 
 - **WHEN** Windows review, protected-source, and offline verification jobs
