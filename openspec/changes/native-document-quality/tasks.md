@@ -207,20 +207,15 @@
       isolation, and throughput qualification with the runner owner; add no
       controller, capacity threshold, or proof gate.
 - [ ] 2.38 Qualify the [fixed-source repairs](design.md#supply-exact-tools-without-a-second-installation-plane).
-      Resolve the review at existing installer, bundle, audit, and documentation
-      owners. Verify one native Markdown spacing owner on identical fix/check
-      inputs and an unchanged second pass. Remove the replaced spacing rule,
-      suppression vetoes, and unused dependencies; preserve non-spacing checks,
-      tight containers, semantic loose-item separators, and byte-exact examples.
-      Verify the
-      [supply](design.md#supply-exact-tools-without-a-second-installation-plane),
-      [risk](design.md#bind-risk-approval-to-the-actual-subject),
-      [execution](design.md#preserve-native-execution-and-complete-validation-evidence),
-      and [publication](design.md#keep-both-publication-peers-complete-and-coherent)
-      contracts through focused tests, full source, cold installation,
-      exact-HEAD proof, and both Forge source/offline jobs. Preserve original
-      findings and dispositions; retire qualification packages after terminal
-      jobs.
+      Resolve findings at the installer, bundle, audit, and documentation owners.
+      Verify the [format](design.md#give-native-quality-concerns-one-owner),
+      [risk](design.md#bind-risk-approval-to-the-actual-subject), and
+      [execution](design.md#preserve-native-execution-and-complete-validation-evidence)
+      contracts through focused regressions, full source, cold install, exact-HEAD
+      proof, and both Forge source/offline jobs. Qualify native Windows ARM64 Node
+      with pinned compatible tools and actual architecture observations. Preserve
+      findings and runner failures; retire replaced rules, unused dependencies,
+      and terminal qualification packages through their declared owners.
 
 ## 3. Qualification and publication
 
@@ -237,19 +232,14 @@
 - [x] 3.4 Publish the major signed SemVer edition independently to GitLab and
       GitHub; verify both exact refs, Releases, downloaded asset hashes, and
       declared source and offline platform jobs.
-- [ ] 3.13 Qualify accepted [release-history and peer-navigation contracts](design.md#keep-both-publication-peers-complete-and-coherent)
-      on every audited affected adopter through its own owners. Verify declared
-      peers, conserved history, accepted Python evidence, repaired-baseline
-      admission, original-plan recovery, and installed bindings. Require both
-      Forge jobs and protected acceptance before retiring superseded identity
-      code; retain original receipts.
 - [ ] 3.5 Complete the final audit against the [original work contract](design.md#preserve-the-original-work-contract-at-seven-topic-owners),
-      all 62 original subsections, five surrounding groups, current source,
-      and review dispositions. Qualify shared contracts and complete the
-      pre-archive steps of the [migration plan](design.md#migration-plan):
-      frozen minor release, cold/platform verification, signed publication,
-      official spec sync, and qualified retirement. Preserve unique evidence;
-      confirm archive prerequisites without claiming its future Git effects.
+      all 62 original subsections, five surrounding groups, current source, and
+      resolved review findings. Require tasks 2.33, 2.38, 3.3, and 3.13, then complete
+      the pre-archive [migration plan](design.md#migration-plan): frozen minor
+      release, cold/platform checks, signed publication, official spec sync, and
+      qualified retirement. Preserve unique evidence and clause dispositions
+      without an equivalence claim; verify archive prerequisites without claiming
+      the future archive commit's proof, publication, or retirement.
 - [x] 3.6 Publish the compatible original-duty correction with fresh local,
       installed ETHOS, signed patch, asset, and both Forge platform evidence;
       preserve the already qualified major release.
@@ -278,6 +268,12 @@
       exact-HEAD installed proof, a signed patch, both declared source and
       offline platform matrices, independent source and asset hashes, and
       retirement of its owned lane and superseded downloads.
+- [ ] 3.13 Qualify accepted [release-history and peer-navigation contracts](design.md#keep-both-publication-peers-complete-and-coherent)
+      on every audited affected adopter through its own owners. Verify declared
+      peers, conserved history, accepted Python evidence, repaired-baseline
+      admission, original-plan recovery, and installed bindings. Require both
+      Forge jobs and protected acceptance before retiring superseded identity
+      code; retain original receipts.
 - [x] 3.14 Qualify and publish compatible plain-language, cross-cycle, and
       offline-supply repairs with source-bound bundle, cold install, proof,
       trusted signed patch, both source/offline matrices, independent downloads,

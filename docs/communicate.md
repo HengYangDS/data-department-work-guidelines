@@ -50,9 +50,9 @@ If a change is necessary, identify it and explain why before answering.
 > hindsight question rather than the one we need. I have kept the file
 > exploratory. I recommend deferring this use. That delays the study but avoids
 > presenting hindsight as point-in-time evidence. We can reconsider when the
-> earlier snapshot and replay evidence are available. Decision owner for this
-> use, please decide before the planned release window whether to defer this use
-> or obtain the snapshot and rerun the check.”
+> earlier snapshot and replay evidence are available. Before the planned release
+> window, the decision owner for this use needs to choose: defer it, or obtain the
+> snapshot and rerun the check.”
 
 ## Make Meetings Produce Decisions, Not Transcripts
 
@@ -84,15 +84,15 @@ both from a different risk preference despite shared reasoning.
    Give the conclusion, decision request, or reason no conclusion is available
    on the first screen. Make one main point per paragraph, define important
    terms at first use, and leave reasoning and next steps actionable.
-3. **Elegance:** Bring aesthetic judgment, taste, and artistic and cultural
-   refinement to expression. Give the writing beauty and a cultivated style
-   suited to its subject and audience. Shape sentence rhythm, transitions, and
-   visual form with care. Choose precise verbs and concrete nouns. Remove
-   formulaic filler, repetition, and empty decoration. Keep the tone objective
-   and measured, without slogans or pretended depth. Let structure serve
-   judgment; do not let a diagram stand in for an argument.
+3. **Elegance:** Write with taste and aesthetic judgment, drawing on artistic
+   and cultural refinement. Let rhythm, transitions, and visual form create
+   beauty and a cultivated style suited to the subject and audience. Choose
+   precise verbs and concrete nouns. Remove formulaic filler, repetition, and
+   empty decoration. Keep the tone objective and measured, without slogans or
+   pretended depth. Let structure serve judgment; do not let a diagram stand
+   in for an argument.
 
-These editing practices apply the three aims; they do not define their limits.
+These editing practices serve the three aims without exhausting them.
 
 Analysis, proposal, and decision documents should follow this order by default:
 

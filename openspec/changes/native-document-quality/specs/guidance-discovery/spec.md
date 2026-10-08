@@ -20,6 +20,14 @@ other owners' professional judgments.
 - **AND** a successful summary or exit status does not replace that inspection,
   and no new report store or approval step is required.
 
+#### Scenario: A current state has no comparison baseline
+
+- **WHEN** a member frames material work or an Agent plans its execution
+- **THEN** problem framing names the comparison baseline as well as the current
+  state, target, scope, constraints, and completion condition
+- **AND** the Agent builds the smallest sufficient model before expanding
+  details; neither collected material nor a long list replaces that model.
+
 #### Scenario: An analysis is split into parts
 
 - **WHEN** a member decomposes a material problem before proposing options
@@ -104,7 +112,23 @@ task boundaries, work states, evidence limits, and learning triggers. Problem
 resolution, tested bounded judgment, and future system improvement SHALL remain
 distinct. Topics SHALL expose start, stop, and verification cues without a root
 monolith or duplicate cards. Practice admission SHALL remain evidence-based and
-distinct from mandatory task-specific prevention.
+distinct from mandatory task-specific prevention. Latest verified facts SHALL
+outrank loyalty to prior approaches, tools, identities, documents, or sunk costs.
+A Blocked report SHALL name the prerequisite gap, its impact, and the escalation.
+
+#### Scenario: A familiar approach conflicts with new facts
+
+- **WHEN** new verified facts contradict a familiar approach, tool, identity,
+  document, or prior investment
+- **THEN** the charter requires correcting the judgment from those facts
+- **AND** loyalty or sunk cost does not justify preserving the old position.
+
+#### Scenario: A blocked report omits its impact
+
+- **WHEN** a member or Agent reports a prerequisite that blocks the affected
+  action
+- **THEN** the delivery topic requires the gap, its impact, and the escalation
+- **AND** naming a blocker alone is not a complete work-state report.
 
 #### Scenario: An unchecked citation accompanies fluent work
 
@@ -315,22 +339,23 @@ distinct from mandatory task-specific prevention.
 
 Material task transitions SHALL be checked; observed high-risk signals SHALL be
 escalated. During active work, the department head or appointed maintainer SHOULD
-calibrate judgments weekly and SHALL review weak signals and mechanisms at least
-monthly. Maintainers SHALL review rules, tools and capability gaps at least
-quarterly. Reviews SHALL reuse sufficient existing carriers, assess mechanisms
-rather than rank people, and respect each metric's limits.
+calibrate judgments weekly. That owner SHALL review weak signals and mechanisms
+at least monthly. Maintainers SHALL review rules, tools and capability gaps at
+least quarterly. Reviews SHALL reuse sufficient existing carriers, assess mechanisms
+rather than rank people, and respect each metric's limits. Managers SHALL resolve
+cross-domain conflicts and long-standing open decisions in time for work to
+proceed.
 
 #### Scenario: Weak signals accumulate without an incident
 
-- **WHEN** weekly sample calibration, monthly mechanism review, or quarterly
-  practice and capability review is due during active work
-- **THEN** the department head or appointed maintainer SHALL inspect weak
-  signals and mechanisms at least monthly, even without an incident, and decide
-  whether a mechanism needs correction
-- **AND** the weekly sample-calibration default remains a separate purpose, uses
-  one or two real samples in about 30 minutes, and permits a justified different
-  interval with a revisit time
-- **AND** a different interval SHALL name its reason and revisit time
+- **WHEN** weekly sample calibration is due during active work, or monthly
+  mechanism review or quarterly practice and capability review is due
+- **THEN** the department head or appointed maintainer SHOULD calibrate judgments
+  weekly on one or two real samples in about
+  30 minutes
+- **AND** a different weekly interval SHALL name its reason and revisit time
+- **AND** that owner SHALL inspect weak signals and mechanisms at least monthly,
+  even without an incident, and decide whether a mechanism needs correction
 - **AND THEN** the guideline maintainer and people using the practices SHALL
   review current rules, templates, tools, Agent practices, and capability gaps
   for net benefit at least quarterly
@@ -367,10 +392,13 @@ rather than rank people, and respect each metric's limits.
 
 #### Scenario: A data incident needs immediate containment
 
-- **WHEN** a data error, production failure, or permission breach threatens
-  downstream work and completing a record first would delay containment
-- **THEN** the task lead contains the affected data flow or use within existing
-  authority and notifies its responsible data or production owner
+- **WHEN** a data error, production failure, or permission or compliance breach
+  threatens data, production, downstream use, or compliance, and completing a
+  record first would delay containment
+- **THEN** whoever discovers it takes containment steps within existing authority
+  and notifies the responsible data or production owner
+- **AND** the person responsible for the affected work, usually the task lead,
+  owns the response and follow-through
 - **AND** inputs and versions needed to establish impact and verify a correction
   remain available
 - **AND** a response beyond current authority is escalated to the decision owner;
@@ -380,10 +408,19 @@ rather than rank people, and respect each metric's limits.
 - **AND** the temporary decision records its maker, facts, authority, expiry,
   takeover owner, and rollback condition once the immediate risk is controlled
 - **AND** verification covers affected data and dependent uses, and records and
-  cause review are completed; repeated exceptions become a mechanism problem
+  cause review are completed; repeated exceptions of the same kind become a
+  mechanism problem
 - **AND** organizational safeguards for members who expose problems remain
   distinct from data-incident containment; no ungrounded physical-safety scenario
   is introduced.
+
+#### Scenario: Cross-domain owners cannot resolve a conflict
+
+- **WHEN** a cross-domain conflict or long-standing open decision prevents
+  affected work from proceeding
+- **THEN** managers SHALL resolve it in time for work to proceed
+- **AND** clarifying the participants or scheduling a later review alone does
+  not discharge that responsibility.
 
 #### Scenario: Downstream results do not reach their owner
 
@@ -400,16 +437,32 @@ understanding and convey it clearly and fluently, and pursue expressive beauty
 through aesthetic judgment, taste, and artistic and cultural refinement suited
 to its subject and audience. Editorial techniques SHALL serve those aims without
 replacing their meanings. Communication SHALL state its purpose in an objective,
-measured tone. Meetings
-SHALL refocus discussion on its decision. Deadline risks SHALL name
-escalation owners and triggers before harm grows. Responsible members and
-supervisors SHALL jointly align on subject, boundary, and success criteria at
-task start. Coaching
-SHALL examine member reasoning, not decide for them. Managers SHALL NOT normalize
-recurring rescue. Agent delegation SHALL name output format, destination,
-audience, and detail. Before sending, authors SHALL test whether cutting a third
-of the wording improves clarity while preserving facts, reasoning, limits, and
+measured tone. Meetings SHALL refocus discussion on its decision. Deadline risks
+SHALL name escalation owners and triggers before harm grows. Responsible members
+and supervisors SHALL jointly align on subject, boundary, and success criteria
+at task start. Coaching SHALL examine member reasoning, not decide for them.
+Managers SHALL demonstrate judgment and communication through concrete work
+examples, not only abstract requirements, and SHALL NOT normalize recurring
+rescue. Agent delegation SHALL name output format, destination, audience, and
+detail. Before sending, authors SHALL test whether cutting a third of the
+wording improves clarity while preserving facts, reasoning, limits, and
 responsibilities; the exercise SHALL NOT impose a deletion quota.
+
+#### Scenario: A decision waits for the right time rather than more evidence
+
+- **WHEN** an option has sufficient information but a timing condition prevents
+  action
+- **THEN** the decision topic identifies that condition and the action or
+  observation that will resolve it, with a revisit time
+- **AND** deferred work does not imply that evidence is always missing.
+
+#### Scenario: A routine task meets its agreed outcome
+
+- **WHEN** a task meets its commitment and hard boundaries without producing a
+  transferable method or system improvement
+- **THEN** the evolution topic does not require an exceptional result from every
+  task
+- **AND** essential prevention and agreed completion conditions still apply.
 
 #### Scenario: An editing technique is mistaken for the writing standard
 
@@ -447,6 +500,13 @@ responsibilities; the exercise SHALL NOT impose a deletion quota.
 - **THEN** its title names the subject, purpose, and document status
 - **AND** its content or work-state claims do not substitute for visible
   document status.
+
+#### Scenario: A manager sets standards only through abstract requirements
+
+- **WHEN** a manager explains work standards only through abstract requirements
+- **THEN** the evolution topic requires concrete work examples showing how the
+  manager judges and communicates
+- **AND** abstract expectations alone do not discharge the demonstration duty.
 
 #### Scenario: A member reports a failure or receives a review score
 

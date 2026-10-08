@@ -481,24 +481,35 @@ function nativeExecutablePath(selected) {
   throw new Error(`native executable not found: ${selected}`);
 }
 
+export function nativeToolPlatform(
+  tool,
+  platform = `${process.platform}-${process.arch}`,
+  manifest = readNativeSupply(),
+) {
+  if (!Object.hasOwn(manifest.tools, tool))
+    throw new Error(`unknown native tool: ${tool}`);
+  const assets = manifest.tools[tool].assets;
+  if (Object.hasOwn(assets, platform)) return platform;
+  if (platform === "win32-arm64" && Object.hasOwn(assets, "win32-x64"))
+    return "win32-x64";
+  throw new Error(`unsupported ${tool} platform: ${platform}`);
+}
+
 export function managedToolPath(
   tool,
   platform = `${process.platform}-${process.arch}`,
   repository = root,
 ) {
   const manifest = readNativeSupply(repository);
-  if (!Object.hasOwn(manifest.tools, tool))
-    throw new Error(`unknown native tool: ${tool}`);
+  const selectedPlatform = nativeToolPlatform(tool, platform, manifest);
   const descriptor = manifest.tools[tool];
-  if (!Object.hasOwn(descriptor.assets, platform))
-    throw new Error(`unsupported ${tool} platform: ${platform}`);
   return path.join(
     repository,
     "build/runtime/tool-cache",
     tool,
     descriptor.version,
-    platform,
-    descriptor.binary + (platform.startsWith("win32-") ? ".exe" : ""),
+    selectedPlatform,
+    descriptor.binary + (selectedPlatform.startsWith("win32-") ? ".exe" : ""),
   );
 }
 
@@ -508,8 +519,9 @@ export function nativeToolBinary(tool) {
     throw new Error(`unknown native tool: ${tool}`);
   }
   const descriptor = manifest.tools[tool];
+  const platform = nativeToolPlatform(tool, undefined, manifest);
   const suffix = process.platform === "win32" ? ".exe" : "";
-  const cached = managedToolPath(tool);
+  const cached = managedToolPath(tool, platform);
   const selected = nativeExecutablePath(
     process.env[`DDWG_${tool.toUpperCase().replaceAll("-", "_")}_BIN`] ||
       (managedFileExists(cached) ? cached : descriptor.binary + suffix),
@@ -535,7 +547,7 @@ export function nativeToolBinary(tool) {
     assertNativeBinaryDigest(
       readFileSync(selected),
       {
-        ...descriptor.assets[`${process.platform}-${process.arch}`],
+        ...descriptor.assets[platform],
         format: descriptor.format ?? "archive",
       },
       tool,

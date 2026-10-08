@@ -28,6 +28,13 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Preserve timing-based decision deferral and make clear that routine tasks need
+  their agreed outcome, not an exceptional result every time.
+- Make the comparison baseline explicit when framing a problem and require
+  Agents to build the smallest sufficient model before expanding detail.
+- Let native Windows ARM64 Node select the existing pinned compatible x64 tools
+  through one installer, cache, and offline-bundle boundary. The asset selection
+  does not by itself establish platform execution or timeout recovery.
 - Preserve one complete native dependency scan and evaluate only the exact,
   expiring development approval. Keep project dependencies, the approved CI
   image, the pinned native-tool group, and the separately approved Lychee assets
@@ -44,12 +51,16 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 - Reduce repeated native-tool and Git observations and keep test fixtures focused
   on their declared inputs. Retain complete source validation, every distinct
   ancestry check, source-selection controls, policy, deadlines, and diagnostics.
+- Load quality modules only for the selected contributor command. Standalone
+  tests avoid unrelated check startup while retaining the full discovered suite,
+  two workers, and the existing deadline.
 
 ### Fixed
 
-- Complete the structured verification context before child tools write output.
-  Keep standard output and error separate; failed writes stop verification
-  before any check runs.
+- Complete the structured context once in both `check` and `verify`, including
+  the observed host name, before validation or formatter children write output.
+  Keep standard output and error separate; failed writes stop both commands
+  before validation or formatting.
 - Use the configured full GitLab repository URL in release commands and read
   back the exact pipeline's project, tag, commit, and source. Clarify frozen
   bundle reuse at a Changelog-only cut and rebuilding after package changes.
@@ -57,9 +68,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   accurate understanding conveyed fluently, and expressive beauty with aesthetic
   judgment and artistic and cultural refinement.
   Keep editorial techniques as applications rather than definitions.
-- Ground emergency guidance in affected data flows, production, and permissions,
-  with clear containment, escalation, and correction checks. Preserve the
-  separate management duty to support members who honestly expose problems.
+- Ground emergency guidance in affected data, production, downstream use,
+  permissions, and compliance. Name discoverer containment, responsible-person
+  follow-through, escalation, and correction checks. Preserve the separate
+  management duty to support members who honestly expose problems.
 - Give Markdown spacing one owner: native formatting, with byte-exact examples
   preserved and independent non-spacing checks retained. Remove the competing
   list-spacing rule and unused dependencies.
@@ -87,6 +99,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 - Upgrade the native math renderer so inherited options cannot grant trusted
   rendering. Preserve Markdownlint tokens, ordinary math, and explicit trust
   through the existing consumer without waiving the dependency finding.
+- Require a resolving action and revisit time for deferred decisions in Agent
+  handoffs; a trigger alone cannot leave work waiting indefinitely.
 - Restore the one-third editing exercise without a deletion quota or loss of
   facts, reasoning, limits, or responsibilities.
 - Restore the ban on vague assurances across answers and meeting records, not
@@ -115,8 +129,11 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   tool platforms, and Change authority descriptions consistent with their
   existing contracts.
 - Make emergency containment reachable from the charter and delivery pages.
-  Clarify managers' decision boundaries and route review, coaching, and cadence
-  questions to their existing topic.
+  Restore managers' timely resolution of cross-domain conflicts and
+  long-standing open decisions, with concrete examples of judgment and
+  communication. Require blocked reports to state impact, and keep old tools,
+  identities, and sunk costs subordinate to verified facts. Route review,
+  coaching, and cadence questions to their existing topic.
 - Restore the justified single-lead default without weakening accountability,
   with explicit interface needs and delivery evidence. Keep L1 and L2 record
   duties at the charter's complete risk boundary.

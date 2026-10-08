@@ -1,23 +1,3 @@
-import { readBundleRecord } from "../ci/offline-bundle.mjs";
-import { checkChangelog } from "./changelog.mjs";
-import { auditDependencies, checkCi } from "./ci.mjs";
-import {
-  checkDocumentMetadata,
-  checkLinks,
-  checkProse,
-  checkTextLayout,
-  formatSource,
-  lintMarkdown,
-} from "./content.mjs";
-import {
-  checkConfigurationLayout,
-  checkDecisions,
-  checkLineEndingAttributes,
-  checkLicense,
-  checkNavigation,
-  checkNoScope,
-  checkProfile,
-} from "./governance.mjs";
 import {
   assertNodeRuntime,
   gitFiles,
@@ -41,7 +21,7 @@ function runTests() {
   });
 }
 
-async function checkRepository() {
+async function reportVerificationContext() {
   // Finish this record before synchronous children inherit the same stream.
   let onWriteError;
   await new Promise((resolve, reject) => {
@@ -52,6 +32,28 @@ async function checkRepository() {
       (error) => (error ? reject(error) : resolve()),
     );
   }).finally(() => process.stdout.off("error", onWriteError));
+}
+
+async function checkRepository() {
+  const {
+    checkConfigurationLayout,
+    checkDecisions,
+    checkLineEndingAttributes,
+    checkLicense,
+    checkNavigation,
+    checkNoScope,
+    checkProfile,
+  } = await import("./governance.mjs");
+  const {
+    checkDocumentMetadata,
+    checkLinks,
+    checkProse,
+    checkTextLayout,
+    lintMarkdown,
+  } = await import("./content.mjs");
+  const { readBundleRecord } = await import("../ci/offline-bundle.mjs");
+  const { checkChangelog } = await import("./changelog.mjs");
+  const { checkCi } = await import("./ci.mjs");
   checkConfigurationLayout();
   checkProfile();
   checkLineEndingAttributes();
@@ -78,58 +80,78 @@ try {
   switch (command) {
     case "check":
       if (arguments_.length) throw new Error("check accepts no arguments");
+      await reportVerificationContext();
       await checkRepository();
       break;
-    case "verify":
+    case "verify": {
       if (arguments_.length) throw new Error("verify accepts no arguments");
+      await reportVerificationContext();
+      const { formatSource } = await import("./content.mjs");
       await formatSource();
       await checkRepository();
       runTests();
       console.log("PASS repository documentation verification");
       break;
-    case "format":
+    }
+    case "format": {
       if (
         arguments_.length > 1 ||
         (arguments_.length === 1 && arguments_[0] !== "--check")
       ) {
         throw new Error("format accepts only --check");
       }
+      const { formatSource } = await import("./content.mjs");
       await formatSource({ check: arguments_[0] === "--check" });
       break;
-    case "lint":
+    }
+    case "lint": {
       if (arguments_.length) throw new Error("lint accepts no arguments");
+      const { lintMarkdown } = await import("./content.mjs");
       lintMarkdown();
       break;
-    case "audit":
+    }
+    case "audit": {
       if (arguments_.length) throw new Error("audit accepts no arguments");
+      const { auditDependencies } = await import("./ci.mjs");
       auditDependencies();
       break;
-    case "prose":
+    }
+    case "prose": {
       if (arguments_.length) throw new Error("prose accepts no arguments");
+      const { checkProse } = await import("./content.mjs");
       await checkProse();
       break;
-    case "links":
+    }
+    case "links": {
       if (
         arguments_.length > 1 ||
         (arguments_.length === 1 && arguments_[0] !== "--online")
       ) {
         throw new Error("links accepts only --online");
       }
+      const { checkLinks } = await import("./content.mjs");
       checkLinks({ online: arguments_[0] === "--online" });
       break;
-    case "changelog":
+    }
+    case "changelog": {
       if (arguments_.length) throw new Error("changelog accepts no arguments");
+      const { checkChangelog } = await import("./changelog.mjs");
       checkChangelog();
       break;
-    case "boundary":
+    }
+    case "boundary": {
       if (arguments_.length) throw new Error("boundary accepts no arguments");
+      const { checkDecisions, checkNoScope } = await import("./governance.mjs");
       checkDecisions();
       checkNoScope();
       break;
-    case "navigation":
+    }
+    case "navigation": {
       if (arguments_.length) throw new Error("navigation accepts no arguments");
+      const { checkNavigation } = await import("./governance.mjs");
       checkNavigation();
       break;
+    }
     case "test":
       if (arguments_.length) throw new Error("test accepts no arguments");
       runTests();

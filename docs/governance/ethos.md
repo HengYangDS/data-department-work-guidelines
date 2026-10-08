@@ -131,11 +131,14 @@ rule selection and spacing;
 [Contributing](../../CONTRIBUTING.md#verify-the-source) owns the commands.
 
 The source check reports path, commit, tree, tracked changes, Node version and
-platform, process architecture, `hostname`, and exact workspace-capacity bytes.
-These are observations, not portable target configuration. A mounted container
-workspace is not necessarily the guest root volume; this does not prove VM
-identity, host architecture, isolation, or throughput. Native read errors remain
-failures. The runner owner verifies the guest and host separately.
+platform, process architecture, `hostname`, and exact workspace-capacity
+bytes. These are observations, not portable target configuration. A mounted
+container workspace is not necessarily the guest root volume; this does not
+prove VM identity, host architecture, isolation, or throughput. Native read
+errors remain failures. The runner owner verifies the guest and host
+separately. The [tool-supply boundary](#tool-supply-and-offline-execution)
+owns tool-selection evidence. Retained local diagnostics may contain the
+observed host name; it is evidence metadata, never a required target value.
 
 Official OpenSpec reports must identify this repository, unique typed items,
 complete diagnostics, and consistent native counts for both `--all` categories,
@@ -245,8 +248,15 @@ CI bootstraps Node/npm and acquires the exact asset before offline execution.
 That whole job is not network-isolation proof. Qualify cold local use separately
 with fresh HOME, no inherited configuration/cache, and denied remote connections.
 Run the full graph on every claimed host with actual npm recorded. The manifest
-supplies macOS x64, but current CI does not qualify that ABI. Windows ARM64 uses
-x64 Node/tools under emulation; record host and process architecture separately.
+supplies macOS x64, but current CI does not qualify that ABI. On Windows ARM64,
+prefer native ARM64 Node. When the manifest has no ARM64 tool asset, use its
+declared pinned x64 asset under Windows emulation. Tool compatibility does not
+require emulating Node too. Qualify the actual combination and record host,
+Node-process, and tool architectures separately. For managed tools, invoke
+`node tools/ci/install-native.mjs TOOL --print-spec` with the same Node executable
+used for verification. Record its selected asset `key` and digests, not a cache
+directory name.
+The installation owner supplies provenance for an external executable.
 Independently download and hash each Forge asset; a pin or install preview is
 not platform acceptance.
 
@@ -316,9 +326,7 @@ package. [Contributing](../../CONTRIBUTING.md#publish-a-release) owns the route.
 - Once a proposal has an open MR, use its MR pipeline instead of a duplicate
   branch-push pipeline.
 - Before Linux admission, verify the exact CI OCI digest is allowed and cached.
-  Native hosts need the declared Node line and exact registry assets. Windows
-  ARM64 uses x64 Node/tools because lychee has no Windows ARM64 binary; qualify
-  emulation without calling the host native x86_64.
+  Native hosts follow the [tool-supply boundary](#tool-supply-and-offline-execution).
 - Signed-tag offline jobs start only after package and Release exist. Source
   tag-push jobs cannot qualify an asset published afterward.
 

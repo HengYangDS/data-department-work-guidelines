@@ -1191,6 +1191,135 @@ test("installer invokes only the locked offline supply path", () => {
   });
 });
 
+test("Windows ARM64 offline installation consumes the pinned compatible assets", () => {
+  buildFixture((inputs) => {
+    const native = readNativeSupply(inputs.repository);
+    const rawTool = readNativeSupply().tools["osv-scanner"];
+    const rawBytes = Buffer.from("pinned OSV binary fixture");
+    const rawLicense = Buffer.from("OSV license fixture");
+    const rawName = rawTool.assets["win32-x64"].name;
+    mkdirSync(path.join(inputs.assetDirectory, "osv-scanner"));
+    mkdirSync(path.join(inputs.licenseDirectory, "osv-scanner"));
+    writeFileSync(
+      path.join(inputs.assetDirectory, "osv-scanner", rawName),
+      rawBytes,
+    );
+    writeFileSync(
+      path.join(inputs.licenseDirectory, "osv-scanner", "LICENSE"),
+      rawLicense,
+    );
+    native.tools["osv-scanner"] = {
+      version: rawTool.version,
+      binary: rawTool.binary,
+      format: rawTool.format,
+      versionOutput: rawTool.versionOutput,
+      assets: {
+        "win32-x64": {
+          name: rawName,
+          sha256: digest(rawBytes),
+          size: rawBytes.byteLength,
+        },
+      },
+      licenses: {
+        LICENSE: {
+          sha256: digest(rawLicense),
+          source: "https://example.test/osv-scanner/LICENSE",
+        },
+      },
+    };
+    const host = `${process.platform}-${process.arch}`;
+    for (const descriptor of Object.values(native.tools)) {
+      if (descriptor.assets[host]) {
+        descriptor.assets["win32-x64"] = descriptor.assets[host];
+        if (host !== "win32-x64") delete descriptor.assets[host];
+      }
+    }
+    writeFileSync(
+      path.join(inputs.repository, ".config/supply/native.json"),
+      JSON.stringify(native),
+    );
+    const built = assembleBundle(inputs);
+    const npmEntry = npmCliPath();
+    const previous = {
+      platform: Object.getOwnPropertyDescriptor(process, "platform"),
+      arch: Object.getOwnPropertyDescriptor(process, "arch"),
+      npmExecPath: process.env.npm_execpath,
+    };
+    const calls = [];
+    try {
+      Object.defineProperty(process, "platform", {
+        ...previous.platform,
+        value: "win32",
+      });
+      Object.defineProperty(process, "arch", {
+        ...previous.arch,
+        value: "arm64",
+      });
+      process.env.npm_execpath = npmEntry;
+      const result = installBundle({
+        bundlePath: inputs.outputPath,
+        record: built,
+        repository: inputs.repository,
+        commandRunner(command, args, options) {
+          assert.equal(command, process.execPath);
+          calls.push(args);
+          if (path.basename(args[0]) === "npm-cli.js") {
+            if (args[1] === "--version") return "12.1.0\n";
+            assert.equal(args[1], "ci");
+            assert.ok(args.includes("--offline"));
+            mkdirSync(path.join(inputs.repository, "node_modules"));
+          } else {
+            assert.equal(path.basename(args[0]), "install-native.mjs");
+            const descriptor = native.tools[args[1]];
+            if (args[1] === "osv-scanner") {
+              assert.equal(descriptor.format, "binary");
+              assert.deepEqual(readFileSync(args[3]), rawBytes);
+              assert.equal(
+                descriptor.assets["win32-x64"].size,
+                rawBytes.byteLength,
+              );
+            }
+            assert.deepEqual(args.slice(2, 3), ["--asset"]);
+            assert.equal(
+              path.basename(args[3]),
+              descriptor.assets["win32-x64"].name,
+            );
+            const target = path.join(
+              inputs.repository,
+              "build/runtime/tool-cache",
+              args[1],
+              descriptor.version,
+              "win32-x64",
+              descriptor.binary + ".exe",
+            );
+            mkdirSync(path.dirname(target), { recursive: true });
+            writeFileSync(target, "verified native fixture");
+          }
+          assert.equal(options.cwd, inputs.repository);
+          return "";
+        },
+      });
+      assert.equal(result.npmVersion, "12.1.0");
+      assert.equal(calls.length, 5);
+      assert.deepEqual(
+        calls.slice(2).map((args) => args[1]),
+        ["lychee", "vale", "osv-scanner"],
+      );
+      assert.equal(
+        existsSync(
+          path.join(inputs.repository, "build/runtime/.offline-install"),
+        ),
+        false,
+      );
+    } finally {
+      Object.defineProperty(process, "platform", previous.platform);
+      Object.defineProperty(process, "arch", previous.arch);
+      if (previous.npmExecPath === undefined) delete process.env.npm_execpath;
+      else process.env.npm_execpath = previous.npmExecPath;
+    }
+  });
+});
+
 test("offline installation refuses an unsupported tool ABI before package-manager effects", () => {
   buildFixture((inputs) => {
     const native = readNativeSupply(inputs.repository);
@@ -1220,7 +1349,7 @@ test("offline installation refuses an unsupported tool ABI before package-manage
             return "";
           },
         }),
-      /offline bundle does not support lychee/u,
+      /unsupported lychee platform/u,
     );
     assert.deepEqual(calls, []);
     assert.equal(

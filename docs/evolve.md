@@ -18,7 +18,7 @@ template, tool, Agent workflow, or platform mechanism as department practice,
 require an observed failure mode, a bounded trial, a responsible owner, and
 evidence of net benefit.
 
-## Start with a Real Failure Mode
+## Admit Practices and Prevent Recurrence
 
 Before admitting a practice, identify the observed failure it addresses.
 Explain why the existing boundary, interface, and feedback are insufficient.
@@ -39,7 +39,8 @@ building a remedy.
 
 You must leave a reusable asset, even before a failure, whenever:
 
-- A problem recurs or affects more than one person, project, or work cycle.
+- A problem of the same kind recurs or affects more than one person, project, or
+  work cycle.
 - An important judgment depends on tacit knowledge held by one or a few people.
 - Forgetting could cause material loss.
 - Agents will repeat the work.
@@ -80,12 +81,14 @@ Agents. Fluency, effort, or Agent efficiency cannot offset these hard risks:
 - Rhetoric or activity counts in place of reasoning and results.
 - Repeated manual rescue without a mechanism to prevent recurrence.
 
-Every task must meet the [hard boundaries](charter.md#four-non-negotiable-boundaries).
-Critical responsibilities should be
-performed independently and reliably. Call a result exceptional only when it
-produces evidenced net benefit, transfers a method, reduces long-term
-complexity, and improves others' capacity. Exceptional performance also shows
-the ability to detect weak structural signals.
+Every task must meet the [hard
+boundaries](charter.md#four-non-negotiable-boundaries). Critical
+responsibilities should be performed independently and reliably. Call a result
+exceptional only when it produces evidenced net benefit, transfers a method,
+reduces long-term complexity, and improves others' capacity. Exceptional
+performance also shows the ability to detect weak structural signals. Not
+every task needs an exceptional result; every task still owes its agreed
+outcome and hard boundaries.
 
 If scoring is used, define its levels, observable behavior, and purpose. A score
 expresses delivery risk; it must not label a person or stand for their overall
@@ -119,11 +122,11 @@ recheck facts, options, and authority at material decisions or changed risk,
 verify at the end, and preserve a handoff when interrupted. Escalate high-risk
 signals when observed; a calendar must not delay containment or a decision.
 
-During active work, the department head or appointed guideline maintainer should
-calibrate judgments against evidence weekly on one or two real work samples, in
-about 30 minutes.
-Use an existing review or asynchronous exchange; this adds no all-member meeting
-or report. A different interval needs a reason and a time to revisit it.
+During active work, the department head or appointed guideline maintainer
+should calibrate judgments against evidence weekly on one or two real work
+samples, in about 30 minutes. Use an existing review or asynchronous exchange;
+this adds no all-member meeting or report. A different interval needs a reason
+and a time to revisit it.
 
 At least monthly, the same owner examines accumulated weak signals: recurring
 failures, escaped quality issues, Agent output corrections or misuse, and
@@ -141,23 +144,21 @@ its owner there. Do not create a form or meeting unless existing carriers cannot
 hold the necessary review. No routine “nothing happened” activity report is
 required.
 
-Managers clarify direction, priorities, decision boundaries, resources, and
-cross-domain decisions;
-ensure results, anomalies, and actual-use effects return promptly to the
-responsible owner; resolve long-standing open decisions in time for work to
-proceed; and show
-their reasoning with concrete work examples. They protect people who honestly
-expose problems and must not penalize honest uncertainty or make one person's
-repeated rescue the department's normal way of operating. They must not use
-these guidelines for retrospective fault-finding, ceremonial review, or
-micromanagement.
+Managers clarify direction, priorities, decision boundaries, and resources. They
+resolve cross-domain conflicts and long-standing open decisions in time for work
+to proceed. They ensure that results, anomalies, and actual-use effects return
+promptly to the responsible owner. They show how they judge and communicate
+through concrete work examples, not only abstract requirements. They protect
+people who honestly expose problems and must not penalize honest uncertainty or
+make one person's repeated rescue the department's normal way of operating. They
+must not use these guidelines for retrospective fault-finding, ceremonial
+review, or micromanagement.
 
-When goals conflict,
-priorities drift, resources are short, decisions stall, or interfaces mislead,
-repair the management system before blaming a member's capability. Within the
-stated decision boundaries, the responsible person closest to the facts chooses
-the method, tools, and implementation path; the charter's hard boundaries still
-apply.
+When goals conflict, priorities drift, resources are short, decisions stall, or
+interfaces mislead, repair the management system before blaming a member's
+capability. Within the stated decision boundaries, the responsible person
+closest to the facts chooses the method, tools, and implementation path; the
+charter's hard boundaries still apply.
 
 Members own end-to-end results in their remit and disclose unknowns, risks,
 dependencies, and failures without waiting to be asked. Guideline maintainers
@@ -167,22 +168,25 @@ rules to mask goal, organizational, or system-design defects.
 
 ## Emergencies and Exceptions
 
-When a data error, production failure, or permission breach threatens downstream
-work, the task lead contains the affected data flow or use and notifies the
-responsible data or production owner. Preserve the inputs and versions needed to
-establish the impact and verify a correction. Stay within existing authority;
-if the response needs further permission, escalate to the decision owner.
+When a data error, production failure, or permission or compliance breach
+threatens data, production, downstream use, or compliance, whoever discovers it
+takes containment steps within their existing authority and notifies the
+responsible data or production owner.
+The person responsible for the affected work, usually the task lead, owns the
+response and follow-through. Preserve the inputs and versions needed to
+establish the impact and verify a correction. If the response needs further
+permission, escalate to the decision owner.
 The [hard boundaries](charter.md#four-non-negotiable-boundaries) still apply:
 report known facts and uncertainty honestly, keep responsibility explicit, and
 observe permission and compliance limits. Urgency does not make an uncertain
 result reliable or grant authority to act.
 
-Contain the impact before completing the record when recording first would delay
-the response. Record who decided what, the facts and authority they used, the
-measure's expiry, takeover owner, and rollback condition. Once risk is
-controlled, verify the correction on affected data and dependent uses, complete
-the record, and review the cause. Repeated emergency exceptions must be handled
-as a mechanism problem.
+Contain the impact before completing the record when recording first would
+delay the response. Record who decided what, the facts and authority they
+used, the measure's expiry, takeover owner, and rollback condition. Once risk
+is controlled, verify the correction on affected data and dependent uses,
+complete the record, and review the cause. Repeated emergency exceptions of
+the same kind must be handled as a mechanism problem.
 
 Specific rule changes still follow
 [repository governance](governance/ethos.md). Team adoption must be shown
