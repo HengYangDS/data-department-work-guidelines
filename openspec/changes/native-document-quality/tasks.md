@@ -237,10 +237,12 @@
       source, exact committed proof, and cold successor. Keep the complete
       original failure and corrected-source evidence in the same native
       Attestation; qualify shared integration and hosted acceptance separately.
-- [ ] 2.43 Supply Git configuration isolation through an owned empty file.
+- [x] 2.43 Supply Git configuration isolation through an owned empty file.
       Preserve the original Windows refusal, verify the unchanged source-selection
       assertions locally and on both Forge Windows jobs, and retain native
       diagnostics and fixture cleanup without changing Git or host policy.
+      Retain complete original and successor evidence under Attestation
+      `687f62fa93ec131cc70507c98f309e54c5e30ea2429da22a60798e19f67bd52a`.
 
 ## 3. Qualification and publication
 
