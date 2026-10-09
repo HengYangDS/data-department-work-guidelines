@@ -31,6 +31,11 @@ test("the public test command bounds workers without reducing its discovered inv
     const unrelatedChecks = new Set(${JSON.stringify(
       [
         "tools/ci/offline-bundle.mjs",
+        "tools/ci/offline/artifact.mjs",
+        "tools/ci/offline/npm.mjs",
+        "tools/ci/offline/build.mjs",
+        "tools/ci/offline/install.mjs",
+        "tools/ci/offline/acquire.mjs",
         "tools/docs/changelog.mjs",
         "tools/docs/ci.mjs",
         "tools/docs/dependencies.mjs",
@@ -78,6 +83,9 @@ test("the public test command bounds workers without reducing its discovered inv
     for (const file of ["tests/runtime/execution.test.mjs","tests/prose/reports.test.mjs","tests/source/metadata.test.mjs","tests/decisions/commands.test.mjs","tests/decisions/records.test.mjs","tests/source/selection.test.mjs","tests/source/links.test.mjs","tests/markdown/semantics.test.mjs","tests/markdown/spacing.test.mjs","tests/format/policy.test.mjs","tests/format/commands.test.mjs"]) assert.ok(expected.includes(file), file);
     for (const file of ["tests/decisions/fixtures.mjs","tests/source/fixtures.mjs"]) assert.equal(expected.includes(file), false, file);
     assert.equal(expected.includes("tests/docs-quality.test.mjs"), false);
+    for (const file of ["tests/offline/archive.test.mjs","tests/offline/build.test.mjs","tests/offline/licenses.test.mjs","tests/offline/install.test.mjs","tests/offline/ownership.test.mjs","tests/runtime/diagnostics.test.mjs","tests/offline/npm.test.mjs","tests/offline/downloads.test.mjs","tests/offline/acquisition.test.mjs"]) assert.ok(expected.includes(file), file);
+    assert.equal(expected.includes("tests/offline/fixtures.mjs"), false);
+    assert.equal(expected.includes("tests/offline-bundle.test.mjs"), false);
     const checkedSpawn = childProcess.spawnSync;
     childProcess.spawnSync = (command, args, options) => {
       if (args?.[0] === "--test") assert.deepEqual(args.slice(2), expected);

@@ -15,7 +15,7 @@ import {
   isolatedNpmEnvironment,
   npmCliPath,
   validateLockSupply,
-} from "../ci/offline-bundle.mjs";
+} from "../ci/offline/npm.mjs";
 import { managedFileExists, nativeToolBinary, root } from "./runtime.mjs";
 
 export const dependencyPolicyPath = ".config/checks/dependencies/policy.toml";

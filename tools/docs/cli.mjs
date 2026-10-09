@@ -50,7 +50,7 @@ async function checkRepository() {
     checkTextLayout,
     lintMarkdown,
   } = await import("./content.mjs");
-  const { readBundleRecord } = await import("../ci/offline-bundle.mjs");
+  const { readBundleRecord } = await import("../ci/offline/artifact.mjs");
   const { validateOpenSpec } = await import("./openspec.mjs");
   const { checkChangelog } = await import("./changelog.mjs");
   const { checkCi } = await import("./ci.mjs");

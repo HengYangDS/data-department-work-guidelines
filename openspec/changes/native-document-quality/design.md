@@ -141,6 +141,14 @@ prose diagnostics, and process execution have focused suites. Shared fixtures
 retain their original source and cleanup behavior, and the public test command
 discovers the complete hierarchy without loading fixtures as tests.
 
+The offline-tool CLI selects the existing modes; it does not re-export a library.
+Artifact validation, native npm binding, bundle construction, cold installation,
+and Forge acquisition each have a module under `tools/ci/offline/`. Tests follow
+those responsibilities and share their original fixtures. Preserve native
+diagnostics, license notices, reservations, cleanup, and exact source binding.
+Cold commands must load before dependency installation; the native Markdown
+parser remains confined to build-time license inspection.
+
 #### Source selection and observations
 
 The existing source verifier reports its real repository, commit and tree,
