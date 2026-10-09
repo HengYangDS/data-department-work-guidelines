@@ -296,7 +296,7 @@ export function checkProfile(repository = root) {
       executable !== "node" ||
       typeof source !== "string" ||
       source.startsWith("-") ||
-      /[\\:\u0000]/u.test(source) ||
+      ["\\", ":", "\0"].some((character) => source.includes(character)) ||
       source
         .split("/")
         .some((part) => !part || part === "." || part === "..") ||

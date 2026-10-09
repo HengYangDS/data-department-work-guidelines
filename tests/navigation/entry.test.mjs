@@ -89,7 +89,7 @@ test("task-map hierarchy separates destinations, related reading, and urgent ent
   };
   assertHierarchy(source);
   assert.throws(
-    () => assertHierarchy(source.replace(/^  - /gmu, "  ")),
+    () => assertHierarchy(source.replace(/^ {2}- /gmu, "  ")),
     /one primary destination per work question/u,
   );
   assert.throws(

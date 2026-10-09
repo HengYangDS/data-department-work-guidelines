@@ -213,6 +213,7 @@ test("profile retains direct Node source invocation and each gate's arguments", 
       [0, ["node", "--eval", "process.exit(0)"]],
       [0, ["node", path.join(directory, "tools", "docs", "cli.mjs"), "check"]],
       [0, ["node", "../tools/docs/cli.mjs", "check"]],
+      [0, ["node", "tools/\0docs/cli.mjs", "check"]],
       [0, ["node", "tools/docs/cli.mjs", "verify"]],
       [1, ["node", "tools/docs/cli.mjs", "format"]],
     ];

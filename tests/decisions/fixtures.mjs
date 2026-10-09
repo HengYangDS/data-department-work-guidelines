@@ -1,7 +1,6 @@
 import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { run } from "../../tools/docs/runtime.mjs";
 
 export const sections = [
   "Context",

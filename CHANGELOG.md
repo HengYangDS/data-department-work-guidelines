@@ -94,6 +94,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Remove unused fixture imports and use explicit string checks for invalid
+  profile-path characters. Preserve navigation assertions and NUL-path refusal
+  under the installed native JavaScript checks.
 - Preserve native-tool and offline-bundle download context and original public
   causes; authenticated failures retain only safe transport categories.
 - Restore the shared data-quality remit across acquisition, production, analysis,

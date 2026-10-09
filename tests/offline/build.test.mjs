@@ -24,7 +24,7 @@ import {
   validateBundleRecord,
 } from "../../tools/ci/offline/artifact.mjs";
 import { validateLockSupply } from "../../tools/ci/offline/npm.mjs";
-import { record, source, buildFixture } from "../offline/fixtures.mjs";
+import { buildFixture } from "../offline/fixtures.mjs";
 
 test("release priming preserves native npm failures through the shared executor", (context) => {
   const actual = childProcess.spawnSync;
