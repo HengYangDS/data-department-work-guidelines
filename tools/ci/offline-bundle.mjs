@@ -517,7 +517,12 @@ export function npmCliPath({
       ),
     ]) {
       if (pathExists(candidate) && lstatSync(candidate).isFile()) {
-        if (platform === "win32") {
+        if (
+          platform === "win32" &&
+          /^\s*SET\s+"NPM_PREFIX_JS=%~dp0\\node_modules\\npm\\bin\\npm-prefix\.js"\s*$/imu.test(
+            readFileSync(selectedLauncher, "utf8"),
+          )
+        ) {
           const prefixCli = path.join(path.dirname(candidate), "npm-prefix.js");
           if (pathExists(prefixCli)) {
             let prefix;

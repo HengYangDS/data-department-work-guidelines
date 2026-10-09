@@ -2354,7 +2354,10 @@ test("npm entrypoint follows its native execution and Windows prefix authority",
       mkdirSync(path.dirname(file), { recursive: true });
       writeFileSync(file, "fixture");
     }
-    writeFileSync(path.join(directory, "npm.cmd"), "fixture");
+    writeFileSync(
+      path.join(directory, "npm.cmd"),
+      'SET "NPM_PREFIX_JS=%~dp0\\node_modules\\npm\\bin\\npm-prefix.js"',
+    );
     writeFileSync(
       path.join(path.dirname(adjacent), "npm-prefix.js"),
       `process.stdout.write(${JSON.stringify(prefix)})`,
@@ -2391,6 +2394,51 @@ test("npm entrypoint follows its native execution and Windows prefix authority",
           npmExecPath: null,
         }),
       /native Windows npm prefix/u,
+    );
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test("a direct Windows npm shim does not inherit the bundled prefix route", () => {
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-npm-shim-"));
+  try {
+    const selected = path.join(
+      directory,
+      "node_modules",
+      "npm",
+      "bin",
+      "npm-cli.js",
+    );
+    const prefix = path.join(directory, "bundled-prefix");
+    const bundled = path.join(
+      prefix,
+      "node_modules",
+      "npm",
+      "bin",
+      "npm-cli.js",
+    );
+    for (const file of [selected, bundled]) {
+      mkdirSync(path.dirname(file), { recursive: true });
+      writeFileSync(file, "fixture");
+    }
+    // npm's cmd-shim calls its declared entry directly, unlike npm.cmd's
+    // installer-specific NPM_PREFIX_JS route.
+    writeFileSync(
+      path.join(directory, "npm.cmd"),
+      '"%_prog%" "%dp0%\\node_modules\\npm\\bin\\npm-cli.js" %*',
+    );
+    writeFileSync(
+      path.join(path.dirname(selected), "npm-prefix.js"),
+      `process.stdout.write(${JSON.stringify(prefix)})`,
+    );
+    assert.equal(
+      npmCliPath({
+        platform: "win32",
+        pathValue: directory,
+        npmExecPath: null,
+      }),
+      realpathSync(selected),
     );
   } finally {
     rmSync(directory, { recursive: true, force: true });
