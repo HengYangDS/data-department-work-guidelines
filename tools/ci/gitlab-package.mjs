@@ -90,3 +90,12 @@ export function packageTransportFailure(error) {
   }
   return new Error("authenticated package transport failed");
 }
+
+export function downloadFailure(message, cause, authenticated = false) {
+  return new Error(
+    message,
+    cause === undefined
+      ? undefined
+      : { cause: authenticated ? packageTransportFailure(cause) : cause },
+  );
+}
