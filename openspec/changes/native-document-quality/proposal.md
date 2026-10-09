@@ -103,19 +103,27 @@ and history capabilities remain product dependencies.
 
 ### New Capabilities
 
-None.
+- [`work-practice`](specs/work-practice/spec.md): decision, data, collaboration,
+  coaching, and feedback duties at their points of use; relocated obligations
+  and original scenarios remain intact.
+- [`verification`](specs/verification/spec.md): complete native source checks,
+  proof prerequisites, execution evidence, and shared CI admission.
+- [`tool-supply`](specs/tool-supply/spec.md): source-bound maintenance tools,
+  portable offline execution, and supply qualification.
+- [`publication`](specs/publication/spec.md): signed editions, protected platform
+  qualification, two-Forge history navigation, and download retirement.
 
 ### Modified Capabilities
 
-- [`quality`](specs/quality/spec.md): one executable owner per concern, native
-  diagnostics and source selection, source-bound supply, complete retirement,
-  and real adverse cases.
-- [`guidance-discovery`](specs/guidance-discovery/spec.md): usable task routes
-  and applicable work-quality duties, reviewed for current purpose, authority,
-  executable conditions, and proportionate cost at their existing topic owners.
-- [`repository-governance`](specs/repository-governance/spec.md): native change
-  authority, independent Forge publication, coherent release identity, and
-  bounded truthful retirement.
+- [`quality`](specs/quality/spec.md): English source, native formatting and
+  prose, reader links, DR form, and configuration ownership; verification and
+  supply requirements move to their own capabilities through official deltas.
+- [`guidance-discovery`](specs/guidance-discovery/spec.md): task routes, unique
+  rule ownership, semantic-review limits, and justified current duties;
+  point-of-use work requirements move to `work-practice`.
+- [`repository-governance`](specs/repository-governance/spec.md): Change
+  authority, source acceptance, task form, evidence, and signed identity;
+  release and platform requirements move to `publication`.
 
 ## Impact
 

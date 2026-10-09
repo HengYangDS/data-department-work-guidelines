@@ -171,6 +171,10 @@ test("Change readers reach every affected capability at its delta owner", () => 
     "quality",
     "guidance-discovery",
     "repository-governance",
+    "work-practice",
+    "verification",
+    "tool-supply",
+    "publication",
   ];
   const assertRoutes = (text, relative) => {
     const links = markdownLinkDestinations(text);
@@ -185,11 +189,16 @@ test("Change readers reach every affected capability at its delta owner", () => 
     const relative = `openspec/changes/native-document-quality/${name}`;
     const source = readFileSync(path.join(root, relative), "utf8");
     assertRoutes(source, relative);
-    assert.throws(
-      () =>
-        assertRoutes(source.replace("(specs/quality/spec.md)", ""), relative),
-      /must link to the quality delta/u,
-    );
+    for (const capability of capabilities) {
+      assert.throws(
+        () =>
+          assertRoutes(
+            source.replace(`(specs/${capability}/spec.md)`, ""),
+            relative,
+          ),
+        /must link to the .* delta/u,
+      );
+    }
   }
 });
 

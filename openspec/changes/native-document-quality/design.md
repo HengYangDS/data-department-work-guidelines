@@ -51,10 +51,11 @@ Test current duties for purpose and authority as well as correspondence. A form,
 model, schedule, or writing technique is not mandatory merely because an earlier
 draft used it. The charter owns authority and hard boundaries; six task topics
 own their judgments and actions. The task map routes to them without repeating
-policy. [Guidance requirements](specs/guidance-discovery/spec.md) own cadence,
-data responsibilities, and adverse cases; [quality](specs/quality/spec.md) and
-[governance](specs/repository-governance/spec.md) own their respective
-requirements.
+policy. [Discovery](specs/guidance-discovery/spec.md) owns routes and review;
+[work practice](specs/work-practice/spec.md) owns point-of-use duties.
+[Quality](specs/quality/spec.md), [verification](specs/verification/spec.md),
+[tool supply](specs/tool-supply/spec.md), [governance](specs/repository-governance/spec.md),
+and [publication](specs/publication/spec.md) own their distinct contracts.
 
 Data-quality duties span acquisition, production, analysis and modeling, data
 science, platforms, infrastructure, product governance, and operational
