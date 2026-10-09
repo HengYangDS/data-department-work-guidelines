@@ -11,6 +11,7 @@ import { syncBuiltinESMExports } from "node:module";
 import { test } from "node:test";
 import { setTimeout as delay } from "node:timers/promises";
 import { pathToFileURL } from "node:url";
+import * as packageTransport from "../tools/ci/gitlab-package.mjs";
 import {
   assertAssetDigest,
   downloadAsset,
@@ -1466,5 +1467,40 @@ test("a supplied install never changes the mode of an existing cache entry", asy
     descriptor.binarySha256 = originalBinaryDigest;
     for (const mock of mocks) mock.mock.restore();
     syncBuiltinESMExports();
+  }
+});
+
+test("download failures share one native cause and privacy boundary", () => {
+  assert.equal(typeof packageTransport.downloadFailure, "function");
+  const native = Object.assign(new Error("fixture-only private transport"), {
+    code: "ECONNRESET",
+  });
+  const publicFailure = packageTransport.downloadFailure(
+    "download failed",
+    native,
+  );
+  assert.equal(publicFailure.message, "download failed");
+  assert.equal(publicFailure.cause, native);
+  const privateFailure = packageTransport.downloadFailure(
+    "download failed",
+    native,
+    true,
+  );
+  assert.notEqual(privateFailure.cause, native);
+  assert.equal(privateFailure.cause.code, "ECONNRESET");
+  assert.equal(
+    privateFailure.cause.message,
+    "package transport connection reset",
+  );
+  assert.equal(Object.hasOwn(privateFailure.cause, "cause"), false);
+  assert.doesNotMatch(privateFailure.cause.message, /fixture-only/u);
+  for (const authenticated of [false, true]) {
+    const statusFailure = packageTransport.downloadFailure(
+      "download failed: HTTP 500",
+      undefined,
+      authenticated,
+    );
+    assert.equal(statusFailure.message, "download failed: HTTP 500");
+    assert.equal(Object.hasOwn(statusFailure, "cause"), false);
   }
 });

@@ -17,10 +17,7 @@ import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
-import {
-  packageTransportFailure,
-  projectPackageRequest,
-} from "./gitlab-package.mjs";
+import { downloadFailure, projectPackageRequest } from "./gitlab-package.mjs";
 import {
   declaredToolRuntime,
   managedFileExists,
@@ -1093,20 +1090,23 @@ async function downloadBundle(request, target, fetcher, provider) {
       signal: AbortSignal.timeout(90_000),
     });
   } catch (error) {
-    throw new Error(`${provider} release bundle download failed`, {
-      cause: provider === "GitLab" ? packageTransportFailure(error) : error,
-    });
+    throw downloadFailure(
+      `${provider} release bundle download failed`,
+      error,
+      provider === "GitLab",
+    );
   }
   if (!response.ok) {
     let cause;
     try {
       await response.body?.cancel();
     } catch (error) {
-      cause = provider === "GitLab" ? packageTransportFailure(error) : error;
+      cause = error;
     }
-    throw new Error(
+    throw downloadFailure(
       `${provider} release bundle download failed: HTTP ${response.status}`,
-      cause === undefined ? undefined : { cause },
+      cause,
+      provider === "GitLab",
     );
   }
   if (!response.body) {
@@ -1122,11 +1122,12 @@ async function downloadBundle(request, target, fetcher, provider) {
       chunks.push(chunk);
     }
   } catch (error) {
-    throw new Error(
+    throw downloadFailure(
       size > limit
         ? `${provider} release bundle exceeds the size limit`
         : `${provider} release bundle download body failed`,
-      { cause: provider === "GitLab" ? packageTransportFailure(error) : error },
+      error,
+      provider === "GitLab",
     );
   }
   if (size > limit)

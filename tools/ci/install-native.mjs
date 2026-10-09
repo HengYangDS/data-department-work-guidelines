@@ -12,10 +12,7 @@ import {
 import { rm } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import {
-  packageTransportFailure,
-  projectPackageRequest,
-} from "./gitlab-package.mjs";
+import { downloadFailure, projectPackageRequest } from "./gitlab-package.mjs";
 import {
   assertNativeBinaryDigest,
   managedFileExists,
@@ -143,20 +140,23 @@ export async function downloadAsset(request, asset = {}) {
       signal: AbortSignal.timeout(90_000),
     });
   } catch (error) {
-    throw new Error("native tool download failed", {
-      cause: request.headers ? packageTransportFailure(error) : error,
-    });
+    throw downloadFailure(
+      "native tool download failed",
+      error,
+      Boolean(request.headers),
+    );
   }
   if (!response.ok) {
     let cause;
     try {
       await response.body?.cancel();
     } catch (error) {
-      cause = request.headers ? packageTransportFailure(error) : error;
+      cause = error;
     }
-    throw new Error(
+    throw downloadFailure(
       `native tool download failed: HTTP ${response.status}`,
-      cause === undefined ? undefined : { cause },
+      cause,
+      Boolean(request.headers),
     );
   }
   if (!response.body) throw new Error("native tool download returned no body");
@@ -170,11 +170,12 @@ export async function downloadAsset(request, asset = {}) {
       chunks.push(chunk);
     }
   } catch (error) {
-    throw new Error(
+    throw downloadFailure(
       size > limit
         ? "native tool download exceeds the size limit"
         : "native tool download body failed",
-      { cause: request.headers ? packageTransportFailure(error) : error },
+      error,
+      Boolean(request.headers),
     );
   }
   if (size > limit)
