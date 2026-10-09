@@ -317,14 +317,15 @@
         preserving every case. Verify full native discovery, execution controls,
         and any applicable language-specific size admission; do not reorganize
         tests merely by physical line count.
-  - [ ] 2.46.4 Review design choices and capability ownership through official
+  - [x] 2.46.4 Review design choices and capability ownership through official
         deltas and main-spec synchronization. Preserve each requirement and
         scenario, maintain all reader routes, and verify strict OpenSpec and
         semantic clarity; official artifacts have no documentation-length
-        ceiling. Reference native design
-        review `6e07f24a22c99b110ace215c25318e05b9ac707a05df99d11a01f93d746bdf57`
+        ceiling. Reference current-source reconciliation
+        `b309c56769ed6dd824237ce58e2722bd541f29e6174528aa9b7219a07469889c`,
+        native design review `6e07f24a22c99b110ace215c25318e05b9ac707a05df99d11a01f93d746bdf57`,
         and delta proof `c0eff0fdce3e3e95fe978876d6cec02ceb00acc04a691004696dd90f8a290a18`;
-        neither proves final delivery or the applicable shared admission.
+        none proves final delivery or the applicable shared admission.
   - [ ] 2.46.5 Keep versioned release notes complete and reachable in their
         semantic owner. Verify native Changelog form, SemVer meaning, tag, and
         both peer comparisons. Root release history and its version sections
