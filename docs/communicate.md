@@ -59,7 +59,9 @@ If a change is necessary, identify it and explain why before answering.
 Before a meeting, name the question, necessary participants, and inputs; do not
 meet for work that can be resolved asynchronously. Do not invite someone only
 out of courtesy if they supply no necessary fact, hold no decision authority,
-and own no action. In the meeting, align facts and definitions before comparing
+and own no action.
+
+In the meeting, align facts and definitions before comparing
 options. When the discussion drifts, return to the question that needs a
 decision. Locate disagreement in facts,
 inference, values, resources, or authority.

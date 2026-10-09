@@ -145,11 +145,14 @@ to risk.
 
 Use multiple Agents in parallel only when independent questions, paths, or
 review angles can be separated. Default parallel work to independent read-only
-research, review, or cross-checking. Give each subtask explicit inputs, outputs,
+research, review, or cross-checking.
+
+Give each subtask explicit inputs, outputs,
 scope, stop conditions, and ownership. Name an integration owner to resolve
 conflicts, remove duplicates, verify the combined result, and make the final
 judgment. Multiple Agents must not edit the same source of truth or worktree
 without coordination.
+
 A majority opinion is not evidence; resolve disagreement against facts and
 criteria. Do not close, overwrite, or clean up work of unknown ownership.
 
