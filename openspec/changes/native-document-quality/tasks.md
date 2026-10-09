@@ -315,9 +315,12 @@
         native inputs, and complete regression journeys; qualify size only where
         a supported product policy applies.
   - [ ] 2.46.3 Review test cohesion by verified behavior, sharing fixtures and
-        preserving every case. Verify full native discovery, execution controls,
-        and any applicable language-specific size admission; do not reorganize
-        tests merely by physical line count.
+        preserving every case. Compare complete runner inputs with the native
+        Git inventory independently of production selection; reject omitted
+        cohorts and repeated execution. Use a compact new-cohort fixture, not
+        a catalogue of current and retired filenames. Verify full native
+        discovery, execution controls, and applicable language-specific size
+        admission; do not reorganize tests merely by physical line count.
   - [x] 2.46.4 Review design choices and capability ownership through official
         deltas and main-spec synchronization. Preserve each requirement and
         scenario, maintain all reader routes, and verify strict OpenSpec and

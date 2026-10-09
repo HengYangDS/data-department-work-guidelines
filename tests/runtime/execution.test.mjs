@@ -24,98 +24,91 @@ test("native process input reaches its selected child without a shell", () => {
 });
 
 test("the public test command bounds workers without reducing its discovered inventory", () => {
-  const script = `
+  const fixtures = [
+    null,
+    [
+      "tests/new domain/entry [sample].test.mjs",
+      "tests/another-domain/behavior.test.mjs",
+      "tests/new domain/entry [sample].test.mjs",
+      "tests/new domain/fixtures.mjs",
+      "docs/entry.test.mjs",
+      "tests/new domain/README.md",
+    ],
+  ];
+  for (const suppliedInventory of fixtures) {
+    const script = `
     import assert from "node:assert/strict";
     import childProcess from "node:child_process";
+    import fs from "node:fs";
+    import path from "node:path";
     import { registerHooks, syncBuiltinESMExports } from "node:module";
-    const unrelatedChecks = new Set(${JSON.stringify(
-      [
-        "tools/ci/offline-bundle.mjs",
-        "tools/ci/offline/artifact.mjs",
-        "tools/ci/offline/npm.mjs",
-        "tools/ci/offline/build.mjs",
-        "tools/ci/offline/install.mjs",
-        "tools/ci/offline/acquire.mjs",
-        "tools/docs/changelog.mjs",
-        "tools/docs/ci.mjs",
-        "tools/docs/dependencies.mjs",
-        "tools/docs/content.mjs",
-        "tools/docs/governance.mjs",
-        "tools/docs/decisions.mjs",
-        "tools/docs/openspec.mjs",
-      ].map((relative) => pathToFileURL(path.join(root, relative)).href),
+    const repository = ${JSON.stringify(root)};
+    const sourcePrefix = ${JSON.stringify(pathToFileURL(path.join(root, "tools")).href + "/")};
+    const entries = new Set(${JSON.stringify(
+      ["tools/docs/cli.mjs", "tools/docs/runtime.mjs"].map(
+        (relative) => pathToFileURL(path.join(root, relative)).href,
+      ),
     )});
     registerHooks({
       resolve(specifier, context, nextResolve) {
         const resolved = nextResolve(specifier, context);
-        assert.equal(
-          unrelatedChecks.has(resolved.url),
-          false,
+        if (resolved.url.startsWith(sourcePrefix)) assert.ok(
+          entries.has(resolved.url),
           "the test command must not load unrelated repository checks",
         );
         return resolved;
       },
     });
     const original = childProcess.spawnSync;
-    let captured = false;
+    const supplied = ${JSON.stringify(suppliedInventory)};
+    const inventory = supplied === null
+      ? original("git", ["ls-files", "--cached", "--others", "--exclude-standard", "-z"], {
+          cwd: repository, encoding: "utf8", timeout: 10_000,
+        })
+      : { status: 0, stdout: supplied.join("\\0") + "\\0", stderr: "" };
+    assert.ifError(inventory.error);
+    assert.equal(inventory.status, 0, inventory.stderr);
+    const expected = [...new Set(inventory.stdout.split("\\0").filter(Boolean))]
+      .filter((file) => file.startsWith("tests/") && file.endsWith(".test.mjs") &&
+        (supplied !== null || fs.existsSync(path.join(repository, file))))
+      .sort();
+    assert.ok(expected.length > 0);
+    if (supplied !== null) {
+      const originalStat = fs.lstatSync;
+      const fixturePaths = new Set(supplied.map((file) => path.join(repository, file)));
+      fs.lstatSync = (file, options) => fixturePaths.has(file)
+        ? { isFile: () => true }
+        : originalStat(file, options);
+    }
+    let executions = 0;
     childProcess.spawnSync = (command, args, options) => {
+      if (supplied !== null && command === "git" && args[0] === "ls-files") {
+        assert.deepEqual(args, ["ls-files", "--cached", "--others", "--exclude-standard", "-z"]);
+        return inventory;
+      }
       if (args?.[0] !== "--test") return original(command, args, options);
       assert.equal(command, process.execPath);
-      assert.equal(args[1], "--test-concurrency=2");
+      assert.deepEqual(args, ["--test", "--test-concurrency=2", ...expected]);
+      assert.equal(options.cwd, repository);
       assert.equal(options.timeout, 180_000);
-      captured = true;
+      executions += 1;
       return { status: 0, stdout: "", stderr: "" };
-    };
-    syncBuiltinESMExports();
-    const { gitFiles } = await import(${JSON.stringify(pathToFileURL(path.join(root, "tools/docs/runtime.mjs")).href)});
-    const expected = gitFiles().filter((file) => file.startsWith("tests/") && file.endsWith(".test.mjs"));
-    assert.ok(expected.length > 0);
-    for (const name of ["policy", "audit", "custody"]) {
-      assert.ok(expected.includes("tests/dependencies/" + name + ".test.mjs"));
-    }
-    assert.equal(expected.includes("tests/dependencies/fixtures.mjs"), false);
-    for (const name of ["admission", "execution", "supply"]) {
-      assert.ok(expected.includes("tests/ci/" + name + ".test.mjs"));
-    }
-    assert.equal(expected.includes("tests/ci/fixtures.mjs"), false);
-    assert.ok(expected.includes("tests/openspec/validation.test.mjs"));
-    assert.equal(expected.includes("tests/docs-ci.test.mjs"), false);
-    for (const file of ["tests/runtime/execution.test.mjs","tests/prose/reports.test.mjs","tests/source/metadata.test.mjs","tests/decisions/commands.test.mjs","tests/decisions/records.test.mjs","tests/source/selection.test.mjs","tests/source/links.test.mjs","tests/markdown/semantics.test.mjs","tests/markdown/spacing.test.mjs","tests/format/policy.test.mjs","tests/format/commands.test.mjs"]) assert.ok(expected.includes(file), file);
-    for (const file of ["tests/decisions/fixtures.mjs","tests/source/fixtures.mjs"]) assert.equal(expected.includes(file), false, file);
-    assert.equal(expected.includes("tests/docs-quality.test.mjs"), false);
-    for (const file of ["tests/offline/archive.test.mjs","tests/offline/build.test.mjs","tests/offline/licenses.test.mjs","tests/offline/install.test.mjs","tests/offline/ownership.test.mjs","tests/runtime/diagnostics.test.mjs","tests/offline/npm.test.mjs","tests/offline/downloads.test.mjs","tests/offline/acquisition.test.mjs"]) assert.ok(expected.includes(file), file);
-    assert.equal(expected.includes("tests/offline/fixtures.mjs"), false);
-    assert.equal(expected.includes("tests/offline-bundle.test.mjs"), false);
-    assert.ok(expected.includes("tests/offline/commands.test.mjs"));
-    for (const name of ["platforms", "selectors", "install", "transport", "cache"]) assert.ok(expected.includes("tests/supply/" + name + ".test.mjs"));
-    for (const name of ["profile", "contribution", "configuration"]) assert.ok(expected.includes("tests/governance/" + name + ".test.mjs"));
-    for (const name of ["entry", "links", "workflows"]) assert.ok(expected.includes("tests/navigation/" + name + ".test.mjs"));
-    for (const name of ["format", "tags", "selection", "navigation"]) assert.ok(expected.includes("tests/changelog/" + name + ".test.mjs"));
-    assert.ok(expected.includes("tests/openspec/routes.test.mjs"));
-    for (const file of ["tests/governance/fixtures.mjs", "tests/changelog/fixtures.mjs", "tests/native-supply.test.mjs", "tests/docs-governance.test.mjs", "tests/changelog.test.mjs"]) assert.equal(expected.includes(file), false, file);
-    const checkedSpawn = childProcess.spawnSync;
-    childProcess.spawnSync = (command, args, options) => {
-      if (args?.[0] === "--test") assert.deepEqual(args.slice(2), expected);
-      return checkedSpawn(command, args, options);
     };
     syncBuiltinESMExports();
     process.argv = [process.execPath, ${JSON.stringify(path.join(root, "tools/docs/cli.mjs"))}, "test"];
     await import(${JSON.stringify(pathToFileURL(path.join(root, "tools/docs/cli.mjs")).href)});
-    assert.equal(captured, true);
+    assert.equal(executions, 1);
     assert.equal(process.exitCode ?? 0, 0);
   `;
-  const result = spawnSync(
-    process.execPath,
-    ["--input-type=module", "--eval", script],
-    {
+    const result = spawnSync(process.execPath, ["--input-type=module"], {
       cwd: root,
       encoding: "utf8",
-      input: "",
+      input: script,
       timeout: 20_000,
-    },
-  );
-  assert.ifError(result.error);
-  assert.equal(result.status, 0, result.stderr);
+    });
+    assert.ifError(result.error);
+    assert.equal(result.status, 0, result.stderr);
+  }
 });
 
 test("source context finishes before inherited child output without merging streams", () => {
