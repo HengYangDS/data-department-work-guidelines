@@ -2112,9 +2112,15 @@ test("both source planes must supply native Vale before verification", () => {
 
 test("Windows supply observes native identities before locked selection", () => {
   const observation = [
-    "Get-Command 'nod[e].exe','np[m].cmd','mis[e].exe','winge[t].exe','scoo[p].ps1','choc[o].exe' -CommandType Application,ExternalScript -All | Select-Object Name,CommandType,Source,Version",
+    "Get-Command '*' -CommandType Application,ExternalScript -All | Where-Object Name -In 'node.exe','npm.cmd','npm.ps1','mise.exe','winget.exe','scoop.ps1','choco.exe' | Format-List Name,CommandType,Source,Version",
     "Get-CimInstance Win32_Service -Filter \"Name LIKE '%gitlab%'\" | Select-Object Name,State,StartName",
     "node -p 'JSON.stringify({executable:process.execPath,arch:process.arch,version:process.version})'",
+  ];
+  const selectedObservation = [
+    "mise exec --locked -- node -p 'JSON.stringify({executable:process.execPath,arch:process.arch,version:process.version})'",
+    "mise exec --locked -- npm --version",
+    "mise exec --locked -- npm config get prefix",
+    `mise exec --locked -- node --input-type=module -e 'import {npmCliPath} from "./tools/ci/offline-bundle.mjs"; import {readFileSync} from "node:fs"; import path from "node:path"; const entry=npmCliPath(); console.log(JSON.stringify({entry,npm:JSON.parse(readFileSync(path.resolve(entry,"../../package.json"))).version,selector:process.env.npm_execpath??null}));'`,
   ];
   const pipeline = YAML.parse(gitlab);
   for (const name of [
@@ -2127,6 +2133,13 @@ test("Windows supply observes native identities before locked selection", () => 
     assert.equal(
       commands[observation.length],
       "mise install --locked --jobs=1",
+    );
+    assert.deepEqual(
+      commands.slice(
+        observation.length + 1,
+        observation.length + 1 + selectedObservation.length,
+      ),
+      selectedObservation,
     );
   }
   assert.doesNotThrow(() => validateCi(github, gitlab, offline));
