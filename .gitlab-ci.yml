@@ -113,7 +113,12 @@ docs:verify:windows:
   inherit:
     default: false
   variables: *native-runtime
-  before_script: *native-source-supply
+  before_script:
+    - &windows-native-observation
+      - Get-Command node,npm,mise,winget,scoop,choco -All -ErrorAction SilentlyContinue | Select-Object Name,CommandType,Source,Version
+      - Get-CimInstance Win32_Service -Filter "Name LIKE '%gitlab%'" | Select-Object Name,State,StartName
+      - node -p 'JSON.stringify({executable:process.execPath,arch:process.arch,version:process.version})'
+    - *native-source-supply
   script:
     - mise exec --locked -- npm run verify
   tags:
@@ -128,7 +133,9 @@ docs:verify:windows:review:
   inherit:
     default: false
   variables: *native-runtime
-  before_script: *native-source-supply
+  before_script:
+    - *windows-native-observation
+    - *native-source-supply
   script:
     - mise exec --locked -- npm run verify
   tags:
@@ -180,7 +187,9 @@ offline:verify:windows:
   inherit:
     default: false
   variables: *native-runtime
-  before_script: *native-runtime-supply
+  before_script:
+    - *windows-native-observation
+    - *native-runtime-supply
   script:
     - mise exec --locked -- node tools/ci/offline-bundle.mjs acquire-gitlab
     - mise exec --locked -- node tools/ci/offline-bundle.mjs install

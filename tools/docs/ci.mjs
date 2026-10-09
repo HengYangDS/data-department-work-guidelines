@@ -531,6 +531,11 @@ const nativeRuntimeVariables = {
   MISE_YES: "1",
 };
 const nativeRuntimeSupply = ["mise install --locked --jobs=1"];
+const windowsNativeObservation = [
+  "Get-Command node,npm,mise,winget,scoop,choco -All -ErrorAction SilentlyContinue | Select-Object Name,CommandType,Source,Version",
+  "Get-CimInstance Win32_Service -Filter \"Name LIKE '%gitlab%'\" | Select-Object Name,State,StartName",
+  "node -p 'JSON.stringify({executable:process.execPath,arch:process.arch,version:process.version})'",
+];
 const selectedNativeSourceSupply = [
   ...nativeRuntimeSupply,
   ...nativeSourceSupply.map((command) => `mise exec --locked -- ${command}`),
@@ -796,6 +801,12 @@ function validateGitLabNativeJobs(gitlab, base, kind, lane) {
     const job = gitlab[name];
     const resourceKeys =
       capabilities.system === "windows" ? ",resource_group" : "";
+    const suppliedCommands =
+      kind === "source" ? selectedNativeSourceSupply : nativeRuntimeSupply;
+    const observedSupply =
+      capabilities.system === "windows"
+        ? [...windowsNativeObservation, ...suppliedCommands]
+        : suppliedCommands;
     if (capabilities.system === "windows") {
       const resource = gitlab["docs:verify:windows"]?.resource_group;
       if (
@@ -817,10 +828,7 @@ function validateGitLabNativeJobs(gitlab, base, kind, lane) {
       Object.keys(job).sort().join(",") !==
         `before_script,extends,inherit${resourceKeys}${rules ? ",rules" : ""},script,tags,variables` ||
       job.extends !== `.${base}` ||
-      JSON.stringify(sourceSupply(job)) !==
-        JSON.stringify(
-          kind === "source" ? selectedNativeSourceSupply : nativeRuntimeSupply,
-        ) ||
+      !isDeepStrictEqual(sourceSupply(job), observedSupply) ||
       !isDeepStrictEqual(job.variables, nativeRuntimeVariables) ||
       !isDeepStrictEqual(
         job.script,

@@ -2110,6 +2110,38 @@ test("both source planes must supply native Vale before verification", () => {
   }
 });
 
+test("Windows supply observes native identities before locked selection", () => {
+  const observation = [
+    "Get-Command node,npm,mise,winget,scoop,choco -All -ErrorAction SilentlyContinue | Select-Object Name,CommandType,Source,Version",
+    "Get-CimInstance Win32_Service -Filter \"Name LIKE '%gitlab%'\" | Select-Object Name,State,StartName",
+    "node -p 'JSON.stringify({executable:process.execPath,arch:process.arch,version:process.version})'",
+  ];
+  const pipeline = YAML.parse(gitlab);
+  for (const name of [
+    "docs:verify:windows",
+    "docs:verify:windows:review",
+    "offline:verify:windows",
+  ]) {
+    const commands = pipeline[name].before_script.flat(10);
+    assert.deepEqual(commands.slice(0, observation.length), observation);
+    assert.equal(
+      commands[observation.length],
+      "mise install --locked --jobs=1",
+    );
+  }
+  assert.doesNotThrow(() => validateCi(github, gitlab, offline));
+  const missing = structuredClone(pipeline);
+  missing["docs:verify:windows"].before_script = missing[
+    "docs:verify:windows"
+  ].before_script
+    .flat(10)
+    .slice(1);
+  assert.throws(
+    () => validateCi(github, YAML.stringify(missing), offline),
+    /full proof/u,
+  );
+});
+
 test("native YAML aliases preserve one source-supply list and reject omissions", () => {
   const pipeline = YAML.parse(gitlab);
   const supply = pipeline[".docs:source-supply"].before_script;
@@ -2118,7 +2150,9 @@ test("native YAML aliases preserve one source-supply list and reject omissions",
   for (const system of ["macos", "windows"]) {
     for (const suffix of ["", ":review"]) {
       assert.strictEqual(
-        pipeline[`docs:verify:${system}${suffix}`].before_script,
+        system === "windows"
+          ? pipeline[`docs:verify:${system}${suffix}`].before_script.at(-1)
+          : pipeline[`docs:verify:${system}${suffix}`].before_script,
         selectedSupply,
       );
     }
@@ -2147,7 +2181,9 @@ test("native YAML aliases preserve one source-supply list and reject omissions",
       );
     }
     assert.strictEqual(
-      pipeline[`offline:verify:${system}`].before_script,
+      system === "windows"
+        ? pipeline[`offline:verify:${system}`].before_script.at(-1)
+        : pipeline[`offline:verify:${system}`].before_script,
       runtime.before_script,
     );
   }
