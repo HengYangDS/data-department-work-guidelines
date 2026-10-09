@@ -214,6 +214,10 @@
       Select Node and npm through native locked Mise commands in every shell
       job; qualify selection, checksum refusal, missing-lock refusal, and
       manifest/lock mismatch without changing machine PATH or Runner identity.
+      Qualify Windows job-local discovery from the inherited and native machine
+      Path, preserving inherited precedence. Record the actual Mise application,
+      version, and execution identity before the original locked commands;
+      require protected-source and offline jobs to verify the diagnosis.
       Verify retirement of temporary diagnosis and preservation of its evidence
       before the final freeze.
       Refresh immutable CI action pins from official stable

@@ -531,9 +531,20 @@ const nativeRuntimeVariables = {
   MISE_YES: "1",
 };
 const nativeRuntimeSupply = ["mise install --locked --jobs=1"];
+const windowsRuntimeEntry = [
+  "$env:PATH = $env:PATH + [IO.Path]::PathSeparator + [Environment]::GetEnvironmentVariable('Path', 'Machine')",
+  "Get-Command mise -CommandType Application -ErrorAction Stop | Select-Object -ExpandProperty Source",
+  "mise --version",
+  "whoami",
+];
+const windowsRuntimeSupply = [...windowsRuntimeEntry, ...nativeRuntimeSupply];
 const selectedNativeSourceSupply = [
   ...nativeRuntimeSupply,
   ...nativeSourceSupply.map((command) => `mise exec --locked -- ${command}`),
+];
+const windowsSourceSupply = [
+  ...windowsRuntimeEntry,
+  ...selectedNativeSourceSupply,
 ];
 const selectedNativeVerifier = `mise exec --locked -- ${verifier}`;
 const selectedNativeOffline = [
@@ -796,9 +807,11 @@ function validateGitLabNativeJobs(gitlab, base, kind, lane) {
     const job = gitlab[name];
     const resourceKeys =
       capabilities.system === "windows" ? ",resource_group" : "";
-    const suppliedCommands =
+    let suppliedCommands =
       kind === "source" ? selectedNativeSourceSupply : nativeRuntimeSupply;
     if (capabilities.system === "windows") {
+      suppliedCommands =
+        kind === "source" ? windowsSourceSupply : windowsRuntimeSupply;
       const resource = gitlab["docs:verify:windows"]?.resource_group;
       if (
         typeof resource !== "string" ||
@@ -888,6 +901,8 @@ export function validateCi(
     ".docs:source-supply",
     ".docs:native-runtime",
     ".docs:native-source-supply",
+    ".docs:windows-runtime",
+    ".docs:windows-source-supply",
     ".docs:verify",
     "docs:verify:linux",
     "docs:verify:linux:review",
@@ -912,6 +927,8 @@ export function validateCi(
   }
   const runtimeOwner = gitlab[".docs:native-runtime"];
   const selectedSupplyOwner = gitlab[".docs:native-source-supply"];
+  const windowsRuntimeOwner = gitlab[".docs:windows-runtime"];
+  const windowsSourceOwner = gitlab[".docs:windows-source-supply"];
   if (
     Object.keys(runtimeOwner ?? {})
       .sort()
@@ -922,7 +939,14 @@ export function validateCi(
     !isDeepStrictEqual(
       sourceSupply(selectedSupplyOwner),
       selectedNativeSourceSupply,
-    )
+    ) ||
+    Object.keys(windowsRuntimeOwner ?? {}).join(",") !== "before_script" ||
+    !isDeepStrictEqual(
+      sourceSupply(windowsRuntimeOwner),
+      windowsRuntimeSupply,
+    ) ||
+    Object.keys(windowsSourceOwner ?? {}).join(",") !== "before_script" ||
+    !isDeepStrictEqual(sourceSupply(windowsSourceOwner), windowsSourceSupply)
   ) {
     throw new Error(
       "GitLab native runtime and source supply must retain their complete owners",

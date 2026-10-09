@@ -1196,6 +1196,53 @@ test("native shell jobs select locked process runtimes without changing host npm
   );
 });
 
+test("Windows jobs refresh only their process from the native machine path", () => {
+  const pipeline = YAML.parse(gitlab);
+  const refresh =
+    "$env:PATH = $env:PATH + [IO.Path]::PathSeparator + [Environment]::GetEnvironmentVariable('Path', 'Machine')";
+  for (const name of [
+    "docs:verify:windows",
+    "docs:verify:windows:review",
+    "offline:verify:windows",
+  ]) {
+    const commands = pipeline[name].before_script.flat(10);
+    assert.equal(commands[0], refresh, name);
+    assert.equal(
+      commands[1],
+      "Get-Command mise -CommandType Application -ErrorAction Stop | Select-Object -ExpandProperty Source",
+      name,
+    );
+    assert.equal(commands[2], "mise --version", name);
+    assert.equal(commands[3], "whoami", name);
+    assert.equal(commands[4], "mise install --locked --jobs=1", name);
+    for (const change of [
+      (job) => {
+        job.before_script = commands.slice(1);
+      },
+      (job) => {
+        job.before_script = [
+          "$env:PATH = [Environment]::GetEnvironmentVariable('Path', 'Machine') + [IO.Path]::PathSeparator + $env:PATH",
+          ...commands.slice(1),
+        ];
+      },
+      (job) => {
+        job.before_script = [
+          "[Environment]::SetEnvironmentVariable('Path', $env:PATH, 'Machine')",
+          ...commands.slice(1),
+        ];
+      },
+    ]) {
+      const changed = structuredClone(pipeline);
+      change(changed[name]);
+      assert.throws(
+        () => validateCi(github, YAML.stringify(changed), offline),
+        /platform job/u,
+        name,
+      );
+    }
+  }
+});
+
 test("both providers invoke one verifier on declared hosts", () => {
   const result = validateCi(github, gitlab);
   assert.equal(result.verifier, "npm run verify");
@@ -2114,12 +2161,13 @@ test("native YAML aliases preserve one source-supply list and reject omissions",
   const pipeline = YAML.parse(gitlab);
   const supply = pipeline[".docs:source-supply"].before_script;
   const selectedSupply = pipeline[".docs:native-source-supply"].before_script;
+  const windowsSupply = pipeline[".docs:windows-source-supply"].before_script;
   assert.strictEqual(pipeline[".docs:verify"].before_script[1], supply);
   for (const system of ["macos", "windows"]) {
     for (const suffix of ["", ":review"]) {
       assert.strictEqual(
         pipeline[`docs:verify:${system}${suffix}`].before_script,
-        selectedSupply,
+        system === "windows" ? windowsSupply : selectedSupply,
       );
     }
   }
@@ -2148,7 +2196,9 @@ test("native YAML aliases preserve one source-supply list and reject omissions",
     }
     assert.strictEqual(
       pipeline[`offline:verify:${system}`].before_script,
-      runtime.before_script,
+      system === "windows"
+        ? pipeline[".docs:windows-runtime"].before_script
+        : runtime.before_script,
     );
   }
 });

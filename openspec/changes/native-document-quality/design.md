@@ -610,6 +610,17 @@ ahead of Node's bundled npm, respecting the Windows native prefix layout.
 This is process-scoped tool selection, not a new installer or a machine PATH,
 service-account, or VM-isolation change. Keep existing review and protected
 identities separate and preserve the complete verifier and project resource.
+
+Windows jobs append the OS-native machine Path to their inherited process Path
+before resolving the existing Mise application. Inherited entries retain their
+priority; no installation directory is encoded in repository source. Record
+the resolved application, its version, and the execution identity before the
+unchanged locked installation and verification commands. This bounded shell
+entry does not write the registry, change the service account, install a second
+Mise, or relax isolation. Actual protected and offline jobs must establish
+whether stale service environment caused the original missing-command failure;
+local pipeline checks alone do not confirm that hypothesis.
+
 Cold checks receive already supplied tools; they neither install Mise nor
 acquire a missing runtime. Qualify the actual Windows ARM64 process and all
 tool combinations before claiming platform acceptance.

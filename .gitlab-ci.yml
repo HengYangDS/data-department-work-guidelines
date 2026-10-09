@@ -39,11 +39,25 @@ default:
 .docs:native-source-supply:
   before_script: &native-source-supply
     - *native-runtime-supply
-    - mise exec --locked -- npm ci --ignore-scripts
-    - mise exec --locked -- node tools/ci/install-native.mjs osv-scanner --gitlab-package
-    - mise exec --locked -- node tools/docs/cli.mjs audit
-    - mise exec --locked -- node tools/ci/install-native.mjs lychee --gitlab-package
-    - mise exec --locked -- node tools/ci/install-native.mjs vale --gitlab-package
+    - &selected-source-supply
+      - mise exec --locked -- npm ci --ignore-scripts
+      - mise exec --locked -- node tools/ci/install-native.mjs osv-scanner --gitlab-package
+      - mise exec --locked -- node tools/docs/cli.mjs audit
+      - mise exec --locked -- node tools/ci/install-native.mjs lychee --gitlab-package
+      - mise exec --locked -- node tools/ci/install-native.mjs vale --gitlab-package
+
+.docs:windows-runtime:
+  before_script: &windows-runtime-supply
+    - $env:PATH = $env:PATH + [IO.Path]::PathSeparator + [Environment]::GetEnvironmentVariable('Path', 'Machine')
+    - Get-Command mise -CommandType Application -ErrorAction Stop | Select-Object -ExpandProperty Source
+    - mise --version
+    - whoami
+    - *native-runtime-supply
+
+.docs:windows-source-supply:
+  before_script: &windows-source-supply
+    - *windows-runtime-supply
+    - *selected-source-supply
 
 .docs:verify:
   stage: verify
@@ -113,7 +127,7 @@ docs:verify:windows:
   inherit:
     default: false
   variables: *native-runtime
-  before_script: *native-source-supply
+  before_script: *windows-source-supply
   script:
     - mise exec --locked -- npm run verify
   tags:
@@ -128,7 +142,7 @@ docs:verify:windows:review:
   inherit:
     default: false
   variables: *native-runtime
-  before_script: *native-source-supply
+  before_script: *windows-source-supply
   script:
     - mise exec --locked -- npm run verify
   tags:
@@ -180,7 +194,7 @@ offline:verify:windows:
   inherit:
     default: false
   variables: *native-runtime
-  before_script: *native-runtime-supply
+  before_script: *windows-runtime-supply
   script:
     - mise exec --locked -- node tools/ci/offline-bundle.mjs acquire-gitlab
     - mise exec --locked -- node tools/ci/offline-bundle.mjs install
