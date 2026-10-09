@@ -11,7 +11,9 @@ relations:
 # Communication
 
 **When to use:** When someone needs to understand a fact, make a decision, take
-action, or continue the work. Answer the reader's actual need before recounting
+action, or continue the work.
+
+Answer the reader's actual need before recounting
 the entire process. If decisive facts or authority are missing, state the gap
 and clarify or escalate before asking anyone to act. Do not request action
 beyond your authority. Test whether an independent reader can identify the
@@ -44,16 +46,6 @@ evidence overturns it; do not hide the point behind jargon or background.
 In a follow-up, keep the subject, definitions, and evaluation criteria unchanged.
 If a change is necessary, identify it and explain why before answering.
 
-> **Illustrative escalation:** “Do not promote the revised price history yet.
-> The vendor changed earlier values, but we have not verified when those values
-> became knowable. A historical simulation with today's file may answer a
-> hindsight question rather than the one we need. I have kept the file
-> exploratory. I recommend deferring this use. That delays the study but avoids
-> presenting hindsight as point-in-time evidence. We can reconsider when the
-> earlier snapshot and replay evidence are available. Before the planned release
-> window, the decision owner for this use needs to choose: defer it, or obtain the
-> snapshot and rerun the check.”
-
 ## Make Meetings Produce Decisions, Not Transcripts
 
 Before a meeting, name the question, necessary participants, and inputs; do not
@@ -62,7 +54,9 @@ out of courtesy if they supply no necessary fact, hold no decision authority,
 and own no action. In the meeting, align facts and definitions before comparing
 options. When the discussion drifts, return to the question that needs a
 decision. Locate disagreement in facts,
-inference, values, resources, or authority. Afterward, keep only the conclusion,
+inference, values, resources, or authority.
+
+Afterward, keep only the conclusion,
 basis, decision, actions, open points, and risks. Each decision and action has
 an owner, deadline, and completion criterion. A discussion may improve the shared
 model without reaching a decision; name that change and the remaining question.
@@ -95,6 +89,8 @@ both from a different risk preference despite shared reasoning.
 
 These editing practices serve the three aims without exhausting them.
 
+### Structure a Decision Document
+
 Analysis, proposal, and decision documents should follow this order by default:
 
 1. Give the title's subject, purpose, and status, then summarize the conclusion,
@@ -105,6 +101,8 @@ Analysis, proposal, and decision documents should follow this order by default:
 4. State the recommendation or decision, then risks, limits, and revisit
    triggers.
 5. Name the action, responsible person, deadline, and acceptance condition.
+
+### Review Before Sending
 
 Appendices hold only supporting detail. Combine or reorder these parts when the
 reader's decision needs it; keep the conclusion, basis, limits, and requested
@@ -125,6 +123,16 @@ fraction or fixed document shape is a writing standard.
 State the risk or blocker; the facts, impact, and latest safe decision time;
 containment already attempted and its result; and the options, costs,
 recommendation, and person who must decide by when.
+
+> **Illustrative escalation:** “Do not promote the revised price history yet.
+> The vendor changed earlier values, but we have not verified when those values
+> became knowable. A historical simulation with today's file may answer a
+> hindsight question rather than the one we need. I have kept the file
+> exploratory. I recommend deferring this use. That delays the study but avoids
+> presenting hindsight as point-in-time evidence. We can reconsider when the
+> earlier snapshot and replay evidence are available. Before the planned release
+> window, the decision owner for this use needs to choose: defer it, or obtain the
+> snapshot and rerun the check.”
 
 ## Replace Vague Assurances with Checkable Statements
 

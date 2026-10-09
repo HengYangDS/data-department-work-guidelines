@@ -523,6 +523,24 @@ const nativeSourceSupply = [
   "node tools/ci/install-native.mjs lychee --gitlab-package",
   "node tools/ci/install-native.mjs vale --gitlab-package",
 ];
+const nativeRuntimeVariables = {
+  MISE_OVERRIDE_CONFIG_FILENAMES: ".config/supply/mise.toml",
+  MISE_CONFIG_DIR: "$CI_PROJECT_DIR/build/runtime/work/mise-config",
+  MISE_CEILING_PATHS: "$CI_PROJECT_DIR/..",
+  MISE_TRUSTED_CONFIG_PATHS: "$CI_PROJECT_DIR/.config/supply/mise.toml",
+  MISE_YES: "1",
+};
+const nativeRuntimeSupply = ["mise install --locked --jobs=1"];
+const selectedNativeSourceSupply = [
+  ...nativeRuntimeSupply,
+  ...nativeSourceSupply.map((command) => `mise exec --locked -- ${command}`),
+];
+const selectedNativeVerifier = `mise exec --locked -- ${verifier}`;
+const selectedNativeOffline = [
+  "mise exec --locked -- node tools/ci/offline-bundle.mjs acquire-gitlab",
+  "mise exec --locked -- node tools/ci/offline-bundle.mjs install",
+  selectedNativeVerifier,
+];
 
 function requirePackageManagerSetup(steps, setupNode) {
   const setup = steps[setupNode]?.with;
@@ -797,10 +815,17 @@ function validateGitLabNativeJobs(gitlab, base, kind, lane) {
       typeof job !== "object" ||
       Array.isArray(job) ||
       Object.keys(job).sort().join(",") !==
-        `before_script,extends,inherit${resourceKeys}${rules ? ",rules" : ""},tags` ||
+        `before_script,extends,inherit${resourceKeys}${rules ? ",rules" : ""},script,tags,variables` ||
       job.extends !== `.${base}` ||
       JSON.stringify(sourceSupply(job)) !==
-        JSON.stringify(kind === "source" ? nativeSourceSupply : []) ||
+        JSON.stringify(
+          kind === "source" ? selectedNativeSourceSupply : nativeRuntimeSupply,
+        ) ||
+      !isDeepStrictEqual(job.variables, nativeRuntimeVariables) ||
+      !isDeepStrictEqual(
+        job.script,
+        kind === "source" ? [selectedNativeVerifier] : selectedNativeOffline,
+      ) ||
       Object.keys(job.inherit ?? {}).join(",") !== "default" ||
       job.inherit.default !== false ||
       JSON.stringify(job.tags) !== JSON.stringify([capability]) ||
@@ -862,6 +887,8 @@ export function validateCi(
     "stages",
     "default",
     ".docs:source-supply",
+    ".docs:native-runtime",
+    ".docs:native-source-supply",
     ".docs:verify",
     "docs:verify:linux",
     "docs:verify:linux:review",
@@ -883,6 +910,24 @@ export function validateCi(
       JSON.stringify(nativeSourceSupply)
   ) {
     throw new Error("GitLab native source supply must have one complete owner");
+  }
+  const runtimeOwner = gitlab[".docs:native-runtime"];
+  const selectedSupplyOwner = gitlab[".docs:native-source-supply"];
+  if (
+    Object.keys(runtimeOwner ?? {})
+      .sort()
+      .join(",") !== "before_script,variables" ||
+    !isDeepStrictEqual(runtimeOwner.variables, nativeRuntimeVariables) ||
+    !isDeepStrictEqual(sourceSupply(runtimeOwner), nativeRuntimeSupply) ||
+    Object.keys(selectedSupplyOwner ?? {}).join(",") !== "before_script" ||
+    !isDeepStrictEqual(
+      sourceSupply(selectedSupplyOwner),
+      selectedNativeSourceSupply,
+    )
+  ) {
+    throw new Error(
+      "GitLab native runtime and source supply must retain their complete owners",
+    );
   }
   if (
     JSON.stringify(gitlab.workflow?.rules) !== JSON.stringify(workflowRules)

@@ -393,6 +393,8 @@ export function checkConfigurationLayout(repository = root) {
     ".config/checks/prose/styles/Plain/StockPhrases.yml",
     ".config/checks/prose/styles/config/vocabularies/Department/accept.txt",
     nativeSupplyPath,
+    ".config/supply/mise.toml",
+    ".config/supply/mise.lock",
     offlineBundleRecordPath,
   ]);
   const expectedDirectories = new Set([".config"]);

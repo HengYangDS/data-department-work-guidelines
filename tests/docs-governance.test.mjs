@@ -257,7 +257,7 @@ test("navigation rejects a missing map, repeated root topic, and missing reader 
 
 test("L1 and L2 work records use the full charter boundary at both task routes", () => {
   for (const [relative, opening] of [
-    ["docs/decide.md", "In the existing ticket"],
+    ["docs/decide.md", "A low-risk matter"],
     ["docs/deliver.md", "These duties can share"],
   ]) {
     const source = readFileSync(path.join(root, relative), "utf8");
@@ -279,13 +279,22 @@ test("L1 and L2 work records use the full charter boundary at both task routes",
 test("data entry routes readers to recovery and current qualification", () => {
   const relative = "docs/data.md";
   const source = readFileSync(path.join(root, relative), "utf8");
-  const opening = [...walkMarkdown(markdownTokens(source, relative))].find(
+  const introductionOf = (text) => {
+    const tokens = markdownTokens(text, relative);
+    const firstSection = tokens.findIndex((token) => headingLevel(token) === 2);
+    assert.notEqual(firstSection, -1, "data work needs a first topic section");
+    return tokens.slice(0, firstSection);
+  };
+  const destinationsOf = (tokens) =>
+    markdownLinkDestinations(tokens.map((token) => token.text).join("\n"));
+  const introduction = introductionOf(source);
+  const opening = [...walkMarkdown(introduction)].find(
     (token) =>
       token.type === "paragraph" &&
       markdownText(token).startsWith("When to use:"),
   );
   assert.ok(opening, "data work needs a visible point-of-use entry");
-  const destinations = markdownLinkDestinations(opening.text);
+  const destinations = destinationsOf(introduction);
   for (const destination of [
     "#ownership-and-change-boundaries",
     "#move-from-a-signal-to-controlled-use",
@@ -295,6 +304,19 @@ test("data entry routes readers to recovery and current qualification", () => {
       `data entry needs the current recovery and qualification route: ${destination}`,
     );
   }
+  const lateRecovery = source.replaceAll(
+    "(#ownership-and-change-boundaries)",
+    "(charter.md)",
+  );
+  assert.equal(
+    destinationsOf(
+      introductionOf(
+        `${lateRecovery}\n[Late recovery](#ownership-and-change-boundaries)\n`,
+      ),
+    ).includes("#ownership-and-change-boundaries"),
+    false,
+    "a link after the first topic section cannot satisfy the reader entry",
+  );
 });
 
 test("emergency containment routes to hard boundaries and both risk entries", () => {

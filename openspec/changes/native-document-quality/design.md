@@ -192,6 +192,47 @@ grant without fabricating a sidecar or claiming general safety.
 
 ### Choose the reading form by the question
 
+The task map groups related questions under direction, data and delivery, and
+collaboration. Link each topic beside the decision it supports rather than
+separating question, title, and reading outcome across a comparison table.
+These groups aid discovery; they neither prescribe a workflow nor move a rule
+away from its seven existing topic owners. Keep repository maintenance in a
+separate final section. Inspect the whole page, not only the linked labels.
+
+Compose each topic around the reader's next decision. Keep its use statement
+short, then state the stop and verification boundaries in a distinct paragraph.
+Give long sections meaningful subheadings instead of relying on emphasis or
+additional padding. Place an example beside the practice it illustrates. Keep
+table rows when readers need to compare the same properties; use a list when
+they need to identify duties. Move edition and stewardship detail after the
+charter's work rules. Preserve each actor, condition, responsibility, claim
+limit, and referenced section anchor. These are reading choices, not new policy,
+roles, approvals, or proof of aesthetics. Inspect complete current-source pages
+and follow member and Agent paths before recording the editorial judgment.
+
+Expose required inputs and conjunctive admission conditions as short lists at
+their topic owners. Give completion a peer heading rather than burying it under
+the evidence comparison. Separate existing actors' emergency and management
+duties without adding roles or authority. The list form does not make any
+required condition optional or enlarge a limited-use permission.
+
+Keep tool acquisition mechanics with the existing supply procedure in Contributing.
+Governance links to that owner and retains artifact identity, authorization,
+qualification, and retirement boundaries. Preserve the original credential,
+cache, extraction, and diagnostic duties when moving their instructions; do
+not create a second supply page or policy.
+
+Keep the six release stages as numbered native subheadings in Contributing,
+with a short task index to its existing procedures. Separate supply inputs,
+source proof, release-cut identity, tag admission, publication, and independent
+download checks without changing their instructions or sequence. This takes more
+vertical space than one long list but gives each stage a navigable boundary.
+Separate execution observations, official reports, artifact scans, project-lock
+scans, retained downloads, and local evidence at their current owners. Agent
+instructions use distinct paragraphs for modeling, safe mutation, verification,
+and interruption rather than a single compound block. These changes add no
+policy, procedure owner, permission, or acceptance claim.
+
 An ordered list explains the working loop. The existing data-stage table puts
 use decisions beside their evidence. Neither needs a second diagram that
 repeats the same sequence. Retain every stage, return condition, judgment, and
@@ -527,6 +568,21 @@ fresh HOME, separate empty user/global npm configuration files, and a clean
 environment establish cold execution. Deny remote connections; permit only local
 connections required by the real HTTP regression.
 
+GitLab shell jobs use original Mise with a project-owned configuration under
+`.config/supply/` and its native six-platform runtime lock. Native read-only
+templates obtain the Node compatibility line and exact npm version from
+`package.json`; the npm backend checks the selected archive's SHA-512 before
+installation. Select the configuration with the native project filename setting,
+not its global config override. Run supply and verification commands through
+`mise exec --locked`. Late native tool-path evaluation places the selected npm
+ahead of Node's bundled npm, respecting the Windows native prefix layout.
+This is process-scoped tool selection, not a new installer or a machine PATH,
+service-account, or VM-isolation change. Keep existing review and protected
+identities separate and preserve the complete verifier and project resource.
+Cold checks receive already supplied tools; they neither install Mise nor
+acquire a missing runtime. Qualify the actual Windows ARM64 process and all
+tool combinations before claiming platform acceptance.
+
 This is a qualification environment, not an effect of npm configuration alone.
 Hosted jobs install Node/npm and acquire their exact asset before offline
 installation; they do not prove network isolation. The builder deliberately
@@ -542,15 +598,15 @@ Windows Runner jobs. Retire qualification packages only after jobs are terminal
 and their complete results are preserved. Source qualification is not a signed
 Release.
 
-For task 2.38, a temporary manual proposal-only Windows review job may run
-Node's native CPU and synchronous-filesystem profiling on the two existing
-process/file-heavy regressions, then inherit the unchanged complete verifier.
-Reuse the review identity, locked tool supply, and project resource group.
-Preserve raw profiles and the failed full-verification trace; a diagnostic
-result grants no proof or protected acceptance. Remove this optional job and
-its validation branch before the final freeze, after evidence has a declared
-owner. Do not add a controller, change VM isolation, raise deadlines, or replace
-real public-command regressions with mocks.
+The full verifier reports its actual Node version, process architecture, source,
+and mounted workspace. Native asset selection may differ from the Node process
+architecture: Windows ARM64 uses a declared x64 tool asset when the publisher
+has no native ARM64 asset. Cache identity and test fixtures use that selected
+asset, not the process architecture. Keep supply and verification in the same
+selected process environment. Retain original runtime observations and failed
+job evidence with task 2.38; temporary diagnosis has no permanent CI owner.
+Do not infer VM identity or isolation from these observations, add a controller,
+raise deadlines, or replace real public-command regressions with mocks.
 
 ### Bind risk approval to the actual subject
 

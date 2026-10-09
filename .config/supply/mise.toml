@@ -1,0 +1,18 @@
+min_version = "2026.10.3"
+
+# package.json owns the runtime compatibility line and exact npm version.
+# These native read-only templates need only the existing bootstrap Node.
+[tools]
+node = '''{{ exec(command="node -p \"parseInt(require('../../package.json').engines.node, 10)\"") | trim }}'''
+"npm:npm" = { version = '''{{ exec(command="node -p \"require('../../package.json').devEngines.packageManager.version\"") | trim }}''', checksum = "sha512:66c2632a94e796649738b2d7894d710c2cc2e1696893823066687f6b0d8a52e5f2b54eeaeaa32ffdc513ecca1e49ff794a5c2ec3f9515d879f1b3182b291cf35", npm_args = "--ignore-scripts --no-audit --no-fund" }
+
+[settings]
+locked = true
+
+[settings.npm]
+package_manager = "npm"
+
+# npm's native global-prefix layout differs on Windows. Select its own command
+# before Node's bundled npm, without changing the machine or shell session.
+[env]
+_.path = { path = "{{ tools['npm:npm'].path }}{% if os() != 'windows' %}/bin{% endif %}", tools = true }

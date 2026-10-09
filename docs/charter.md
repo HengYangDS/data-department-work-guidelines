@@ -8,21 +8,9 @@ relations:
 ---
 -->
 
-# Data Department Work Guidelines: Charter
+# Charter
 
-> **Guideline edition:** v7.1.0
->
-> This label alone does not establish released content. Working branches may
-> include [Unreleased changes](../CHANGELOG.md#unreleased); use the signed tag
-> for the exact release.
->
-> **Applies to:** Data Department members and Agents acting under their
-> delegation.
->
-> **Accountability:** The department head owns these guidelines and may appoint
-> maintainers to organize calibration and revisions. A task lead, authorized
-> decision owner, and acceptor may be the same person when policy permits;
-> do not infer one role's authority from another.
+**Applies to:** Data Department members and Agents acting under their delegation.
 
 ## Purpose
 
@@ -32,10 +20,13 @@ unclear; use [execution and delivery](deliver.md) to verify a later result.
 
 The value of data work is not a file acquired, a table produced, a report
 written, or a process started. This guideline is a work-quality contract against
-four failures: disordered reasoning that confuses facts with choices; quick
-fixes that leave the underlying mechanism untouched; communication that leaves
-no one able to decide or act; and AI that produces more material without making
-judgment or outcomes more reliable.
+four failures:
+
+- Disordered reasoning that confuses facts with choices.
+- Quick fixes that leave the underlying mechanism untouched.
+- Communication that leaves no one able to decide or act.
+- AI that produces more material without making judgment or outcomes more
+  reliable.
 
 A task should resolve the problem, test the judgment and its limits, and leave
 the system better able to recognize or handle the next occurrence. These are
@@ -81,12 +72,14 @@ convenient rule.
 
 ## Four Non-Negotiable Boundaries
 
-| Boundary                      | What it means                                                                                                                 |
-| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| Tell the truth                | Do not fabricate, hide, or selectively present facts, or dress uncertainty as certainty.                                      |
-| Stay in bounds                | Do not cross the applicable subject, time, professional competence, permission, data, security, compliance, or action limits. |
-| Name the owner                | Important judgments, decisions, changes, and acceptances have an accountable person.                                          |
-| Do not claim false completion | Do not claim a result is complete, correct, usable, or adopted without current evidence matching that claim.                  |
+1. **Tell the truth.** Do not fabricate, hide, or selectively present facts, or
+   dress uncertainty as certainty.
+2. **Stay in bounds.** Do not cross the applicable subject, time, professional
+   competence, permission, data, security, compliance, or action limits.
+3. **Name the owner.** Important judgments, decisions, changes, and acceptances
+   have an accountable person.
+4. **Do not claim false completion.** Do not claim a result is complete, correct,
+   usable, or adopted without current evidence matching that claim.
 
 Within these boundaries, autonomy, exploration, and creative work are welcome.
 When a boundary would be crossed, stop, make it visible, and escalate. If a
@@ -148,3 +141,16 @@ a large platform for a low-risk, occasional problem.
 Rules serve judgment. Forms, diagrams, meeting counts, and tool runs do not
 replace outcomes. An available reading path proves neither that members have
 adopted these guidelines nor that department quality has improved.
+
+## Guideline Stewardship
+
+**Accountability:** The department head owns these guidelines and may appoint
+maintainers to organize calibration and revisions. A task lead, authorized
+decision owner, and acceptor may be the same person when policy permits;
+do not infer one role's authority from another.
+
+**Guideline edition:** v7.1.0
+
+This label alone does not establish released content. Working branches may
+include [Unreleased changes](../CHANGELOG.md#unreleased); use the signed tag
+for the exact release.

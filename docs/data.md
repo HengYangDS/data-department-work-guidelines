@@ -11,7 +11,9 @@ relations:
 # Data Quality and Adoption
 
 **When to use:** Acquiring data, defining a metric, studying history, deploying
-a production pipeline, or allowing a business use. A readable file, attractive
+a production pipeline, or allowing a business use.
+
+A readable file, attractive
 chart, or promising model signal does not by itself establish that the data may
 be admitted for a specific use. Keep a proposed use exploratory until evidence
 of its meaning, quality, permission, and reproducibility supports that decision.
@@ -59,8 +61,9 @@ in hindsight. Availability time is when a value became accessible to the
 relevant user or system, not when someone later queried it. Check historical
 revisions, backfills, and restatements, and whether sample selection, entity
 changes, market calendars, or survival status introduce bias. Explain how
-missingness, delay, conflict, and anomalies affect the conclusion. If
-point-in-time consistency cannot be proved, do not automatically call the data
+missingness, delay, conflict, and anomalies affect the conclusion.
+
+If point-in-time consistency cannot be proved, do not automatically call the data
 wrong; lower the strength of the conclusion and stop making research or business
 commitments that exceed the evidence. State confidence, alternative
 explanations, and conclusions the data cannot support.
@@ -128,6 +131,8 @@ accountability remains mandatory. Use the
 [charter's interface contract](charter.md#form-follows-risk) to make each side's
 needs and delivery evidence explicit.
 
+### Change Shared or Production Data
+
 Changes to production, shared assets, or critical management chains require:
 
 - A defined subject, impact, task lead, and authority.
@@ -143,10 +148,20 @@ changes, production releases, deletion or overwrite, and irreversible actions.
 An Agent may implement or help verify them within its delegated scope, but
 cannot approve them.
 
-Before data enters a lasting work system, its **meaning must be explainable,
-source traceable, time identifiable, process reproducible, quality verifiable,
-operation observable, owner identifiable, and use bounded**. If any condition is
-unmet, label the data exploratory, temporary, limited-use, or awaiting
-verification. A limited use requires its own evidence and permission; it does
-not make the data a fully qualified asset. Close the specific completion claim
-through [execution and delivery](deliver.md).
+### Admit a Durable Data Asset
+
+Before data enters a lasting work system, **all eight conditions must hold**:
+
+- Its meaning is explainable.
+- Its source is traceable.
+- Its time is identifiable.
+- Its process is reproducible.
+- Its quality is verifiable.
+- Its operation is observable.
+- Its owner is identifiable.
+- Its use is bounded.
+
+If any condition is unmet, label the data exploratory, temporary, limited-use,
+or awaiting verification. A limited use requires its own evidence and
+permission; it does not make the data a fully qualified asset. Close the
+specific completion claim through [execution and delivery](deliver.md).

@@ -11,11 +11,13 @@ relations:
 # Practice and Evolution
 
 **When to use:** A problem repeats, coaching or review is needed, a template,
-tool, or rule is proposed, or an existing mechanism has become a burden. The aim
-of learning is to find the next failure earlier, judge it more easily, and need
-less manual rescue, not to increase the file count. Before admitting a rule,
-template, tool, Agent workflow, or platform mechanism as department practice,
-require an observed failure mode, a bounded trial, a responsible owner, and
+tool, or rule is proposed, or an existing mechanism has become a burden.
+
+The aim of learning is to find the next failure earlier, judge it more easily,
+and need less manual rescue, not to increase the file count. Before admitting
+a rule, template, tool, Agent workflow, or platform mechanism as
+department practice, require an observed failure mode, a bounded trial,
+a responsible owner, and
 evidence of net benefit.
 
 ## Admit Practices and Prevent Recurrence
@@ -31,6 +33,8 @@ An untested preference is not a department rule. Retire a rule that has lost its
 subject, has no user, duplicates a source of truth, or costs more than it
 returns.
 
+### Detect Drift Before Failure
+
 Watch small changes without treating one anomaly as a trend: drifting
 definitions, recurring questions, temporary human rescue, expired evidence,
 ambiguous ownership, intermittent failures, and slight delays can be early
@@ -45,6 +49,8 @@ of error, loss, repeated rescue, or coordination cost, even before a failure:
 - An important judgment depends on tacit knowledge held by one or a few people.
 - Forgetting could cause material loss.
 - Agents will repeat the work.
+
+### Improve the Existing Mechanism
 
 A reusable asset may be a test, monitor, checklist, decision record, example,
 rule, platform capability, or clearer ownership interface. Improve or link an
@@ -72,6 +78,8 @@ coaching. Coaching tests the member's reasoning without making the judgment for
 them. Feedback names a proposition, evidence, behavior, and consequence; a
 label such as “weak logic” gives no actionable direction.
 
+### Review Critical Risks
+
 Review evidence before judging delivery risk. At minimum, inspect problem
 framing, the logical model, evidence and uncertainty, trade-offs, execution and
 acceptance, oral and written communication, and delegation and verification of
@@ -95,6 +103,8 @@ reduces long-term complexity, and improves others' capacity. Exceptional
 performance also shows the ability to detect weak structural signals. Not
 every task needs an exceptional result; every task still owes its agreed
 outcome and hard boundaries.
+
+### Use Scores with Care
 
 If scoring is used, define its levels, observable behavior, and purpose. A score
 expresses delivery risk; it must not label a person or stand for their overall
@@ -155,15 +165,18 @@ its owner there. Do not create a form or meeting unless existing carriers cannot
 hold the necessary review. No routine “nothing happened” activity report is
 required.
 
-Managers clarify direction, priorities, decision boundaries, and resources. They
-resolve cross-domain conflicts and long-standing open decisions in time for work
-to proceed. They ensure that results, anomalies, and actual-use effects return
-promptly to the responsible owner. They show how they judge and communicate
-through concrete work examples, not only abstract requirements. They protect
-people who honestly expose problems and must not penalize honest uncertainty or
-make one person's repeated rescue the department's normal way of operating. They
-must not use these guidelines for retrospective fault-finding, ceremonial
-review, or micromanagement.
+### Management Responsibilities
+
+**Managers** clarify direction, priorities, decision boundaries, and resources.
+They resolve cross-domain conflicts and long-standing open decisions in time
+for work to proceed, and ensure that results, anomalies, and actual-use effects
+return promptly to the responsible owner.
+
+They show how they judge and communicate through concrete work examples, not
+only abstract requirements. They protect people who honestly expose problems
+and must not penalize honest uncertainty or make one person's repeated rescue
+the department's normal way of operating. They must not use these guidelines
+for retrospective fault-finding, ceremonial review, or micromanagement.
 
 When goals conflict, priorities drift, resources are short, decisions stall, or
 interfaces mislead, repair the management system before blaming a member's
@@ -171,22 +184,26 @@ capability. Within the stated decision boundaries, the responsible person
 closest to the facts chooses the method, tools, and implementation path; the
 charter's hard boundaries still apply.
 
-Members own end-to-end results in their remit and disclose unknowns, risks,
-dependencies, and failures without waiting to be asked. Guideline maintainers
-gather real cases, conflicts, and signs of obsolescence, and state the reason,
-evidence, effective time, and scope for each addition or deletion. Do not add
-rules to mask goal, organizational, or system-design defects.
+**Members** own end-to-end results in their remit and disclose unknowns, risks,
+dependencies, and failures without waiting to be asked.
+
+**Guideline maintainers** gather real cases, conflicts, and signs of
+obsolescence, and state the reason, evidence, effective time, and scope for
+each addition or deletion. Do not add rules to mask goal, organizational, or
+system-design defects.
 
 ## Emergencies and Exceptions
 
 When a data error, production failure, or permission or compliance breach
-threatens data, production, downstream use, or compliance, whoever discovers it
-takes containment steps within their existing authority and notifies the
-responsible data or production owner.
-The person responsible for the affected work, usually the task lead, owns the
-response and follow-through. Preserve the inputs and versions needed to
-establish the impact and verify a correction. If the response needs further
-permission, escalate to the decision owner.
+threatens people, data, production, downstream use, or compliance:
+
+1. **Whoever discovers it** takes containment steps within their existing
+   authority and notifies the responsible data or production owner.
+2. **The person responsible for the affected work**, usually the task lead,
+   owns the response and follow-through. Preserve the inputs and versions
+   needed to establish the impact and verify a correction. If the response
+   needs further permission, escalate to the decision owner.
+
 The [hard boundaries](charter.md#four-non-negotiable-boundaries) still apply:
 report known facts and uncertainty honestly, keep responsibility explicit, and
 observe permission and compliance limits. Urgency does not make an uncertain

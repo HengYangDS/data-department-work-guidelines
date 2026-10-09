@@ -2066,6 +2066,25 @@ test("unowned code formats fail explicitly instead of accepting raw whitespace",
   }
 });
 
+test("the generated Mise lock keeps its native TOML owner", async () => {
+  const source = readFileSync(
+    path.join(root, ".config/supply/mise.lock"),
+    "utf8",
+  );
+  assert.deepEqual(
+    await textViolations(".config/supply/mise.lock", source),
+    [],
+  );
+  assert.match(
+    (await textViolations(".config/supply/mise.lock", "not = ["))[0],
+    /invalid TOML/u,
+  );
+  assert.match(
+    (await textViolations("unowned.lock", source))[0],
+    /no native formatting owner/u,
+  );
+});
+
 test("Markdown checks consume the native concern-local TOML policy", () => {
   const relative = ".config/checks/markdown/markdownlint.toml";
   assert.ok(existsSync(path.join(root, relative)), relative);

@@ -209,6 +209,13 @@
       controller, capacity threshold, or proof gate.
 - [ ] 2.38 Qualify the [fixed-source repairs](design.md#supply-exact-tools-without-a-second-installation-plane).
       Resolve findings at the installer, bundle, audit, and documentation owners.
+      Inspect and reconcile the actual Windows Node/npm installation owner,
+      runtime architecture, and service binding without changing isolation.
+      Select Node and npm through native locked Mise commands in every shell
+      job; qualify selection, checksum refusal, missing-lock refusal, and
+      manifest/lock mismatch without changing machine PATH or Runner identity.
+      Verify retirement of temporary diagnosis and preservation of its evidence
+      before the final freeze.
       Verify the [format](design.md#give-native-quality-concerns-one-owner),
       [risk](design.md#bind-risk-approval-to-the-actual-subject), and
       [execution](design.md#preserve-native-execution-and-complete-validation-evidence)
@@ -217,9 +224,7 @@
       with pinned compatible tools and actual architecture observations. Preserve
       findings and runner failures; retire replaced rules, unused dependencies,
       and terminal qualification packages through their declared owners.
-      Preserve same-source Windows diagnostic evidence; retire its temporary
-      manual review job, CI validator, and dedicated test before the final
-      freeze. Refresh immutable CI action pins from official stable
+      Refresh immutable CI action pins from official stable
       releases, verify the explicit Node setup contract and real refusal cases,
       and preserve complete upstream finding reports and selected-route limits.
       The download-error repair is signed at `4a56d2f`. Its 313-case full verifier,
@@ -234,11 +239,12 @@
       tool selectors. Preserve selector precedence and the caller's environment;
       verify the original selector-dependent failure, both rejection paths,
       the full native contribution command, and committed-source ETHOS proof.
-- [x] 2.40 Qualify the working-loop list, controlled-use table, and human–Agent
-      role table and ordered handoff at their canonical topics. Preserve every
-      stage, relationship, return condition, and authority limit while retiring
-      duplicated diagrams and custom styling. Inspect the complete rendered
-      sections and member and Agent routes at actual desktop reading widths.
+- [ ] 2.40 Compose and qualify the task map and all seven topic pages, with the
+      governance route. Give use, judgment, duties, examples, stop conditions,
+      and handoff a clear reading hierarchy. Preserve
+      every topic route, stage, relationship, return condition, and authority
+      limit while retiring duplicated views and custom styling. Inspect complete
+      pages, sections, and member and Agent routes at desktop reading widths.
       Preserve the editorial audit and failed routes; source syntax and
       screenshots alone do not prove adoption, team benefit, or screen-reader
       acceptance. Keep the current clause review and native render/CI receipts

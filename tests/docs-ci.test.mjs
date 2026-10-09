@@ -1163,6 +1163,39 @@ test("the repository check rejects an undeclared Node major", () => {
   assert.throws(() => assertNodeRuntime("22.23.3"), /Node 26/u);
 });
 
+test("native shell jobs select locked process runtimes without changing host npm", () => {
+  const pipeline = YAML.parse(gitlab);
+  for (const system of ["macos", "windows"]) {
+    for (const suffix of ["", ":review"]) {
+      const job = pipeline[`docs:verify:${system}${suffix}`];
+      assert.equal(
+        job.script[0],
+        "mise exec --locked -- npm run verify",
+        "the selected native runtime must execute the complete verifier",
+      );
+      assert.equal(
+        job.variables.MISE_OVERRIDE_CONFIG_FILENAMES,
+        ".config/supply/mise.toml",
+        "the supply configuration must be a project input, not a global override",
+      );
+      assert.ok(
+        job.before_script.flat(10).includes("mise install --locked --jobs=1"),
+      );
+    }
+    assert.deepEqual(pipeline[`offline:verify:${system}`].script, [
+      "mise exec --locked -- node tools/ci/offline-bundle.mjs acquire-gitlab",
+      "mise exec --locked -- node tools/ci/offline-bundle.mjs install",
+      "mise exec --locked -- npm run verify",
+    ]);
+  }
+  const changed = structuredClone(pipeline);
+  changed["docs:verify:windows"].script = ["npm run verify"];
+  assert.throws(
+    () => validateCi(github, YAML.stringify(changed), offline),
+    /native runtime|platform job/u,
+  );
+});
+
 test("both providers invoke one verifier on declared hosts", () => {
   const result = validateCi(github, gitlab);
   assert.equal(result.verifier, "npm run verify");
@@ -2051,6 +2084,7 @@ test("both source planes must supply native Vale before verification", () => {
   );
   for (const name of [
     ".docs:source-supply",
+    ".docs:native-source-supply",
     ".docs:verify",
     "docs:verify:macos",
     "docs:verify:windows",
@@ -2064,8 +2098,9 @@ test("both source planes must supply native Vale before verification", () => {
               .flat(10)
               .filter(
                 (command) =>
-                  command !==
-                  "node tools/ci/install-native.mjs vale --gitlab-package",
+                  !command.endsWith(
+                    "node tools/ci/install-native.mjs vale --gitlab-package",
+                  ),
               );
           }),
           offline,
@@ -2078,12 +2113,13 @@ test("both source planes must supply native Vale before verification", () => {
 test("native YAML aliases preserve one source-supply list and reject omissions", () => {
   const pipeline = YAML.parse(gitlab);
   const supply = pipeline[".docs:source-supply"].before_script;
+  const selectedSupply = pipeline[".docs:native-source-supply"].before_script;
   assert.strictEqual(pipeline[".docs:verify"].before_script[1], supply);
   for (const system of ["macos", "windows"]) {
     for (const suffix of ["", ":review"]) {
       assert.strictEqual(
         pipeline[`docs:verify:${system}${suffix}`].before_script,
-        supply,
+        selectedSupply,
       );
     }
   }
@@ -2100,6 +2136,19 @@ test("native YAML aliases preserve one source-supply list and reject omissions",
           offline,
         ),
       /native source supply/u,
+    );
+  }
+  const runtime = pipeline[".docs:native-runtime"];
+  for (const system of ["macos", "windows"]) {
+    for (const suffix of ["", ":review"]) {
+      assert.strictEqual(
+        pipeline[`docs:verify:${system}${suffix}`].variables,
+        runtime.variables,
+      );
+    }
+    assert.strictEqual(
+      pipeline[`offline:verify:${system}`].before_script,
+      runtime.before_script,
     );
   }
 });
