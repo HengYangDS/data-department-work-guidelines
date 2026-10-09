@@ -487,6 +487,11 @@ test("the public test command bounds workers without reducing its discovered inv
       assert.ok(expected.includes("tests/dependencies/" + name + ".test.mjs"));
     }
     assert.equal(expected.includes("tests/dependencies/fixtures.mjs"), false);
+    for (const name of ["admission", "execution", "supply"]) {
+      assert.ok(expected.includes("tests/ci/" + name + ".test.mjs"));
+    }
+    assert.equal(expected.includes("tests/ci/fixtures.mjs"), false);
+    assert.equal(expected.includes("tests/docs-ci.test.mjs"), false);
     const checkedSpawn = childProcess.spawnSync;
     childProcess.spawnSync = (command, args, options) => {
       if (args?.[0] === "--test") assert.deepEqual(args.slice(2), expected);
