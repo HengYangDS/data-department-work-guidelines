@@ -5,7 +5,7 @@ import path from "node:path";
 import { syncBuiltinESMExports } from "node:module";
 import { test } from "node:test";
 import { pathToFileURL } from "node:url";
-import { proseAlerts } from "../../tools/docs/content.mjs";
+import { checkProse } from "../../tools/docs/content.mjs";
 import { root } from "../../tools/docs/runtime.mjs";
 
 test("source checks reject prose before unrelated native prerequisites", () => {
@@ -23,11 +23,11 @@ test("source checks reject prose before unrelated native prerequisites", () => {
         (command === "git" && ["for-each-ref", "cat-file", "merge-base"].includes(args?.[0]))
       )
         throw new Error("unrelated native prerequisite executed before prose rejection");
-      if (args?.includes("--output=JSON") && args.includes("--no-exit")) {
+      if (args?.includes("--output=line")) {
         invocations.push("vale");
         return {
           status: 0,
-          stdout: JSON.stringify({ "README.md": [{ Line: 1, Span: [1, 4], Check: "Vale.Repetition", Message: "fixture repeated word" }] }),
+          stdout: "README.md:1:1:Vale.Repetition:fixture repeated word\\n",
           stderr: "",
         };
       }
@@ -55,63 +55,57 @@ test("source checks reject prose before unrelated native prerequisites", () => {
   assert.ifError(result.error);
   assert.equal(result.status, 0, result.stderr);
   assert.match(
-    result.stderr,
-    /README\.md:1:1 \[Vale\.Repetition\].*fixture repeated word/u,
+    result.stdout,
+    /README\.md:1:1:Vale\.Repetition:fixture repeated word/u,
   );
 });
 
-test("native Vale refuses malformed successful reports with their raw diagnosis", (context) => {
+test("native Vale findings keep their original output without a report schema", (context) => {
   const nativeSpawn = childProcess.spawnSync;
-  let report = {};
+  let report = "";
+  let status = 0;
+  let executions = 0;
+  const output = context.mock.method(process.stdout, "write", () => true);
   const observation = context.mock.method(
     childProcess,
     "spawnSync",
     (command, args, options) => {
-      if (args?.includes("--output=JSON")) {
-        return { status: 0, stdout: JSON.stringify(report), stderr: "" };
+      if (args?.includes("--output=line")) {
+        assert.equal(args.includes("--no-exit"), false);
+        assert.equal(args.includes("--output=JSON"), false);
+        executions += 1;
+        return { status, stdout: report, stderr: "" };
       }
       return nativeSpawn(command, args, options);
     },
   );
   syncBuiltinESMExports();
   try {
-    for (const invalid of [
-      { Code: "E201", Text: "fixture runtime diagnosis" },
-      { "README.md": {} },
-      {
-        "README.md": [
-          { Line: 1, Span: [1], Check: "Vale.Repetition", Message: "fixture" },
-        ],
-      },
-      {
-        "README.md": [
-          {
-            Line: 0,
-            Span: [1, 2],
-            Check: "Vale.Repetition",
-            Message: "fixture",
-          },
-        ],
-      },
+    for (const finding of [
+      "README.md:1:1:Vale.Repetition:fixture repeated word\n",
+      "README.md:2:1:Plain.Warning:fixture warning\n",
+      "README.md:3:1:Plain.Suggestion:fixture suggestion\n",
+      JSON.stringify({ Code: "E201", Text: "fixture runtime diagnosis" }),
     ]) {
-      report = invalid;
-      assert.throws(
-        () => proseAlerts(["README.md"]),
-        (error) =>
-          error.message.includes("native Vale returned an invalid report") &&
-          error.message.includes(JSON.stringify(invalid)),
-      );
+      report = finding;
+      const before = output.mock.callCount();
+      assert.throws(() => checkProse(["README.md"]), /reported findings/u);
+      assert.equal(output.mock.callCount(), before + 1);
+      assert.equal(output.mock.calls[before].arguments[0], finding);
     }
-    report = { "README.md": [] };
-    assert.deepEqual(proseAlerts(["README.md"]), report);
-    report = {
-      "README.md": [
-        { Line: 1, Span: [1, 2], Check: "Vale.Repetition", Message: "fixture" },
-      ],
-    };
-    assert.deepEqual(proseAlerts(["README.md"]), report);
+    status = 1;
+    report = "README.md:1:1:Vale.Repetition:fixture repeated word\n";
+    const before = output.mock.callCount();
+    assert.throws(() => checkProse(["README.md"]), /exited 1/u);
+    assert.equal(output.mock.callCount(), before + 1);
+    assert.equal(output.mock.calls[before].arguments[0], report);
+    status = 0;
+    report = "";
+    assert.doesNotThrow(() => checkProse(["README.md"]));
+    assert.equal(executions, 6);
   } finally {
     observation.mock.restore();
+    output.mock.restore();
     syncBuiltinESMExports();
   }
 });

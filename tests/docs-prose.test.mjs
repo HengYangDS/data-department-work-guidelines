@@ -15,7 +15,7 @@ import os from "node:os";
 import path from "node:path";
 import { syncBuiltinESMExports } from "node:module";
 import { test } from "node:test";
-import { proseAlerts, checkProse } from "../tools/docs/content.mjs";
+import { checkProse } from "../tools/docs/content.mjs";
 import { gitFiles, nativeToolBinary, root } from "../tools/docs/runtime.mjs";
 
 function proseBatch(sources) {
@@ -26,7 +26,22 @@ function proseBatch(sources) {
       writeFileSync(file, source, "utf8");
       return file;
     });
-    const alerts = proseAlerts(files);
+    const native = spawnSync(
+      nativeToolBinary("vale"),
+      [
+        "--no-global",
+        `--config=${path.join(root, ".config/checks/prose/vale.ini")}`,
+        "--output=JSON",
+        "--no-exit",
+        "--no-color",
+        ...files,
+      ],
+      { cwd: root, encoding: "utf8", timeout: 120_000 },
+    );
+    assert.ifError(native.error);
+    assert.equal(native.status, 0, native.stderr);
+    assert.equal(native.stderr, "");
+    const alerts = JSON.parse(native.stdout);
     return files.map((file, index) => {
       assert.equal(readFileSync(file, "utf8"), sources[index]);
       return alerts[file] ?? [];
@@ -60,7 +75,7 @@ test("native prose refuses process warnings without losing its report", (context
     "spawnSync",
     (command, args, options) => {
       const result = actualSpawn(command, args, options);
-      if (args.includes("--output=JSON")) {
+      if (args.includes("--output=line")) {
         executions += 1;
         nativeOutput = result.stdout;
         return {
@@ -74,7 +89,7 @@ test("native prose refuses process warnings without losing its report", (context
   syncBuiltinESMExports();
   try {
     assert.throws(
-      () => proseFindings("The result is verified.\n"),
+      () => checkProse(["README.md"]),
       /emitted warning output:[\s\S]*native prose warning/u,
     );
     assert.equal(executions, 1);
@@ -236,12 +251,22 @@ test("native prose preserves syntax, quoted examples and honest uncertainty", ()
   );
 });
 
-test("the repository prose owner fails on a real current file", () => {
+test("the repository prose owner fails on a real current file", (context) => {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-prose-"));
   try {
     const file = path.join(directory, "current.md");
     writeFileSync(file, "# Current\n\nUse the the report.\n");
-    assert.throws(() => checkProse([file]), /Vale\.Repetition.*repeated/u);
+    const output = context.mock.method(process.stdout, "write", () => true);
+    try {
+      assert.throws(() => checkProse([file]), /exited 1/u);
+      assert.equal(output.mock.callCount(), 1);
+      assert.match(
+        output.mock.calls[0].arguments[0],
+        /Vale\.Repetition:.*repeated/u,
+      );
+    } finally {
+      output.mock.restore();
+    }
     writeFileSync(file, "# Current\n\nUse the report.\n");
     assert.doesNotThrow(() => checkProse([file]));
   } finally {
@@ -293,24 +318,34 @@ test("native prose checks table cells without joining distinct columns", () => {
 });
 
 test("real Vale control comments cannot disable prose checks", () => {
-  for (const control of [
-    "<!-- vale off -->",
-    "<!-- vale on -->",
-    "<!-- vale style = NO -->",
-    "<!-- vale styles = YES -->",
-    "<!-- vale Vale.Spelling = NO -->",
-    "<!-- vale Vale.Repetition = off -->",
-    "<!-- v&#97;le off -->",
-    "<!-- vale&#32;off -->",
-  ]) {
-    for (const source of [
-      `${control}\n\nUse the the report.\n`,
-      `Use ${control} the the report.\n`,
-      `> ${control}\n> Use the the report.\n`,
-      `- ${control}\n  Use the the report.\n`,
-      `| Duty |\n| --- |\n| ${control} Use the the report. |\n`,
-    ])
-      assert.throws(() => proseFindings(source), /no-quality-control/u);
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-prose-controls-"));
+  try {
+    const file = path.join(directory, "controlled.md");
+    for (const control of [
+      "<!-- vale off -->",
+      "<!-- vale on -->",
+      "<!-- vale style = NO -->",
+      "<!-- vale styles = YES -->",
+      "<!-- vale Vale.Spelling = NO -->",
+      "<!-- vale Vale.Repetition = off -->",
+      "<!-- v&#97;le off -->",
+      "<!-- vale&#32;off -->",
+    ]) {
+      for (const source of [
+        `${control}\n\nUse the the report.\n`,
+        `Use ${control} the the report.\n`,
+        `> ${control}\n> Use the the report.\n`,
+        `- ${control}\n  Use the the report.\n`,
+        `| Duty |\n| --- |\n| ${control} Use the the report. |\n`,
+      ]) {
+        writeFileSync(file, source);
+        assert.throws(() => checkProse([file]), /no-quality-control/u);
+        assert.equal(readFileSync(file, "utf8"), source);
+      }
+    }
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+    assert.equal(existsSync(directory), false);
   }
   const validSources = [
     "<!-- Vale explains configured prose rules. -->\n\nThe result is verified.\n",
@@ -436,8 +471,8 @@ test("public prose and integrity commands reject the same current-file defect", 
       assert.ifError(result.error);
       assert.equal(result.status, 1, `${command}: ${result.stderr}`);
       assert.match(
-        result.stderr,
-        /README\.md:\d+:\d+ \[Vale\.Repetition\].*repeated/u,
+        result.stdout,
+        /README\.md:\d+:\d+:Vale\.Repetition:.*repeated/u,
       );
       if (command === "check") {
         const contexts = result.stdout
@@ -492,9 +527,9 @@ test("public prose and integrity commands reject the same current-file defect", 
     const invalidProse = runCheck("prose");
     assert.ifError(invalidProse.error);
     assert.equal(invalidProse.status, 1, invalidProse.stdout);
-    assert.match(invalidProse.stderr, /\[Vale\.Repetition\].*repeated/u);
+    assert.match(invalidProse.stdout, /Vale\.Repetition:.*repeated/u);
     for (const { relative } of sources)
-      assert.ok(invalidProse.stderr.replaceAll("\\", "/").includes(relative));
+      assert.ok(invalidProse.stdout.replaceAll("\\", "/").includes(relative));
     writeSources(
       ({ anchor }) => `# Source\n\n[Entry](../README.md#${anchor})\n`,
     );

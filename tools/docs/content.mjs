@@ -186,7 +186,7 @@ export function lintMarkdown({ files = sourceMarkdown(), strings } = {}) {
   );
 }
 
-export function proseAlerts(files = currentMarkdown()) {
+export function checkProse(files = currentMarkdown()) {
   if (!files.length)
     throw new Error("no current Markdown files to check for prose");
   const absoluteFiles = files.map((relative) =>
@@ -211,57 +211,16 @@ export function proseAlerts(files = currentMarkdown()) {
     [
       "--no-global",
       `--config=${filePath(".config/checks/prose/vale.ini")}`,
-      "--output=JSON",
-      "--no-exit",
+      "--output=line",
       "--no-color",
       ...absoluteFiles,
     ],
     { capture: true, rejectStderr: true },
   );
-  let alerts;
-  try {
-    alerts = JSON.parse(output);
-  } catch (cause) {
-    throw new Error(`native Vale returned an invalid report: ${output}`, {
-      cause,
-    });
+  if (output) {
+    process.stdout.write(output);
+    throw new Error("native Vale reported findings");
   }
-  const validAlert = (alert) =>
-    alert &&
-    typeof alert === "object" &&
-    !Array.isArray(alert) &&
-    Number.isInteger(alert.Line) &&
-    alert.Line > 0 &&
-    Array.isArray(alert.Span) &&
-    alert.Span.length === 2 &&
-    alert.Span.every((column) => Number.isInteger(column) && column > 0) &&
-    alert.Span[1] >= alert.Span[0] &&
-    typeof alert.Check === "string" &&
-    alert.Check.trim() &&
-    typeof alert.Message === "string" &&
-    alert.Message.trim();
-  if (
-    !alerts ||
-    typeof alerts !== "object" ||
-    Array.isArray(alerts) ||
-    Object.values(alerts).some(
-      (entries) => !Array.isArray(entries) || !entries.every(validAlert),
-    )
-  ) {
-    throw new Error(`native Vale returned an invalid report: ${output}`);
-  }
-  return alerts;
-}
-
-export function checkProse(files = currentMarkdown()) {
-  const findings = Object.entries(proseAlerts(files)).flatMap(
-    ([file, alerts]) =>
-      alerts.map(
-        ({ Line, Span, Check, Message }) =>
-          `${file}:${Line}:${Span[0]} [${Check}] ${Message}`,
-      ),
-  );
-  if (findings.length) throw new Error(findings.join("\n"));
   console.log(
     `PASS native Vale spelling, prose and terminology: ${files.length} current Markdown files`,
   );

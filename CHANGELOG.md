@@ -27,6 +27,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Preserve native Vale findings and exit status without parsing its output or
+  rewriting its report.
 - Separate dependency auditing from CI topology. Group audit tests by policy,
   execution, and evidence; discover every Git-selected test in semantic
   subdirectories while preserving the worker limit and execution deadline.
