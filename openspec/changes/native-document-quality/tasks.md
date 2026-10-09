@@ -227,21 +227,19 @@
       Refresh immutable CI action pins from official stable
       releases, verify the explicit Node setup contract and real refusal cases,
       and preserve complete upstream finding reports and selected-route limits.
-
-  Verify the [format](design.md#give-native-quality-concerns-one-owner),
-  [risk](design.md#bind-risk-approval-to-the-actual-subject), and
-  [execution](design.md#preserve-native-execution-and-complete-validation-evidence)
-  contracts through focused regressions, full source, cold install, exact-HEAD
-  proof, and both Forge source/offline jobs. Qualify native Windows ARM64 Node
-  with pinned compatible tools and actual architecture observations.
-
-  Preserve findings and runner failures; retire replaced rules, unused dependencies,
-  and terminal qualification packages through their declared owners.
-  Preserve original download-boundary failures and qualification evidence in
-  non-authorizing
-  Attestation `816cb6432b150825c22073cce0a89e6632721aa0477620b44496dab739166162`.
-  Complete Windows, both-Forge, and accepted shared-runtime checks before
-  closing this task.
+      Verify the [format](design.md#give-native-quality-concerns-one-owner),
+      [risk](design.md#bind-risk-approval-to-the-actual-subject), and
+      [execution](design.md#preserve-native-execution-and-complete-validation-evidence)
+      contracts through focused regressions, full source, cold install, exact-HEAD
+      proof, and both Forge source/offline jobs. Qualify native Windows ARM64 Node
+      with pinned compatible tools and actual architecture observations.
+      Preserve findings and runner failures; retire replaced rules, unused
+      dependencies, and terminal qualification packages through their declared
+      owners. Keep original download-boundary failures and qualification evidence
+      in non-authorizing Attestation
+      `816cb6432b150825c22073cce0a89e6632721aa0477620b44496dab739166162`.
+      Complete Windows, both-Forge, and accepted shared-runtime checks before
+      closing this task.
 
 - [x] 2.39 Isolate native-cache rejection fixtures from inherited explicit
       tool selectors. Preserve selector precedence and the caller's environment;
@@ -257,12 +255,13 @@
       screenshots alone do not prove adoption, team benefit, or screen-reader
       acceptance. Keep the current clause review and native render/CI receipts
       under Attestation `07833876851f4480c3a4e82a2d94ac720e1306bf69f5b3b5b80d62ce3782a01a`.
-      Current independent reader disposition:
-      `326125f9c749324ae88f1a47f5bd4788ad6f72463059e6b78ae770fad3201257`;
-      owner review and ten conserved reader-source bindings:
+      Retain the independent review in
+      `326125f9c749324ae88f1a47f5bd4788ad6f72463059e6b78ae770fad3201257`
+      and owner review in
       `466c69defd3bbd5c8fab06ea3c0103cd6326ca43b69a5df796a8c0a8d518b702`.
-      Neither closes authenticated GitLab reading, accessibility, adoption,
-      shared integration, or final publication. Retire verified inspection copies.
+      Qualify authenticated GitLab reading, accessibility, shared integration,
+      and final publication separately; do not infer team adoption. Retire
+      verified inspection copies.
 - [x] 2.41 Share editor and Finder exclusions through native Git policy. Verify
       a fresh repository without ambient or Git-common exclusions, preserve
       tracked guidance selection, and run full source checks, committed-source
