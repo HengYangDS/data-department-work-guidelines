@@ -184,8 +184,9 @@
       [resource loading](design.md#keep-configuration-with-its-consumer), task
       diagnostics, risk approval, and identity; retire replaced glue in the same
       migration.
-      Integrate the accepted public CUE projection and shared 512-line admission
-      contracts; their actual installed adopter routes remain prerequisites.
+      Integrate the accepted public CUE projection and carrier-specific shared
+      size admission; qualify actual installed routes, supported languages,
+      metrics, and declared limits without a blanket file-length rule.
 - [x] 2.34 Serialize Windows review, protected-source, and offline jobs through
       one project-scoped native resource group. Reject missing, ref-dependent,
       or divergent reservations; preserve trust boundaries, full discovery, two
@@ -297,35 +298,42 @@
       boundaries, and run the same non-writing drift check on both peers.
       Reject hand edits and preserve signed source identity. Retire the replaced
       YAML policy implementation after actual protected source/offline acceptance.
-- [ ] 2.46 Consume accepted shared 512-line admission and reorganize oversized
-      carriers by semantic ownership. Qualify code ELOC and Markdown non-blank
-      physical lines at 512 passing and 513 refusing, with complete source/test
-      selection, preserved requirements and versioned release notes, and no
-      mutation on refusal. Do not copy the shared gate, minify, hide inputs,
-      create catch-all history, or waive the limit.
+- [ ] 2.46 Consume accepted shared size admission at its actual carrier and
+      language boundaries. Qualify 512/513 on applicable current authored
+      Markdown; code uses supported metrics and declared policy. Keep complete
+      source/test selection and preserve meaning. Release-owned Changelog,
+      official OpenSpec artifacts, and declared generated output retain their
+      own checks. Do not copy the gate, minify, hide inputs, or invent exemptions.
   - [x] 2.46.1 Separate dependency auditing from CI topology. Preserve all 53
         original CI/audit cases and module declarations, share audit fixtures,
         and verify complete nested test discovery with the original worker limit,
         deadline, and full local suite.
-  - [ ] 2.46.2 Divide runtime, release, and CI implementation by responsibility;
-        preserve public commands, errors, effects, and native input ownership.
-        Verify their complete regression journeys and actual size admission.
-  - [ ] 2.46.3 Group the remaining oversized tests by the behavior they verify,
-        with shared fixtures and no case loss. Verify full native discovery,
-        execution controls, and actual size admission.
-  - [ ] 2.46.4 Keep design choices concise and partition oversized capabilities
-        through official deltas and main-spec synchronization. Preserve each
-        requirement and scenario, maintain all reader routes, and verify strict
-        OpenSpec plus accepted installed size admission. Reference native design
+  - [ ] 2.46.2 Review lasting runtime, release, and CI responsibilities; separate
+        only incoherent owners and retire the existing CI checker through CUE,
+        without an interim partition. Preserve public commands, errors, effects,
+        native inputs, and complete regression journeys; qualify size only where
+        a supported product policy applies.
+  - [ ] 2.46.3 Review test cohesion by verified behavior, sharing fixtures and
+        preserving every case. Verify full native discovery, execution controls,
+        and any applicable language-specific size admission; do not reorganize
+        tests merely by physical line count.
+  - [ ] 2.46.4 Review design choices and capability ownership through official
+        deltas and main-spec synchronization. Preserve each requirement and
+        scenario, maintain all reader routes, and verify strict OpenSpec and
+        semantic clarity; official artifacts have no documentation-length
+        ceiling. Reference native design
         review `6e07f24a22c99b110ace215c25318e05b9ac707a05df99d11a01f93d746bdf57`
         and delta proof `c0eff0fdce3e3e95fe978876d6cec02ceb00acc04a691004696dd90f8a290a18`;
-        neither replaces shared admission of the final source.
+        neither proves final delivery or the applicable shared admission.
   - [ ] 2.46.5 Keep versioned release notes complete and reachable in their
-        semantic owner. Verify native Changelog, tag, comparison, and size checks
-        without moving notes to an undifferentiated history carrier.
-  - [ ] 2.46.6 Integrate the accepted shared gate through its public installed
-        route. Verify 512 passes and 513 refuses without mutation on complete
-        selected source, then run changed plan and exact-HEAD proof.
+        semantic owner. Verify native Changelog form, SemVer meaning, tag, and
+        both peer comparisons. Root release history and its version sections
+        have no length ceiling; add no fragments or duplicate history carrier.
+  - [ ] 2.46.6 Integrate accepted shared admission through its public installed
+        route. Verify applicable authored Markdown at 512/513 without mutation,
+        release-history and official-artifact classification, and supported
+        code metrics with declared limits. Then run changed plan and exact-HEAD
+        proof on complete selected source; absent policy is not coverage.
 
 ## 3. Qualification and publication
 

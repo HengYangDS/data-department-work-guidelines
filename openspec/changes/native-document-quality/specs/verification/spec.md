@@ -448,29 +448,6 @@ and single-peer execution SHALL remain independent of an unavailable peer.
 - **AND** execution preserves exact signed source identity and claims only the
   observed peer's acceptance.
 
-### Requirement: Shared source-size admission preserves semantic ownership
-
-Code ELOC and Markdown non-blank physical lines SHALL each have an inclusive
-512-line limit enforced through the accepted shared admission owner. Required
-source, tests, specifications, and release notes SHALL remain discoverable and
-semantically complete. Reorganization SHALL NOT minify, conceal inputs, copy the
-shared checker, create a catch-all history carrier, or weaken the limit.
-
-#### Scenario: A carrier reaches the admitted boundary
-
-- **WHEN** selected code contains 512 ELOC or selected Markdown contains 512
-  non-blank physical lines
-- **THEN** the shared size gate admits that carrier without changing it
-- **AND** each corresponding 513-line carrier is refused without mutation.
-
-#### Scenario: An oversized carrier is reorganized
-
-- **WHEN** source is divided by semantic responsibility to meet the limit
-- **THEN** every prior requirement, test journey, and versioned release note
-  remains reachable at its declared owner
-- **AND** the complete native selection and actual shared admission are verified
-  before the replaced carrier or implementation is retired.
-
 ### Requirement: Proof prerequisites retain product ownership
 
 Product-native prerequisites and quality axes SHALL belong to the accepted
@@ -486,3 +463,50 @@ commands for the same source without authored substitute evidence.
   default gate boundary
 - **AND** passing document commands alone do not satisfy behavior, semantics,
   diagnostics, or subject applicability.
+
+## MODIFIED Requirements
+
+### Requirement: Shared source-size admission preserves semantic ownership
+
+Accepted shared admission SHALL classify each selected carrier before applying
+its metric and limit. The documentation ceiling SHALL apply only to current
+authored Markdown; release-owned Changelog, official OpenSpec artifacts, and
+declared generated output SHALL retain their own checks. Code SHALL use
+supported language metrics and declared policy. Admission SHALL preserve meaning
+and source selection without a private checker or hidden input.
+
+#### Scenario: A carrier reaches the admitted boundary
+
+- **WHEN** selected current authored Markdown reaches the accepted product's
+  inclusive 512-nonblank-line boundary
+- **THEN** shared documentation admission accepts 512 and refuses the
+  corresponding 513-line source without mutation
+- **AND** supported code is evaluated by its language-specific metric and
+  declared limit, not Markdown length.
+
+#### Scenario: An oversized carrier is reorganized
+
+- **WHEN** an applicable carrier exceeds its own admitted limit and source is
+  divided by semantic responsibility
+- **THEN** every prior requirement, test journey, and versioned release note
+  remains reachable at its declared owner
+- **AND** complete native selection and applicable shared admission are verified
+  before the replaced carrier or implementation is retired
+- **AND** source outside that policy is not divided merely to satisfy its count.
+
+#### Scenario: Release history and official artifacts grow
+
+- **WHEN** root release-owned Changelog, an Unreleased or version section,
+  official OpenSpec artifacts, or declared generated output exceeds the ordinary
+  documentation ceiling
+- **THEN** documentation length alone does not reject those carriers
+- **AND** release form and meaning, official artifact validation, and declared
+  producer checks remain mandatory at their own owners.
+
+#### Scenario: Carrier ownership remains explicit
+
+- **WHEN** current authored documentation receives a history, evidence, or
+  archived metadata label, or another directory contains a same-named Changelog
+- **THEN** that label or name alone does not change its applicable policy
+- **AND** generated-output classification requires its current native producer
+  declaration rather than a local exemption.

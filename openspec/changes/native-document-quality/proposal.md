@@ -90,10 +90,11 @@ and history capabilities remain product dependencies.
   Generate the GitLab and GitHub YAML projections, keeping only necessary peer
   differences and the existing native executors. Qualify non-writing drift
   checks on each peer before retiring the duplicated YAML policy checker.
-- Consume accepted shared source-size admission: code ELOC and Markdown
-  non-blank physical lines have an inclusive 512-line limit. Reorganize oversized
-  carriers by semantic ownership without losing requirements or adding a second
-  checker, history dump, or exception that weakens the limit.
+- Consume accepted shared size admission at its actual carrier and language
+  boundaries. The documentation ceiling applies to current authored Markdown,
+  not release-owned Changelog, official OpenSpec artifacts, or declared generated
+  output. Code uses supported metrics and declared policy. Improve semantic
+  ownership without a private checker, hidden inputs, or lost meaning.
 - Consolidate the existing proposal, design, and task ledger by semantic
   concern. Keep every task ID and obligation; replace stale progress with
   current evidence references without rewriting original Git or execution

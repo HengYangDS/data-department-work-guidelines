@@ -444,12 +444,20 @@ original stable CUE. Refuse edited projections before effects on either peer.
 Until the installed public route is qualified, preserve working pipelines and
 failures rather than copy the compiler or add a reader dependency.
 
-Shared size admission measures code ELOC and Markdown non-blank physical lines,
-with 512 accepted and 513 refused unchanged. Partition code, tests, design, and
-capabilities by responsibility, preserving discovery, requirements, scenarios,
-and versioned release notes. No minification, hidden input, catch-all history,
-private checker, or exemption closes this obligation; qualify the actual shared
-gate and full source journey.
+Shared size admission classifies the carrier before applying its metric and
+declared limit. Current authored Markdown uses non-blank physical lines;
+release-owned root Changelog, official OpenSpec artifacts, and declared generated
+output retain their own checks. A metadata label or a same-named file elsewhere
+does not change ownership. Code uses supported language metrics and declared
+policy; a Python-only report or absent policy does not qualify JavaScript.
+
+Qualify the accepted product's 512/513 documentation boundary only on applicable
+authored Markdown. Keep Changelog complete at its existing owner and review
+OpenSpec by official validation and semantic responsibility, not document count.
+Improve code and test cohesion where it serves their lasting responsibilities;
+do not partition a checker already scheduled for replacement by CUE. Preserve
+discovery, obligations, and diagnostics without minification, hidden input,
+catch-all history, or a private size checker.
 
 Local verification and supplied installation need neither Forge. GitLab is the
 organizational publication plane; GitHub is an independent complete repository,
