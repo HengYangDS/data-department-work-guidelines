@@ -122,6 +122,13 @@ validator.
 
 ### Give native quality concerns one owner
 
+Dependency policy, complete native audit evidence, and its bounded approval live
+in `tools/docs/dependencies.mjs`, not the CI topology checker. Audit tests share
+one fixture and separate policy, execution, and evidence duties. The public test
+command discovers all Git-selected `tests/**/*.test.mjs` inputs, excluding fixture
+modules; native Node retains two workers and the existing deadline. Move callers
+directly to the responsible module rather than retain a compatibility export.
+
 #### Source selection and observations
 
 The existing source verifier reports its real repository, commit and tree,

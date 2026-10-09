@@ -27,6 +27,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Separate dependency auditing from CI topology. Group audit tests by policy,
+  execution, and evidence; discover every Git-selected test in semantic
+  subdirectories while preserving the worker limit and execution deadline.
 - Organize the task map by direction, data, delivery, and collaboration. Open
   each topic with its use, separate long sections by the reader's decision,
   place examples beside the practice they illustrate, and reserve tables for

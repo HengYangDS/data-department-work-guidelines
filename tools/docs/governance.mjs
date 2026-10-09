@@ -8,7 +8,7 @@ import {
   dependencyPolicyPath,
   parseDependencyPolicy,
   validateDependencyInput,
-} from "./ci.mjs";
+} from "./dependencies.mjs";
 import {
   headingLevel,
   headingText,

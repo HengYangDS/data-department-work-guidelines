@@ -8,8 +8,9 @@ import {
 } from "./runtime.mjs";
 
 function testFiles() {
-  return gitFiles().filter((relative) =>
-    /^tests\/[^/]+\.test\.mjs$/u.test(relative),
+  return gitFiles().filter(
+    (relative) =>
+      relative.startsWith("tests/") && relative.endsWith(".test.mjs"),
   );
 }
 
@@ -112,7 +113,7 @@ try {
     }
     case "audit": {
       if (arguments_.length) throw new Error("audit accepts no arguments");
-      const { auditDependencies } = await import("./ci.mjs");
+      const { auditDependencies } = await import("./dependencies.mjs");
       auditDependencies();
       break;
     }

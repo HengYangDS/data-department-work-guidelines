@@ -453,6 +453,7 @@ test("the public test command bounds workers without reducing its discovered inv
         "tools/ci/offline-bundle.mjs",
         "tools/docs/changelog.mjs",
         "tools/docs/ci.mjs",
+        "tools/docs/dependencies.mjs",
         "tools/docs/content.mjs",
         "tools/docs/governance.mjs",
       ].map((relative) => pathToFileURL(path.join(root, relative)).href),
@@ -480,8 +481,12 @@ test("the public test command bounds workers without reducing its discovered inv
     };
     syncBuiltinESMExports();
     const { gitFiles } = await import(${JSON.stringify(pathToFileURL(path.join(root, "tools/docs/runtime.mjs")).href)});
-    const expected = gitFiles().filter((file) => /^tests\\/[^/]+\\.test\\.mjs$/u.test(file));
+    const expected = gitFiles().filter((file) => file.startsWith("tests/") && file.endsWith(".test.mjs"));
     assert.ok(expected.length > 0);
+    for (const name of ["policy", "audit", "custody"]) {
+      assert.ok(expected.includes("tests/dependencies/" + name + ".test.mjs"));
+    }
+    assert.equal(expected.includes("tests/dependencies/fixtures.mjs"), false);
     const checkedSpawn = childProcess.spawnSync;
     childProcess.spawnSync = (command, args, options) => {
       if (args?.[0] === "--test") assert.deepEqual(args.slice(2), expected);

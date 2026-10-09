@@ -303,6 +303,25 @@
       selection, preserved requirements and versioned release notes, and no
       mutation on refusal. Do not copy the shared gate, minify, hide inputs,
       create catch-all history, or waive the limit.
+  - [x] 2.46.1 Separate dependency auditing from CI topology. Preserve all 53
+        original CI/audit cases and module declarations, share audit fixtures,
+        and verify complete nested test discovery with the original worker limit,
+        deadline, and full local suite.
+  - [ ] 2.46.2 Divide runtime, release, and CI implementation by responsibility;
+        preserve public commands, errors, effects, and native input ownership.
+        Verify their complete regression journeys and actual size admission.
+  - [ ] 2.46.3 Group the remaining oversized tests by the behavior they verify,
+        with shared fixtures and no case loss. Verify full native discovery,
+        execution controls, and actual size admission.
+  - [ ] 2.46.4 Keep design choices concise and partition oversized capabilities
+        through official deltas. Preserve each requirement and scenario, update
+        all reader routes, and verify strict OpenSpec and size admission.
+  - [ ] 2.46.5 Keep versioned release notes complete and reachable in their
+        semantic owner. Verify native Changelog, tag, comparison, and size checks
+        without moving notes to an undifferentiated history carrier.
+  - [ ] 2.46.6 Integrate the accepted shared gate through its public installed
+        route. Verify 512 passes and 513 refuses without mutation on complete
+        selected source, then run changed plan and exact-HEAD proof.
 
 ## 3. Qualification and publication
 
