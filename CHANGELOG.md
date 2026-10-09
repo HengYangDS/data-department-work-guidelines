@@ -39,7 +39,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 - Let problem models represent interacting causes and cross-cutting constraints;
   decision readiness does not imply approval.
 - Qualify data for its intended use rather than force research through a
-  production pipeline. Distinguish publication from observed use.
+  production pipeline. Apply operational checks and recovery to shared or
+  production changes, while bounded research keeps its own evidence and
+  permission requirements. Distinguish publication from observed use.
 - Keep practices for a current duty or evidenced benefit, without demanding that
   each be unique. Let discussions clarify a model without pretending a decision
   was made; avoid fixed fact counts and redundant Agent recitals.

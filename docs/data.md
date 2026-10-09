@@ -18,11 +18,11 @@ establish that the data may be admitted for a specific use. Keep a proposed use
 exploratory until evidence of its meaning, quality, permission, and
 reproducibility supports that decision.
 
-Stop a proposed controlled use or production change and escalate when meaning
-or quality is unverified, permission is insufficient, or its
-[recovery path](#change-shared-or-production-data) is missing. Before relying on
-a result, recheck key findings, tests, operational observation, and acceptance
-against [the intended use](#move-from-a-signal-to-controlled-use).
+Before relying on a result, recheck key findings, reproducibility, and permission
+against [the intended use](#move-from-a-signal-to-controlled-use). Stop a proposed
+controlled use and escalate if its meaning or quality is unverified or permission
+is insufficient. For a shared or production change, also require the
+[operational checks and recovery path](#change-shared-or-production-data).
 
 For a lasting data asset, [all eight admission conditions](#admit-a-durable-data-asset)
 must hold. For historical research, preserve
