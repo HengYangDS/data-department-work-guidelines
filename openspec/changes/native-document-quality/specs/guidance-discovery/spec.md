@@ -124,6 +124,20 @@ distinct from mandatory task-specific prevention. Latest verified facts SHALL
 outrank loyalty to prior approaches, tools, identities, documents, or sunk costs.
 A Blocked report SHALL name the prerequisite gap, its impact, and the escalation.
 
+#### Scenario: A current topic inherits an obsolete rule
+
+- **WHEN** a rule, model, form, review schedule, or writing technique remains in
+  a current topic from an earlier draft
+- **THEN** the review SHALL assess its applicable authority, current work
+  purpose, actionable conditions, and cognitive and maintenance cost against
+  current instructions, verified facts, and department needs
+- **AND** the rule SHALL be kept, clarified, merged, replaced, or retired with a
+  justified disposition at the existing review owner
+- **AND** neither its earlier presence nor the current topic layout SHALL
+  establish that it is valid or mandatory
+- **AND** binding applicable duties and hard boundaries SHALL remain intact;
+  immutable historical text and evidence SHALL not be rewritten.
+
 #### Scenario: Numbered clauses omit an original chapter introduction
 
 - **WHEN** the retired guidelines are used to check the seven current topics
@@ -138,20 +152,6 @@ A Blocked report SHALL name the prerequisite gap, its impact, and the escalation
   merely because it appeared in the earlier source
 - **AND** a heading count, byte-matched excerpt, refreshed hash, or passing
   source check cannot by itself establish semantic fidelity.
-
-#### Scenario: A current topic inherits an obsolete rule
-
-- **WHEN** a rule, model, form, review schedule, or writing technique remains in
-  a current topic from an earlier draft
-- **THEN** the review SHALL assess its applicable authority, current work
-  purpose, actionable conditions, and cognitive and maintenance cost against
-  current instructions, verified facts, and department needs
-- **AND** the rule SHALL be kept, clarified, merged, replaced, or retired with a
-  justified disposition at the existing review owner
-- **AND** neither its earlier presence nor the current topic layout SHALL
-  establish that it is valid or mandatory
-- **AND** binding applicable duties and hard boundaries SHALL remain intact;
-  immutable historical text and evidence SHALL not be rewritten.
 
 #### Scenario: A useful practice has an alternative
 
@@ -180,44 +180,6 @@ A Blocked report SHALL name the prerequisite gap, its impact, and the escalation
 - **AND** a reading form, available route, or Agent report cannot establish
   permission, acceptance, adoption, or improved team outcomes.
 
-#### Scenario: A familiar approach conflicts with new facts
-
-- **WHEN** new verified facts contradict a familiar approach, tool, identity,
-  document, or prior investment
-- **THEN** the charter requires correcting the judgment from those facts
-- **AND** loyalty or sunk cost does not justify preserving the old position.
-
-#### Scenario: A blocked report omits its impact
-
-- **WHEN** a member or Agent reports a prerequisite that blocks the affected
-  action
-- **THEN** the delivery topic requires the gap, its impact, and the escalation
-- **AND** naming a blocker alone is not a complete work-state report.
-
-#### Scenario: An unchecked citation accompanies fluent work
-
-- **WHEN** an analyst presents an unchecked secondhand figure as a fact in an
-  otherwise fluent and complete decision memo
-- **THEN** the evolution topic treats the citation as a hard risk
-- **AND** fluency, effort, and Agent efficiency do not offset it; neither can
-  Agent output replace responsibility.
-
-#### Scenario: Continued work would cross a boundary or invent a fact
-
-- **WHEN** an action would cross a permission, compliance, security, or data
-  boundary, or continuing requires presenting a guess as fact
-- **THEN** the Agent stops that affected action and escalates
-- **AND** independent authorized work may continue without hiding the gap.
-
-#### Scenario: An unsupported completion claim has already been sent
-
-- **WHEN** a member or Agent discovers an actual hard-boundary breach, including
-  a completion claim without matching evidence
-- **THEN** the charter requires stopping the affected action, disclosing and
-  correcting the breach within existing authority, and escalation according
-  to risk
-- **AND** stopping future work alone does not correct the prior breach.
-
 #### Scenario: A project rule conflicts with department guidance
 
 - **WHEN** a member authors, applies, or reviews a local project rule
@@ -227,14 +189,15 @@ A Blocked report SHALL name the prerequisite gap, its impact, and the escalation
   even when the person considers the difference minor
 - **AND** guessing or choosing the convenient rule does not resolve the conflict.
 
-#### Scenario: A high-risk task enters the route
+#### Scenario: An authorized task has no accountable person
 
-- **WHEN** a member starts a production, sensitive-data, destructive, or
-  externally binding task
-- **THEN** the charter exposes the L2 authorization, recovery, independent
-  review, and human acceptance floor
-- **AND THEN** the task's six boundaries can be found without reading unrelated
-  topics.
+- **WHEN** standing read-only permission and verified datasets establish a safe
+  task, but its request identifies no responsible person and no foreign work is
+  encountered
+- **THEN** Agents SHALL stop the affected action and escalate to identify the
+  accountable task owner; the collaboration topic requires seeking that person
+- **AND** general permission does not establish task accountability; no new
+  role, approval gate, or report is required.
 
 #### Scenario: A long-running or uncertain task crosses the L1 boundary
 
@@ -245,16 +208,137 @@ A Blocked report SHALL name the prerequisite gap, its impact, and the escalation
 - **AND** both routes refer to the charter's complete risk levels instead of
   narrowing the duty to cross-person or high-risk work.
 
-#### Scenario: A result is called complete
+#### Scenario: A high-risk task enters the route
 
-- **WHEN** a member or Agent gives an important update, reports a deliverable,
-  or requests a work decision
-- **THEN** every important update SHALL name current risks or blockers and its
-  next action, responsible actor, deadline, and completion condition, including
-  when it requests a decision
-- **AND** the delivery topic distinguishes executing, verified, accepted,
-  published, and effective or in-use states for reported deliverables
-- **AND THEN** the claim does not outrun its current subject-bound evidence.
+- **WHEN** a member starts a production, sensitive-data, destructive, or
+  externally binding task
+- **THEN** the charter exposes the L2 authorization, recovery, independent
+  review, and human acceptance floor
+- **AND THEN** the task's six boundaries can be found without reading unrelated
+  topics.
+
+#### Scenario: A reversible overwrite bypasses high-risk checks
+
+- **WHEN** an overwrite can be rolled back but replaces existing source or data
+  and is treated as L0 solely because it is reversible
+- **THEN** the charter still includes overwrite in the L2 risk floor
+- **AND** written decision, authorization, recovery, independent review, and
+  human acceptance remain required; reversibility does not replace them.
+
+#### Scenario: An Agent expands a task through incidental changes
+
+- **WHEN** an Agent has permission to change a repository but adds edits outside
+  the agreed task scope
+- **THEN** the collaboration topic requires action within both authority and
+  scope, without incidental changes
+- **AND** the member checks actual changes against both the agreed and reported
+  scope; general permission, an accurate report, and a small diff do not expand
+  it.
+
+#### Scenario: A delivery plan omits cost or intermediate commitments
+
+- **WHEN** a plan identifies dependencies and people but omits costs,
+  milestones, constraints, or observable checkpoints
+- **THEN** the delivery topic identifies those missing execution commitments
+- **AND** adding a longer plan or more people does not satisfy that duty.
+
+#### Scenario: An Agent lacks a nonessential presentation preference
+
+- **WHEN** the task, authoritative facts, permissions, and safe direction are
+  established but a presentation preference is unspecified
+- **THEN** the Agent should continue with reasonable stated assumptions
+- **AND** missing facts or authority, material direction changes, and
+  irreversible risk still stop the affected action for clarification.
+
+#### Scenario: Meaning or purpose changes without disclosure
+
+- **WHEN** a central concept changes meaning within an analysis or an exchange
+  hides whether it seeks information, discussion, or a decision
+- **THEN** the analysis and communication topics require stable meanings and an
+  explicit exchange purpose
+- **AND** objective, measured language carries the reasoning without slogans or
+  pretended depth.
+
+#### Scenario: A time-valid sample hides selection bias
+
+- **WHEN** historical research selects only instruments or periods with complete
+  coverage, even though each selected value was knowable at the decision time
+- **THEN** the data topic requires examining sample-selection bias
+- **AND** it requires explaining how missingness, delay, conflict, and anomalies
+  affect the conclusion, with confidence and unsupported conclusions stated.
+
+#### Scenario: An unchecked citation accompanies fluent work
+
+- **WHEN** an analyst presents an unchecked secondhand figure as a fact in an
+  otherwise fluent and complete decision memo
+- **THEN** the evolution topic treats the citation as a hard risk
+- **AND** fluency, effort, and Agent efficiency do not offset it; neither can
+  Agent output replace responsibility.
+
+#### Scenario: A familiar approach conflicts with new facts
+
+- **WHEN** new verified facts contradict a familiar approach, tool, identity,
+  document, or prior investment
+- **THEN** the charter requires correcting the judgment from those facts
+- **AND** loyalty or sunk cost does not justify preserving the old position.
+
+#### Scenario: A delay or recurring dispute escapes mechanism analysis
+
+- **WHEN** a delay or recurring dispute is dismissed as coordination noise
+  instead of investigated as a possible mechanism problem
+- **THEN** the decision topic requires the original symptom, timeline, affected
+  subjects, competing explanations, and why prevention or detection failed
+- **AND** a safe reproducer or observation plan and claim-matched regression
+  remain necessary without another form, rule store, or meeting.
+
+#### Scenario: Continued work would cross a boundary or invent a fact
+
+- **WHEN** an action would cross a permission, compliance, security, or data
+  boundary, or continuing requires presenting a guess as fact
+- **THEN** the Agent stops that affected action and escalates
+- **AND** independent authorized work may continue without hiding the gap.
+
+#### Scenario: Another person's unfinished work is recognized
+
+- **WHEN** an Agent encounters another person's uncommitted work, even when its
+  owner and purpose are known
+- **THEN** Agents SHALL stop the affected action and escalate; recognizing
+  another person's work does not bypass that requirement
+- **AND** recognizing the work does not authorize overwriting, cleaning, or
+  continuing the affected action.
+
+#### Scenario: Work ownership cannot be established
+
+- **WHEN** encountered work has unknown ownership
+- **THEN** Agents SHALL stop the affected action and escalate for unknown
+  ownership, while preserving that work
+- **AND** the Agent does not infer disposal or editing authority from a clean
+  accepted branch or its own task.
+
+#### Scenario: A blocked report omits its impact
+
+- **WHEN** a member or Agent reports a prerequisite that blocks the affected
+  action
+- **THEN** the delivery topic requires the gap, its impact, and the escalation
+- **AND** naming a blocker alone is not a complete work-state report.
+
+#### Scenario: An unsupported completion claim has already been sent
+
+- **WHEN** a member or Agent discovers an actual hard-boundary breach, including
+  a completion claim without matching evidence
+- **THEN** the charter requires stopping the affected action, disclosing and
+  correcting the breach within existing authority, and escalation according
+  to risk
+- **AND** stopping future work alone does not correct the prior breach.
+
+#### Scenario: Written data policy does not operate in the workflow
+
+- **WHEN** admission, permission, review, veto, or exit controls exist only as
+  written policy
+- **THEN** the data topic requires the governance owner to make them operate in
+  the actual workflow
+- **AND** delivery coordination neither hides unresolved decisions nor grants
+  authority over professional judgments.
 
 #### Scenario: High-impact work lacks necessary prevention
 
@@ -286,22 +370,6 @@ A Blocked report SHALL name the prerequisite gap, its impact, and the escalation
 - **AND** a work record alone does not satisfy that duty, and no new report,
   template, or meeting is required.
 
-#### Scenario: A delivery plan omits cost or intermediate commitments
-
-- **WHEN** a plan identifies dependencies and people but omits costs,
-  milestones, constraints, or observable checkpoints
-- **THEN** the delivery topic identifies those missing execution commitments
-- **AND** adding a longer plan or more people does not satisfy that duty.
-
-#### Scenario: Written data policy does not operate in the workflow
-
-- **WHEN** admission, permission, review, veto, or exit controls exist only as
-  written policy
-- **THEN** the data topic requires the governance owner to make them operate in
-  the actual workflow
-- **AND** delivery coordination neither hides unresolved decisions nor grants
-  authority over professional judgments.
-
 #### Scenario: Repeated personal intervention becomes routine
 
 - **WHEN** recurring work depends on one person's rescue
@@ -312,74 +380,16 @@ A Blocked report SHALL name the prerequisite gap, its impact, and the escalation
 - **THEN** the coaching examines the member's reasoning rather than deciding the
   conclusion for them.
 
-#### Scenario: Meaning or purpose changes without disclosure
+#### Scenario: A result is called complete
 
-- **WHEN** a central concept changes meaning within an analysis or an exchange
-  hides whether it seeks information, discussion, or a decision
-- **THEN** the analysis and communication topics require stable meanings and an
-  explicit exchange purpose
-- **AND** objective, measured language carries the reasoning without slogans or
-  pretended depth.
-
-#### Scenario: A time-valid sample hides selection bias
-
-- **WHEN** historical research selects only instruments or periods with complete
-  coverage, even though each selected value was knowable at the decision time
-- **THEN** the data topic requires examining sample-selection bias
-- **AND** it requires explaining how missingness, delay, conflict, and anomalies
-  affect the conclusion, with confidence and unsupported conclusions stated.
-
-#### Scenario: An Agent lacks a nonessential presentation preference
-
-- **WHEN** the task, authoritative facts, permissions, and safe direction are
-  established but a presentation preference is unspecified
-- **THEN** the Agent should continue with reasonable stated assumptions
-- **AND** missing facts or authority, material direction changes, and
-  irreversible risk still stop the affected action for clarification.
-
-#### Scenario: An authorized task has no accountable person
-
-- **WHEN** standing read-only permission and verified datasets establish a safe
-  task, but its request identifies no responsible person and no foreign work is
-  encountered
-- **THEN** Agents SHALL stop the affected action and escalate to identify the
-  accountable task owner; the collaboration topic requires seeking that person
-- **AND** general permission does not establish task accountability; no new
-  role, approval gate, or report is required.
-
-#### Scenario: Another person's unfinished work is recognized
-
-- **WHEN** an Agent encounters another person's uncommitted work, even when its
-  owner and purpose are known
-- **THEN** Agents SHALL stop the affected action and escalate; recognizing
-  another person's work does not bypass that requirement
-- **AND** recognizing the work does not authorize overwriting, cleaning, or
-  continuing the affected action.
-
-#### Scenario: Work ownership cannot be established
-
-- **WHEN** encountered work has unknown ownership
-- **THEN** Agents SHALL stop the affected action and escalate for unknown
-  ownership, while preserving that work
-- **AND** the Agent does not infer disposal or editing authority from a clean
-  accepted branch or its own task.
-
-#### Scenario: A reversible overwrite bypasses high-risk checks
-
-- **WHEN** an overwrite can be rolled back but replaces existing source or data
-  and is treated as L0 solely because it is reversible
-- **THEN** the charter still includes overwrite in the L2 risk floor
-- **AND** written decision, authorization, recovery, independent review, and
-  human acceptance remain required; reversibility does not replace them.
-
-#### Scenario: A delay or recurring dispute escapes mechanism analysis
-
-- **WHEN** a delay or recurring dispute is dismissed as coordination noise
-  instead of investigated as a possible mechanism problem
-- **THEN** the decision topic requires the original symptom, timeline, affected
-  subjects, competing explanations, and why prevention or detection failed
-- **AND** a safe reproducer or observation plan and claim-matched regression
-  remain necessary without another form, rule store, or meeting.
+- **WHEN** a member or Agent gives an important update, reports a deliverable,
+  or requests a work decision
+- **THEN** every important update SHALL name current risks or blockers and its
+  next action, responsible actor, deadline, and completion condition, including
+  when it requests a decision
+- **AND** the delivery topic distinguishes executing, verified, accepted,
+  published, and effective or in-use states for reported deliverables
+- **AND THEN** the claim does not outrun its current subject-bound evidence.
 
 #### Scenario: A completion claim meets only some conditions
 
@@ -389,16 +399,6 @@ A Blocked report SHALL name the prerequisite gap, its impact, and the escalation
   holds for the actual subject, scope, version, and environment
 - **AND** a nearby lifecycle state or planned check cannot fill the gap;
   independent authorized work may continue.
-
-#### Scenario: An Agent expands a task through incidental changes
-
-- **WHEN** an Agent has permission to change a repository but adds edits outside
-  the agreed task scope
-- **THEN** the collaboration topic requires action within both authority and
-  scope, without incidental changes
-- **AND** the member checks actual changes against both the agreed and reported
-  scope; general permission, an accurate report, and a small diff do not expand
-  it.
 
 ### Requirement: Feedback combines events and periodic review
 
@@ -520,13 +520,21 @@ reader's understanding, judgment, or action while preserving facts, reasoning,
 limits, responsibilities, and expressive quality. An editing fraction or fixed
 document shape SHALL NOT become a writing standard.
 
-#### Scenario: A discussion clarifies the problem without a decision
+#### Scenario: A manager sets standards only through abstract requirements
 
-- **WHEN** a discussion improves the shared model but no option is approved
-- **THEN** communication SHALL name what became clearer and the remaining
-  question without treating that understanding as approval or resolution
-- **AND** an important update SHALL provide the decisive facts needed for its
-  conclusion, not a fixed count of facts.
+- **WHEN** a manager explains work standards only through abstract requirements
+- **THEN** the evolution topic requires concrete work examples showing how the
+  manager judges and communicates
+- **AND** abstract expectations alone do not discharge the demonstration duty.
+
+#### Scenario: Task-start calibration omits its counterpart
+
+- **WHEN** a responsible member begins capability-building work with an
+  individual interpretation of its subject, boundary, and success criteria
+- **THEN** the evolution topic requires the responsible member and supervisor
+  to align jointly at task start
+- **AND** later periodic review does not replace that shared understanding
+- **AND** no new meeting or approval gate is required.
 
 #### Scenario: A simple delegation is already clear
 
@@ -537,12 +545,22 @@ document shape SHALL NOT become a writing standard.
 - **AND** extended or interrupted work SHALL retain the state needed for
   continuation in its existing work record.
 
-#### Scenario: Published guidance has not entered use
+#### Scenario: Fluent delivery hides the purpose or the judgment owner
 
-- **WHEN** a revision reaches its agreed publication destination but actual use
-  has not been observed
-- **THEN** the delivery topic SHALL distinguish publication from effective or
-  in-use state, and neither SHALL establish improved team outcomes.
+- **WHEN** an exchange leaves its purpose unstated, uses slogans instead of
+  reasoning, substitutes the supervisor's conclusion for the member's, or
+  leaves an Agent's deliverable ambiguous
+- **THEN** the communication and evolution topics require a clear purpose,
+  measured expression, and preserved member judgment
+- **AND** recurring intervention requires a management-system correction.
+
+#### Scenario: A discussion clarifies the problem without a decision
+
+- **WHEN** a discussion improves the shared model but no option is approved
+- **THEN** communication SHALL name what became clearer and the remaining
+  question without treating that understanding as approval or resolution
+- **AND** an important update SHALL provide the decisive facts needed for its
+  conclusion, not a fixed count of facts.
 
 #### Scenario: A decision waits for the right time rather than more evidence
 
@@ -551,14 +569,6 @@ document shape SHALL NOT become a writing standard.
 - **THEN** the decision topic identifies that condition and the action or
   observation that will resolve it, with a revisit time
 - **AND** deferred work does not imply that evidence is always missing.
-
-#### Scenario: A routine task meets its agreed outcome
-
-- **WHEN** a task meets its commitment and hard boundaries without producing a
-  transferable method or system improvement
-- **THEN** the evolution topic does not require an exceptional result from every
-  task
-- **AND** essential prevention and agreed completion conditions still apply.
 
 #### Scenario: An editing technique is mistaken for the writing standard
 
@@ -573,14 +583,12 @@ document shape SHALL NOT become a writing standard.
 - **AND** source checks or a shorter draft do not establish aesthetic quality
   or semantic equivalence.
 
-#### Scenario: Fluent delivery hides the purpose or the judgment owner
+#### Scenario: A draft decision could be mistaken for acceptance
 
-- **WHEN** an exchange leaves its purpose unstated, uses slogans instead of
-  reasoning, substitutes the supervisor's conclusion for the member's, or
-  leaves an Agent's deliverable ambiguous
-- **THEN** the communication and evolution topics require a clear purpose,
-  measured expression, and preserved member judgment
-- **AND** recurring intervention requires a management-system correction.
+- **WHEN** a member presents an analysis, proposal, or decision document
+- **THEN** its title names the subject, purpose, and document status
+- **AND** its content or work-state claims do not substitute for visible
+  document status.
 
 #### Scenario: A shorter draft removes information needed to act
 
@@ -590,36 +598,13 @@ document shape SHALL NOT become a writing standard.
 - **AND** the author keeps necessary wording and a useful arrangement when
   further cuts or a fixed shape would lose meaning or expressive quality.
 
-#### Scenario: A draft decision could be mistaken for acceptance
+#### Scenario: A meeting decision has no execution commitment
 
-- **WHEN** a member presents an analysis, proposal, or decision document
-- **THEN** its title names the subject, purpose, and document status
-- **AND** its content or work-state claims do not substitute for visible
-  document status.
-
-#### Scenario: A manager sets standards only through abstract requirements
-
-- **WHEN** a manager explains work standards only through abstract requirements
-- **THEN** the evolution topic requires concrete work examples showing how the
-  manager judges and communicates
-- **AND** abstract expectations alone do not discharge the demonstration duty.
-
-#### Scenario: A member reports a failure or receives a review score
-
-- **WHEN** a member exposes a problem honestly or receives scored feedback
-- **THEN** managers protect honest disclosure and do not penalize honest
-  uncertainty; scores describe delivery risk rather than label people
-- **AND** exceptional practice requires evidenced net benefit, transferable
-  methods, lower long-term complexity, and improved capacity for others.
-
-#### Scenario: Task-start calibration omits its counterpart
-
-- **WHEN** a responsible member begins capability-building work with an
-  individual interpretation of its subject, boundary, and success criteria
-- **THEN** the evolution topic requires the responsible member and supervisor
-  to align jointly at task start
-- **AND** later periodic review does not replace that shared understanding
-- **AND** no new meeting or approval gate is required.
+- **WHEN** a meeting records a decision but names no owner, deadline, or
+  completion criterion because no separate action item was created
+- **THEN** the communication topic requires those commitments for the decision
+  itself as well as for each action
+- **AND** a transcript or collective agreement does not establish those duties.
 
 #### Scenario: New facts disprove a stated judgment
 
@@ -628,13 +613,28 @@ document shape SHALL NOT become a writing standard.
 - **AND** the author does not defer that correction to the next meeting or
   periodic review, or conceal the disproved position behind background detail.
 
-#### Scenario: A meeting decision has no execution commitment
+#### Scenario: A routine task meets its agreed outcome
 
-- **WHEN** a meeting records a decision but names no owner, deadline, or
-  completion criterion because no separate action item was created
-- **THEN** the communication topic requires those commitments for the decision
-  itself as well as for each action
-- **AND** a transcript or collective agreement does not establish those duties.
+- **WHEN** a task meets its commitment and hard boundaries without producing a
+  transferable method or system improvement
+- **THEN** the evolution topic does not require an exceptional result from every
+  task
+- **AND** essential prevention and agreed completion conditions still apply.
+
+#### Scenario: Published guidance has not entered use
+
+- **WHEN** a revision reaches its agreed publication destination but actual use
+  has not been observed
+- **THEN** the delivery topic SHALL distinguish publication from effective or
+  in-use state, and neither SHALL establish improved team outcomes.
+
+#### Scenario: A member reports a failure or receives a review score
+
+- **WHEN** a member exposes a problem honestly or receives scored feedback
+- **THEN** managers protect honest disclosure and do not penalize honest
+  uncertainty; scores describe delivery risk rather than label people
+- **AND** exceptional practice requires evidenced net benefit, transferable
+  methods, lower long-term complexity, and improved capacity for others.
 
 ### Requirement: Data roles retain operational responsibility
 

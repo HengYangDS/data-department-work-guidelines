@@ -216,22 +216,24 @@
       manifest/lock mismatch without changing machine PATH or Runner identity.
       Verify retirement of temporary diagnosis and preservation of its evidence
       before the final freeze.
-      Verify the [format](design.md#give-native-quality-concerns-one-owner),
-      [risk](design.md#bind-risk-approval-to-the-actual-subject), and
-      [execution](design.md#preserve-native-execution-and-complete-validation-evidence)
-      contracts through focused regressions, full source, cold install, exact-HEAD
-      proof, and both Forge source/offline jobs. Qualify native Windows ARM64 Node
-      with pinned compatible tools and actual architecture observations. Preserve
-      findings and runner failures; retire replaced rules, unused dependencies,
-      and terminal qualification packages through their declared owners.
       Refresh immutable CI action pins from official stable
       releases, verify the explicit Node setup contract and real refusal cases,
       and preserve complete upstream finding reports and selected-route limits.
-      Preserve original download-boundary failures and qualification evidence in
-      non-authorizing
-      Attestation `816cb6432b150825c22073cce0a89e6632721aa0477620b44496dab739166162`.
-      Complete Windows, both-Forge, and accepted shared-runtime checks before
-      closing this task.
+
+  Verify the [format](design.md#give-native-quality-concerns-one-owner),
+  [risk](design.md#bind-risk-approval-to-the-actual-subject), and
+  [execution](design.md#preserve-native-execution-and-complete-validation-evidence)
+  contracts through focused regressions, full source, cold install, exact-HEAD
+  proof, and both Forge source/offline jobs. Qualify native Windows ARM64 Node
+  with pinned compatible tools and actual architecture observations.
+
+  Preserve findings and runner failures; retire replaced rules, unused dependencies,
+  and terminal qualification packages through their declared owners.
+  Preserve original download-boundary failures and qualification evidence in
+  non-authorizing
+  Attestation `816cb6432b150825c22073cce0a89e6632721aa0477620b44496dab739166162`.
+  Complete Windows, both-Forge, and accepted shared-runtime checks before
+  closing this task.
 
 - [x] 2.39 Isolate native-cache rejection fixtures from inherited explicit
       tool selectors. Preserve selector precedence and the caller's environment;

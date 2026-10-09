@@ -337,15 +337,6 @@ GitLab and GitHub SHALL supply and qualify the frozen release independently.
 - **AND** the action commit and subsequent native npm declaration remain separate
   supply inputs; a new action version does not establish an advisory-free artifact.
 
-#### Scenario: Standalone tests avoid unrelated quality startup
-
-- **WHEN** the public test command selects the complete Git-discovered test inventory
-- **THEN** the CLI loads only its invocation dependencies before native test execution
-- **AND** it preserves two workers, the 180-second outer deadline, every selected
-  test, and original process failures
-- **AND** full verification still executes all declared repository checks; this
-  dependency change does not qualify runner capacity or isolation.
-
 #### Scenario: Windows ARM64 runs native Node and compatible x64 tools
 
 - **WHEN** Node runs natively on Windows ARM64 and a tool has no pinned ARM64
@@ -358,6 +349,14 @@ GitLab and GitHub SHALL supply and qualify the frozen release independently.
   verification remain required; selection tests alone do not prove platform
   execution or timeout recovery.
 
+#### Scenario: Native supply is incomplete or changed
+
+- **WHEN** the requested ABI, archive, digest, or source-bound manifest is missing
+  or changed
+- **THEN** installation and verification fail without fetching a substitute,
+  borrowing another Forge's identity, or reusing an earlier bundle
+- **AND** only the exact operation's disposable temporary stage is removed.
+
 #### Scenario: A native tool is supplied offline
 
 - **WHEN** a supported host receives the exact source-bound bundle or a pinned
@@ -368,19 +367,6 @@ GitLab and GitHub SHALL supply and qualify the frozen release independently.
 - **AND** tool admission requires that version check to pass
 - **AND** a replaced manifest or installer retires after verified consumer migration
 - **AND** it preserves the destination's host installation and credentials.
-
-#### Scenario: A frozen bundle is qualified before release
-
-- **WHEN** an authorized explicit API or web pipeline selects protected `dev`
-  or `main` and supplies its tracked bundle's SHA-256
-- **THEN** only the existing offline platform jobs execute, using the same
-  project's temporary content-addressed qualification package
-- **AND** acquisition verifies the source-bound record, complete bundle, and
-  exact digest before offline installation and full repository verification
-- **AND** source jobs do not replay, proposal jobs cannot enter this route,
-  and this result does not qualify a signed tag, Release, or network isolation
-- **AND** the caller preserves raw results and deletes the exact temporary
-  package after every selected job has reached a terminal state.
 
 #### Scenario: An accepted native candidate is copied once
 
@@ -412,13 +398,27 @@ GitLab and GitHub SHALL supply and qualify the frozen release independently.
   admission, while independently owned host tools retain their own byte
   authority and the repository's locked version requirement.
 
-#### Scenario: Native supply is incomplete or changed
+#### Scenario: Standalone tests avoid unrelated quality startup
 
-- **WHEN** the requested ABI, archive, digest, or source-bound manifest is missing
-  or changed
-- **THEN** installation and verification fail without fetching a substitute,
-  borrowing another Forge's identity, or reusing an earlier bundle
-- **AND** only the exact operation's disposable temporary stage is removed.
+- **WHEN** the public test command selects the complete Git-discovered test inventory
+- **THEN** the CLI loads only its invocation dependencies before native test execution
+- **AND** it preserves two workers, the 180-second outer deadline, every selected
+  test, and original process failures
+- **AND** full verification still executes all declared repository checks; this
+  dependency change does not qualify runner capacity or isolation.
+
+#### Scenario: A frozen bundle is qualified before release
+
+- **WHEN** an authorized explicit API or web pipeline selects protected `dev`
+  or `main` and supplies its tracked bundle's SHA-256
+- **THEN** only the existing offline platform jobs execute, using the same
+  project's temporary content-addressed qualification package
+- **AND** acquisition verifies the source-bound record, complete bundle, and
+  exact digest before offline installation and full repository verification
+- **AND** source jobs do not replay, proposal jobs cannot enter this route,
+  and this result does not qualify a signed tag, Release, or network isolation
+- **AND** the caller preserves raw results and deletes the exact temporary
+  package after every selected job has reached a terminal state.
 
 ### Requirement: Tool supply and portability require executed checks
 

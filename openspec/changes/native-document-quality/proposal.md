@@ -99,13 +99,15 @@ None.
 
 ### Modified Capabilities
 
-- `quality`: one executable owner per concern, native diagnostics and source
-  selection, source-bound supply, complete retirement, and real adverse cases.
-- `guidance-discovery`: usable task routes and applicable work-quality duties,
-  reviewed for current purpose, authority, executable conditions, and
-  proportionate cost at their existing topic owners.
-- `repository-governance`: native change authority, independent Forge
-  publication, coherent release identity, and bounded truthful retirement.
+- [`quality`](specs/quality/spec.md): one executable owner per concern, native
+  diagnostics and source selection, source-bound supply, complete retirement,
+  and real adverse cases.
+- [`guidance-discovery`](specs/guidance-discovery/spec.md): usable task routes
+  and applicable work-quality duties, reviewed for current purpose, authority,
+  executable conditions, and proportionate cost at their existing topic owners.
+- [`repository-governance`](specs/repository-governance/spec.md): native change
+  authority, independent Forge publication, coherent release identity, and
+  bounded truthful retirement.
 
 ## Impact
 

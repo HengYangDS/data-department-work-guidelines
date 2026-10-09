@@ -1021,6 +1021,99 @@ test("lifecycle readers reach current artifacts and source retirement duties", (
   );
 });
 
+test("governance readers reach Change intent and durable decision rationale", () => {
+  fixture((directory) => {
+    const entry = path.join(directory, "docs/governance/ethos.md");
+    const original = readFileSync(entry, "utf8");
+    for (const destination of [
+      "../../openspec/README.md",
+      "../decisions/README.md",
+    ]) {
+      const route = `(${destination})`;
+      assert.ok(
+        original.includes(route),
+        "the governance route must be visible",
+      );
+      checkNavigation(directory);
+      writeFileSync(entry, original.replace(route, ""));
+      assert.throws(
+        () => checkNavigation(directory),
+        /missing task routes in docs\/governance\/ethos\.md/u,
+      );
+      writeFileSync(entry, original);
+    }
+  });
+});
+
+test("Change readers reach every affected capability at its delta owner", () => {
+  const capabilities = [
+    "quality",
+    "guidance-discovery",
+    "repository-governance",
+  ];
+  const assertRoutes = (text, relative) => {
+    const links = markdownLinkDestinations(text);
+    for (const capability of capabilities) {
+      assert.ok(
+        links.includes(`specs/${capability}/spec.md`),
+        `${relative} must link to the ${capability} delta`,
+      );
+    }
+  };
+  for (const name of ["proposal.md", "design.md"]) {
+    const relative = `openspec/changes/native-document-quality/${name}`;
+    const source = readFileSync(path.join(root, relative), "utf8");
+    assertRoutes(source, relative);
+    assert.throws(
+      () =>
+        assertRoutes(source.replace("(specs/quality/spec.md)", ""), relative),
+      /must link to the quality delta/u,
+    );
+  }
+});
+
+test("task qualification and evidence stay in one readable task item", () => {
+  const relative = "openspec/changes/native-document-quality/tasks.md";
+  const source = readFileSync(path.join(root, relative), "utf8");
+  const assertTaskContainer = (text) => {
+    const list = markdownTokens(text, relative).find(
+      (token) =>
+        token.type === "listUnordered" && token.text.includes("2.38 Qualify"),
+    );
+    assert.ok(list, "the existing task must remain in its numbered group");
+    const start = list.children.findIndex(
+      (token) => token.type === "content" && token.text.startsWith("[ ] 2.38 "),
+    );
+    assert.notEqual(start, -1);
+    const next = list.children.findIndex(
+      (token, index) => index > start && token.type === "listItemPrefix",
+    );
+    const item = list.children.slice(start, next < 0 ? undefined : next);
+    const tokens = [...walkMarkdown(item)];
+    assert.ok(
+      tokens.every(
+        (token) => !["codeIndented", "codeFenced"].includes(token.type),
+      ),
+      "task actions and completion checks must not become code",
+    );
+    const paragraphs = tokens.filter((token) => token.type === "paragraph");
+    assert.equal(paragraphs.length, 3, "retain the three semantic task groups");
+    assert.ok(markdownText(paragraphs[0]).startsWith("[ ] 2.38 Qualify"));
+    assert.ok(markdownText(paragraphs[1]).startsWith("Verify the"));
+    assert.ok(markdownText(paragraphs[2]).startsWith("Preserve findings"));
+  };
+  assertTaskContainer(source);
+  const qualification = "\n\n  Verify the [format]";
+  assert.ok(source.includes(qualification));
+  assert.throws(
+    () =>
+      assertTaskContainer(
+        source.replace(qualification, "\n\n      Verify the [format]"),
+      ),
+    /completion checks must not become code/u,
+  );
+});
+
 test("navigation requires a rendered link rather than an example or image", () => {
   fixture((directory) => {
     const entry = path.join(directory, "README.md");

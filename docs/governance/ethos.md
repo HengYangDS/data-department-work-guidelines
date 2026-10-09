@@ -28,15 +28,17 @@ permission, acceptance, and retirement boundaries.
 
 ## Change Authority
 
-| Owner                    | Responsibility                                                                       | Limit                                                      |
-| ------------------------ | ------------------------------------------------------------------------------------ | ---------------------------------------------------------- |
-| Official OpenSpec Change | Material intent, requirements, design, and progress in `tasks.md`.                   | Does not authorize a write or publication.                 |
-| Installed ETHOS          | Changed-path attribution, lane lease, admission, proof, acceptance, and publication. | Acts on current source and policy, not remembered results. |
-| Repository checks        | Document quality, reader routes, decision shape, and declared configuration.         | Do not replace OpenSpec lifecycle or ETHOS admission.      |
-| Decision record          | Durable rationale and rejected alternatives.                                         | Does not hold tasks, command output, or acceptance logs.   |
+| Owner                                                | Responsibility                                                                       | Limit                                                      |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------------- |
+| [Official OpenSpec Change](../../openspec/README.md) | Material intent, requirements, design, and progress in `tasks.md`.                   | Does not authorize a write or publication.                 |
+| Installed ETHOS                                      | Changed-path attribution, lane lease, admission, proof, acceptance, and publication. | Acts on current source and policy, not remembered results. |
+| Repository checks                                    | Document quality, reader routes, decision shape, and declared configuration.         | Do not replace OpenSpec lifecycle or ETHOS admission.      |
+| [Decision record](../decisions/README.md)            | Durable rationale and rejected alternatives.                                         | Does not hold tasks, command output, or acceptance logs.   |
 
-The compiled Commitment is transient. A private scope companion, tracked claim
-ledger, method-pack plan, or local script supplies no second lifecycle.
+ETHOS compiles the selected Change's acceptance conditions into a temporary
+object, the Commitment. It does not replace the Change. A private scope companion,
+tracked claim ledger, method-pack plan, or local script supplies no second lifecycle.
+
 Follow the [official artifact rules](../../openspec/config.yaml): specifications
 own observable requirements, design owns choices and migration order, and tasks
 own actions, completion checks, and checkbox state. Keep results with their

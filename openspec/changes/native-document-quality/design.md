@@ -71,6 +71,9 @@ The [guidance requirements](specs/guidance-discovery/spec.md) define the full
 observable contract, including cadence, data responsibilities, and adverse
 cases. The task map routes readers to those owners rather than restating their
 rules. This keeps a correction from creating competing policies.
+The [quality](specs/quality/spec.md) and
+[repository-governance](specs/repository-governance/spec.md) deltas cover the
+executable checks and governance boundaries.
 
 The common data-quality contract covers acquisition, production, analysis and
 modeling, data science, platform engineering, infrastructure, product governance,
@@ -119,6 +122,8 @@ validator.
 
 ### Give native quality concerns one owner
 
+#### Source selection and observations
+
 The existing source verifier reports its real repository, commit and tree,
 tracked-change state, Node version, platform, process architecture, observed
 host name, and mounted workspace capacity once. Use
@@ -132,6 +137,8 @@ waive checks on selected source beneath normally ignored paths; ignored
 untracked state remains excluded. Current prose and link selection preserve the
 official archived-Change boundary. Formatting and native lint retain their
 historical-format controls.
+
+#### Prose and native Markdown checks
 
 Vale owns spelling, repeated words, selected terminology, and diagnosed concise
 or stock-phrase defects. Native policy and vocabulary own selection; the current
@@ -164,6 +171,8 @@ or wrapped comments, without rejecting code or explanatory prose. Native
 formatter ignore controls may preserve byte-exact examples. The shared
 implementation has one owner; the prose caller does not copy its parser.
 
+#### Formatting and semantic preservation
+
 Prettier's public file-information and configuration interfaces select supported
 Git source regardless of usual code directories or ambient ignore files.
 Unsupported source formats fail explicitly. Prettier owns supported code,
@@ -180,6 +189,14 @@ owns Markdown spacing, including quote separators and container layout; native
 Markdown lint retains non-spacing checks without overruled formatting or a
 second spacing verdict.
 
+Remove the replaced remark bridge, its unused dependencies, and
+the formatter-comment vetoes in the same migration. Vale comment controls remain
+invalid because they suppress the governed prose checks, not formatting.
+
+Verify the public fix and check commands on the same Git-selected inputs and
+an unchanged second fix pass, including nested quotes and byte-exact examples
+protected by native ignore.
+
 Keep the general text owner's English and justified plain-text hygiene. Remove
 duplicate raw scans of Markdown, source code, and structured data. Meaningful
 blank lines inside fenced/indented examples, strings, scalars, and nested
@@ -190,7 +207,14 @@ requires no installer or host imports; its native Wasm API supplies the complete
 original MIT notice. Verify that notice against the locked identity and complete
 grant without fabricating a sidecar or claiming general safety.
 
+Each formatting attempt creates one fresh native TOML formatter for file matching
+and output. Standalone target discovery retains its native default acquisition;
+there is no cross-attempt cache. Native diagnostics, preservation policy, parsed
+data comparison, source selection, and process deadlines remain unchanged.
+
 ### Choose the reading form by the question
+
+#### Task routes and topic hierarchy
 
 The task map groups related questions under direction, data and delivery, and
 collaboration. Link each topic beside the decision it supports rather than
@@ -238,6 +262,8 @@ the evidence comparison. Separate existing actors' emergency and management
 duties without adding roles or authority. The list form does not make any
 required condition optional or enlarge a limited-use permission.
 
+#### Contributor and governance procedures
+
 Keep tool acquisition mechanics with the existing supply procedure in Contributing.
 Governance links to that owner and retains artifact identity, authorization,
 qualification, and retirement boundaries. Preserve the original credential,
@@ -254,6 +280,8 @@ scans, retained downloads, and local evidence at their current owners. Agent
 instructions use distinct paragraphs for modeling, safe mutation, verification,
 and interruption rather than a single compound block. These changes add no
 policy, procedure owner, permission, or acceptance claim.
+
+#### Work examples and whole-page review
 
 An ordered list explains the working loop. The existing data-stage table puts
 use decisions beside their evidence. Neither needs a second diagram that
@@ -284,23 +312,29 @@ Represent the charter's existing authority priority as an ordered list; its
 waiver and fact-authority limits remain binding. These forms change navigation
 and reading order, not powers, procedures, or acceptance.
 
-Keep the root reading action immediately after its purpose. General delivery-risk
-review and management duties are peers of coaching and cadence, not their
-subtopics. The three writing aims stay together; decision-document order and
-sending review have separate peer sections, with reordering and appendix limits
-beside the order they qualify. Place pre-action and completion gates before the
-working-loop reference. Keep documentation-editing duties outside the source-check
-procedure in Contributing. Separate download staging, cache publication, cleanup,
+Keep the root reading action immediately after its purpose. General
+delivery-risk review and management duties are peers of coaching and cadence,
+not their subtopics. The three writing aims stay together; decision-document
+order and sending review have separate peer sections, with reordering and
+appendix limits beside the order they qualify. Place pre-action and completion
+gates before the working-loop reference. Keep minimum duties apart from the
+conditional exceptional-performance standard, with its applicability limit
+beside it.
+
+Keep documentation-editing duties outside the source-check procedure in
+Contributing. Separate download staging, cache publication, cleanup,
 child-process controls, and archive extraction into their existing semantic
-boundaries. Keep minimum duties apart from the conditional exceptional-performance
-standard, with its applicability limit beside it. Preserve each original sentence
-and anchor when moving it. Link the OpenSpec entry to accepted requirements and
-the current proposal, design, and sole task ledger. Keep completed-source
-retirement obligations at the retirement owner rather than under decision form,
-and give the proposal's source-review item distinct paragraphs for clause review,
-prevention and coaching, and review-cycle limits without splitting its obligation.
-Actual rendered composition, not heading-level tests, determines whether the
-reading form improves.
+boundaries.
+
+Link the OpenSpec entry to accepted requirements and the current proposal,
+design, and sole task ledger. Keep completed-source retirement obligations at
+the retirement owner rather than under decision form, and give the proposal's
+source-review item distinct paragraphs for clause review, prevention and
+coaching, and review-cycle limits without splitting its obligation.
+
+Preserve each original sentence and anchor when moving it. Actual rendered
+composition, not heading-level tests, determines whether the reading form
+improves.
 
 Use a diagram only when its relationships are clearer than the corresponding
 steps or table. Keep any editable diagram source beside its authoritative rules
@@ -425,6 +459,8 @@ record the exact surface without claiming universal reader understanding.
 
 ### Preserve native execution and complete validation evidence
 
+#### Official reports and source requirements
+
 The official OpenSpec command owns validation and lifecycle. Its consumer checks
 the complete native report: actual resolved root, report version, unique typed
 item identities, issue arrays, and counts for both categories selected by
@@ -438,12 +474,19 @@ dependent link checks; an otherwise valid report cannot hide an unapproved
 process warning. Do not change native report formats or rerun tools for cleaner
 output.
 
+Only the OpenSpec child's official telemetry option suppresses offline
+telemetry/update requests. Remove inherited case variants before setting that
+value; preserve parent environment and global settings. Exercise both actual
+child selection and the pinned request behavior of the CLI.
+
 Before official synchronization, rebuild every changed capability through the
 official merge and validator. Resolve all diagnostics, including long
 requirement statements, without waivers. Keep concise obligations with their
 existing scenarios; do not drop an actor, permission, or counterexample to
 meet a size check. An already-removed requirement is not a pending deletion:
 retain its original Git evidence and remove the redundant current delta.
+
+#### Same-attempt diagnostics
 
 The existing process owner retains command identity, native cause, exit status,
 signal, standard output, and standard error on creation failure, timeout, or
@@ -455,6 +498,8 @@ Timeout evidence must match the original attempt, including termination before
 output. A one-second fixture deadline cannot require fixed progress text that
 the child never emitted. Non-timeout cases keep exact expected text; capture
 modes, diagnostic counts, deadlines, and single execution remain unchanged.
+
+#### Isolated tests and command startup
 
 Native npm admission fixtures resolve the selected CLI once, reuse the existing
 isolated npm environment, and retain every child status, signal, native error,
@@ -507,19 +552,7 @@ source remains selected. Force-track the formatting fixture's observed Markdown
 TOML policy so its unchanged-byte assertion still exercises a selected source.
 Native Git inventory assertions bind each fixture to its declared inputs.
 
-Prettier alone owns Markdown spacing for fix and check on the same Git-selected
-inputs. Preserve its parsed containers: tight lists remain tight; loose or
-multi-paragraph items keep one semantic separator. Verify the public commands
-and an unchanged second fix pass, including nested quotes and byte-exact examples
-protected by native ignore. Markdownlint retains non-spacing checks, not a second
-spacing verdict. Remove the replaced remark bridge, its unused dependencies, and
-the formatter-comment vetoes in the same migration. Vale comment controls remain
-invalid because they suppress the governed prose checks, not formatting.
-
-Each formatting attempt creates one fresh native TOML formatter for file matching
-and output. Standalone target discovery retains its native default acquisition;
-there is no cross-attempt cache. Native diagnostics, preservation policy, parsed
-data comparison, source selection, and process deadlines remain unchanged.
+#### Native history resolution
 
 Resolve the complete Changelog reference selection in one native Git
 `cat-file --batch-check` call with native line-delimited input and output. The
@@ -532,6 +565,13 @@ diagnostics fail. The existing process owner supplies stdin without a shell;
 there is no custom ancestry graph, history cache, or relaxed deadline.
 
 ### Supply exact tools without a second installation plane
+
+The guidelines are directly readable; members and Agents need no repository
+software installation. The optional offline bundle is a maintenance toolkit
+for quality checks, not an installable guideline product. ETHOS remains a
+separate installed governance dependency.
+
+#### Runtime and compatible assets
 
 Source and offline workflows configure Node through one explicit version input.
 They resolve the latest stable release in the declared major and disable
@@ -546,26 +586,41 @@ Select the native tool asset independently of the Node process architecture.
 Prefer a declared exact-platform asset; on Windows ARM64 only, use a declared
 pinned x64 tool when no ARM64 asset exists. One selection function at the existing
 runtime owner serves the installer, managed-cache identity, and offline bundle.
-Do not duplicate asset pins or claim a new native ARM64 binary. The host's native
-Node may launch x64 tools under Windows emulation; actual source and offline jobs
-must qualify that combination and timeout behavior before it is accepted.
-
-The guidelines are directly readable; members and Agents need no repository
-software installation. The optional offline bundle is a maintenance toolkit
-for quality checks, not an installable guideline product. ETHOS remains a
-separate installed governance dependency.
-
-The existing native manifest owns versions, host/ABI assets, sizes, digests,
-version output, and original notices for Vale, lychee, and OSV Scanner. Native
-raw binaries and archives use that same supply owner. The bundle carries the
-complete npm cache, every declared native asset, and upstream notices, bound to
-edition, Node major, full package manifest, lock, and native supply.
+Cache identity and test fixtures use that selected asset, not the Node process
+architecture. Keep supply and verification in the same selected process
+environment. Do not duplicate asset pins or claim a new native ARM64 binary.
+The host's native Node may launch x64 tools under Windows emulation; actual source
+and offline jobs must qualify that combination and timeout behavior before it
+is accepted.
 
 Supply and host qualification are distinct. The manifest carries macOS x64
 assets, but the declared CI matrices do not execute that ABI. Windows ARM64
 runner acceptance records the actual host, Node-process, and tool
 architectures, and qualifies their combination under the [tool-supply
 boundary](../../../docs/governance/ethos.md#tool-supply-and-offline-execution).
+
+GitLab shell jobs use original Mise with a project-owned configuration under
+`.config/supply/` and its native six-platform runtime lock. Native read-only
+templates obtain the Node compatibility line and exact npm version from
+`package.json`; the npm backend checks the selected archive's SHA-512 before
+installation. Select the configuration with the native project filename setting,
+not its global config override. Run supply and verification commands through
+`mise exec --locked`. Late native tool-path evaluation places the selected npm
+ahead of Node's bundled npm, respecting the Windows native prefix layout.
+This is process-scoped tool selection, not a new installer or a machine PATH,
+service-account, or VM-isolation change. Keep existing review and protected
+identities separate and preserve the complete verifier and project resource.
+Cold checks receive already supplied tools; they neither install Mise nor
+acquire a missing runtime. Qualify the actual Windows ARM64 process and all
+tool combinations before claiming platform acceptance.
+
+#### Bound inputs and atomic installation
+
+The existing native manifest owns versions, host/ABI assets, sizes, digests,
+version output, and original notices for Vale, lychee, and OSV Scanner. Native
+raw binaries and archives use that same supply owner. The bundle carries the
+complete npm cache, every declared native asset, and upstream notices, bound to
+edition, Node major, full package manifest, lock, and native supply.
 
 Local installed or locally supplied verification needs no remote service. GitLab
 uses its own project registry and CI identity; GitHub uses its independent
@@ -612,10 +667,7 @@ strict diagnostics instead of granting a rootless container extra capability.
 Exclude/reject host archive attributes. Listing success does not prove
 extraction under the actual capability limit.
 
-Only the OpenSpec child's official telemetry option suppresses offline
-telemetry/update requests. Remove inherited case variants before setting that
-value; preserve parent environment and global settings. Exercise both actual
-child selection and the pinned request behavior of the CLI.
+#### Cold execution and hosted qualification
 
 Keep one exact native package-manager contract. A historical multi-npm
 compatibility scenario cannot compete with current exact admission. Preserve
@@ -623,21 +675,6 @@ actual npm observation, install effects, cold execution, and audit boundaries. A
 fresh HOME, separate empty user/global npm configuration files, and a clean
 environment establish cold execution. Deny remote connections; permit only local
 connections required by the real HTTP regression.
-
-GitLab shell jobs use original Mise with a project-owned configuration under
-`.config/supply/` and its native six-platform runtime lock. Native read-only
-templates obtain the Node compatibility line and exact npm version from
-`package.json`; the npm backend checks the selected archive's SHA-512 before
-installation. Select the configuration with the native project filename setting,
-not its global config override. Run supply and verification commands through
-`mise exec --locked`. Late native tool-path evaluation places the selected npm
-ahead of Node's bundled npm, respecting the Windows native prefix layout.
-This is process-scoped tool selection, not a new installer or a machine PATH,
-service-account, or VM-isolation change. Keep existing review and protected
-identities separate and preserve the complete verifier and project resource.
-Cold checks receive already supplied tools; they neither install Mise nor
-acquire a missing runtime. Qualify the actual Windows ARM64 process and all
-tool combinations before claiming platform acceptance.
 
 This is a qualification environment, not an effect of npm configuration alone.
 Hosted jobs install Node/npm and acquire their exact asset before offline
@@ -654,15 +691,11 @@ Windows Runner jobs. Retire qualification packages only after jobs are terminal
 and their complete results are preserved. Source qualification is not a signed
 Release.
 
-The full verifier reports its actual Node version, process architecture, source,
-and mounted workspace. Native asset selection may differ from the Node process
-architecture: Windows ARM64 uses a declared x64 tool asset when the publisher
-has no native ARM64 asset. Cache identity and test fixtures use that selected
-asset, not the process architecture. Keep supply and verification in the same
-selected process environment. Retain original runtime observations and failed
-job evidence with task 2.38; temporary diagnosis has no permanent CI owner.
-Do not infer VM identity or isolation from these observations, add a controller,
-raise deadlines, or replace real public-command regressions with mocks.
+Use the [source observations](#give-native-quality-concerns-one-owner) to
+identify the actual process; they do not establish VM identity or isolation.
+Retain original runtime observations and failed job evidence with task 2.38;
+temporary diagnosis has no permanent CI owner. Do not add a controller, raise
+deadlines, or replace real public-command regressions with mocks.
 
 ### Bind risk approval to the actual subject
 

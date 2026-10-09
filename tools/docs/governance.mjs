@@ -352,6 +352,11 @@ export function checkNavigation(repository = root) {
       ["docs/README.md", "docs/charter.md", "docs/governance/ethos.md"],
     ],
     ["docs/README.md", normative],
+    [
+      "docs/governance/ethos.md",
+      ["openspec/README.md", "docs/decisions/README.md"],
+    ],
+    ["docs/decisions/README.md", ["docs/README.md", "openspec/README.md"]],
   ]);
   for (const [source, targets] of routes) {
     const found = linksIn(read(source), source);
