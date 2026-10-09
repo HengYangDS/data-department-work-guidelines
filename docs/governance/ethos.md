@@ -310,7 +310,7 @@ The human approvals have distinct subjects:
 | Five pinned Lychee 0.24.2 assets                                             | Trusted local checks, controlled CI, and identical assets in the toolkit. | 2026-10-18 00:00 UTC                                       |
 
 The approved image index is
-`sha256:39cff0f037088f0d8faf3e5a3ca055d653a15b66faaba8af3daf72f0102f375f`.
+`sha256:32fa97f3363975684b08bf4e8a68a47c7905175cc20275b50b974bbd02aba731`.
 These are not production, arbitrary-untrusted-input, other-finding, or
 cross-repository approvals. Each artifact still needs authenticity, complete
 bytes, hashes, licenses, actual function, and platform acceptance. Lychee's

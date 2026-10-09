@@ -347,8 +347,11 @@ archive SHA-512; late path evaluation places selected npm first, including the
 Windows prefix. Select the project filename, not global overrides. Windows adds
 the OS machine Path after inherited entries before resolving existing Mise,
 without encoded install paths, registry writes, service changes, or another
-installer. Record application and execution identity; hosted jobs qualify the
-environment hypothesis. Cold checks acquire neither Mise nor missing runtime.
+installer. Temporary application, version, and execution-identity probes diagnose
+discovery; remove them after protected-source and offline jobs qualify the
+environment hypothesis and their evidence is preserved. Keep the process-only
+Path refresh and original locked commands. Cold checks acquire neither Mise nor
+missing runtime.
 
 #### Bound inputs and atomic installation
 

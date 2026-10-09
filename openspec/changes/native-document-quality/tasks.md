@@ -218,11 +218,12 @@
       job; qualify selection, checksum refusal, missing-lock refusal, and
       manifest/lock mismatch without changing machine PATH or Runner identity.
       Qualify Windows job-local discovery from the inherited and native machine
-      Path, preserving inherited precedence. Record the actual Mise application,
-      version, and execution identity before the original locked commands;
-      require protected-source and offline jobs to verify the diagnosis.
-      Verify retirement of temporary diagnosis and preservation of its evidence
-      before the final freeze.
+      Path, preserving inherited precedence. Preserve the actual Mise
+      application, version, and execution-identity diagnosis with its producer;
+      require protected-source and offline jobs to qualify discovery and the
+      original locked commands. Retire temporary probes only after their
+      evidence is preserved; verify enduring process-only discovery before the
+      final freeze.
       Refresh immutable CI action pins from official stable
       releases, verify the explicit Node setup contract and real refusal cases,
       and preserve complete upstream finding reports and selected-route limits.

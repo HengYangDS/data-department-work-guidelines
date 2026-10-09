@@ -74,9 +74,6 @@ const nativeRuntimeVariables = {
 const nativeRuntimeSupply = ["mise install --locked --jobs=1"];
 const windowsRuntimeEntry = [
   "$env:PATH = $env:PATH + [IO.Path]::PathSeparator + [Environment]::GetEnvironmentVariable('Path', 'Machine')",
-  "Get-Command mise -CommandType Application -ErrorAction Stop | Select-Object -ExpandProperty Source",
-  "mise --version",
-  "whoami",
 ];
 const windowsRuntimeSupply = [...windowsRuntimeEntry, ...nativeRuntimeSupply];
 const selectedNativeSourceSupply = [

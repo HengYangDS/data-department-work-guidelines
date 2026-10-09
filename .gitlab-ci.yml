@@ -16,7 +16,7 @@ stages:
   - verify
 
 default:
-  image: public.ecr.aws/docker/library/node:26-trixie@sha256:39cff0f037088f0d8faf3e5a3ca055d653a15b66faaba8af3daf72f0102f375f
+  image: public.ecr.aws/docker/library/node:26-trixie@sha256:32fa97f3363975684b08bf4e8a68a47c7905175cc20275b50b974bbd02aba731
 
 .docs:source-supply:
   before_script: &docs-source-supply
@@ -49,9 +49,6 @@ default:
 .docs:windows-runtime:
   before_script: &windows-runtime-supply
     - $env:PATH = $env:PATH + [IO.Path]::PathSeparator + [Environment]::GetEnvironmentVariable('Path', 'Machine')
-    - Get-Command mise -CommandType Application -ErrorAction Stop | Select-Object -ExpandProperty Source
-    - mise --version
-    - whoami
     - *native-runtime-supply
 
 .docs:windows-source-supply:

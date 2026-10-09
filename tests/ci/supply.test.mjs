@@ -54,14 +54,7 @@ test("Windows jobs refresh only their process from the native machine path", () 
   ]) {
     const commands = pipeline[name].before_script.flat(10);
     assert.equal(commands[0], refresh, name);
-    assert.equal(
-      commands[1],
-      "Get-Command mise -CommandType Application -ErrorAction Stop | Select-Object -ExpandProperty Source",
-      name,
-    );
-    assert.equal(commands[2], "mise --version", name);
-    assert.equal(commands[3], "whoami", name);
-    assert.equal(commands[4], "mise install --locked --jobs=1", name);
+    assert.equal(commands[1], "mise install --locked --jobs=1", name);
     for (const change of [
       (job) => {
         job.before_script = commands.slice(1);
