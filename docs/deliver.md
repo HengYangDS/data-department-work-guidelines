@@ -11,7 +11,9 @@ relations:
 # Execution and Delivery
 
 **When to use:** Before acting, reporting progress, accepting work, or claiming
-completion. Make the commitment, owner, and completion condition visible first.
+completion.
+
+Make the commitment, owner, and completion condition visible first.
 The form may shrink with risk; the chain of trust may not skip a link. Pause the
 affected action and escalate when authority, the target, or critical facts are
 missing.
@@ -40,13 +42,15 @@ they do not replace the duties above.
 
 ## Before Acting
 
-| Question                         | Minimum answer                                                                 |
-| -------------------------------- | ------------------------------------------------------------------------------ |
-| What is being done, and why now? | Deliverable, purpose, target, success criteria, scope, and non-goals.          |
-| Who is responsible?              | Task lead, collaborators, authorized decision owner, and acceptor.             |
-| How will it proceed?             | Critical path, dependencies, milestones, deadline, and observable checkpoints. |
-| What will it take?               | Resources, costs, and constraints.                                             |
-| What if it goes wrong?           | Triggers to pause, degrade, roll back, or hand control to a person.            |
+- **What is being done, and why now?** Deliverable, purpose, target, success
+  criteria, scope, and non-goals.
+- **Who is responsible?** Task lead, collaborators, authorized decision owner,
+  and acceptor.
+- **How will it proceed?** Critical path, dependencies, milestones, deadline,
+  and observable checkpoints.
+- **What will it take?** Resources, costs, and constraints.
+- **What if it goes wrong?** Triggers to pause, degrade, roll back, or hand
+  control to a person.
 
 Check the actual target location, current state, concurrent work, and recovery
 path before making a change. Expose critical-path blockers when observed; do
@@ -93,12 +97,19 @@ the language.
 | A revision is published                          | It took effect, was adopted, or produced the intended outcome.                |
 | An Agent reports completion                      | The work is complete or a member verified and accepted responsibility for it. |
 
-Say “complete” only when all conditions hold: the deliverable is at the agreed
-location; every completion criterion is satisfied; current verification
-matching the claim has run and passed; risks, limits, uncovered cases, and
-follow-up ownership are recorded; and the agreed lifecycle state is reached.
-When human acceptance is required, an authorized person must have accepted
-the result. A nearby state or a planned check does not satisfy this gate.
+## Close the Work
+
+Say “complete” only when **all** conditions hold:
+
+- The deliverable is at the agreed location.
+- Every completion criterion is satisfied.
+- Current verification matching the claim has run and passed.
+- Risks, limits, uncovered cases, and follow-up ownership are recorded.
+- The agreed lifecycle state is reached.
+- When human acceptance is required, an authorized person has accepted the
+  result.
+
+A nearby state or a planned check does not satisfy this gate.
 
 For L1 and L2 work, leave the material decision, actual result, limits, and
 remaining owner in the existing work record. Without a reviewable record, do

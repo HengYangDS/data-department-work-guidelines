@@ -11,20 +11,27 @@ relations:
 # Analysis and Decisions
 
 **When to use:** The task is unclear, an anomaly needs explanation, or a choice
-must be made. Identify the decision the analysis must support before choosing
+must be made.
+
+Identify the decision the analysis must support before choosing
 its depth. Do not begin by filling a template or collecting material. If the
 decision owner or subject is unknown, pause the affected action; test a proposed
 answer against shared criteria, counterexamples, and stated limits.
 
 ## Frame the Right Problem
 
-In the existing ticket, discussion, or proposal, answer: Who must decide what,
-and by when? What is the subject, who is affected, and what are the present
-state, comparison baseline, target, success criteria, non-goals, and
-constraints? Which facts are known, and which unknowns matter? Who owns the
-work, who has authority to decide, and who accepts it? A low-risk matter may
-need one conversation; L1 and L2 work needs a reviewable record under the
-[charter's risk levels](charter.md#form-follows-risk).
+In the existing ticket, discussion, or proposal, answer:
+
+- **Decision:** Who must decide what, and by when?
+- **Problem:** What is the subject, who is affected, and what are the present
+  state, comparison baseline, target, success criteria, non-goals, and
+  constraints?
+- **Knowledge:** Which facts are known, and which unknowns matter?
+- **Ownership:** Who owns the work, who has authority to decide, and who
+  accepts it?
+
+A low-risk matter may need one conversation; L1 and L2 work needs a reviewable
+record under the [charter's risk levels](charter.md#form-follows-risk).
 
 Name the time, cost, compliance, technical, and resource constraints. A target
 without those limits is not an executable commitment.
@@ -33,12 +40,17 @@ If the subject, authority, or irreversible consequences are unclear, stop the
 affected action and ask an authorized person to decide. **Collecting information
 is not the goal; explain which judgment it could change.**
 
-For important work, make six boundaries explicit: **subject** (the system, data,
-people, or decision), **scope** (in and out), **time** (fact cutoff and period
-of validity), **responsibility** (task lead, decision owner, reviewer, acceptor,
-and those to inform), **evidence** (what it does and does not establish), and
-**action** (what is authorized and what requires escalation). An attractive
-solution to an unnamed subject is not yet a proposal.
+For important work, make six boundaries explicit:
+
+- **Subject:** The system, data, people, or decision.
+- **Scope:** What is in and out.
+- **Time:** Fact cutoff and period of validity.
+- **Responsibility:** Task lead, decision owner, reviewer, acceptor, and those
+  to inform.
+- **Evidence:** What it does and does not establish.
+- **Action:** What is authorized and what requires escalation.
+
+An attractive solution to an unnamed subject is not yet a proposal.
 
 ## Keep Six Meanings Distinct
 
@@ -76,6 +88,8 @@ so explicitly.
    limits, what remains possible, the next verification action, and what later
    observation would change the judgment.
 
+### Diagnose a Failure and Its Prevention Gap
+
 For an incident, anomaly, delay, quality problem, or recurring dispute, preserve
 the original symptom and timeline, including changes before it began;
 distinguish affected from unaffected subjects,
@@ -91,6 +105,8 @@ or sampling plan that could distinguish the leading hypotheses. After a repair,
 check the original symptom, adjacent paths, and unintended side effects; name
 what was not exercised. In review, distinguish judgments that helped from those
 that failed, and explain why; a fix without changed judgment invites recurrence.
+
+### Check the Reasoning
 
 Check the reasoning for correlation presented as causation, a case presented
 as a population, a necessary condition treated as sufficient, a later outcome
@@ -110,6 +126,8 @@ have clear exit and replacement conditions. Novelty, completeness, or
 popularity does not establish suitability. A recommendation states its
 premises, strongest objection, first step if chosen, and revisit trigger. The
 authorized person decides; a long analysis cannot stand in for authorization.
+
+### Record the Choice and Next Action
 
 Once a choice is made, use the [decision-document order](communicate.md#write-for-fidelity-clarity-and-elegance)
 and record what was decided, by whom, on what date, and why, with its revisit

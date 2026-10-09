@@ -138,6 +138,8 @@ official OpenSpec, and the standalone regression suite. The
 rule selection and spacing;
 [Contributing](../../CONTRIBUTING.md#verify-the-source) owns the commands.
 
+### Observe the Execution Environment
+
 The source check reports path, commit, tree, tracked changes, Node version and
 platform, process architecture, `hostname`, and exact workspace-capacity
 bytes. These are observations, not portable target configuration. A mounted
@@ -147,6 +149,8 @@ errors remain failures. The runner owner verifies the guest and host
 separately. The [tool-supply boundary](#tool-supply-and-offline-execution)
 owns tool-selection evidence. Retained local diagnostics may contain the
 observed host name; it is evidence metadata, never a required target value.
+
+### Preserve Official OpenSpec Results
 
 Official OpenSpec reports must identify this repository, unique typed items,
 complete diagnostics, and consistent native counts for both `--all` categories,
@@ -175,6 +179,8 @@ prose does not prove factual accuracy, semantic fidelity, or understanding.
 
 ### Source Links and Decision Records
 
+#### Source Link Selection
+
 Git selects tracked and non-ignored candidate source. Resolve every local link
 and image under the repository root, rejecting ignored build/cache/history,
 private paths, control files, tracked-link escapes, and symlinked directory
@@ -185,6 +191,8 @@ escaping, ignored, or dangling aliases fail; links never adopt untracked private
 files. An ignored supplied bundle is a separate explicit verification input.
 Use pinned lychee for offline checks and its explicit online operation for
 external qualification. Gate failure remains failure regardless of local files.
+
+#### Decision Record Form
 
 Decision records keep stable IDs, lowercase filenames, matching titles,
 accepted metadata, and exactly five root sections: Context, Decision,
@@ -227,6 +235,8 @@ checks never upgrade it. Do not use
 | GitHub source CI     | Pinned official upstream assets.                       |
 | Offline installation | Matching source-bound bundle; no replacement download. |
 
+### Select and Verify Native Tools
+
 The [supply manifest](../../.config/supply/native.json) pins archives, raw binary
 sizes, extracted executable digests, and upstream notices per platform. The
 [bundle record](../../.config/release/offline-bundle.json) binds edition, Node
@@ -241,20 +251,14 @@ version does not admit altered bytes. Package-manager binaries retain their
 installation owner's trust boundary; they are not declared byte-equivalent to
 release assets.
 
-Use Node's native HTTP client for unauthenticated GitHub downloads. GitLab's
-project token must not follow redirects. Bound repository, tag, filename, time,
-and size; stage only in owned temporary storage. Reject linked cache/download
-parents before network or staging. Publish a fully verified candidate atomically
-inside its cache; concurrent callers may reuse verified bytes but never replace
-or remove another attempt. Existing invalid entries remain failures. Preserve
-permissions and remove only the caller's temporary stage. Preserve original
-command, streams, failure, cancellation, and cleanup diagnostics; use only a
-bounded opaque hash in authenticated-transport errors, never secret fragments.
+### Acquire Supplied Assets
 
-Official OpenSpec child-process controls disable telemetry and update requests
-for offline verification without global changes. Archives exclude host extended
-attributes; inspection and extraction reject native warnings even after exit
-zero. Extraction keeps the destination executor's ownership.
+Use the [tool acquisition procedure](../../CONTRIBUTING.md#acquire-supplied-assets)
+for download, cache publication, and extraction. It preserves the declared
+artifact identity, credential boundary, original diagnostics, and the
+destination executor's ownership; it grants no use or distribution approval.
+
+### Qualify Each Platform
 
 CI bootstraps Node/npm and acquires the exact asset before offline execution.
 That whole job is not network-isolation proof. Qualify cold local use separately
@@ -272,11 +276,15 @@ The installation owner supplies provenance for an external executable.
 Independently download and hash each Forge asset; a pin or install preview is
 not platform acceptance.
 
+### Audit Dependencies and Artifacts
+
 Project-lock scans do not cover bundled Node, npm, native-tool, or ETHOS
 components. Audit actual artifact digests, platforms, and component inventories
 through native extractors; absent or empty inventories leave coverage unproved.
 Keep raw findings and binary-symbol results separately; symbols do not prove
 runtime reachability. Failed scanning is not a clean audit.
+
+#### Project-Lock Reports
 
 Both hosted planes retain one complete unfiltered OSV project scan, exact lock
 and [native policy](../../.config/checks/dependencies/policy.toml), streams, and
@@ -290,6 +298,8 @@ Observe public npm stable
 through isolated native configuration, fresh cache, and explicit online freshness;
 keep its original result with the scan. Source checks contact no advisory
 service and cannot renew artifact-use or distribution approval.
+
+### Bound Known Findings
 
 The human approvals have distinct subjects:
 
@@ -353,6 +363,8 @@ nor registration and isolation.
 
 ## Evidence and Retirement
 
+### Retained Downloads
+
 Keep downloads for the latest qualified release and one qualified rollback,
 plus native packages consumed by source or CI. Before retirement, verify exact
 identities and consumers. Preserve signed tags, source, original release notes,
@@ -360,6 +372,8 @@ and historical evidence; remove withdrawn download links and add a dated notice.
 Recheck retained hashes and both Forge inventories. Report reclaimed space only
 from provider confirmation. [Contributing](../../CONTRIBUTING.md#retire-superseded-downloads)
 owns the procedure.
+
+### Local Evidence and Workspaces
 
 Local `build/`, `node_modules/`, leases, and caches are not repository truth.
 Evidence stays with its producer and claim; no root evidence folder is required.

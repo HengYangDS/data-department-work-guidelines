@@ -27,6 +27,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Organize the task map by direction, data, delivery, and collaboration. Open
+  each topic with its use, separate long sections by the reader's decision,
+  place examples beside the practice they illustrate, and reserve tables for
+  comparisons. Preserve the seven routes, duties, and evidence boundaries.
 - Review current rules against applicable authority, work needs, and their cost;
   retired drafts are comparison inputs, not a restoration baseline.
 - Let problem models represent interacting causes and cross-cutting constraints;
