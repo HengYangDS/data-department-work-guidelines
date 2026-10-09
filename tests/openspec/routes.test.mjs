@@ -166,7 +166,7 @@ test("governance readers reach Change intent and durable decision rationale", ()
   });
 });
 
-test("Change readers reach every affected capability at its delta owner", () => {
+test("Change and main-spec readers reach every capability at its owner", () => {
   const capabilities = [
     "quality",
     "guidance-discovery",
@@ -176,27 +176,31 @@ test("Change readers reach every affected capability at its delta owner", () => 
     "tool-supply",
     "publication",
   ];
-  const assertRoutes = (text, relative) => {
+  const assertRoutes = (text, relative, prefix) => {
     const links = markdownLinkDestinations(text);
     for (const capability of capabilities) {
       assert.ok(
-        links.includes(`specs/${capability}/spec.md`),
-        `${relative} must link to the ${capability} delta`,
+        links.includes(`${prefix}${capability}/spec.md`),
+        `${relative} must link to the ${capability} owner`,
       );
     }
   };
-  for (const name of ["proposal.md", "design.md"]) {
-    const relative = `openspec/changes/native-document-quality/${name}`;
+  for (const [relative, prefix] of [
+    ["openspec/changes/native-document-quality/proposal.md", "specs/"],
+    ["openspec/changes/native-document-quality/design.md", "specs/"],
+    ["openspec/specs/README.md", ""],
+  ]) {
     const source = readFileSync(path.join(root, relative), "utf8");
-    assertRoutes(source, relative);
+    assertRoutes(source, relative, prefix);
     for (const capability of capabilities) {
       assert.throws(
         () =>
           assertRoutes(
-            source.replace(`(specs/${capability}/spec.md)`, ""),
+            source.replace(`(${prefix}${capability}/spec.md)`, ""),
             relative,
+            prefix,
           ),
-        /must link to the .* delta/u,
+        /must link to the .* owner/u,
       );
     }
   }

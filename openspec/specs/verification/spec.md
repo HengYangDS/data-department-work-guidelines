@@ -1,11 +1,11 @@
-# Spec Delta
+# verification Specification
 
 ## Purpose
 
 Define complete source verification, native proof prerequisites, execution
 evidence, and shared CI admission without replacing OpenSpec or ETHOS authority.
 
-## ADDED Requirements
+## Requirements
 
 ### Requirement: Default proof and root binding are distinct
 
@@ -448,24 +448,6 @@ and single-peer execution SHALL remain independent of an unavailable peer.
 - **AND** execution preserves exact signed source identity and claims only the
   observed peer's acceptance.
 
-### Requirement: Proof prerequisites retain product ownership
-
-Product-native prerequisites and quality axes SHALL belong to the accepted
-ETHOS dependency graph and verified owners, not additional profile descriptors.
-Native behavior and static diagnostics SHALL conjoin the mapped document
-commands for the same source without authored substitute evidence.
-
-#### Scenario: A profile attempts to replace native proof evidence
-
-- **WHEN** a repository adds a descriptor or authored report instead of its
-  required product-native prerequisite
-- **THEN** accepted ETHOS refuses proof without changing the repository's two
-  default gate boundary
-- **AND** passing document commands alone do not satisfy behavior, semantics,
-  diagnostics, or subject applicability.
-
-## MODIFIED Requirements
-
 ### Requirement: Shared source-size admission preserves semantic ownership
 
 Accepted shared admission SHALL classify each selected carrier before applying
@@ -510,3 +492,19 @@ and source selection without a private checker or hidden input.
 - **THEN** that label or name alone does not change its applicable policy
 - **AND** generated-output classification requires its current native producer
   declaration rather than a local exemption.
+
+### Requirement: Proof prerequisites retain product ownership
+
+Product-native prerequisites and quality axes SHALL belong to the accepted
+ETHOS dependency graph and verified owners, not additional profile descriptors.
+Native behavior and static diagnostics SHALL conjoin the mapped document
+commands for the same source without authored substitute evidence.
+
+#### Scenario: A profile attempts to replace native proof evidence
+
+- **WHEN** a repository adds a descriptor or authored report instead of its
+  required product-native prerequisite
+- **THEN** accepted ETHOS refuses proof without changing the repository's two
+  default gate boundary
+- **AND** passing document commands alone do not satisfy behavior, semantics,
+  diagnostics, or subject applicability.
