@@ -180,16 +180,27 @@ test("profile requires selected regular source rather than a remembered path", (
     );
     assert.throws(() => checkProfile(directory), /repository source/u);
 
+    const entry = path.join(directory, "tools", "docs", "cli.mjs");
+    const source = readFileSync(path.join(root, "tools", "docs", "cli.mjs"));
+    writeFileSync(entry, source);
+    writeFileSync(file, original);
+    assert.doesNotThrow(() => checkProfile(directory));
+
     symlinkSync(
       path.join(root, "tools", "docs"),
       path.join(directory, "linked"),
       "junction",
     );
-    writeFileSync(
-      file,
-      original.replaceAll("tools/docs/cli.mjs", "linked/cli.mjs"),
+    const linkedProfile = original.replaceAll(
+      "tools/docs/cli.mjs",
+      "linked/cli.mjs",
     );
-    assert.throws(() => checkProfile(directory), /repository source/u);
+    writeFileSync(file, linkedProfile);
+    assert.throws(() => checkProfile(directory), Error);
+    assert.equal(readFileSync(file, "utf8"), linkedProfile);
+    assert.deepEqual(readFileSync(entry), source);
+    writeFileSync(file, original);
+    assert.doesNotThrow(() => checkProfile(directory));
   });
 });
 
