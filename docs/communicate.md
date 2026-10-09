@@ -19,6 +19,10 @@ and clarify or escalate before asking anyone to act. Do not request action
 beyond your authority. Test whether an independent reader can identify the
 basis, limits, and request.
 
+Use [update structure](#structure-an-important-update) for a status or
+request, [decision-document order](#structure-a-decision-document) for a
+proposal, and [escalation](#escalate-risk-in-four-parts) for an unresolved risk.
+
 ## Know What the Exchange Must Accomplish
 
 State the purpose of the exchange before presenting the detail.
@@ -31,13 +35,17 @@ State the purpose of the exchange before presenting the detail.
 | Escalate    | Help with an authority, resource, or risk gap before work stalls or harm grows. |
 | Review      | An explanation of the mechanism and what to keep, change, or discard.           |
 
-For an important update, lead with the **conclusion or present state**. Then
-give the decisive facts needed for that conclusion, the impact, current risks or
-blockers, a recommendation, and any decision needed from whom and by when. Name
-the next action, its owner and due time, and the condition that shows completion.
-A status update names what changed since the previous report, not how much
-activity occurred. If there is no conclusion, state which evidence is missing
-and when it can be obtained.
+### Structure an Important Update
+
+- **Conclusion or present state:** Lead with the answer. A status update names
+  what changed since the previous report, not how much activity occurred.
+- **Basis and impact:** Give the decisive facts needed for the conclusion,
+  the impact, and current risks or blockers. If there is no conclusion, state
+  which evidence is missing and when it can be obtained.
+- **Decision needed:** Give the recommendation and any decision needed,
+  from whom and by when.
+- **Next action:** Name its owner and due time, and the condition that shows
+  completion.
 
 Answer a question first, then explain.
 Say “I don't know” when that is true. Revise a position immediately when new
@@ -68,24 +76,35 @@ both from a different risk preference despite shared reasoning.
 
 ## Write for Fidelity, Clarity, and Elegance
 
-1. **Fidelity:** Preserve the intended meaning without distortion. Keep actors,
-   conditions, responsibilities, and limits intact. Give facts their sources.
-   Separate facts, hypotheses, judgments, and decisions. Do not hide
-   counterexamples, uncertainty, failure, or limits.
-2. **Clarity:** Begin with accurate understanding, then convey the meaning
-   clearly and fluently so the reader can understand it and act. Let the title
-   identify the subject and purpose. For analysis,
-   proposal, and decision documents, also name their status in the title.
-   Give the conclusion, decision request, or reason no conclusion is available
-   on the first screen. Make one main point per paragraph, define important
-   terms at first use, and leave reasoning and next steps actionable.
-3. **Elegance:** Write with taste and aesthetic judgment, drawing on artistic
-   and cultural refinement. Let rhythm, transitions, and visual form create
-   beauty and a cultivated style suited to the subject and audience. Choose
-   precise verbs and concrete nouns. Remove formulaic filler, repetition, and
-   empty decoration. Keep the tone objective and measured, without slogans or
-   pretended depth. Let structure serve judgment; do not let a diagram stand
-   in for an argument.
+### Fidelity
+
+Preserve the intended meaning without distortion.
+
+Keep actors, conditions, responsibilities, and limits intact. Give facts their
+sources. Separate facts, hypotheses, judgments, and decisions. Do not hide
+counterexamples, uncertainty, failure, or limits.
+
+### Clarity
+
+Begin with accurate understanding, then convey the meaning clearly and fluently
+so the reader can understand it and act.
+
+Let the title identify the subject and purpose. For analysis, proposal, and
+decision documents, also name their status in the title. Give the conclusion,
+decision request, or reason no conclusion is available on the first screen. Make
+one main point per paragraph, define important terms at first use, and leave
+reasoning and next steps actionable.
+
+### Elegance
+
+Write with taste and aesthetic judgment, drawing on artistic and cultural
+refinement. Let rhythm, transitions, and visual form create beauty and a
+cultivated style suited to the subject and audience.
+
+Choose precise verbs and concrete nouns. Remove formulaic filler, repetition,
+and empty decoration. Keep the tone objective and measured, without slogans or
+pretended depth. Let structure serve judgment; do not let a diagram stand in for
+an argument.
 
 These editing practices serve the three aims without exhausting them.
 
@@ -120,18 +139,24 @@ fraction or fixed document shape is a writing standard.
 
 ## Escalate Risk in Four Parts
 
-State the risk or blocker; the facts, impact, and latest safe decision time;
-containment already attempted and its result; and the options, costs,
-recommendation, and person who must decide by when.
+1. **Risk:** State the risk or blocker.
+2. **Impact:** Give the facts, impact, and latest safe decision time.
+3. **Containment:** State what has been attempted and its result.
+4. **Decision:** Give the options, costs, recommendation, and person who must
+   decide by when.
 
 > **Illustrative escalation:** “Do not promote the revised price history yet.
 > The vendor changed earlier values, but we have not verified when those values
 > became knowable. A historical simulation with today's file may answer a
-> hindsight question rather than the one we need. I have kept the file
-> exploratory. I recommend deferring this use. That delays the study but avoids
+> hindsight question rather than the one we need.
+>
+> I have kept the file exploratory. I recommend deferring this use. That delays
+> the study but avoids
 > presenting hindsight as point-in-time evidence. We can reconsider when the
-> earlier snapshot and replay evidence are available. Before the planned release
-> window, the decision owner for this use needs to choose: defer it, or obtain the
+> earlier snapshot and replay evidence are available.
+>
+> Before the planned release window, the decision owner for this use needs to
+> choose: defer it, or obtain the
 > snapshot and rerun the check.”
 
 ## Replace Vague Assurances with Checkable Statements

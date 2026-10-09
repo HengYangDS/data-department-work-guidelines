@@ -13,28 +13,45 @@ relations:
 Choose the page that answers your next work question. Members and Agents use
 the same guidance; each topic owns its rules and points to the related work.
 
+**Urgent failure or breach:** Go directly to
+[emergencies and exceptions](evolve.md#emergencies-and-exceptions).
+
 ## Direction and Decisions
 
-- [Charter](charter.md): Identify the subject, who may act, which facts are
-  authoritative, and what must be protected.
-- [Analysis and decisions](decide.md): Separate facts from hypotheses, compare
-  alternatives, and name the decision owner and revisit conditions.
+- [Establish authority](charter.md#two-kinds-of-authority): Identify the
+  subject, who may act, which facts are authoritative, and what must be protected.
+  - Work record: Apply the [risk levels](charter.md#form-follows-risk).
+- [Frame a decision](decide.md#frame-the-right-problem): Separate facts from
+  hypotheses and name the decision owner and revisit conditions.
+  - Options: [Make the choice
+    comparable](decide.md#make-the-choice-comparable-and-actionable).
 
 ## Data and Delivery
 
-- [Data quality and adoption](data.md): Check source, time, meaning, quality,
-  and permission for the proposed use; define its exit conditions.
-- [Execution and delivery](deliver.md): Define the deliverable, current
-  verification, limits, and who may accept the result.
+- [Qualify a data asset](data.md#admit-a-durable-data-asset): Check source,
+  time, meaning, quality, and permission for the proposed use; define its exit
+  conditions.
+  - Historical research: Preserve the
+    [historical point of view](data.md#preserve-the-historical-point-of-view).
+- [Verify and close work](deliver.md#close-the-work): Match the deliverable,
+  current verification, limits, and acceptance to the agreed completion conditions.
+  - Before execution: [Check the commitment](deliver.md#before-acting).
 
 ## Collaboration and Improvement
 
-- [Communication](communicate.md): Give the recipient a clear conclusion,
-  basis, impact, request, and next step.
-- [Human–AI collaboration](human-agent.md): Delegate a clear scope, stop
-  conditions, and verification; retain human responsibility.
-- [Practice and evolution](evolve.md): Review risks and feedback, coach through
-  real work, adjust the cadence, and retain or retire practices from net benefit.
+- [Prepare an update or request](communicate.md#structure-an-important-update):
+  Give the recipient a clear conclusion, basis, impact, request, and next step.
+- [Escalate a risk](communicate.md#escalate-risk-in-four-parts) before it
+  causes harm.
+- [Delegate to an Agent](human-agent.md#delegate-a-boundary-not-a-pile-of-context):
+  Set scope, stop conditions, and verification; retain human responsibility.
+  - Before acceptance: [Check the actual
+    output](human-agent.md#check-agent-output).
+- [Improve a practice](evolve.md#admit-practices-and-prevent-recurrence):
+  Review risks and feedback, coach through real work, and keep or retire practices
+  from net benefit.
+  - Review rhythm: Adjust the
+    [review cadence](evolve.md#cadence-and-responsibilities).
 
 ## Follow the Work Through
 

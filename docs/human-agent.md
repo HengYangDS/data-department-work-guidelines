@@ -21,6 +21,10 @@ Stop when the target, fact source, responsible person, or permission cannot be
 established; a person checks the actual work and evidence before accepting an
 Agent's result.
 
+To assign work, [set the delegation boundary](#delegate-a-boundary-not-a-pile-of-context).
+Before acceptance, [check the actual output](#check-agent-output).
+If work stops, [preserve a usable handoff](#report-and-preserve-a-handoff).
+
 ## Delegate a Boundary, Not a Pile of Context
 
 A consequential delegation states:
@@ -168,20 +172,21 @@ stopped action.
 
 ### Report and Preserve a Handoff
 
-A completion report names the [delivery
-state](deliver.md#name-the-state-not-the-effort) reached and the goal, scope,
-target, version, actual changes, verification method, result, execution time
-and environment, and where the evidence can be inspected.
+A completion report names the [delivery state](deliver.md#name-the-state-not-the-effort)
+reached and gives:
 
-Name risks, limits,
-assumptions, unresolved questions, and any acceptance still needed.
+- **Work:** Goal, scope, target, version, and actual changes.
+- **Verification:** Method, result, execution time and environment, and where
+  the evidence can be inspected.
+- **Limits:** Risks, limits, assumptions, unresolved questions, and any
+  acceptance still needed.
 
-Partial
-work names its affected scope and the delivery state reached.
-[Deferral](decide.md#make-the-choice-comparable-and-actionable) is a decision
-state; record its resolving action and revisit time as that topic requires.
-Neither label replaces a completion check. State what remains incomplete and
-why; distinguish a missing dependency from work that has not been attempted.
+Partial work names its affected scope and the delivery state reached.
+[Deferral](decide.md#decision-readiness) is a decision state; record its resolving
+action and revisit time as that topic requires. Neither label replaces a
+completion check. State what remains incomplete and why; distinguish a missing
+dependency from work that has not been attempted.
+
 End with the next responsible person, action, and due time; do not write only
 “follow up.”
 

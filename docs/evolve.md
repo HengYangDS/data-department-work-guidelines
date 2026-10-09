@@ -20,14 +20,22 @@ department practice, require an observed failure mode, a bounded trial,
 a responsible owner, and
 evidence of net benefit.
 
+For an urgent failure or breach, go directly to
+[emergencies and exceptions](#emergencies-and-exceptions). For routine work,
+use [practice admission](#admit-practices-and-prevent-recurrence) or the
+[review cadence](#cadence-and-responsibilities).
+
 ## Admit Practices and Prevent Recurrence
 
-Before admitting a practice, identify the observed failure it addresses.
-Explain why the existing boundary, interface, and feedback are insufficient.
-What risk and complexity would it reduce, and what cognitive and maintenance
-cost would it add? How can it be tried on a small scale, and what
-observation would justify keeping it? Who maintains it, when is it reviewed,
-and what triggers revision or retirement?
+Before admitting a practice, establish:
+
+- **Problem and cost:** The observed failure it addresses; why the existing
+  boundary, interface, and feedback are insufficient; the risk and complexity
+  it would reduce; and the cognitive and maintenance cost it would add.
+- **Trial and evidence:** How it can be tried on a small scale, and what
+  observation would justify keeping it.
+- **Ownership and exit:** Who maintains it, when it is reviewed, and what
+  triggers revision or retirement.
 
 An untested preference is not a department rule. Retire a rule that has lost its
 subject, has no user, duplicates a source of truth, or costs more than it
@@ -65,18 +73,22 @@ correction, and prevention of recurrence.
 
 ## Grow Capability Through Real Work
 
-The responsible member confirms the subject, boundary, and success criteria
-with the existing task owner. In capability-building work, a supervisor coaches
-that reasoning and checks the shared understanding. Routine work within an
-established mandate does not need another supervisor approval. At important
-decisions, examine facts,
-hypotheses, options, and risks. After delivery, choose the most consequential
-gap in reasoning or expression and agree on an observable improvement for the
-next task. Keep a few successful and failed examples with reasons. Move
-gradually from guided execution to independent judgment, method-building, and
-coaching. Coaching tests the member's reasoning without making the judgment for
-them. Feedback names a proposition, evidence, behavior, and consequence; a
-label such as “weak logic” gives no actionable direction.
+1. **Confirm the boundary.** The responsible member confirms the subject,
+   boundary, and success criteria with the existing task owner. In
+   capability-building work, a supervisor coaches that reasoning and checks the
+   shared understanding. Routine work within an established mandate does not
+   need another supervisor approval.
+2. **Review the reasoning.** At important decisions, examine facts, hypotheses,
+   options, and risks.
+3. **Agree on the next improvement.** After delivery, choose the most
+   consequential gap in reasoning or expression and agree on an observable
+   improvement for the next task. Keep a few successful and failed examples
+   with reasons. Move gradually from guided execution to independent judgment,
+   method-building, and coaching.
+
+Coaching tests the member's reasoning without making the judgment for them.
+Feedback names a proposition, evidence, behavior, and consequence; a label such
+as “weak logic” gives no actionable direction.
 
 ### Review Critical Risks
 
@@ -120,13 +132,18 @@ worth. If a five-level review is used, keep its meaning stable:
 
 ## Observe the System Without Worshipping Numbers
 
-Watch for rework from unclear goals or definitions, quality failures found
-downstream, repeated incidents, late exposure of risk, reopened completion
-claims, reasons decisions wait, handoff continuity, why Agent output was
-returned, corrected, or out of bounds, growth from guided execution toward
-independent judgment, and whether a new mechanism lowers total cost. For every
-metric, first name the decision it supports, its fact source, period, boundary,
-and how it could be gamed. No single metric may stand for a person's overall
+Watch the work from three angles:
+
+- **Work and decisions:** Rework from unclear goals or definitions, reasons
+  decisions wait, and handoff continuity.
+- **Quality and risk:** Quality failures found downstream, repeated incidents,
+  late exposure of risk, and reopened completion claims.
+- **Agent use and capability:** Why Agent output was returned, corrected, or
+  out of bounds; growth from guided execution toward independent judgment;
+  and whether a new mechanism lowers total cost.
+
+For every metric, first name the decision it supports, its fact source, period,
+boundary, and how it could be gamed. No single metric may stand for a person's overall
 worth, and no local metric may stand for the overall value of work or a system.
 Investigate anomalies through cases and mechanisms; do not equate them directly
 with individual performance.

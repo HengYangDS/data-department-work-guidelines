@@ -18,6 +18,9 @@ The form may shrink with risk; the chain of trust may not skip a link. Pause the
 affected action and escalate when authority, the target, or critical facts are
 missing.
 
+Before changing anything, [check the commitment](#before-acting). To report or
+accept a result, [apply the completion conditions](#close-the-work).
+
 > Authorized person and subject → commitment and boundary → bounded action →
 > current evidence → bounded claim → acceptance and learning.
 
@@ -59,6 +62,34 @@ not state changes. If scope or risk materially changes, return to the authorized
 decision owner. Record the change and the decision that resolves it in the
 existing work record so collaborators work from the same commitment.
 
+## Close the Work
+
+Say “complete” only when **all** conditions hold:
+
+- The deliverable is at the agreed location.
+- Every completion criterion is satisfied.
+- Current verification matching the claim has run and passed.
+- Risks, limits, uncovered cases, and follow-up ownership are recorded.
+- The agreed lifecycle state is reached.
+- When human acceptance is required, an authorized person has accepted the
+  result.
+
+A nearby state or a planned check does not satisfy this gate.
+
+For L1 and L2 work, leave the material decision, actual result, limits, and
+remaining owner in the existing work record. Without a reviewable record, do
+not say the organization has learned from the work.
+
+Before calling high-impact or repeated work complete, leave the necessary
+test, monitor, rule, or recovery
+path in the existing system of responsibility so the next occurrence is found
+earlier and judged more easily. Do not create an unconsumed evidence
+directory or report to prove effort.
+
+For data delivery, see
+[data quality and adoption](data.md); for this repository's source lifecycle,
+see [repository governance](governance/ethos.md).
+
 ## Name the State, Not the Effort
 
 | State                 | What it permits you to say                                                                 |
@@ -96,27 +127,3 @@ the language.
 | A change is merged                               | It was published at the agreed destination.                                   |
 | A revision is published                          | It took effect, was adopted, or produced the intended outcome.                |
 | An Agent reports completion                      | The work is complete or a member verified and accepted responsibility for it. |
-
-## Close the Work
-
-Say “complete” only when **all** conditions hold:
-
-- The deliverable is at the agreed location.
-- Every completion criterion is satisfied.
-- Current verification matching the claim has run and passed.
-- Risks, limits, uncovered cases, and follow-up ownership are recorded.
-- The agreed lifecycle state is reached.
-- When human acceptance is required, an authorized person has accepted the
-  result.
-
-A nearby state or a planned check does not satisfy this gate.
-
-For L1 and L2 work, leave the material decision, actual result, limits, and
-remaining owner in the existing work record. Without a reviewable record, do
-not say the organization has learned from the work. Before calling high-impact
-or repeated work complete, leave the necessary test, monitor, rule, or recovery
-path in the existing system of responsibility so the next occurrence is found
-earlier and judged more easily. Do not create an unconsumed evidence
-directory or report to prove effort. For data delivery, see
-[data quality and adoption](data.md); for this repository's source lifecycle,
-see [repository governance](governance/ethos.md).

@@ -13,22 +13,20 @@ relations:
 **When to use:** Acquiring data, defining a metric, studying history, deploying
 a production pipeline, or allowing a business use.
 
-A readable file, attractive
-chart, or promising model signal does not by itself establish that the data may
-be admitted for a specific use. Keep a proposed use exploratory until evidence
-of its meaning, quality, permission, and reproducibility supports that decision.
+A readable file, attractive chart, or promising model signal does not by itself
+establish that the data may be admitted for a specific use. Keep a proposed use
+exploratory until evidence of its meaning, quality, permission, and
+reproducibility supports that decision.
+
 Stop a proposed controlled use or production change and escalate when meaning
 or quality is unverified, permission is insufficient, or its
-[recovery path](#ownership-and-change-boundaries) is missing. Before relying on
-a result, recheck key findings and
-[current checks](#move-from-a-signal-to-controlled-use): tests, operational
-observation, and acceptance.
+[recovery path](#change-shared-or-production-data) is missing. Before relying on
+a result, recheck key findings, tests, operational observation, and acceptance
+against [the intended use](#move-from-a-signal-to-controlled-use).
 
-These requirements apply to information acquisition, data production,
-analysis and modeling, data science, platform engineering, infrastructure,
-product governance, and operational delivery. The
-[ownership boundaries](#ownership-and-change-boundaries) keep each role
-accountable within that shared contract.
+For a lasting data asset, [all eight admission conditions](#admit-a-durable-data-asset)
+must hold. For historical research, preserve
+[what was knowable at the time](#preserve-the-historical-point-of-view).
 
 ## Answer Six Questions First
 
@@ -67,6 +65,24 @@ If point-in-time consistency cannot be proved, do not automatically call the dat
 wrong; lower the strength of the conclusion and stop making research or business
 commitments that exceed the evidence. State confidence, alternative
 explanations, and conclusions the data cannot support.
+
+## Admit a Durable Data Asset
+
+Before data enters a lasting work system, **all eight conditions must hold**:
+
+- Its meaning is explainable.
+- Its source is traceable.
+- Its time is identifiable.
+- Its process is reproducible.
+- Its quality is verifiable.
+- Its operation is observable.
+- Its owner is identifiable.
+- Its use is bounded.
+
+If any condition is unmet, label the data exploratory, temporary, limited-use,
+or awaiting verification. A limited use requires its own evidence and
+permission; it does not make the data a fully qualified asset. Close the
+specific completion claim through [execution and delivery](deliver.md).
 
 ## Move from a Signal to Controlled Use
 
@@ -109,12 +125,25 @@ the operational feed checks apply only if that feed is proposed.
 | Production feed | Replayable inputs and outputs, tests, monitoring, access review, and recovery. | Do not promote it to an operational feed.     |
 | Use admission   | Domain meaning, permissions and veto, authorized decision, and acceptance.     | Do not infer permission from deployment.      |
 
+**Illustrative outcome:** If only today's corrected series is available, the
+backtest's point-in-time validity remains unproved. Keep the proposed historical
+use exploratory; do not treat a result from that file as evidence of what could
+have been known then. The next step is to obtain the earlier snapshot and
+correction history, then recheck availability at each decision time before
+asking the authorized owner to decide on that use. A reliable operational feed
+would not, by itself, resolve this historical question.
+
 An Agent may locate snapshots, compare revisions, or run replay checks within
 its delegation. It cannot decide that the dataset is admitted. The task lead
 brings the evidence and open risks to the decision owner and acceptor; later
 observed use, not this table, establishes adoption.
 
 ## Ownership and Change Boundaries
+
+These requirements apply to information acquisition, data production,
+analysis and modeling, data science, platform engineering, infrastructure,
+product governance, and operational delivery. The ownership boundaries below
+keep each role accountable within that shared contract.
 
 | Owner      | Responsibility                                                                                                                          |
 | ---------- | --------------------------------------------------------------------------------------------------------------------------------------- |
@@ -147,21 +176,3 @@ The authorized decision owner must approve high-risk use admission, permission
 changes, production releases, deletion or overwrite, and irreversible actions.
 An Agent may implement or help verify them within its delegated scope, but
 cannot approve them.
-
-### Admit a Durable Data Asset
-
-Before data enters a lasting work system, **all eight conditions must hold**:
-
-- Its meaning is explainable.
-- Its source is traceable.
-- Its time is identifiable.
-- Its process is reproducible.
-- Its quality is verifiable.
-- Its operation is observable.
-- Its owner is identifiable.
-- Its use is bounded.
-
-If any condition is unmet, label the data exploratory, temporary, limited-use,
-or awaiting verification. A limited use requires its own evidence and
-permission; it does not make the data a fully qualified asset. Close the
-specific completion claim through [execution and delivery](deliver.md).

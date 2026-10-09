@@ -33,7 +33,7 @@ the system better able to recognize or handle the next occurrence. These are
 three distinct outcomes, not three required reports. Data work converts
 real-world signals into reliable judgments, data assets, and actions. Before a
 result enters a lasting work system, apply the
-[data-admission conditions](data.md#ownership-and-change-boundaries).
+[data-admission conditions](data.md#admit-a-durable-data-asset).
 
 Understand the situation and reason from evidence. Use the minimum structure
 needed for a sound decision and a reliable result, without forcing reality
@@ -51,6 +51,7 @@ records, then work plans, provisional agreements, and personal preferences.
 Projects may clarify this order. Clarifying it does not grant waiver authority;
 establish the authority to waive an obligation and resolve any conflict before
 acting.
+
 An Agent, tool, or repository file cannot grant organizational authority to
 itself.
 
@@ -60,6 +61,7 @@ scope. Analysis and formal records must trace back to their original basis.
 Secondhand accounts, caches, generated views, Agent output, and memory are
 leads, not verified facts. Authority to act cannot make a false fact true;
 factual evidence does not itself grant permission to act.
+
 If an authorized request conflicts with verified facts, report the conflict
 and its impact. Do not alter the record or silently act as if either authority
 had resolved the other.

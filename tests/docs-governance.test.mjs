@@ -255,6 +255,60 @@ test("navigation rejects a missing map, repeated root topic, and missing reader 
   });
 });
 
+test("task-map hierarchy separates destinations, related reading, and urgent entry", () => {
+  const relative = "docs/README.md";
+  const source = readFileSync(path.join(root, relative), "utf8");
+  const assertHierarchy = (text) => {
+    const tokens = markdownTokens(text, relative);
+    const primary = tokens
+      .filter((token) => token.type === "listUnordered")
+      .flatMap((token) => token.children)
+      .filter((token) => token.type === "content")
+      .map((token) => markdownLinkDestinations(token.text));
+    for (const links of primary) {
+      assert.equal(
+        links.length,
+        1,
+        "one primary destination per work question",
+      );
+    }
+    const destinations = new Set(
+      primary.flatMap((links) =>
+        links.map((link) => `docs/${link.split("#")[0]}`),
+      ),
+    );
+    const profile = parseToml(
+      readFileSync(path.join(root, ".ethos/profile.toml"), "utf8"),
+    );
+    for (const topic of profile.normative_sources) {
+      assert.ok(destinations.has(topic), `${topic} needs a primary work route`);
+    }
+    const firstSection = tokens.findIndex((token) => headingLevel(token) === 2);
+    assert.notEqual(firstSection, -1);
+    assert.ok(
+      markdownLinkDestinations(
+        tokens
+          .slice(0, firstSection)
+          .map((token) => token.text)
+          .join("\n"),
+      ).includes("evolve.md#emergencies-and-exceptions"),
+      "urgent containment must be discoverable before routine work routes",
+    );
+  };
+  assertHierarchy(source);
+  assert.throws(
+    () => assertHierarchy(source.replace(/^  - /gmu, "  ")),
+    /one primary destination per work question/u,
+  );
+  assert.throws(
+    () =>
+      assertHierarchy(
+        source.replace("(evolve.md#emergencies-and-exceptions)", "(evolve.md)"),
+      ),
+    /urgent containment/u,
+  );
+});
+
 test("L1 and L2 work records use the full charter boundary at both task routes", () => {
   for (const [relative, opening] of [
     ["docs/decide.md", "A low-risk matter"],
@@ -296,8 +350,9 @@ test("data entry routes readers to recovery and current qualification", () => {
   assert.ok(opening, "data work needs a visible point-of-use entry");
   const destinations = destinationsOf(introduction);
   for (const destination of [
-    "#ownership-and-change-boundaries",
+    "#change-shared-or-production-data",
     "#move-from-a-signal-to-controlled-use",
+    "#admit-a-durable-data-asset",
   ]) {
     assert.ok(
       destinations.includes(destination),
@@ -305,15 +360,15 @@ test("data entry routes readers to recovery and current qualification", () => {
     );
   }
   const lateRecovery = source.replaceAll(
-    "(#ownership-and-change-boundaries)",
+    "(#change-shared-or-production-data)",
     "(charter.md)",
   );
   assert.equal(
     destinationsOf(
       introductionOf(
-        `${lateRecovery}\n[Late recovery](#ownership-and-change-boundaries)\n`,
+        `${lateRecovery}\n[Late recovery](#change-shared-or-production-data)\n`,
       ),
-    ).includes("#ownership-and-change-boundaries"),
+    ).includes("#change-shared-or-production-data"),
     false,
     "a link after the first topic section cannot satisfy the reader entry",
   );
@@ -357,6 +412,63 @@ test("emergency containment routes to hard boundaries and both risk entries", ()
       `${entry} must route to emergency containment without restating it`,
     );
   }
+});
+
+test("reader handoffs link to the section that owns the named decision", () => {
+  const journeys = [
+    ["docs/README.md", "data.md#admit-a-durable-data-asset"],
+    ["docs/README.md", "deliver.md#close-the-work"],
+    ["docs/README.md", "evolve.md#emergencies-and-exceptions"],
+    ["docs/README.md", "communicate.md#structure-an-important-update"],
+    ["docs/communicate.md", "#structure-an-important-update"],
+    ["docs/charter.md", "data.md#admit-a-durable-data-asset"],
+    ["docs/decide.md", "communicate.md#structure-a-decision-document"],
+    ["docs/human-agent.md", "decide.md#decision-readiness"],
+  ];
+  for (const [relative, destination] of journeys) {
+    const source = readFileSync(path.join(root, relative), "utf8");
+    assert.ok(
+      markdownLinkDestinations(source).includes(destination),
+      `${relative} must hand off to ${destination}, not a broader parent`,
+    );
+  }
+});
+
+test("important-update entry lands on its actionable fields", () => {
+  const relative = "docs/communicate.md";
+  const source = readFileSync(path.join(root, relative), "utf8");
+  const assertUpdateSection = (text) => {
+    const tokens = markdownTokens(text, relative);
+    const start = tokens.findIndex(
+      (token) =>
+        headingLevel(token) === 3 &&
+        headingText(token) === "Structure an Important Update",
+    );
+    assert.notEqual(start, -1, "updates need their own navigable subsection");
+    const fields = tokens
+      .slice(start + 1)
+      .find((token) => !token.type.startsWith("lineEnding"));
+    assert.equal(fields.type, "listUnordered");
+    assert.equal(
+      fields.children.filter((token) => token.type === "content").length,
+      4,
+    );
+    assert.match(
+      markdownText(fields),
+      /Conclusion or present state:.*Basis and impact:.*Decision needed:.*Next action:/su,
+    );
+  };
+  assertUpdateSection(source);
+  assert.throws(
+    () =>
+      assertUpdateSection(
+        source.replace(
+          "### Structure an Important Update",
+          "For an important update:",
+        ),
+      ),
+    /navigable subsection/u,
+  );
 });
 
 test("navigation requires a rendered link rather than an example or image", () => {

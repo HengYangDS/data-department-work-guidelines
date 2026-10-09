@@ -18,6 +18,11 @@ its depth. Do not begin by filling a template or collecting material. If the
 decision owner or subject is unknown, pause the affected action; test a proposed
 answer against shared criteria, counterexamples, and stated limits.
 
+For an unclear task, [frame the problem](#frame-the-right-problem). For a
+clear choice, [compare options](#make-the-choice-comparable-and-actionable).
+[Record the choice and next action](#record-the-choice-and-next-action) after
+an authorized decision.
+
 ## Frame the Right Problem
 
 In the existing ticket, discussion, or proposal, answer:
@@ -70,23 +75,30 @@ so explicitly.
 
 ## Use the Smallest Sufficient Model
 
-1. Define the central concepts and subjects. Keep one meaning for each concept
-   within the same discussion, then identify causal, dependency, constraint, and
-   feedback relationships. Choose a useful way to divide the problem and explain
-   how the parts connect to the decision. Show material gaps, shared causes, and
-   cross-cutting constraints; do not force interacting parts into non-overlapping
-   boxes or count the same effect twice. A long list or polished prose cannot
-   substitute for that model.
-2. Attach source and time to important facts; state how each unknown affects the
-   decision. Separate observation from explanation.
-3. Offer falsifiable hypotheses. Check counterexamples, the baseline, and the
-   option of not acting. Prefer the smallest experiment that distinguishes
-   plausible explanations. Rank candidates by explanatory power, likelihood
-   under the known facts, and the cost of a decisive test. An easy test does not
-   make a weak explanation more likely.
-4. Give a bounded conclusion: what the evidence supports, your confidence and
-   limits, what remains possible, the next verification action, and what later
-   observation would change the judgment.
+1. **Model the relationships.** Define the central concepts and subjects. Keep
+   one meaning for each concept within the same discussion, then identify
+   causal, dependency, constraint, and feedback relationships.
+
+   Choose a useful way to divide the problem and explain how the parts connect
+   to the decision. Show material gaps, shared causes, and cross-cutting
+   constraints; do not force interacting parts into non-overlapping boxes or
+   count the same effect twice. A long list or polished prose cannot substitute
+   for that model.
+
+2. **Bind the observations.** Attach source and time to important facts; state
+   how each unknown affects the decision. Separate observation from explanation.
+
+3. **Test the hypotheses.** Offer falsifiable hypotheses. Check counterexamples,
+   the baseline, and the option of not acting. Prefer the smallest experiment
+   that distinguishes plausible explanations.
+
+   Rank candidates by explanatory power, likelihood under the known facts, and
+   the cost of a decisive test. An easy test does not make a weak explanation
+   more likely.
+
+4. **Bound the conclusion.** Give a bounded conclusion: what the evidence
+   supports, your confidence and limits, what remains possible, the next
+   verification action, and what later observation would change the judgment.
 
 ### Diagnose a Failure and Its Prevention Gap
 
@@ -116,24 +128,29 @@ experience, or “best practice” without checking its applicable boundary.
 
 ## Make the Choice Comparable and Actionable
 
-For one decision, include feasible options, including the status quo. Compare
-them on the same basis: benefit, cost, risk, reversibility, and opportunity
-cost. Prefer an option that solves the framed problem, removes the main
-failure mode, and operates within current boundaries and resources. It should
-be verifiable, observable, and recoverable, reduce total maintenance and
-reliance on individual memory, repeated coordination, and manual rescue, and
-have clear exit and replacement conditions. Novelty, completeness, or
-popularity does not establish suitability. A recommendation states its
-premises, strongest objection, first step if chosen, and revisit trigger. The
-authorized person decides; a long analysis cannot stand in for authorization.
+- **Compare options:** Include feasible options, including the status quo.
+  Compare them on the same basis: benefit, cost, risk, reversibility, and
+  opportunity cost.
+- **Test the fit:** Prefer an option that solves the framed problem, removes
+  the main failure mode, and operates within current boundaries and resources.
+  It should be verifiable, observable, and recoverable, reduce total maintenance
+  and reliance on individual memory, repeated coordination, and manual rescue,
+  and have clear exit and replacement conditions. Novelty, completeness, or
+  popularity does not establish suitability.
+- **Recommend:** State the premises, strongest objection, first step if chosen,
+  and revisit trigger.
+
+The authorized person decides; a long analysis cannot stand in for authorization.
 
 ### Record the Choice and Next Action
 
-Once a choice is made, use the [decision-document order](communicate.md#write-for-fidelity-clarity-and-elegance)
+Once a choice is made, use the [decision-document order](communicate.md#structure-a-decision-document)
 and record what was decided, by whom, on what date, and why, with its revisit
 trigger in the existing work record. Record the first action,
 its owner, and its completion condition there too. A deadline says when a
 decision is needed; it does not establish when approval occurred.
+
+### Decision Readiness
 
 When a proposal cannot yet proceed, distinguish its decision readiness from the
 state of execution:

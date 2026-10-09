@@ -199,6 +199,17 @@ These groups aid discovery; they neither prescribe a workflow nor move a rule
 away from its seven existing topic owners. Keep repository maintenance in a
 separate final section. Inspect the whole page, not only the linked labels.
 
+Separate each task-map destination from its related reading through native
+nested lists. Give urgent failures an immediate route and escalation its own
+entry instead of appending them to routine improvement. Keep fidelity, clarity,
+and elegance as individually navigable subsections; separate each aim from its
+editing practices without dropping a sentence or reducing elegance to polish.
+Give important updates their own subsection and route both entries directly to
+its conclusion, basis, decision request, and next action; purpose classification
+stays available without becoming a detour. Inspect the actual Forge reading
+measure before changing a preview width; local CSS is a review aid, not shipped
+style or hosted acceptance.
+
 Compose each topic around the reader's next decision. Keep its use statement
 short, then state the stop and verification boundaries in a distinct paragraph.
 Give long sections meaningful subheadings instead of relying on emphasis or
@@ -209,6 +220,17 @@ charter's work rules. Preserve each actor, condition, responsibility, claim
 limit, and referenced section anchor. These are reading choices, not new policy,
 roles, approvals, or proof of aesthetics. Inspect complete current-source pages
 and follow member and Agent paths before recording the editorial judgment.
+
+Route the task map and topic openings to the decisive section, not only the
+page title. A link naming admission, completion, decision-document order, or
+readiness must land on that subject's actual owner. Move completion and durable
+admission ahead of their supporting reference tables; preserve the complete
+conditions and qualifications. Expose compound action groups only where they
+help the next decision, rather than turning every paragraph into a checklist.
+Keep the market-history example explicitly illustrative, with a conditional
+bounded conclusion and next verification action, not an implied incident,
+permission, or adoption result. Check these reader journeys against parsed
+links and complete rendered sections.
 
 Expose required inputs and conjunctive admission conditions as short lists at
 their topic owners. Give completion a peer heading rather than burying it under
@@ -245,6 +267,13 @@ the unmet/met acceptance branches without repeating the table as a sequence
 diagram. People retain direction, authority, and responsibility; an authorized
 acceptor may be the task lead when authorized. The reading form creates no new
 role, permission, or acceptance ceremony.
+
+Keep complex analysis steps readable as modeling, observations, hypotheses,
+and conclusion. Separate coaching alignment, decision review, and the next
+improvement; group a handoff by work, verification, and limits. Split long
+examples at the change from facts to containment to a decision request. These
+choices increase vertical space but expose the judgments a reader must make;
+they preserve the existing instructions and add no required carrier or stage.
 
 Use a diagram only when its relationships are clearer than the corresponding
 steps or table. Keep any editable diagram source beside its authoritative rules
