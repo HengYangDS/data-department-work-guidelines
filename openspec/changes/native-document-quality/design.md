@@ -275,6 +275,33 @@ examples at the change from facts to containment to a decision request. These
 choices increase vertical space but expose the judgments a reader must make;
 they preserve the existing instructions and add no required carrier or stage.
 
+Keep a member's output check beside the shared execution and acceptance steps;
+place Agent execution and parallel work in their own peer section. Give coaching
+and controlled shared/production data changes direct task-map routes to their
+existing rules. Show full source checks before conditional runtime and native-tool
+preparation in Contributing, without hiding prerequisites or acquisition limits.
+Represent the charter's existing authority priority as an ordered list; its
+waiver and fact-authority limits remain binding. These forms change navigation
+and reading order, not powers, procedures, or acceptance.
+
+Keep the root reading action immediately after its purpose. General delivery-risk
+review and management duties are peers of coaching and cadence, not their
+subtopics. The three writing aims stay together; decision-document order and
+sending review have separate peer sections, with reordering and appendix limits
+beside the order they qualify. Place pre-action and completion gates before the
+working-loop reference. Keep documentation-editing duties outside the source-check
+procedure in Contributing. Separate download staging, cache publication, cleanup,
+child-process controls, and archive extraction into their existing semantic
+boundaries. Keep minimum duties apart from the conditional exceptional-performance
+standard, with its applicability limit beside it. Preserve each original sentence
+and anchor when moving it. Link the OpenSpec entry to accepted requirements and
+the current proposal, design, and sole task ledger. Keep completed-source
+retirement obligations at the retirement owner rather than under decision form,
+and give the proposal's source-review item distinct paragraphs for clause review,
+prevention and coaching, and review-cycle limits without splitting its obligation.
+Actual rendered composition, not heading-level tests, determines whether the
+reading form improves.
+
 Use a diagram only when its relationships are clearer than the corresponding
 steps or table. Keep any editable diagram source beside its authoritative rules
 and complete text equivalent; use native grammar rather than private CSS or

@@ -29,14 +29,18 @@ and history capabilities remain product dependencies.
   Do not restore old prose, formats, or workflows by default. Compare original
   clauses and revised topics, including decision constraints and dates,
   execution costs, data acceptance, communication, human judgment,
-  responsibility, evidence, and event-driven learning. Keep precautionary
-  task-specific prevention assets distinct from the observed-failure threshold
-  for admission as department practice. Keep task-start clarity, coaching where
-  it is needed, and immediate correction. Preserve weekly, monthly, and quarterly
-  review purposes with explicit outputs and justified interval changes rather
+  responsibility, evidence, and event-driven learning.
+
+  Keep precautionary task-specific prevention assets distinct from the
+  observed-failure threshold for admission as department practice. Keep task-start
+  clarity, coaching where it is needed, and immediate correction.
+
+  Preserve weekly, monthly, and quarterly review purposes with explicit outputs
+  and justified interval changes rather
   than fixed sample counts or meeting lengths. Remove the mandatory editing
   fraction, rigid decomposition, and extra supervisor step for routine work
   without weakening quality or authority boundaries or adding all-member reports.
+
 - Give Git-selected source one native owner per format and one configuration
   owner per concern. Prettier owns Markdown spacing and container layout on
   identical fix/check inputs, and handles supported code and structured data;

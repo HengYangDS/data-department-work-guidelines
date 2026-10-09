@@ -31,18 +31,6 @@ for the required record and safeguards, using the existing ticket, review, or
 project document.
 Urgent containment follows [emergencies and exceptions](evolve.md#emergencies-and-exceptions).
 
-## The Working Loop
-
-1. **Frame** the subject, outcome, and limits.
-2. **Analyze** facts, the model, and alternatives.
-3. **Decide** within authority.
-4. **Execute** bounded action.
-5. **Verify** current evidence.
-6. **Learn** what to retain, revise, or retire.
-
-New evidence or changed risk returns to Frame. The six stages organize the work;
-they do not replace the duties above.
-
 ## Before Acting
 
 - **What is being done, and why now?** Deliverable, purpose, target, success
@@ -89,6 +77,18 @@ directory or report to prove effort.
 For data delivery, see
 [data quality and adoption](data.md); for this repository's source lifecycle,
 see [repository governance](governance/ethos.md).
+
+## The Working Loop
+
+1. **Frame** the subject, outcome, and limits.
+2. **Analyze** facts, the model, and alternatives.
+3. **Decide** within authority.
+4. **Execute** bounded action.
+5. **Verify** current evidence.
+6. **Learn** what to retain, revise, or retire.
+
+New evidence or changed risk returns to Frame. The six stages organize the work;
+they do not replace the duties above.
 
 ## Name the State, Not the Effort
 
