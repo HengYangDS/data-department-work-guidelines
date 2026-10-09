@@ -86,6 +86,7 @@ test("the public test command bounds workers without reducing its discovered inv
     for (const file of ["tests/offline/archive.test.mjs","tests/offline/build.test.mjs","tests/offline/licenses.test.mjs","tests/offline/install.test.mjs","tests/offline/ownership.test.mjs","tests/runtime/diagnostics.test.mjs","tests/offline/npm.test.mjs","tests/offline/downloads.test.mjs","tests/offline/acquisition.test.mjs"]) assert.ok(expected.includes(file), file);
     assert.equal(expected.includes("tests/offline/fixtures.mjs"), false);
     assert.equal(expected.includes("tests/offline-bundle.test.mjs"), false);
+    assert.ok(expected.includes("tests/offline/commands.test.mjs"));
     const checkedSpawn = childProcess.spawnSync;
     childProcess.spawnSync = (command, args, options) => {
       if (args?.[0] === "--test") assert.deepEqual(args.slice(2), expected);
