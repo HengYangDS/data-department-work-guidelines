@@ -134,6 +134,13 @@ in process and source-selection utilities. Its tests keep telemetry, native
 root identity, complete findings, and the real official diagnostic journey
 together. The general runtime has no compatibility export.
 
+Decision validation lives in `tools/docs/decisions.mjs`; configuration and
+reader-route checks keep their own governance owner. Source tests group metadata,
+selection, and links separately; Markdown semantics and spacing, native formatting,
+prose diagnostics, and process execution have focused suites. Shared fixtures
+retain their original source and cleanup behavior, and the public test command
+discovers the complete hierarchy without loading fixtures as tests.
+
 #### Source selection and observations
 
 The existing source verifier reports its real repository, commit and tree,

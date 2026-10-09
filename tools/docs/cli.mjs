@@ -37,7 +37,6 @@ async function reportVerificationContext() {
 async function checkRepository() {
   const {
     checkConfigurationLayout,
-    checkDecisions,
     checkLineEndingAttributes,
     checkLicense,
     checkNavigation,
@@ -55,6 +54,7 @@ async function checkRepository() {
   const { validateOpenSpec } = await import("./openspec.mjs");
   const { checkChangelog } = await import("./changelog.mjs");
   const { checkCi } = await import("./ci.mjs");
+  const { checkDecisions } = await import("./decisions.mjs");
   checkConfigurationLayout();
   checkProfile();
   checkLineEndingAttributes();
@@ -142,7 +142,8 @@ try {
     }
     case "boundary": {
       if (arguments_.length) throw new Error("boundary accepts no arguments");
-      const { checkDecisions, checkNoScope } = await import("./governance.mjs");
+      const { checkNoScope } = await import("./governance.mjs");
+      const { checkDecisions } = await import("./decisions.mjs");
       checkDecisions();
       checkNoScope();
       break;
