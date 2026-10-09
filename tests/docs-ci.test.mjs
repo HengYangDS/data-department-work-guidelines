@@ -2118,9 +2118,8 @@ test("Windows supply observes native identities before locked selection", () => 
   ];
   const selectedObservation = [
     "mise exec --locked -- node -p 'JSON.stringify({executable:process.execPath,arch:process.arch,version:process.version})'",
-    "mise exec --locked -- npm --version",
+    "mise exec --locked -- npm --loglevel=verbose --version",
     "mise exec --locked -- npm config get prefix",
-    `mise exec --locked -- node --input-type=module -e 'import {npmCliPath} from "./tools/ci/offline-bundle.mjs"; import {readFileSync} from "node:fs"; import path from "node:path"; const entry=npmCliPath(); console.log(JSON.stringify({entry,npm:JSON.parse(readFileSync(path.resolve(entry,"../../package.json"))).version,selector:process.env.npm_execpath??null}));'`,
   ];
   const pipeline = YAML.parse(gitlab);
   for (const name of [
