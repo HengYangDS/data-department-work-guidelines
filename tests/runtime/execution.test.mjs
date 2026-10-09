@@ -87,6 +87,12 @@ test("the public test command bounds workers without reducing its discovered inv
     assert.equal(expected.includes("tests/offline/fixtures.mjs"), false);
     assert.equal(expected.includes("tests/offline-bundle.test.mjs"), false);
     assert.ok(expected.includes("tests/offline/commands.test.mjs"));
+    for (const name of ["platforms", "selectors", "install", "transport", "cache"]) assert.ok(expected.includes("tests/supply/" + name + ".test.mjs"));
+    for (const name of ["profile", "contribution", "configuration"]) assert.ok(expected.includes("tests/governance/" + name + ".test.mjs"));
+    for (const name of ["entry", "links", "workflows"]) assert.ok(expected.includes("tests/navigation/" + name + ".test.mjs"));
+    for (const name of ["format", "tags", "selection", "navigation"]) assert.ok(expected.includes("tests/changelog/" + name + ".test.mjs"));
+    assert.ok(expected.includes("tests/openspec/routes.test.mjs"));
+    for (const file of ["tests/governance/fixtures.mjs", "tests/changelog/fixtures.mjs", "tests/native-supply.test.mjs", "tests/docs-governance.test.mjs", "tests/changelog.test.mjs"]) assert.equal(expected.includes(file), false, file);
     const checkedSpawn = childProcess.spawnSync;
     childProcess.spawnSync = (command, args, options) => {
       if (args?.[0] === "--test") assert.deepEqual(args.slice(2), expected);

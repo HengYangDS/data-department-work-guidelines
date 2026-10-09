@@ -149,6 +149,13 @@ diagnostics, license notices, reservations, cleanup, and exact source binding.
 Cold commands must load before dependency installation; the native Markdown
 parser remains confined to build-time license inspection.
 
+Native supply tests separate platform selection, installation, transport, and
+cache ownership. Governance tests separate profile, configuration, contributor,
+and reader journeys; Changelog tests separate grammar, tags, release selection,
+and peer navigation. Shared fixtures retain their original declarations and
+cleanup. The full test command discovers each focused suite and excludes the
+retired monoliths and fixture carriers.
+
 #### Source selection and observations
 
 The existing source verifier reports its real repository, commit and tree,
