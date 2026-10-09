@@ -796,6 +796,8 @@ function validateGitLabNativeJobs(gitlab, base, kind, lane) {
     const job = gitlab[name];
     const resourceKeys =
       capabilities.system === "windows" ? ",resource_group" : "";
+    const suppliedCommands =
+      kind === "source" ? selectedNativeSourceSupply : nativeRuntimeSupply;
     if (capabilities.system === "windows") {
       const resource = gitlab["docs:verify:windows"]?.resource_group;
       if (
@@ -817,10 +819,7 @@ function validateGitLabNativeJobs(gitlab, base, kind, lane) {
       Object.keys(job).sort().join(",") !==
         `before_script,extends,inherit${resourceKeys}${rules ? ",rules" : ""},script,tags,variables` ||
       job.extends !== `.${base}` ||
-      JSON.stringify(sourceSupply(job)) !==
-        JSON.stringify(
-          kind === "source" ? selectedNativeSourceSupply : nativeRuntimeSupply,
-        ) ||
+      !isDeepStrictEqual(sourceSupply(job), suppliedCommands) ||
       !isDeepStrictEqual(job.variables, nativeRuntimeVariables) ||
       !isDeepStrictEqual(
         job.script,
