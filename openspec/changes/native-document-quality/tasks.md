@@ -26,9 +26,9 @@
       review](design.md#review-original-duties-at-seven-topic-owners).
       Keep each applicable duty at one topic owner, account for justified changes
       or removals, and verify no unexplained loss through
-      fixed-source editorial review and source quality checks. Retain the
-      original one-third editing exercise without a deletion quota or loss of
-      facts, reasoning, limits, or responsibilities. Preserve narrower
+      fixed-source editorial review and source quality checks. Preserve facts,
+      reasoning, limits, and responsibilities without a fixed deletion exercise.
+      Preserve narrower
       applicable responsibilities, not every reviewer suggestion, without another
       report, parser, evaluator, meeting, approval, or meaning gate.
       State fidelity, clarity, and elegance in their full meanings; preserve

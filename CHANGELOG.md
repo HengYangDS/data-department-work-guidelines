@@ -148,8 +148,6 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   through the existing consumer without waiving the dependency finding.
 - Require a resolving action and revisit time for deferred decisions in Agent
   handoffs; a trigger alone cannot leave work waiting indefinitely.
-- Restore the one-third editing exercise without a deletion quota or loss of
-  facts, reasoning, limits, or responsibilities.
 - Restore the ban on vague assurances across answers and meeting records, not
   only updates and escalations. Keep the rule in the communication topic.
 - Require both Forges' declared verification deadlines, select worktree
