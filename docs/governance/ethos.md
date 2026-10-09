@@ -263,12 +263,15 @@ destination executor's ownership; it grants no use or distribution approval.
 CI bootstraps Node/npm and acquires the exact asset before offline execution.
 That whole job is not network-isolation proof. Qualify cold local use separately
 with fresh HOME, no inherited configuration/cache, and denied remote connections.
-Run the full graph on every claimed host with actual npm recorded. The manifest
-supplies macOS x64, but current CI does not qualify that ABI. On Windows ARM64,
-prefer native ARM64 Node. When the manifest has no ARM64 tool asset, use its
-declared pinned x64 asset under Windows emulation. Tool compatibility does not
-require emulating Node too. Qualify the actual combination and record host,
-Node-process, and tool architectures separately. For managed tools, invoke
+Run the full graph on every claimed host with actual npm recorded.
+
+The manifest supplies macOS x64, but current CI does not qualify that ABI. On
+Windows ARM64, prefer native ARM64 Node. When the manifest has no ARM64 tool
+asset, use its declared pinned x64 asset under Windows emulation. Tool
+compatibility does not require emulating Node too. Qualify the actual
+combination and record host, Node-process, and tool architectures separately.
+
+For managed tools, invoke
 `node tools/ci/install-native.mjs TOOL --print-spec` with the same Node executable
 used for verification. Record its selected asset `key` and digests, not a cache
 directory name.

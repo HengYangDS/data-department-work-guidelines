@@ -120,11 +120,16 @@ that failed, and explain why; a fix without changed judgment invites recurrence.
 
 ### Check the Reasoning
 
-Check the reasoning for correlation presented as causation, a case presented
-as a population, a necessary condition treated as sufficient, a later outcome
-used to infer a unique earlier cause, selective search for supporting
-evidence, criteria changed midstream, and an appeal to common sense,
-experience, or “best practice” without checking its applicable boundary.
+Check the reasoning for:
+
+- Correlation presented as causation.
+- A case presented as a population.
+- A necessary condition treated as sufficient.
+- A later outcome used to infer a unique earlier cause.
+- Selective search for supporting evidence.
+- Criteria changed midstream.
+- An appeal to common sense, experience, or “best practice” without checking its
+  applicable boundary.
 
 ## Make the Choice Comparable and Actionable
 

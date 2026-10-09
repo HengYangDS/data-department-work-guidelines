@@ -471,6 +471,82 @@ test("important-update entry lands on its actionable fields", () => {
   );
 });
 
+test("reasoning checks keep each distinction independently readable", () => {
+  const relative = "docs/decide.md";
+  const source = readFileSync(path.join(root, relative), "utf8");
+  const assertChecks = (text) => {
+    const tokens = markdownTokens(text, relative);
+    const start = tokens.findIndex(
+      (token) =>
+        headingLevel(token) === 3 &&
+        headingText(token) === "Check the Reasoning",
+    );
+    assert.notEqual(start, -1);
+    const end = tokens.findIndex(
+      (token, index) =>
+        index > start && headingLevel(token) > 0 && headingLevel(token) <= 3,
+    );
+    const list = tokens
+      .slice(start + 1, end < 0 ? undefined : end)
+      .find((token) => token.type === "listUnordered");
+    assert.ok(list, "reasoning checks need separately readable items");
+    assert.deepEqual(
+      list.children
+        .filter((token) => token.type === "content")
+        .map((token) => markdownText(token).replace(/\s+/gu, " ").trim()),
+      [
+        "Correlation presented as causation.",
+        "A case presented as a population.",
+        "A necessary condition treated as sufficient.",
+        "A later outcome used to infer a unique earlier cause.",
+        "Selective search for supporting evidence.",
+        "Criteria changed midstream.",
+        "An appeal to common sense, experience, or “best practice” without checking its applicable boundary.",
+      ],
+    );
+  };
+  assertChecks(source);
+  assert.throws(
+    () => assertChecks(source.replace(/^-(?= )/gmu, " ")),
+    /separately readable items/u,
+  );
+});
+
+test("platform qualification separates common, architecture, and tool evidence", () => {
+  const relative = "docs/governance/ethos.md";
+  const source = readFileSync(path.join(root, relative), "utf8");
+  const assertLayers = (text) => {
+    const tokens = markdownTokens(text, relative);
+    const start = tokens.findIndex(
+      (token) =>
+        headingLevel(token) === 3 &&
+        headingText(token) === "Qualify Each Platform",
+    );
+    assert.notEqual(start, -1);
+    const end = tokens.findIndex(
+      (token, index) =>
+        index > start && headingLevel(token) > 0 && headingLevel(token) <= 3,
+    );
+    const paragraphs = [
+      ...walkMarkdown(tokens.slice(start + 1, end < 0 ? undefined : end)),
+    ]
+      .filter((token) => token.type === "paragraph")
+      .map((token) => markdownText(token).replace(/\s+/gu, " ").trim());
+    assert.equal(paragraphs.length, 3, "platform readers need distinct layers");
+    assert.ok(paragraphs[0].startsWith("CI bootstraps Node/npm"));
+    assert.ok(paragraphs[1].startsWith("The manifest supplies macOS x64"));
+    assert.ok(paragraphs[2].startsWith("For managed tools, invoke"));
+  };
+  assertLayers(source);
+  assert.throws(
+    () =>
+      assertLayers(
+        source.replace("\n\nThe manifest supplies", "\nThe manifest supplies"),
+      ),
+    /distinct layers/u,
+  );
+});
+
 test("navigation requires a rendered link rather than an example or image", () => {
   fixture((directory) => {
     const entry = path.join(directory, "README.md");
