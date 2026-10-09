@@ -1,11 +1,36 @@
 import assert from "node:assert/strict";
-import { readFileSync, writeFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
+import {
+  cpSync,
+  mkdirSync,
+  readFileSync,
+  rmSync,
+  symlinkSync,
+  writeFileSync,
+} from "node:fs";
 import path from "node:path";
 import { test } from "node:test";
 import { parse as parseToml, stringify as stringifyToml } from "smol-toml";
 import { checkProfile } from "../../tools/docs/governance.mjs";
 import { root } from "../../tools/docs/runtime.mjs";
 import { fixture } from "./fixtures.mjs";
+
+function profileFixture(run) {
+  return fixture((directory) => {
+    mkdirSync(path.join(directory, "tools", "docs"), { recursive: true });
+    cpSync(
+      path.join(root, "tools", "docs", "cli.mjs"),
+      path.join(directory, "tools", "docs", "cli.mjs"),
+    );
+    const initialized = spawnSync("git", ["init", "--quiet", directory], {
+      encoding: "utf8",
+      timeout: 10_000,
+    });
+    assert.ifError(initialized.error);
+    assert.equal(initialized.status, 0, initialized.stderr);
+    return run(directory);
+  });
+}
 
 test("publication verification declares the complete local tool graph", () => {
   const release = parseToml(
@@ -18,7 +43,7 @@ test("publication verification declares the complete local tool graph", () => {
 });
 
 test("profile rejects a third proof gate and an old shell entrypoint", () => {
-  fixture((directory) => {
+  profileFixture((directory) => {
     checkProfile(directory);
     const file = path.join(directory, ".ethos", "profile.toml");
     const original = readFileSync(file, "utf8");
@@ -45,7 +70,7 @@ test("profile rejects a third proof gate and an old shell entrypoint", () => {
 });
 
 test("profile requires product-owned native evidence on both document gates", () => {
-  fixture((directory) => {
+  profileFixture((directory) => {
     const file = path.join(directory, ".ethos", "profile.toml");
     const original = readFileSync(file, "utf8");
     const behavior =
@@ -68,7 +93,7 @@ test("profile requires product-owned native evidence on both document gates", ()
 });
 
 test("profile preserves the dimensions and trust boundary of its native gates", () => {
-  fixture((directory) => {
+  profileFixture((directory) => {
     const file = path.join(directory, ".ethos", "profile.toml");
     const original = parseToml(readFileSync(file, "utf8"));
     assert.doesNotThrow(() => checkProfile(directory));
@@ -104,7 +129,7 @@ test("profile preserves the dimensions and trust boundary of its native gates", 
 });
 
 test("profile admits every tracked candidate without an enumerated path list", () => {
-  fixture((directory) => {
+  profileFixture((directory) => {
     const file = path.join(directory, ".ethos", "profile.toml");
     const original = readFileSync(file, "utf8");
     writeFileSync(
@@ -115,5 +140,79 @@ test("profile admits every tracked candidate without an enumerated path list", (
       ),
     );
     assert.throws(() => checkProfile(directory), /all tracked candidates/u);
+  });
+});
+
+test("profile accepts a different relative source without changing gate meaning", () => {
+  profileFixture((directory) => {
+    const file = path.join(directory, ".ethos", "profile.toml");
+    const original = readFileSync(file, "utf8");
+    const entry = path.join(directory, "tools", "docs", "verification.mjs");
+    cpSync(path.join(directory, "tools", "docs", "cli.mjs"), entry);
+    assert.deepEqual(
+      readFileSync(entry),
+      readFileSync(path.join(directory, "tools", "docs", "cli.mjs")),
+    );
+    writeFileSync(
+      file,
+      original.replaceAll("tools/docs/cli.mjs", "tools/docs/verification.mjs"),
+    );
+    assert.doesNotThrow(() => checkProfile(directory));
+  });
+});
+
+test("profile requires selected regular source rather than a remembered path", () => {
+  profileFixture((directory) => {
+    const file = path.join(directory, ".ethos", "profile.toml");
+    const original = readFileSync(file, "utf8");
+    rmSync(path.join(directory, "tools", "docs", "cli.mjs"));
+    assert.throws(() => checkProfile(directory), /repository source/u);
+
+    mkdirSync(path.join(directory, "build"));
+    cpSync(
+      path.join(root, "tools", "docs", "cli.mjs"),
+      path.join(directory, "build", "verification.mjs"),
+    );
+    writeFileSync(path.join(directory, ".gitignore"), "/build/\n");
+    writeFileSync(
+      file,
+      original.replaceAll("tools/docs/cli.mjs", "build/verification.mjs"),
+    );
+    assert.throws(() => checkProfile(directory), /repository source/u);
+
+    symlinkSync(
+      path.join(root, "tools", "docs"),
+      path.join(directory, "linked"),
+      "junction",
+    );
+    writeFileSync(
+      file,
+      original.replaceAll("tools/docs/cli.mjs", "linked/cli.mjs"),
+    );
+    assert.throws(() => checkProfile(directory), /repository source/u);
+  });
+});
+
+test("profile retains direct Node source invocation and each gate's arguments", () => {
+  profileFixture((directory) => {
+    const file = path.join(directory, ".ethos", "profile.toml");
+    const original = parseToml(readFileSync(file, "utf8"));
+    const invalidCommands = [
+      [0, [process.execPath, "tools/docs/cli.mjs", "check"]],
+      [0, ["node", "--eval", "process.exit(0)"]],
+      [0, ["node", path.join(directory, "tools", "docs", "cli.mjs"), "check"]],
+      [0, ["node", "../tools/docs/cli.mjs", "check"]],
+      [0, ["node", "tools/docs/cli.mjs", "verify"]],
+      [1, ["node", "tools/docs/cli.mjs", "format"]],
+    ];
+    for (const [index, command] of invalidCommands) {
+      const altered = structuredClone(original);
+      altered.proof.gates[index].command = command;
+      writeFileSync(file, stringifyToml(altered));
+      assert.throws(
+        () => checkProfile(directory),
+        /portable repository entrypoint/u,
+      );
+    }
   });
 });

@@ -21,6 +21,7 @@ import {
   root,
   run,
   gitFiles,
+  managedFileExists,
   sourceAttributes,
   filesUnder,
 } from "./runtime.mjs";
@@ -279,10 +280,8 @@ export function checkProfile(repository = root) {
       "profile proof dimensions must select their native document gates",
     );
   }
-  const commands = [
-    ["node", "tools/docs/cli.mjs", "check"],
-    ["node", "tools/docs/cli.mjs", "format", "--check"],
-  ];
+  const argumentsByGate = [["check"], ["format", "--check"]];
+  const sources = new Set(gitFiles(repository));
   const verificationProviders = [
     ["ethos.adapters.gates.code_quality:behavior_report"],
     ["ethos.adapters.gates.code_quality:static_report"],
@@ -292,9 +291,27 @@ export function checkProfile(repository = root) {
     { kind: "lint", evidence_class: "contract" },
   ];
   for (const [index, gate] of profile.proof.gates.entries()) {
-    if (JSON.stringify(gate.command) !== JSON.stringify(commands[index])) {
+    const [executable, source, ...arguments_] = gate.command ?? [];
+    if (
+      executable !== "node" ||
+      typeof source !== "string" ||
+      source.startsWith("-") ||
+      /[\\:\u0000]/u.test(source) ||
+      source
+        .split("/")
+        .some((part) => !part || part === "." || part === "..") ||
+      !isDeepStrictEqual(arguments_, argumentsByGate[index])
+    ) {
       throw new Error(
         `profile ${gate.id} must invoke the portable repository entrypoint`,
+      );
+    }
+    if (
+      !sources.has(source) ||
+      !managedFileExists(path.join(repository, source), repository)
+    ) {
+      throw new Error(
+        `profile ${gate.id} must invoke selected regular repository source: ${source}`,
       );
     }
     if (
