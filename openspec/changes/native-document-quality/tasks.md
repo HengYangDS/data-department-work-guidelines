@@ -227,13 +227,11 @@
       Refresh immutable CI action pins from official stable
       releases, verify the explicit Node setup contract and real refusal cases,
       and preserve complete upstream finding reports and selected-route limits.
-      The download-error repair is signed at `4a56d2f`. Its 313-case full verifier,
-      fresh macOS offline clone, installed exact-HEAD two-gate proof, and current
-      ETHOS source-native two-gate diagnostic pass. Original lint, source-fence,
-      caller-supply, and local HTTP fixture failures remain conserved in
+      Preserve original download-boundary failures and qualification evidence in
       non-authorizing
       Attestation `816cb6432b150825c22073cce0a89e6632721aa0477620b44496dab739166162`.
-      Windows, both Forges, and accepted shared-runtime qualification remain open.
+      Complete Windows, both-Forge, and accepted shared-runtime checks before
+      closing this task.
 
 - [x] 2.39 Isolate native-cache rejection fixtures from inherited explicit
       tool selectors. Preserve selector precedence and the caller's environment;
