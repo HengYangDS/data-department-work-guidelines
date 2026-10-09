@@ -1,9 +1,10 @@
-# quality
+# quality Specification
 
 ## Purpose
 
-Define the documentation repository's quality boundary: checks establish source
-properties, not Change authority, remote delivery, or team adoption.
+Define English source, native formatting and prose, reader links, decision-record
+form, and configuration ownership. These checks establish source properties,
+not Change authority, remote delivery, or team adoption.
 
 ## Requirements
 
@@ -130,367 +131,21 @@ Structural validity SHALL NOT claim to establish the quality of the reasoning.
 - **AND** ordinary sentences describing a command and bare evidence paths
   remain valid; inspected variables are never evaluated.
 
-### Requirement: Default proof and root binding are distinct
-
-The profile SHALL list exactly `docs-integrity` and `markdown-format` as
-default gates and descriptors. Both SHALL use a repository-relative Node
-entrypoint without executable bits or a POSIX shell. The former SHALL omit
-formatting; the latter owns it, while standalone verification runs it once.
-Installed ETHOS and Git-common hooks SHALL bind the selected worktree and
-enforce admission without a tracked adapter or optional gate.
-
-#### Scenario: Root-binding contract is audited
-
-- **WHEN** the repository validates `.ethos/profile.toml`
-- **THEN** its accepted typed profile parses with exactly the two default gate
-  descriptors
-- **AND THEN** no optional `repository-root-binding` descriptor is present.
-
-#### Scenario: Root binding is independently exercised
-
-- **WHEN** a contributor runs the installed ETHOS command from an owned
-  worktree and its Git-common hook protocol evaluates a staged path
-- **THEN** both resolve that selected worktree and apply current admission
-- **AND THEN** no repository shell adapter or optional gate changes the default
-  proof floor.
-
-#### Scenario: Format is checked once per verification path
-
-- **WHEN** a contributor invokes the standalone full verifier
-- **THEN** formatting runs once before the remaining checks
-- **AND WHEN** ETHOS executes the two default proof gates
-- **THEN** `docs-integrity` omits formatting and `markdown-format` owns it.
-
-### Requirement: One portable documentation verifier measures source properties
-
-One locked, shell-independent verifier SHALL check all Git-selected source
-formats supported by pinned native Prettier, including Markdown, code, JSON and
-YAML; native TOML formatting; Markdown lint; native Vale prose; pinned offline
-lychee links and fragments; metadata, English, spacing, decisions and navigation.
-The same repository-relative entry SHALL run locally and on both CI planes.
-Diagram, card, topic and evidence counts SHALL NOT determine validity.
-
-#### Scenario: Official OpenSpec reports success with findings
-
-- **WHEN** the official CLI exits successfully but its complete report contains
-  an INFO, WARNING, or ERROR finding, or the process emits standard error
-- **THEN** the existing verifier rejects the result and preserves the native
-  item, location, severity, and message
-- **AND** findings remain visible when standard error accompanies the report,
-  whether the process succeeds or fails
-- **AND** passing summary totals do not establish a clean source check.
-
-#### Scenario: Native prose has already rejected the source
-
-- **WHEN** native prose reports a source defect through the public integrity
-  command
-- **THEN** the command preserves that finding and fails before unrelated
-  Changelog history or official OpenSpec execution
-- **AND** valid prose still reaches every declared check, all distinct native
-  ancestry checks, and the complete test inventory with unchanged deadlines;
-  no cache, private history implementation, or weaker acceptance is added.
-
-#### Scenario: A strict native command fails with partial diagnostics
-
-- **WHEN** a native archive or source command emits output before failure or
-  timeout while its caller rejects standard error without requesting capture
-- **THEN** the existing process owner preserves both partial output streams
-  once and reports the failure or timeout
-- **AND** a successful command with warning output still fails without losing
-  its partial result; no extra executor or failure-suppression mode is added.
-
-#### Scenario: A contextual error wraps a native refusal
-
-- **WHEN** the process, bundle, or Changelog owner adds context to a native
-  process, filesystem, plugin, or Git error
-- **THEN** the contextual error retains the original error as its cause
-- **AND** the existing refusal message and owned-resource cleanup remain
-  observable; context must not erase native diagnosis.
-
-#### Scenario: Native execution cannot start or reaches its deadline
-
-- **WHEN** a command is missing or reaches its execution deadline
-- **THEN** the existing process error retains the original native error object,
-  including its code and command path
-- **AND** successful output, nonzero exit status, warning refusal, and single
-  replay of partial diagnostics keep their existing behavior.
-
-#### Scenario: Native history resolves one complete selection
-
-- **WHEN** Changelog validation selects its current comparison and tag refs
-- **THEN** one native Git batch resolves every selected reference to a commit
-  before native ancestry checks run for all distinct resolved pairs
-- **AND** missing objects, non-commit observations, incomplete line-delimited
-  output, or native warnings fail without accepting partial history
-- **AND** exact tag/HEAD identity, full test selection, and process deadlines
-  remain unchanged; native batch defaults add no Git version requirement,
-  local ancestry implementation, or cache.
-
-#### Scenario: Official validation evidence is incomplete or wrongly bound
-
-- **WHEN** a native report names another root, omits items or issue arrays,
-  repeats an item identity, omits a category selected by `--all` even when it
-  has no items, or reports counts inconsistent with its items
-- **THEN** the verifier rejects that evidence without a report waiver
-- **AND** official OpenSpec retains responsibility for validation and lifecycle;
-  the consumer does not replace its parser or admission.
-
-#### Scenario: Verification fixtures do not borrow prior local state
-
-- **WHEN** the complete verifier runs in a fresh checkout with the declared
-  tools and locked dependencies but no prior build directory or native cache
-- **THEN** source-link and concurrent-install tests create or model their own
-  exact prerequisites and complete without an earlier verification run
-- **AND** the public source-link test uses compact tracked and candidate source
-  with real Git selection and lychee, not unrelated history or documents
-- **AND** source confinement, exclusive copy, version, and mode-preservation
-  assertions remain unchanged; fixture children are removed afterward.
-
-#### Scenario: A public rejection regression carries only its native prerequisites
-
-- **WHEN** the focused prose/integrity regression runs against a temporary
-  repository
-- **THEN** it uses actual native executables, policies, dependencies, and Git
-  selection with compact positive source and complete local links
-- **AND** both command refusals, unchanged source, ignored-untracked exclusion,
-  force-tracked inclusion, each missing anchor, repair, and cleanup remain
-  checked without cloning unrelated history or repeatedly checking other documents
-- **AND** full source verification still selects every actual repository input
-  and test with the same workers and deadlines; no native report is fabricated.
-
-#### Scenario: Native format and lint fixtures select their complete relevant source
-
-- **WHEN** a focused native format or lint regression runs in a temporary Git
-  repository
-- **THEN** executable, policy, and dependency carriers remain present and are
-  consumed normally without becoming unrelated checked source
-- **AND** native Git inventory retains every sample, literal, ambient-policy
-  counterexample, archive input, and force-tracked source, including the observed
-  Markdown TOML policy; original assertions and deadlines remain unchanged
-- **AND** one formatting attempt uses one fresh native TOML formatter for matching
-  and output, preserving diagnostics and data without a cross-attempt cache
-- **AND** full repository verification still checks all selected source and tests;
-  the temporary fixture is removed after success or failure.
-
-#### Scenario: Navigation links are hidden in non-reader content
-
-- **WHEN** code, a comment, an unlinked image, escaped syntax, an unused
-  definition, or a shadowed reference replaces a required task route
-- **THEN** native Markdown link resolution rejects the missing reader route
-- **AND** those same examples cannot falsely count as repeated topic links.
-
-#### Scenario: A navigation anchor has no readable label
-
-- **WHEN** a required route has an empty label, only whitespace or invisible
-  formatting characters, or a linked image without descriptive alt text
-- **THEN** navigation rejects the missing reader route even if its destination
-  or optional title names the expected file
-- **AND** formatted text and descriptive linked-image alt text remain valid;
-  the native engine still owns link and reference resolution.
-
-#### Scenario: A reader uses a legitimate native Markdown route
-
-- **WHEN** a required route uses a titled, full, collapsed, or shortcut link,
-  a character reference, or a normalized repository-relative path
-- **THEN** navigation resolves its actual destination and first definition
-- **AND** real repeated topic routes remain rejected regardless of spelling;
-  native lychee still checks source targets and fragments.
-
-#### Scenario: A table source link is not visible in its rendered cell
-
-- **WHEN** a cell separator without an escape splits a required navigation
-  link, or places it beyond a GFM table's declared columns
-- **THEN** the existing navigation owner rejects the missing rendered route
-- **AND** ordinary links and escaped-pipe labels inside visible cells remain
-  valid; the official native table extension owns the cell boundaries.
-
-#### Scenario: A topic's reader cue is hidden or merely quoted as code
-
-- **WHEN** the use cue appears only in code, a comment, or an image instead of
-  the visible topic opening
-- **THEN** navigation rejects the missing reader entry
-- **AND** a visible cue with or without emphasis remains valid.
-
-#### Scenario: Native formatting is not narrowed by source location
-
-- **WHEN** Git selects a supported code or document file outside the usual code
-  directories or beneath a normally ignored local-state path
-- **THEN** the public formatter checks and writes that file through native
-  Prettier parser detection, without a private language or directory list
-- **AND** ambient ignore files cannot exempt already selected source.
-
-#### Scenario: Ignored local state is not formatting input
-
-- **WHEN** a defective supported file is untracked and ignored by Git
-- **THEN** both public formatting modes leave it outside their source inventory
-- **AND** unowned code formats fail explicitly rather than silently passing
-  or acquiring an overlapping formatter.
-
-#### Scenario: A diagram is removed without losing meaning
-
-- **WHEN** a redundant diagram is deleted and the remaining document preserves
-  its unique explanation and valid links
-- **THEN** documentation validation passes without a diagram-count waiver or
-  browser installation.
-
-#### Scenario: A public check is invoked without a POSIX shell
-
-- **WHEN** a supported host invokes `npm run verify` without a POSIX shell
-- **THEN** the check uses the same repository-relative Node entrypoint
-- **AND THEN** no repository-authored shell wrapper or browser is needed.
-
-#### Scenario: Multiple suites launch document-tool subprocesses
-
-- **WHEN** the standalone verifier runs its discovered quality-test inventory
-- **THEN** at most two test files execute concurrently on every platform
-- **AND** every discovered file still runs with unchanged failure and deadline
-  admission, without a CPU-dependent default or skipped boundary
-- **AND** a narrow OpenSpec environment regression exercises its actual
-  invocation owner while the canonical graph retains real tool execution.
-
-#### Scenario: A link points to local state that is absent from a clean checkout
-
-- **WHEN** a current source document links to an existing ignored cache file or
-  Git metadata
-- **THEN** the public link check rejects that reference as outside repository
-  source even when the native existence check would pass
-- **AND** tracked and non-ignored candidate references remain valid.
-
-#### Scenario: A directory or alias links to source
-
-- **WHEN** a local link names a source directory or a delivered internal alias
-- **THEN** the boundary accepts it only when both requested and resolved paths
-  belong to the source inventory
-- **AND** an ignored alias to source, or a delivered alias to local or outside
-  state, cannot borrow source ownership.
-
-### Requirement: Tool supply and portability require executed checks
-
-CI SHALL verify native-tool digests and audit all locked dependencies online
-with OSV Scanner, separately from offline source checks. Raw findings and
-disposition evidence SHALL stay distinct. Public checks SHALL avoid POSIX shells
-and host paths; each claimed OS SHALL execute the full graph. Current command
-examples SHALL be checked against the installed CLI. GitLab jobs SHALL name
-purpose and platform; hidden phase templates SHALL own common steps.
-
-#### Scenario: An upstream download returns a rejected response
-
-- **WHEN** a native-tool or either Forge's release download returns a rejected
-  HTTP response with an unread body
-- **THEN** its existing owner awaits native body cancellation before returning
-  failure and retains the HTTP status and any original cleanup error
-- **AND** it performs no automatic retry or fallback and publishes no unverified
-  output; a concurrent verified target remains unchanged.
-
-#### Scenario: A native audit times out before or after output
-
-- **WHEN** the audit's native process exceeds its unchanged deadline, whether
-  or not it emits output first
-- **THEN** the original attempt's command, streams, status, signal, and error
-  remain in its own evidence and execution fails before disposition
-- **AND** validation does not assume startup latency, synthesize progress,
-  replay the attempt, or extend the deadline.
-
-#### Scenario: Verification job names omit the platform
-
-- **WHEN** a GitLab source or offline verification job has a platform-less name,
-  a duplicated old alias, or an incorrect shared parent
-- **THEN** the existing CI validator rejects the configuration
-- **AND** all declared jobs inherit their hidden phase owner without changing
-  runner capabilities, rules, or verification commands.
-- **AND** jobs use `docs:verify:<os>` or `offline:verify:<os>` for `linux`,
-  `macos`, and `windows`, with `:review` for source review; no runnable shared
-  owner or platform-specific parent substitutes for the hidden phase template.
-
-#### Scenario: Windows verification events share a finite executor
-
-- **WHEN** Windows review, protected-source, and offline verification jobs
-  become eligible for the same project's finite executor
-- **THEN** they declare one stable native project-scoped resource group,
-  independent of the event and ref
-- **AND** the existing CI contract rejects missing or divergent reservations
-- **AND** separate runner identities and ref admission remain unchanged
-- **AND** all discovered tests and existing deadlines remain mandatory;
-  the reservation does not prove isolation from another project.
-
-#### Scenario: A command was retired by its product
-
-- **WHEN** a current instruction names a command absent from the installed
-  public CLI
-- **THEN** release review against the installed CLI reports the stale
-  instruction
-- **AND THEN** a valid link or formatted code block does not hide it.
-- **AND** parsed prose alone cannot establish command validity.
-
-#### Scenario: Prose or dependency supply fails
-
-- **WHEN** a current Markdown file contains a misspelling
-- **THEN** the locked spelling check rejects it without a local waiver.
-- **WHEN** the native dependency audit reports an unapproved advisory, fails,
-  or provides incomplete evidence
-- **THEN** each hosted job fails before running the repository verifier
-- **AND** both Forges preserve complete raw findings and execution output.
-
-#### Scenario: The approved native disposition is scoped and expires
-
-- **WHEN** the exact human-approved native OSV entry is active
-- **THEN** the existing input boundary admits only npm `braces` 3.0.3 in
-  development paths, with its complete original raw finding retained
-- **AND** an unapproved raw advisory remains blocking even if absent from the
-  later scan; OSV alone applies its native ID disposition
-- **AND** stable-version observation selects the public npm registry with
-  isolated native configuration and cache and explicit online freshness
-- **WHEN** a matching input, native report, stable release, or official fix
-  changes, the finding disappears or is withdrawn, or the entry expires
-- **THEN** execution fails until the entry is retired and the inputs are qualified
-  again
-- **AND** no package-wide ignore, private OSV schema, or general security waiver
-  substitutes for the approved boundary.
-
-#### Scenario: A fresh supported host runs the full graph
-
-- **WHEN** a maintainer installs the declared locked dependencies on a claimed
-  host OS and invokes the single repository check
-- **THEN** format, lint, links, and repository-specific validations run without
-  a POSIX shell or a host-specific absolute path
-- **AND THEN** missing tools fail visibly rather than being downloaded or
-  silently skipped.
-- **AND** banning `.sh` files alone does not establish portability.
-
-#### Scenario: Windows checks out the same text bytes
-
-- **WHEN** Git checks out tracked text on a host with CRLF defaults
-- **THEN** the repository's native `.gitattributes` rule selects LF
-- **AND THEN** the same formatting check evaluates the same text bytes.
-
-### Requirement: Reader interpretation is reviewed without staged adoption theater
-
-Representative member and Agent tasks SHALL be walked through the task routes
-for correct rule selection and interpretation limits. A staged team-use trial
-SHALL NOT be a release gate or substitute for naturally observed use.
-
-#### Scenario: A member or Agent follows a task route
-
-- **WHEN** a representative task requires a decision, data qualification, or
-  delivery boundary
-- **THEN** editorial review verifies that the task route selects the relevant
-  rule and states its interpretation limit
-- **AND THEN** this review is not reported as actual team adoption.
-
 ### Requirement: Retained repository text uses English
 
 Tracked reader guidance, operations, decisions, changelog, OpenSpec artifacts,
-code comments, and test prose SHALL be English. The validator SHALL reject CJK
-in tracked or unignored candidate text with file and line. Human review SHALL
-assess clarity and faithful translation. Git history remains unchanged;
-translating a tracked archive SHALL NOT certify its earlier language or
-lifecycle retroactively.
+code comments, and test prose SHALL be English. The validator SHALL reject CJK,
+including supplementary Han scripts, in tracked or unignored candidate text
+with file and line. Human review SHALL assess clarity and faithful translation.
+Git history remains unchanged; translating a tracked archive SHALL NOT certify
+its earlier language or lifecycle retroactively.
 
 #### Scenario: A candidate reintroduces Chinese prose
 
-- **WHEN** a tracked or unignored candidate text file contains a CJK character
+- **WHEN** a tracked or unignored candidate text contains a CJK character from
+  either the basic or supplementary planes
 - **THEN** the documentation gate fails and identifies its file and line
-- **AND THEN** the failure does not claim to have assessed translation quality.
+- **AND** that check does not claim to assess translation quality.
 
 #### Scenario: An archived artifact is translated
 
@@ -500,173 +155,22 @@ lifecycle retroactively.
 - **AND THEN** the translated artifact is not treated as fresh proof or as
   retrospective certification of the original work.
 
-### Requirement: Product-owned code evidence accompanies document proof
-
-`docs-integrity` SHALL conjoin its Node command with ETHOS-owned tests and
-coverage; `markdown-format` SHALL conjoin its command with ETHOS-owned JavaScript
-syntax checks. Both SHALL use the same committed tree. Profile validation SHALL
-reject missing or misdirected providers without a third gate. Command output or
-repository-authored reports SHALL NOT prove code correctness. Runtime success
-SHALL NOT close shared semantic, diagnostic, or subject-applicability acceptance.
-
-#### Scenario: Document command passes but native code fails
-
-- **WHEN** both repository document commands exit successfully but a tracked
-  JavaScript test fails or production module is not exercised
-- **THEN** ETHOS blocks full proof for the behavior axis
-- **AND THEN** a repository-authored test report cannot turn the result green.
-
-#### Scenario: Native code passes but a document command fails
-
-- **WHEN** ETHOS obtains valid native code evidence but the document command
-  for either mapped gate fails
-- **THEN** that gate and full proof remain blocked
-- **AND THEN** native evidence does not excuse a broken document check.
-
-#### Scenario: Both sides of each gate pass
-
-- **WHEN** both document commands and their ETHOS-owned native verifiers pass
-  for the exact committed source
-- **THEN** the two existing gate IDs satisfy their mapped runtime checks
-- **AND** shared semantic, diagnostic, and subject-applicability acceptance
-  remains a separately verified ETHOS product obligation
-- **AND THEN** no additional default gate or private lifecycle is required.
-
-#### Scenario: Native syntax passes without semantic correctness
-
-- **WHEN** a syntax-valid production function refers to an undefined identifier
-  on a reachable but unexercised branch
-- **THEN** source and proof descriptions distinguish syntax success from static
-  semantic correctness
-- **AND** shared acceptance remains open until the formally accepted installed
-  product establishes the required property.
-
-#### Scenario: Native reports omit an unapproved warning
-
-- **WHEN** the native test stream emits an unapproved warning that its selected
-  reports omit
-- **THEN** documentation and completion claims identify the diagnostic gap
-- **AND** the passing report does not close the shared warning-handling
-  obligation or authorize a repository-private replacement.
-
-#### Scenario: Applicable scopes differ by subject
-
-- **WHEN** the formal product contract permits different native scopes to
-  jointly cover a required property
-- **THEN** qualification checks each subject against its actual obligation
-- **AND** it does not require every provider to cover every language or accept
-  uncovered required subjects.
-
-### Requirement: A supplied offline bundle can install the complete verification toolchain
-
-Each declared platform's release-bound bundle SHALL supply every locked npm
-package, declared native asset, and upstream notice. Supported Node/npm
-and Git SHALL install and run the full verifier from empty application caches
-without network access. Before extraction, the installer SHALL match committed
-source identities and a trusted external or source-pinned digest. ETHOS remains
-separate; the bundle SHALL NOT impersonate its authority.
-
-#### Scenario: Cold local verification succeeds without network access
-
-- **WHEN** a user supplies a complete bundle for the checked-out release on a
-  declared host with supported Node/npm and Git
-- **AND** the application has no pre-existing npm cache, `node_modules/`, or
-  native-tool cache
-- **THEN** the actual offline install and full repository verifier pass while
-  outbound network access is unavailable
-- **AND THEN** a successful `npm ci --offline --dry-run` alone is not accepted
-  as installation evidence.
-
-#### Scenario: An archive carries another machine's file ownership
-
-- **WHEN** a verified bundle or native-tool archive names the packaging
-  machine's owners and the destination cannot change file ownership
-- **THEN** native extraction retains the current executor's ownership without
-  adding privileges, altering the source-pinned archive, or skipping validation
-- **AND** digest, confinement, license, and required executable-mode checks
-  remain intact; full verification still runs in the constrained consumer.
-
-#### Scenario: A concurrent acquisition fails after another call succeeds
-
-- **WHEN** a caller acquires the source-bound bundle
-- **THEN** it verifies an exclusively owned temporary output before exclusive
-  publication
-- **WHEN** two calls acquire the same bundle and one completes before the
-  other's download or verification fails
-- **THEN** the completed target and its digest remain unchanged
-- **AND** the failed call neither overwrites nor removes that target and removes
-  only its own temporary stage.
-
-#### Scenario: A managed cache path is linked or already installed
-
-- **WHEN** a managed binary, downloaded archive, or repository-local parent is
-  linked or has a type other than its required regular file or directory
-- **THEN** installation and verification fail before remote access, staging, or
-  execution through that path
-- **WHEN** installation or verification reuses a regular binary with the pinned
-  version, including an ordinary cache hit or a concurrent supplied install
-- **THEN** its permissions and bytes remain unchanged.
-
-#### Scenario: A bundle download parent points outside the repository
-
-- **WHEN** either Forge acquisition encounters a symbolic link or Windows
-  junction at any repository-local parent of its download target
-- **THEN** it fails before a network request or temporary stage is created
-- **AND** the foreign directory's existing files and bytes remain unchanged.
-
-#### Scenario: Offline validation inherits enabled telemetry
-
-- **WHEN** the verifier invokes official OpenSpec during offline validation
-- **THEN** the child-process environment supplies one official opt-out value
-- **AND** inherited telemetry settings, including enabled values and
-  case-variant Windows keys, cannot override it
-- **AND** the child makes no telemetry or update request
-- **AND** the parent environment and global configuration remain unchanged.
-
-#### Scenario: Offline supply is incomplete or altered
-
-- **WHEN** a bundle is missing a required npm entry, native asset, or license
-  notice, contains an unsafe member, or disagrees with the checked-out lockfile,
-  tool manifest, version, or trusted bundle digest
-- **THEN** the installer fails before accepting the toolchain or running the
-  verifier
-- **AND THEN** it does not silently fetch a replacement or mark the release
-  qualified.
-
-#### Scenario: A different supported platform consumes the same release
-
-- **WHEN** the release claims macOS, Linux, and Windows support
-- **THEN** the complete offline installation and verification graph is executed
-  on each declared platform using the release's bundle
-- **AND THEN** one platform's successful install or a static matrix declaration
-  does not qualify another platform.
-
-#### Scenario: GitLab qualifies its native Linux release asset
-
-- **WHEN** the same-project GitLab package and Release are available for the
-  checked-out signed tag
-- **THEN** a post-publication pipeline on the declared Linux ARM64 runner
-  obtains the package with its project job token and rejects redirects or
-  altered bytes before installation
-- **AND THEN** the complete offline install and full verifier run at the tag's
-  exact source SHA; a successful tag-push documentation job is not a substitute.
-
 ### Requirement: Retained source receives format and spacing checks
 
-Native format and Markdown checks SHALL cover Git-selected source, including
-archives. Reader blocks SHALL have one blank line; single-paragraph list peers
-stay adjacent and loose peers consistently separated. Code and data literals
-SHALL retain meaningful spacing. Plain UTF-8 text SHALL receive spacing checks;
-unowned code SHALL fail. Binaries and symlinks are excluded. Spelling, links, and
-metadata SHALL cover current readers, not promote archives to guidance.
+Native format and Markdown checks SHALL cover all Git-selected source,
+including archives. Prettier alone SHALL own Markdown spacing for fix and check
+on identical inputs with unchanged second-pass output. It SHALL preserve tight
+lists and nested fences, one semantic separator in loose lists and between
+document blocks, and meaningful code/data spacing. Other lint SHALL NOT reject
+formatter-accepted structure or issue a duplicate spacing verdict.
 
 #### Scenario: An archived Markdown file breaks source hygiene
 
 - **WHEN** a tracked or unignored candidate Markdown file under an official
   Change archive violates Prettier, Markdown lint, or the one-blank-line rule
 - **THEN** the repository verifier fails with the offending file
-- **AND THEN** the archive remains a historical record, not a current reader
-  route or a substitute lifecycle authority.
+- **AND** the archive remains a historical record, not a current reader route
+  or a substitute lifecycle authority.
 
 #### Scenario: Text without a filename extension contains visual padding
 
@@ -679,7 +183,7 @@ metadata SHALL cover current readers, not promote archives to guidance.
 
 - **WHEN** fenced or indented Markdown code contains meaningful consecutive
   blank lines, including a nested or longer-fence example
-- **THEN** the existing native spacing rule preserves that literal content
+- **THEN** the native formatter preserves that literal content
 - **AND** the general text consumer does not reject it through a duplicate
   raw Markdown spacing scan.
 
@@ -709,33 +213,70 @@ metadata SHALL cover current readers, not promote archives to guidance.
 
 #### Scenario: A comment attempts to suppress formatting
 
-- **WHEN** a real native Prettier ignore or range-control comment would exempt
-  a source block from formatting
-- **THEN** native Markdown parsing rejects the control in the existing check
-- **AND** literal code examples and explanatory comments remain valid without
-  a second parser or document-level formatting waiver.
+- **WHEN** a native formatter ignore comment exempts a byte-exact example
+- **THEN** the native formatter preserves that example through fix, check,
+  and a second fix pass
+- **AND** non-spacing Markdown rules still apply without a suppression blacklist
+  or second spacing parser; strings, YAML scalars, and ordinary TOML comments
+  retain their data and native formatting behavior.
 
 #### Scenario: Wrapped simple list items contain unnecessary gaps
 
-- **WHEN** a list has only single-paragraph items, including wrapped, ordered,
-  task, nested, or quoted items, and a blank line separates peers
-- **THEN** the native list-spacing rule rejects that gap with its source position
-- **AND** document comments and ambient policy cannot waive that check.
+- **WHEN** wrapped, ordered, task, nested, or quoted list items have repeated
+  blank lines outside literal content
+- **THEN** native format check rejects the source and formatting reconciles its
+  container separators
+- **AND** Markdown lint accepts the fixed point without a second spacing verdict
+- **AND** ambient ignore files cannot remove Git-selected inputs from either
+  formatter invocation.
 
 #### Scenario: List structure requires separation
 
-- **WHEN** a list item has internally separated paragraphs or blocks, or a
-  fenced example contains literal blank lines
-- **THEN** the native rule preserves literal content and requires one blank line
-  between the genuinely loose list's peer items
+- **WHEN** a list item has internally separated paragraphs or blocks
+- **THEN** the native formatter preserves literal content and reconciles
+  semantic loose-item separators
 - **AND** tight nested lists, separate lists, heading boundaries, and ordinary
   paragraph separation retain their structure.
+
+#### Scenario: A tight list contains a fenced example
+
+- **WHEN** a tight list item contains a fence without surrounding blank lines,
+  including a nested, task, or quoted list
+- **THEN** native formatting preserves that fixed point and native lint
+  accepts it
+- **AND** fences outside lists still require reader-block separation; a fence
+  alone does not make a list loose.
 
 #### Scenario: Reader padding follows a valid code example
 
 - **WHEN** reader blocks have consecutive blank lines outside literal code
-- **THEN** the native Markdown rule rejects the padding at its source location
+- **THEN** the native format check rejects the selected source file
 - **AND** the valid code example does not hide the reader-layout defect.
+
+#### Scenario: A source without a filename extension has no native owner
+
+- **WHEN** an input without a filename extension is neither a declared plain-text
+  identity nor recognized by its actual repository-relative native parser
+- **THEN** the text check rejects the unowned input
+- **AND** recognized shebang source, ordinary text and structured literals keep
+  their native spacing rules regardless of the caller's working directory.
+
+#### Scenario: Source bytes would bypass English checks
+
+- **WHEN** text source contains NUL, invalid UTF-8, or a binary declaration for
+  a known text format
+- **THEN** the verifier rejects that source with its path
+- **AND** declared binary assets remain reachable without being interpreted
+  as prose, while effective text attributes require LF.
+
+#### Scenario: Native tools receive literal selected filenames
+
+- **WHEN** a selected source filename resembles a command option or contains
+  a line break
+- **THEN** the existing native tool invocation supplies that exact filename
+  without interpreting it as an option or splitting it into multiple inputs
+- **AND** a formatting defect or broken link still fails, while corrected source
+  passes without restricting valid repository filenames.
 
 ### Requirement: Reader guidance separates visible content from registry metadata
 
@@ -782,93 +323,6 @@ failure rather than an accepted status or an unreported exclusion.
 - **THEN** the explicit live link check uses the pinned lychee and current
   Markdown inventory
 - **AND THEN** any broken external link prevents a complete release claim.
-
-### Requirement: The actual package manager conforms before execution
-
-The repository SHALL declare one exact npm version through `package.json`'s
-native `devEngines.packageManager` contract with `onFail: error`. npm SHALL
-reject a version mismatch before installation, `ci`, or run effects. An
-installed executable, host version, or Node major SHALL NOT substitute for
-observing the actual consuming npm command.
-
-#### Scenario: A contributor selects Node's older bundled npm
-
-- **WHEN** a contributor invokes install, `ci`, or run with npm 11.19.1 while
-  the native repository declaration requires npm 12.2.0
-- **THEN** native npm admission rejects the command before dependency or script
-  effects occur
-- **AND THEN** no repository-specific waiver or parser makes it green.
-
-#### Scenario: A previous npm release is selected
-
-- **WHEN** the destination selects npm 12.1.0 while source declares 12.2.0
-- **THEN** native admission rejects installation or run effects
-- **AND THEN** no waiver or private parser makes it green.
-
-#### Scenario: The declared npm is selected
-
-- **WHEN** the actual selected npm matches the exact native declaration
-- **THEN** ordinary installation and repository checks run under that version
-- **AND THEN** the version observation does not replace those checks.
-
-#### Scenario: Windows has a separate global npm prefix
-
-- **WHEN** npm's native launcher selects an upgraded global CLI rather than the
-  Node-adjacent bundled CLI
-- **THEN** programmatic calls resolve that same CLI through npm's native
-  execution-path or prefix authority
-- **AND THEN** failed native resolution stops execution instead of silently
-  choosing a different package manager.
-
-#### Scenario: Offline execution reports the selected package manager
-
-- **WHEN** the source-bound bundle is installed on a declared host
-- **THEN** native npm admission requires the single exact source declaration
-- **AND** the installer reports the actual npm version and runs full
-  verification; a label or second npm-major field cannot qualify the host
-- **AND** the package audit does not certify Node's bundled npm executable.
-
-### Requirement: Package-manager acquisition stays outside offline verification
-
-Online ephemeral CI SHALL acquire the declared npm through its native
-installer before repository dependency installation. Maintained native hosts
-SHALL use their existing installation owner and qualify actual executable
-selection. Local checks and offline bundle installation SHALL NOT download
-or update a missing or mismatched package manager.
-
-#### Scenario: An ephemeral hosted job starts with bundled npm
-
-- **WHEN** online CI starts with a compatible Node and an older bundled npm
-- **THEN** its explicit supply step derives the desired version from the one
-  native declaration and installs it before the repository package command
-- **AND THEN** the actual source and offline checks run under that version.
-
-#### Scenario: Offline installation has the wrong package manager
-
-- **WHEN** a host has the complete release bundle but selects a mismatched npm
-- **THEN** installation fails under native package-manager admission without
-  acquiring another package manager or installing repository dependencies
-- **AND THEN** the failure is not reported as incomplete bundle supply.
-
-### Requirement: Public bundle acquisition has no ambient CLI dependency
-
-Public GitHub bundle acquisition SHALL use the declared Node runtime to download
-the exact repository, tag, and asset without a Forge CLI or credential. GitLab
-SHALL retain its project-scoped identity and refuse authenticated redirects.
-Both SHALL bound download time and size and verify the pinned digest before
-extraction; failed acquisition SHALL remove only its own failed output.
-
-#### Scenario: A public release asset is acquired
-
-- **WHEN** the public GitHub release has the exact declared tag and asset
-- **THEN** Node downloads it without a CLI or credential and validates its digest
-- **AND THEN** an existing verified file is not downloaded a second time.
-
-#### Scenario: Public supply is missing or altered
-
-- **WHEN** the requested asset is missing, oversized, unavailable, or altered
-- **THEN** acquisition fails and removes only its own failed output
-- **AND THEN** it does not fall back to another tag, origin, CLI, or credential.
 
 ### Requirement: Native English prose and terminology checks
 
@@ -975,112 +429,6 @@ NOT influence this check.
   success
 - **AND** a persistent removal error fails rather than silently leaving residue.
 
-### Requirement: Public-command integration has a bounded native execution budget
-
-Tests of the complete public prose and repository commands SHALL retain actual
-current-source execution, defect rejection, corrected-source success, and
-unchanged-source assertions. Their child deadline SHALL use the same finite
-120-second budget as the existing runtime command owner, not a shorter implicit
-performance requirement. A subprocess error SHALL be reported before an exit
-status assertion; a timeout SHALL NOT be mistaken for a rejected source defect.
-
-#### Scenario: A supported host completes a full current-source check
-
-- **WHEN** a real public-command test needs more than 30 seconds but completes
-  within the native 120-second budget
-- **THEN** it may finish its actual selected rules without being canceled early
-- **AND** the expected source defect and unchanged bytes are still asserted.
-
-#### Scenario: A public-command child exceeds the admitted budget
-
-- **WHEN** the child reaches its finite timeout or has an execution error
-- **THEN** the test fails with that actual error before comparing its exit code
-- **AND** it does not skip, retry, or count the timeout as defect rejection.
-
-### Requirement: Complete retirement of replaced quality tools
-
-The replacement SHALL migrate every textlint responsibility: English checks,
-DR boundary parsing, and offline README license recognition. It SHALL remove
-retired direct and unused transitive dependencies, configurations, adapters,
-imports, command entries, test interfaces, and current operational guidance.
-No alternate parser, compatibility facade, fallback, or optional retired checker
-SHALL remain. Immutable historical source SHALL NOT become an executable
-dependency or current authority.
-
-#### Scenario: A replacement leaves a retired consumer
-
-- **WHEN** an active consumer, declared or resolved dependency, configuration,
-  command, or guidance still requires a replaced tool
-- **THEN** transition acceptance fails even if the new prose command passes
-- **AND** a complete current-consumer and dependency-graph audit is required
-  before retirement can be claimed.
-
-#### Scenario: All former responsibilities use their native owners
-
-- **WHEN** all three consumers pass their retained positive and negative cases
-  through the selected native English and Markdown owners
-- **THEN** source verification and clean offline installation succeed without
-  any retired package or fallback
-- **AND** DR constraints, explicit matching license notices, upstream bytes,
-  source locations, and meaningful uncertainty remain intact.
-
-### Requirement: One source-bound native quality supply
-
-One repository-native tool manifest SHALL bind the lychee and Vale versions,
-platform assets, archive digests, and license notices. The existing native
-installer and source-bound offline bundle SHALL consume that manifest without
-duplicated tool supply. Local verification SHALL never download a missing tool.
-GitLab and GitHub SHALL supply and qualify the frozen release independently.
-The old manifest and installer SHALL retire when their consumers are replaced.
-
-#### Scenario: A native tool is supplied offline
-
-- **WHEN** a supported host receives the exact source-bound bundle or a pinned
-  local archive
-- **THEN** the installer verifies its digest, safe archive members, executable
-  version, and source binding before admitting the tool
-- **AND** it preserves the destination's host installation and credentials.
-
-#### Scenario: An accepted native candidate is copied once
-
-- **WHEN** pinned supply and the candidate's native version pass before
-  exclusive installation
-- **THEN** the existing installer verifies complete copied-byte equality and
-  its owned POSIX mode without repeating the same version startup
-- **AND** a pre-existing or concurrent target retains independent verification
-  and its existing mode; changed copied bytes fail
-- **AND** actual installed consumers still run with unchanged deadlines, while
-  the installer's own temporary stage is removed before completion.
-
-#### Scenario: Native supply is incomplete or changed
-
-- **WHEN** the requested ABI, archive, digest, or source-bound manifest is missing
-  or changed
-- **THEN** installation and verification fail without fetching a substitute,
-  borrowing another Forge's identity, or reusing an earlier bundle
-- **AND** only the exact operation's disposable temporary stage is removed.
-
-### Requirement: Source-event tag routes match the release family
-
-Both source-event routes SHALL admit only `v*` tags without `/`; GitLab offline
-rules SHALL use the same family. The CI contract SHALL reject broader tag rules.
-Native release checks SHALL retain strict SemVer and signature admission;
-GitHub offline acquisition retains source/version checks.
-
-#### Scenario: An unrelated tag would enter source supply
-
-- **WHEN** a GitLab workflow, protected-source rule, or offline rule admits any
-  nonempty tag without the declared family constraint
-- **THEN** the existing CI contract rejects that broader route
-- **AND** unrelated and slash-containing tags are excluded before GitLab tool
-  supply, while branch and review routes remain unchanged.
-
-#### Scenario: A matching prefix does not establish a release
-
-- **WHEN** a tag begins with `v` but is not a signed strict SemVer edition
-- **THEN** native release checks still reject that identity
-- **AND** an eligible source-event route does not prove a Release or asset.
-
 ### Requirement: Local references resolve to delivered source
 
 Local file links SHALL remain inside the repository and resolve to tracked or
@@ -1159,3 +507,37 @@ records SHALL NOT gain converters, duplicate copies, or old-path fallback.
   records before npm dependencies exist
 - **THEN** each consumer uses its single required native record directly
 - **AND** no TOML converter, duplicate manifest, or bootstrap parser is added.
+
+### Requirement: Source text and binary ownership remain explicit
+
+Known plain-text identities, extensions, and native parsers SHALL define text
+ownership; files without extensions SHALL NOT default to plain text. Unowned code,
+invalid UTF-8, and NUL SHALL fail with a source path. Effective Git attributes
+SHALL identify binaries and require LF for text; known text SHALL NOT evade
+checks through a binary declaration. Symlinks SHALL remain excluded from text
+interpretation. Plain UTF-8 text SHALL receive native spacing checks.
+
+#### Scenario: An undeclared carrier would evade source checks
+
+- **WHEN** an input without an extension has no native owner, or known text declares
+  binary content or contains invalid UTF-8 or NUL
+- **THEN** source validation refuses with its path rather than skipping it
+- **AND** declared binary assets, source aliases, and native structured formats
+  retain their own interpretation boundaries.
+
+### Requirement: Native selected inputs retain literal identity
+
+Native tools SHALL receive each exact selected filename, including option-like
+names and names a line-delimited list cannot represent. Native formatter ignore
+controls MAY protect byte-exact examples without suppressing non-spacing lint.
+Spelling, links, and metadata SHALL cover current readers rather than promote
+archived source to guidance.
+
+#### Scenario: A literal filename or preserved example reaches a check
+
+- **WHEN** Git selects an option-like or line-break filename or a byte-exact
+  example protected by native formatter control
+- **THEN** the tool retains its exact input identity and the formatter preserves
+  the example through fix, check, and unchanged second fix
+- **AND** remaining source defects and non-spacing rules still fail without an
+  ambient policy waiver or a duplicate spacing parser.

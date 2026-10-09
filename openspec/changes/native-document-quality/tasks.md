@@ -314,8 +314,12 @@
         with shared fixtures and no case loss. Verify full native discovery,
         execution controls, and actual size admission.
   - [ ] 2.46.4 Keep design choices concise and partition oversized capabilities
-        through official deltas. Preserve each requirement and scenario, update
-        all reader routes, and verify strict OpenSpec and size admission.
+        through official deltas and main-spec synchronization. Preserve each
+        requirement and scenario, maintain all reader routes, and verify strict
+        OpenSpec plus accepted installed size admission. Reference native design
+        review `6e07f24a22c99b110ace215c25318e05b9ac707a05df99d11a01f93d746bdf57`
+        and delta proof `c0eff0fdce3e3e95fe978876d6cec02ceb00acc04a691004696dd90f8a290a18`;
+        neither replaces shared admission of the final source.
   - [ ] 2.46.5 Keep versioned release notes complete and reachable in their
         semantic owner. Verify native Changelog, tag, comparison, and size checks
         without moving notes to an undifferentiated history carrier.
@@ -325,19 +329,22 @@
 
 ## 3. Qualification and publication
 
-- [x] 3.1 Freeze source and a source-bound offline bundle; run format, lint,
-      prose, links, negative tests, strict official OpenSpec, and diff checks.
-- [x] 3.2 Prove a clean offline install and full verification without inherited
-      caches, host paths, credentials, or remote supply.
+- [ ] 3.1 Freeze the final source and its source-bound offline bundle after all
+      implementation and shared-contract work. Run format, lint, prose, links,
+      negative tests, strict official OpenSpec, and diff checks on those bytes.
+- [ ] 3.2 Prove a clean offline install and full verification of that frozen
+      source and bundle without inherited caches, host paths, credentials, or
+      remote supply; earlier source qualification does not satisfy this check.
 - [ ] 3.3 Verify [shared-contract integration](design.md#integrate-accepted-shared-ownership-without-weakening-the-floor).
       Qualify DDWG, AIGW, and Proxy on the same accepted ETHOS source/wheel,
       actual installed bindings,
       exact-HEAD plan/proof, native semantics, full test selection, diagnostic
       custody, and single execution. Consume DDWG migration and the other
       owners' qualification; retain original failures.
-- [x] 3.4 Publish the major signed SemVer edition independently to GitLab and
-      GitHub; verify both exact refs, Releases, downloaded asset hashes, and
-      declared source and offline platform jobs.
+- [ ] 3.4 Classify the final changes against the latest qualified edition and
+      publish the correctly incremented signed SemVer release independently to
+      GitLab and GitHub. Verify both exact refs, Releases, downloaded asset
+      hashes, and declared source and offline platform jobs at the final source.
 - [ ] 3.5 Complete the [current-duty and retired-source review](design.md#review-original-duties-at-seven-topic-owners):
       compare all 62 original subsections, five surrounding groups, and chapter
       introductions and diagrams outside them with current source. Explain every
