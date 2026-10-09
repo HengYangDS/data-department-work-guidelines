@@ -43,11 +43,14 @@ sunk costs do not outrank new facts.
 
 ## Two Kinds of Authority
 
-**Authority to act** answers who may decide what to do. Law, regulation,
-security requirements, and mandatory company policy come first. Within those
-boundaries, use the explicit decision of the authorized owner for the current
-matter, then effective contracts, policies, specifications, and decision
-records, then work plans, provisional agreements, and personal preferences.
+**Authority to act** answers who may decide what to do. Apply this order:
+
+1. Law, regulation, security requirements, and mandatory company policy.
+2. Within those boundaries, the explicit decision of the authorized owner for
+   the current matter.
+3. Effective contracts, policies, specifications, and decision records.
+4. Work plans, provisional agreements, and personal preferences.
+
 Projects may clarify this order. Clarifying it does not grant waiver authority;
 establish the authority to waive an obligation and resolve any conflict before
 acting.

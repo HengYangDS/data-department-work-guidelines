@@ -90,7 +90,7 @@ Coaching tests the member's reasoning without making the judgment for them.
 Feedback names a proposition, evidence, behavior, and consequence; a label such
 as “weak logic” gives no actionable direction.
 
-### Review Critical Risks
+## Review Critical Risks
 
 Review evidence before judging delivery risk. At minimum, inspect problem
 framing, the logical model, evidence and uncertainty, trade-offs, execution and
@@ -109,8 +109,10 @@ Agents. Fluency, effort, or Agent efficiency cannot offset these hard risks:
 
 Every task must meet the [hard
 boundaries](charter.md#four-non-negotiable-boundaries). Critical
-responsibilities should be performed independently and reliably. Call a result
-exceptional only when it produces evidenced net benefit, transfers a method,
+responsibilities should be performed independently and reliably.
+
+Call a result exceptional only when it produces evidenced net benefit, transfers
+a method,
 reduces long-term complexity, and improves others' capacity. Exceptional
 performance also shows the ability to detect weak structural signals. Not
 every task needs an exceptional result; every task still owes its agreed
@@ -182,7 +184,7 @@ its owner there. Do not create a form or meeting unless existing carriers cannot
 hold the necessary review. No routine “nothing happened” activity report is
 required.
 
-### Management Responsibilities
+## Management Responsibilities
 
 **Managers** clarify direction, priorities, decision boundaries, and resources.
 They resolve cross-domain conflicts and long-standing open decisions in time

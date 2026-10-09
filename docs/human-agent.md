@@ -24,6 +24,7 @@ Agent's result.
 To assign work, [set the delegation boundary](#delegate-a-boundary-not-a-pile-of-context).
 Before acceptance, [check the actual output](#check-agent-output).
 If work stops, [preserve a usable handoff](#report-and-preserve-a-handoff).
+Agents follow the [execution boundaries](#agent-execution) before acting.
 
 ## Delegate a Boundary, Not a Pile of Context
 
@@ -91,7 +92,24 @@ People retain direction, authority, and responsibility throughout. Neither
 delegation nor acceptance expands permission or transfers responsibility.
 An Agent's report cannot substitute for examination of the actual work.
 
-### Agent Execution
+### Check Agent Output
+
+A member checks the actual work, not just the Agent's prose summary:
+
+- Confirm the correct authority and current state, true and complete current
+  inputs, and clear separation of assumptions, inferences, and judgments.
+- Compare actual changes with the agreed and reported scope; inspect
+  counterexamples, risks, non-goals, and uncovered cases.
+- Confirm that verification actually ran against the current version and
+  correct environment, the completion claim stays within its evidence, and
+  an authorized person explicitly approved high-risk actions.
+- Preserve reviewable outputs, evidence, and follow-up ownership.
+
+Even checked Agent output becomes a durable team fact only when
+its underlying source and limits are recorded in the authoritative system for
+that work.
+
+## Agent Execution
 
 An Agent must first confirm the task, target, current state, responsible person,
 and applicable local rules; repository work also requires the exact root.
@@ -122,23 +140,6 @@ status, and decisive output with the producing task; success excerpts do not
 replace inspection of warnings, omissions, or failures elsewhere in the
 selected results. Test or review code, analysis, and documents in proportion
 to risk.
-
-### Check Agent Output
-
-A member checks the actual work, not just the Agent's prose summary:
-
-- Confirm the correct authority and current state, true and complete current
-  inputs, and clear separation of assumptions, inferences, and judgments.
-- Compare actual changes with the agreed and reported scope; inspect
-  counterexamples, risks, non-goals, and uncovered cases.
-- Confirm that verification actually ran against the current version and
-  correct environment, the completion claim stays within its evidence, and
-  an authorized person explicitly approved high-risk actions.
-- Preserve reviewable outputs, evidence, and follow-up ownership.
-
-Even checked Agent output becomes a durable team fact only when
-its underlying source and limits are recorded in the authoritative system for
-that work.
 
 ### Parallel Work
 

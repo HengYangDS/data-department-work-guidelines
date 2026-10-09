@@ -33,6 +33,9 @@ the same guidance; each topic owns its rules and points to the related work.
   conditions.
   - Historical research: Preserve the
     [historical point of view](data.md#preserve-the-historical-point-of-view).
+- [Change shared or production data](data.md#change-shared-or-production-data):
+  Check authority, replay, tests, release and recovery, permissions, and stop
+  conditions before a controlled change.
 - [Verify and close work](deliver.md#close-the-work): Match the deliverable,
   current verification, limits, and acceptance to the agreed completion conditions.
   - Before execution: [Check the commitment](deliver.md#before-acting).
@@ -47,9 +50,10 @@ the same guidance; each topic owns its rules and points to the related work.
   Set scope, stop conditions, and verification; retain human responsibility.
   - Before acceptance: [Check the actual
     output](human-agent.md#check-agent-output).
+- [Coach a member](evolve.md#grow-capability-through-real-work): Review the reasoning
+  at important decisions and agree on an observable improvement for the next task.
 - [Improve a practice](evolve.md#admit-practices-and-prevent-recurrence):
-  Review risks and feedback, coach through real work, and keep or retire practices
-  from net benefit.
+  Review risks and feedback, and keep or retire practices from net benefit.
   - Review rhythm: Adjust the
     [review cadence](evolve.md#cadence-and-responsibilities).
 

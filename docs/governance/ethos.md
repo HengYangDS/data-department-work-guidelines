@@ -206,12 +206,6 @@ bare paths, and evidence links remain valid. Syntax cannot judge all command
 dialects or durable reasoning; reviewers move execution and acceptance narratives
 to their Change or producing record.
 
-Retire completed-Change copies only after resolving unique facts, obligations,
-and consumers. Bind historical links to the full ancestor commit and exact path,
-and verify original bytes. Git retains the history; deletion neither absorbs an
-unresolved obligation nor closes this active Change. Official archive and its
-new commit's proof and publication remain separate.
-
 ## Tool Supply and Offline Execution
 
 Tools serve maintainers and CI; reading the guidelines requires no installation.
@@ -365,6 +359,12 @@ network. Tags, images, YAML, or older green runs prove neither actual execution
 nor registration and isolation.
 
 ## Evidence and Retirement
+
+Retire completed-Change copies only after resolving unique facts, obligations,
+and consumers. Bind historical links to the full ancestor commit and exact path,
+and verify original bytes. Git retains the history; deletion neither absorbs an
+unresolved obligation nor closes this active Change. Official archive and its
+new commit's proof and publication remain separate.
 
 ### Retained Downloads
 

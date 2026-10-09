@@ -12,13 +12,57 @@ push admission; a method-pack plan or decision record grants neither.
 
 | Your task                  | Read next                                                           |
 | -------------------------- | ------------------------------------------------------------------- |
+| Edit a documentation page  | [Document editing](#edit-a-documentation-page)                      |
 | Check a working change     | [Verify the source](#verify-the-source)                             |
 | Work without remote supply | [Offline maintenance toolkit](#use-the-offline-maintenance-toolkit) |
 | Configure commit identity  | [Commit and release](#commit-and-release)                           |
 | Cut and publish an edition | [Publish a release](#publish-a-release)                             |
 | Remove replaced downloads  | [Retire superseded downloads](#retire-superseded-downloads)         |
 
+## Edit a documentation page
+
+For `docs/` pages, copy a current page's leading ETHOS HTML metadata comment.
+Leave one blank line before the H1, the first visible block. The repository
+check guards reading order; ETHOS owns metadata meaning. Keep `node_modules/`
+and generated output out of Git.
+
 ## Verify the source
+
+The full check requires the declared Node/npm, locked dependencies, and the
+[native check tools](#supply-native-checks). If they are already available,
+[run the source check](#run-the-full-source-check). Otherwise, prepare the
+[declared runtime and dependencies](#prepare-the-runtime-and-dependencies),
+then [supply any missing checks](#supply-native-checks). Use the
+[offline toolkit](#use-the-offline-maintenance-toolkit) when remote supply
+is unavailable.
+
+### Run the full source check
+
+```text
+npm run verify
+ethos plan --changed --json
+```
+
+The complete verifier checks format, Markdown, English prose and terms, local
+links and fragments, metadata, navigation, decisions, configuration, CI,
+SemVer/Changelog, official OpenSpec, and the regression suite. It downloads
+nothing. Before online publication, also run `node tools/docs/cli.mjs audit` and
+retain its complete result under the
+[supply boundary](docs/governance/ethos.md#tool-supply-and-offline-execution).
+
+| When you need to                 | Command                        |
+| -------------------------------- | ------------------------------ |
+| Format the selected source       | `npm run format`               |
+| Check formatting without writing | `npm run format -- --check`    |
+| Check non-spacing Markdown rules | `node tools/docs/cli.mjs lint` |
+| Check spelling, prose, and terms | `npm run prose`                |
+
+Follow the [configuration map](.config/README.md) for spacing, native rules, and
+byte-exact examples. Review meaning at the [communication](docs/communicate.md)
+and relevant task owner: a passing style check cannot establish factual accuracy,
+semantic fidelity, or reader understanding.
+
+### Prepare the runtime and dependencies
 
 Use the Node line and exact npm version declared in
 [`package.json`](package.json). Prepare them through the destination's existing
@@ -60,50 +104,22 @@ exact version.
 Use Node's native HTTP client for unauthenticated GitHub downloads. GitLab's
 project token must not follow redirects. Bound repository, tag, filename, time,
 and size; stage only in owned temporary storage. Reject linked cache/download
-parents before network or staging. Publish a fully verified candidate atomically
-inside its cache; concurrent callers may reuse verified bytes but never replace
-or remove another attempt. Existing invalid entries remain failures. Preserve
-permissions and remove only the caller's temporary stage. Preserve original
+parents before network or staging.
+
+Publish a fully verified candidate atomically inside its cache; concurrent
+callers may reuse verified bytes but never replace or remove another attempt.
+Existing invalid entries remain failures.
+
+Preserve permissions and remove only the caller's temporary stage. Preserve original
 command, streams, failure, cancellation, and cleanup diagnostics; use only a
 bounded opaque hash in authenticated-transport errors, never secret fragments.
 
 Official OpenSpec child-process controls disable telemetry and update requests
-for offline verification without global changes. Archives exclude host extended
-attributes; inspection and extraction reject native warnings even after exit
-zero. Extraction keeps the destination executor's ownership.
+for offline verification without global changes.
 
-### Run the full source check
-
-Then run:
-
-```text
-npm run verify
-ethos plan --changed --json
-```
-
-The complete verifier checks format, Markdown, English prose and terms, local
-links and fragments, metadata, navigation, decisions, configuration, CI,
-SemVer/Changelog, official OpenSpec, and the regression suite. It downloads
-nothing. Before online publication, also run `node tools/docs/cli.mjs audit` and
-retain its complete result under the
-[supply boundary](docs/governance/ethos.md#tool-supply-and-offline-execution).
-
-| When you need to                 | Command                        |
-| -------------------------------- | ------------------------------ |
-| Format the selected source       | `npm run format`               |
-| Check formatting without writing | `npm run format -- --check`    |
-| Check non-spacing Markdown rules | `node tools/docs/cli.mjs lint` |
-| Check spelling, prose, and terms | `npm run prose`                |
-
-Follow the [configuration map](.config/README.md) for spacing, native rules, and
-byte-exact examples. Review meaning at the [communication](docs/communicate.md)
-and relevant task owner: a passing style check cannot establish factual accuracy,
-semantic fidelity, or reader understanding.
-
-For `docs/` pages, copy a current page's leading ETHOS HTML metadata comment.
-Leave one blank line before the H1, the first visible block. The repository
-check guards reading order; ETHOS owns metadata meaning. Keep `node_modules/`
-and generated output out of Git.
+Archives exclude host extended attributes; inspection and extraction reject
+native warnings even after exit zero. Extraction keeps the destination executor's
+ownership.
 
 ## Use the offline maintenance toolkit
 

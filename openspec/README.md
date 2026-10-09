@@ -2,9 +2,15 @@
 
 One active Change under `openspec/changes/<change-id>/` carries a material
 repository change's proposal, design, specification deltas, and `tasks.md`.
-Task progress lives only there. Accepted requirements enter `openspec/specs/`
-through the official Change-bound sync workflow or archive. Both require ETHOS
-write admission; an unbound direct edit cannot substitute for the Change.
+Task progress lives only there. [Accepted requirements](specs/README.md) enter
+`openspec/specs/` through the official Change-bound sync workflow or archive.
+Both require ETHOS write admission; an unbound direct edit cannot substitute for
+the Change.
+
+For the current Change, read its
+[proposal](changes/native-document-quality/proposal.md) for intent,
+[design](changes/native-document-quality/design.md) for choices, or
+[tasks](changes/native-document-quality/tasks.md) for actions and progress.
 
 Install locked tools with `npm ci --ignore-scripts`, then run the official
 validator and ETHOS from the selected worktree:

@@ -108,7 +108,7 @@ an argument.
 
 These editing practices serve the three aims without exhausting them.
 
-### Structure a Decision Document
+## Structure a Decision Document
 
 Analysis, proposal, and decision documents should follow this order by default:
 
@@ -121,11 +121,13 @@ Analysis, proposal, and decision documents should follow this order by default:
    triggers.
 5. Name the action, responsible person, deadline, and acceptance condition.
 
-### Review Before Sending
-
 Appendices hold only supporting detail. Combine or reorder these parts when the
 reader's decision needs it; keep the conclusion, basis, limits, and requested
-action easy to find. Before sending, check the title, first screen,
+action easy to find.
+
+## Review Before Sending
+
+Before sending, check the title, first screen,
 sources, counterexamples, terminology, classification, and causal chain; a
 timeline alone does not prove cause. Ask whether a reader outside the work can
 restate the conclusion, basis, limits, and next action without filling gaps.
