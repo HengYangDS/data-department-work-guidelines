@@ -532,7 +532,7 @@ const nativeRuntimeVariables = {
 };
 const nativeRuntimeSupply = ["mise install --locked --jobs=1"];
 const windowsNativeObservation = [
-  "Get-Command node,npm,mise,winget,scoop,choco -All -ErrorAction SilentlyContinue | Select-Object Name,CommandType,Source,Version",
+  "Get-Command 'nod[e].exe','np[m].cmd','mis[e].exe','winge[t].exe','scoo[p].ps1','choc[o].exe' -CommandType Application,ExternalScript -All | Select-Object Name,CommandType,Source,Version",
   "Get-CimInstance Win32_Service -Filter \"Name LIKE '%gitlab%'\" | Select-Object Name,State,StartName",
   "node -p 'JSON.stringify({executable:process.execPath,arch:process.arch,version:process.version})'",
 ];
