@@ -1,1 +1,4 @@
 * text=auto eol=lf
+
+tests/**/*.test.mjs ethos-role=test
+tests/**/fixtures.mjs ethos-role=tooling

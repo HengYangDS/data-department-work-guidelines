@@ -16,6 +16,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Added
 
+- Declare executable test and fixture-support roles through native Git
+  attributes, without dropping static analysis or counting fixtures as tests.
 - Share native Git exclusions for editor state and Finder metadata across
   contributor clones, without hiding guideline source.
 - An explicit protected-source GitLab route for qualifying a frozen offline

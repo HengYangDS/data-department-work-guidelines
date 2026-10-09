@@ -168,6 +168,65 @@ test("current Markdown inventory excludes official archives, not live topics", (
   assert.deepEqual(currentMarkdown(files), files.slice(0, -1));
 });
 
+test("native Git roles distinguish executable tests from their fixture support", () => {
+  using workspace = mkdtempDisposableSync(
+    path.join(os.tmpdir(), "ddwg-test-roles-"),
+  );
+  const directory = workspace.path;
+  const git = (arguments_) => {
+    const result = spawnSync("git", arguments_, {
+      cwd: directory,
+      encoding: "utf8",
+      timeout: 10_000,
+    });
+    assert.ifError(result.error);
+    assert.equal(result.status, 0, result.stderr);
+    return result.stdout;
+  };
+  git(["init", "--quiet"]);
+  writeFileSync(
+    path.join(directory, ".gitattributes"),
+    readFileSync(path.join(root, ".gitattributes")),
+  );
+  const paths = [
+    "tests/retained/contract.test.mjs",
+    "tests/new domain/nested/behavior.test.mjs",
+    "tests/new domain/nested/fixtures.mjs",
+    "tools/docs/runtime.mjs",
+  ];
+  const expected = ["test", "test", "tooling", "unspecified"];
+  for (const relative of paths) {
+    mkdirSync(path.dirname(path.join(directory, relative)), {
+      recursive: true,
+    });
+    writeFileSync(path.join(directory, relative), "export {};\n");
+  }
+  git(["add", "--", ".gitattributes", paths[0]]);
+  for (const source of [[], ["--cached"]]) {
+    assert.deepEqual(
+      git(["check-attr", "-z", ...source, "ethos-role", "--", ...paths])
+        .split("\0")
+        .slice(0, -1),
+      paths.flatMap((relative, index) => [
+        relative,
+        "ethos-role",
+        expected[index],
+      ]),
+    );
+  }
+  const selected = git([
+    "ls-files",
+    "--cached",
+    "--others",
+    "--exclude-standard",
+    "-z",
+  ])
+    .split("\0")
+    .filter((relative) => relative.endsWith(".test.mjs"))
+    .sort();
+  assert.deepEqual(selected, paths.slice(0, 2).sort());
+});
+
 test("native Git attributes bind complete ordered reports to selected paths", (context) => {
   const selected = ["README.md", "docs/with space.md"];
   const nativeSpawn = childProcess.spawnSync;
