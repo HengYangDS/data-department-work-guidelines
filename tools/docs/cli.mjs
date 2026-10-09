@@ -3,7 +3,6 @@ import {
   gitFiles,
   reportError,
   run,
-  validateOpenSpec,
   workspaceObservation,
 } from "./runtime.mjs";
 
@@ -53,6 +52,7 @@ async function checkRepository() {
     lintMarkdown,
   } = await import("./content.mjs");
   const { readBundleRecord } = await import("../ci/offline-bundle.mjs");
+  const { validateOpenSpec } = await import("./openspec.mjs");
   const { checkChangelog } = await import("./changelog.mjs");
   const { checkCi } = await import("./ci.mjs");
   checkConfigurationLayout();

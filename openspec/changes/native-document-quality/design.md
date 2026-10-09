@@ -129,6 +129,11 @@ command discovers all Git-selected `tests/**/*.test.mjs` inputs, excluding fixtu
 modules; native Node retains two workers and the existing deadline. Move callers
 directly to the responsible module rather than retain a compatibility export.
 
+The official OpenSpec report consumer lives in `tools/docs/openspec.mjs`, not
+in process and source-selection utilities. Its tests keep telemetry, native
+root identity, complete findings, and the real official diagnostic journey
+together. The general runtime has no compatibility export.
+
 #### Source selection and observations
 
 The existing source verifier reports its real repository, commit and tree,
