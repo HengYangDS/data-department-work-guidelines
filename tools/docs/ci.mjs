@@ -530,17 +530,7 @@ const nativeRuntimeVariables = {
   MISE_TRUSTED_CONFIG_PATHS: "$CI_PROJECT_DIR/.config/supply/mise.toml",
   MISE_YES: "1",
 };
-const nativeRuntimeSupply = [
-  "mise install --locked --jobs=1",
-  "mise exec --locked -- node -p 'JSON.stringify({executable:process.execPath,arch:process.arch,version:process.version})'",
-  "mise exec --locked -- npm --loglevel=verbose --version",
-  "mise exec --locked -- npm config get prefix",
-];
-const windowsNativeObservation = [
-  "Get-Command '*' -CommandType Application,ExternalScript -All | Where-Object Name -In 'node.exe','npm.cmd','npm.ps1','mise.exe','winget.exe','scoop.ps1','choco.exe' | Format-List Name,CommandType,Source,Version",
-  "Get-CimInstance Win32_Service -Filter \"Name LIKE '%gitlab%'\" | Select-Object Name,State,StartName",
-  "node -p 'JSON.stringify({executable:process.execPath,arch:process.arch,version:process.version})'",
-];
+const nativeRuntimeSupply = ["mise install --locked --jobs=1"];
 const selectedNativeSourceSupply = [
   ...nativeRuntimeSupply,
   ...nativeSourceSupply.map((command) => `mise exec --locked -- ${command}`),
@@ -808,10 +798,6 @@ function validateGitLabNativeJobs(gitlab, base, kind, lane) {
       capabilities.system === "windows" ? ",resource_group" : "";
     const suppliedCommands =
       kind === "source" ? selectedNativeSourceSupply : nativeRuntimeSupply;
-    const observedSupply =
-      capabilities.system === "windows"
-        ? [...windowsNativeObservation, ...suppliedCommands]
-        : suppliedCommands;
     if (capabilities.system === "windows") {
       const resource = gitlab["docs:verify:windows"]?.resource_group;
       if (
@@ -833,7 +819,7 @@ function validateGitLabNativeJobs(gitlab, base, kind, lane) {
       Object.keys(job).sort().join(",") !==
         `before_script,extends,inherit${resourceKeys}${rules ? ",rules" : ""},script,tags,variables` ||
       job.extends !== `.${base}` ||
-      !isDeepStrictEqual(sourceSupply(job), observedSupply) ||
+      !isDeepStrictEqual(sourceSupply(job), suppliedCommands) ||
       !isDeepStrictEqual(job.variables, nativeRuntimeVariables) ||
       !isDeepStrictEqual(
         job.script,

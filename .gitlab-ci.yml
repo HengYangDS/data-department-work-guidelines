@@ -35,9 +35,6 @@ default:
     MISE_YES: "1"
   before_script: &native-runtime-supply
     - mise install --locked --jobs=1
-    - mise exec --locked -- node -p 'JSON.stringify({executable:process.execPath,arch:process.arch,version:process.version})'
-    - mise exec --locked -- npm --loglevel=verbose --version
-    - mise exec --locked -- npm config get prefix
 
 .docs:native-source-supply:
   before_script: &native-source-supply
@@ -116,12 +113,7 @@ docs:verify:windows:
   inherit:
     default: false
   variables: *native-runtime
-  before_script:
-    - &windows-native-observation
-      - Get-Command '*' -CommandType Application,ExternalScript -All | Where-Object Name -In 'node.exe','npm.cmd','npm.ps1','mise.exe','winget.exe','scoop.ps1','choco.exe' | Format-List Name,CommandType,Source,Version
-      - Get-CimInstance Win32_Service -Filter "Name LIKE '%gitlab%'" | Select-Object Name,State,StartName
-      - node -p 'JSON.stringify({executable:process.execPath,arch:process.arch,version:process.version})'
-    - *native-source-supply
+  before_script: *native-source-supply
   script:
     - mise exec --locked -- npm run verify
   tags:
@@ -136,9 +128,7 @@ docs:verify:windows:review:
   inherit:
     default: false
   variables: *native-runtime
-  before_script:
-    - *windows-native-observation
-    - *native-source-supply
+  before_script: *native-source-supply
   script:
     - mise exec --locked -- npm run verify
   tags:
@@ -190,9 +180,7 @@ offline:verify:windows:
   inherit:
     default: false
   variables: *native-runtime
-  before_script:
-    - *windows-native-observation
-    - *native-runtime-supply
+  before_script: *native-runtime-supply
   script:
     - mise exec --locked -- node tools/ci/offline-bundle.mjs acquire-gitlab
     - mise exec --locked -- node tools/ci/offline-bundle.mjs install
