@@ -231,19 +231,64 @@ test("task qualification and evidence stay in one readable task item", () => {
       "task actions and completion checks must not become code",
     );
     const paragraphs = tokens.filter((token) => token.type === "paragraph");
-    assert.equal(paragraphs.length, 3, "retain the three semantic task groups");
     assert.ok(markdownText(paragraphs[0]).startsWith("[ ] 2.38 Qualify"));
-    assert.ok(markdownText(paragraphs[1]).startsWith("Verify the"));
-    assert.ok(markdownText(paragraphs[2]).startsWith("Preserve findings"));
+    const actions = paragraphs
+      .map((token) => markdownText(token, { code: true }))
+      .join(" ")
+      .replace(/\s+/gu, " ");
+    let previous = -1;
+    for (const action of [
+      "Verify the format, risk, and execution contracts",
+      "Preserve findings and runner failures",
+      "Complete Windows, both-Forge, and accepted shared-runtime checks before closing this task.",
+    ]) {
+      const position = actions.indexOf(action);
+      assert.ok(
+        position > previous,
+        `completion action must remain in its task and order: ${action}`,
+      );
+      previous = position;
+    }
+    assert.ok(
+      actions.includes(
+        "816cb6432b150825c22073cce0a89e6632721aa0477620b44496dab739166162",
+      ),
+      "qualification evidence reference must remain in its task",
+    );
+    const links = markdownLinkDestinations(
+      paragraphs.map((token) => token.text).join("\n\n"),
+    );
+    for (const destination of [
+      "design.md#give-native-quality-concerns-one-owner",
+      "design.md#bind-risk-approval-to-the-actual-subject",
+      "design.md#preserve-native-execution-and-complete-validation-evidence",
+    ]) {
+      assert.ok(
+        links.includes(destination),
+        `missing task route: ${destination}`,
+      );
+    }
   };
   assertTaskContainer(source);
-  const qualification = "\n\n  Verify the [format]";
+  const qualification = "\n      Verify the [format]";
   assert.ok(source.includes(qualification));
+  assertTaskContainer(
+    source
+      .replace(qualification, "\n\n  Verify the [format]")
+      .replace("\n      Preserve findings", "\n\n  Preserve findings"),
+  );
   assert.throws(
     () =>
       assertTaskContainer(
         source.replace(qualification, "\n\n      Verify the [format]"),
       ),
     /completion checks must not become code/u,
+  );
+  assert.throws(
+    () =>
+      assertTaskContainer(
+        source.replace(qualification, "\n\nVerify the [format]"),
+      ),
+    /completion action must remain in its task/u,
   );
 });
