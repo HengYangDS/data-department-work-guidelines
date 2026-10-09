@@ -256,90 +256,143 @@ export function checkProfile(repository = root) {
   const profile = parseToml(
     readFileSync(path.join(repository, ".ethos/profile.toml"), "utf8"),
   );
-  const expected = ["docs-integrity", "markdown-format"];
-  const actual = profile.proof?.code_correctness_gates;
-  const ids = profile.proof?.gates?.map((gate) => gate.id);
-  if (
-    JSON.stringify(actual) !== JSON.stringify(expected) ||
-    JSON.stringify(ids) !== JSON.stringify(expected)
-  ) {
-    throw new Error(
-      "profile proof floor must have exactly docs-integrity and markdown-format",
-    );
-  }
-  if (
-    !isDeepStrictEqual(
-      { ...profile.proof.code_correctness_map },
-      {
-        behavior: "docs-integrity",
-        "static-analysis": "markdown-format",
-      },
-    )
-  ) {
-    throw new Error(
-      "profile proof dimensions must select their native document gates",
-    );
-  }
-  const argumentsByGate = [["check"], ["format", "--check"]];
+  const registryPath = profile.proof?.gate_registry;
   const sources = new Set(gitFiles(repository));
-  const verificationProviders = [
-    ["ethos.adapters.gates.code_quality:behavior_report"],
-    ["ethos.adapters.gates.code_quality:static_report"],
-  ];
-  const evidence = [
-    { kind: "test", evidence_class: "proof" },
-    { kind: "lint", evidence_class: "contract" },
-  ];
-  for (const [index, gate] of profile.proof.gates.entries()) {
-    const [executable, source, ...arguments_] = gate.command ?? [];
+  const selectedSource = (source, owner) => {
     if (
-      executable !== "node" ||
       typeof source !== "string" ||
       source.startsWith("-") ||
       ["\\", ":", "\0"].some((character) => source.includes(character)) ||
-      source
-        .split("/")
-        .some((part) => !part || part === "." || part === "..") ||
-      !isDeepStrictEqual(arguments_, argumentsByGate[index])
+      source.split("/").some((part) => !part || part === "." || part === "..")
     ) {
-      throw new Error(
-        `profile ${gate.id} must invoke the portable repository entrypoint`,
-      );
+      throw new Error(`${owner} must select portable repository source`);
     }
     if (
       !sources.has(source) ||
       !managedFileExists(path.join(repository, source), repository)
     ) {
       throw new Error(
-        `profile ${gate.id} must invoke selected regular repository source: ${source}`,
+        `${owner} must select regular repository source: ${source}`,
       );
     }
+  };
+  selectedSource(registryPath, "profile registry");
+  if (
+    ["gates", "code_correctness_gates", "code_correctness_map"].some((key) =>
+      Object.hasOwn(profile.proof, key),
+    )
+  ) {
+    throw new Error(
+      "profile must use one native gate registry, not inline gates",
+    );
+  }
+  // Native ETHOS validates the schema and graph. This is the local document
+  // boundary: two roots, with product-owned code evidence as prerequisites.
+  const registry = parseToml(
+    readFileSync(path.join(repository, registryPath), "utf8"),
+  );
+  const expected = ["docs-integrity", "markdown-format"];
+  if (
+    registry.id !== profile.profile_id ||
+    ![registry.proof_sets?.default, registry.proof_sets?.full].every(
+      (ids) =>
+        Array.isArray(ids) &&
+        isDeepStrictEqual([...ids].sort(), [...expected].sort()),
+    )
+  ) {
+    throw new Error(
+      "profile proof floor must have exactly docs-integrity and markdown-format",
+    );
+  }
+  const gates = new Map(registry.gates?.map((gate) => [gate.id, gate]));
+  const contracts = [
+    {
+      id: "docs-integrity",
+      kind: "test",
+      depends_on: ["code-behavior"],
+      dimensions: ["documentation", "links"],
+      execution_mode: "subprocess",
+      evidence_class: "proof",
+      tool_adapter: "repository-native",
+      providers: [],
+      verification_providers: [],
+    },
+    {
+      id: "markdown-format",
+      kind: "lint",
+      depends_on: [],
+      dimensions: ["static-analysis", "format", "markdown"],
+      execution_mode: "verified-command",
+      evidence_class: "contract",
+      tool_adapter: "ethos",
+      providers: [],
+      verification_providers: [
+        "ethos.adapters.gates.code_quality:static_report",
+      ],
+    },
+    {
+      id: "code-behavior",
+      kind: "test",
+      depends_on: [],
+      dimensions: ["behavior"],
+      execution_mode: "provider",
+      evidence_class: "proof",
+      tool_adapter: "ethos",
+      providers: ["ethos.adapters.gates.code_quality:behavior_report"],
+      verification_providers: [],
+      command: [],
+      timeout_seconds: 180,
+      cpu_reservation: 2,
+    },
+  ];
+  if (
+    gates.size !== contracts.length ||
+    registry.gates.length !== contracts.length
+  ) {
+    throw new Error(
+      "profile must declare only document roots and their native prerequisite",
+    );
+  }
+  for (const contract of contracts) {
+    const gate = gates.get(contract.id);
     if (
-      JSON.stringify(gate.verification_providers) !==
-        JSON.stringify(verificationProviders[index]) ||
-      gate.execution_mode !== "verified-command" ||
-      gate.tool_adapter !== "ethos"
-    ) {
-      throw new Error(
-        `profile ${gate.id} lacks its native verification provider`,
-      );
-    }
-    if (
-      gate.kind !== evidence[index].kind ||
-      gate.evidence_class !== evidence[index].evidence_class ||
+      !gate ||
+      gate.trust_bearing !== true ||
       gate.network_policy !== "offline" ||
-      gate.trust_bearing !== true
+      Object.entries(contract).some(
+        ([key, value]) =>
+          !isDeepStrictEqual(
+            gate[key] ?? (Array.isArray(value) ? [] : undefined),
+            value,
+          ),
+      )
     ) {
       throw new Error(
-        `profile ${gate.id} must preserve its native document gate contract`,
+        `profile ${contract.id} must preserve its native document gate contract`,
       );
     }
+  }
+  for (const [id, arguments_] of [
+    ["docs-integrity", ["check"]],
+    ["markdown-format", ["format", "--check"]],
+  ]) {
+    const [executable, source, ...actualArguments] =
+      gates.get(id).command ?? [];
+    if (
+      executable !== "node" ||
+      !isDeepStrictEqual(actualArguments, arguments_)
+    ) {
+      throw new Error(
+        `profile ${id} must invoke the portable repository entrypoint`,
+      );
+    }
+    selectedSource(source, `profile ${id} entrypoint`);
   }
   if (JSON.stringify(profile.openspec?.material_paths) !== '["**"]') {
     throw new Error("profile must admit all tracked candidates");
   }
   console.log(
-    "PASS ETHOS profile: two document commands with product-owned code evidence",
+    "PASS ETHOS profile: two document roots with a native behavior prerequisite",
   );
 }
 

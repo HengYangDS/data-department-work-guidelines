@@ -29,6 +29,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Separate document checks from native behavior evidence in one ETHOS gate
+  registry. Keep the two document roots and make the product's original test
+  attempt their prerequisite, without a third default gate or duplicate schema.
 - Preserve native Vale findings and exit status without parsing its output or
   rewriting its report.
 - Separate dependency auditing from CI topology. Group audit tests by policy,

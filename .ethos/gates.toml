@@ -1,0 +1,53 @@
+# ETHOS owns this registry schema, dependency closure, and evidence producers.
+# Repository checks assert only this repository's declared topology.
+id = "data-department-work-guidelines"
+
+[proof_sets]
+default = ["docs-integrity", "markdown-format"]
+full = ["docs-integrity", "markdown-format"]
+
+[[gates]]
+id = "docs-integrity"
+kind = "test"
+command = ["node", "tools/docs/cli.mjs", "check"]
+profile = "repository"
+toolchain = "repository-native"
+depends_on = ["code-behavior"]
+asset_classes = ["markdown-docs", "javascript-code"]
+dimensions = ["documentation", "links"]
+execution_mode = "subprocess"
+evidence_class = "proof"
+trust_bearing = true
+tool_adapter = "repository-native"
+network_policy = "offline"
+
+[[gates]]
+id = "markdown-format"
+kind = "lint"
+command = ["node", "tools/docs/cli.mjs", "format", "--check"]
+verification_providers = ["ethos.adapters.gates.code_quality:static_report"]
+profile = "repository"
+toolchain = "ethos"
+asset_classes = ["markdown-docs", "javascript-code"]
+dimensions = ["static-analysis", "format", "markdown"]
+execution_mode = "verified-command"
+evidence_class = "contract"
+trust_bearing = true
+tool_adapter = "ethos"
+network_policy = "offline"
+
+[[gates]]
+id = "code-behavior"
+kind = "test"
+providers = ["ethos.adapters.gates.code_quality:behavior_report"]
+profile = "repository"
+toolchain = "ethos"
+asset_classes = ["javascript-code"]
+dimensions = ["behavior"]
+execution_mode = "provider"
+evidence_class = "proof"
+trust_bearing = true
+tool_adapter = "ethos"
+network_policy = "offline"
+timeout_seconds = 180
+cpu_reservation = 2

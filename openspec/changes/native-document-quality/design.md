@@ -541,12 +541,25 @@ evidence and recovery until their exact consumer releases them.
 
 ### Integrate accepted shared ownership without weakening the floor
 
-Keep only `docs-integrity` and `markdown-format` as default gates and profile
-descriptors. ETHOS owns native behavior/static prerequisites and their
-dependency closure, not extra profile descriptors or forwarded authored reports.
+Keep only `docs-integrity` and `markdown-format` as default and full proof roots.
+The profile selects one native registry instead of inline gate declarations.
+The integrity command depends on the provider-only `code-behavior` prerequisite;
+ETHOS owns its original Node test attempt, V8 custody, two workers, and
+180-second total budget. The format command retains native static verification.
+Do not forward a document command's output as behavior evidence or add a third
+root. ETHOS owns the registry schema and dependency closure; local validation
+checks this repository's topology, not a second graph or schema implementation.
 Consume accepted installed schemas, not prototype fields. Migrate profile,
 checks, tests, and guidance together; retire replaced format, stream-report,
 risk, and history glue only after consumer acceptance.
+
+Replace the test wrapper recipe only through the installed direct-Node contract
+that appends Git-selected tests to an option-only recipe. Preserve explicit
+operands and single-attempt journal validation. A candidate source fix is not
+installed acceptance; keep native proof integration open until the actual
+consumer qualifies it. Node treats glob-like operands as patterns, so the
+existing literal-filename counterexample remains a product gap, not a claim of
+general filename support.
 
 Exercise semantics, same-attempt diagnostics, complete selection, single
 execution, and subject applicability. Syntax is not semantics; a Node report may

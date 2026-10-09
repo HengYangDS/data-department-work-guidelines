@@ -5,22 +5,22 @@
 Define complete source verification, native proof prerequisites, execution
 evidence, and shared CI admission without replacing OpenSpec or ETHOS authority.
 
-## ADDED Requirements
+## MODIFIED Requirements
 
 ### Requirement: Default proof and root binding are distinct
 
-The profile SHALL declare only `docs-integrity` and `markdown-format` as
-default gates and descriptors. Both SHALL use repository-relative Node commands
-without shell or executable-bit dependencies. Integrity SHALL omit formatting;
-the format gate SHALL own it and standalone verification SHALL run it once.
-Behavior and static mappings SHALL select those gates with their native kinds,
-evidence classes, offline policies, and trust status.
+The profile SHALL select one native gate registry whose default and full roots
+are only `docs-integrity` and `markdown-format`. Both document commands SHALL use
+repository-relative Node source without shell or executable-bit dependencies.
+Integrity SHALL omit formatting; the format gate SHALL own it and standalone
+verification SHALL run it once. Native behavior and static prerequisites SHALL
+retain their declared kinds, evidence classes, offline policies, and trust.
 
 #### Scenario: Root-binding contract is audited
 
 - **WHEN** the repository validates `.ethos/profile.toml`
-- **THEN** its accepted typed profile has exactly the two default proof gates
-  and descriptors
+- **THEN** its accepted typed profile selects one native registry with exactly
+  the two document roots
 - **AND** each required native prerequisite and quality axis names its verified
   owner in the accepted product graph, without another profile descriptor
 - **AND THEN** no optional `repository-root-binding` descriptor is present.
@@ -53,8 +53,82 @@ evidence classes, offline policies, and trust status.
 - **WHEN** the profile swaps a default dimension mapping or changes a gate's
   native kind, evidence class, offline policy, or trust-bearing status
 - **THEN** the existing profile check rejects that exact contract mismatch
-- **AND** the unchanged two-gate profile remains valid without another gate
-  or a duplicate lifecycle implementation.
+- **AND** the unchanged two-root policy remains valid with its native
+  prerequisite, without another root or a duplicate lifecycle implementation.
+
+### Requirement: Proof prerequisites retain product ownership
+
+Product-native prerequisites and quality axes SHALL belong to one accepted
+ETHOS gate registry selected by the profile. Default and full proof roots SHALL
+remain `docs-integrity` and `markdown-format`. The integrity command SHALL depend
+on a provider-only behavior prerequisite that owns its original test attempt
+and native coverage. Static verification SHALL remain with the format command.
+Neither inline duplicate declarations nor authored substitute evidence SHALL
+replace that ownership.
+
+#### Scenario: A profile attempts to replace native proof evidence
+
+- **WHEN** a repository forwards a document command's output, adds a third root,
+  or supplies an authored report instead of its product-native prerequisite
+- **THEN** accepted ETHOS refuses proof without changing the repository's two
+  default gate boundary
+- **AND** passing document commands alone do not satisfy behavior, semantics,
+  diagnostics, or subject applicability.
+
+#### Scenario: Document and behavior execution retain distinct evidence
+
+- **WHEN** ETHOS resolves both document roots from the selected native registry
+- **THEN** the behavior prerequisite owns one Git-selected Node test attempt,
+  its native coverage, two workers, and a 180-second total execution budget
+- **AND** the document commands retain their own results without replaying tests
+  or claiming that their output proves code behavior.
+
+### Requirement: Shared source-size admission preserves semantic ownership
+
+Accepted shared admission SHALL classify each selected carrier before applying
+its metric and limit. The documentation ceiling SHALL apply only to current
+authored Markdown; release-owned Changelog, official OpenSpec artifacts, and
+declared generated output SHALL retain their own checks. Code SHALL use
+supported language metrics and declared policy. Admission SHALL preserve meaning
+and source selection without a private checker or hidden input.
+
+#### Scenario: A carrier reaches the admitted boundary
+
+- **WHEN** selected current authored Markdown reaches the accepted product's
+  inclusive 512-nonblank-line boundary
+- **THEN** shared documentation admission accepts 512 and refuses the
+  corresponding 513-line source without mutation
+- **AND** supported code is evaluated by its language-specific metric and
+  declared limit, not Markdown length.
+
+#### Scenario: An oversized carrier is reorganized
+
+- **WHEN** an applicable carrier exceeds its own admitted limit and source is
+  divided by semantic responsibility
+- **THEN** every prior requirement, test journey, and versioned release note
+  remains reachable at its declared owner
+- **AND** complete native selection and applicable shared admission are verified
+  before the replaced carrier or implementation is retired
+- **AND** source outside that policy is not divided merely to satisfy its count.
+
+#### Scenario: Release history and official artifacts grow
+
+- **WHEN** root release-owned Changelog, an Unreleased or version section,
+  official OpenSpec artifacts, or declared generated output exceeds the ordinary
+  documentation ceiling
+- **THEN** documentation length alone does not reject those carriers
+- **AND** release form and meaning, official artifact validation, and declared
+  producer checks remain mandatory at their own owners.
+
+#### Scenario: Carrier ownership remains explicit
+
+- **WHEN** current authored documentation receives a history, evidence, or
+  archived metadata label, or another directory contains a same-named Changelog
+- **THEN** that label or name alone does not change its applicable policy
+- **AND** generated-output classification requires its current native producer
+  declaration rather than a local exemption.
+
+## ADDED Requirements
 
 ### Requirement: One portable documentation verifier measures source properties
 
@@ -447,66 +521,3 @@ and single-peer execution SHALL remain independent of an unavailable peer.
 - **AND** local and installed offline checks do not acquire an undeclared remote
 - **AND** execution preserves exact signed source identity and claims only the
   observed peer's acceptance.
-
-### Requirement: Proof prerequisites retain product ownership
-
-Product-native prerequisites and quality axes SHALL belong to the accepted
-ETHOS dependency graph and verified owners, not additional profile descriptors.
-Native behavior and static diagnostics SHALL conjoin the mapped document
-commands for the same source without authored substitute evidence.
-
-#### Scenario: A profile attempts to replace native proof evidence
-
-- **WHEN** a repository adds a descriptor or authored report instead of its
-  required product-native prerequisite
-- **THEN** accepted ETHOS refuses proof without changing the repository's two
-  default gate boundary
-- **AND** passing document commands alone do not satisfy behavior, semantics,
-  diagnostics, or subject applicability.
-
-## MODIFIED Requirements
-
-### Requirement: Shared source-size admission preserves semantic ownership
-
-Accepted shared admission SHALL classify each selected carrier before applying
-its metric and limit. The documentation ceiling SHALL apply only to current
-authored Markdown; release-owned Changelog, official OpenSpec artifacts, and
-declared generated output SHALL retain their own checks. Code SHALL use
-supported language metrics and declared policy. Admission SHALL preserve meaning
-and source selection without a private checker or hidden input.
-
-#### Scenario: A carrier reaches the admitted boundary
-
-- **WHEN** selected current authored Markdown reaches the accepted product's
-  inclusive 512-nonblank-line boundary
-- **THEN** shared documentation admission accepts 512 and refuses the
-  corresponding 513-line source without mutation
-- **AND** supported code is evaluated by its language-specific metric and
-  declared limit, not Markdown length.
-
-#### Scenario: An oversized carrier is reorganized
-
-- **WHEN** an applicable carrier exceeds its own admitted limit and source is
-  divided by semantic responsibility
-- **THEN** every prior requirement, test journey, and versioned release note
-  remains reachable at its declared owner
-- **AND** complete native selection and applicable shared admission are verified
-  before the replaced carrier or implementation is retired
-- **AND** source outside that policy is not divided merely to satisfy its count.
-
-#### Scenario: Release history and official artifacts grow
-
-- **WHEN** root release-owned Changelog, an Unreleased or version section,
-  official OpenSpec artifacts, or declared generated output exceeds the ordinary
-  documentation ceiling
-- **THEN** documentation length alone does not reject those carriers
-- **AND** release form and meaning, official artifact validation, and declared
-  producer checks remain mandatory at their own owners.
-
-#### Scenario: Carrier ownership remains explicit
-
-- **WHEN** current authored documentation receives a history, evidence, or
-  archived metadata label, or another directory contains a same-named Changelog
-- **THEN** that label or name alone does not change its applicable policy
-- **AND** generated-output classification requires its current native producer
-  declaration rather than a local exemption.

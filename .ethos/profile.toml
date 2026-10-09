@@ -17,40 +17,8 @@ normative_sources = [
 # these patterns must be attributed to one selected active official Change.
 material_paths = ["**"]
 
-# The two default commands check repository documents. ETHOS independently
-# obtains JavaScript test evidence and checks syntax for the mapped axes.
-# Syntax checks do not establish semantic correctness. Native test reports
-# can omit runtime warnings; passing reports do not close the shared ETHOS
-# semantic, diagnostic, and subject-applicability acceptance obligations.
+# One native registry owns the two document roots and their prerequisites.
+# ETHOS obtains behavior evidence from its own test attempt, not the output
+# of a document command. See the registry for execution and evidence bounds.
 [proof]
-code_correctness_gates = ["docs-integrity", "markdown-format"]
-
-[proof.code_correctness_map]
-behavior = "docs-integrity"
-static-analysis = "markdown-format"
-
-[[proof.gates]]
-id = "docs-integrity"
-kind = "test"
-command = ["node", "tools/docs/cli.mjs", "check"]
-verification_providers = ["ethos.adapters.gates.code_quality:behavior_report"]
-asset_classes = ["markdown-docs", "javascript-code"]
-dimensions = ["behavior", "documentation", "links"]
-execution_mode = "verified-command"
-evidence_class = "proof"
-trust_bearing = true
-tool_adapter = "ethos"
-network_policy = "offline"
-
-[[proof.gates]]
-id = "markdown-format"
-kind = "lint"
-command = ["node", "tools/docs/cli.mjs", "format", "--check"]
-verification_providers = ["ethos.adapters.gates.code_quality:static_report"]
-asset_classes = ["markdown-docs", "javascript-code"]
-dimensions = ["static-analysis", "format", "markdown"]
-execution_mode = "verified-command"
-evidence_class = "contract"
-trust_bearing = true
-tool_adapter = "ethos"
-network_policy = "offline"
+gate_registry = ".ethos/gates.toml"

@@ -180,7 +180,10 @@
       compatibility lifecycle.
 - [ ] 2.33 Migrate and verify DDWG against the [accepted shared contracts](design.md#integrate-accepted-shared-ownership-without-weakening-the-floor).
       Verify the installed profile, validators, tests, and guidance with two
-      default gates. Qualify [native formatting](design.md#give-native-quality-concerns-one-owner),
+      default roots in one native registry and a provider-only behavior
+      prerequisite. Qualify the installed direct-Node Git-selected recipe and
+      its single-attempt evidence before completing native proof integration.
+      Qualify [native formatting](design.md#give-native-quality-concerns-one-owner),
       [resource loading](design.md#keep-configuration-with-its-consumer), task
       diagnostics, risk approval, and identity; retire replaced glue in the same
       migration.

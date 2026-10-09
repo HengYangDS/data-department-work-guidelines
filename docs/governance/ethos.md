@@ -140,6 +140,15 @@ official OpenSpec, and the standalone regression suite. The
 rule selection and spacing;
 [Contributing](../../CONTRIBUTING.md#verify-the-source) owns the commands.
 
+The [profile](../../.ethos/profile.toml) selects one native
+[gate registry](../../.ethos/gates.toml). Both proof sets have two roots:
+`docs-integrity` and `markdown-format`. The integrity command depends on the
+product's provider-only `code-behavior` gate, which owns one Node test attempt,
+its native coverage, two workers, and a 180-second total budget. A document
+command's output cannot substitute for that attempt. ETHOS owns the registry
+schema, graph, and evidence; repository checks guard only the declared topology.
+Syntax checks and test totals do not close semantic or diagnostic obligations.
+
 ### Observe the Execution Environment
 
 The source check reports path, commit, tree, tracked changes, Node version and
