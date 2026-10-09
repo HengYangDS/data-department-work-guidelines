@@ -184,6 +184,8 @@
       [resource loading](design.md#keep-configuration-with-its-consumer), task
       diagnostics, risk approval, and identity; retire replaced glue in the same
       migration.
+      Integrate the accepted public CUE projection and shared 512-line admission
+      contracts; their actual installed adopter routes remain prerequisites.
 - [x] 2.34 Serialize Windows review, protected-source, and offline jobs through
       one project-scoped native resource group. Reject missing, ref-dependent,
       or divergent reservations; preserve trust boundaries, full discovery, two
@@ -243,7 +245,7 @@
       tool selectors. Preserve selector precedence and the caller's environment;
       verify the original selector-dependent failure, both rejection paths,
       the full native contribution command, and committed-source ETHOS proof.
-- [ ] 2.40 Compose and qualify the task map and all seven topic pages, with the
+- [x] 2.40 Compose and qualify the task map and all seven topic pages, with the
       governance route. Give use, judgment, duties, examples, stop conditions,
       and handoff a clear reading hierarchy. Preserve
       every topic route, stage, relationship, return condition, and authority
@@ -253,6 +255,12 @@
       screenshots alone do not prove adoption, team benefit, or screen-reader
       acceptance. Keep the current clause review and native render/CI receipts
       under Attestation `07833876851f4480c3a4e82a2d94ac720e1306bf69f5b3b5b80d62ce3782a01a`.
+      Current independent reader disposition:
+      `326125f9c749324ae88f1a47f5bd4788ad6f72463059e6b78ae770fad3201257`;
+      owner review and ten conserved reader-source bindings:
+      `466c69defd3bbd5c8fab06ea3c0103cd6326ca43b69a5df796a8c0a8d518b702`.
+      Neither closes authenticated GitLab reading, accessibility, adoption,
+      shared integration, or final publication. Retire verified inspection copies.
 - [x] 2.41 Share editor and Finder exclusions through native Git policy. Verify
       a fresh repository without ambient or Git-common exclusions, preserve
       tracked guidance selection, and run full source checks, committed-source
@@ -281,6 +289,20 @@
       paths, native checks, and source-bound proof before closing this task.
       Evidence: native editorial Attestation
       `940f164cc44b311fb62486e1d889bcefc2a67e0d453982d29ea8bb65dd970135`.
+- [ ] 2.45 Replace duplicated peer CI semantics with the accepted
+      [CUE projection contract](design.md#keep-both-publication-peers-complete-and-coherent).
+      Define the common graph, platform intent, admission, quality and release
+      actions once; generate peer YAML and retain only necessary platform
+      adapters. Reuse existing native executors, qualify single-peer and offline
+      boundaries, and run the same non-writing drift check on both peers.
+      Reject hand edits and preserve signed source identity. Retire the replaced
+      YAML policy implementation after actual protected source/offline acceptance.
+- [ ] 2.46 Consume accepted shared 512-line admission and reorganize oversized
+      carriers by semantic ownership. Qualify code ELOC and Markdown non-blank
+      physical lines at 512 passing and 513 refusing, with complete source/test
+      selection, preserved requirements and versioned release notes, and no
+      mutation on refusal. Do not copy the shared gate, minify, hide inputs,
+      create catch-all history, or waive the limit.
 
 ## 3. Qualification and publication
 
@@ -302,7 +324,7 @@
       introductions and diagrams outside them with current source. Explain every
       justified change or removal, assess the fitness of the current topics,
       and resolve every review finding. Require tasks
-      2.33, 2.38, 2.40, 2.44, 3.3, and 3.13, then complete
+      2.33, 2.38, 2.40, 2.44, 2.45, 2.46, 3.3, and 3.13, then complete
       the pre-archive [migration plan](design.md#migration-plan): a frozen release
       classified against the currently effective contract,
       release, cold/platform checks, signed publication, official spec sync, and

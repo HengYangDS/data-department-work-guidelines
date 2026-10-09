@@ -86,6 +86,14 @@ and history capabilities remain product dependencies.
   contracts in place. Keep exactly two default gates, qualify the actual native
   dependency graph on DDWG, AIGW, and Proxy, and remove product-superseded local
   glue in the same migration.
+- Define the common CI task graph, platform intent, and admission once in CUE.
+  Generate the GitLab and GitHub YAML projections, keeping only necessary peer
+  differences and the existing native executors. Qualify non-writing drift
+  checks on each peer before retiring the duplicated YAML policy checker.
+- Consume accepted shared source-size admission: code ELOC and Markdown
+  non-blank physical lines have an inclusive 512-line limit. Reorganize oversized
+  carriers by semantic ownership without losing requirements or adding a second
+  checker, history dump, or exception that weakens the limit.
 - Consolidate the existing proposal, design, and task ledger by semantic
   concern. Keep every task ID and obligation; replace stale progress with
   current evidence references without rewriting original Git or execution

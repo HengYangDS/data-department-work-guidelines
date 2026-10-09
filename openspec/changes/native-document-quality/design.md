@@ -774,6 +774,37 @@ private risk-admission mechanism when shared ownership is integrated.
 
 ### Keep both publication peers complete and coherent
 
+The common CI graph, platform intent, admission, quality actions, and release
+qualification have one CUE owner. GitLab and GitHub are independently selectable
+peers; their YAML files are generated projections, not separately authored
+policy. Keep event mapping, permissions, runner selection, credentials, and asset
+transport in the peer adapters. Shared actions call the same existing native
+executors. Copying equivalent script lists into two CUE branches does not remove
+the duplicate authority.
+
+Use the accepted ETHOS projection contract and the original stable CUE compiler.
+Generation check compares the declared source and projections without writing;
+both peers reject hand-edited drift before shared quality or release work. Keep
+local verification and installed offline tools independent of either Forge.
+Source inputs and signed commit identity remain explicit. A single selected peer
+cannot claim the unavailable peer's acceptance.
+
+The installed product's public adopter generation and drift-check route is an
+integration prerequisite, not an assumed capability. Pending that route, retain
+the current executable pipeline and original failures; do not create a copied
+compiler, second controller, or reader installation requirement. Replace the
+duplicated repository YAML policy implementation in the same qualified batch.
+
+Consume the shared inclusive 512-line admission at its accepted owner: code is
+measured in ELOC; Markdown is measured in non-blank physical lines. Qualify 512
+passing and 513 refusing without mutation. Split oversized source, tests, design,
+and specifications by real semantic responsibility, preserving requirements and
+test discovery. Conserved release notes stay with their versioned owner; moving
+them to a catch-all history directory or excluding a required input does not
+close the limit. Do not minify, hide lines, duplicate policy, or mint a private
+exemption to pass. Qualification remains pending until the shared gate and the
+actual source journey are observed.
+
 Local verification/install are independent of either remote. GitLab is the
 organization publication plane; GitHub is an independent complete repository and
 CI/CD plane. Each must qualify its own source, Release object, downloaded bytes,

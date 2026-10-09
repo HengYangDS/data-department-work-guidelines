@@ -590,3 +590,61 @@ isolation, throughput, or capacity admission or add a controller or gate.
 - **THEN** verification fails with the original error
 - **AND** it does not fabricate a zero-capacity observation or claim runner
   qualification.
+
+### Requirement: Common CI semantics have one CUE owner
+
+Common CI topology, platform intent, admission, quality actions, and release
+qualification SHALL have one CUE owner. Forge YAML SHALL be generated
+projections; peer adapters SHALL own only necessary platform and transport
+differences. Shared actions SHALL use existing native executors. Both peers
+SHALL enforce the same non-writing drift check before effects. Local verification
+and single-peer execution SHALL remain independent of an unavailable peer.
+
+#### Scenario: Peer adapters preserve the common contract
+
+- **WHEN** GitLab and GitHub projections are generated from the declared CUE source
+- **THEN** both use the same task graph, platform intent, admission, quality
+  actions, and release qualification
+- **AND** peer adapters carry only necessary event mapping, permissions, runner
+  selection, credentials, and asset transport
+- **AND** equivalent shared action lists are not authored separately per peer.
+
+#### Scenario: An authored YAML projection drifts
+
+- **WHEN** a projected task, platform, trigger, or command is edited without its
+  declared CUE source
+- **THEN** generation check refuses before shared quality or release effects on
+  either peer
+- **AND** the check leaves the source and every projection unchanged.
+
+#### Scenario: Only one publication peer is selected
+
+- **WHEN** native execution selects one declared peer while the other is absent
+  or unavailable
+- **THEN** the common task and quality contract remains the same
+- **AND** local and installed offline checks do not acquire an undeclared remote
+- **AND** execution preserves exact signed source identity and claims only the
+  observed peer's acceptance.
+
+### Requirement: Shared source-size admission preserves semantic ownership
+
+Code ELOC and Markdown non-blank physical lines SHALL each have an inclusive
+512-line limit enforced through the accepted shared admission owner. Required
+source, tests, specifications, and release notes SHALL remain discoverable and
+semantically complete. Reorganization SHALL NOT minify, conceal inputs, copy the
+shared checker, create a catch-all history carrier, or weaken the limit.
+
+#### Scenario: A carrier reaches the admitted boundary
+
+- **WHEN** selected code contains 512 ELOC or selected Markdown contains 512
+  non-blank physical lines
+- **THEN** the shared size gate admits that carrier without changing it
+- **AND** each corresponding 513-line carrier is refused without mutation.
+
+#### Scenario: An oversized carrier is reorganized
+
+- **WHEN** source is divided by semantic responsibility to meet the limit
+- **THEN** every prior requirement, test journey, and versioned release note
+  remains reachable at its declared owner
+- **AND** the complete native selection and actual shared admission are verified
+  before the replaced carrier or implementation is retired.
