@@ -122,6 +122,11 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Align Change intent and prevention scenarios with practice admission based on
+  an observed problem, substantiated material risk, or applicable obligation.
+  A bounded trial qualifies the implementation; necessary safeguards do not wait
+  for an incident or for admission as department practice.
+
 - Resolve Node and npm from `package.json` through native Mise discovery of
   `.config/mise/config.toml` and its adjacent lock. Remove executable version
   and PATH templates and filename overrides; preserve safe-mode preparation,

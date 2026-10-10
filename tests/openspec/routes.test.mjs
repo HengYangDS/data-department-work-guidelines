@@ -23,6 +23,67 @@ import {
 import { root } from "../../tools/docs/runtime.mjs";
 import { fixture, contentUnderHeading } from "../governance/fixtures.mjs";
 
+test("practice admission preserves preventive obligations across current carriers", () => {
+  const carriers = [
+    ["docs/evolve.md", "Admit Practices and Prevent Recurrence"],
+    ["openspec/changes/native-document-quality/proposal.md", "What Changes"],
+    [
+      "openspec/changes/native-document-quality/specs/work-practice/spec.md",
+      "Scenario: Prevention is needed before the first failure",
+    ],
+  ];
+  const contract = (paragraphs) => ({
+    need: paragraphs.some((text) =>
+      text.includes(
+        "observed problem, substantiated material risk, or applicable obligation",
+      ),
+    ),
+    safeguards: paragraphs.some(
+      (text) =>
+        text.includes("safeguards") &&
+        text.includes("not wait for an incident or practice admission"),
+    ),
+    implementation: paragraphs.some(
+      (text) =>
+        text.includes("trial") &&
+        text.includes("implementation") &&
+        text.includes("not") &&
+        text.includes("whether the obligation applies"),
+    ),
+  });
+  const selected = Object.fromEntries(
+    carriers.map(([relative, title]) => {
+      const source = readFileSync(path.join(root, relative), "utf8");
+      const paragraphs = [
+        ...walkMarkdown(contentUnderHeading(source, relative, title)),
+      ]
+        .filter((token) => token.type === "paragraph")
+        .map((token) =>
+          markdownText(token).replace(/\s+/gu, " ").toLowerCase(),
+        );
+      const expected = { need: true, safeguards: true, implementation: true };
+      const legacy = paragraphs.map((text) =>
+        text.replace(
+          "observed problem, substantiated material risk, or applicable obligation",
+          "observed failure mode",
+        ),
+      );
+      assert.equal(contract(legacy).need, false, relative);
+      const waived = paragraphs.map((text) =>
+        text.replace(
+          "whether the obligation applies",
+          "when to admit the practice",
+        ),
+      );
+      assert.equal(contract(waived).implementation, false, relative);
+      return [relative, { actual: contract(paragraphs), expected }];
+    }),
+  );
+  for (const [relative, { actual, expected }] of Object.entries(selected)) {
+    assert.deepEqual(actual, expected, relative);
+  }
+});
+
 test("OpenSpec entry selects only the locked portable CLI", () => {
   const source = readFileSync(path.join(root, "openspec", "README.md"), "utf8");
   const expected =

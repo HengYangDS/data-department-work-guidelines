@@ -31,9 +31,12 @@ and history capabilities remain product dependencies.
   execution costs, data acceptance, communication, human judgment,
   responsibility, evidence, and event-driven learning.
 
-  Keep precautionary task-specific prevention assets distinct from the
-  observed-failure threshold for admission as department practice. Keep task-start
-  clarity, coaching where it is needed, and immediate correction.
+  Admit department practice from an observed problem, substantiated material
+  risk, or applicable obligation, with a bounded trial, ownership, and evidence
+  of net benefit. Necessary safeguards must not wait for an incident or practice
+  admission; the trial chooses and verifies their implementation, not whether
+  the obligation applies. Keep task-specific prevention, task-start clarity,
+  coaching where it is needed, and immediate correction.
 
   Preserve weekly, monthly, and quarterly review purposes with explicit outputs
   and justified interval changes rather
