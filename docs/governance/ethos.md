@@ -225,9 +225,12 @@ The optional bundle supplies quality checks without remote supply, not the
 guidelines or ETHOS. ETHOS is a separate installed prerequisite.
 
 `package.json` owns the Node line and exact npm version through native
-`devEngines.packageManager`. npm rejects mismatch before `install`, `ci`, and
-`run`. Ephemeral CI acquires that npm first. Shell CI uses the existing Mise
-owner with the [project configuration](../../.config/mise/config.toml) and
+`devEngines.runtime` and `devEngines.packageManager`, with `onFail: error`.
+npm rejects mismatch before `install`, `ci`, and `run`. Ephemeral CI acquires
+that npm first. The declaration's checksum is enforced by Mise acquisition;
+npm accepting checksum metadata is not an integrity check. Shell CI uses the
+existing Mise owner with the
+[project configuration](../../.config/mise/config.toml) and
 [native lock](../../.config/mise/mise.lock); every native job command runs
 with the selected runtime, without changing host npm or Runner services.
 Maintained hosts keep their existing installation owner. Local and offline

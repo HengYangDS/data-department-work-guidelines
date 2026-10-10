@@ -126,7 +126,11 @@ export function buildFixture(run) {
     writeFileSync(path.join(repository, "VERSION"), "4.2.0\n");
     writeFileSync(
       path.join(repository, "package.json"),
-      JSON.stringify({ engines: { node: "26.x" } }),
+      JSON.stringify({
+        devEngines: {
+          runtime: { name: "node", version: "26.x", onFail: "error" },
+        },
+      }),
     );
     writeFileSync(path.join(repository, "package-lock.json"), "fixture lock\n");
     writeFileSync(

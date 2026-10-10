@@ -318,8 +318,8 @@ test("offline supply binds the native package-manager policy bytes", () => {
     writeFileSync(
       path.join(inputs.repository, "package.json"),
       JSON.stringify({
-        engines: { node: "26.x" },
         devEngines: {
+          runtime: { name: "node", version: "26.x", onFail: "error" },
           packageManager: { name: "npm", version: "0.0.0", onFail: "error" },
         },
       }),

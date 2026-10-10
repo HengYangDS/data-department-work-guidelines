@@ -25,9 +25,11 @@ and generated release record remain JSON so the offline installer can validate
 them before npm dependencies exist. Do not add converters, duplicate records,
 or old-path fallbacks.
 
-Mise discovers its project configuration at `.config/mise/config.toml` and
-reads the adjacent native lock without a filename or global override. The lock
-pins supported runtime archives without installing them.
+Mise discovers its project configuration at `.config/mise/config.toml`, reads
+the adjacent native lock, and resolves `package.json`'s development declarations
+through its native idiomatic parser. The manifest owns the Node line and npm
+version/checksum; the lock pins resolved runtime archives without installing
+them. No executable version or PATH template is needed.
 [Runtime preparation](../CONTRIBUTING.md#prepare-the-runtime-and-dependencies)
 owns local selection and CI isolation. `mise exec --locked` scopes the selected
 runtime to its child command; it changes neither the machine PATH nor host npm.

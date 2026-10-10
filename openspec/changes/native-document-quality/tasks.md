@@ -231,9 +231,13 @@
       Select Node and npm through native locked Mise commands in every shell
       job; qualify selection, checksum refusal, missing-lock refusal, and
       manifest/lock mismatch without changing machine PATH or Runner identity.
+      Qualify native development declarations and checksum metadata without
+      executable version or PATH templates. Verify installed safe-mode
+      materialization of manifest, config, and lock with native process settings;
+      distinguish npm bootstrap acceptance from Mise checksum enforcement.
       Use native project discovery at `.config/mise/config.toml` and its adjacent
       lock, with no filename selector or global override. Preserve the original
-      config and lock bytes, retire their old paths and selection wiring, and
+      config and lock bytes as evidence. Retire old paths and selection wiring;
       qualify warning-free local commands, the global credential boundary, and
       job-local CI isolation through the existing supply regression.
       Qualify Windows job-local discovery from the inherited and native machine

@@ -64,10 +64,14 @@ semantic fidelity, or reader understanding.
 
 ### Prepare the runtime and dependencies
 
-Use the Node line and exact npm version declared in
-[`package.json`](package.json). Prepare them through the destination's existing
-installation owner; do not bypass npm admission with `--force` or an override.
-Install locked dependencies with `npm ci --ignore-scripts`.
+[`package.json`](package.json) owns the Node line through `devEngines.runtime`
+and the exact npm version through `devEngines.packageManager`, both with
+`onFail: error`. npm rejects a mismatch before installation, `ci`, or run
+effects. The package-manager version includes native SHA-512 metadata: Mise
+checks it when acquiring npm; npm's own installer accepts the metadata but
+does not enforce that declared checksum. Prepare tools through the destination's
+existing installation owner; do not bypass admission with `--force` or an
+override. Install locked dependencies with `npm ci --ignore-scripts`.
 
 GitLab's macOS and Windows jobs use the existing Mise installation with the
 [project runtime configuration](.config/mise/config.toml) and its
@@ -80,6 +84,11 @@ missing Node or npm.
 Mise discovers the project configuration and adjacent lock from the repository
 root. No filename selector is needed. Leave `MISE_CONFIG_FILE` and
 `MISE_OVERRIDE_CONFIG_FILENAMES` unset; keep the global configuration unchanged.
+Its native package parser reads both development declarations. Safe-mode
+preparation must include `package.json` as well as the config and lock, and
+select `node,npm` idiomatic parsing and the package manager for the npm backend
+through native Mise process settings. ETHOS owns that materialization; do not
+add an executable version template, a PATH template, or weaken safe mode.
 For already prepared, download-free checks, set `MISE_AUTO_INSTALL=0` for the
 current process. If this reviewed checkout is not yet trusted, use the native
 Mise trust operation for this one configuration before inspection or execution.

@@ -369,17 +369,26 @@ and asset architecture separately; macOS x64 supply alone is not current matrix
 qualification. Actual Windows source/offline jobs qualify emulation and timing.
 
 GitLab shell jobs use original Mise, its natively discovered
-`.config/mise/config.toml`, the adjacent six-platform lock, native package-derived
-inputs, and `mise exec --locked`. The npm backend checks archive SHA-512; late
-path evaluation places selected npm first, including the Windows prefix. Local
-and CI consumers need no filename selector. Keep `MISE_CONFIG_FILE` and
-`MISE_OVERRIDE_CONFIG_FILENAMES` unset; prepared local checks use
-`MISE_AUTO_INSTALL=0`. The global override treats a global credential command as
-project-local; preserve its global-only security boundary and warnings. CI keeps
-its job-local `MISE_CONFIG_DIR`, separate from host settings. The existing supply
-tests guard native discovery and isolation; move the original config and lock
-without changing their bytes, and retire the old paths and selection wiring
-together. No extra validator or configuration owner is introduced. Windows adds
+`.config/mise/config.toml`, the adjacent six-platform lock, and `mise exec --locked`.
+The native package parser reads `devEngines.runtime` and
+`devEngines.packageManager` from one manifest. npm's version carries SHA-512
+metadata, which Mise passes to its npm backend for actual archive verification.
+A bare npm backend alias prevents registry fallback without an executable version
+or PATH template. npm accepts that metadata but does not enforce its checksum;
+bootstrap acceptance cannot qualify the Mise acquisition boundary.
+
+ETHOS safe-mode preparation must materialize the manifest, config, and lock and
+select native `node,npm` idiomatic parsing and npm backend settings through the
+process environment. Preserve safe mode, locked/offline checks, no automatic
+installation or system fallback, and isolated absent global/system configuration.
+Actual installed Node/npm selection, checksum refusal, and warning-free commands
+remain acceptance conditions; a source repair or ambient PATH is not sufficient.
+Local and CI consumers need no filename selector. Keep `MISE_CONFIG_FILE` and
+`MISE_OVERRIDE_CONFIG_FILENAMES` unset. The global override treats a global
+credential command as project-local; preserve its global-only security boundary.
+CI keeps its job-local `MISE_CONFIG_DIR`, separate from host settings. The supply
+tests guard native discovery and isolation; retire replaced templates and binding
+wiring rather than keeping a second parser or configuration owner. Windows adds
 the OS machine Path after inherited entries before resolving existing Mise,
 without encoded install paths, registry writes, service changes, or another
 installer. Temporary application, version, and execution-identity probes diagnose

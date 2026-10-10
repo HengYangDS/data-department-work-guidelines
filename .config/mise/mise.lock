@@ -5,7 +5,7 @@ lockfile_version = 3
 [[tools.node]]
 version = "26.11.1"
 backend = "core:node"
-specifiers = ["26"]
+specifiers = ["26.x"]
 
 [tools.node."platforms.linux-arm64"]
 checksum = "sha256:170454fb022f5e9b5f6cc76c25fa32ef5100895be44eb04e92f9780591491bbf"
@@ -31,10 +31,7 @@ url = "https://nodejs.org/dist/v26.11.1/node-v26.11.1-win-arm64.zip"
 checksum = "sha256:97f36a8a9684ff0d3e35758b4610fef5b628a5880e96f2ccc11240e5daf9934e"
 url = "https://nodejs.org/dist/v26.11.1/node-v26.11.1-win-x64.zip"
 
-[[tools."npm:npm"]]
+[[tools.npm]]
 version = "12.2.0"
 backend = "npm:npm"
 specifiers = ["12.2.0"]
-
-[tools."npm:npm".options]
-npm_args = "--ignore-scripts --no-audit --no-fund"

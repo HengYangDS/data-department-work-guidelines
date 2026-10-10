@@ -25,9 +25,24 @@ test("Node owns the package-manager bootstrap without a duplicate npm major", ()
   try {
     writeFileSync(
       path.join(directory, "package.json"),
-      JSON.stringify({ engines: { node: "26.x" } }),
+      JSON.stringify({
+        devEngines: {
+          runtime: { name: "node", version: "26.x", onFail: "error" },
+        },
+      }),
     );
     assert.deepEqual(declaredToolRuntime(directory), { nodeMajor: 26 });
+    for (const runtime of [
+      { name: "bun", version: "26.x", onFail: "error" },
+      { name: "node", version: "26.x", onFail: "warn" },
+      { name: "node", version: "26.11.1", onFail: "error" },
+    ]) {
+      writeFileSync(
+        path.join(directory, "package.json"),
+        JSON.stringify({ devEngines: { runtime } }),
+      );
+      assert.throws(() => declaredToolRuntime(directory), /declared Node/u);
+    }
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }
@@ -240,13 +255,14 @@ test("npm owns exact package-manager admission without duplicate fields", () => 
   const manifest = JSON.parse(
     readFileSync(path.join(root, "package.json"), "utf8"),
   );
-  assert.deepEqual(manifest.devEngines?.packageManager, {
-    name: "npm",
-    version: "12.2.0",
-    onFail: "error",
-  });
+  assert.equal(manifest.devEngines.packageManager.name, "npm");
+  assert.equal(manifest.devEngines.packageManager.onFail, "error");
+  assert.match(
+    strictVersion(manifest.devEngines.packageManager.version),
+    /^12\.2\.0\+sha512\.[a-f0-9]{128}$/u,
+  );
   assert.equal(manifest.packageManager, undefined);
-  assert.equal(manifest.engines?.npm, undefined);
+  assert.equal(manifest.engines, undefined);
 });
 
 test("native npm result assertions preserve process failure diagnostics", () => {
@@ -351,7 +367,41 @@ test("native npm rejects mismatched install, ci, and run before effects", () => 
     const versionDiagnostic = assertNpmResult(version, 0, ["--version"]);
     const versionText = version.stdout.trim();
     assert.doesNotThrow(() => strictVersion(versionText), versionDiagnostic);
-    manifest.devEngines.packageManager.version = versionText;
+    const checksumMetadata = JSON.parse(
+      readFileSync(path.join(root, "package.json"), "utf8"),
+    ).devEngines.packageManager.version.split("+")[1];
+    manifest.devEngines.packageManager.version = `${versionText}+${checksumMetadata}`;
+    manifest.devEngines.runtime = {
+      name: "node",
+      version: "0.x",
+      onFail: "error",
+    };
+    writeFileSync(
+      path.join(directory, "package.json"),
+      JSON.stringify(manifest),
+    );
+    for (const args of [
+      ["install", "--ignore-scripts"],
+      ["ci", "--ignore-scripts"],
+      ["run", "effect"],
+    ]) {
+      const result = spawnSync(process.execPath, [cli, ...args], {
+        cwd: directory,
+        env,
+        encoding: "utf8",
+        timeout: 15_000,
+        input: "",
+      });
+      const diagnostic = assertNpmResult(result, 1, args);
+      assert.match(result.stderr, /EBADDEVENGINES.*runtime/su, diagnostic);
+      assert.equal(existsSync(marker), false, diagnostic);
+      assert.equal(
+        existsSync(path.join(directory, "node_modules")),
+        false,
+        diagnostic,
+      );
+    }
+    manifest.devEngines.runtime.version = `${process.versions.node.split(".")[0]}.x`;
     writeFileSync(
       path.join(directory, "package.json"),
       JSON.stringify(manifest),

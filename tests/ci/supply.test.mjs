@@ -1,9 +1,34 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import YAML from "yaml";
+import { parse as parseToml } from "smol-toml";
 import { validateCi } from "../../tools/docs/ci.mjs";
-import { assertNodeRuntime } from "../../tools/docs/runtime.mjs";
+import { assertNodeRuntime, readText } from "../../tools/docs/runtime.mjs";
 import { github, gitlab, offline, changedGitLab } from "./fixtures.mjs";
+
+test("Mise reads development declarations without executable version templates", () => {
+  const configuration = parseToml(readText(".config/mise/config.toml"));
+  const manifest = JSON.parse(readText("package.json"));
+  assert.equal(Object.hasOwn(configuration, "tools"), false);
+  assert.deepEqual(configuration.settings.idiomatic_version_file_enable_tools, [
+    "node",
+    "npm",
+  ]);
+  assert.equal(configuration.settings.locked, true);
+  assert.equal(configuration.settings.npm.package_manager, "npm");
+  assert.equal(configuration.tool_alias.npm, "npm:npm");
+  assert.equal(Object.hasOwn(configuration, "env"), false);
+  assert.match(
+    manifest.devEngines.packageManager.version,
+    /^12\.2\.0\+sha512\.[a-f0-9]{128}$/u,
+  );
+  assert.deepEqual(manifest.devEngines.runtime, {
+    name: "node",
+    version: "26.x",
+    onFail: "error",
+  });
+  assert.equal(Object.hasOwn(manifest, "engines"), false);
+});
 
 test("the repository check rejects an undeclared Node major", () => {
   assert.doesNotThrow(() => assertNodeRuntime("26.10.0"));

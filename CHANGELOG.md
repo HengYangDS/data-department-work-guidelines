@@ -115,6 +115,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Resolve Node and npm from one native development manifest without executable
+  version or PATH templates. Bind npm acquisition to its declared SHA-512 through
+  Mise, preserve safe-mode preparation requirements, and distinguish npm
+  bootstrap acceptance from checksum enforcement.
 - Pass Git-selected tests as literal files to Node's official runner, so pattern
   syntax in a filename cannot silently omit a test. Keep new cohorts, ignored
   local state, single execution, two workers, the overall deadline, and native

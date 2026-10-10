@@ -54,7 +54,7 @@ export function filesUnder(directory) {
 }
 
 export function declaredToolRuntime(repository = root) {
-  const { engines } = JSON.parse(
+  const { devEngines } = JSON.parse(
     readFileSync(path.join(repository, "package.json"), "utf8"),
   );
   const major = (value, name) => {
@@ -62,8 +62,12 @@ export function declaredToolRuntime(repository = root) {
     if (!match) throw new Error(`invalid declared ${name} major`);
     return Number(match[1]);
   };
+  const runtime = devEngines?.runtime;
+  if (runtime?.name !== "node" || runtime.onFail !== "error") {
+    throw new Error("invalid declared Node runtime");
+  }
   return {
-    nodeMajor: major(engines?.node, "Node"),
+    nodeMajor: major(runtime.version, "Node"),
   };
 }
 
