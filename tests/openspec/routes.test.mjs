@@ -96,6 +96,12 @@ test("lifecycle readers reach current artifacts and source retirement duties", (
     path.join(root, "docs/governance/ethos.md"),
     "utf8",
   );
+  const containsRetirementDuty = (tokens) =>
+    [...walkMarkdown(tokens)].some(
+      (token) =>
+        token.type === "paragraph" &&
+        markdownText(token).includes("completed-Change copies"),
+    );
   const assertJourney = (entryText, governanceText) => {
     const links = markdownLinkDestinations(entryText);
     for (const artifact of [
@@ -115,27 +121,31 @@ test("lifecycle readers reach current artifacts and source retirement duties", (
       "Evidence and Retirement",
     );
     assert.ok(
-      [...walkMarkdown(retirement)].some((token) =>
-        markdownText(token).startsWith("Retire completed-Change copies"),
-      ),
+      containsRetirementDuty(retirement),
       "source retirement duties must be reachable through their retirement owner",
     );
     assert.ok(
-      ![
-        ...walkMarkdown(
-          contentUnderHeading(
-            governanceText,
-            "docs/governance/ethos.md",
-            "Decision Record Form",
-          ),
+      !containsRetirementDuty(
+        contentUnderHeading(
+          governanceText,
+          "docs/governance/ethos.md",
+          "Decision Record Form",
         ),
-      ].some((token) =>
-        markdownText(token).startsWith("Retire completed-Change copies"),
       ),
       "source retirement is not a decision-format rule",
     );
   };
   assertJourney(entry, governancePage);
+  const duty = [...walkMarkdown(markdownTokens(governancePage))].find(
+    (token) =>
+      token.type === "paragraph" &&
+      markdownText(token).includes("completed-Change copies"),
+  );
+  assert.ok(duty, "the source retirement duty must have a paragraph owner");
+  assert.throws(
+    () => assertJourney(entry, governancePage.replace(duty.text, "")),
+    /source retirement duties must be reachable/u,
+  );
   assert.throws(
     () => assertJourney(entry.replace("(specs/README.md)", ""), governancePage),
     /missing lifecycle reading route/u,
@@ -156,7 +166,24 @@ test("governance readers reach Change intent and durable decision rationale", ()
         "the governance route must be visible",
       );
       checkNavigation(directory);
-      writeFileSync(entry, original.replace(route, ""));
+      const isTarget = (href) => href.split(/[?#]/u, 1)[0] === destination;
+      const partial = original.replace(route, "");
+      if (markdownLinkDestinations(partial).some(isTarget)) {
+        writeFileSync(entry, partial);
+        assert.doesNotThrow(() => checkNavigation(directory));
+      }
+      let missing = original;
+      for (const href of new Set(
+        markdownLinkDestinations(original).filter(isTarget),
+      )) {
+        missing = missing.replaceAll(`(${href})`, "");
+      }
+      assert.equal(
+        markdownLinkDestinations(missing).some(isTarget),
+        false,
+        "the missing-route fixture must remove every route to the owner",
+      );
+      writeFileSync(entry, missing);
       assert.throws(
         () => checkNavigation(directory),
         /missing task routes in docs\/governance\/ethos\.md/u,

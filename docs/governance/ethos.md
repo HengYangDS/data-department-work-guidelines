@@ -10,8 +10,8 @@ relations:
 
 # Repository Change and Release
 
-Change this repository through one official OpenSpec Change and an owned ETHOS
-Work Lane. Verify the exact committed source and each publication separately.
+Material changes need one official OpenSpec Change and an owned ETHOS Work
+Lane. Publish through native admission and verify each Forge independently.
 For department work, start at the [task map](../README.md).
 
 | Your task                       | Read next                                             |
@@ -35,14 +35,16 @@ permission, acceptance, and retirement boundaries.
 | Repository checks                                    | Document quality, reader routes, decision shape, and declared configuration.         | Do not replace OpenSpec lifecycle or ETHOS admission.      |
 | [Decision record](../decisions/README.md)            | Durable rationale and rejected alternatives.                                         | Does not hold tasks, command output, or acceptance logs.   |
 
-ETHOS compiles the selected Change's acceptance conditions into a temporary
-object, the Commitment. It does not replace the Change. A private scope companion,
-tracked claim ledger, method-pack plan, or local script supplies no second lifecycle.
+The selected OpenSpec Change owns intent, requirements, design, and progress.
+ETHOS compiles its acceptance conditions into a temporary Commitment for
+admission and proof. A private scope companion, tracked claim ledger,
+method-pack plan, or local script cannot supply another lifecycle.
 
-Follow the [official artifact rules](../../openspec/config.yaml): specifications
-own observable requirements, design owns choices and migration order, and tasks
-own actions, completion checks, and checkbox state. Keep results with their
-producer; successful parsing alone does not prove artifact conformance.
+Follow the [official artifact rules](../../openspec/config.yaml). Specifications
+own observable requirements; design owns choices and migration order; tasks
+own actions, completion checks, and checkbox state. Keep execution results with
+their producer. An artifact may parse correctly and still violate those
+boundaries.
 
 1. Before a tracked write, run installed ETHOS status in the intended worktree.
    Follow its verdict, gaps, next action, and continuation; obtain passing
@@ -68,13 +70,14 @@ producer; successful parsing alone does not prove artifact conformance.
 | Ordinary work | Actual use with subject, source, time, and limits.     | Repository or publication integrity. |
 
 Local verification contacts neither Forge. GitLab is the organization's primary
-publication plane. GitHub is a complete independent repository, CI/CD, update,
-and distribution plane, including when GitLab is unavailable. An outage update
-still needs native ETHOS admission, actual GitHub publication, reading back the
-ref, and source jobs; configuration or an earlier run proves none of those effects.
-GitHub cannot supply a missing GitLab result. Qualified releases remain
-available, while every new edition requires [both release-cut checks](#versioned-releases).
-Do not raw-push around a native refusal.
+publication plane. GitHub independently provides the complete repository,
+CI/CD, updates, and distribution, including during a GitLab outage. An outage
+update requires native ETHOS admission, actual GitHub publication, checking the
+published ref, and its source jobs. Do not raw-push around a native refusal.
+
+Qualified releases remain available during an outage. A new edition still needs
+[both release-cut checks](#versioned-releases); a GitHub result cannot qualify
+GitLab, or vice versa.
 
 Publish only `dev`, `main`, `proposal/*`, and ETHOS-admitted signed release tags.
 `candidate/dev` and `work/*` stay local. The
@@ -82,13 +85,13 @@ Publish only `dev`, `main`, `proposal/*`, and ETHOS-admitted signed release tags
 [release declaration](../../.ethos/release.toml) own admission without operator
 keys or host paths.
 
-Both Forges retain the same signed commit graph, including governed merge
+Publish the same signed commit graph to both Forges, including governed merge
 commits. Fast-forward acceptance advances a ref to a descendant; it does not
-require a single-parent history. Do not squash or rewrite accepted history to
-satisfy one peer's configuration. Keep `dev` and `main` protected, require the
+require single-parent history. Do not squash or rewrite accepted history to
+satisfy a peer's configuration. Keep `dev` and `main` protected, require the
 declared source checks and trusted signatures, and forbid force pushes and
-deletions. Remote history rules must admit the repository's governed graph;
-GitHub's linear-history requirement is incompatible with this contract.
+deletions. Remote rules must admit the governed graph; GitHub's linear-history
+requirement conflicts with that contract.
 
 ## Versioned Releases
 
@@ -133,33 +136,24 @@ success. The same Changelog serves both peers and local readers.
 
 ## Quality and Local State
 
-`npm run verify` uses one [portable entry](../../tools/docs/cli.mjs): native
-formatting, Markdown and Vale, offline lychee, repository boundaries, strict
-official OpenSpec, and the standalone regression suite. The
-[configuration map](../../.config/README.md) identifies the native owners of
-rule selection and spacing;
-[Contributing](../../CONTRIBUTING.md#verify-the-source) owns the commands.
-
-The [profile](../../.ethos/profile.toml) selects one native
-[gate registry](../../.ethos/gates.toml). ETHOS owns its schema, graph, resource
-reservations, and evidence. The integrity command depends on the product's
-provider-only behavior gate; that provider must obtain one complete native Node
-test attempt under the declared worker limit and deadline. A document command's
-output cannot substitute for that attempt. Repository checks guard only the
-declared topology.
-Syntax checks and test totals do not close semantic or diagnostic obligations.
+Run `npm run verify` through the [portable entry](../../tools/docs/cli.mjs).
+It checks native formatting, Markdown, Vale, offline lychee, repository
+boundaries, strict official OpenSpec, and the standalone regression suite.
+[Contributing](../../CONTRIBUTING.md#verify-the-source) owns the commands;
+the [configuration map](../../.config/README.md) owns rule selection and spacing.
 
 ### Observe the Execution Environment
 
-The source check reports path, commit, tree, tracked changes, Node version and
-platform, process architecture, `hostname`, and exact workspace-capacity
-bytes. These are observations, not portable target configuration. A mounted
-container workspace is not necessarily the guest root volume; this does not
-prove VM identity, host architecture, isolation, or throughput. Native read
-errors remain failures. The runner owner verifies the guest and host
-separately. The [tool-supply boundary](#tool-supply-and-offline-execution)
-owns tool-selection evidence. Retained local diagnostics may contain the
-observed host name; it is evidence metadata, never a required target value.
+The source check records path, commit, tree, tracked changes, Node version and
+platform, process architecture, `hostname`, and exact workspace-capacity bytes.
+Keep native read errors as failures. These observations do not establish VM
+identity, host architecture, isolation, or throughput: the runner owner must
+verify guest and host separately. A mounted workspace may differ from the guest
+root volume.
+
+Host names belong in diagnostic evidence, never portable target configuration.
+The [tool-supply boundary](#tool-supply-and-offline-execution) owns tool-selection
+evidence.
 
 ### Preserve Official OpenSpec Results
 
@@ -171,23 +165,24 @@ validation; OpenSpec still owns validation and lifecycle.
 
 ### Proof and Configuration
 
-Resolve the selected proof roots, prerequisite closure, and product verifiers
-from the native profile and gate registry. Require them and the document commands
-to pass for the exact committed tree. ETHOS independently obtains native Node
-behavior evidence; repository-authored reports or forwarded command output
-cannot substitute.
+The [profile](../../.ethos/profile.toml) selects one native
+[gate registry](../../.ethos/gates.toml), with `docs-integrity` and
+`markdown-format` as its default roots. ETHOS owns the schema, graph, resource
+reservations, and evidence. The integrity root requires its provider-only
+behavior prerequisite: one complete native Node test attempt under the declared
+worker limit and deadline. Require the full prerequisite closure and document
+commands to pass for the exact committed tree; document output or a
+repository-authored report cannot substitute for that behavior attempt.
 
-Syntax can pass with a reachable undefined identifier, and Node reports can
-omit runtime warnings. Require applicable static semantics and complete
-same-attempt diagnostics before accepting the subject's quality claim. Only
-qualified behavior from an accepted installed integration can close that
-obligation. Accepted native scopes may jointly cover a property; each provider
-need not cover every language.
+Require applicable static semantics and complete diagnostics from the same
+attempt. Syntax may pass despite a reachable undefined identifier, and a Node
+report may omit runtime warnings. Accepted native providers may jointly cover a
+property; each need not cover every language. A shared-quality claim requires
+the accepted installed product and its actual adopter qualification.
 
-Repository checks enforce this repository's placement and selection, not a
-copied ETHOS schema or universal enforcement. A shared-quality claim needs the
-accepted installed product and actual adopter qualification. Passing format or
-prose does not prove factual accuracy, semantic fidelity, or understanding.
+Repository checks guard this repository's placement and selection; they do not
+copy ETHOS schemas or establish universal enforcement. Test totals, format, and
+prose checks do not prove factual accuracy, semantic fidelity, or understanding.
 
 ### Source Links and Decision Records
 
@@ -206,36 +201,38 @@ external qualification. Gate failure remains failure regardless of local files.
 
 #### Decision Record Form
 
-Decision records keep stable IDs, lowercase filenames, matching titles,
-accepted metadata, and exactly five root sections: Context, Decision,
-Alternatives Rejected, Consequences and Boundary, Evidence and Revisit.
-Readable sections cannot consist only of empty headings, separators, or link
-definitions. Native Markdown tokens check nesting and reject code blocks, tasks,
-extra headings, mismatched identities, and HTML beyond the leading registry
-comment. A non-evaluating shell lexer recognizes supported quoted and compound
-invocations without ambient variables. Ordinary rationale, tables, inline terms,
-bare paths, and evidence links remain valid. Syntax cannot judge all command
-dialects or durable reasoning; reviewers move execution and acceptance narratives
-to their Change or producing record.
+Follow the [decision register's form](../decisions/README.md#add-only-a-decision-worth-keeping):
+stable IDs, lowercase filenames, matching titles, accepted metadata, and its five
+root sections with readable rationale. Keep tasks, code blocks, execution and
+acceptance narratives, and release operations with their Change or producing
+record. Extra headings, mismatched identities, and HTML beyond the leading
+registry comment are invalid.
+
+The [decision checker](../../tools/docs/decisions.mjs) must accept ordinary
+rationale, tables, inline terms, bare paths, and evidence links without evaluating
+shell input or consulting ambient variables. It cannot cover every command
+dialect or judge durable reasoning. Reviewers move execution and acceptance
+narratives to their producing record; a structural pass alone does not establish
+a sound decision.
 
 ## Tool Supply and Offline Execution
 
-Tools serve maintainers and CI; reading the guidelines requires no installation.
-The optional bundle supplies quality checks without remote supply, not the
-guidelines or ETHOS. ETHOS is a separate installed prerequisite.
+Reading the guidelines requires no installation. Maintainers and CI use the
+optional bundle to supply quality checks without downloads. Install ETHOS
+separately for Change admission and proof; it is not included in that bundle.
 
-`package.json` owns the Node line and exact npm version through native
-`devEngines.runtime` and `devEngines.packageManager`, with `onFail: error`.
-npm rejects mismatch before `install`, `ci`, and `run`. Ephemeral CI acquires
-that npm first. The declaration's checksum is enforced by Mise acquisition;
-npm accepting checksum metadata is not an integrity check. Shell CI uses the
-existing Mise owner with the
-[project configuration](../../.config/mise/config.toml) and
-[native lock](../../.config/mise/mise.lock); every native job command runs
-with the selected runtime, without changing host npm or Runner services.
-Maintained hosts keep their existing installation owner. Local and offline
-checks never upgrade it. Do not use
-`--force` or an admission override. Tracked `.gitattributes` keeps LF on every OS.
+[`package.json`](../../package.json) owns the Node line and exact npm version
+through `devEngines`, with `onFail: error`. npm rejects a mismatch before
+`install`, `ci`, and `run`; ephemeral CI acquires that npm first. Mise acquisition
+enforces the declared checksum. npm accepting checksum metadata does not verify
+integrity.
+
+Shell CI selects each command's runtime through the existing Mise installation,
+[project configuration](../../.config/mise/config.toml), and
+[native lock](../../.config/mise/mise.lock). Keep host npm, Runner services, and
+each maintained host's installation owner unchanged. Local and offline checks
+never upgrade them. Do not use `--force` or an admission override. Tracked
+`.gitattributes` keeps LF on every OS.
 
 | Operation            | Supply boundary                                        |
 | -------------------- | ------------------------------------------------------ |
@@ -246,19 +243,18 @@ checks never upgrade it. Do not use
 
 ### Select and Verify Native Tools
 
-The [supply manifest](../../.config/supply/native.json) pins archives, raw binary
-sizes, extracted executable digests, and upstream notices per platform. The
-[bundle record](../../.config/release/offline-bundle.json) binds edition, Node
-major, complete package manifest, lockfile, and native supply. The bundle holds
-the complete npm cache, declared native assets, and notices; it does not duplicate
-npm policy or relicense third-party packages.
+The [supply manifest](../../.config/supply/native.json) pins platform archives,
+raw binary sizes, executable digests, and upstream notices. The
+[bundle record](../../.config/release/offline-bundle.json) binds the edition,
+Node major, complete package manifest, lockfile, and native supply. Include the
+complete npm cache, declared native assets, and notices. The bundle does not
+change third-party licenses or duplicate npm policy.
 
-Acquisition and installation must verify bytes before extraction or execution.
-Resolve PATH names and direct selectors to an actual native file, including
-Windows quoting and executable suffixes, before its version command. A matching
-version does not admit altered bytes. Package-manager binaries retain their
-installation owner's trust boundary; they are not declared byte-equivalent to
-release assets.
+Verify bytes before extraction or execution. Before checking a version, resolve
+PATH names and direct selectors to a native file, respecting Windows quoting
+and executable suffixes. A matching version cannot admit altered bytes.
+Package-manager binaries retain their installation owner's trust boundary;
+do not claim they are byte-equivalent to release assets.
 
 ### Acquire Supplied Assets
 
@@ -291,56 +287,59 @@ not platform acceptance.
 
 ### Audit Dependencies and Artifacts
 
-Project-lock scans do not cover bundled Node, npm, native-tool, or ETHOS
-components. Audit actual artifact digests, platforms, and component inventories
-through native extractors; absent or empty inventories leave coverage unproved.
-Keep raw findings and binary-symbol results separately; symbols do not prove
-runtime reachability. Failed scanning is not a clean audit.
+Audit Node, npm, native-tool, and ETHOS artifacts separately from the project
+lock. Bind each audit to its digest, platform, and component inventory from a
+native extractor. Missing or empty inventories leave coverage unproved. Keep
+raw findings separate from binary-symbol results; symbols do not establish
+runtime reachability, and a failed scan cannot establish a clean audit.
 
 #### Project-Lock Reports
 
-Both hosted planes retain one complete unfiltered OSV project scan, exact lock
-and [native policy](../../.config/checks/dependencies/policy.toml), streams, and
-status. The input owner applies the exact approved development finding without
-a filtered second scan. Unapproved findings, expiry, changed input, failed or
-warning-bearing execution, and malformed/incomplete reports fail qualification.
-An approved report still contains a known finding; do not call it clean.
-When a finding disappears, is withdrawn, gets an official fix, or its stable
-release changes, retire the disposition and qualify the changed inputs again.
-Observe public npm stable
-through isolated native configuration, fresh cache, and explicit online freshness;
-keep its original result with the scan. Source checks contact no advisory
-service and cannot renew artifact-use or distribution approval.
+On each hosted plane, retain one complete unfiltered OSV project scan, its exact
+lock and [policy](../../.config/checks/dependencies/policy.toml), streams, and
+status. Apply the exact approved development disposition to that input without
+a second filtered scan. Unapproved findings, expiry, input drift, failed or
+warning-bearing execution, and malformed or incomplete reports fail
+qualification. An approved report still contains a known finding; do not call it
+clean.
+
+Retire the disposition when the finding disappears, is withdrawn, receives an
+official fix, or its stable release changes; qualify the changed inputs again.
+Check public npm stable versions through isolated native configuration, fresh
+cache, and an explicit online operation. Retain its original result with the
+scan. Source checks contact no advisory service and cannot renew use or
+distribution approval.
 
 ### Bound Known Findings
 
-Require an authorized decision bound to the exact artifact, finding, allowed
-use, distribution scope, expiry or withdrawal condition, and complete reports.
-Keep the binding with its native policy or producing Change and evidence;
-this page grants no approval. The [dependency policy](../../.config/checks/dependencies/policy.toml)
-owns project-lock dispositions, not image or native-binary approvals.
+An authorized risk decision must identify the exact artifact and finding,
+allowed use and distribution, expiry or withdrawal condition, and complete
+reports. Keep that binding with the native policy or producing Change and
+evidence. This page grants no approval; the
+[dependency policy](../../.config/checks/dependencies/policy.toml) owns only
+project-lock dispositions, not image or native-binary approvals.
 
-Do not extend a development approval to production, arbitrary untrusted input,
-other findings, changed artifacts, or another repository. Each artifact still
-needs authenticity, complete bytes, hashes, licenses, actual function, and
-platform acceptance. Source-lock advisories, including maintenance findings and
-aliases, are not a complete shipped-binary inventory; retain that limitation
-and the full reports. Replace a compatibility check only after its accepted
-installed successor qualifies the same consumer; remove the replaced check in
-that migration rather than retain a second risk policy or gate.
+A development approval cannot cover production, arbitrary untrusted input,
+other findings, changed artifacts, or another repository. Verify authenticity,
+complete bytes, hashes, licenses, function, and each claimed platform separately.
+Source-lock advisories, including maintenance findings and aliases, cannot
+establish a complete shipped-binary inventory; retain that limit and the full
+reports. Replace a compatibility check only after the accepted installed
+successor qualifies the same consumer, then remove the old check in that
+migration. Keep no second risk policy or gate.
 
 ## Runner and Transport Boundaries
 
-GitHub uses its own hosted platform matrix. GitLab source and offline jobs use
-this project's admitted Linux, macOS, and Windows runners and pinned packages,
-not a public-download fallback. Qualify each through actual jobs and native
-runner/guest observations.
+Verify GitHub's hosted platform matrix and GitLab's admitted Linux, macOS, and
+Windows runners through their jobs and native runner/guest observations. GitLab
+source and offline jobs use pinned project packages without public-download
+fallbacks.
 
-Bundle qualification must bind the exact source, artifact, and job results.
-Temporary qualification packages are not signed Releases, authenticated release
-downloads, or whole-job network-isolation proof. Wait for terminal jobs,
-preserve all results, then retire the exact temporary package.
-[Contributing](../../CONTRIBUTING.md#publish-a-release) owns the executable route.
+Bind bundle qualification to the exact source, artifact, and job results.
+Temporary qualification packages do not establish signed Releases,
+authenticated release downloads, or whole-job network isolation. Wait for all
+jobs to become terminal, preserve their results, then retire the exact temporary
+package. [Contributing](../../CONTRIBUTING.md#publish-a-release) owns the route.
 
 ### Review and Protected Execution
 
@@ -372,11 +371,11 @@ nor registration and isolation.
 
 ## Evidence and Retirement
 
-Retire completed-Change copies only after resolving unique facts, obligations,
+Before retiring completed-Change copies, resolve their unique facts, obligations,
 and consumers. Bind historical links to the full ancestor commit and exact path,
-and verify original bytes. Git retains the history; deletion neither absorbs an
-unresolved obligation nor closes a Change. Official archive and its
-new commit's proof and publication remain separate.
+and verify original bytes. Git retains source history. Deletion cannot absorb an
+unresolved obligation or close a Change. Official archive creates a new commit;
+prove and publish that commit separately afterward.
 
 ### Retained Downloads
 
@@ -390,15 +389,16 @@ owns the procedure.
 
 ### Local Evidence and Workspaces
 
-Local `build/`, `node_modules/`, leases, and caches are not repository truth.
-Evidence stays with its producer and claim; no root evidence folder is required.
-Required failures and job results need a named consumer, exact source binding,
-and release condition. Later success does not make them disposable. Transfer
-unique evidence to its existing durable owner and verify complete bytes before
-retiring its workspace; `build/` is not a permanent archive. Classify active
-state, durable evidence, foreign work, and disposable residue, remove only proved
-owned residue, then verify exact absence and preserved content.
+Keep evidence with its producer and claim. Local `build/`, `node_modules/`,
+leases, and caches do not establish repository truth, and no root evidence folder
+is required. Required failures and job results need a named consumer, exact
+source binding, and release condition. Later success does not release them.
 
-Observe each selected revision in its actual environment before claiming remote
-delivery, ETHOS parity, or team use. Do not stage a human task or recruit a
+Before retiring a workspace, transfer unique evidence to its existing durable
+owner and verify complete bytes. `build/` is not a permanent archive. Separate
+active state, durable evidence, foreign work, and disposable residue; remove only
+proved owned residue, then verify its absence and preserved content.
+
+Claims of remote delivery, ETHOS parity, or team use need the selected revision
+observed in its actual environment. Do not stage a human task or recruit a
 reviewer just to certify guideline adoption.

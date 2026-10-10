@@ -103,11 +103,11 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   with explicit pins for the audited Markdown parser and terminal-width fixes.
 - Refresh the digest-pinned official Node 26 CI image on its supported Debian
   base.
-- Shorten active OpenSpec Change documents and simplify governance navigation.
-  Change tasks remain bounded implementation checklists; decision records hold
-  durable rationale. Separate contributor procedures, governance boundaries,
-  and native configuration guidance without repeating their policy or changing
-  release order.
+- Simplify governance navigation and active OpenSpec Change documents. Keep
+  Change tasks as bounded implementation checklists and decision records as
+  durable rationale. Consolidate proof boundaries in governance, link decision
+  form to its register, and separate contributor procedures and configuration
+  guidance without changing authority, acceptance, or release order.
 - Reduce repeated native-tool and Git observations and keep test fixtures focused
   on their declared inputs. Retain complete source validation, every distinct
   ancestry check, source-selection controls, policy, deadlines, and diagnostics.
