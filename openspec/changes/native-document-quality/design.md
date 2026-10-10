@@ -210,6 +210,14 @@ procedure, and supply staging, cache publication, cleanup, child processes, and
 extraction at their respective owners. Agent guidance separates modeling, safe
 mutation, verification, interruption, and parallel work.
 
+Changelog entries describe notable effects for members and maintainers, grouping
+related unreleased fixes by outcome rather than replaying implementation steps.
+Preserve incompatible duties, upgrade actions, removals, security limits, and
+qualification boundaries. Original commits retain implementation detail; released
+notes and both Forge history routes remain unchanged. Native validation owns
+format and identity, while source review owns the completeness of the curated
+entry. No private prose schema or release-note length ceiling is introduced.
+
 #### Work examples and whole-page review
 
 Use ordered steps for the working loop and Human–Agent handoff. Compact lists
