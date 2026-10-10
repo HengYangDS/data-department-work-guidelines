@@ -144,8 +144,10 @@ The [profile](../../.ethos/profile.toml) selects one native
 [gate registry](../../.ethos/gates.toml). Both proof sets have two roots:
 `docs-integrity` and `markdown-format`. The integrity command depends on the
 product's provider-only `code-behavior` gate, which owns one Node test attempt,
-its native coverage, two workers, and a 180-second total budget. A document
-command's output cannot substitute for that attempt. ETHOS owns the registry
+its native coverage, and a 180-second total budget. The registry reserves two
+CPU slots; the installed test recipe must separately qualify its two-worker
+limit. A document command's output cannot substitute for that attempt.
+ETHOS owns the registry
 schema, graph, and evidence; repository checks guard only the declared topology.
 Syntax checks and test totals do not close semantic or diagnostic obligations.
 
@@ -171,9 +173,9 @@ validation; OpenSpec still owns validation and lifecycle.
 
 ### Proof and Configuration
 
-Only `docs-integrity` and `markdown-format` are default gates and descriptors.
-Their document commands and product-owned verifiers must both pass for the
-committed tree. ETHOS independently obtains native Node behavior evidence;
+Only `docs-integrity` and `markdown-format` are default proof roots. Their
+dependency closure, document commands, and selected product verifiers must pass
+for the committed tree. ETHOS independently obtains native Node behavior evidence;
 repository-authored reports or forwarded command output cannot substitute.
 
 Syntax can pass with a reachable undefined identifier. Node reports can omit

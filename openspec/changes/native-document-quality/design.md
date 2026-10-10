@@ -544,8 +544,10 @@ evidence and recovery until their exact consumer releases them.
 Keep only `docs-integrity` and `markdown-format` as default and full proof roots.
 The profile selects one native registry instead of inline gate declarations.
 The integrity command depends on the provider-only `code-behavior` prerequisite;
-ETHOS owns its original Node test attempt, V8 custody, two workers, and
-180-second total budget. The format command retains native static verification.
+ETHOS owns its original Node test attempt, V8 custody, and 180-second total
+budget. The registry reserves two CPU slots; the installed native recipe must
+separately qualify its two-worker limit. The format command retains native
+static verification.
 Do not forward a document command's output as behavior evidence or add a third
 root. ETHOS owns the registry schema and dependency closure; local validation
 checks this repository's topology, not a second graph or schema implementation.

@@ -79,7 +79,10 @@ replace that ownership.
 
 - **WHEN** ETHOS resolves both document roots from the selected native registry
 - **THEN** the behavior prerequisite owns one Git-selected Node test attempt,
-  its native coverage, two workers, and a 180-second total execution budget
+  its native coverage, two reserved CPU slots, and a 180-second total execution
+  budget
+- **AND** the installed native test recipe separately qualifies its two-worker
+  limit; a CPU reservation alone does not set Node concurrency
 - **AND** the document commands retain their own results without replaying tests
   or claiming that their output proves code behavior.
 

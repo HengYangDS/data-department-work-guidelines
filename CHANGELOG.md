@@ -29,6 +29,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Refresh the native TOML parser to 1.9.1, rejecting malformed exponent signs
+  without changing accepted configuration or adding a dependency.
 - Separate document checks from native behavior evidence in one ETHOS gate
   registry. Keep the two document roots and make the product's original test
   attempt their prerequisite, without a third default gate or duplicate schema.

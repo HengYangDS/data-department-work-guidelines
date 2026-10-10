@@ -79,6 +79,16 @@ test("the text boundary retains TOML syntax without duplicating native formattin
     [],
   );
   assert.match((await textViolations(toml, "[invalid\n"))[0], /invalid TOML/u);
+  for (const value of ["3e+20", "3e-20"]) {
+    const source = `limit = ${value}\n`;
+    assert.equal(parseToml(source).limit, Number(value));
+    assert.deepEqual(await textViolations(toml, source), []);
+  }
+  for (const value of ["3e++20", "3e+"]) {
+    const source = `limit = ${value}\n`;
+    assert.throws(() => parseToml(source));
+    assert.match((await textViolations(toml, source))[0], /invalid TOML/u);
+  }
 });
 
 test("native TOML policy preserves data and agrees with the source format owner", () => {
