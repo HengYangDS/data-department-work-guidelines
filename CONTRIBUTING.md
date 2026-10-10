@@ -70,32 +70,31 @@ installation owner; do not bypass npm admission with `--force` or an override.
 Install locked dependencies with `npm ci --ignore-scripts`.
 
 GitLab's macOS and Windows jobs use the existing Mise installation with the
-[project runtime configuration](.config/supply/mise.toml) and its
-[native lock](.config/supply/mise.lock). Mise installs selected versions under
+[project runtime configuration](.config/mise/config.toml) and its
+[native lock](.config/mise/mise.lock). Mise installs selected versions under
 its native data directory and scopes their PATH to each command. The jobs do
 not modify the host's npm, Runner service, or isolation. Runtime preparation
 is separate from offline verification: the offline installer never supplies
 missing Node or npm.
 
-To use that existing Mise installation locally, set this process environment
-from the repository root. Leave the global configuration unchanged.
-
-| Setting                          | Local value                             |
-| -------------------------------- | --------------------------------------- |
-| `MISE_OVERRIDE_CONFIG_FILENAMES` | `.config/supply/mise.toml`              |
-| `MISE_CONFIG_FILE`               | Unset.                                  |
-| `MISE_AUTO_INSTALL`              | `0` for prepared, download-free checks. |
+Mise discovers the project configuration and adjacent lock from the repository
+root. No filename selector is needed. Leave `MISE_CONFIG_FILE` and
+`MISE_OVERRIDE_CONFIG_FILENAMES` unset; keep the global configuration unchanged.
+For already prepared, download-free checks, set `MISE_AUTO_INSTALL=0` for the
+current process. If this reviewed checkout is not yet trusted, use the native
+Mise trust operation for this one configuration before inspection or execution.
 
 ```text
+mise trust .config/mise/config.toml
 mise config ls --json
 mise exec --locked -- node --version
 mise exec --locked -- npm --version
 mise exec --locked -- npm run verify
 ```
 
-Use the project filename selector, not `MISE_CONFIG_FILE`: that override makes
-Mise treat the global `github.credential_command` as project-local and reject
-it with a security warning. Keep the credential command with its global owner;
+Do not use `MISE_CONFIG_FILE` to select this project: that override makes Mise
+treat the global `github.credential_command` as project-local and reject it
+with a security warning. Keep the credential command with its global owner;
 do not copy it into the project or suppress warnings. Preserve the separate,
 job-local CI `MISE_CONFIG_DIR` isolation rather than exposing host configuration
 to jobs.

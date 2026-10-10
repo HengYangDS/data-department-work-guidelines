@@ -122,9 +122,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 - Keep temporary risk approvals and integration status out of lasting governance
   prose; preserve their exact bindings at the existing Change and native policy.
   Give historical decision evidence readable, immutable source links.
-- Select the Mise project configuration without replacing its global owner.
-  Keep global credential-command security and job-local CI isolation; reject
-  the legacy override in the existing supply regression.
+- Let Mise discover `.config/mise/config.toml` and its adjacent native lock
+  without a filename override. Preserve global credential-command security and
+  job-local CI isolation; retire the old paths and selection wiring together.
 - Remove unused fixture imports and use explicit string checks for invalid
   profile-path characters. Preserve navigation assertions and NUL-path refusal
   under the installed native JavaScript checks.

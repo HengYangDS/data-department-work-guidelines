@@ -145,15 +145,12 @@ test("unowned code formats fail explicitly instead of accepting raw whitespace",
 
 test("the generated Mise lock keeps its native TOML owner", async () => {
   const source = readFileSync(
-    path.join(root, ".config/supply/mise.lock"),
+    path.join(root, ".config/mise/mise.lock"),
     "utf8",
   );
-  assert.deepEqual(
-    await textViolations(".config/supply/mise.lock", source),
-    [],
-  );
+  assert.deepEqual(await textViolations(".config/mise/mise.lock", source), []);
   assert.match(
-    (await textViolations(".config/supply/mise.lock", "not = ["))[0],
+    (await textViolations(".config/mise/mise.lock", "not = ["))[0],
     /invalid TOML/u,
   );
   assert.match(

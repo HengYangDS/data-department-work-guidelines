@@ -41,7 +41,7 @@ const plainTextIdentities = new Set([
   ".gitignore",
   ".gitattributes",
 ]);
-const nativeGeneratedToml = new Set([".config/supply/mise.lock"]);
+const nativeGeneratedToml = new Set([".config/mise/mise.lock"]);
 export function nativeTomlFormatter(repository = root) {
   const formatter = createFromBuffer(readFileSync(tomlPlugin.getPath()));
   const policyPath = path.join(repository, ".config/checks/format/toml.toml");

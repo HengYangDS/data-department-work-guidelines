@@ -21,9 +21,9 @@ test("native shell jobs select locked process runtimes without changing host npm
         "the selected native runtime must execute the complete verifier",
       );
       assert.equal(
-        job.variables.MISE_OVERRIDE_CONFIG_FILENAMES,
-        ".config/supply/mise.toml",
-        "the supply configuration must be a project input, not a global override",
+        job.variables.MISE_TRUSTED_CONFIG_PATHS,
+        "$CI_PROJECT_DIR/.config/mise/config.toml",
+        "the native project configuration must remain a job-owned input",
       );
       assert.ok(
         job.before_script.flat(10).includes("mise install --locked --jobs=1"),
@@ -43,7 +43,7 @@ test("native shell jobs select locked process runtimes without changing host npm
   );
 });
 
-test("Mise project selection preserves job-local global configuration isolation", () => {
+test("Mise native discovery preserves job-local global configuration isolation", () => {
   const pipeline = YAML.parse(gitlab);
   assert.doesNotThrow(() => validateCi(github, gitlab, offline));
   for (const system of ["macos", "windows"]) {
@@ -54,8 +54,8 @@ test("Mise project selection preserves job-local global configuration isolation"
     ]) {
       const variables = pipeline[name].variables;
       assert.equal(
-        variables.MISE_OVERRIDE_CONFIG_FILENAMES,
-        ".config/supply/mise.toml",
+        variables.MISE_TRUSTED_CONFIG_PATHS,
+        "$CI_PROJECT_DIR/.config/mise/config.toml",
         name,
       );
       assert.equal(
@@ -63,15 +63,22 @@ test("Mise project selection preserves job-local global configuration isolation"
         "$CI_PROJECT_DIR/build/runtime/work/mise-config",
         name,
       );
-      assert.equal(Object.hasOwn(variables, "MISE_CONFIG_FILE"), false, name);
+      for (const selector of [
+        "MISE_CONFIG_FILE",
+        "MISE_OVERRIDE_CONFIG_FILENAMES",
+      ])
+        assert.equal(Object.hasOwn(variables, selector), false, name);
     }
   }
   for (const change of [
     (variables) => {
-      variables.MISE_CONFIG_FILE = "$CI_PROJECT_DIR/.config/supply/mise.toml";
-      delete variables.MISE_OVERRIDE_CONFIG_FILENAMES;
+      variables.MISE_CONFIG_FILE = "$CI_PROJECT_DIR/.config/mise/config.toml";
+    },
+    (variables) => {
+      variables.MISE_OVERRIDE_CONFIG_FILENAMES = ".config/mise/config.toml";
     },
     (variables) => delete variables.MISE_CONFIG_DIR,
+    (variables) => delete variables.MISE_TRUSTED_CONFIG_PATHS,
   ]) {
     assert.throws(
       () =>

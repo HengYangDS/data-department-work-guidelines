@@ -6,17 +6,17 @@ stay outside this directory. The existing repository verifier requires the
 declared native files and rejects unowned entries, linked configuration, and
 duplicate formatting policy in `package.json`.
 
-| Responsibility            | Owner                                                                      | Native consumer                                                                         |
-| ------------------------- | -------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| Source formatting         | [Prettier policy](checks/format/prettier.toml)                             | Markdown, code, JSON, and YAML; literal content keeps its spacing.                      |
-| TOML formatting           | [dprint policy](checks/format/toml.toml)                                   | Official dprint Wasm formatter; parsed TOML options enter its public configuration API. |
-| Markdown policy           | [Non-spacing Markdown rules](checks/markdown/markdownlint.toml)            | Markdownlint over Git-selected source; Prettier alone owns Markdown spacing.            |
-| Prose and terms           | [Vale configuration](checks/prose/vale.ini), its styles, and vocabulary    | Vale; the INI file selects its adjacent native YAML styles.                             |
-| Link checking             | [Lychee TOML](checks/links/lychee.toml)                                    | Lychee; only the explicit online operation changes offline mode.                        |
-| Dependency findings       | [Native OSV policy](checks/dependencies/policy.toml)                       | OSV Scanner; complete raw findings and one exact, expiring development disposition.     |
-| Native tool supply        | [Supply manifest](supply/native.json)                                      | The existing installer and offline-bundle builder.                                      |
-| Shell CI runtime          | [Mise configuration](supply/mise.toml) and [native lock](supply/mise.lock) | Original Mise; process-scoped Node and npm selected from the package declaration.       |
-| Release artifact identity | [Bundle record](release/offline-bundle.json)                               | Offline inspection, installation, and release verification.                             |
+| Responsibility            | Owner                                                                    | Native consumer                                                                         |
+| ------------------------- | ------------------------------------------------------------------------ | --------------------------------------------------------------------------------------- |
+| Source formatting         | [Prettier policy](checks/format/prettier.toml)                           | Markdown, code, JSON, and YAML; literal content keeps its spacing.                      |
+| TOML formatting           | [dprint policy](checks/format/toml.toml)                                 | Official dprint Wasm formatter; parsed TOML options enter its public configuration API. |
+| Markdown policy           | [Non-spacing Markdown rules](checks/markdown/markdownlint.toml)          | Markdownlint over Git-selected source; Prettier alone owns Markdown spacing.            |
+| Prose and terms           | [Vale configuration](checks/prose/vale.ini), its styles, and vocabulary  | Vale; the INI file selects its adjacent native YAML styles.                             |
+| Link checking             | [Lychee TOML](checks/links/lychee.toml)                                  | Lychee; only the explicit online operation changes offline mode.                        |
+| Dependency findings       | [Native OSV policy](checks/dependencies/policy.toml)                     | OSV Scanner; complete raw findings and one exact, expiring development disposition.     |
+| Native tool supply        | [Supply manifest](supply/native.json)                                    | The existing installer and offline-bundle builder.                                      |
+| Shell CI runtime          | [Mise configuration](mise/config.toml) and [native lock](mise/mise.lock) | Original Mise; process-scoped Node and npm selected from the package declaration.       |
+| Release artifact identity | [Bundle record](release/offline-bundle.json)                             | Offline inspection, installation, and release verification.                             |
 
 Prefer TOML when the consumer reads it directly or accepts its parsed values
 through a public configuration API. Vale requires INI for its main
@@ -25,8 +25,9 @@ and generated release record remain JSON so the offline installer can validate
 them before npm dependencies exist. Do not add converters, duplicate records,
 or old-path fallbacks.
 
-The generated Mise lock pins supported runtime archives without installing
-them. Its filename is a project input, not a global configuration override.
+Mise discovers its project configuration at `.config/mise/config.toml` and
+reads the adjacent native lock without a filename or global override. The lock
+pins supported runtime archives without installing them.
 [Runtime preparation](../CONTRIBUTING.md#prepare-the-runtime-and-dependencies)
 owns local selection and CI isolation. `mise exec --locked` scopes the selected
 runtime to its child command; it changes neither the machine PATH nor host npm.

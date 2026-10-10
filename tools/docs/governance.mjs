@@ -132,8 +132,8 @@ export function checkConfigurationLayout(repository = root) {
     ".config/checks/prose/styles/Plain/StockPhrases.yml",
     ".config/checks/prose/styles/config/vocabularies/Department/accept.txt",
     nativeSupplyPath,
-    ".config/supply/mise.toml",
-    ".config/supply/mise.lock",
+    ".config/mise/config.toml",
+    ".config/mise/mise.lock",
     offlineBundleRecordPath,
   ]);
   const expectedDirectories = new Set([".config"]);
@@ -249,7 +249,7 @@ export function checkConfigurationLayout(repository = root) {
     throw new Error(
       "configuration ownership must keep Vale styles concern-local",
     );
-  console.log("PASS configuration ownership: checks, supply and release");
+  console.log("PASS configuration ownership: checks, Mise, supply and release");
 }
 
 export function checkProfile(repository = root) {

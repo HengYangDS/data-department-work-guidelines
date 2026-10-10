@@ -368,16 +368,18 @@ exists. One selector serves installer, cache, and bundle. Record host, process,
 and asset architecture separately; macOS x64 supply alone is not current matrix
 qualification. Actual Windows source/offline jobs qualify emulation and timing.
 
-GitLab shell jobs use original Mise, `.config/supply/`, its six-platform lock,
-native package-derived inputs, and `mise exec --locked`. The npm backend checks
-archive SHA-512; late path evaluation places selected npm first, including the
-Windows prefix. Local consumers select `.config/supply/mise.toml` through
-`MISE_OVERRIDE_CONFIG_FILENAMES`, with `MISE_CONFIG_FILE` unset and prepared
-checks using `MISE_AUTO_INSTALL=0`. The global override treats a global
-credential command as project-local; retain its global-only security boundary and
-warnings. CI keeps its job-local `MISE_CONFIG_DIR`, separate from host settings.
-The existing supply tests guard the project selector and isolation; no extra
-validator or configuration owner is introduced. Windows adds
+GitLab shell jobs use original Mise, its natively discovered
+`.config/mise/config.toml`, the adjacent six-platform lock, native package-derived
+inputs, and `mise exec --locked`. The npm backend checks archive SHA-512; late
+path evaluation places selected npm first, including the Windows prefix. Local
+and CI consumers need no filename selector. Keep `MISE_CONFIG_FILE` and
+`MISE_OVERRIDE_CONFIG_FILENAMES` unset; prepared local checks use
+`MISE_AUTO_INSTALL=0`. The global override treats a global credential command as
+project-local; preserve its global-only security boundary and warnings. CI keeps
+its job-local `MISE_CONFIG_DIR`, separate from host settings. The existing supply
+tests guard native discovery and isolation; move the original config and lock
+without changing their bytes, and retire the old paths and selection wiring
+together. No extra validator or configuration owner is introduced. Windows adds
 the OS machine Path after inherited entries before resolving existing Mise,
 without encoded install paths, registry writes, service changes, or another
 installer. Temporary application, version, and execution-identity probes diagnose

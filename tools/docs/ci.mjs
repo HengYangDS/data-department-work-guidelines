@@ -65,10 +65,9 @@ const nativeSourceSupply = [
   "node tools/ci/install-native.mjs vale --gitlab-package",
 ];
 const nativeRuntimeVariables = {
-  MISE_OVERRIDE_CONFIG_FILENAMES: ".config/supply/mise.toml",
   MISE_CONFIG_DIR: "$CI_PROJECT_DIR/build/runtime/work/mise-config",
   MISE_CEILING_PATHS: "$CI_PROJECT_DIR/..",
-  MISE_TRUSTED_CONFIG_PATHS: "$CI_PROJECT_DIR/.config/supply/mise.toml",
+  MISE_TRUSTED_CONFIG_PATHS: "$CI_PROJECT_DIR/.config/mise/config.toml",
   MISE_YES: "1",
 };
 const nativeRuntimeSupply = ["mise install --locked --jobs=1"];

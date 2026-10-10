@@ -46,9 +46,10 @@ and history capabilities remain product dependencies.
   identical fix/check inputs, and handles supported code and structured data;
   dprint owns TOML. Markdownlint owns non-spacing document checks. Preserve
   meaningful literal bytes, comments, order, and nesting.
-- Keep configuration under checks, supply, or release according to its consumer.
-  Use TOML where the native tool accepts it; retain Vale's required INI/YAML and
-  dependency-free bootstrap JSON without converters or duplicate manifests.
+- Keep configuration with its native consumer: checks, Mise, supply, or release.
+  Let Mise discover its project config and adjacent lock without a filename
+  override. Use TOML where the native tool accepts it; retain Vale's required
+  INI/YAML and dependency-free bootstrap JSON without duplicate manifests.
 - Enforce stable, unique, nonempty five-section decisions without execution
   logs. Use native Markdown tokens and a non-evaluating shell lexer; preserve
   ordinary rationale, evidence links, and inherited-property words.

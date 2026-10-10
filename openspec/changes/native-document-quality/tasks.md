@@ -228,10 +228,11 @@
       Select Node and npm through native locked Mise commands in every shell
       job; qualify selection, checksum refusal, missing-lock refusal, and
       manifest/lock mismatch without changing machine PATH or Runner identity.
-      Keep the project filename selector separate from the global configuration
-      owner. Qualify warning-free local commands and rejection of project-local
-      credential commands; preserve job-local CI isolation and exercise the
-      existing supply regression without suppressing warnings.
+      Use native project discovery at `.config/mise/config.toml` and its adjacent
+      lock, with no filename selector or global override. Preserve the original
+      config and lock bytes, retire their old paths and selection wiring, and
+      qualify warning-free local commands, the global credential boundary, and
+      job-local CI isolation through the existing supply regression.
       Qualify Windows job-local discovery from the inherited and native machine
       Path, preserving inherited precedence. Preserve the actual Mise
       application, version, and execution-identity diagnosis with its producer;

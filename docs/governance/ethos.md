@@ -227,8 +227,8 @@ guidelines or ETHOS. ETHOS is a separate installed prerequisite.
 `package.json` owns the Node line and exact npm version through native
 `devEngines.packageManager`. npm rejects mismatch before `install`, `ci`, and
 `run`. Ephemeral CI acquires that npm first. Shell CI uses the existing Mise
-owner with the [project configuration](../../.config/supply/mise.toml) and
-[native lock](../../.config/supply/mise.lock); every native job command runs
+owner with the [project configuration](../../.config/mise/config.toml) and
+[native lock](../../.config/mise/mise.lock); every native job command runs
 with the selected runtime, without changing host npm or Runner services.
 Maintained hosts keep their existing installation owner. Local and offline
 checks never upgrade it. Do not use
