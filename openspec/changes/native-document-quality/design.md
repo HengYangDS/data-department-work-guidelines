@@ -512,9 +512,11 @@ output retain their own checks. A metadata label or a same-named file elsewhere
 does not change ownership. Code uses supported language metrics and declared
 policy; a Python-only report or absent policy does not qualify JavaScript.
 
-Qualify the accepted product's 512/513 documentation boundary only on applicable
-authored Markdown. Keep Changelog complete at its existing owner and review
-OpenSpec by official validation and semantic responsibility, not document count.
+Qualify the accepted product's declared documentation limit and the first
+non-conforming value only on applicable authored Markdown; resolve both from
+the installed public contract rather than copying a numeric ceiling. Keep
+Changelog complete at its existing owner and review OpenSpec by official
+validation and semantic responsibility, not document count.
 Improve code and test cohesion where it serves their lasting responsibilities;
 do not partition a checker already scheduled for replacement by CUE. Preserve
 discovery, obligations, and diagnostics without minification, hidden input,

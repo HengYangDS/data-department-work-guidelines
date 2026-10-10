@@ -246,7 +246,10 @@
       require protected-source and offline jobs to qualify discovery and the
       original locked commands. Retire temporary probes only after their
       evidence is preserved; verify enduring process-only discovery before the
-      final freeze.
+      final freeze. Use native contributor discovery/version evidence
+      `e2716d443068e5ef8a3a30b0294c89e8a7c95c3f391b0c2c1654d61d4451d319`
+      without substituting it for installed materialization, full proof, or
+      platform qualification.
       Refresh immutable CI action pins from official stable
       releases, verify the explicit Node setup contract and real refusal cases,
       and preserve complete upstream finding reports and selected-route limits.
@@ -322,9 +325,11 @@
       Reject hand edits and preserve signed source identity. Retire the replaced
       YAML policy implementation after actual protected source/offline acceptance.
 - [ ] 2.46 Consume accepted shared size admission at its actual carrier and
-      language boundaries. Qualify 512/513 on applicable current authored
-      Markdown; code uses supported metrics and declared policy. Keep complete
-      source/test selection and preserve meaning. Release-owned Changelog,
+      language boundaries. Resolve the Markdown metric and declared limit from
+      the installed public contract; qualify applicable source at that limit
+      and one non-blank physical line above it. Code uses supported metrics and
+      declared policy. Keep complete source/test selection and preserve meaning.
+      Release-owned Changelog,
       official OpenSpec artifacts, and declared generated output retain their
       own checks. Do not copy the gate, minify, hide inputs, or invent exemptions.
   - [x] 2.46.1 Separate dependency auditing from CI topology. Preserve all 53
@@ -362,10 +367,12 @@
         both peer comparisons. Root release history and its version sections
         have no length ceiling; add no fragments or duplicate history carrier.
   - [ ] 2.46.6 Integrate accepted shared admission through its public installed
-        route. Verify applicable authored Markdown at 512/513 without mutation,
-        release-history and official-artifact classification, and supported
-        code metrics with declared limits. Then run changed plan and exact-HEAD
-        proof on complete selected source; absent policy is not coverage.
+        route. Resolve its carrier metric and limit, then verify authored
+        Markdown at that limit and one non-blank physical line above it without
+        mutation. Qualify release-history and official-artifact classification,
+        and supported code metrics with declared limits. Then run changed plan
+        and exact-HEAD proof on complete selected source; absent policy is not
+        coverage.
 
 ## 3. Qualification and publication
 

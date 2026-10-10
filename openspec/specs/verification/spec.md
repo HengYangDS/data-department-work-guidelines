@@ -459,10 +459,12 @@ and source selection without a private checker or hidden input.
 
 #### Scenario: A carrier reaches the admitted boundary
 
-- **WHEN** selected current authored Markdown reaches the accepted product's
-  inclusive 512-nonblank-line boundary
-- **THEN** shared documentation admission accepts 512 and refuses the
-  corresponding 513-line source without mutation
+- **WHEN** selected current authored Markdown reaches the inclusive limit
+  declared by the accepted installed product for that carrier and metric
+- **THEN** shared documentation admission accepts source at that limit and
+  refuses otherwise equivalent source one non-blank physical line above it
+  without mutation
+- **AND** both boundary values are resolved from that same accepted contract
 - **AND** supported code is evaluated by its language-specific metric and
   declared limit, not Markdown length.
 
