@@ -362,7 +362,7 @@
         native design review `6e07f24a22c99b110ace215c25318e05b9ac707a05df99d11a01f93d746bdf57`,
         and delta proof `c0eff0fdce3e3e95fe978876d6cec02ceb00acc04a691004696dd90f8a290a18`;
         none proves final delivery or the applicable shared admission.
-  - [ ] 2.46.5 Keep versioned release notes complete and reachable in their
+  - [x] 2.46.5 Keep versioned release notes complete and reachable in their
         semantic owner. Verify native Changelog form, SemVer meaning, tag, and
         both peer comparisons. Root release history and its version sections
         have no length ceiling; add no fragments or duplicate history carrier.
