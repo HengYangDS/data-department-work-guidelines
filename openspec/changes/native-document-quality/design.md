@@ -372,7 +372,11 @@ the project runtime, and an updated action is not a clean audit.
 
 Select native assets independently of Node architecture. Prefer the declared
 exact platform; Windows ARM64 may use its pinned x64 tool where no ARM64 asset
-exists. One selector serves installer, cache, and bundle. Record host, process,
+exists. One selector serves installer, cache, and bundle. Each operation passes
+its already-read supply manifest through managed-path resolution; asset, platform,
+version, and binary identities cannot diverge through a duplicate file read.
+Keep the original installation effects and refusals; this does not prevent
+hostile same-user replacement after inspection. Record host, process,
 and asset architecture separately; macOS x64 supply alone is not current matrix
 qualification. Actual Windows source/offline jobs qualify emulation and timing.
 

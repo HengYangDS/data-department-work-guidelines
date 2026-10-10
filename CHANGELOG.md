@@ -141,6 +141,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   enclosing worktree. Cache tests are isolated from host selectors without
   changing the contributor's tools or tying unrelated prose to advisory dates.
   Git failures retain the same attempt's complete localized diagnostics.
+  Installer, runtime, and offline cache paths retain their operation's already-read
+  supply manifest, rather than resolve asset and cache identities from separate
+  file reads.
 - Bind release notes and metadata to tagged source and comparisons to
   adjacent releases. GitLab commands use the configured repository URL and
   verify the returned pipeline's project, tag, commit, and source. An offline

@@ -209,7 +209,7 @@ export async function install({
         ? gitlabPackageRequest(tool, selected)
         : null;
   const binaryName = selected.binaryName;
-  const target = managedToolPath(tool, selected.key);
+  const target = managedToolPath(tool, selected.key, root, manifest);
   const directory = path.dirname(target);
   const cached = managedFileExists(target);
   if (!assetFile && !request) {

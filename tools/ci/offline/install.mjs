@@ -64,7 +64,12 @@ export function installBundle({
     ([tool, descriptor]) => {
       const selectedPlatform = nativeToolPlatform(tool, platform, native);
       const asset = descriptor.assets[selectedPlatform];
-      const target = managedToolPath(tool, selectedPlatform, repository);
+      const target = managedToolPath(
+        tool,
+        selectedPlatform,
+        repository,
+        native,
+      );
       return { tool, asset, target };
     },
   );

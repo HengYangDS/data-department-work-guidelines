@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 import { manifest, selectedAsset } from "../../tools/ci/install-native.mjs";
@@ -87,6 +88,35 @@ test("all native consumers share the declared managed path", () => {
     () => managedToolPath("lychee", "win32-riscv64"),
     /unsupported/u,
   );
+});
+
+test("managed paths retain their bound manifest without rereading supply", () => {
+  using workspace = fs.mkdtempDisposableSync(
+    path.join(os.tmpdir(), "ddwg-native-path-binding-"),
+  );
+  const repository = workspace.path;
+  const before = structuredClone(manifest);
+  assert.throws(() => managedToolPath("vale", undefined, repository), {
+    code: "ENOENT",
+  });
+  for (const [tool, descriptor] of Object.entries(manifest.tools)) {
+    for (const platform of [...Object.keys(descriptor.assets), "win32-arm64"]) {
+      const selected = selectedAsset(tool, ...platform.split("-"));
+      assert.equal(
+        managedToolPath(tool, platform, repository, manifest),
+        path.join(
+          repository,
+          "build/runtime/tool-cache",
+          tool,
+          selected.version,
+          selected.key,
+          selected.binaryName,
+        ),
+      );
+    }
+  }
+  assert.deepEqual(manifest, before);
+  assert.deepEqual(fs.readdirSync(repository), []);
 });
 
 test("native tool identities must name declared manifest entries", () => {

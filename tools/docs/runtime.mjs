@@ -401,8 +401,8 @@ export function managedToolPath(
   tool,
   platform = `${process.platform}-${process.arch}`,
   repository = root,
+  manifest = readNativeSupply(repository),
 ) {
-  const manifest = readNativeSupply(repository);
   const selectedPlatform = nativeToolPlatform(tool, platform, manifest);
   const descriptor = manifest.tools[tool];
   return path.join(
@@ -423,7 +423,7 @@ export function nativeToolBinary(tool) {
   const descriptor = manifest.tools[tool];
   const platform = nativeToolPlatform(tool, undefined, manifest);
   const suffix = process.platform === "win32" ? ".exe" : "";
-  const cached = managedToolPath(tool, platform);
+  const cached = managedToolPath(tool, platform, root, manifest);
   const selected = nativeExecutablePath(
     process.env[`DDWG_${tool.toUpperCase().replaceAll("-", "_")}_BIN`] ||
       (managedFileExists(cached) ? cached : descriptor.binary + suffix),
