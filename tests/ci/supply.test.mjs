@@ -43,6 +43,50 @@ test("native shell jobs select locked process runtimes without changing host npm
   );
 });
 
+test("Mise project selection preserves job-local global configuration isolation", () => {
+  const pipeline = YAML.parse(gitlab);
+  assert.doesNotThrow(() => validateCi(github, gitlab, offline));
+  for (const system of ["macos", "windows"]) {
+    for (const name of [
+      `docs:verify:${system}`,
+      `docs:verify:${system}:review`,
+      `offline:verify:${system}`,
+    ]) {
+      const variables = pipeline[name].variables;
+      assert.equal(
+        variables.MISE_OVERRIDE_CONFIG_FILENAMES,
+        ".config/supply/mise.toml",
+        name,
+      );
+      assert.equal(
+        variables.MISE_CONFIG_DIR,
+        "$CI_PROJECT_DIR/build/runtime/work/mise-config",
+        name,
+      );
+      assert.equal(Object.hasOwn(variables, "MISE_CONFIG_FILE"), false, name);
+    }
+  }
+  for (const change of [
+    (variables) => {
+      variables.MISE_CONFIG_FILE = "$CI_PROJECT_DIR/.config/supply/mise.toml";
+      delete variables.MISE_OVERRIDE_CONFIG_FILENAMES;
+    },
+    (variables) => delete variables.MISE_CONFIG_DIR,
+  ]) {
+    assert.throws(
+      () =>
+        validateCi(
+          github,
+          changedGitLab(".docs:native-runtime", (_, job) =>
+            change(job.variables),
+          ),
+          offline,
+        ),
+      /native runtime and source supply/u,
+    );
+  }
+});
+
 test("Windows jobs refresh only their process from the native machine path", () => {
   const pipeline = YAML.parse(gitlab);
   const refresh =

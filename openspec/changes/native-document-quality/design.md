@@ -355,7 +355,13 @@ qualification. Actual Windows source/offline jobs qualify emulation and timing.
 GitLab shell jobs use original Mise, `.config/supply/`, its six-platform lock,
 native package-derived inputs, and `mise exec --locked`. The npm backend checks
 archive SHA-512; late path evaluation places selected npm first, including the
-Windows prefix. Select the project filename, not global overrides. Windows adds
+Windows prefix. Local consumers select `.config/supply/mise.toml` through
+`MISE_OVERRIDE_CONFIG_FILENAMES`, with `MISE_CONFIG_FILE` unset and prepared
+checks using `MISE_AUTO_INSTALL=0`. The global override treats a global
+credential command as project-local; retain its global-only security boundary and
+warnings. CI keeps its job-local `MISE_CONFIG_DIR`, separate from host settings.
+The existing supply tests guard the project selector and isolation; no extra
+validator or configuration owner is introduced. Windows adds
 the OS machine Path after inherited entries before resolving existing Mise,
 without encoded install paths, registry writes, service changes, or another
 installer. Temporary application, version, and execution-identity probes diagnose

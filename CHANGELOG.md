@@ -105,6 +105,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Select the Mise project configuration without replacing its global owner.
+  Keep global credential-command security and job-local CI isolation; reject
+  the legacy override in the existing supply regression.
 - Remove unused fixture imports and use explicit string checks for invalid
   profile-path characters. Preserve navigation assertions and NUL-path refusal
   under the installed native JavaScript checks.

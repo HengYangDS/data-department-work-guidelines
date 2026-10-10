@@ -26,10 +26,11 @@ them before npm dependencies exist. Do not add converters, duplicate records,
 or old-path fallbacks.
 
 The generated Mise lock pins supported runtime archives without installing
-them. Shell CI selects this project configuration through the native filename
-setting and executes commands with `mise exec --locked`. It neither
-changes the machine PATH nor upgrades the host's npm. Local checks may use
-already prepared tools directly; they do not require remote supply.
+them. Its filename is a project input, not a global configuration override.
+[Runtime preparation](../CONTRIBUTING.md#prepare-the-runtime-and-dependencies)
+owns local selection and CI isolation. `mise exec --locked` scopes the selected
+runtime to its child command; it changes neither the machine PATH nor host npm.
+Already prepared tools can run local checks without remote supply.
 
 ## Source layout and rule changes
 

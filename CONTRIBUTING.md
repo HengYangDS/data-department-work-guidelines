@@ -77,6 +77,29 @@ not modify the host's npm, Runner service, or isolation. Runtime preparation
 is separate from offline verification: the offline installer never supplies
 missing Node or npm.
 
+To use that existing Mise installation locally, set this process environment
+from the repository root. Leave the global configuration unchanged.
+
+| Setting                          | Local value                             |
+| -------------------------------- | --------------------------------------- |
+| `MISE_OVERRIDE_CONFIG_FILENAMES` | `.config/supply/mise.toml`              |
+| `MISE_CONFIG_FILE`               | Unset.                                  |
+| `MISE_AUTO_INSTALL`              | `0` for prepared, download-free checks. |
+
+```text
+mise config ls --json
+mise exec --locked -- node --version
+mise exec --locked -- npm --version
+mise exec --locked -- npm run verify
+```
+
+Use the project filename selector, not `MISE_CONFIG_FILE`: that override makes
+Mise treat the global `github.credential_command` as project-local and reject
+it with a security warning. Keep the credential command with its global owner;
+do not copy it into the project or suppress warnings. Preserve the separate,
+job-local CI `MISE_CONFIG_DIR` isolation rather than exposing host configuration
+to jobs.
+
 ### Supply native checks
 
 Use the Vale, lychee, and OSV Scanner versions in the
