@@ -99,8 +99,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   support distinct from executable tests, all static checks, two workers, the
   declared deadline, and native failures and cancellations. Group dependency
   tests by policy, execution, and evidence; load only the selected command's
-  modules. Remove repeated tool and Git observations without dropping source
-  controls or distinct ancestry checks.
+  modules. Share native Git setup and fresh offline identity defaults without
+  coupling expected inputs to production or losing caller-specific environments.
+  Remove repeated observations without dropping source controls or distinct
+  ancestry checks.
 - Configure one ETHOS gate registry with only `docs-integrity` and
   `markdown-format` as default document roots. Require the product's original
   native test attempt as their behavior prerequisite. Document output cannot

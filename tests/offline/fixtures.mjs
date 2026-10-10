@@ -26,27 +26,29 @@ export const listingSupply = {
   },
 };
 
-export function record(overrides = {}) {
+function identityDefaults() {
   return {
-    schemaVersion: 4,
     version: "4.2.0",
-    fileName: "data-department-work-guidelines-v4.2.0-offline-tools.tar.gz",
-    sha256: digest("archive"),
     lockSha256: digest("lock"),
     packageJsonSha256: digest("package"),
     nativeToolsSha256: digest("native tools"),
     nodeMajor: 26,
+  };
+}
+
+export function record(overrides = {}) {
+  const { version, ...identity } = identityDefaults();
+  return {
+    schemaVersion: 4,
+    version,
+    fileName: "data-department-work-guidelines-v4.2.0-offline-tools.tar.gz",
+    sha256: digest("archive"),
+    ...identity,
     ...overrides,
   };
 }
 
-export const source = {
-  version: "4.2.0",
-  lockSha256: digest("lock"),
-  packageJsonSha256: digest("package"),
-  nativeToolsSha256: digest("native tools"),
-  nodeMajor: 26,
-};
+export const source = identityDefaults();
 
 export async function bundleFixture(
   run,

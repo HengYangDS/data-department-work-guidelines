@@ -8,6 +8,7 @@ import { syncBuiltinESMExports } from "node:module";
 import { test } from "node:test";
 import { pathToFileURL } from "node:url";
 import { root, run } from "../../tools/docs/runtime.mjs";
+import { fixtureGit } from "../source/fixtures.mjs";
 
 test("native process input reaches its selected child without a shell", () => {
   const input = "First reference\0Second reference\0";
@@ -147,16 +148,7 @@ test("public test execution preserves literal Git inputs and a new cohort", () =
       path.join(directory, ".gitignore"),
       "tests/local-only/\nexecutions.jsonl\n",
     );
-    const git = (args) => {
-      const result = spawnSync("git", args, {
-        cwd: directory,
-        encoding: "utf8",
-        timeout: 10_000,
-      });
-      assert.ifError(result.error);
-      assert.equal(result.status, 0, result.stderr);
-      return result.stdout;
-    };
+    const git = (args) => fixtureGit(directory, args);
     git(["init", "--quiet"]);
     const marker = path.join(directory, "executions.jsonl");
     const writeTest = (relative, body = "assert.ok(true);") => {

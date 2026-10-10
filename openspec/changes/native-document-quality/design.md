@@ -123,7 +123,11 @@ loads the Markdown parser.
 Tests follow those responsibilities and share existing fixtures rather than
 duplicate them. Native Git discovers every selected `tests/**/*.test.mjs`, not
 fixture modules or retired monoliths. Preserve cases, declarations, diagnostics,
-cleanup, two workers, and the existing outer deadline.
+cleanup, two workers, and the existing outer deadline. Setup-only Git calls share
+one raw native invocation with exact working directory, caller environment,
+UTF-8, and ten-second deadline; source assertions keep their independent expected
+inputs. Offline identities use fresh fixture defaults, with caller overrides
+last and no expected value derived from production.
 
 #### Source selection and observations
 

@@ -22,6 +22,7 @@ import {
   sourceAttributes,
   sourceMarkdown,
 } from "../../tools/docs/runtime.mjs";
+import { fixtureGit } from "./fixtures.mjs";
 
 test("shared Git excludes editor state without hiding guidance source", () => {
   using workspace = mkdtempDisposableSync(
@@ -43,17 +44,7 @@ test("shared Git excludes editor state without hiding guidance source", () => {
     GIT_CONFIG_GLOBAL: emptyConfig,
     GIT_CONFIG_COUNT: "0",
   };
-  const git = (arguments_) => {
-    const result = spawnSync("git", arguments_, {
-      cwd: directory,
-      env: environment,
-      encoding: "utf8",
-      timeout: 10_000,
-    });
-    assert.ifError(result.error);
-    assert.equal(result.status, 0, result.stderr);
-    return result.stdout;
-  };
+  const git = (args) => fixtureGit(directory, args, { env: environment });
   git(["init", "--quiet"]);
   writeFileSync(
     path.join(directory, ".gitignore"),
@@ -86,6 +77,57 @@ test("shared Git excludes editor state without hiding guidance source", () => {
       .sort(),
     [".gitignore", "docs/decide.md"],
   );
+});
+
+test("fixture Git retains caller inputs and native failures", (context) => {
+  const args = ["ls-files", "-z"];
+  const environment = { PATH: process.env.PATH };
+  let result = { status: 0, stdout: "one\0two\0", stderr: "" };
+  const observation = context.mock.method(
+    childProcess,
+    "spawnSync",
+    (command, selected, options) => {
+      assert.equal(command, "git");
+      assert.equal(selected, args);
+      assert.deepEqual(options, {
+        cwd: root,
+        env: environment,
+        encoding: "utf8",
+        timeout: 10_000,
+      });
+      return result;
+    },
+  );
+  syncBuiltinESMExports();
+  try {
+    assert.equal(fixtureGit(root, args, { env: environment }), result.stdout);
+    result = {
+      status: 128,
+      stdout: "",
+      stderr: "native fixture Git refusal\n",
+    };
+    assert.throws(
+      () => fixtureGit(root, args, { env: environment }),
+      (error) =>
+        error.actual === 128 &&
+        error.expected === 0 &&
+        error.message.includes(result.stderr.trimEnd()),
+    );
+    const nativeError = Object.assign(
+      new Error("native fixture spawn failed"),
+      {
+        code: "ENOENT",
+      },
+    );
+    result = { error: nativeError, status: null, stdout: "", stderr: "" };
+    assert.throws(
+      () => fixtureGit(root, args, { env: environment }),
+      (error) => error.actual === nativeError,
+    );
+  } finally {
+    observation.mock.restore();
+    syncBuiltinESMExports();
+  }
 });
 
 test("Git selection excludes worktree deletions and preserves native failure evidence", (context) => {
@@ -173,16 +215,7 @@ test("native Git roles distinguish executable tests from their fixture support",
     path.join(os.tmpdir(), "ddwg-test-roles-"),
   );
   const directory = workspace.path;
-  const git = (arguments_) => {
-    const result = spawnSync("git", arguments_, {
-      cwd: directory,
-      encoding: "utf8",
-      timeout: 10_000,
-    });
-    assert.ifError(result.error);
-    assert.equal(result.status, 0, result.stderr);
-    return result.stdout;
-  };
+  const git = (args) => fixtureGit(directory, args);
   git(["init", "--quiet"]);
   writeFileSync(
     path.join(directory, ".gitattributes"),
