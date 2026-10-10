@@ -339,6 +339,11 @@
         a catalogue of current and retired filenames. Verify full native
         discovery, execution controls, and applicable language-specific size
         admission; do not reorganize tests merely by physical line count.
+        Replace glob-interpreted CLI test operands with Node's official
+        literal-file API; qualify actual Git-selected paths, a new cohort,
+        unchanged worker and deadline bounds, and failure/cancellation results.
+        Keep product-owned proof integration and shared admission open until
+        their actual installed consumers qualify.
   - [x] 2.46.4 Review design choices and capability ownership through official
         deltas and main-spec synchronization. Preserve each requirement and
         scenario, maintain all reader routes, and verify strict OpenSpec and

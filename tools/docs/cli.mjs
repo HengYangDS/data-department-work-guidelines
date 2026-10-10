@@ -2,7 +2,7 @@ import {
   assertNodeRuntime,
   gitFiles,
   reportError,
-  run,
+  root,
   workspaceObservation,
 } from "./runtime.mjs";
 
@@ -13,12 +13,23 @@ function testFiles() {
   );
 }
 
-function runTests() {
+async function runTests() {
   const files = testFiles();
   if (!files.length) throw new Error("no repository quality tests found");
-  run(process.execPath, ["--test", "--test-concurrency=2", ...files], {
-    timeout: 180_000,
+  const { run } = await import("node:test");
+  const { spec } = await import("node:test/reporters");
+  const { pipeline } = await import("node:stream/promises");
+  const tests = run({
+    files,
+    cwd: root,
+    concurrency: 2,
+    signal: AbortSignal.timeout(180_000),
   });
+  tests.on("test:summary", ({ file, success, counts }) => {
+    if (file === undefined && (!success || !counts.tests)) process.exitCode = 1;
+  });
+  await pipeline(tests, new spec(), process.stdout, { end: false });
+  if (process.exitCode) throw new Error("repository quality tests failed");
 }
 
 async function reportVerificationContext() {
@@ -90,7 +101,7 @@ try {
       const { formatSource } = await import("./content.mjs");
       await formatSource();
       await checkRepository();
-      runTests();
+      await runTests();
       console.log("PASS repository documentation verification");
       break;
     }
@@ -156,7 +167,7 @@ try {
     }
     case "test":
       if (arguments_.length) throw new Error("test accepts no arguments");
-      runTests();
+      await runTests();
       break;
     default:
       throw new Error(

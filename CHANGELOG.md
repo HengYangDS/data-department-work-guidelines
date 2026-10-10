@@ -115,6 +115,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Pass Git-selected tests as literal files to Node's official runner, so pattern
+  syntax in a filename cannot silently omit a test. Keep new cohorts, ignored
+  local state, single execution, two workers, the overall deadline, and native
+  failure and cancellation results under the same test command.
 - Admit evidenced preventive practices without requiring a prior incident;
   retain trial, net benefit, ownership, review, and exit, without delaying
   mandatory safeguards. Replace two wide data-use tables with local decision

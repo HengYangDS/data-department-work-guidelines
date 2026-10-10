@@ -86,6 +86,18 @@ replace that ownership.
 - **AND** the document commands retain their own results without replaying tests
   or claiming that their output proves code behavior.
 
+#### Scenario: Native test paths contain pattern syntax
+
+- **WHEN** a selected test path contains spaces or glob syntax, or a new
+  non-ignored test cohort is added
+- **THEN** the repository test command supplies the complete native Git inventory
+  as literal files to Node's official test-runner API and executes each file once
+- **AND** force-tracked files remain selected while ignored local files stay out
+- **AND** two workers and the 180-second whole-attempt deadline remain enforced;
+  failures, empty execution, and cancellation cannot report success
+- **AND** this repository command does not replace the product-owned behavior
+  prerequisite or qualify its installed input and evidence contract.
+
 ### Requirement: Shared source-size admission preserves semantic ownership
 
 Accepted shared admission SHALL classify each selected carrier before applying
