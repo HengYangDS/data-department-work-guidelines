@@ -171,10 +171,11 @@ validation; OpenSpec still owns validation and lifecycle.
 
 ### Proof and Configuration
 
-Only `docs-integrity` and `markdown-format` are default proof roots. Their
-dependency closure, document commands, and selected product verifiers must pass
-for the committed tree. ETHOS independently obtains native Node behavior evidence;
-repository-authored reports or forwarded command output cannot substitute.
+Resolve the selected proof roots, prerequisite closure, and product verifiers
+from the native profile and gate registry. Require them and the document commands
+to pass for the exact committed tree. ETHOS independently obtains native Node
+behavior evidence; repository-authored reports or forwarded command output
+cannot substitute.
 
 Syntax can pass with a reachable undefined identifier, and Node reports can
 omit runtime warnings. Require applicable static semantics and complete
