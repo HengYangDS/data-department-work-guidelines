@@ -43,6 +43,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   implementation and verification with their engineering and professional
   owners, including failed and uncovered cases, without a separate testing
   team or confusing verified results with authorized acceptance.
+- Update Prettier to 3.9.10 for its upstream Markdown table parsing fix;
+  preserve prose wrapping and native spacing rules.
 - Refresh the native TOML parser to 1.9.1, rejecting malformed exponent signs
   without changing accepted configuration or adding a dependency.
 - Separate document checks from native behavior evidence in one ETHOS gate
