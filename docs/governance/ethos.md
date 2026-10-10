@@ -141,14 +141,12 @@ rule selection and spacing;
 [Contributing](../../CONTRIBUTING.md#verify-the-source) owns the commands.
 
 The [profile](../../.ethos/profile.toml) selects one native
-[gate registry](../../.ethos/gates.toml). Both proof sets have two roots:
-`docs-integrity` and `markdown-format`. The integrity command depends on the
-product's provider-only `code-behavior` gate, which owns one Node test attempt,
-its native coverage, and a 180-second total budget. The registry reserves two
-CPU slots; the installed test recipe must separately qualify its two-worker
-limit. A document command's output cannot substitute for that attempt.
-ETHOS owns the registry
-schema, graph, and evidence; repository checks guard only the declared topology.
+[gate registry](../../.ethos/gates.toml). ETHOS owns its schema, graph, resource
+reservations, and evidence. The integrity command depends on the product's
+provider-only behavior gate; that provider must obtain one complete native Node
+test attempt under the declared worker limit and deadline. A document command's
+output cannot substitute for that attempt. Repository checks guard only the
+declared topology.
 Syntax checks and test totals do not close semantic or diagnostic obligations.
 
 ### Observe the Execution Environment
@@ -178,12 +176,12 @@ dependency closure, document commands, and selected product verifiers must pass
 for the committed tree. ETHOS independently obtains native Node behavior evidence;
 repository-authored reports or forwarded command output cannot substitute.
 
-Syntax can pass with a reachable undefined identifier. Node reports can omit
-unapproved runtime warnings. Neither permits semantic defects or warnings to be
-ignored. Until the formally accepted ETHOS quality integration is installed and
-qualified, static semantics, same-attempt warning handling, and every code
-subject's applicable obligations remain open. Accepted native scopes may
-jointly cover a property; each provider need not cover every language.
+Syntax can pass with a reachable undefined identifier, and Node reports can
+omit runtime warnings. Require applicable static semantics and complete
+same-attempt diagnostics before accepting the subject's quality claim. Only
+qualified behavior from an accepted installed integration can close that
+obligation. Accepted native scopes may jointly cover a property; each provider
+need not cover every language.
 
 Repository checks enforce this repository's placement and selection, not a
 copied ETHOS schema or universal enforcement. A shared-quality claim needs the
@@ -272,8 +270,9 @@ That whole job is not network-isolation proof. Qualify cold local use separately
 with fresh HOME, no inherited configuration/cache, and denied remote connections.
 Run the full graph on every claimed host with actual npm recorded.
 
-The manifest supplies macOS x64, but current CI does not qualify that ABI. On
-Windows ARM64, prefer native ARM64 Node. When the manifest has no ARM64 tool
+Declaring a platform asset does not qualify that ABI. Verify each claimed
+platform through its actual executor. On Windows ARM64, prefer native ARM64
+Node. When the manifest has no ARM64 tool
 asset, use its declared pinned x64 asset under Windows emulation. Tool
 compatibility does not require emulating Node too. Qualify the actual
 combination and record host, Node-process, and tool architectures separately.
@@ -311,24 +310,20 @@ service and cannot renew artifact-use or distribution approval.
 
 ### Bound Known Findings
 
-The human approvals have distinct subjects:
+Require an authorized decision bound to the exact artifact, finding, allowed
+use, distribution scope, expiry or withdrawal condition, and complete reports.
+Keep the binding with its native policy or producing Change and evidence;
+this page grants no approval. The [dependency policy](../../.config/checks/dependencies/policy.toml)
+owns project-lock dispositions, not image or native-binary approvals.
 
-| Subject                                                                      | Approved development use                                                  | End of approval                                            |
-| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| Locked `braces` 3.0.3, `GHSA-vfj7-8cjw-p6xm`                                 | Trusted repository checks and tool distribution.                          | 2026-10-18 00:00 UTC                                       |
-| Exact pinned Node 26 Trixie image                                            | Controlled CI.                                                            | This artifact and use; changes need renewed qualification. |
-| Exact Vale 3.24.0, OSV Scanner 2.6.0, npm 12.2.0 group and hash-bound bundle | Trusted local checks, controlled CI, and that bundle's distribution.      | 2026-10-18 00:00 UTC                                       |
-| Five pinned Lychee 0.24.2 assets                                             | Trusted local checks, controlled CI, and identical assets in the toolkit. | 2026-10-18 00:00 UTC                                       |
-
-The approved image index is
-`sha256:32fa97f3363975684b08bf4e8a68a47c7905175cc20275b50b974bbd02aba731`.
-These are not production, arbitrary-untrusted-input, other-finding, or
-cross-repository approvals. Each artifact still needs authenticity, complete
-bytes, hashes, licenses, actual function, and platform acceptance. Lychee's
-source-lock advisories, including maintenance findings and aliases, are not a
-complete shipped-binary inventory; retain that limitation and full reports.
-Qualify an accepted installed ETHOS subject contract, then retire the existing
-compatibility check in the same migration, without a second risk policy or gate.
+Do not extend a development approval to production, arbitrary untrusted input,
+other findings, changed artifacts, or another repository. Each artifact still
+needs authenticity, complete bytes, hashes, licenses, actual function, and
+platform acceptance. Source-lock advisories, including maintenance findings and
+aliases, are not a complete shipped-binary inventory; retain that limitation
+and the full reports. Replace a compatibility check only after its accepted
+installed successor qualifies the same consumer; remove the replaced check in
+that migration rather than retain a second risk policy or gate.
 
 ## Runner and Transport Boundaries
 
@@ -337,11 +332,11 @@ this project's admitted Linux, macOS, and Windows runners and pinned packages,
 not a public-download fallback. Qualify each through actual jobs and native
 runner/guest observations.
 
-For a frozen pre-release bundle, protected accepted-source qualification selects
-the existing offline jobs with a digest-bound temporary package. It is not a
-signed Release, authenticated release download, or whole-job network-isolation
-proof. Wait for terminal jobs, preserve all results, then retire the exact
-package. [Contributing](../../CONTRIBUTING.md#publish-a-release) owns the route.
+Bundle qualification must bind the exact source, artifact, and job results.
+Temporary qualification packages are not signed Releases, authenticated release
+downloads, or whole-job network-isolation proof. Wait for terminal jobs,
+preserve all results, then retire the exact temporary package.
+[Contributing](../../CONTRIBUTING.md#publish-a-release) owns the executable route.
 
 ### Review and Protected Execution
 
@@ -376,7 +371,7 @@ nor registration and isolation.
 Retire completed-Change copies only after resolving unique facts, obligations,
 and consumers. Bind historical links to the full ancestor commit and exact path,
 and verify original bytes. Git retains the history; deletion neither absorbs an
-unresolved obligation nor closes this active Change. Official archive and its
+unresolved obligation nor closes a Change. Official archive and its
 new commit's proof and publication remain separate.
 
 ### Retained Downloads

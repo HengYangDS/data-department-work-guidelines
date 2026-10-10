@@ -16,9 +16,9 @@ tool, or rule is proposed, or an existing mechanism has become a burden.
 The aim of learning is to find the next failure earlier, judge it more easily,
 and need less manual rescue, not to increase the file count. Before admitting
 a rule, template, tool, Agent workflow, or platform mechanism as
-department practice, require an observed failure mode, a bounded trial,
-a responsible owner, and
-evidence of net benefit.
+department practice, establish an observed problem, substantiated material risk,
+or applicable obligation. Require a bounded trial, a responsible owner, and
+evidence of net benefit from the proposed practice.
 
 For an urgent failure or breach, go directly to
 [emergencies and exceptions](#emergencies-and-exceptions). For routine work,
@@ -29,17 +29,22 @@ use [practice admission](#admit-practices-and-prevent-recurrence) or the
 
 Before admitting a practice, establish:
 
-- **Problem and cost:** The observed failure it addresses; why the existing
-  boundary, interface, and feedback are insufficient; the risk and complexity
-  it would reduce; and the cognitive and maintenance cost it would add.
+- **Need and cost:** The observed problem, substantiated material risk, or
+  applicable obligation it addresses; why the existing boundary, interface,
+  and feedback are insufficient; the risk and complexity it would reduce;
+  and the cognitive and maintenance cost it would add.
 - **Trial and evidence:** How it can be tried on a small scale, and what
   observation would justify keeping it.
 - **Ownership and exit:** Who maintains it, when it is reviewed, and what
   triggers revision or retirement.
 
-An untested preference is not a department rule. Retire a rule that has lost its
-subject, has no user, duplicates a source of truth, or costs more than it
-returns.
+Necessary safeguards must not wait for an incident or practice admission.
+Meet the applicable obligation within existing authority; use the trial to
+choose and verify a proportionate implementation, not to decide whether the
+obligation applies. An untested preference is not a department rule.
+
+Retire a rule that has lost its subject, has no user, duplicates a source of
+truth, or costs more than it returns.
 
 ### Detect Drift Before Failure
 

@@ -20,7 +20,7 @@
 - [x] 2.2 Extend the current installer and bundle owners without retaining a
       second command, manifest, or installer for the same concern. Verify the
       native supply and cold-install tests and the resolved source interfaces.
-- [x] 2.3 Apply human English editing to all seven task topics. Compare every
+- [ ] 2.3 Apply human English editing to all seven task topics. Compare every
       original duty, actor, condition, permission, authority, and evidence limit
       with the [original-duty
       review](design.md#review-original-duties-at-seven-topic-owners).
@@ -35,6 +35,14 @@
       aesthetic intent rather than substituting editorial techniques.
       Ground scenarios and emergency responses in quantitative data work; keep
       employee-management safeguards distinct from incident containment.
+      Qualify preventive-practice admission before an incident, retaining
+      evidence, trial, net benefit, ownership, review, and exit. Inspect the
+      compact data-use and worked-case lists without losing any decision,
+      evidence requirement, stop condition, or authority boundary; correct
+      historical duty extraction without rewriting the original review receipt.
+      Keep one-time risk approvals and integration status with their existing
+      Change, native policy, and receipts; preserve general governance conditions
+      and immutable decision sources without opaque identifiers in reading prose.
 - [x] 2.4 Reconcile package, current OpenSpec, contribution, governance, CI,
       version, and changelog contracts. Audit current consumers and the resolved
       dependency graph for retired residue; preserve historical Git bytes.

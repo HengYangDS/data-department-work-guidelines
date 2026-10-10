@@ -233,13 +233,32 @@ reports SHALL name gap, impact, and escalation.
 - **WHEN** a rule, template, tool, Agent workflow, or platform mechanism is
   proposed for department-practice admission, or a task triggers mandatory prevention
 - **THEN** department-practice admission of a rule, template, tool, Agent
-  workflow, or platform mechanism SHALL require an observed failure mode, a
-  bounded trial, a responsible owner, and evidence of net benefit
+  workflow, or platform mechanism SHALL require an observed problem,
+  substantiated material risk, or applicable obligation, together with a bounded
+  trial, a responsible owner, and evidence of net benefit from the practice
 - **AND** mandatory task-specific prevention SHALL NOT wait for an incident;
   producing its asset SHALL NOT automatically standardize it as department practice
 - **AND** high-impact or repeated work cannot be called complete while its
   necessary test, monitor, rule, or recovery path is missing from its existing owner
 - **AND** an extra report or evidence directory does not satisfy that condition.
+
+#### Scenario: A preventive practice addresses a new obligation
+
+- **WHEN** a new data use has a substantiated material risk or applicable
+  obligation but no harmful incident has occurred
+- **THEN** the evolution topic SHALL allow a proportionate preventive practice
+  to be considered on that evidence, with bounded trial, net benefit, ownership,
+  review, and exit conditions
+- **AND** necessary safeguards SHALL apply before practice admission; the trial
+  SHALL qualify their implementation, not suspend the underlying obligation.
+
+#### Scenario: A preference has no evidenced need
+
+- **WHEN** a proposed department practice has no observed problem, substantiated
+  material risk, or applicable obligation, or lacks trial evidence and ownership
+- **THEN** the evolution topic SHALL refuse its admission as a department rule
+- **AND** enthusiasm, a speculative benefit, or an extra document SHALL NOT
+  replace the missing basis.
 
 #### Scenario: Repeated weak signals appear
 

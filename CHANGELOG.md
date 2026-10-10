@@ -108,6 +108,13 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Admit evidenced preventive practices without requiring a prior incident;
+  retain trial, net benefit, ownership, review, and exit, without delaying
+  mandatory safeguards. Replace two wide data-use tables with local decision
+  and evidence lists while preserving every condition and authority boundary.
+- Keep temporary risk approvals and integration status out of lasting governance
+  prose; preserve their exact bindings at the existing Change and native policy.
+  Give historical decision evidence readable, immutable source links.
 - Select the Mise project configuration without replacing its global owner.
   Keep global credential-command security and job-local CI isolation; reject
   the legacy override in the existing supply regression.

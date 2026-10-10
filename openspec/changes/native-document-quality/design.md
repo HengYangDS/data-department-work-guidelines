@@ -103,6 +103,13 @@ judgments, dissent, corrected counterexamples, and failed routes at their
 producer. An editorial crosswalk is not an automated equivalence proof,
 committee quorum, or new meaning validator.
 
+Practice admission starts from an observed problem, substantiated material risk,
+or applicable obligation, not necessarily a past incident. Retain bounded
+trial, evidence of net benefit, ownership, review, and exit. Mandatory safeguards
+still apply before practice admission; a trial chooses and verifies their
+implementation rather than suspending the underlying obligation. Keep current
+refinements separate from historical duty extraction in the clause review.
+
 ### Give native quality concerns one owner
 
 Keep process and Git selection in the runtime, dependency audits in their audit
@@ -205,8 +212,9 @@ mutation, verification, interruption, and parallel work.
 
 #### Work examples and whole-page review
 
-Use ordered steps for the working loop and Human–Agent handoff; the data-stage
-table compares use and evidence, and the role table defines retained powers.
+Use ordered steps for the working loop and Human–Agent handoff. Compact lists
+pair each data-use question with its evidence and each worked-case decision
+with its stop condition; retain useful role comparisons as tables.
 People delegate, verify, and accept; an authorized task lead may accept.
 Preserve return conditions and met/unmet branches without duplicating them in
 diagrams. Coaching separates alignment, review, and improvement; handoffs
@@ -432,13 +440,27 @@ blanket waiver exists. Observe npm's public stable release through isolated
 native configuration, fresh cache, and explicit online freshness; retain that
 result with the scan.
 
-The four approvals are separate: locked braces 3.0.3 checks/distribution, the
-digest-bound Node Trixie CI image, the pinned Vale/OSV/npm group and bundle, and
-the five pinned Lychee 0.24.2 assets. The braces and tool approvals end at
-2026-10-18 00:00 UTC. Exact subjects and allowed development use remain at the
-[risk boundary](../../../docs/governance/ethos.md#bound-known-findings), not a
-production, untrusted-input, cross-repository, or other-finding waiver. Changed
-artifacts require renewed qualification.
+This Change consumes four separate human approvals:
+
+- Locked braces 3.0.3, `GHSA-vfj7-8cjw-p6xm`, for trusted repository development
+  checks and distribution. Its native disposition is in
+  [dependency policy](../../../.config/checks/dependencies/policy.toml).
+- The official Node 26.11.1 Trixie image index
+  `sha256:32fa97f3363975684b08bf4e8a68a47c7905175cc20275b50b974bbd02aba731`,
+  for controlled development CI at this exact artifact and use.
+- Exact Vale 3.24.0, OSV Scanner 2.6.0, and npm 12.2.0, for trusted local
+  checks, controlled development CI, and their hash-bound offline bundle.
+- The five Lychee 0.24.2 assets pinned in
+  [native supply](../../../.config/supply/native.json), for trusted local checks,
+  controlled development CI, and distribution of those identical assets in the
+  approved hash-bound offline maintenance toolkit.
+
+The braces, native-tool group, and Lychee approvals end at 2026-10-18 00:00 UTC.
+Retain complete reports, exact artifact hashes, and platform acceptance. These
+are not production, arbitrary-untrusted-input, cross-repository, or other-finding
+approvals. Changed artifacts require renewed qualification. The
+[risk boundary](../../../docs/governance/ethos.md#bound-known-findings) states
+the general conditions; it is not an approval ledger.
 
 Until an accepted installed ETHOS subject contract covers the actual consumer,
 keep bounded compatibility at its existing owner. Bind braces version and

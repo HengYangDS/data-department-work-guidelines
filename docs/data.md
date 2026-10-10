@@ -93,14 +93,18 @@ production evidence is gathered earlier. Revisit the affected value, meaning,
 or quality judgment when facts or use change. Neither deployment nor feedback
 authorizes a new use.
 
-| Concern      | Decision                          | Typical basis                                                          |
-| ------------ | --------------------------------- | ---------------------------------------------------------------------- |
-| Opportunity  | Is evaluation worthwhile?         | Business question, value hypothesis, source, and information boundary. |
-| Exploration  | What is the data?                 | Samples, meaning, timeline, quality profile, and alternative sources.  |
-| Reproduction | Can key findings be reproduced?   | Replayable method, controls, anomalies, and failure explanation.       |
-| Production   | Can it run reliably?              | Tests, release, backfill, monitoring, ownership, and recovery.         |
-| Admission    | May it serve this use?            | Acceptance, permissions, lineage, limits, veto, and exit conditions.   |
-| Feedback     | Do results support continued use? | Use feedback, quality trends, cost, incidents, and review.             |
+- **Opportunity:** Is evaluation worthwhile? Establish the business question,
+  value hypothesis, source, and information boundary.
+- **Exploration:** What is the data? Examine samples, meaning, timeline, quality
+  profile, and alternative sources.
+- **Reproduction:** Can key findings be reproduced? Use a replayable method,
+  controls, anomalies, and failure explanation.
+- **Production:** Can it run reliably? Require tests, release, backfill,
+  monitoring, ownership, and recovery.
+- **Admission:** May it serve this use? Establish acceptance, permissions,
+  lineage, limits, veto, and exit conditions.
+- **Feedback:** Do results support continued use? Review use feedback, quality
+  trends, cost, and incidents.
 
 “Technically possible” is not “worth doing”; “a signal exists” is not
 “production-ready”; “deployed” is not “admitted for every use.” Label exploratory,
@@ -119,11 +123,14 @@ only whether today's series is accurate, but what was knowable at each decision
 time. Research admission and production admission answer different questions:
 the operational feed checks apply only if that feed is proposed.
 
-| Gate            | Evidence to obtain                                                             | Stop if missing                               |
-| --------------- | ------------------------------------------------------------------------------ | --------------------------------------------- |
-| Research claim  | Earlier snapshot, availability time, and correction history.                   | Do not call the backtest point-in-time valid. |
-| Production feed | Replayable inputs and outputs, tests, monitoring, access review, and recovery. | Do not promote it to an operational feed.     |
-| Use admission   | Domain meaning, permissions and veto, authorized decision, and acceptance.     | Do not infer permission from deployment.      |
+- **Research claim:** Obtain the earlier snapshot, availability time, and
+  correction history. Without them, do not call the backtest point-in-time valid.
+- **Production feed:** Require replayable inputs and outputs, tests, monitoring,
+  access review, and recovery. Without them, do not promote the data to an
+  operational feed.
+- **Use admission:** Establish domain meaning, permissions and veto, the
+  authorized decision, and acceptance. Deployment cannot supply missing
+  permission.
 
 **Illustrative outcome:** If only today's corrected series is available, the
 backtest's point-in-time validity remains unproved. Keep the proposed historical
@@ -136,7 +143,7 @@ would not, by itself, resolve this historical question.
 An Agent may locate snapshots, compare revisions, or run replay checks within
 its delegation. It cannot decide that the dataset is admitted. The task lead
 brings the evidence and open risks to the decision owner and acceptor; later
-observed use, not this table, establishes adoption.
+observed use, not these checks, establishes adoption.
 
 ## Ownership and Change Boundaries
 

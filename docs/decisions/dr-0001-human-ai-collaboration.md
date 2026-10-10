@@ -46,9 +46,13 @@ delegation or acceptance.
 
 ## Evidence and Revisit
 
-The original choice is recorded in Git commit
-`fad08e7379fd8454d9f92775477e0dc98edcb6c0`. The current definition is in the
+The original choice is recorded in the historical decision
+([GitLab][original-gitlab] · [GitHub][original-github]). The current definition
+is in the
 [charter](../charter.md) and [human–AI collaboration](../human-agent.md); later
 normalization preserves its scope without certifying the original work under the
 later OpenSpec lifecycle. Revisit the name if actual use weakens human
 accountability or projects cannot apply it accurately.
+
+[original-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/blob/fad08e7379fd8454d9f92775477e0dc98edcb6c0/docs/decisions/2026-07-12-human-intelligence-collaboration.md
+[original-github]: https://github.com/HengYangDS/data-department-work-guidelines/blob/fad08e7379fd8454d9f92775477e0dc98edcb6c0/docs/decisions/2026-07-12-human-intelligence-collaboration.md

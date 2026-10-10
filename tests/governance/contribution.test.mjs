@@ -168,19 +168,43 @@ test("platform qualification separates common, architecture, and tool evidence",
       ...walkMarkdown(tokens.slice(start + 1, end < 0 ? undefined : end)),
     ]
       .filter((token) => token.type === "paragraph")
-      .map((token) => markdownText(token).replace(/\s+/gu, " ").trim());
+      .map((token) =>
+        markdownText(token, { code: true }).replace(/\s+/gu, " ").trim(),
+      );
     assert.equal(paragraphs.length, 3, "platform readers need distinct layers");
-    assert.ok(paragraphs[0].startsWith("CI bootstraps Node/npm"));
-    assert.ok(paragraphs[1].startsWith("The manifest supplies macOS x64"));
-    assert.ok(paragraphs[2].startsWith("For managed tools, invoke"));
+    assert.match(
+      paragraphs[0],
+      /Qualify cold local use separately.*fresh HOME.*no inherited configuration\/cache.*denied remote connections/u,
+      "cold use needs an independent environment and connection boundary",
+    );
+    assert.match(
+      paragraphs[1],
+      /actual executor.*record host, Node-process, and tool architectures separately/u,
+      "platform acceptance needs the actual executor and distinct architectures",
+    );
+    assert.match(
+      paragraphs[2],
+      /selected asset key and digests.*installation owner supplies provenance.*Independently download and hash each Forge asset/u,
+      "tool acceptance needs asset identity, provenance, and actual download bytes",
+    );
   };
   assertLayers(source);
   assert.throws(
     () =>
       assertLayers(
-        source.replace("\n\nThe manifest supplies", "\nThe manifest supplies"),
+        source.replace("\n\nDeclaring a platform", "\nDeclaring a platform"),
       ),
     /distinct layers/u,
+  );
+  assert.throws(
+    () =>
+      assertLayers(
+        source.replace(
+          "record host, Node-process, and tool architectures separately",
+          "record only the operating system",
+        ),
+      ),
+    /actual executor and distinct architectures/u,
   );
 });
 

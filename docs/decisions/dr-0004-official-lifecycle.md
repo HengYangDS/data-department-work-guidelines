@@ -58,10 +58,8 @@ records the separation of decision rationale, methods, and Change authority. The
 English and release-truth correction
 ([GitLab][english-gitlab] · [GitHub][english-github])
 reaffirms that boundary without claiming the original adoption followed a later
-lifecycle. Both designs are cited at Git commit
-`c8599ce9c91ed5f988abd6b3f3011ac94430283d`, at the exact historical paths linked
-below. The commit and paths identify the durable sources; Forge links are
-convenience routes at the declared repository coordinates.
+lifecycle. Both links identify exact historical sources, not the current
+product or repository state.
 These records explain the choice, not current product behavior or
 remote delivery. [Repository governance](../governance/ethos.md) and the
 [official OpenSpec workspace](../../openspec/README.md) own the current rules.
