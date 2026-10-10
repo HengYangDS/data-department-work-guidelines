@@ -29,6 +29,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Clarify data-work responsibilities through existing role and authority
+  assignments. Keep business meaning, data models, implementation, product
+  lifecycle, and technical decisions distinct without another organization
+  model; preserve consumer migration, compatibility, and permission.
 - Refresh the native TOML parser to 1.9.1, rejecting malformed exponent signs
   without changing accepted configuration or adding a dependency.
 - Separate document checks from native behavior evidence in one ETHOS gate

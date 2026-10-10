@@ -140,25 +140,61 @@ observed use, not this table, establishes adoption.
 
 ## Ownership and Change Boundaries
 
-These requirements apply to information acquisition, data production,
-analysis and modeling, data science, platform engineering, infrastructure,
-product governance, and operational delivery. The ownership boundaries below
-keep each role accountable within that shared contract.
+Apply this contract to information acquisition, analysis and modeling, data
+science, software development, data production, platforms and infrastructure,
+product and technical management, governance, and operational delivery.
 
-| Owner      | Responsibility                                                                                                                          |
-| ---------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| Domain     | Define meaning, quality requirements, suitable use cases, and professional judgments.                                                   |
-| Production | Ensure deployability, backfill, monitoring, recovery, and reliable long-term operation.                                                 |
-| Platform   | Abstract repeated, cross-domain capabilities needed for durable operation without replacing domain judgment.                            |
-| Governance | Define admission, permissions, lineage, review, veto, and exit, and make those controls work in the actual workflow.                    |
-| Delivery   | Make priorities, resources, dependencies, risks, and open decisions visible without replacing the other owners' professional judgments. |
+Assign responsibility for the actual work. Distinguish its output, the
+activities that produce or support it, and who decides and accepts it. The
+following responsibilities may overlap in one person or team. Assign them
+through the department's current role and authority arrangements; this page
+defines data-work obligations, not seats or reporting lines.
 
-Sharing an interface does not transfer responsibility or grant authority over
-another owner's judgments. Cross-domain work should have one accountable task
-lead and clear professional interfaces. Explain any different arrangement;
-accountability remains mandatory. Use the
-[charter's interface contract](charter.md#form-follows-risk) to make each side's
-needs and delivery evidence explicit.
+| Responsibility | Work that must be owned                                                                                                                 |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Domain         | Define meaning, quality requirements, suitable use cases, and professional judgments.                                                   |
+| Production     | Ensure deployability, backfill, monitoring, recovery, and reliable long-term operation.                                                 |
+| Platform       | Abstract repeated, cross-domain capabilities needed for durable operation without replacing domain judgment.                            |
+| Governance     | Define admission, permissions, lineage, review, veto, and exit, and make those controls work in the actual workflow.                    |
+| Delivery       | Make priorities, resources, dependencies, risks, and open decisions visible without replacing the other owners' professional judgments. |
+
+Cross-domain work should have one accountable task lead and clear professional
+interfaces. Explain any different arrangement; accountability remains mandatory.
+For each important result or decision, name its accountable owner, decision
+mandate, and acceptor in the existing work or product record. These assignments
+may be held by the same person where authority and risk permit. A shared
+interface does not transfer responsibility or grant authority over another
+owner's judgment. Use the [charter's interface contract](charter.md#form-follows-risk)
+to make each side's needs and delivery evidence explicit.
+
+### Assign Modeling and Lifecycle Decisions
+
+Business modeling settles the entities, relationships, rules, and metric
+meanings that the work represents. Data modeling settles grain, identifiers and
+keys, constraints, time and version rules, and how the agreed meaning is
+represented. Name an owner for shared definitions across domains and bring
+conflicting meanings to the authorized domain owners; choosing a convenient
+schema does not resolve that conflict.
+
+Development must preserve the agreed model in implementation, tests, and
+interfaces. Technical choices need an owner for architecture, compatibility,
+reliability and capacity limits, shared standards, and dependencies within the
+existing mandate. Those decisions do not grant business or use permission.
+
+For a data service or asset, product management must settle intended consumers,
+use, value, acceptance, and evolution. Its owner must address consumer impact,
+versioning, migration or deprecation notice, and evidence before retirement.
+Asset governance retains permission and exit controls; production retains
+release and recovery. The task lead coordinates these decisions without taking
+over their owners' authority.
+
+For example, a shared issuer-identifier change can preserve a valid schema while
+changing which entities a report joins. Business and data-model owners settle
+identity and its time rules, development tests affected joins, and technical
+owners check compatibility. The product owner identifies dependent consumers
+and their migration; production plans release and recovery, and governance
+confirms permission. A passing schema check cannot settle a conflicting meaning
+or an unresolved consumer migration.
 
 ### Change Shared or Production Data
 

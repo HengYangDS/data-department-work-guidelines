@@ -58,8 +58,19 @@ policy. [Discovery](specs/guidance-discovery/spec.md) owns routes and review;
 and [publication](specs/publication/spec.md) own their distinct contracts.
 
 Data-quality duties span acquisition, production, analysis and modeling, data
-science, platforms, infrastructure, product governance, and operational
-delivery. Keep each role responsible for its work. Feedback revisits value,
+science, development, platforms, infrastructure, product and technical
+management, governance, and operational delivery. The five existing data
+responsibilities are overlapping obligations, not a second organization model.
+Use current organizational role and authority assignments for actual owners;
+do not copy internal seat, capacity, or reporting matrices into public guidance.
+Name work outputs, activities, decision mandates, and acceptance. Keep business
+meaning, data representation and cross-domain definitions, implementation and
+compatibility, product lifecycle and consumer migration, and technical choices
+explicit at the data topic, without a second taxonomy or decision table.
+Preserve every domain, production, platform, governance, and delivery obligation
+without adding teams, records, or approval steps. Test a shared model change and
+retirement with a dependent consumer; semantic conformance, passing tests, and
+permission remain distinct. Feedback revisits value,
 meaning, and quality without granting another data use. Quantitative examples
 are explicitly illustrative. Incident containment addresses invalid downstream
 results, production, permissions, and compliance; management protection for

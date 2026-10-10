@@ -364,7 +364,13 @@
       compare all 62 original subsections, five surrounding groups, and chapter
       introductions and diagrams outside them with current source. Explain every
       justified change or removal, assess the fitness of the current topics,
-      and resolve every review finding. Require tasks
+      and resolve every review finding. Qualify the data topic's responsibility
+      boundaries through a shared model change and a dependent-consumer
+      retirement: preserve all five existing obligations, distinguish outputs,
+      activities and decisions, and assign modeling, development, product and
+      technical responsibilities through current organizational authority,
+      without copying internal seats or inventing another organization model.
+      Require tasks
       2.33, 2.38, 2.40, 2.44, 2.45, 2.46, 3.3, and 3.13, then complete
       the pre-archive [migration plan](design.md#migration-plan): a frozen release
       classified against the currently effective contract,
