@@ -636,6 +636,14 @@ hide copied results or progress prose outside or within a task. Commands, links,
 and wrapped actions remain valid. Qualify actual enforcement without a private
 task schema, duplicate validator, or extra default gate.
 
+Keep each checkbox focused on its action and completion check; reference the
+producer rather than copy review coverage or execution results. Preserve existing
+task identities and states when editing prose. As the official template directs,
+archive and post-archive actions remain plain bullets under `Workflow follow-up`,
+outside tracked progress. Repository regressions check native apply output and
+Markdown containment, not fixed sentences or evidence IDs; they do not replace
+the shared task-authoring diagnostic.
+
 Qualify DDWG, AIGW CLI, and Codex Responses Proxy against the same accepted
 product source and wheel, at each installed binding, exact source plan/proof,
 and acceptance. Version labels or another language's success do not substitute.

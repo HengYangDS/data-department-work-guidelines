@@ -45,6 +45,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   team or confusing verified results with authorized acceptance.
 - Update Prettier to 3.9.10 for its upstream Markdown table parsing fix;
   preserve prose wrapping and native spacing rules.
+- Make the active Change checklist actionable without copying execution reports.
+  Preserve task IDs and states; keep archive follow-up outside tracked progress
+  and test native task parsing and reading routes instead of fixed prose.
 - Refresh the native TOML parser to 1.9.1, rejecting malformed exponent signs
   without changing accepted configuration or adding a dependency.
 - Separate document checks from native behavior evidence in one ETHOS gate

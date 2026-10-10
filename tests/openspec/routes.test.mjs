@@ -13,6 +13,8 @@ import path from "node:path";
 import { test } from "node:test";
 import { checkNavigation } from "../../tools/docs/governance.mjs";
 import {
+  headingLevel,
+  headingText,
   markdownLinkDestinations,
   markdownText,
   markdownTokens,
@@ -233,17 +235,21 @@ test("Change and main-spec readers reach every capability at its owner", () => {
   }
 });
 
-test("task qualification and evidence stay in one readable task item", () => {
+test("task completion routes stay in their Markdown item after prose editing", () => {
   const relative = "openspec/changes/native-document-quality/tasks.md";
   const source = readFileSync(path.join(root, relative), "utf8");
-  const assertTaskContainer = (text) => {
-    const list = markdownTokens(text, relative).find(
+  const assertTaskContainer = (text, id, destinations) => {
+    const marker = `[ ] ${id} `;
+    const list = [...walkMarkdown(markdownTokens(text, relative))].find(
       (token) =>
-        token.type === "listUnordered" && token.text.includes("2.38 Qualify"),
+        token.type === "listUnordered" &&
+        token.children.some(
+          (child) => child.type === "content" && child.text.startsWith(marker),
+        ),
     );
-    assert.ok(list, "the existing task must remain in its numbered group");
+    assert.ok(list, "the selected task must remain a Markdown list item");
     const start = list.children.findIndex(
-      (token) => token.type === "content" && token.text.startsWith("[ ] 2.38 "),
+      (token) => token.type === "content" && token.text.startsWith(marker),
     );
     assert.notEqual(start, -1);
     const next = list.children.findIndex(
@@ -258,64 +264,128 @@ test("task qualification and evidence stay in one readable task item", () => {
       "task actions and completion checks must not become code",
     );
     const paragraphs = tokens.filter((token) => token.type === "paragraph");
-    assert.ok(markdownText(paragraphs[0]).startsWith("[ ] 2.38 Qualify"));
-    const actions = paragraphs
-      .map((token) => markdownText(token, { code: true }))
-      .join(" ")
-      .replace(/\s+/gu, " ");
-    let previous = -1;
-    for (const action of [
-      "Verify the format, risk, and execution contracts",
-      "Preserve findings and runner failures",
-      "Complete Windows, both-Forge, and accepted shared-runtime checks before closing this task.",
-    ]) {
-      const position = actions.indexOf(action);
-      assert.ok(
-        position > previous,
-        `completion action must remain in its task and order: ${action}`,
-      );
-      previous = position;
-    }
-    assert.ok(
-      actions.includes(
-        "816cb6432b150825c22073cce0a89e6632721aa0477620b44496dab739166162",
-      ),
-      "qualification evidence reference must remain in its task",
-    );
+    assert.ok(markdownText(paragraphs[0]).startsWith(marker));
     const links = markdownLinkDestinations(
       paragraphs.map((token) => token.text).join("\n\n"),
     );
-    for (const destination of [
-      "design.md#give-native-quality-concerns-one-owner",
-      "design.md#bind-risk-approval-to-the-actual-subject",
-      "design.md#preserve-native-execution-and-complete-validation-evidence",
-    ]) {
+    for (const destination of destinations) {
       assert.ok(
         links.includes(destination),
         `missing task route: ${destination}`,
       );
     }
   };
-  assertTaskContainer(source);
-  const qualification = "\n      Verify the [format]";
-  assert.ok(source.includes(qualification));
-  assertTaskContainer(
-    source
-      .replace(qualification, "\n\n  Verify the [format]")
-      .replace("\n      Preserve findings", "\n\n  Preserve findings"),
+  assertTaskContainer(source, "2.38", [
+    "design.md#give-native-quality-concerns-one-owner",
+    "design.md#bind-risk-approval-to-the-actual-subject",
+    "design.md#preserve-native-execution-and-complete-validation-evidence",
+  ]);
+  const destination = "design.md#native-supply";
+  const check = `[Check the selected version](${destination}).`;
+  for (const description of ["Select the tool.", "Qualify the native input."]) {
+    for (const separator of ["\n  ", "\n\n  "]) {
+      const fixture = `# Tasks\n\n## 1. Native supply\n\n- [ ] 1.1 ${description}${separator}${check}\n`;
+      assertTaskContainer(fixture, "1.1", [destination]);
+    }
+  }
+  const prefix = "# Tasks\n\n## 1. Native supply\n\n- [ ] 1.1 Select the tool.";
+  for (const misplaced of [
+    `\n\n      ${check}\n`,
+    `\n\n${check}\n`,
+    `\n  \x60\x60\x60text\n  ${check}\n  \x60\x60\x60\n`,
+  ]) {
+    assert.throws(
+      () => assertTaskContainer(prefix + misplaced, "1.1", [destination]),
+      /must not become code|missing task route/u,
+    );
+  }
+});
+
+test("official apply tracks current checkbox items, not archive follow-up", () => {
+  const relative = "openspec/changes/native-document-quality/tasks.md";
+  const source = readFileSync(path.join(root, relative), "utf8");
+  const env = Object.fromEntries(
+    Object.entries(process.env).filter(
+      ([key]) => key.toUpperCase() !== "OPENSPEC_TELEMETRY",
+    ),
   );
+  env.OPENSPEC_TELEMETRY = "0";
+  const result = spawnSync(
+    process.execPath,
+    [
+      path.join(root, "node_modules/@fission-ai/openspec/bin/openspec.js"),
+      "instructions",
+      "apply",
+      "--change",
+      "native-document-quality",
+      "--json",
+    ],
+    { cwd: root, env, encoding: "utf8", timeout: 10_000 },
+  );
+  assert.ifError(result.error);
+  assert.equal(result.status, 0);
+  assert.equal(result.stderr, "");
+  const report = JSON.parse(result.stdout);
+  assert.equal(report.changeName, "native-document-quality");
+  assert.equal(report.root.path, root);
+  assert.equal(report.taskTrackingConfigured, true);
+  assert.equal(report.progress.total, report.tasks.length);
+  assert.equal(
+    report.progress.complete,
+    report.tasks.filter((task) => task.done).length,
+  );
+  assert.equal(
+    report.progress.remaining,
+    report.tasks.filter((task) => !task.done).length,
+  );
+  const tokens = markdownTokens(source, relative);
+  const followup = tokens.find(
+    (token) =>
+      headingLevel(token) === 2 && headingText(token) === "Workflow follow-up",
+  );
+  assert.ok(followup, "archive work remains visible outside tracked progress");
+  const paragraphs = [...walkMarkdown(tokens)]
+    .filter((token) => token.type === "listUnordered")
+    .flatMap((token) =>
+      token.children
+        .filter((child) => child.type === "content")
+        .map((child) =>
+          child.children.find((item) => item.type === "paragraph"),
+        ),
+    )
+    .filter(
+      (token) =>
+        token &&
+        token.startLine < followup.startLine &&
+        ["[ ] ", "[x] "].some((marker) => token.text.startsWith(marker)),
+    );
+  assert.ok(
+    paragraphs.length,
+    "the active checklist must contain readable work",
+  );
+  const expected = paragraphs.map((token) => ({
+    description: token.text.split("\n")[0].slice(4),
+    done: token.text.startsWith("[x] "),
+    line: token.startLine,
+  }));
+  const assertCompleteSelection = (tasks) => {
+    assert.deepEqual(
+      tasks.map(({ description, done, line }) => ({ description, done, line })),
+      expected,
+      "native apply must preserve every readable task in source order",
+    );
+  };
+  assertCompleteSelection(report.tasks);
   assert.throws(
-    () =>
-      assertTaskContainer(
-        source.replace(qualification, "\n\n      Verify the [format]"),
-      ),
-    /completion checks must not become code/u,
+    () => assertCompleteSelection(report.tasks.slice(1)),
+    /every readable task/u,
   );
-  assert.throws(
-    () =>
-      assertTaskContainer(
-        source.replace(qualification, "\n\nVerify the [format]"),
-      ),
-    /completion action must remain in its task/u,
-  );
+  for (const task of report.tasks) {
+    assert.equal(task.sourcePath, path.join(root, relative));
+    assert.ok(task.line < followup.startLine);
+    const paragraph = paragraphs.find((token) => token.startLine === task.line);
+    assert.ok(paragraph, "each native task is readable, not code or a comment");
+    assert.ok(paragraph.text.includes(task.description));
+    assert.ok(markdownText(paragraph, { code: true }).trim());
+  }
 });

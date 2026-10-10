@@ -2,467 +2,272 @@
 
 ## 1. Native responsibilities and contract
 
-- [x] 1.1 Validate native Vale against all current English positive and negative
-      cases, including headings, emphasis, quotes, tables, and domain
-      qualifiers.
-- [x] 1.2 Replace textlint parsing in DR boundaries and the offline README
-      license reader with the existing native Markdown parser; preserve every
-      decision, execution, license, and cold-install counterexample.
-- [x] 1.3 Define one native-tool supply contract and test missing assets,
-      changed digests, unsupported ABIs, safe extraction, and bounded cleanup.
+- [x] 1.1 Validate native Vale against English positive and negative cases;
+      verify headings, emphasis, quotes, tables, and domain qualifiers.
+- [x] 1.2 Replace textlint in decision and license readers with the native
+      Markdown parser; preserve decision, execution, license, and cold-install cases.
+- [x] 1.3 Define one native-tool supply contract; test missing assets, changed
+      digests, unsupported ABIs, extraction boundaries, and bounded cleanup.
 
 ## 2. Implementation and reader quality
 
-- [x] 2.1 Replace spelling and prose adapters with one native Vale command;
-      after all three consumers migrate, remove every retired direct and unused
-      transitive dependency, configuration, adapter, command, and test
-      interface.
-- [x] 2.2 Extend the current installer and bundle owners without retaining a
-      second command, manifest, or installer for the same concern. Verify the
-      native supply and cold-install tests and the resolved source interfaces.
-- [x] 2.3 Apply human English editing to all seven task topics. Compare every
-      original duty, actor, condition, permission, authority, and evidence limit
-      with the [original-duty
-      review](design.md#review-original-duties-at-seven-topic-owners).
-      Keep each applicable duty at one topic owner, account for justified changes
-      or removals, and verify no unexplained loss through
-      fixed-source editorial review and source quality checks. Preserve facts,
-      reasoning, limits, and responsibilities without a fixed deletion exercise.
-      Preserve narrower
-      applicable responsibilities, not every reviewer suggestion, without another
-      report, parser, evaluator, meeting, approval, or meaning gate.
-      State fidelity, clarity, and elegance in their full meanings; preserve
-      aesthetic intent rather than substituting editorial techniques.
-      Ground scenarios and emergency responses in quantitative data work; keep
-      employee-management safeguards distinct from incident containment.
-      Qualify preventive-practice admission before an incident, retaining
-      evidence, trial, net benefit, ownership, review, and exit. Inspect the
-      compact data-use and worked-case lists without losing any decision,
-      evidence requirement, stop condition, or authority boundary; correct
-      historical duty extraction without rewriting the original review receipt.
-      Keep one-time risk approvals and integration status with their existing
-      Change, native policy, and receipts; preserve general governance conditions
-      and immutable decision sources without opaque identifiers in reading prose.
-      Retain current-source editorial closure in Attestation
-      `8f022094fdcbda03b94fbd4077c4cacf2a8665a867e89ac87b1c8b5d4a602497`;
-      final shared integration and publication remain separate.
-- [x] 2.4 Reconcile package, current OpenSpec, contribution, governance, CI,
-      version, and changelog contracts. Audit current consumers and the resolved
-      dependency graph for retired residue; preserve historical Git bytes.
-- [x] 2.5 Repair inherited-property command classification, repeated stable
-      decision IDs, and empty sections at the existing parser and tree owners;
-      replace old shell token parsing with a pinned non-evaluating native lexer,
-      verify real negative cases, and preserve readable decision content.
-- [x] 2.6 Preserve native glob arguments and reject selected literal and
-      variable command operands without treating ordinary command descriptions
-      as execution; prove the retained and added cases through the DR boundary.
-- [x] 2.7 Await bounded native asynchronous cleanup in the existing installer;
-      prove completion ordering and persistent-error propagation, then qualify
-      actual Windows tool installation through its existing source CI job.
-- [x] 2.8 Separate configuration by check, supply, and release responsibility;
-      use native Prettier, Markdownlint, and lychee TOML, move rule code to its
-      existing module, reject misplaced or duplicate configuration, and retire
-      package-embedded and inline policy along with all old paths.
-- [x] 2.9 Bind local links to tracked or non-ignored candidate source; reject
-      ignored state and aliases whose targets are not source, while preserving
-      valid files, directory routes, and delivered internal aliases. Prove the
-      boundary through the existing public link command.
-- [x] 2.10 Give all runnable GitLab verification jobs explicit purpose and
-      platform names; keep common steps in hidden native templates. Preserve
-      execution and runner boundaries, reject old aliases and incorrect
-      inheritance, and validate the resolved GitLab configuration.
-- [x] 2.11 Rework governance for task-based reading and keep procedures at the
-      contributor owner. Review the two existing DRs and decision register for
-      durable rationale, alternatives, evidence, and revisit conditions;
-      preserve choices, metadata, and all governance obligations, then check
-      links, native prose, and the rendered reading path.
-- [x] 2.12 Complete independent fixed-source review of all documentation and
-      configuration across original meaning, business use, authority, English
-      voice, navigation, native configuration, and historical truth. Resolve
-      findings at existing owners and reverify affected claims. Keep actual
-      reviewer coverage and failed routes at their producing evidence; use
-      native graph and audit evidence for generated lock entries.
-- [x] 2.13 Restore explicit sample-selection and anomaly-impact duties and the
-      default continuation when Agent context is not blocking; compare both with
-      the original clauses, challenge them with adverse cases, and rerun
-      affected quality checks. Correct the earlier comparison's unqualified
-      conclusion without rewriting its dated evidence.
-- [x] 2.14 Restrict GitLab workflow, protected-source, and offline tag rules to
-      the shared release `v*` tag family before tool supply. Prove old broad
-      routes fail, valid version routes pass, and native GitLab dry-runs reject
-      unrelated tags without changing Runner or strict release admission.
-- [x] 2.15 Correct the OpenSpec entry's cache, capability, and sync descriptions
-      against the installed official contract, and name both GitLab native-tool
-      prerequisites. Verify the documented local CLI fails without its package
-      and runs the locked version when installed; preserve official sync and
-      archive admission without adding an adapter.
-- [x] 2.16 Correct governance, profile, and specification descriptions against
-      the executable syntax-only and warning-omission controls; distinguish
-      current proof from shared acceptance and product-defined applicable
-      scopes. Retain exactly two default gates and no private substitute.
-      Reconcile current references and rerun affected checks.
-- [x] 2.17 Remove duplicate directory-name exclusions after native Git source
-      selection. Prove ignored local state stays excluded, while tracked current
-      Markdown under normally ignored paths receives prose and link checks.
-      Preserve the official archive boundary and reconcile current guidance.
-- [x] 2.18 Use the pinned native Prettier file-information contract for every
-      Git-selected supported source file. Reject format defects outside usual
-      code directories and under normally ignored tracked paths despite ambient
-      ignore files; preserve ignored untracked state, native TOML validation,
-      and the separate two-gate proof responsibilities.
-- [x] 2.19 Refresh native Vale supply to the verified latest stable release;
-      bind every archive and notice to official digests, embed native tests in
-      the two existing rules, reject a silently ineffective rule through native
-      coverage, and retain project-level prose tests without a second pipeline.
-- [x] 2.20 Replace implicit single-Forge Changelog navigation with neutral
-      version headings and explicit GitLab and GitHub history links. Consume the
-      installed product's official `forge_repository` declaration, enforce both
-      peer identities and identical refs, preserve every existing release
-      counterexample, and add missing-peer, wrong-route, credential, and
-      divergent-range controls. Verify native Markdown presentation and
-      authenticated private comparison destinations without a second file or
-      redirect service.
-- [x] 2.21 Restore the original decision-date duty at the existing analysis
-      owner. Distinguish an actual decision's owner, date, and basis from a
-      deadline or fact cutoff; compare the original and current obligations with
-      adverse cases and correct the earlier semantic-coverage conclusion without
-      rewriting its dated evidence. Preserve all other duties and avoid a new
-      record, template, or validator.
-- [x] 2.22 Replace specialist record and publication terminology in member
-      guidance with ordinary work language. Preserve the existing record owner,
-      decision date, authorization, evidence limits, and acceptance; compare
-      changed clauses with the original and rerun affected source quality and
-      rendering checks.
-- [x] 2.23 Repair bundle acquisition and managed-cache ownership at their
-      existing owners. Preserve a successful concurrent target, reject linked
-      binary-cache and bundle-download paths before remote access, staging, or
-      execution, preserve reused permissions, and test normal, failed,
-      concurrent, and cross-platform paths. Exercise each linked local download
-      parent on both Forges, preserve foreign bytes, and reuse one path guard.
-- [x] 2.24 Disable OpenSpec outbound requests only for offline verification
-      through its official environment option. Exercise inherited on-values,
-      case-variant keys, acknowledged telemetry, and unchanged global settings;
-      rerun the canonical source graph without another adapter.
-- [x] 2.25 Restore cross-cycle impact as an independent reusable-prevention
-      trigger in the evolution topic. Compare the original and current clauses,
-      challenge a single issue spanning cycles under one owner and project,
-      preserve the other triggers, and rerun source quality and rendering.
-- [x] 2.26 Verify [complete native execution](design.md#preserve-native-execution-and-complete-validation-evidence).
-      Use two workers and existing deadlines. Require adverse controls and full
-      Windows execution without retries or
-      skipped cases. Preserve original timeout evidence and every discovered
-      assertion.
-- [x] 2.27 Remove inherited build-directory and native-cache prerequisites from
-      the existing source-link and concurrent-install fixtures. Create the
-      ignored parent explicitly and model the regular target behind `EEXIST`;
-      preserve source confinement, exclusive copy, version, and permissions. Run
-      isolated regressions and complete fresh-checkout verification. Keep the
-      public source-link fixture compact through actual Git selection and
-      lychee, retaining tracked/candidate positives, local-state refusals,
-      unchanged source, cleanup, and its original child deadline.
-- [x] 2.28 Repair and verify [native reader routes](design.md#resolve-reader-routes-and-links-from-their-native-meaning).
-      Include actual GFM tables and meaningful positive/negative routes. Require
-      focused tests, full source, rendering, proof, cold installation, changed
-      lock/supply, and both Forge matrices without changing published objects.
-- [x] 2.29 Refresh the existing shell lexer to verified stable 1.12.0. Preserve
-      native command/operator grouping, globs, quotation, compound commands,
-      ordinary rationale, and non-evaluation cases. Qualify locked resolution,
-      install effects, advisories, original notices, source-bound offline
-      supply, exact-source proof, official scenario sync, and both platform
-      matrices. Preserve published objects and one lexer; no hook or fallback is
-      added.
-- [x] 2.30 Replace Markdownlint CLI2 with the native core over all Git-selected
-      Markdown. Preserve TOML options, comment controls, literal filenames,
-      native diagnostics, positive controls, and every counterexample. Retire
-      the wrapper, unused dependencies, configuration path, and current
-      consumers together; verify removal, source-bound supply, cold install,
-      proof, and both matrices.
-- [x] 2.31 Repair and verify the [official OpenSpec report consumer](design.md#preserve-native-execution-and-complete-validation-evidence).
-      Verify complete reports, diagnostics, wrong-root/ignored-state controls,
-      constrained extraction, Windows paths, cleanup, cold installation, proof,
-      official sync, and both matrices. Preserve original failures without a
-      lifecycle replacement, privilege expansion, skipped platform, or waiver.
-- [x] 2.32 Retire reviewed completed-Change copies only after unique-fact,
-      obligation, incoming-consumer, and recovery review. Preserve exact
-      ancestor Git and proof; replace cited designs with full commit/path links
-      on both Forges and the real archive fixture with an owned temporary input.
-      Keep future archive-path controls and verify source, recovery, proof, cold
-      install, and native integration without a history directory or
-      compatibility lifecycle.
-- [ ] 2.33 Migrate and verify DDWG against the [accepted shared contracts](design.md#integrate-accepted-shared-ownership-without-weakening-the-floor).
-      Verify the installed profile, validators, tests, and guidance with two
-      default roots in one native registry and a provider-only behavior
-      prerequisite. Qualify the installed direct-Node Git-selected recipe and
-      its single-attempt evidence before completing native proof integration.
-      Qualify [native formatting](design.md#give-native-quality-concerns-one-owner),
-      [resource loading](design.md#keep-configuration-with-its-consumer), task
-      diagnostics, risk approval, and identity; retire replaced glue in the same
-      migration.
-      Integrate the accepted public CUE projection and carrier-specific shared
-      size admission; qualify actual installed routes, supported languages,
-      metrics, and declared limits without a blanket file-length rule.
-- [x] 2.34 Serialize Windows review, protected-source, and offline jobs through
-      one project-scoped native resource group. Reject missing, ref-dependent,
-      or divergent reservations; preserve trust boundaries, full discovery, two
-      workers, and the 180-second deadline. Verify hosted jobs do not overlap
-      and exercise native resource waiting. Keep original failures; project
-      serialization does not qualify VM-wide capacity or a later release.
-- [x] 2.35 Close rejected native-tool and release-download response bodies at
-      their existing owners. Preserve status, cleanup causes, successful
-      downloads, credential redirects, and concurrent verified output. Verify
-      awaited disposal and a real HTTP error stream, then full source and both
-      matrices without retries, fallbacks, another module, or
-      upstream-availability claims.
-- [x] 2.36 Bind audit/process timeout evidence to the original command, streams,
-      status, signal, and native error, including termination before output.
-      Preserve every adverse case, the one-second fixture deadline, capture
-      mode, diagnostic count, non-timeout exact text, and once-only execution.
-      Verify full source, exact-HEAD proof, cold install, and both matrices
-      without assuming startup speed or fabricating progress.
-- [x] 2.37 Report native source, runtime, and mounted workspace capacity through
-      the existing verifier. Verify exact integer bytes and original read errors,
-      then local checks and both Forge source matrices. Keep VM identity,
-      isolation, and throughput qualification with the runner owner; add no
-      controller, capacity threshold, or proof gate.
-- [ ] 2.38 Qualify the [fixed-source repairs](design.md#supply-exact-tools-without-a-second-installation-plane).
-      Resolve findings at the installer, bundle, audit, and documentation owners.
-      Inspect and reconcile the actual Windows Node/npm installation owner,
-      runtime architecture, and service binding without changing isolation.
-      Select Node and npm through native locked Mise commands in every shell
-      job; qualify selection, checksum refusal, missing-lock refusal, and
-      manifest/lock mismatch without changing machine PATH or Runner identity.
-      Qualify native development declarations and checksum metadata without
-      executable version or PATH templates. Verify installed safe-mode
-      materialization of manifest, config, and lock with native process settings;
-      distinguish npm bootstrap acceptance from Mise checksum enforcement.
-      Use native project discovery at `.config/mise/config.toml` and its adjacent
-      lock, with no filename selector or global override. Preserve the original
-      config and lock bytes as evidence. Retire old paths and selection wiring;
-      qualify warning-free local commands, the global credential boundary, and
-      job-local CI isolation through the existing supply regression.
-      Qualify Windows job-local discovery from the inherited and native machine
-      Path, preserving inherited precedence. Preserve the actual Mise
-      application, version, and execution-identity diagnosis with its producer;
-      require protected-source and offline jobs to qualify discovery and the
-      original locked commands. Retire temporary probes only after their
-      evidence is preserved; verify enduring process-only discovery before the
-      final freeze. Use native contributor discovery/version evidence
-      `e2716d443068e5ef8a3a30b0294c89e8a7c95c3f391b0c2c1654d61d4451d319`
-      without substituting it for installed materialization, full proof, or
-      platform qualification.
-      Refresh immutable CI action pins from official stable
-      releases, verify the explicit Node setup contract and real refusal cases,
-      and preserve complete upstream finding reports and selected-route limits.
-      Verify the [format](design.md#give-native-quality-concerns-one-owner),
+- [x] 2.1 Replace spelling and prose adapters with native Vale; after the three
+      consumers migrate, verify removal of retired dependencies, rules, commands,
+      adapters, and test interfaces.
+- [x] 2.2 Extend the existing installer and bundle owners; verify native supply,
+      cold installation, and resolved interfaces without a second installation plane.
+- [x] 2.3 Edit all seven topics in natural English and complete the
+      [original-duty review](design.md#review-original-duties-at-seven-topic-owners).
+      Verify duties, actors, conditions, authority, evidence limits, quantitative
+      examples, emergency boundaries, and practice admission against fixed source.
+      Preserve justified clause changes and review limits at the producer; reference
+      `8f022094fdcbda03b94fbd4077c4cacf2a8665a867e89ac87b1c8b5d4a602497`.
+- [x] 2.4 Reconcile package, OpenSpec, contribution, governance, CI, version,
+      and Changelog contracts; verify current consumers and the resolved dependency
+      graph contain no retired implementation, while preserving historical Git bytes.
+- [x] 2.5 Repair inherited-property command classification, duplicate decision
+      IDs, and empty sections; verify the non-evaluating native lexer rejects
+      execution without rejecting readable rationale.
+- [x] 2.6 Preserve glob arguments and reject literal or variable command
+      operands; verify decision checks distinguish execution from descriptions.
+- [x] 2.7 Await bounded asynchronous installer cleanup; verify ordering,
+      persistent-error propagation, and actual Windows source CI installation.
+- [x] 2.8 Place native configuration by check, supply, and release responsibility;
+      verify misplaced or duplicate policy fails and retire old paths and
+      inline rules.
+- [x] 2.9 Bind links to Git-selected source; verify valid file, directory, and
+      internal-alias routes pass while ignored state and escaping aliases fail.
+- [x] 2.10 Name GitLab jobs by purpose and platform, sharing hidden templates;
+      verify execution, admission, selectors, and paired naming controls.
+- [x] 2.11 Rewrite governance, decisions, and contribution guidance by reader
+      question; verify duties, durable rationale, alternatives, evidence, links,
+      native prose, and the rendered route.
+- [x] 2.12 Independently review fixed-source documentation and configuration;
+      resolve meaning, business-use, authority, voice, navigation, native-config,
+      and historical-truth findings. Verify affected claims and preserve actual
+      review coverage and failed routes at their producer.
+- [x] 2.13 Restore sample-selection, anomaly-impact, and non-blocking Agent
+      continuation duties; compare original clauses, challenge adverse cases, and
+      verify affected source quality and rendering.
+- [x] 2.14 Restrict GitLab tag admission to shared `v*` releases before supply;
+      verify native dry-runs reject unrelated tags without changing Runner identity.
+- [x] 2.15 Reconcile OpenSpec cache, capability, sync, and tool prerequisites;
+      verify the documented CLI rejects missing packages and runs the locked version.
+- [x] 2.16 Correct governance and proof descriptions against syntax-only and
+      warning-omission controls; verify two default roots, declared applicability,
+      and the distinction between local proof and shared acceptance.
+- [x] 2.17 Remove duplicate directory exclusions after native Git selection;
+      verify tracked Markdown remains checked beneath normally ignored paths while
+      untracked local state stays excluded and official archive rules remain intact.
+- [x] 2.18 Use pinned Prettier file information for every supported selected
+      file; verify formatting defects fail despite ambient ignores, while preserving
+      untracked ignored state, TOML validation, and the two proof responsibilities.
+- [x] 2.19 Refresh Vale to verified stable supply and official digests; verify
+      native rule coverage rejects ineffective rules without another prose pipeline.
+- [x] 2.20 Give neutral Changelog headings native links to both declared Forges;
+      verify peer identities, identical refs, authenticated destinations, and
+      malformed, missing, credential-bearing, or divergent comparison routes.
+- [x] 2.21 Restore the actual decision's owner, date, and basis; distinguish
+      deadline and fact cutoff through original-clause and adverse-case review,
+      preserving the earlier failed comparison without another record or validator.
+- [x] 2.22 Replace specialist publication terms in member guidance with ordinary
+      language; verify original duties, decision dates, authority, evidence limits,
+      source quality, and rendering remain intact.
+- [x] 2.23 Repair bundle acquisition and cache ownership; verify successful
+      concurrent targets survive and linked parents fail before access or execution.
+      Preserve permissions and foreign bytes; exercise download paths on both Forges.
+- [x] 2.24 Disable offline OpenSpec requests through its official child-only
+      option; verify inherited and case-variant settings, acknowledged telemetry,
+      the complete source graph, and unchanged global settings.
+- [x] 2.25 Restore impact across cycles as a prevention trigger; challenge one
+      issue spanning cycles under one owner and project, then verify original duties,
+      source quality, and rendering.
+- [x] 2.26 Verify [complete native execution](design.md#preserve-native-execution-and-complete-validation-evidence)
+      with two workers and existing deadlines; require adverse controls and full
+      Windows execution without retries or skips, retaining original failures.
+- [x] 2.27 Remove inherited build/cache prerequisites from link and installation
+      fixtures; verify explicit fixture inputs, native Git and lychee selection,
+      confinement, exclusive copy, version, permissions, and cleanup in a
+      fresh clone.
+- [x] 2.28 Repair [native reader routes](design.md#resolve-reader-routes-and-links-from-their-native-meaning);
+      verify real GFM tables, positive and negative routes, full source, rendering,
+      proof, cold supply, and both platform matrices without altering
+      published bytes.
+- [x] 2.29 Refresh the one shell lexer to stable 1.12.0; verify command grouping,
+      globs, quotes, compound input, ordinary rationale, and non-evaluation. Qualify
+      locked supply, notices, advisories, proof, official sync, and both matrices.
+- [x] 2.30 Replace Markdownlint CLI2 with native core on Git-selected Markdown;
+      verify TOML options, controls, literal paths, diagnostics, and every case.
+      Retire the wrapper and unused dependencies after cold supply and both matrices.
+- [x] 2.31 Repair the [official OpenSpec report consumer](design.md#preserve-native-execution-and-complete-validation-evidence);
+      verify complete reports, findings, root identity, extraction, Windows paths,
+      cleanup, cold installation, proof, sync, and both matrices. Retain failures.
+- [x] 2.32 Retire completed-Change copies after obligation and consumer review;
+      verify ancestor bytes, recovery, and both-Forge commit/path references.
+      Preserve archive controls through owned fixtures, proof, and cold installation.
+- [ ] 2.33 Integrate the [accepted shared contracts](design.md#integrate-accepted-shared-ownership-without-weakening-the-floor)
+      in the actual DDWG installation. Verify two default roots, provider-owned
+      behavior, complete single-attempt tests and diagnostics, native formatting,
+      resource loading, task authoring, risk, and identity. Consume the CUE
+      and size integrations in 2.45 and 2.46; retire replaced glue after
+      consumer acceptance.
+- [x] 2.34 Serialize Windows jobs through one project-scoped resource group;
+      verify reservation refusals, actual resource waiting, and non-overlap while
+      retaining full discovery, two workers, the deadline, and original failures.
+- [x] 2.35 Await disposal of rejected tool and release response bodies; verify
+      native status, cleanup causes, credential redirects, real HTTP error streams,
+      concurrent output, full source, and both matrices without retries or fallback.
+- [x] 2.36 Bind timeout evidence to one native attempt's command, streams,
+      status, signal, and error; preserve the one-second fixture deadline and verify
+      focused cases, full source, committed proof, cold installation, and both matrices.
+- [x] 2.37 Report source, runtime, and mounted capacity at the existing verifier;
+      verify exact integer bytes and native read errors locally and in both source
+      matrices, without inferring VM identity, isolation, or throughput.
+- [ ] 2.38 Qualify the [fixed-source supply repairs](design.md#supply-exact-tools-without-a-second-installation-plane)
+      through actual Windows, protected-source, offline, and installed ETHOS routes.
+      Verify native Mise discovery, manifest/config/lock materialization, safe-mode
+      process settings, checksum and mismatch refusals, and warning-free commands.
+      Distinguish npm bootstrap from checksum enforcement; preserve host owners,
+      inherited Path precedence, credential boundaries, and job-local isolation.
+      Qualify pinned stable actions and native Windows ARM64 Node against the
+      [format](design.md#give-native-quality-concerns-one-owner),
       [risk](design.md#bind-risk-approval-to-the-actual-subject), and
       [execution](design.md#preserve-native-execution-and-complete-validation-evidence)
-      contracts through focused regressions, full source, cold install, exact-HEAD
-      proof, and both Forge source/offline jobs. Qualify native Windows ARM64 Node
-      with pinned compatible tools and actual architecture observations.
-      Preserve findings and runner failures; retire replaced rules, unused
-      dependencies, and terminal qualification packages through their declared
-      owners. Keep original download-boundary failures and qualification evidence
-      in non-authorizing Attestation
+      contracts using focused tests, full source, cold install, exact-HEAD proof,
+      and both Forge source/offline matrices. Retire replaced wiring and probes
+      after preserving their original findings and qualification evidence:
+      `e2716d443068e5ef8a3a30b0294c89e8a7c95c3f391b0c2c1654d61d4451d319`,
       `816cb6432b150825c22073cce0a89e6632721aa0477620b44496dab739166162`.
-      Complete Windows, both-Forge, and accepted shared-runtime checks before
-      closing this task.
-
-- [x] 2.39 Isolate native-cache rejection fixtures from inherited explicit
-      tool selectors. Preserve selector precedence and the caller's environment;
-      verify the original selector-dependent failure, both rejection paths,
-      the full native contribution command, and committed-source ETHOS proof.
-- [x] 2.40 Compose and qualify the task map and all seven topic pages, with the
-      governance route. Give use, judgment, duties, examples, stop conditions,
-      and handoff a clear reading hierarchy. Preserve
-      every topic route, stage, relationship, return condition, and authority
-      limit while retiring duplicated views and custom styling. Inspect complete
-      pages, sections, and member and Agent routes at desktop reading widths.
-      Preserve the editorial audit and failed routes; source syntax and
-      screenshots alone do not prove adoption, team benefit, or screen-reader
-      acceptance. Keep the current clause review and native render/CI receipts
-      under Attestation `07833876851f4480c3a4e82a2d94ac720e1306bf69f5b3b5b80d62ce3782a01a`.
-      Retain the independent review in
-      `326125f9c749324ae88f1a47f5bd4788ad6f72463059e6b78ae770fad3201257`
-      and owner review in
+- [x] 2.39 Isolate cache-rejection fixtures from inherited explicit selectors;
+      verify precedence, original failures, both rejection routes, the native
+      contribution command, and committed-source proof without changing the caller.
+- [x] 2.40 Compose the task map, seven topics, and governance route by reader
+      question; inspect complete desktop pages and actual member and Agent paths.
+      Verify duties, stages, relationships, returns, and limits survive retirement
+      of duplicated views; preserve failed routes and retire inspection copies.
+      Reference `07833876851f4480c3a4e82a2d94ac720e1306bf69f5b3b5b80d62ce3782a01a`,
+      `326125f9c749324ae88f1a47f5bd4788ad6f72463059e6b78ae770fad3201257`, and
       `466c69defd3bbd5c8fab06ea3c0103cd6326ca43b69a5df796a8c0a8d518b702`.
-      Qualify authenticated GitLab reading, accessibility, shared integration,
-      and final publication separately; do not infer team adoption. Retire
-      verified inspection copies.
-- [x] 2.41 Share editor and Finder exclusions through native Git policy. Verify
-      a fresh repository without ambient or Git-common exclusions, preserve
-      tracked guidance selection, and run full source checks, committed-source
-      proof, and cold verification. Keep the complete native evidence under
-      Attestation `28a9c0d556e978dd6afbad8f733dbdd47f18bc1ff410c6128da8efa8b31361f6`.
-- [x] 2.42 Bind failed Git selection to the same native child's failure status
-      and complete diagnostic without a language assumption or replay. Preserve
-      the localized cold failure, then verify the focused regression, full
-      source, exact committed proof, and cold successor. Keep the complete
-      original failure and corrected-source evidence in the same native
-      Attestation; qualify shared integration and hosted acceptance separately.
-- [x] 2.43 Supply Git configuration isolation through an owned empty file.
-      Preserve the original Windows refusal, verify the unchanged source-selection
-      assertions locally and on both Forge Windows jobs, and retain native
-      diagnostics and fixture cleanup without changing Git or host policy.
-      Retain complete original and successor evidence under Attestation
+- [x] 2.41 Share editor and Finder exclusions through tracked native Git policy;
+      verify fresh-clone selection without ambient exclusions, full source, proof,
+      and cold verification. Reference
+      `28a9c0d556e978dd6afbad8f733dbdd47f18bc1ff410c6128da8efa8b31361f6`.
+- [x] 2.42 Preserve Git-selection failure status and complete diagnostics from
+      the same child; verify localized failures, focused cases, full source,
+      committed proof, and cold successor without replay or a language assumption.
+- [x] 2.43 Isolate Git configuration through an owned empty file; verify the
+      unchanged selection assertions locally and in both Windows jobs, preserving
+      the native refusal and cleanup. Reference
       `687f62fa93ec131cc70507c98f309e54c5e30ea2429da22a60798e19f67bd52a`.
-- [x] 2.44 Correct the obsolete-source preservation premise in this active
-      proposal, design, and guidance contract. Review all seven current topics
-      for applicable authority, current purpose, actionable conditions, and
-      proportionate cognitive and maintenance cost, not just correspondence
-      with the retired source. Resolve omissions and obsolete rules through
-      justified dispositions at the existing review owner; never restore the
-      retired root monolith. Preserve binding current duties, completed task
-      evidence, and immutable history. Verify the actual edited source, reading
-      paths, native checks, and source-bound proof before closing this task.
-      Evidence: native editorial Attestation
-      `940f164cc44b311fb62486e1d889bcefc2a67e0d453982d29ea8bb65dd970135`.
-- [ ] 2.45 Replace duplicated peer CI semantics with the accepted
+- [x] 2.44 Replace obsolete-source restoration with current-duty review;
+      verify seven topics against authority, purpose, actionable conditions, and
+      cognitive and maintenance cost. Resolve omissions with justified dispositions,
+      then check actual source, reading paths, and proof; preserve original evidence.
+      Reference `940f164cc44b311fb62486e1d889bcefc2a67e0d453982d29ea8bb65dd970135`.
+- [ ] 2.45 Define shared CI semantics once through the accepted
       [CUE projection contract](design.md#keep-both-publication-peers-complete-and-coherent).
-      Define the common graph, platform intent, admission, quality and release
-      actions once; generate peer YAML and retain only necessary platform
-      adapters. Reuse existing native executors, qualify single-peer and offline
-      boundaries, and run the same non-writing drift check on both peers.
-      Reject hand edits and preserve signed source identity. Retire the replaced
-      YAML policy implementation after actual protected source/offline acceptance.
-- [ ] 2.46 Consume accepted shared size admission at its actual carrier and
-      language boundaries. Resolve the Markdown metric and declared limit from
-      the installed public contract; qualify applicable source at that limit
-      and one non-blank physical line above it. Code uses supported metrics and
-      declared policy. Keep complete source/test selection and preserve meaning.
-      Release-owned Changelog,
-      official OpenSpec artifacts, and declared generated output retain their
-      own checks. Do not copy the gate, minify, hide inputs, or invent exemptions.
-  - [x] 2.46.1 Separate dependency auditing from CI topology. Preserve all 53
-        original CI/audit cases and module declarations, share audit fixtures,
-        and verify complete nested test discovery with the original worker limit,
-        deadline, and full local suite.
-  - [ ] 2.46.2 Review lasting runtime, release, and CI responsibilities; separate
-        only incoherent owners and retire the existing CI checker through CUE,
-        without an interim partition. Preserve public commands, errors, effects,
-        native inputs, and complete regression journeys; qualify size only where
-        a supported product policy applies.
-  - [ ] 2.46.3 Review test cohesion by verified behavior, sharing fixtures and
-        preserving every case. Compare complete runner inputs with the native
-        Git inventory independently of production selection; reject omitted
-        cohorts and repeated execution. Use a compact new-cohort fixture, not
-        a catalogue of current and retired filenames. Verify full native
-        discovery, execution controls, and applicable language-specific size
-        admission; do not reorganize tests merely by physical line count.
-        Replace glob-interpreted CLI test operands with Node's official
-        literal-file API; qualify actual Git-selected paths, a new cohort,
-        unchanged worker and deadline bounds, and failure/cancellation results.
-        Keep product-owned proof integration and shared admission open until
-        their actual installed consumers qualify.
-  - [x] 2.46.4 Review design choices and capability ownership through official
-        deltas and main-spec synchronization. Preserve each requirement and
-        scenario, maintain all reader routes, and verify strict OpenSpec and
-        semantic clarity; official artifacts have no documentation-length
-        ceiling. Reference current-source reconciliation
-        `b309c56769ed6dd824237ce58e2722bd541f29e6174528aa9b7219a07469889c`,
-        native design review `6e07f24a22c99b110ace215c25318e05b9ac707a05df99d11a01f93d746bdf57`,
-        and delta proof `c0eff0fdce3e3e95fe978876d6cec02ceb00acc04a691004696dd90f8a290a18`;
-        none proves final delivery or the applicable shared admission.
-  - [x] 2.46.5 Keep versioned release notes complete and reachable in their
-        semantic owner. Verify native Changelog form, SemVer meaning, tag, and
-        both peer comparisons. Root release history and its version sections
-        have no length ceiling; add no fragments or duplicate history carrier.
-  - [ ] 2.46.6 Integrate accepted shared admission through its public installed
-        route. Resolve its carrier metric and limit, then verify authored
-        Markdown at that limit and one non-blank physical line above it without
-        mutation. Qualify release-history and official-artifact classification,
-        and supported code metrics with declared limits. Then run changed plan
-        and exact-HEAD proof on complete selected source; absent policy is not
-        coverage.
+      Generate peer YAML from the common graph and necessary platform adapters;
+      verify stable input identity, offline and single-peer use, non-writing drift
+      refusal, and actual protected source/offline jobs before retiring the checker.
+- [ ] 2.46 Integrate accepted shared size admission at supported carrier and
+      language boundaries; complete the sub-tasks below without dropping meaning,
+      selected inputs, or regression cases.
+  - [x] 2.46.1 Separate dependency auditing from CI topology; verify all 53
+        original cases, declarations, shared fixtures, nested discovery, worker
+        limits, deadlines, and full local execution.
+  - [ ] 2.46.2 Review runtime, release, and CI cohesion; separate only incoherent
+        owners and retire CI checks through 2.45, without an interim partition.
+        Verify preserved commands, errors, effects, native inputs, and regressions.
+  - [ ] 2.46.3 Review test cohesion and share fixtures without losing cases;
+        compare complete runner inputs independently with native Git selection.
+        Verify new-cohort discovery, omitted/repeated-run refusals, literal-file
+        Node execution, failure/cancellation, two workers, and the existing deadline.
+        Qualify actual installed proof integration and supported size policy.
+  - [x] 2.46.4 Reconcile design choices, official deltas, and main specifications;
+        verify requirements, scenarios, reader routes, strict OpenSpec, and clarity.
+        Reference `b309c56769ed6dd824237ce58e2722bd541f29e6174528aa9b7219a07469889c`,
+        `6e07f24a22c99b110ace215c25318e05b9ac707a05df99d11a01f93d746bdf57`, and
+        `c0eff0fdce3e3e95fe978876d6cec02ceb00acc04a691004696dd90f8a290a18`.
+  - [x] 2.46.5 Preserve versioned notes in their one release-history owner;
+        verify complete Changelog form, SemVer meaning, tags, and both comparisons
+        without a length ceiling or duplicate history carrier.
+  - [ ] 2.46.6 Qualify the public installed carrier policy at its actual metric
+        and limit, including the boundary and one non-blank physical line
+        above it.
+        Verify release-history and official-artifact classification, supported code
+        metrics, non-mutating refusal, changed plan, and exact-HEAD proof; add no
+        private gate, invented exemption, or unsupported coverage claim.
 
 ## 3. Qualification and publication
 
-- [ ] 3.1 Freeze the final source and its source-bound offline bundle after all
-      implementation and shared-contract work. Run format, lint, prose, links,
-      negative tests, strict official OpenSpec, and diff checks on those bytes.
-- [ ] 3.2 Prove a clean offline install and full verification of that frozen
-      source and bundle without inherited caches, host paths, credentials, or
-      remote supply; earlier source qualification does not satisfy this check.
-- [ ] 3.3 Verify [shared-contract integration](design.md#integrate-accepted-shared-ownership-without-weakening-the-floor).
-      Qualify DDWG, AIGW, and Proxy on the same accepted ETHOS source/wheel,
-      actual installed bindings,
-      exact-HEAD plan/proof, native semantics, full test selection, diagnostic
-      custody, and single execution. Consume DDWG migration and the other
-      owners' qualification; retain original failures.
-- [ ] 3.4 Classify the final changes against the latest qualified edition and
-      publish the correctly incremented signed SemVer release independently to
-      GitLab and GitHub. Verify both exact refs, Releases, downloaded asset
-      hashes, and declared source and offline platform jobs at the final source.
-      Preserve the major-version assessment against v7.0.12 in the
-      [migration design](design.md#migration-plan); qualify the prepared v8.0.0
-      source and bundle before tagging, and keep earlier releases immutable.
-- [ ] 3.5 Complete the [current-duty and retired-source review](design.md#review-original-duties-at-seven-topic-owners):
-      compare all 62 original subsections, five surrounding groups, and chapter
-      introductions and diagrams outside them with current source. Explain every
-      justified change or removal, assess the fitness of the current topics,
-      and resolve every review finding. Qualify the data topic's responsibility
-      boundaries through a shared model change and a dependent-consumer
-      retirement: preserve all five existing obligations, distinguish outputs,
-      activities and decisions, and assign modeling, development, product and
-      technical responsibilities through current organizational authority,
-      without copying internal seats or inventing another organization model.
-      Verify end-to-end engineering and professional responsibility, affected
-      interfaces and migrations, bound evidence, failure disposition, and
-      uncovered cases. Keep risk-based review distinct from authorized
-      acceptance and retain implementation responsibility without a new
-      testing team or record.
-      Require tasks
-      2.33, 2.38, 2.40, 2.44, 2.45, 2.46, 3.3, and 3.13, then complete
-      the pre-archive [migration plan](design.md#migration-plan): a frozen release
-      classified against the currently effective contract,
-      release, cold/platform checks, signed publication, official spec sync, and
-      qualified retirement. Preserve unique evidence and clause dispositions
-      without an equivalence claim; verify archive prerequisites without claiming
-      the future archive commit's proof, publication, or retirement.
-- [x] 3.6 Publish the compatible original-duty correction with fresh local,
-      installed ETHOS, signed patch, asset, and both Forge platform evidence;
-      preserve the already qualified major release.
-- [x] 3.7 Qualify and publish the final compatible decision-boundary correction
-      with exact-source proof, a signed patch, a source-bound offline bundle,
-      and both Forge platform matrices; preserve prior release objects.
-- [x] 3.8 Qualify and publish the compatible configuration correction with
-      current native tests, a fresh cold-install bundle, exact-HEAD installed
-      proof, and both source and offline platform matrices.
-- [x] 3.9 Qualify and publish the compatible source-link, CI-naming, and reader
-      repairs with full source, cold bundle, exact-HEAD proof, signed patch,
-      both source/offline matrices, independent downloads, links, and exact
-      aftercare. Preserve older signed objects and notes.
-- [x] 3.10 Retire superseded download assets independently on both Forges;
-      retain the latest qualified release, one qualified rollback, and tool
-      packages consumed by retained source. Preserve tags, original notes, and
-      historical evidence; remove retired download links, record the withdrawal,
-      and verify retained digests and exact absence. Claim storage reduction
-      only when native provider statistics establish it.
-- [x] 3.11 Qualify and publish the compatible formatter and native-tool refresh
-      with a source-bound bundle, cold install, trusted signature, exact-HEAD
-      installed proof, both Forge source and offline matrices, and bounded
-      retirement of superseded downloads and owned working state.
-- [x] 3.12 Qualify and publish the compatible dual-Forge Changelog correction
-      with full local checks, current-source rendering, cold offline install,
-      exact-HEAD installed proof, a signed patch, both declared source and
-      offline platform matrices, independent source and asset hashes, and
-      retirement of its owned lane and superseded downloads.
-- [ ] 3.13 Qualify accepted [release-history and peer-navigation contracts](design.md#keep-both-publication-peers-complete-and-coherent)
-      on every audited affected adopter through its own owners. Verify declared
-      peers, conserved history, accepted Python evidence, repaired-baseline
-      admission, original-plan recovery, and installed bindings. Reconcile native
-      merge history with both peers' branch protection; preserve required checks,
-      signatures, administrator enforcement, and refusal of force pushes and
-      deletions. Verify the same exact signed graph and actual protected jobs on
-      each peer before retiring superseded identity code; retain original
-      refusals and partial-effect receipts.
-- [x] 3.14 Qualify and publish compatible plain-language, cross-cycle, and
-      offline-supply repairs with source-bound bundle, cold install, proof,
-      trusted signed patch, both source/offline matrices, independent downloads,
-      and exact lane/asset aftercare. Preserve corrected normative duties and
-      verify retirement of absorbed constituent lanes; retain the active lane
-      until shared integration closes.
-- [x] 3.15 Qualify the compatible bounded-test correction with frozen bundle,
-      cold install, exact-HEAD proof, signed patch, both source/offline
-      matrices, and exact download/scratch retirement. Preserve immutable v7.0.7
-      and failed GitLab Windows evidence, original tags/notes, current qualified
-      downloads, and rollback.
+- [ ] 3.1 Freeze final source and its bound offline bundle after 2.33, 2.38,
+      2.45, and 2.46; run format, lint, prose, links, negative tests, strict official
+      OpenSpec, and diff checks on those exact bytes. Verify supported platforms,
+      original notices, stable supply, complete findings, exact approvals, and hashes.
+- [ ] 3.2 Install and verify that frozen bundle in a clean environment with
+      outbound access refused and no inherited caches, host paths, or credentials;
+      verify full source checks and rejection of missing, changed, or unsupported
+      inputs without downloads, host changes, or admission weakening.
+- [ ] 3.3 Qualify DDWG, AIGW, and Proxy on the same accepted ETHOS source/wheel
+      and actual bindings; verify exact-HEAD plan/proof, semantics, full selection,
+      complete diagnostics, and one execution through each adopter's own owner.
+- [ ] 3.4 Publish the correctly classified signed release on both Forges under
+      the [migration plan](design.md#migration-plan). Assess compatibility against
+      v7.0.12 and qualify the prepared v8.0.0 before tagging; verify source, bundle,
+      version, and tag identity, the same protected graph, source/offline platform
+      jobs, Releases, independent downloads, and hashes. Preserve earlier releases.
+- [ ] 3.5 Complete the [final original-duty and current-use review](design.md#review-original-duties-at-seven-topic-owners).
+      Account for all 62 subsections, five surrounding groups, introductions, and
+      diagrams; explain justified changes and resolve every finding on final source.
+      Exercise shared-model change and dependent-consumer retirement in the data
+      topic, preserving five professional obligations, lifecycle responsibility,
+      authority, interfaces, migration, evidence, failure disposition, and uncovered
+      cases without a new organization model or testing team. Verify final member
+      and Agent routes, including actual hosted reading and accessibility limits.
+      Complete 2.33, 2.38, 2.40, 2.44, 2.45, 2.46, 3.2, 3.3, 3.4, and 3.13 before
+      official spec sync and archive-readiness verification; preserve unique
+      evidence and retire absorbed resources only after consumer checks under the
+      [migration plan](design.md#migration-plan). Do not certify equivalence
+      or use.
+- [x] 3.6 Publish the compatible original-duty correction; verify fresh local
+      and installed proof, signed source, assets, and both platform matrices while
+      preserving the previously qualified major release.
+- [x] 3.7 Publish the compatible decision-boundary correction; verify exact
+      source proof, signed patch, bound bundle, and both platform matrices.
+- [x] 3.8 Publish the compatible configuration correction; verify native tests,
+      cold bundle, committed proof, and both source/offline platform matrices.
+- [x] 3.9 Publish source-link, CI-naming, and reader repairs; verify full source,
+      cold install, committed proof, signed patch, both matrices, downloads, and
+      exact aftercare while preserving earlier source and notes.
+- [x] 3.10 Retire superseded downloads on each Forge; verify retained release,
+      rollback, consumed tools, hashes, withdrawal notices, and exact absence.
+      Preserve tags and original notes; use provider statistics for reclaimed space.
+- [x] 3.11 Publish compatible formatter and native-tool updates; verify bound
+      supply, cold install, signature, committed proof, both platform matrices,
+      and bounded retirement of replaced downloads and owned working state.
+- [x] 3.12 Publish the dual-Forge Changelog correction; verify full source,
+      rendering, cold install, committed proof, signed patch, both matrices,
+      independent hashes, and retirement of its lane and superseded downloads.
+- [ ] 3.13 Qualify accepted [history and peer-navigation contracts](design.md#keep-both-publication-peers-complete-and-coherent)
+      on affected adopters through their owners. Verify peers, conserved history,
+      accepted Python evidence, repaired-baseline admission, original-plan recovery,
+      and actual bindings. Require the same signed merge graph and protected jobs
+      on both peers. Verify administrator enforcement and native refusal of
+      force pushes and deletions without weakening required checks or signatures;
+      retire identity glue after acceptance and preserve original refusals and
+      partial-effect receipts.
+- [x] 3.14 Publish plain-language, cross-cycle, and offline-supply repairs;
+      verify bundle, cold install, proof, signature, both matrices, downloads,
+      and exact aftercare. Retire absorbed lanes without closing shared integration.
+- [x] 3.15 Qualify the bounded-test correction; verify frozen bundle, cold
+      install, committed proof, signature, both matrices, and download/scratch
+      retirement while retaining v7.0.7, failures, notices, and qualified rollback.
+
+## Workflow follow-up
+
+- After tracked work, official spec sync, and review requirements are satisfied,
+  archive officially. Verify the resulting commit's source and trusted signature.
+- Prove and publish that new archive commit on both protected peers; verify exact
+  refs and declared jobs rather than reuse the pre-archive proof.
+- Retire the absorbed Work Lane and proposal through their native owners after
+  preserving unique evidence; verify exact absence and retained consumers.
