@@ -29,6 +29,13 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Prepare the next major edition for incompatible changes to released duties
+  and stable reader routes. Replace unconditional manager review minima with
+  accountable, risk-adjusted intervals; see the
+  [current review cadence](docs/evolve.md#cadence-and-responsibilities).
+  Update links to [DR-0001's renamed path](docs/decisions/dr-0001-human-ai-collaboration.md)
+  and use the current topic indexes for section links. Existing v7 releases
+  remain unchanged. Before upgrading, recheck affected work agreements and links.
 - Clarify data-work responsibilities through existing role and authority
   assignments. Keep business meaning, data models, implementation, product
   lifecycle, and technical decisions distinct without another organization
@@ -199,7 +206,7 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 - Preserve package-manager output and native error causes, and test the actual
   release-download size limit. Distinguish supplied ABIs and hosted offline
   steps from host qualification and network isolation.
-- Keep the prepared minor edition, complete local publication check, supported
+- Keep the prepared edition, complete local publication check, supported
   tool platforms, and Change authority descriptions consistent with their
   existing contracts.
 - Make emergency containment reachable from the charter and delivery pages.

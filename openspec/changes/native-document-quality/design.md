@@ -644,6 +644,17 @@ without replacing published tags or bytes. Assess compatibility against the
 effective contract: corrected omissions may be fixes, changed duties need their
 own assessment. Preserve accepted releases.
 
+The next edition is `8.0.0`, assessed against signed `v7.0.12`. That release
+required at-least-monthly and at-least-quarterly reviews; the revised cadence
+lets the accountable owner justify different intervals. Its stable DR-0001
+path has also been removed in favor of the current human–AI name. These are
+observable public-contract changes even though the decisions, review purposes,
+and retained authority remain. They require a major increment; neither a
+`docs` commit label nor restoration of an older duty establishes compatibility.
+Publish the migration in Unreleased notes, update affected agreements and
+links, and preserve all v7 tags, notes, and exact source. Reassess any further
+change before freezing; this preparation is not a released or accepted edition.
+
 Product gaps do not waive admission. An authorized emergency exception covers
 only its exact effect with preserved cause and immediate restoration and
 acceptance; it cannot patch immutable runtime or manufacture proof.
@@ -658,9 +669,9 @@ acceptance; it cannot patch immutable runtime or manufacture proof.
    rules with justified dispositions, preserving task identities and duties.
 4. Qualify accepted shared quality, formatting, risk, history, CUE, and size
    contracts at DDWG and the required actual AIGW/Proxy bindings.
-5. Freeze compatible final source and bundle. Qualify local and cold checks,
-   trusted signature, exact-HEAD proof, both source/offline matrices, Releases,
-   independent download hashes, and every claimed host.
+5. Freeze the correctly versioned final source and bundle. Qualify local and
+   cold checks, trusted signature, exact-HEAD proof, both source/offline
+   matrices, Releases, independent download hashes, and every claimed host.
 6. Audit requirements and evidence, sync officially, and retire absorbed resources
    after consumer, hash, permission, and native-inventory checks. Complete archive
    prerequisites without claiming its future Git effects.

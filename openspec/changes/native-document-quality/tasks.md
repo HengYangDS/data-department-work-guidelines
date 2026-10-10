@@ -372,6 +372,9 @@
       publish the correctly incremented signed SemVer release independently to
       GitLab and GitHub. Verify both exact refs, Releases, downloaded asset
       hashes, and declared source and offline platform jobs at the final source.
+      Preserve the major-version assessment against v7.0.12 in the
+      [migration design](design.md#migration-plan); qualify the prepared v8.0.0
+      source and bundle before tagging, and keep earlier releases immutable.
 - [ ] 3.5 Complete the [current-duty and retired-source review](design.md#review-original-duties-at-seven-topic-owners):
       compare all 62 original subsections, five surrounding groups, and chapter
       introductions and diagrams outside them with current source. Explain every
