@@ -20,7 +20,7 @@
 - [x] 2.2 Extend the current installer and bundle owners without retaining a
       second command, manifest, or installer for the same concern. Verify the
       native supply and cold-install tests and the resolved source interfaces.
-- [ ] 2.3 Apply human English editing to all seven task topics. Compare every
+- [x] 2.3 Apply human English editing to all seven task topics. Compare every
       original duty, actor, condition, permission, authority, and evidence limit
       with the [original-duty
       review](design.md#review-original-duties-at-seven-topic-owners).
@@ -43,6 +43,9 @@
       Keep one-time risk approvals and integration status with their existing
       Change, native policy, and receipts; preserve general governance conditions
       and immutable decision sources without opaque identifiers in reading prose.
+      Retain current-source editorial closure in Attestation
+      `8f022094fdcbda03b94fbd4077c4cacf2a8665a867e89ac87b1c8b5d4a602497`;
+      final shared integration and publication remain separate.
 - [x] 2.4 Reconcile package, current OpenSpec, contribution, governance, CI,
       version, and changelog contracts. Audit current consumers and the resolved
       dependency graph for retired residue; preserve historical Git bytes.
