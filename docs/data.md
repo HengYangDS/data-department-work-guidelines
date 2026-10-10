@@ -196,6 +196,30 @@ and their migration; production plans release and recovery, and governance
 confirms permission. A passing schema check cannot settle a conflicting meaning
 or an unresolved consumer migration.
 
+### Own Implementation and Verification
+
+Engineering owners carry responsibility from requirements and design through
+implementation, verification, release, operational feedback, and improvement,
+as applicable to the work. Development and verification are activities within
+that responsibility, not separate teams or a transfer of quality to the next
+stage. Professional owners verify the judgments and models within their remit.
+
+Before handing over a result, its owner must identify:
+
+- The agreed model and criteria tested, including affected interfaces and
+  migrations.
+- The actual inputs, version, environment, method, and results, with limits
+  and uncovered cases.
+- Each failure or discrepancy, its disposition, and the owner of any unresolved
+  risk.
+
+Keep these details with the
+[existing work evidence](deliver.md#evidence-sets-the-limit-of-the-claim).
+Risk may require specialist or independent review under the existing authority.
+Review does not remove implementation quality responsibility or require a
+new testing team. Verification supports acceptance, use admission, and release
+decisions; passing checks cannot grant them.
+
 ### Change Shared or Production Data
 
 Changes to production, shared assets, or critical management chains require:

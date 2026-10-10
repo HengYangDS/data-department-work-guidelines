@@ -374,6 +374,11 @@
       activities and decisions, and assign modeling, development, product and
       technical responsibilities through current organizational authority,
       without copying internal seats or inventing another organization model.
+      Verify end-to-end engineering and professional responsibility, affected
+      interfaces and migrations, bound evidence, failure disposition, and
+      uncovered cases. Keep risk-based review distinct from authorized
+      acceptance and retain implementation responsibility without a new
+      testing team or record.
       Require tasks
       2.33, 2.38, 2.40, 2.44, 2.45, 2.46, 3.3, and 3.13, then complete
       the pre-archive [migration plan](design.md#migration-plan): a frozen release

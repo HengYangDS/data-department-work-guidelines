@@ -67,6 +67,14 @@ Name work outputs, activities, decision mandates, and acceptance. Keep business
 meaning, data representation and cross-domain definitions, implementation and
 compatibility, product lifecycle and consumer migration, and technical choices
 explicit at the data topic, without a second taxonomy or decision table.
+Engineering responsibility runs from requirements and design through
+implementation, verification, release, operational feedback, and improvement
+as applicable; professional owners verify their judgments and models. Bind
+verification to agreed criteria, affected interfaces and migrations, actual
+inputs and environment, results, failures, limits, and unresolved-risk owners
+in the existing work evidence. Risk-based specialist or independent review
+retains implementation responsibility and grants no acceptance or permission;
+it does not require another testing team.
 Preserve every domain, production, platform, governance, and delivery obligation
 without adding teams, records, or approval steps. Test a shared model change and
 retirement with a dependent consumer; semantic conformance, passing tests, and

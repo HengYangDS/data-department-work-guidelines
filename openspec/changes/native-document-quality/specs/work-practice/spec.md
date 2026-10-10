@@ -440,7 +440,16 @@ accountable ownership, decision mandates and acceptance. Business and data
 modeling, development, product management and technical management SHALL retain
 explicit responsibility for their distinct decisions. Shared interfaces SHALL
 NOT transfer responsibility or authority; suitable use, technical approval and
-passing tests SHALL NOT grant permission. Owners SHALL be accountable.
+passing tests SHALL NOT grant permission. Engineering owners SHALL retain
+responsibility from requirements and design through implementation,
+verification, release, operational feedback and improvement as applicable.
+Professional owners SHALL verify their judgments and models. Verification SHALL
+identify agreed criteria, affected interfaces and migrations, actual inputs,
+version, environment, method, results, failed and uncovered cases, their
+disposition and unresolved-risk owners in existing work evidence. Risk-based
+specialist or independent review SHALL NOT transfer implementation responsibility
+or require a separate testing team. Verification SHALL NOT grant acceptance,
+use admission or release authority. Owners SHALL be accountable.
 
 #### Scenario: Research does not need a production feed
 
@@ -539,3 +548,18 @@ passing tests SHALL NOT grant permission. Owners SHALL be accountable.
   SHALL retain release and recovery responsibility
 - **AND** no local passing test SHALL substitute for an unresolved consumer
   migration or the required permission.
+
+#### Scenario: A local test passes while dependent use remains unverified
+
+- **WHEN** a changed shared dataset or interface passes local tests while an
+  affected consumer join or migration remains failed or unverified
+- **THEN** the engineering owner SHALL retain implementation and verification
+  responsibility rather than hand quality to a separate testing stage
+- **AND** the responsible professional owners SHALL verify the affected meaning
+  and model; the existing work evidence SHALL identify agreed criteria, actual
+  inputs, version, environment, method and results, failures, uncovered cases,
+  their disposition and the owner of any unresolved risk
+- **AND** any specialist or independent review SHALL follow risk and current
+  authority without relieving the implementer of quality responsibility
+- **AND** the passing local test SHALL NOT establish consumer acceptance,
+  permission for use or release authority.
