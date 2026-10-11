@@ -5,12 +5,12 @@ import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 import { manifest, selectedAsset } from "../../tools/ci/install-native.mjs";
+import { root } from "../../tools/runtime.mjs";
 import {
   managedToolPath,
   nativeToolPlatform,
   nativeToolBinary,
-  root,
-} from "../../tools/docs/runtime.mjs";
+} from "../../tools/supply.mjs";
 
 test("official supply declares exactly the supported platform assets", () => {
   assert.deepEqual(Object.keys(manifest.tools.lychee.assets).sort(), [

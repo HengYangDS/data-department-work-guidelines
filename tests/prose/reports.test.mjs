@@ -6,7 +6,7 @@ import { syncBuiltinESMExports } from "node:module";
 import { test } from "node:test";
 import { pathToFileURL } from "node:url";
 import { checkProse } from "../../tools/docs/content.mjs";
-import { root } from "../../tools/docs/runtime.mjs";
+import { root } from "../../tools/runtime.mjs";
 
 test("source checks reject prose before unrelated native prerequisites", () => {
   const script = `

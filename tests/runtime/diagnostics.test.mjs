@@ -4,8 +4,8 @@ import { mkdtempSync, rmSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
-import { run as runCommand } from "../../tools/docs/runtime.mjs";
-import * as runtime from "../../tools/docs/runtime.mjs";
+import { run as runCommand } from "../../tools/runtime.mjs";
+import * as runtime from "../../tools/runtime.mjs";
 
 test("archive commands preserve native errors and reject warnings", () => {
   assert.equal(
@@ -87,7 +87,7 @@ test("CLI diagnostics retain native causes without repeating command output", (c
 });
 
 test("piped native failures preserve diagnostics without duplicate output", () => {
-  const module = new URL("../../tools/docs/runtime.mjs", import.meta.url).href;
+  const module = new URL("../../tools/runtime.mjs", import.meta.url).href;
   const cases = [
     {
       child:

@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import semver from "semver";
-import { root, run } from "./runtime.mjs";
+import { root, run } from "../runtime.mjs";
 import {
   parseChangelog,
   publicationPeers,

@@ -1,7 +1,7 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
-import { reportError, root } from "../docs/runtime.mjs";
+import { reportError, root } from "../runtime.mjs";
 import { buildReleaseBundle } from "./offline/build.mjs";
 import {
   acquireGitHubBundle,

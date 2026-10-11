@@ -9,12 +9,11 @@ import os from "node:os";
 import path from "node:path";
 import {
   declaredToolRuntime,
-  nativeSupplyPath,
   offlineBundleRecordPath,
-  readNativeSupply,
   root,
   run,
-} from "../../docs/runtime.mjs";
+} from "../../runtime.mjs";
+import { nativeSupplyPath, readNativeSupply } from "../../supply.mjs";
 
 const recordKeys = [
   "fileName",

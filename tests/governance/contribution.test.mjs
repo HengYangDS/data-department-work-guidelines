@@ -24,7 +24,7 @@ import {
   markdownTokens,
   walkMarkdown,
 } from "../../tools/docs/markdown.mjs";
-import { root } from "../../tools/docs/runtime.mjs";
+import { root } from "../../tools/runtime.mjs";
 import { contentUnderHeading } from "./fixtures.mjs";
 
 test("source checking precedes conditional tool preparation without hiding inputs", () => {

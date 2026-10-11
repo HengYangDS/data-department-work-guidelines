@@ -12,7 +12,7 @@ import {
 import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
-import { root, run as runCommand } from "../../tools/docs/runtime.mjs";
+import { root, run as runCommand } from "../../tools/runtime.mjs";
 import {
   assembleBundle,
   checkPackageLicenses,

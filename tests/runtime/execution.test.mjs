@@ -7,7 +7,7 @@ import path from "node:path";
 import { syncBuiltinESMExports } from "node:module";
 import { test } from "node:test";
 import { pathToFileURL } from "node:url";
-import { root, run } from "../../tools/docs/runtime.mjs";
+import { root, run } from "../../tools/runtime.mjs";
 import { fixtureGit } from "../source/fixtures.mjs";
 
 test("native process input reaches its selected child without a shell", () => {
@@ -47,7 +47,7 @@ test("the public test command bounds workers without reducing its discovered inv
     const repository = ${JSON.stringify(root)};
     const sourcePrefix = ${JSON.stringify(pathToFileURL(path.join(root, "tools")).href + "/")};
     const entries = new Set(${JSON.stringify(
-      ["tools/docs/cli.mjs", "tools/docs/runtime.mjs"].map(
+      ["tools/docs/cli.mjs", "tools/runtime.mjs"].map(
         (relative) => pathToFileURL(path.join(root, relative)).href,
       ),
     )});
@@ -138,7 +138,7 @@ test("public test execution preserves literal Git inputs and a new cohort", () =
     for (const relative of [
       "package.json",
       "tools/docs/cli.mjs",
-      "tools/docs/runtime.mjs",
+      "tools/runtime.mjs",
     ]) {
       const destination = path.join(directory, relative);
       fs.mkdirSync(path.dirname(destination), { recursive: true });
@@ -425,7 +425,7 @@ test("the public check command rejects incomplete-mode waivers", () => {
 });
 
 test("verification context binds native workspace capacity without claiming VM identity", async () => {
-  const { workspaceObservation } = await import("../../tools/docs/runtime.mjs");
+  const { workspaceObservation } = await import("../../tools/runtime.mjs");
   assert.equal(typeof workspaceObservation, "function");
   const actual = workspaceObservation();
   assert.equal(actual.kind, "repository-verification-context");

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import * as dependencies from "../../tools/docs/dependencies.mjs";
-import { readText, root } from "../../tools/docs/runtime.mjs";
+import { readText, root } from "../../tools/runtime.mjs";
 import {
   approvedFinding,
   dependencyPolicy,

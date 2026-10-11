@@ -17,7 +17,7 @@ import {
   checkDecisions,
   validateDecision,
 } from "../../tools/docs/decisions.mjs";
-import { root } from "../../tools/docs/runtime.mjs";
+import { root } from "../../tools/runtime.mjs";
 import { sections, decision, fixture } from "../decisions/fixtures.mjs";
 
 test("decision sections and identity remain exact", () => {

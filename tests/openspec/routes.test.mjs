@@ -20,7 +20,7 @@ import {
   markdownTokens,
   walkMarkdown,
 } from "../../tools/docs/markdown.mjs";
-import { root } from "../../tools/docs/runtime.mjs";
+import { root } from "../../tools/runtime.mjs";
 import { fixture, contentUnderHeading } from "../governance/fixtures.mjs";
 
 test("practice admission preserves preventive obligations across current carriers", () => {

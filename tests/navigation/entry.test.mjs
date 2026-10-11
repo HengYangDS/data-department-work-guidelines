@@ -12,7 +12,7 @@ import {
   markdownTokens,
   walkMarkdown,
 } from "../../tools/docs/markdown.mjs";
-import { root } from "../../tools/docs/runtime.mjs";
+import { root } from "../../tools/runtime.mjs";
 import { fixture } from "../governance/fixtures.mjs";
 
 test("navigation rejects a missing map, repeated root topic, and missing reader cue", () => {

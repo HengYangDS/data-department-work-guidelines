@@ -11,7 +11,7 @@ import {
 import { syncBuiltinESMExports } from "node:module";
 import path from "node:path";
 import { test } from "node:test";
-import { readNativeSupply } from "../../tools/docs/runtime.mjs";
+import { readNativeSupply } from "../../tools/supply.mjs";
 import { assembleBundle } from "../../tools/ci/offline/build.mjs";
 import {
   assertSafeBundleListing,

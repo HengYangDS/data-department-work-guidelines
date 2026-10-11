@@ -1,6 +1,6 @@
 import { lstatSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import { run } from "../../docs/runtime.mjs";
+import { run } from "../../runtime.mjs";
 
 export function pathExists(target) {
   try {

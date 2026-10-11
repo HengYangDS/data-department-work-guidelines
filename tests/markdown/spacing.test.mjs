@@ -4,7 +4,7 @@ import path from "node:path";
 import { test } from "node:test";
 import { parse as parseToml } from "smol-toml";
 import { lintMarkdown, textViolations } from "../../tools/docs/content.mjs";
-import { root } from "../../tools/docs/runtime.mjs";
+import { root } from "../../tools/runtime.mjs";
 
 test("Markdown spacing preserves fenced and indented literal content", async () => {
   for (const source of [

@@ -12,7 +12,7 @@ import path from "node:path";
 import { test } from "node:test";
 import { parse as parseToml, stringify as stringifyToml } from "smol-toml";
 import { checkProfile } from "../../tools/docs/governance.mjs";
-import { root } from "../../tools/docs/runtime.mjs";
+import { root } from "../../tools/runtime.mjs";
 import { fixture } from "./fixtures.mjs";
 
 function profileFixture(run) {

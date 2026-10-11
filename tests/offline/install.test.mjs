@@ -10,7 +10,8 @@ import {
 import path from "node:path";
 import { test } from "node:test";
 import { pathToFileURL } from "node:url";
-import { readNativeSupply, root } from "../../tools/docs/runtime.mjs";
+import { root } from "../../tools/runtime.mjs";
+import { readNativeSupply } from "../../tools/supply.mjs";
 import { assembleBundle } from "../../tools/ci/offline/build.mjs";
 import { installBundle } from "../../tools/ci/offline/install.mjs";
 import { npmCliPath } from "../../tools/ci/offline/npm.mjs";
@@ -31,7 +32,8 @@ test("the public offline installer reports its actual package-manager version", 
       "tools/ci/offline/install.mjs",
       "tools/ci/offline/acquire.mjs",
       "tools/ci/gitlab-package.mjs",
-      "tools/docs/runtime.mjs",
+      "tools/runtime.mjs",
+      "tools/supply.mjs",
     ]) {
       const target = path.join(inputs.repository, relative);
       mkdirSync(path.dirname(target), { recursive: true });

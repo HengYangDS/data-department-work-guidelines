@@ -1,6 +1,6 @@
 import { realpathSync } from "node:fs";
 import path from "node:path";
-import { root, runNodeTool } from "./runtime.mjs";
+import { root, runNodeTool } from "../runtime.mjs";
 
 export function validateOpenSpec() {
   const output = runNodeTool(

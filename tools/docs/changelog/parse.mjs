@@ -3,7 +3,7 @@ import path from "node:path";
 import semver from "semver";
 import { parse as parseToml } from "smol-toml";
 import { headingLevel, markdownTokens, walkMarkdown } from "../markdown.mjs";
-import { root } from "../runtime.mjs";
+import { root } from "../../runtime.mjs";
 
 const categories = [
   "Added",

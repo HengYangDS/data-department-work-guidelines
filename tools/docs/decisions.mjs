@@ -9,7 +9,7 @@ import {
   markdownTokens,
   walkMarkdown,
 } from "./markdown.mjs";
-import { root, filesUnder } from "./runtime.mjs";
+import { root, filesUnder } from "../runtime.mjs";
 
 const requiredSections = [
   "Context",

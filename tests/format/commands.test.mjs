@@ -13,7 +13,7 @@ import {
 import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
-import { root } from "../../tools/docs/runtime.mjs";
+import { root } from "../../tools/runtime.mjs";
 import { assertFixtureSources } from "../source/fixtures.mjs";
 
 test("native TOML formatting checks literal Git paths and preserves data", () => {

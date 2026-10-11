@@ -10,7 +10,7 @@ import {
   markdownTokens,
   walkMarkdown,
 } from "../../tools/docs/markdown.mjs";
-import { root } from "../../tools/docs/runtime.mjs";
+import { root } from "../../tools/runtime.mjs";
 import { contentUnderHeading } from "../governance/fixtures.mjs";
 
 test("L1 and L2 work records use the full charter boundary at both task routes", () => {

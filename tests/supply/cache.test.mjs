@@ -12,21 +12,19 @@ import {
   manifest,
   selectedAsset,
 } from "../../tools/ci/install-native.mjs";
-import {
-  managedFileExists,
-  nativeToolBinary,
-  root,
-} from "../../tools/docs/runtime.mjs";
+import { managedFileExists, root } from "../../tools/runtime.mjs";
+import { nativeToolBinary } from "../../tools/supply.mjs";
 
 test("managed cached binaries verify bytes before version execution", async () => {
   const directory = fs.realpathSync.native(
     fs.mkdtempSync(path.join(os.tmpdir(), "ddwg-native-integrity-")),
   );
   try {
-    const runtime = path.join(directory, "tools/docs/runtime.mjs");
+    const runtime = path.join(directory, "tools/supply.mjs");
     const installer = path.join(directory, "tools/ci/install-native.mjs");
     for (const relative of [
-      "tools/docs/runtime.mjs",
+      "tools/runtime.mjs",
+      "tools/supply.mjs",
       "tools/ci/install-native.mjs",
       "tools/ci/gitlab-package.mjs",
     ]) {

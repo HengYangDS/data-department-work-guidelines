@@ -8,7 +8,8 @@ import { syncBuiltinESMExports } from "node:module";
 import { test } from "node:test";
 import { pathToFileURL } from "node:url";
 import { manifest } from "../../tools/ci/install-native.mjs";
-import { nativeToolBinary, root } from "../../tools/docs/runtime.mjs";
+import { root } from "../../tools/runtime.mjs";
+import { nativeToolBinary } from "../../tools/supply.mjs";
 
 test("explicit native tool selectors use portable names and retain version admission", (context) => {
   const directory = fs.mkdtempSync(
@@ -133,7 +134,7 @@ test("Windows native selection binds quoted paths and direct suffixes before exe
   const directory = fs.realpathSync.native(
     fs.mkdtempSync(path.join(os.tmpdir(), "ddwg-native-windows-lookup-")),
   );
-  const runtimePath = path.join(directory, "tools/docs/runtime.mjs");
+  const runtimePath = path.join(directory, "tools/supply.mjs");
   const target = path.join(
     directory,
     "build/runtime/tool-cache/vale",
@@ -168,7 +169,11 @@ test("Windows native selection binds quoted paths and direct suffixes before exe
   syncBuiltinESMExports();
   try {
     fs.mkdirSync(path.dirname(runtimePath), { recursive: true });
-    fs.copyFileSync(path.join(root, "tools/docs/runtime.mjs"), runtimePath);
+    fs.copyFileSync(path.join(root, "tools/supply.mjs"), runtimePath);
+    fs.copyFileSync(
+      path.join(root, "tools/runtime.mjs"),
+      path.join(directory, "tools/runtime.mjs"),
+    );
     const supply = path.join(directory, ".config/supply/native.json");
     fs.mkdirSync(path.dirname(supply), { recursive: true });
     fs.writeFileSync(supply, JSON.stringify(fixture));

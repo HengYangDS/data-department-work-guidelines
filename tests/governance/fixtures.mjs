@@ -14,7 +14,7 @@ import {
   markdownTokens,
 } from "../../tools/docs/markdown.mjs";
 
-import { root } from "../../tools/docs/runtime.mjs";
+import { root } from "../../tools/runtime.mjs";
 
 export function fixture(run) {
   const directory = mkdtempSync(

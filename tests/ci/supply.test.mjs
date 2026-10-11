@@ -3,7 +3,7 @@ import { test } from "node:test";
 import YAML from "yaml";
 import { parse as parseToml } from "smol-toml";
 import { validateCi } from "../../tools/docs/ci.mjs";
-import { assertNodeRuntime, readText } from "../../tools/docs/runtime.mjs";
+import { assertNodeRuntime, readText } from "../../tools/runtime.mjs";
 import { github, gitlab, offline, changedGitLab } from "./fixtures.mjs";
 
 test("Mise reads development declarations without executable version templates", () => {

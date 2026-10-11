@@ -1,5 +1,5 @@
 import YAML from "yaml";
-import { readText } from "../../tools/docs/runtime.mjs";
+import { readText } from "../../tools/runtime.mjs";
 
 export const github = readText(".github/workflows/docs-verify.yml");
 export const gitlab = readText(".gitlab-ci.yml");

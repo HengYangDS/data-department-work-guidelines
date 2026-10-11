@@ -13,7 +13,8 @@ import {
 import os from "node:os";
 import { createRequire } from "node:module";
 import path from "node:path";
-import { readNativeSupply, run } from "../../docs/runtime.mjs";
+import { run } from "../../runtime.mjs";
+import { readNativeSupply } from "../../supply.mjs";
 import {
   assertRegularTree,
   digestBytes,

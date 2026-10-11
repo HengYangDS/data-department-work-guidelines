@@ -15,8 +15,6 @@ import {
   markdownTokens,
 } from "./markdown.mjs";
 import {
-  nativeSupplyPath,
-  nativeToolBinary,
   offlineBundleRecordPath,
   root,
   run,
@@ -24,7 +22,8 @@ import {
   managedFileExists,
   sourceAttributes,
   filesUnder,
-} from "./runtime.mjs";
+} from "../runtime.mjs";
+import { nativeSupplyPath, nativeToolBinary } from "../supply.mjs";
 
 function linksIn(source, relative) {
   return new Set(

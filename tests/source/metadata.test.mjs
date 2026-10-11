@@ -17,7 +17,7 @@ import {
   lintMarkdown,
   textViolations,
 } from "../../tools/docs/content.mjs";
-import { gitFiles, root } from "../../tools/docs/runtime.mjs";
+import { gitFiles, root } from "../../tools/runtime.mjs";
 
 test("document metadata reads the product-supported title-first carrier", () => {
   const source = [

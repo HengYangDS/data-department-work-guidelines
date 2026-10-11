@@ -1,6 +1,6 @@
 import { isDeepStrictEqual } from "node:util";
 import YAML from "yaml";
-import { declaredToolRuntime, readText } from "./runtime.mjs";
+import { declaredToolRuntime, readText } from "../runtime.mjs";
 
 const verifier = "npm run verify";
 const auditCommand = "node tools/docs/cli.mjs audit";

@@ -13,7 +13,7 @@ import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 import * as governance from "../../tools/docs/governance.mjs";
-import { root } from "../../tools/docs/runtime.mjs";
+import { root } from "../../tools/runtime.mjs";
 import { configurationFixture } from "./fixtures.mjs";
 
 test("configuration has separate native concern owners", () => {

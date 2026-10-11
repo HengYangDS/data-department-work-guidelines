@@ -21,7 +21,7 @@ import {
   root,
   sourceAttributes,
   sourceMarkdown,
-} from "../../tools/docs/runtime.mjs";
+} from "../../tools/runtime.mjs";
 import { fixtureGit } from "./fixtures.mjs";
 
 test("shared Git excludes editor state without hiding guidance source", () => {
@@ -225,7 +225,7 @@ test("native Git roles distinguish executable tests from their fixture support",
     "tests/retained/contract.test.mjs",
     "tests/new domain/nested/behavior.test.mjs",
     "tests/new domain/nested/fixtures.mjs",
-    "tools/docs/runtime.mjs",
+    "tools/runtime.mjs",
   ];
   const expected = ["test", "test", "tooling", "unspecified"];
   for (const relative of paths) {

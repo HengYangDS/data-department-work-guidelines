@@ -15,7 +15,7 @@ import {
   safeArchiveEntries,
   selectedAsset,
 } from "../../tools/ci/install-native.mjs";
-import { reportError, root } from "../../tools/docs/runtime.mjs";
+import { reportError, root } from "../../tools/runtime.mjs";
 
 test("asset digest is checked before extraction", () => {
   const bytes = Buffer.from("bounded fixture");

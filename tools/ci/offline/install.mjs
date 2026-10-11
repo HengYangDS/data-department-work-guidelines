@@ -1,13 +1,12 @@
 import { mkdirSync, mkdtempDisposableSync, rmSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { managedFileExists, run } from "../../runtime.mjs";
 import {
-  managedFileExists,
   managedToolPath,
   nativeToolPlatform,
   readNativeSupply,
-  run,
-} from "../../docs/runtime.mjs";
+} from "../../supply.mjs";
 import {
   inspectBundle,
   sourceIdentity,

@@ -23,7 +23,8 @@ import {
   textViolations,
 } from "../../tools/docs/content.mjs";
 import { checkConfigurationLayout } from "../../tools/docs/governance.mjs";
-import { nativeToolBinary, nodeTool, root } from "../../tools/docs/runtime.mjs";
+import { nodeTool, root } from "../../tools/runtime.mjs";
+import { nativeToolBinary } from "../../tools/supply.mjs";
 
 test("native structured formats preserve literal blank lines", async () => {
   for (const [name, source] of [

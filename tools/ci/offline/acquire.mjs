@@ -6,7 +6,7 @@ import {
 } from "node:fs";
 import path from "node:path";
 import { downloadFailure, projectPackageRequest } from "../gitlab-package.mjs";
-import { managedFileExists, root } from "../../docs/runtime.mjs";
+import { managedFileExists, root } from "../../runtime.mjs";
 import { readBundleRecord, sha256, verifyBundle } from "./artifact.mjs";
 
 async function downloadBundle(request, target, fetcher, provider) {

@@ -16,7 +16,8 @@ import path from "node:path";
 import { syncBuiltinESMExports } from "node:module";
 import { test } from "node:test";
 import { checkProse } from "../../tools/docs/content.mjs";
-import { gitFiles, nativeToolBinary, root } from "../../tools/docs/runtime.mjs";
+import { gitFiles, root } from "../../tools/runtime.mjs";
+import { nativeToolBinary } from "../../tools/supply.mjs";
 
 function proseBatch(sources) {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-native-prose-"));

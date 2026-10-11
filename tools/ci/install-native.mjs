@@ -13,16 +13,13 @@ import { rm } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { downloadFailure, projectPackageRequest } from "./gitlab-package.mjs";
+import { managedFileExists, reportError, root, run } from "../runtime.mjs";
 import {
   assertNativeBinaryDigest,
-  managedFileExists,
   managedToolPath,
   nativeToolPlatform,
   readNativeSupply,
-  reportError,
-  root,
-  run,
-} from "../docs/runtime.mjs";
+} from "../supply.mjs";
 
 export const manifest = readNativeSupply();
 

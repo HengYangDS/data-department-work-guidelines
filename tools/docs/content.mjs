@@ -22,7 +22,6 @@ import {
   currentMarkdown,
   filePath,
   gitFiles,
-  nativeToolBinary,
   readText,
   root,
   run,
@@ -30,7 +29,8 @@ import {
   sourceMarkdown,
   sourceAttributes,
   temporaryRoot,
-} from "./runtime.mjs";
+} from "../runtime.mjs";
+import { nativeToolBinary } from "../supply.mjs";
 
 const requiredMetadata = ["subject", "role", "state", "relations"];
 const cjk =

@@ -13,7 +13,8 @@ import path from "node:path";
 import { test } from "node:test";
 import { gunzipSync } from "node:zlib";
 import { markdownTokens, walkMarkdown } from "../../tools/docs/markdown.mjs";
-import { readNativeSupply, root } from "../../tools/docs/runtime.mjs";
+import { root } from "../../tools/runtime.mjs";
+import { readNativeSupply } from "../../tools/supply.mjs";
 import {
   assembleBundle,
   buildReleaseBundle,

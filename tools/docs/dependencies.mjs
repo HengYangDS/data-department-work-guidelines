@@ -16,7 +16,8 @@ import {
   npmCliPath,
   validateLockSupply,
 } from "../ci/offline/npm.mjs";
-import { managedFileExists, nativeToolBinary, root } from "./runtime.mjs";
+import { managedFileExists, root } from "../runtime.mjs";
+import { nativeToolBinary } from "../supply.mjs";
 
 export const dependencyPolicyPath = ".config/checks/dependencies/policy.toml";
 // Bounded compatibility at the existing input owner until accepted ETHOS risk

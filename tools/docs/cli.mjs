@@ -4,7 +4,7 @@ import {
   reportError,
   root,
   workspaceObservation,
-} from "./runtime.mjs";
+} from "../runtime.mjs";
 
 function testFiles() {
   return gitFiles().filter(

@@ -366,6 +366,12 @@ Guidelines are directly readable. The optional offline bundle supplies
 maintenance checks; it is not an installable guideline product. ETHOS remains
 its own installed governance dependency.
 
+Repository-wide process, Git, and filesystem execution belongs to
+`tools/runtime.mjs`; native asset selection and byte verification belong to
+`tools/supply.mjs`. Document checks, installers, and bundle readers consume
+those shared owners directly, without a document-runtime facade or duplicate
+resolver. Moving source does not change native tool pins or installation effects.
+
 #### Runtime and compatible assets
 
 Use one Node compatibility declaration and native exact npm declaration. Source

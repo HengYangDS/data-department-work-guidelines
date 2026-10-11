@@ -13,7 +13,7 @@ import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 import { strictVersion } from "../../tools/docs/changelog.mjs";
-import { declaredToolRuntime, root } from "../../tools/docs/runtime.mjs";
+import { declaredToolRuntime, root } from "../../tools/runtime.mjs";
 import {
   isolatedNpmEnvironment,
   npmCliPath,

@@ -12,7 +12,7 @@ import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 import { pathToFileURL } from "node:url";
-import { nodeTool, root } from "../../tools/docs/runtime.mjs";
+import { nodeTool, root } from "../../tools/runtime.mjs";
 
 test("offline verification disables official telemetry only in its OpenSpec child", () => {
   const script = `
@@ -216,8 +216,8 @@ test("real official OpenSpec diagnostics block source verification", () => {
     mkdirSync(path.dirname(runtime), { recursive: true });
     cpSync(path.join(root, "tools", "docs", "openspec.mjs"), runtime);
     cpSync(
-      path.join(root, "tools", "docs", "runtime.mjs"),
-      path.join(path.dirname(runtime), "runtime.mjs"),
+      path.join(root, "tools", "runtime.mjs"),
+      path.join(directory, "tools", "runtime.mjs"),
     );
     const manifest = path.join(
       directory,

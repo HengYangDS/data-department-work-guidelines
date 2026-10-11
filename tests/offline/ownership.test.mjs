@@ -17,7 +17,7 @@ import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 import { pathToFileURL } from "node:url";
-import { root } from "../../tools/docs/runtime.mjs";
+import { root } from "../../tools/runtime.mjs";
 import { acquireGitHubBundle } from "../../tools/ci/offline/acquire.mjs";
 import {
   assembleBundle,

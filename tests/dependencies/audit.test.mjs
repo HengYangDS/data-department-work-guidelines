@@ -15,7 +15,7 @@ import { syncBuiltinESMExports } from "node:module";
 import path from "node:path";
 import { test } from "node:test";
 import * as dependencies from "../../tools/docs/dependencies.mjs";
-import { readText, root } from "../../tools/docs/runtime.mjs";
+import { readText, root } from "../../tools/runtime.mjs";
 import {
   approvedFinding,
   dependencyPolicy,

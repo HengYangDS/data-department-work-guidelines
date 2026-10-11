@@ -19,7 +19,7 @@ import { Parser } from "htmlparser2";
 import { micromark } from "micromark";
 import { markdownTokens, walkMarkdown } from "../../tools/docs/markdown.mjs";
 import { lintMarkdown } from "../../tools/docs/content.mjs";
-import { root } from "../../tools/docs/runtime.mjs";
+import { root } from "../../tools/runtime.mjs";
 import { assertFixtureSources } from "../source/fixtures.mjs";
 
 test("native Markdown preserves delimiter flanking and ordinary emphasis", () => {

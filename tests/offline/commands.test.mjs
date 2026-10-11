@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import childProcess, { spawnSync } from "node:child_process";
 import { syncBuiltinESMExports } from "node:module";
 import { test } from "node:test";
-import { root } from "../../tools/docs/runtime.mjs";
+import { root } from "../../tools/runtime.mjs";
 
 test("the offline CLI is inert on import and exposes no library facade", async (context) => {
   const execution = context.mock.method(childProcess, "spawnSync", () => {

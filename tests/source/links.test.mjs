@@ -18,7 +18,8 @@ import { syncBuiltinESMExports } from "node:module";
 import { test } from "node:test";
 import { pathToFileURL } from "node:url";
 import { checkLinks, repositoryFileUri } from "../../tools/docs/content.mjs";
-import { gitFiles, nativeToolBinary, root } from "../../tools/docs/runtime.mjs";
+import { gitFiles, root } from "../../tools/runtime.mjs";
+import { nativeToolBinary } from "../../tools/supply.mjs";
 import { assertFixtureSources } from "../source/fixtures.mjs";
 
 test("repository file links cannot escape the checkout", () => {
