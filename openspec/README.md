@@ -12,18 +12,21 @@ For the current Change, read its
 [design](changes/native-document-quality/design.md) for choices, or
 [tasks](changes/native-document-quality/tasks.md) for actions and progress.
 
-Install locked tools with `npm ci --ignore-scripts`, then run the official
-validator and ETHOS from the selected worktree:
+From the selected worktree, use installed ETHOS to check the official artifacts
+and plan the changed source:
 
 ```text
-node node_modules/@fission-ai/openspec/bin/openspec.js validate --all --strict --json
 ethos status --json
+ethos prove --host --execute --gate openspec --json
 ethos plan --changed --json
 ```
 
-Node executes the installed locked package's JavaScript entry directly. A
-missing local entry fails instead of consulting a global CLI, npm execution
-cache, or registry. The command needs no executable bit or POSIX shell.
+Status identifies the bound runtime and its official OpenSpec command. The
+OpenSpec gate uses that runtime's supplied Node and CLI; this check needs no
+repository npm installation. Keep the complete native result, including findings
+and prerequisites. Host validation does not grant write permission or constitute
+repository proof. Follow [source verification](../CONTRIBUTING.md#verify-the-source)
+for the other document checks and their current prerequisites.
 
 ETHOS owns material-path attribution, write admission, proof, and closeout.
 `npm run verify` guards repository-specific document and decision topology; it
