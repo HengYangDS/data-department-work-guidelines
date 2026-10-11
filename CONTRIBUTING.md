@@ -57,9 +57,10 @@ retain its complete result under the
 | Check non-spacing Markdown rules | `node tools/docs/cli.mjs lint` |
 | Check spelling, prose, and terms | `npm run prose`                |
 
-Follow the [configuration map](.config/README.md) for spacing, native rules, and
-byte-exact examples. Review meaning at the [communication](docs/communicate.md)
-and relevant task owner: a passing style check cannot establish factual accuracy,
+The [configuration map](.config/README.md) locates each native input; it does not
+restate common standards. Use the installed ETHOS rules and the declared native
+formatters. Review meaning at the [communication](docs/communicate.md) and
+relevant task owner: a passing style check cannot establish factual accuracy,
 semantic fidelity, or reader understanding.
 
 ### Prepare the runtime and dependencies

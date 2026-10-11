@@ -139,8 +139,9 @@ success. The same Changelog serves both peers and local readers.
 Run `npm run verify` through the [portable entry](../../tools/docs/cli.mjs).
 It checks native formatting, Markdown, Vale, offline lychee, repository
 boundaries, strict official OpenSpec, and the standalone regression suite.
-[Contributing](../../CONTRIBUTING.md#verify-the-source) owns the commands;
-the [configuration map](../../.config/README.md) owns rule selection and spacing.
+[Contributing](../../CONTRIBUTING.md#verify-the-source) owns the commands.
+Installed ETHOS owns the common rules; the
+[configuration map](../../.config/README.md) locates current native inputs.
 
 ### Observe the Execution Environment
 

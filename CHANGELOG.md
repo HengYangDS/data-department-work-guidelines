@@ -28,6 +28,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Keep the configuration map as navigation to native inputs. Remove its copy
+  of shared formatting and prose standards; installed ETHOS owns common rules.
+  Executable checks remain required until their replacements qualify.
 - Prepare v8.0.0 for incompatible review duties and reader routes. Replace
   unconditional review minima with accountable, risk-adjusted intervals.
   Preserve calibration, mechanism review, and practice and capability review
