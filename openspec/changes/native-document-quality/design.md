@@ -539,6 +539,12 @@ non-conforming value only on applicable authored Markdown; resolve both from
 the installed public contract rather than copying a numeric ceiling. Keep
 Changelog complete at its existing owner and review OpenSpec by official
 validation and semantic responsibility, not document count.
+Keep execution and Git-selected runner cases at the execution test owner;
+context, stream ordering, and workspace-capacity cases belong to the context
+test owner. Move original cases intact, and share fixtures only where setup
+semantics match. Native Node discovery must include each cohort once without
+replaying another verifier or reducing its selected inputs.
+
 Improve code and test cohesion where it serves their lasting responsibilities;
 do not partition a checker already scheduled for replacement by CUE. Preserve
 discovery, obligations, and diagnostics without minification, hidden input,
