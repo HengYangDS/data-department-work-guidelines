@@ -64,6 +64,7 @@ test("source checking precedes conditional tool preparation without hiding input
         .join("\n"),
     );
     for (const prerequisite of [
+      "#make-ethos-available",
       "#prepare-the-runtime-and-dependencies",
       "#supply-native-checks",
     ]) {
@@ -73,10 +74,39 @@ test("source checking precedes conditional tool preparation without hiding input
       );
     }
     const command = section.find((token) => token.type === "codeFenced");
+    const codeLines = (token) =>
+      [...walkMarkdown(token.children)]
+        .filter((child) => child.type === "codeFlowValue")
+        .map((child) => child.text);
     assert.ok(
       command &&
-        command.text.includes("npm run verify\nethos plan --changed --json"),
-      "the first verification example must run the checks, not install tools",
+        codeLines(command).length === 1 &&
+        codeLines(command)[0] === "npm run verify",
+      "the full-check example must not imply a fixed transition pipeline",
+    );
+    const readiness = contentUnderHeading(
+      text,
+      relative,
+      "Inspect Change readiness",
+    );
+    const plans = readiness
+      .filter((token) => token.type === "codeFenced")
+      .map((token) => codeLines(token).join("\n"));
+    assert.ok(
+      plans.includes("ethos plan --changed --json") &&
+        plans.includes("ethos plan --change CHANGE_ID --json"),
+      "dirty inspection and selected-Change readiness need distinct examples",
+    );
+    const offline = contentUnderHeading(
+      text,
+      relative,
+      "Use the offline maintenance toolkit",
+    );
+    assert.ok(
+      markdownLinkDestinations(
+        offline.map((token) => token.text).join("\n"),
+      ).includes("#make-ethos-available"),
+      "offline verification must expose the separate product prerequisite",
     );
     const acquisition = [
       ...walkMarkdown(
@@ -126,6 +156,23 @@ test("source checking precedes conditional tool preparation without hiding input
           source.slice(end),
       ),
     /source checks must precede/u,
+  );
+  assert.throws(
+    () =>
+      assertCheckEntry(
+        source.replace("(#make-ethos-available)", "(#supply-native-checks)"),
+      ),
+    /preparation must stay discoverable/u,
+  );
+  assert.throws(
+    () =>
+      assertCheckEntry(
+        source.replace(
+          "ethos plan --change CHANGE_ID --json",
+          "ethos plan --changed --json",
+        ),
+      ),
+    /selected-Change readiness/u,
   );
   assert.throws(
     () =>

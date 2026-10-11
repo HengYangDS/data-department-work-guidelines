@@ -28,8 +28,9 @@ and generated output out of Git.
 
 ## Verify the source
 
-The full check requires the declared Node/npm, locked dependencies, and the
-[native check tools](#supply-native-checks). If they are already available,
+The full check requires [installed ETHOS](#make-ethos-available), the declared
+Node/npm, locked dependencies, and the [native check tools](#supply-native-checks).
+If they are already available,
 [run the source check](#run-the-full-source-check). Otherwise, prepare the
 [declared runtime and dependencies](#prepare-the-runtime-and-dependencies),
 then [supply any missing checks](#supply-native-checks). Use the
@@ -40,7 +41,6 @@ is unavailable.
 
 ```text
 npm run verify
-ethos plan --changed --json
 ```
 
 `npm run verify` invokes the installed ETHOS full host graph. The two document
@@ -70,6 +70,43 @@ restate common standards. Use the installed ETHOS rules and the declared native
 formatters. Review meaning at the [communication](docs/communicate.md) and
 relevant task owner: a passing style check cannot establish factual accuracy,
 semantic fidelity, or reader understanding.
+
+### Inspect Change readiness
+
+For uncommitted work, inspect the changed source:
+
+```text
+ethos plan --changed --json
+```
+
+A clean checkout may return `no_changes` with no plan nodes. To inspect the
+selected official Change, use its directory name:
+
+```text
+ethos plan --change CHANGE_ID --json
+```
+
+Follow the returned verdict, gaps, next action, and continuation. Neither a
+plan nor host verification proves acceptance or publication. Repository proof
+must bind the selected Change and exact committed source.
+
+### Make ETHOS available
+
+The installed `ethos` command must be available to the shell that runs npm.
+Use the ETHOS product's native installation and supplied offline distribution;
+the repository's hooks and Git-common runtime do not install a shell command.
+Check the actual caller before running the full source check:
+
+```text
+ethos --version
+ethos status --json
+```
+
+If the command is missing, setup is incomplete. Node/npm preparation and the
+DDWG toolkit below cannot supply it. Do not add a repository wrapper or expose
+a private runtime path to make the check appear installed. Clean CI must
+prepare the same product command explicitly; an existing host installation
+does not prove that route.
 
 ### Prepare the runtime and dependencies
 
@@ -165,7 +202,9 @@ ownership.
 
 For checks without remote supply, transfer the matching source-bound bundle to a
 fresh checkout with the declared Node, npm, and Git. The optional toolkit does
-not install the guidelines or include ETHOS:
+not install the guidelines or include ETHOS. Supply
+[the product command separately](#make-ethos-available) before verification;
+the toolkit alone cannot qualify a clean or offline environment:
 
 ```text
 node tools/ci/offline-bundle.mjs inspect --bundle PATH
@@ -264,13 +303,15 @@ and later publication on both Forges. Re-run `npm run verify`.
 
 ### 3. Prove and accept the source
 
-Run `ethos plan --changed --json` and follow its current verdict. Commit with
+Use [Change readiness](#inspect-change-readiness) for the current source and
+selected Change. Commit with
 the configured trusted SSH signer. From a fresh checkout of the committed
 source with no `node_modules/` or application tool cache, use
 `node tools/ci/offline-bundle.mjs install --bundle BUNDLE_PATH` and
-`npm run verify` without remote supply. The source and bundle must match.
+`npm run verify` without remote supply, with ETHOS separately installed from
+the accepted product supply. The source and bundle must match.
 Take the actual OID from `git rev-parse HEAD`, and execute
-`ethos prove --execute --full --scope repository --expect-head OID --json`.
+`ethos prove --execute --full --change CHANGE_ID --expect-head OID --json`.
 
 Follow the native candidate and accepted-root results. A Change with remote
 delivery obligations stays active while those tasks are open; archive only

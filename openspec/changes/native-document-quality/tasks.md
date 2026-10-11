@@ -126,6 +126,11 @@
       matrices, without inferring VM identity, isolation, or throughput.
 - [ ] 2.38 Consume the [shared native tool supply](design.md#supply-exact-tools-without-a-second-installation-plane)
       through actual installed ETHOS, Windows, protected-source, and offline routes.
+      Qualify the public contributor command without an injected runtime path,
+      and prepare that same product explicitly in clean source and offline CI;
+      Git-common hooks and a DDWG toolkit do not supply the shell command.
+      Distinguish changed-source inspection from selected-Change readiness and
+      committed repository proof in the contribution route.
       Where the product selects Mise, verify native discovery, exact input
       materialization, safe-mode settings, checksum and mismatch refusals, and
       warning-free commands. For retained Node consumers, distinguish npm bootstrap
@@ -139,6 +144,7 @@
       exact-HEAD proof, and both Forge source/offline matrices. Retire DDWG supply,
       installer, bundle code, common manifests, replaced wiring, and probes
       after preserving their original findings and qualification evidence:
+      `3078972e5e3cc4b9f4b6903bebae8a7f2a4e25c597600a06385a6ac4852fefca`,
       `e2716d443068e5ef8a3a30b0294c89e8a7c95c3f391b0c2c1654d61d4451d319`,
       `816cb6432b150825c22073cce0a89e6632721aa0477620b44496dab739166162`.
 - [x] 2.39 Isolate cache-rejection fixtures from inherited explicit selectors;
