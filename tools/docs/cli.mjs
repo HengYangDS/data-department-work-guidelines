@@ -1,7 +1,6 @@
 import {
   assertNodeRuntime,
   reportError,
-  root,
   workspaceObservation,
 } from "../runtime.mjs";
 
