@@ -195,13 +195,34 @@ Asset governance retains permission and exit controls; production retains
 release and recovery. The task lead coordinates these decisions without taking
 over their owners' authority.
 
-For example, a shared issuer-identifier change can preserve a valid schema while
-changing which entities a report joins. Business and data-model owners settle
-identity and its time rules, development tests affected joins, and technical
-owners check compatibility. The product owner identifies dependent consumers
-and their migration; production plans release and recovery, and governance
-confirms permission. A passing schema check cannot settle a conflicting meaning
-or an unresolved consumer migration.
+#### Worked change: a shared issuer identifier
+
+**Illustrative case, not a recorded incident.** A shared dataset changes its
+issuer identifier. Local tests pass, but a dependent report still joins on the
+old identifier. The new schema may be valid even if the report now matches the
+wrong entities or loses matches.
+
+Business and data-model owners resolve identity and its time rules, including
+any conflict between domain definitions. Development checks affected joins
+against the agreed meaning; technical owners check compatibility. The product
+owner identifies dependent consumers and their migration. Production plans
+release and recovery, and governance confirms permission and exit conditions.
+The task lead coordinates the unresolved decisions.
+
+Before retiring the old interface, establish that each affected consumer has
+migrated or that the authorized owner has ended its use. A deprecation notice
+alone does not establish completed migration. Identify failed and unverified
+joins in the existing work evidence, with their inputs, version, environment,
+impact, responsible owner, and next action.
+
+If the report's migration or approved withdrawal is unverified, retirement
+remains unfinished even when local tests pass. Retain only the old interface
+and recovery material needed for that named dependency, with a resolution action
+and revisit time. After acceptance and the required release and exit decisions,
+retire the replaced live interface. Verify that the report uses the successor
+or is no longer an active consumer under the authorized decision.
+An Agent may trace dependencies, compare joins, and prepare migration evidence
+within its delegation; it cannot supply the missing acceptance or permission.
 
 ### Own Implementation and Verification
 
