@@ -1,3 +1,4 @@
+---
 extends: existence
 message: "Replace '%s' with the specific claim it is meant to convey."
 level: error
