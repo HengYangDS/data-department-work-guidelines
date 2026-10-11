@@ -2,153 +2,110 @@
 
 ## Why
 
-The opening source split English checks across spelling, textlint, and a custom
-write-good adapter. Replacing only the prose command would leave its decision
-parser, license reader, supply, and configuration consumers behind. The same
-source also contained compressed department duties, duplicated policy, and
-navigation that could pass without giving readers a usable route.
+DDWG is a documentation repository. Its value is the judgment and guidance it
+helps members and Agents apply, not a second set of quality tools or standards.
+Common checks, tool supply, CI, and release behavior belong to ETHOS. Their
+rules also belong there; copying the standards while removing the code would
+leave another authority to maintain.
 
-This Change replaces those owners together, puts applicable department duties at
-their seven task topics, and qualifies the delivered source. Review the retired
-guidelines for omissions and justify changed or removed duties against current
-instructions, verified facts, and department needs. Shared ETHOS quality, risk,
-and history capabilities remain product dependencies.
+This Change delivers useful English guidance and replaces shared maintenance
+with accepted installed ETHOS capabilities. The actual consumer must preserve
+the complete applicable quality floor before its predecessor retires. DDWG
+keeps department content, native parameters, and only a business-specific
+increment justified by an observed gap. No substantial unique automation has
+been established.
 
 ## What Changes
 
-- Use native Vale for spelling, selected terminology, repetition, and diagnosed
-  prose defects. Keep native vocabulary and effective rule coverage; preserve
-  uncertainty, authority, code, and evidence limits.
-- **BREAKING** Migrate decision and license parsing before removing textlint,
-  CSpell, write-good, and their unused dependencies, configuration, adapters, and
-  commands.
-- Remove Markdownlint CLI2's redundant selection layer while keeping
-  the native core, diagnostics, TOML policy, and all distinguishing cases.
-- Review the complete retired source for omissions. Keep applicable duties at
-  their task owners and explain each changed, replaced, or removed requirement.
-  Do not restore old prose, formats, or workflows by default. Compare original
-  clauses and revised topics, including decision constraints and dates,
-  execution costs, data acceptance, communication, human judgment,
-  responsibility, evidence, and event-driven learning.
+- **BREAKING** Consume shared checks, supply, CI, and release capabilities
+  directly from accepted installed ETHOS. Qualify each actual consumer, then
+  retire duplicate code, tests, dependencies, configuration, commands, guidance,
+  and common specification copies in the same admitted migration. A copied
+  executor, generated adopter script, facade, or language port is not a replacement.
+- Make the durable specifications describe department content and shared-contract
+  bindings, not another formatter, prose, decision, supply, or release standard.
+  Keep migration obligations in this Change and evidence with its native producer.
+  The installed product owns schemas, algorithms, defaults, and tool choices.
+- Review all 62 original subsections and five surrounding groups against the
+  seven current topic owners. Preserve applicable duties and explain changed,
+  replaced, or removed clauses. Review actors, authority, conditions, costs,
+  evidence, data use, communication, human judgment, and failure disposition.
 
   Admit department practice from an observed problem, substantiated material
   risk, or applicable obligation, with a bounded trial, ownership, and evidence
   of net benefit. Necessary safeguards must not wait for an incident or practice
   admission; the trial chooses and verifies their implementation, not whether
-  the obligation applies. Keep task-specific prevention, task-start clarity,
-  coaching where it is needed, and immediate correction.
+  the obligation applies.
 
-  Preserve weekly, monthly, and quarterly review purposes with explicit outputs
-  and justified interval changes rather
-  than fixed sample counts or meeting lengths. Remove the mandatory editing
-  fraction, rigid decomposition, and extra supervisor step for routine work
-  without weakening quality or authority boundaries or adding all-member reports.
+  Preserve weekly, monthly, and quarterly review purposes and useful outputs.
+  Permit justified interval changes without fixed sample counts, meeting
+  lengths, routine all-member reports, or another approval step for ordinary work.
 
-- Give Git-selected source one native owner per format and one configuration
-  owner per concern. Prettier owns Markdown spacing and container layout on
-  identical fix/check inputs, and handles supported code and structured data;
-  dprint owns TOML. Markdownlint owns non-spacing document checks. Preserve
-  meaningful literal bytes, comments, order, and nesting.
-- Keep configuration with its native consumer: checks, Mise, supply, or release.
-  Let Mise discover its project config and adjacent lock without a filename
-  override. Use TOML where the native tool accepts it; retain Vale's required
-  INI/YAML and dependency-free bootstrap JSON without duplicate manifests.
-- Enforce stable, unique, nonempty five-section decisions without execution
-  logs. Use native Markdown tokens and a non-evaluating shell lexer; preserve
-  ordinary rationale, evidence links, and inherited-property words.
-- Resolve navigation through the native Markdown compiler's actual GFM anchors.
-  Check visible labels, reference semantics, table routes, and opening cues.
-  Bind local links and aliases to delivered source, not ignored caches or Git
-  metadata, while lychee retains link extraction and fragment ownership.
-- Preserve the complete official OpenSpec report, selected categories, root,
-  counts, and diagnostics. Preserve native command errors, timeout streams, and
-  warnings at their existing consumers without repeating execution.
-- Extend the existing installer and offline bundle owner for Vale, lychee, and
-  OSV Scanner. Verify exact supply and complete notices, refuse linked managed
-  paths, keep concurrent verified targets, and retain executor ownership. Cancel
-  rejected response bodies before failure and retain cleanup causes.
-- Replace npm audit with one complete native OSV scan. Retain every finding and
-  reject unapproved findings, expired approvals, invalid reports, failed scans,
-  and input drift. Keep the exact development approvals separate by artifact
-  and use. Migrate the bounded input check only after accepted ETHOS risk
-  admission covers those subjects; retire duplicate filtering immediately.
-  Keep required failure evidence at its producing owner.
-- Keep local verification independent of remote supply. GitLab and GitHub each
-  supply and publish the same qualified source and offline bytes independently.
-  Give runnable CI jobs symmetric purpose/platform names, restrict tag routes
-  before supply, preserve review/protected isolation, and serialize this
-  project's Windows jobs through one native resource group.
-- Keep one Changelog with neutral version headings and explicit history links
-  for both declared publication peers. Preserve SemVer, signed identity, native
-  reference resolution, and ancestry without guessing web coordinates from Git
-  transport.
-- Retire reviewed completed-Change copies and superseded download assets only
-  after consumer, recovery, and preservation checks. Keep immutable Git,
-  original release notes, failed evidence, and one qualified rollback; introduce
-  no history directory or retention controller.
-- Integrate the formally accepted ETHOS quality, risk, and repaired-history
-  contracts in place. Keep exactly two default gates, qualify the actual native
-  dependency graph on DDWG, AIGW, and Proxy, and remove product-superseded local
-  glue in the same migration.
-- Define the common CI task graph, platform intent, and admission once in CUE.
-  Generate the GitLab and GitHub YAML projections, keeping only necessary peer
-  differences and the existing native executors. Qualify non-writing drift
-  checks on each peer before retiring the duplicated YAML policy checker.
-- Consume accepted shared size admission at its actual carrier and language
-  boundaries. The documentation ceiling applies to current authored Markdown,
-  not release-owned Changelog, official OpenSpec artifacts, or declared generated
-  output. Code uses supported metrics and declared policy. Improve semantic
-  ownership without a private checker, hidden inputs, or lost meaning.
-- Consolidate the existing proposal, design, and task ledger by semantic
-  concern. Keep every task ID and obligation; replace stale progress with
-  current evidence references without rewriting original Git or execution
-  records.
+- Improve task navigation and natural English for members and Agents. Keep
+  business meaning, historical validity, shared-model changes, engineering
+  responsibility, consumer migration, permissions, and recovery explicit at
+  their existing topic owners. Review real reading paths rather than infer
+  understanding from shorter prose, a graph, or a test count.
+- Declare English content, Department vocabulary, necessary native inputs,
+  supported platforms, and the two publication peers through accepted contracts.
+  Inherit shared formatting, lint, prose, links, decision, carrier, and source
+  policies. Preserve meaningful literals and complete diagnostics without
+  defining their parsers or settings again in this repository.
+- Preserve the requested stable lowercase, five-section decision form through
+  its shared owner, without a local schema or duplicate standard.
+- Keep `docs-integrity` and `markdown-format` as the selected DDWG default roots.
+  The product owns their applicable prerequisites and evidence. Other adopters
+  retain their own applicable graph; optional descriptors are not invalid merely
+  because they are outside the default closure.
+- Use the product's accepted shared CI contract. Its owner selects the source
+  representation and projection mechanism; DDWG supplies peer and platform
+  parameters. Qualify non-writing drift refusal and actual source/offline jobs
+  before retiring duplicate local CI policy.
+- Keep document editions separate from shared maintenance-tool distribution.
+  Qualify the exact accepted product supply in local and offline consumers.
+  Retire the former DDWG generic bundle when its named consumers release it;
+  previous tool versions and approvals do not dictate the final architecture.
+- Publish the same admitted source graph independently on GitLab and GitHub.
+  Consume native version, history, signing, release, and download contracts;
+  verify each peer's own jobs, tags, assets, navigation, and retained downloads.
+- Preserve task IDs, checked historical work, original failures, and required
+  evidence. Retire replaced current carriers without rewriting Git history,
+  retrospectively certifying earlier work, or leaving a second progress ledger.
 
 ## Capabilities
 
 ### New Capabilities
 
-- [`work-practice`](specs/work-practice/spec.md): decision, data, collaboration,
-  coaching, and feedback duties at their points of use; relocated obligations
-  and original scenarios remain intact.
-- [`verification`](specs/verification/spec.md): complete native source checks,
-  proof prerequisites, execution evidence, and shared CI admission.
-- [`tool-supply`](specs/tool-supply/spec.md): source-bound maintenance tools,
-  portable offline execution, and supply qualification.
-- [`publication`](specs/publication/spec.md): signed editions, protected platform
-  qualification, two-Forge history navigation, and download retirement.
+- [`work-practice`](specs/work-practice/spec.md): department decision, data,
+  delivery, communication, coaching, and feedback duties at their points of use.
+- [`verification`](specs/verification/spec.md): the selected DDWG shared proof
+  contract and actual-consumer qualification.
+- [`tool-supply`](specs/tool-supply/spec.md): readable guidance independent of
+  tools and the DDWG binding to accepted product maintenance supply.
+- [`publication`](specs/publication/spec.md): the DDWG publication peers,
+  platform selection, and document-edition acceptance.
 
 ### Modified Capabilities
 
-- [`quality`](specs/quality/spec.md): English source, native formatting and
-  prose, reader links, DR form, and configuration ownership; verification and
-  supply requirements move to their own capabilities through official deltas.
+- [`quality`](specs/quality/spec.md): English reader content and shared quality
+  inheritance; copied common standards retire through official deltas.
 - [`guidance-discovery`](specs/guidance-discovery/spec.md): task routes, unique
-  rule ownership, semantic-review limits, and justified current duties;
-  point-of-use work requirements move to `work-practice`.
-- [`repository-governance`](specs/repository-governance/spec.md): Change
-  authority, source acceptance, task form, evidence, and signed identity;
-  release and platform requirements move to `publication`.
+  department-rule ownership, semantic review, and justified current duties.
+- [`repository-governance`](specs/repository-governance/spec.md): native shared
+  authority and DDWG parameters rather than copied lifecycle or release rules.
 
 ## Impact
 
-The document tools, tests, native policy, npm lock, CI, contributor guidance,
-release identity, and offline bundle change. Department content receives
-semantically reviewed English edits and justified corrections, replacements, or
-retirement of rules, not preservation of every early clause, new approval roles,
-forms, meetings, or an automated claim of equivalence.
+Current tools, tests, package inputs, common configuration, CI, contributor
+procedures, and duplicate specifications change or retire after actual shared
+consumer acceptance. Department guidance receives reviewed English corrections
+and justified rule changes without new approval roles, forms, or ritual meetings.
 
-The initial contributor/supply transition is a major edition. Classify later
-changes against the currently effective contract: compatible fixes use patch
-releases, compatible additions use minor releases, and breaking changes require
-a major release. Retired wording does not establish compatibility. Published
-tags and asset bytes remain immutable. A completed historical copy may leave
-the current tree through this admitted Change without certifying its reported
-execution or rewriting history.
+Classify the final edition through the accepted release contract against the
+currently effective edition. The prepared major edition is not already released.
+Published source, tags, notes, and assets retain their native history and identity.
 
-OpenSpec and ETHOS retain lifecycle, admission, proof, acceptance, and
-publication authority. There is no private scope, duplicate lifecycle, tracked
-evidence ledger, new installer, mobile work, staged adoption exercise,
-foreign-lane mutation, credential migration, or model change. Final release and
-closure depend on accepted shared-product integration and actual adopter
-qualification; local source success cannot supply those results.
+Continue this official Change and its [task ledger](tasks.md). Shared integration
+and final delivery remain open until observed at their actual owners. There is
+no private scope, duplicate lifecycle, new installer, mobile work, staged adoption
+exercise, foreign-lane mutation, credential migration, or model change.

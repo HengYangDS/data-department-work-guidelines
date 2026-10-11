@@ -2,137 +2,90 @@
 
 ## ADDED Requirements
 
-### Requirement: Contributor exclusions travel with source
+### Requirement: Repository declarations bind common product capabilities
 
-Tracked native Git ignore policy SHALL exclude untracked editor state and Finder
-metadata in a fresh clone without ambient or Git-common exclusions. Tracked
-guidance SHALL remain selected; local exclusions SHALL NOT establish portability.
+DDWG SHALL bind common governance and maintenance through accepted installed
+ETHOS contracts and native declarations. Its specifications SHALL define
+business content, necessary parameters, and justified unique increments, not
+another lifecycle, task schema, formatter, release rule, or progress authority.
+Actual consumer acceptance SHALL precede retirement of duplicate standards and
+implementations through this official Change.
 
-#### Scenario: A contributor opens a fresh clone in an editor
+#### Scenario: Common capability ownership is corrected
 
-- **WHEN** editor state or Finder metadata appears in a fresh repository using
-  its tracked ignore policy and no personal exclusions
-- **THEN** native Git excludes those untracked files and retains tracked guidance
-- **AND** the repository adds no controller or quality gate for that selection.
+- **WHEN** a DDWG capability is replaced through its accepted installed owner
+- **THEN** the native interface validates the actual repository declaration
+- **AND** the same admitted migration retires duplicate code, generic tests,
+  dependencies, common configuration, procedures, and specification copies.
 
-### Requirement: Active task artifacts remain implementation checklists
+#### Scenario: A common implementation is not yet consumable
 
-Active `tasks.md` SHALL follow the official template: numbered groups of bounded
-checkbox actions with completion checks. Tasks SHALL own state; specifications
-and design SHALL own requirements and choices. Execution results, review
-coverage, logs, checkpoints, debugging narratives and acceptance reports SHALL
-stay with their producer, referenced but not copied into tasks. Accepted
-installed ETHOS SHALL enforce this boundary, not parsing alone, without a private
-schema or default gate.
+- **WHEN** the selected product interface or required installed input is absent
+- **THEN** its migration and dependent acceptance remain pending in existing tasks
+- **AND** DDWG retains required failures without a private companion, copied rule,
+  alternate executor, or false archive.
 
-#### Scenario: A parsed checklist contains execution narration
+#### Scenario: An independent product task remains unfinished
 
-- **WHEN** an active task artifact contains copied execution results or progress
-  narration outside a checkbox or indented beneath one
-- **THEN** the shared installed ETHOS task-authoring diagnostic rejects that
-  artifact through the existing document-quality admission
-- **AND** official checkbox counts cannot override that diagnostic.
+- **WHEN** an ETHOS, AIGW, or Proxy task is unrelated to the capability being consumed
+- **THEN** it does not block independent DDWG content or reader work
+- **AND** each adopter keeps its own actual source, authority, and acceptance owner.
 
-#### Scenario: A task records an action and its completion check
+### Requirement: DDWG selects native source and branch parameters
 
-- **WHEN** an active task follows the selected official template with a bounded
-  action, a completion check, and any necessary reference to producer evidence
-- **THEN** the shared diagnostic accepts meaningful links, inline verification
-  commands, and wrapped action text
-- **AND** the official parser remains the owner of task identity and completion.
+DDWG SHALL declare `dev`, `main`, `candidate/dev`, `work/`, and `proposal/` through
+ETHOS's accepted native branch contract. Only `dev`, `main`, and `proposal/*`
+SHALL be published to its declared Forges. Official OpenSpec SHALL carry material
+intent, with the existing tasks as the sole progress ledger. Native shared
+contracts SHALL own admission, signatures, history repair, proof, and closure.
 
-### Requirement: Publication peers preserve the governed commit graph
+#### Scenario: A contributor changes tracked source
 
-GitLab and GitHub SHALL retain the same signed commit graph, including governed
-merge commits. Fast-forward acceptance SHALL advance refs without rewriting
-accepted parent provenance. Both `dev` and `main` SHALL remain protected with
-required source checks and trusted signatures; force pushes and deletions SHALL
-remain prohibited. Provider-specific history rules SHALL admit that graph.
+- **WHEN** the contributor selects this active Change and its owned leased lane
+- **THEN** native admission binds the exact source, paths, actor, and current state
+- **AND** reader guidance and local checks do not grant additional authority.
 
-#### Scenario: A governed integration reaches both peers
+#### Scenario: A local working branch is offered for publication
 
-- **WHEN** an exact signed integration contains a merge commit and passes the
-  declared proof and source checks
-- **THEN** both peers accept the same commit graph without squashing, rewriting
-  accepted history, or bypassing the required checks
-- **AND** publication is verified through each exact ref and actual source jobs.
+- **WHEN** the publication route selects `work/*` or `candidate/dev`
+- **THEN** the accepted native branch policy refuses that remote effect
+- **AND** a declared proposal may proceed only under its actual admission.
+
+#### Scenario: The completed Change is archived
+
+- **WHEN** the official lifecycle creates a later archive object
+- **THEN** its actual native proof, signature, publication, and lane retirement
+  are separately observed at their new source binding
+- **AND** earlier checks and historical task state do not certify those effects.
 
 ## REMOVED Requirements
 
-### Requirement: Hosted documentation verification begins from a Git checkout
+**Reason:** Shared admission, evidence, task, signing, identity, branch, and
+publication behavior must not be restated as another DDWG standard. The MIT
+reuse grant remains a repository choice at its existing owner.
 
-**Reason**: This requirement belongs to the publication capability.
-**Migration**: Preserve its full obligation and scenarios at
-`openspec/specs/publication/spec.md` through this Change.
+**Migration:** Native branch and profile declarations bind the shared owner.
+Existing tasks retain complete qualification and evidence obligations; accepted
+consumer transitions retire copied standards with their duplicate execution.
+Original requirement and scenario bytes remain in captured source evidence
+`640cc1a0f708b9b8411d714f07d084376a8b691469e8518181d213366ab753e6`.
 
-### Requirement: Per-project dual-Forge runner isolation
+### Requirement: Accepted-to-release fast-forward mirror
 
-**Reason**: This requirement belongs to the publication capability.
-**Migration**: Preserve its full obligation and scenarios at
-`openspec/specs/publication/spec.md` through this Change.
+### Requirement: ETHOS material-path attribution remains product-owned
 
-### Requirement: Version identity follows SemVer compatibility
+### Requirement: Local and remote publication facts are separate
 
-**Reason**: This requirement belongs to the publication capability.
-**Migration**: Preserve its full obligation and scenarios at
-`openspec/specs/publication/spec.md` through this Change.
+### Requirement: Change completion follows declared obligations
 
-### Requirement: Changelog structure follows Keep a Changelog
+### Requirement: Evidence remains with its producing owner
 
-**Reason**: This requirement belongs to the publication capability.
-**Migration**: Preserve its full obligation and scenarios at
-`openspec/specs/publication/spec.md` through this Change.
+### Requirement: Repository-generated commits follow the signed source contract
 
-### Requirement: Release comparison links bind ancestry and tags
+### Requirement: New commit identity and message policy is native
 
-**Reason**: This requirement belongs to the publication capability.
-**Migration**: Preserve its full obligation and scenarios at
-`openspec/specs/publication/spec.md` through this Change.
+### Requirement: Contributor exclusions travel with source
 
-### Requirement: Prepared and published release states remain distinct
+### Requirement: Active task artifacts remain implementation checklists
 
-**Reason**: This requirement belongs to the publication capability.
-**Migration**: Preserve its full obligation and scenarios at
-`openspec/specs/publication/spec.md` through this Change.
-
-### Requirement: Each Forge supplies its pinned documentation tool independently
-
-**Reason**: This requirement belongs to the publication capability.
-**Migration**: Preserve its full obligation and scenarios at
-`openspec/specs/publication/spec.md` through this Change.
-
-### Requirement: Offline verification supply is a separately observed release asset
-
-**Reason**: This requirement belongs to the publication capability.
-**Migration**: Preserve its full obligation and scenarios at
-`openspec/specs/publication/spec.md` through this Change.
-
-### Requirement: GitLab Runner image admission matches the source pin
-
-**Reason**: This requirement belongs to the publication capability.
-**Migration**: Preserve its full obligation and scenarios at
-`openspec/specs/publication/spec.md` through this Change.
-
-### Requirement: Offline release archives exclude host metadata
-
-**Reason**: This requirement belongs to the publication capability.
-**Migration**: Preserve its full obligation and scenarios at
-`openspec/specs/publication/spec.md` through this Change.
-
-### Requirement: Release operations are reproducible from the contributor route
-
-**Reason**: This requirement belongs to the publication capability.
-**Migration**: Preserve its full obligation and scenarios at
-`openspec/specs/publication/spec.md` through this Change.
-
-### Requirement: Remote download retention is bounded and truthful
-
-**Reason**: This requirement belongs to the publication capability.
-**Migration**: Preserve its full obligation and scenarios at
-`openspec/specs/publication/spec.md` through this Change.
-
-### Requirement: Changelog navigation offers both declared Forges
-
-**Reason**: This requirement belongs to the publication capability.
-**Migration**: Preserve its full obligation and scenarios at
-`openspec/specs/publication/spec.md` through this Change.
+### Requirement: Publication peers preserve the governed commit graph

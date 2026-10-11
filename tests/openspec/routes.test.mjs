@@ -362,7 +362,7 @@ test("task completion routes stay in their Markdown item after prose editing", (
   }
 });
 
-test("official apply tracks current checkbox items, not archive follow-up", () => {
+test("official apply tracks every readable item without a second progress section", () => {
   const relative = "openspec/changes/native-document-quality/tasks.md";
   const source = readFileSync(path.join(root, relative), "utf8");
   const env = Object.fromEntries(
@@ -400,11 +400,22 @@ test("official apply tracks current checkbox items, not archive follow-up", () =
     report.tasks.filter((task) => !task.done).length,
   );
   const tokens = markdownTokens(source, relative);
-  const followup = tokens.find(
-    (token) =>
-      headingLevel(token) === 2 && headingText(token) === "Workflow follow-up",
+  const groups = tokens.filter((token) => headingLevel(token) === 2);
+  assert.ok(groups.length, "the official checklist has numbered task groups");
+  assert.ok(
+    groups.every((token) => /^\d+\.\s/u.test(headingText(token))),
+    "task progress must not acquire an unnumbered status section",
   );
-  assert.ok(followup, "archive work remains visible outside tracked progress");
+  const designRelative = "openspec/changes/native-document-quality/design.md";
+  const migration = contentUnderHeading(
+    readFileSync(path.join(root, designRelative), "utf8"),
+    designRelative,
+    "Migration Plan",
+  );
+  assert.ok(
+    migration.some((token) => token.type === "listOrdered"),
+    "the design retains the migration dependency order",
+  );
   const paragraphs = [...walkMarkdown(tokens)]
     .filter((token) => token.type === "listUnordered")
     .flatMap((token) =>
@@ -417,7 +428,6 @@ test("official apply tracks current checkbox items, not archive follow-up", () =
     .filter(
       (token) =>
         token &&
-        token.startLine < followup.startLine &&
         ["[ ] ", "[x] "].some((marker) => token.text.startsWith(marker)),
     );
   assert.ok(
@@ -443,7 +453,6 @@ test("official apply tracks current checkbox items, not archive follow-up", () =
   );
   for (const task of report.tasks) {
     assert.equal(task.sourcePath, path.join(root, relative));
-    assert.ok(task.line < followup.startLine);
     const paragraph = paragraphs.find((token) => token.startLine === task.line);
     assert.ok(paragraph, "each native task is readable, not code or a comment");
     assert.ok(paragraph.text.includes(task.description));

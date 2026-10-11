@@ -106,11 +106,12 @@
       verify ancestor bytes, recovery, and both-Forge commit/path references.
       Preserve archive controls through owned fixtures, proof, and cold installation.
 - [ ] 2.33 Integrate the [accepted shared contracts](design.md#integrate-accepted-shared-ownership-without-weakening-the-floor)
-      in the actual DDWG installation. Verify two default roots, provider-owned
-      behavior, complete single-attempt tests and diagnostics, native formatting,
-      resource loading, task authoring, risk, and identity. Consume the CUE
-      and size integrations in 2.45 and 2.46; retire replaced glue after
-      consumer acceptance.
+      through the actual installed ETHOS interfaces. Verify complete document
+      checks, formatting, prose, links, official reports, source selection, and
+      diagnostics at their product owners with only two default roots. Qualify
+      unchanged real files and distinguishing refusals before replacing a gate;
+      retire the replaced DDWG checks, common configuration, procedures, and
+      copied standards in the same batch.
 - [x] 2.34 Serialize Windows jobs through one project-scoped resource group;
       verify reservation refusals, actual resource waiting, and non-overlap while
       retaining full discovery, two workers, the deadline, and original failures.
@@ -123,18 +124,20 @@
 - [x] 2.37 Report source, runtime, and mounted capacity at the existing verifier;
       verify exact integer bytes and native read errors locally and in both source
       matrices, without inferring VM identity, isolation, or throughput.
-- [ ] 2.38 Qualify the [fixed-source supply repairs](design.md#supply-exact-tools-without-a-second-installation-plane)
-      through actual Windows, protected-source, offline, and installed ETHOS routes.
-      Verify native Mise discovery, manifest/config/lock materialization, safe-mode
-      process settings, checksum and mismatch refusals, and warning-free commands.
-      Distinguish npm bootstrap from checksum enforcement; preserve host owners,
+- [ ] 2.38 Consume the [shared native tool supply](design.md#supply-exact-tools-without-a-second-installation-plane)
+      through actual installed ETHOS, Windows, protected-source, and offline routes.
+      Where the product selects Mise, verify native discovery, exact input
+      materialization, safe-mode settings, checksum and mismatch refusals, and
+      warning-free commands. For retained Node consumers, distinguish npm bootstrap
+      from checksum enforcement; preserve host owners,
       inherited Path precedence, credential boundaries, and job-local isolation.
       Qualify pinned stable actions and native Windows ARM64 Node against the
       [format](design.md#give-native-quality-concerns-one-owner),
       [risk](design.md#bind-risk-approval-to-the-actual-subject), and
       [execution](design.md#preserve-native-execution-and-complete-validation-evidence)
-      contracts using focused tests, full source, cold install, exact-HEAD proof,
-      and both Forge source/offline matrices. Retire replaced wiring and probes
+      contracts using focused tests, full source, cold product installation,
+      exact-HEAD proof, and both Forge source/offline matrices. Retire DDWG supply,
+      installer, bundle code, common manifests, replaced wiring, and probes
       after preserving their original findings and qualification evidence:
       `e2716d443068e5ef8a3a30b0294c89e8a7c95c3f391b0c2c1654d61d4451d319`,
       `816cb6432b150825c22073cce0a89e6632721aa0477620b44496dab739166162`.
@@ -165,24 +168,27 @@
       then check actual source, reading paths, and proof; preserve original evidence.
       Reference `940f164cc44b311fb62486e1d889bcefc2a67e0d453982d29ea8bb65dd970135`.
 - [ ] 2.45 Define shared CI semantics once through the accepted
-      [CUE projection contract](design.md#keep-both-publication-peers-complete-and-coherent).
-      Generate peer YAML from the common graph and necessary platform adapters;
+      [native projection contract](design.md#keep-both-publication-peers-complete-and-coherent).
+      Consume peer YAML from the common graph and necessary platform adapters;
       verify stable input identity, offline and single-peer use, non-writing drift
-      refusal, and actual protected source/offline jobs before retiring the checker.
-- [ ] 2.46 Integrate accepted shared size admission at supported carrier and
-      language boundaries; complete the sub-tasks below without dropping meaning,
-      selected inputs, or regression cases.
+      refusal, and actual protected source/offline jobs before retiring the DDWG
+      checker, duplicate shared job recipes, and local copies of common CI rules.
+- [ ] 2.46 Complete direct shared consumption and retire redundant source;
+      preserve meaning, selected inputs, and distinguishing acceptance cases.
   - [x] 2.46.1 Separate dependency auditing from CI topology; verify all 53
         original cases, declarations, shared fixtures, nested discovery, worker
         limits, deadlines, and full local execution.
-  - [ ] 2.46.2 Review runtime, release, and CI cohesion; separate only incoherent
-        owners and retire CI checks through 2.45, without an interim partition.
-        Verify preserved commands, errors, effects, native inputs, and regressions.
-  - [ ] 2.46.3 Review test cohesion and share fixtures without losing cases;
-        compare complete runner inputs independently with native Git selection.
-        Verify new-cohort discovery, omitted/repeated-run refusals, literal-file
-        Node execution, failure/cancellation, two workers, and the existing deadline.
-        Qualify actual installed proof integration and supported size policy.
+  - [ ] 2.46.2 Migrate runtime, release, and common validation consumers to
+        their installed ETHOS owners. Verify commands, errors, effects, native
+        inputs, and actual acceptance; retire duplicate code, dependencies,
+        configuration, guidance, and copied common specifications, reconciling
+        retained Purpose statements without an interim split or language port.
+  - [ ] 2.46.3 Qualify distinguishing source and diagnostic cases through the
+        shared product; preserve complete selection, literal paths, one execution,
+        failure, cancellation, and bounded cleanup. Retire generic DDWG tests and
+        fixtures and duplicated standard copies after product-consumer acceptance;
+        retain only content cases and a demonstrated business-specific increment
+        at their proper owners.
   - [x] 2.46.4 Reconcile design choices, official deltas, and main specifications;
         verify requirements, scenarios, reader routes, strict OpenSpec, and clarity.
         Reference `b309c56769ed6dd824237ce58e2722bd541f29e6174528aa9b7219a07469889c`,
@@ -191,29 +197,34 @@
   - [x] 2.46.5 Preserve versioned notes in their one release-history owner;
         verify complete Changelog form, SemVer meaning, tags, and both comparisons
         without a length ceiling or duplicate history carrier.
-  - [ ] 2.46.6 Qualify the public installed carrier policy at its actual metric
-        and limit, including the boundary and one non-blank physical line
-        above it.
+  - [ ] 2.46.6 Qualify the public installed carrier policy on final retained
+        source at its actual metric and limit, including the boundary and one
+        non-blank physical line above it.
         Verify release-history and official-artifact classification, supported code
         metrics, non-mutating refusal, changed plan, and exact-HEAD proof; add no
         private gate, invented exemption, or unsupported coverage claim.
 
 ## 3. Qualification and publication
 
-- [ ] 3.1 Freeze final source and its bound offline bundle after 2.33, 2.38,
-      2.45, and 2.46; run format, lint, prose, links, negative tests, strict official
-      OpenSpec, and diff checks on those exact bytes. Verify supported platforms,
-      original notices, stable supply, complete findings, exact approvals, and hashes.
-- [ ] 3.2 Install and verify that frozen bundle in a clean environment with
-      outbound access refused and no inherited caches, host paths, or credentials;
+- [ ] 3.1 Freeze final source and its accepted installed product inputs after
+      2.33, 2.38, 2.45, and 2.46; run format, lint, prose, links, negative tests,
+      strict official OpenSpec, and diff checks on those exact bytes. Verify
+      supported platforms, original notices, stable supply, complete findings,
+      exact approvals, and hashes.
+- [ ] 3.2 Install the frozen shared product's offline supply and verify DDWG in
+      a clean environment with outbound access refused and no inherited caches,
+      host paths, or credentials;
       verify full source checks and rejection of missing, changed, or unsupported
-      inputs without downloads, host changes, or admission weakening.
+      inputs without downloads, host changes, or admission weakening. Keep the
+      document edition separate from shared tooling distribution; retire the
+      replaced DDWG bundle after its current consumers release it.
 - [ ] 3.3 Qualify DDWG, AIGW, and Proxy on the same accepted ETHOS source/wheel
       and actual bindings; verify exact-HEAD plan/proof, semantics, full selection,
       complete diagnostics, and one execution through each adopter's own owner.
 - [ ] 3.4 Publish the correctly classified signed release on both Forges under
       the [migration plan](design.md#migration-plan). Assess compatibility against
-      v7.0.12 and qualify the prepared v8.0.0 before tagging; verify source, bundle,
+      v7.0.12 and qualify the prepared v8.0.0 before tagging; verify source, shared
+      supply,
       version, and tag identity, the same protected graph, source/offline platform
       jobs, Releases, independent downloads, and hashes. Preserve earlier releases.
 - [ ] 3.5 Complete the [final original-duty and current-use review](design.md#review-original-duties-at-seven-topic-owners).
@@ -262,12 +273,3 @@
 - [x] 3.15 Qualify the bounded-test correction; verify frozen bundle, cold
       install, committed proof, signature, both matrices, and download/scratch
       retirement while retaining v7.0.7, failures, notices, and qualified rollback.
-
-## Workflow follow-up
-
-- After tracked work, official spec sync, and review requirements are satisfied,
-  archive officially. Verify the resulting commit's source and trusted signature.
-- Prove and publish that new archive commit on both protected peers; verify exact
-  refs and declared jobs rather than reuse the pre-archive proof.
-- Retire the absorbed Work Lane and proposal through their native owners after
-  preserving unique evidence; verify exact absence and retained consumers.

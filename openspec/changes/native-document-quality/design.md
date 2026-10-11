@@ -2,743 +2,385 @@
 
 ## Context
 
-This Change starts from edition 6.1.1,
-`c8599ce9c91ed5f988abd6b3f3011ac94430283d`. That source distributed prose checks
-across CSpell, textlint, write-good, and local terminology rules. Textlint also
-parsed decisions and licenses, so replacing its prose command alone was
-insufficient.
+This Change began at edition 6.1.1,
+`c8599ce9c91ed5f988abd6b3f3011ac94430283d`. Its checks were distributed across
+CSpell, textlint, write-good, and local terminology rules. Textlint also parsed
+decisions and licenses, so replacing prose alone could not retire it.
 
 The retired guideline blob, `ce3d090be258e65534781769e3e2fd5ab7439ef8`, and its
 [earlier clause comparison][baseline-review-gitlab]
-([GitHub][baseline-review-github]) are review inputs, not current authority or
-certification of equivalence. The earlier design is preserved in Git at
+([GitHub][baseline-review-github]) remain review inputs, not current authority
+or proof of equivalence. The earlier design remains in Git at
 `934293b8a6ab0600af75ea86fbdbdf36c46d1bd9`, at this same path
-([GitLab][previous-design-gitlab] · [GitHub][previous-design-github]). Original
-diagnoses, failed attempts, and review limits remain with their evidence owners.
+([GitLab][previous-design-gitlab] · [GitHub][previous-design-github]).
 
-[Tasks](tasks.md) is the sole action and completion ledger. This design records
-choices, boundaries, and migration order; specifications own the observable
-requirements, and code owns implementation detail.
+The current DDWG tools contain common responsibilities already owned by ETHOS.
+The source-bound ownership audit remains at native Attestation
+`e2c4f0f4406bc39e5284cbd341d7f973983355eb74fd7a5f892c775fa96d3ac4`.
+It establishes a migration need, not accepted installed replacement behavior.
+
+The same correction applies to standards. DDWG must not retain separate
+formatter, decision, supply, proof, CI, or release specifications merely because
+it once implemented those checks. This Change carries the transition; the
+accepted shared contract owns the continuing common obligation.
+
+[Tasks](tasks.md) is the sole action and completion ledger. Design owns choices
+and dependency order. Specification deltas declare DDWG requirements and
+retirement; native records own execution results. Captured original requirements,
+scenarios, diagnostics, and eight-file captured source inputs are preserved at
+`640cc1a0f708b9b8411d714f07d084376a8b691469e8518181d213366ab753e6`.
+That preservation does not certify their implementation or waive an obligation.
 
 ## Goals / Non-Goals
 
 Deliver useful English guidance for members and Agents. Preserve applicable
-duties and explain every changed or retired clause from current instructions,
-verified facts, and department needs. Give each check, configuration, and
-procedure one owner. Qualify complete local and offline tool supply, then
-publish one signed source graph and frozen artifact independently on both
-Forges. Retire replaced implementations with their migrated consumers.
+original duties and justify changed or retired clauses against current
+instructions, facts, and department needs. Consume shared maintenance from
+accepted installed ETHOS, qualify its actual local and offline consumers, then
+retire duplicate standards and implementation together. Publish one admitted
+source graph independently on both Forges.
 
-Do not add a lifecycle, private scope, evidence ledger, installer, retention
-controller, universal meeting, mobile site, or staged adoption trial.
-Credentials, selected models, active services, and foreign lanes are outside
-this migration. Local checks prove neither historical execution, complete
-semantic equivalence, accepted shared-product behavior, nor actual team use.
+Do not create another lifecycle, scope, progress ledger, installer, bundle
+product, taxonomy, approval role, meeting, mobile site, or staged adoption trial.
+Do not copy, generate, wrap, or port a shared executor. Credentials, selected
+models, active services, and foreign work remain with their current owners.
 
 ## Decisions
 
 ### Review original duties at seven topic owners
 
-Review all 62 original numbered subsections and five surrounding groups against
-the complete current topics, including introductions, examples, diagrams,
-templates, and final checks. Compare actor, action, obligation strength,
-permission, condition, authority, evidence, escalation, and revisit limits.
-Preserve applicable duties; explain replacements and removals at the existing
-clause-review owner. Unexplained loss fails review. Hashes, headings, prose
-scores, or shorter pages do not establish semantic coverage.
+Compare all 62 original subsections and five surrounding groups with the seven
+current topics, including introductions, examples, diagrams, templates, and
+final checks. Review actor, action, obligation, authority, condition, evidence,
+escalation, and revisit limits. Explain each replacement or removal at the
+existing clause-review owner. Unexplained loss fails review; shorter text,
+hashes, headings, diagrams, and test counts cannot establish equivalence.
 
-Test current duties for purpose and authority as well as correspondence. A form,
-model, schedule, or writing technique is not mandatory merely because an earlier
-draft used it. The charter owns authority and hard boundaries; six task topics
-own their judgments and actions. The task map routes to them without repeating
-policy. [Discovery](specs/guidance-discovery/spec.md) owns routes and review;
-[work practice](specs/work-practice/spec.md) owns point-of-use duties.
-[Quality](specs/quality/spec.md), [verification](specs/verification/spec.md),
-[tool supply](specs/tool-supply/spec.md), [governance](specs/repository-governance/spec.md),
-and [publication](specs/publication/spec.md) own their distinct contracts.
+The charter owns department purpose and hard boundaries. The six task topics
+own decisions, delivery, data, communication, human–AI collaboration, and
+improvement. The task map routes to them without another policy. Department
+requirements remain in [discovery](specs/guidance-discovery/spec.md) and
+[work practice](specs/work-practice/spec.md); common specifications become
+shared bindings rather than duplicate standards.
 
-Data-quality duties span acquisition, production, analysis and modeling, data
-science, development, platforms, infrastructure, product and technical
-management, governance, and operational delivery. The five existing data
-responsibilities are overlapping obligations, not a second organization model.
-Use current organizational role and authority assignments for actual owners;
-do not copy internal seat, capacity, or reporting matrices into public guidance.
-Name work outputs, activities, decision mandates, and acceptance. Keep business
-meaning, data representation and cross-domain definitions, implementation and
-compatibility, product lifecycle and consumer migration, and technical choices
-explicit at the data topic, without a second taxonomy or decision table.
-Engineering responsibility runs from requirements and design through
-implementation, verification, release, operational feedback, and improvement
-as applicable; professional owners verify their judgments and models. Bind
-verification to agreed criteria, affected interfaces and migrations, actual
-inputs and environment, results, failures, limits, and unresolved-risk owners
-in the existing work evidence. Risk-based specialist or independent review
-retains implementation responsibility and grants no acceptance or permission;
-it does not require another testing team.
-Preserve every domain, production, platform, governance, and delivery obligation
-without adding teams, records, or approval steps. Test a shared model change and
-retirement with a dependent consumer; semantic conformance, passing tests, and
-permission remain distinct. Feedback revisits value,
-meaning, and quality without granting another data use. Quantitative examples
-are explicitly illustrative. Incident containment addresses invalid downstream
-results, production, permissions, and compliance; management protection for
-members who expose problems is a separate duty. Generic physical-safety
-scenarios do not define data incident response.
+Data responsibilities span acquisition, production, analysis, science,
+engineering, platforms, product management, governance, and operational use.
+The five existing professional obligations overlap; they are not a new
+organization chart. Use actual role assignments for ownership. Keep business
+meaning, representation, implementation and compatibility, consumer migration,
+permissions, technical decisions, and end-to-end verification distinct without
+copying internal seats or reporting matrices into public guidance.
 
-State fidelity, clarity, and elegance before applying them. Fidelity preserves
-intended meaning; clarity requires accurate understanding and fluent expression;
-elegance includes expressive beauty, taste, and artistic and cultural refinement
-suited to the subject and audience. Precision, restraint, brevity, and visual
-structure are techniques, not substitute definitions. Add no unrelated
-philosophical doctrine or machine claim of aesthetic quality.
+The historical-research example must distinguish a known historical-validity
+defect from an unknown fact. The identifier-change example must retain the
+old consumer interface until verified migration or authorized end of use.
+Local tests, deprecation notices, and Agent reports cannot supply missing
+permission or acceptance. Keep unresolved consumers, recovery, next actions,
+and review times explicit in the producing work record.
 
-Distinguish missing information from a timing condition when a decision waits;
-each needs a resolution action and revisit time. Problem framing states its
-comparison baseline. Agents build the smallest sufficient model before expanding
-detail. Every task owes its commitment and hard boundaries; exceptional outcomes
-are conditional, not a universal requirement.
-
-Reviews bind fixed source and concrete adverse cases. Preserve earlier
-judgments, dissent, corrected counterexamples, and failed routes at their
-producer. An editorial crosswalk is not an automated equivalence proof,
-committee quorum, or new meaning validator.
+Preserve weekly, monthly, and quarterly review purposes and useful outputs;
+justify interval changes from risk, work volume, change, and feedback. A calendar
+must not delay urgent correction. Task-start clarity, coaching, and preventive
+safeguards remain duties without fixed meeting lengths, sample counts,
+all-member reports, or a universal extra supervisor step.
 
 Practice admission starts from an observed problem, substantiated material risk,
-or applicable obligation, not necessarily a past incident. Retain bounded
-trial, evidence of net benefit, ownership, review, and exit. Mandatory safeguards
-still apply before practice admission; a trial chooses and verifies their
-implementation rather than suspending the underlying obligation. Keep current
-refinements separate from historical duty extraction in the clause review.
+or applicable obligation. A bounded trial selects and verifies implementation,
+not whether an existing safeguard applies. Retain net-benefit evidence,
+ownership, review, and exit. Preserve earlier judgments, dissent, and limits at
+their producer instead of restoring old wording by default.
 
 ### Give native quality concerns one owner
 
-Keep process and Git selection in the runtime, dependency audits in their audit
-module, official OpenSpec reports in their native consumer, and DR validation in
-the decision module. Call each owner directly; retain no compatibility exports.
-The offline command selects modes without exposing a library facade; artifact
-identity, npm binding, build, install, and acquisition have separate owners.
-Cold commands load before dependencies; build-time license inspection alone
-loads the Markdown parser.
+ETHOS owns shared standards and executable checks. DDWG declares English source,
+Department terminology, current reader paths, selected native inputs, and any
+proved business-specific increment. Shared algorithms, defaults, schemas, and
+regression policy remain at their product owners.
 
-Tests follow those responsibilities and share existing fixtures rather than
-duplicate them. Native Git discovers every selected `tests/**/*.test.mjs`, not
-fixture modules or retired monoliths. Preserve cases, declarations, diagnostics,
-cleanup, two workers, and the existing outer deadline. Setup-only Git calls share
-one raw native invocation with exact working directory, caller environment,
-UTF-8, and ten-second deadline; source assertions keep their independent expected
-inputs. Offline identities use fresh fixture defaults, with caller overrides
-last and no expected value derived from production.
+| Concern                         | Continuing owner                                          | DDWG retains                                               |
+| ------------------------------- | --------------------------------------------------------- | ---------------------------------------------------------- |
+| Content and work routes         | Department topics                                         | Meaning, duties, English text, and navigation.             |
+| Format, lint, prose, and links  | [Shared quality binding](specs/quality/spec.md)           | Selected content and necessary native parameters.          |
+| Source and proof selection      | [Verification binding](specs/verification/spec.md)        | Actual DDWG consumer acceptance.                           |
+| Installed maintenance inputs    | [Supply binding](specs/tool-supply/spec.md)               | Necessary product parameters.                              |
+| Peer and edition selection      | [Publication binding](specs/publication/spec.md)          | Declared repositories, platforms, and version.             |
+| Native authority                | [Governance binding](specs/repository-governance/spec.md) | Repository and branch parameters.                          |
+| Decisions and document carriers | Shared document contract                                  | Stable lowercase decision identities and actual rationale. |
+| Source execution and proof      | ETHOS command plane                                       | Applicable source and selected document roots.             |
+| Tool supply and diagnostics     | Installed product                                         | Necessary consumer inputs, not another supply manifest.    |
+| CI, history, and release        | Shared native contract and each Forge                     | Peers, platforms, document version, and meaningful notes.  |
 
-#### Source selection and observations
+The installed-consumer diagnostic
+`02ee9de6274d93f6a97d2a6bc72b4a4ce7eb137eedd1f2f3a99128da16b0ef94`
+records concrete source-binding and package-closure failures. Rules or source
+files alone do not establish a replacement. The product must supply every
+required runtime input without its source checkout. Qualify the actual public
+consumer, then delete duplicate code, configuration, tests, procedures, and
+common specifications in the same admitted transition.
 
-Git selects tracked and non-ignored candidate source, including force-tracked
-files beneath ordinarily ignored directories. Prose and links retain the
-official archived-Change boundary; format and lint retain historical controls.
-Directory names do not waive checks.
+A retained Node consumer keeps its applicable product-native obligations; a
+content-only DDWG does not need Node or a dummy suite just to run ETHOS. Reuse
+existing native formatters, Markdown parsers, Vale, Lychee, and official OpenSpec.
+Do not prescribe another module layout, fallback parser, or orchestration plane.
 
-The verifier reports repository, commit, tree, tracked changes, Node version,
-platform, process architecture, host name, and mounted capacity once through
-native Git, filesystem, and OS interfaces. Use exact integer bytes and retain
-read errors. These observations establish neither VM identity, isolation,
-throughput, nor a capacity threshold; the runner owner qualifies those.
+#### Preserve native execution and complete validation evidence
 
-#### Prose and native Markdown checks
+Migration acceptance uses the native product's exact source, selected inputs,
+command, streams, status, and effects. Preserve literal filenames, complete
+selection, original failures, meaningful literals, cancellation, and bounded
+cleanup. Nonempty actual execution, corrected-source acceptance, and a
+representative real rejection are required; copied reports and exit zero alone
+are insufficient.
 
-Vale owns spelling, repetition, reviewed terminology, and diagnosed stock-phrase
-and concision defects. Supply explicit source, verified binaries, native policy,
-and narrow vocabulary additions. Real defects remain negative examples; no
-wildcard baseline replaces judgment. Native rule coverage must fail when a
-loaded rule stops detecting its defect, while command tests preserve Markdown,
-configuration, warnings, and real invocation.
+Qualify fix and check on identical declared inputs and verify an unchanged
+second fix. The shared formatter owns spacing; other lint must not overrule
+accepted container structure or treat code/data literals as visual padding.
+Generic execution and parser regressions belong to their product. Existing
+DDWG cases are migration inputs, not a mandate to keep their file layout,
+algorithms, worker counts, or executor afterward.
 
-Reject a known prose failure before unrelated Changelog and OpenSpec work; valid
-source still executes the complete graph. Markdownlint core receives the
-concern-local TOML through its public API, preserving native options, comments,
-filenames, locations, rule IDs, details, heading rules, and width checks.
-Literal Git filenames need no CLI2 discovery layer.
-
-One native Markdown parser supplies control comments, DR shape, and license
-sections. Actual Vale suppression controls fail, including nested or wrapped
-comments; explanatory prose and code remain valid. Native formatter ignores may
-preserve byte-exact examples.
-
-#### Formatting and semantic preservation
-
-Prettier's public interfaces own supported Markdown, code, JSON, and YAML;
-dprint's format-only TOML Wasm interface owns TOML. Preserve locked identities,
-comments, key and array order, multiline bytes, parsed meaning, and diagnostics.
-Unsupported or missing format supply fails without a raw-scan fallback. One
-fresh TOML formatter serves each attempt; standalone discovery retains native
-acquisition and no cross-attempt cache.
-
-Prettier alone owns Markdown spacing: one document-block separator, tight nested
-lists, meaningful loose-list and quote separators, and distinct containers.
-Fences do not automatically loosen lists. Lint owns non-spacing rules without
-overruling formatter-accepted structure. Public fix and check select the same
-Git source; the second fix is unchanged, including nested quotes and ignored
-byte-exact examples. General English and plain-text hygiene do not scan embedded
-code, strings, scalars, or literals as padding.
-
-Remove the remark bridge, unused dependencies, raw spacing checks, and formatter
-comment vetoes together. Do not add the known-vulnerable Taplo binary. Preserve
-the locked TOML plugin's complete original MIT grant through its native API,
-without inventing a notice sidecar or claiming general safety.
+Use complete official OpenSpec reports and original parsers. Do not replace
+lifecycle or task syntax, discard findings, borrow an ambient package cache,
+or misclassify native diagnostics. A generated projection needs its native
+patch admission; a plain source edit needs exact path admission and subsequent
+validation. Neither authorizes acceptance, installation, or publication alone.
 
 ### Choose the reading form by the question
 
-#### Task routes and topic hierarchy
+The task map starts with work questions and direct urgent routes. Keep related
+reading nested, examples beside their practice, and maintenance last. Topics
+lead with purpose, then the decision, authority, stop conditions, and evidence
+needed to act. Use headings for distinct questions, lists for duties, and tables
+for genuine comparisons, not repeated summaries of the same policy.
 
-Group related work questions in the task map and put each destination beside the
-decision it supports. Nested related reading stays distinct; urgent failures and
-escalation have direct routes. Maintenance comes last. Topics open with their
-use, then their stop and verification boundaries. Route admission, readiness,
-completion, and decision-document order to the decisive section, not a page
-title. Preserve anchors, compound conditions, and every actor's authority.
+Fidelity preserves subject meaning and qualifications. Clarity requires accurate
+understanding and fluent expression. Elegance also requires beauty, taste,
+proportion, and cultural refinement suited to the audience. Brevity and restraint
+are techniques, not substitute definitions or machine-certified outcomes.
 
-Use subheadings for long sections, lists for duties, and tables for comparisons.
-Place examples beside their practice and keep required inputs conjunctive.
-Separate minimum duties from conditional exceptional performance, emergency
-duties from management duties, and completion from supporting evidence.
-Important updates expose conclusion, basis, decision request, and next action.
-Fidelity, clarity, and elegance remain separately navigable; charter stewardship
-follows work rules. No reading choice adds a role, approval, or checklist
-ritual.
+#### Resolve reader routes and links from their native meaning
 
-#### Contributor and governance procedures
+Qualify raw Markdown, normal Forge rendering, and Agent retrieval on the same
+content. Resolve visible labels and real heading targets through native tools;
+check actual in-page and cross-file journeys where claimed. Preserve list,
+quote, table, and conditional meaning, and keep metadata out of the visible
+reader preamble through the accepted document representation.
 
-Contributing owns setup, native tools, source checks, and six navigable release
-stages. Governance links there and owns permission and acceptance. Separate
-inputs, source proof, release-cut identity, tagging, publication, and downloads
-without changing dependencies. Keep document editing outside the source-check
-procedure, and supply staging, cache publication, cleanup, child processes, and
-extraction at their respective owners. Agent guidance separates modeling, safe
-mutation, verification, interruption, and parallel work.
-
-Changelog entries describe notable effects for members and maintainers, grouping
-related unreleased fixes by outcome rather than replaying implementation steps.
-Preserve incompatible duties, upgrade actions, removals, security limits, and
-qualification boundaries. Original commits retain implementation detail; released
-notes and both Forge history routes remain unchanged. Native validation owns
-format and identity, while source review owns the completeness of the curated
-entry. No private prose schema or release-note length ceiling is introduced.
-
-#### Work examples and whole-page review
-
-Use ordered steps for the working loop and Human–Agent handoff. Compact lists
-pair each data-use question with its evidence and each worked-case decision
-with its stop condition; retain useful role comparisons as tables.
-People delegate, verify, and accept; an authorized task lead may accept.
-Preserve return conditions and met/unmet branches without duplicating them in
-diagrams. Coaching separates alignment, review, and improvement; handoffs
-separate work, verification, and limits. Market-history examples remain
-conditional and illustrative, with the next verification action and no implied
-permission.
-
-Inspect complete current-source pages and actual member and Agent routes at
-desktop reading widths. Use a diagram only when relationships become clearer
-than steps or a table. Keep editable source beside rules and a complete text
-equivalent; use native grammar, not private CSS or positioned arrows. Derived
-review renders belong in ignored `build/`. Local previews establish neither
-hosted rendering, screen-reader acceptance, aesthetic consensus, nor team
-benefit.
+Retain original visual relationships when they aid judgment; use simpler text,
+a table, or a purposeful figure when it communicates them better. Do not add
+Mermaid for decoration or count rendered pages as aesthetic approval. Link and
+prose tools cannot prove understanding, accessibility, factual accuracy, or team
+use. Name those limits and preserve failed reading routes at their producer.
 
 ### Keep configuration with its consumer
 
-`.config/checks/`, `.config/supply/`, and `.config/release/` own check policy,
-native supply, and frozen artifact identity. Executable rules stay with code;
-the configuration map routes to native settings. `.gitignore` supplies shared
-editor and Finder exclusions, tested in isolated Git configuration with an empty
-`info/exclude`, without hiding tracked guidance.
+DDWG retains only parameters consumed by accepted interfaces: content selection,
+language and vocabulary, native inputs, and publication peers and platforms.
+Shared defaults and schemas remain in ETHOS. Use a native format the consumer
+supports; an official INI requirement is not a reason to invent a TOML converter.
 
-Create `assets/` for consumed original media and `resources/` for consumed
-non-code program inputs, not empty template symmetry. Native settings stay in
-`.config/`; reproducible output stays in semantic ignored `build/` directories.
-ETHOS's `system/` is its product contract, not an adopter template. Package
-projection may preserve canonical source hierarchy without creating another
-source owner; executable resources remain governed code.
+Keep necessary root entrypoints small. `.config/` holds retained native settings;
+reproducible output uses its producer's ignored `build/` area. Create `assets/`
+only for consumed media and `resources/` only for consumed non-code inputs.
+ETHOS's product source layout is not a template to copy into every adopter.
+No empty placeholders, compatibility aliases, second manifests, or catch-all
+history folders are required.
 
-Qualify the accepted, installed ETHOS resource contract before moving supply or
-bundle inputs. Migrate loading, imports, package inclusion, tests, CI, and
-contributor routes together, verify complete bytes, and remove old paths and
-aliases. Do not move obsolete records into new scaffolding or copy schemas.
+### Keep decisions separate from execution
 
-Keep native formats: TOML for Prettier, lychee, Markdownlint, and dprint policy;
-INI, YAML, and text for Vale; JSON for cold supply and release loading before
-npm dependencies exist. Do not add converters, bootstrap parsers, embedded
-duplicate policy, or ambient overrides. Repository topology checks do not become
-a copied ETHOS schema or proof gate.
-
-### Keep decisions durable and executable evidence at its producer
-
-DRs use unique stable IDs, lowercase paths, matching titles, accepted metadata,
-and five meaningful ordered root sections. Native tokens distinguish rationale
-from task markers, execution content, and fenced or indented code under
-wrappers. Breaks, whitespace, or link definitions alone do not fill a section.
-Bare paths, evidence links, interpreter concepts, decision tables, and quoted
-rationale stay valid.
-
-One pinned non-evaluating shell lexer recognizes supported invocations, quoted
-operands, operators, globs, variables, comments, and end-of-options. Use own
-properties, retain glob operands, read no ambient values, and execute no text.
-This is not a parser for every shell or full here-documents; review owns
-unsupported cases.
-
-The two records keep their actual dates, choices, alternatives, consequences,
-and revisit limits. Commands, releases, readiness, and acceptance belong to
-their Change or evidence producer, not new DR sections. Sequence gaps require no
-new decision. Rename the descriptive DR-0001 path with its incoming index while
-preserving its subject, ID, date, and reasoning; retain no alias.
-
-### Resolve reader routes and links from their native meaning
-
-The locked Markdown compiler and HTML parser own actual GFM links and anchors,
-Unicode identity, reference precedence, and tables. Exclude comments, code,
-escaped examples, unused or shadowed definitions, unresolved references, and
-unlinked images from routes. Visible text or descriptive linked-image alt text
-is required; whitespace, invisible characters, and optional titles do not label
-a destination. Preserve emphasis, entities, escaped pipes, titles, relative
-normalization, and the first visible topic cue without manual cell splitting.
-
-Lychee owns extraction, targets, fragments, and explicit online checks. Bind
-requested and resolved local targets to complete Git-selected source within the
-repository: ignored aliases cannot borrow tracked targets, and tracked aliases
-cannot borrow outside files or caches. Preserve valid delivered internal aliases
-and directory indexes; reject escapes, cycles, dangling links, and private
-state. HTML compilation is syntax evidence, not visual qualification or Forge
-destination authentication.
-
-### Preserve native execution and complete validation evidence
-
-#### Official reports and source requirements
-
-Official OpenSpec owns validation, sync, and archive. Its consumer requires the
-actual resolved root, native version, unique typed items, complete issues, and
-consistent counts for both `--all` categories, including empty ones. INFO,
-WARNING, ERROR, standard error, incomplete or totals-only reports, and wrong
-roots fail with their original diagnostics. Vale capture and lychee extraction
-retain strict standard-error handling; do not rerun for cleaner output.
-
-Only the OpenSpec child's official telemetry option suppresses offline telemetry
-and updates. Remove inherited case variants in that child without changing its
-parent or global settings; exercise actual native request behavior. Before sync,
-merge and strictly validate each changed capability officially. Keep every
-actor, permission, and scenario when shortening requirements. Remove a redundant
-delta for an already-removed requirement, preserving its Git evidence.
-
-#### Same-attempt diagnostics
-
-The existing executor retains command identity, native cause, status, signal,
-standard output, and standard error on creation failure, nonzero exit, or
-timeout. Replay captured diagnostics once. Attach only real causes; keep
-exit-only errors distinct. Timeout assertions accept termination before progress
-without fabricating text; other cases retain exact diagnostics. Preserve primary
-and cleanup errors, and never infer a hosted cause from a fixture that lost its
-result.
-
-#### Isolated tests and command startup
-
-Fixtures own their prerequisites, Git boundary, regular empty configuration
-files, and cleanup. Resolve Windows aliases natively without accepting wrong
-roots or dependency junctions. Keep localization and the same child's diagnostic
-instead of forcing language or rerunning Git. Npm fixtures retain actual status,
-signal, native errors, partial streams, effects, and deadlines; absent status is
-not a refusal.
-
-Load quality modules only for the selected command. Test discovery needs Git,
-not unrelated format, CI, or bundle startup. Compact public-command fixtures
-retain real executables, policy, dependency carriers, local links, ignored and
-force-tracked samples, literals, archives, native errors, and complete selected
-inputs. They do not replace full-source verification or native tools with mocks.
-Preserve two workers, the outer deadline, and every test; qualify hosted timing
-separately.
-
-#### Native history resolution
-
-Resolve all selected Changelog refs in one native `cat-file --batch-check` call,
-using the existing control-free reference grammar and stdin protocol. Require
-one commit result per ref, then native ancestry for each distinct pair and exact
-tag/HEAD identity. Missing objects, wrong types, incomplete output, and native
-diagnostics fail. Add no shell, history cache, ancestry graph, or Git minimum.
+Keep only a lasting decision that current rules alone cannot explain. Stable
+lowercase identities and the human-selected five-section form remain required
+through the accepted shared decision contract, not a DDWG schema. The record
+expresses its rationale and boundary. Tasks, command output, implementation
+state, release steps, and acceptance logs stay with their producing Change or
+native record.
+Preserve evidence links and ordinary concepts without text blacklists that
+mistake a command name for execution. Qualify the shared parser before removing
+the existing local boundary check; do not copy its specification into DDWG.
 
 ### Supply exact tools without a second installation plane
 
-Guidelines are directly readable. The optional offline bundle supplies
-maintenance checks; it is not an installable guideline product. ETHOS remains
-its own installed governance dependency.
+Reading the guidelines needs no tool installation. Source maintenance consumes
+accepted installed ETHOS and its exact native supply. The document edition has
+no independent generic installer, npm cache, tool manifest, or maintenance bundle.
+The previous DDWG bundle survives only for a named unfinished consumer or
+recovery transition, with an exact binding and exit condition.
 
-Repository-wide process, Git, and filesystem execution belongs to
-`tools/runtime.mjs`; native asset selection and byte verification belong to
-`tools/supply.mjs`. Document checks, installers, and bundle readers consume
-those shared owners directly, without a document-runtime facade or duplicate
-resolver. Moving source does not change native tool pins or installation effects.
+Qualify supported platform selection, safe materialization, integrity refusal,
+warning-free commands, licenses, and complete offline execution through the
+actual product interface. Retained Node consumers receive Node/npm acceptance
+at their real owner; prior runtime or image choices do not dictate the terminal
+DDWG dependencies. Preserve destination installation ownership, native stores,
+credentials, and global-only authentication boundaries. Do not add permanent PATH
+changes, extra source-only dependencies, aliases, registry writes, or wrappers
+to hide package-closure gaps.
 
-#### Runtime and compatible assets
+#### Cold acceptance and temporary supply
 
-Use one Node compatibility declaration and native exact npm declaration. Source
-jobs select latest stable Node within that major through locked original tools,
-immutable action commits, and disabled automatic package-manager caching. Reject
-competing version inputs or undeclared setup options. An action's runtime is not
-the project runtime, and an updated action is not a clean audit.
-
-Select native assets independently of Node architecture. Prefer the declared
-exact platform; Windows ARM64 may use its pinned x64 tool where no ARM64 asset
-exists. One selector serves installer, cache, and bundle. Each operation passes
-its already-read supply manifest through managed-path resolution; asset, platform,
-version, and binary identities cannot diverge through a duplicate file read.
-Keep the original installation effects and refusals; this does not prevent
-hostile same-user replacement after inspection. Record host, process,
-and asset architecture separately; macOS x64 supply alone is not current matrix
-qualification. Actual Windows source/offline jobs qualify emulation and timing.
-
-GitLab shell jobs use original Mise, its natively discovered
-`.config/mise/config.toml`, the adjacent six-platform lock, and `mise exec --locked`.
-The native package parser reads `devEngines.runtime` and
-`devEngines.packageManager` from one manifest. npm's version carries SHA-512
-metadata, which Mise passes to its npm backend for actual archive verification.
-A bare npm backend alias prevents registry fallback without an executable version
-or PATH template. npm accepts that metadata but does not enforce its checksum;
-bootstrap acceptance cannot qualify the Mise acquisition boundary.
-
-ETHOS safe-mode preparation must materialize the manifest, config, and lock and
-select native `node,npm` idiomatic parsing and npm backend settings through the
-process environment. Preserve safe mode, locked/offline checks, no automatic
-installation or system fallback, and isolated absent global/system configuration.
-Actual installed Node/npm selection, checksum refusal, and warning-free commands
-remain acceptance conditions; a source repair or ambient PATH is not sufficient.
-Local and CI consumers need no filename selector. Keep `MISE_CONFIG_FILE` and
-`MISE_OVERRIDE_CONFIG_FILENAMES` unset. The global override treats a global
-credential command as project-local; preserve its global-only security boundary.
-CI keeps its job-local `MISE_CONFIG_DIR`, separate from host settings. The supply
-tests guard native discovery and isolation; retire replaced templates and binding
-wiring rather than keeping a second parser or configuration owner. Windows adds
-the OS machine Path after inherited entries before resolving existing Mise,
-without encoded install paths, registry writes, service changes, or another
-installer. Temporary application, version, and execution-identity probes diagnose
-discovery; remove them after protected-source and offline jobs qualify the
-environment hypothesis and their evidence is preserved. Keep the process-only
-Path refresh and original locked commands. Cold checks acquire neither Mise nor
-missing runtime.
-
-#### Bound inputs and atomic installation
-
-One manifest pins native versions, platforms, sizes, hashes, output, and
-notices. The bundle includes the complete npm cache, every native asset, and
-original notices, bound to edition, Node major, full package manifest, lock, and
-supply. Local supplied checks need no remote; each Forge uses its own declared
-route and identity. Wrong or missing input fails before extraction or execution,
-without substitute downloads, redirects carrying credentials, or provider
-fallback.
-
-Verify exclusively owned temporary bytes and publish atomically inside the
-destination. Retain verified concurrent targets and existing modes; reject
-linked managed parents, files, and archives before effects. Managed selection
-hashes bytes before version execution. Preserve complete final equality and
-owned POSIX mode without rerunning the same accepted binary; actual consumers
-still execute it. Independent host tools retain their own trust boundary. These
-checks do not prevent hostile same-user replacement after inspection.
-
-Accept the declared positive bounded stream size and refuse one extra byte.
-Await owned-stage cleanup with bounded native retries; retain failures. Cancel
-rejected response bodies and retain cancellation causes. Public errors keep
-native causes; authenticated errors omit credential-bearing detail. Add no retry
-controller or transport abstraction. Extraction retains executor ownership
-through native no-same-owner behavior and rejects host metadata, traversal,
-links, and incomplete listings; actual extraction, not listing alone, qualifies
-the container capability boundary.
-
-#### Cold execution and hosted qualification
-
-Cold qualification uses the exact npm contract, fresh HOME, distinct empty
-user/global configuration, clean environment, denied remote connections, and
-only local connections required by real HTTP tests. Hosted bootstrap and
-acquisition do not establish whole-job network isolation. The builder primes
-locked npm cache online through the existing executor but never fetches missing
-native assets or notices implicitly.
-
-Resolve fixed-source findings at their original owners and preserve
-dispositions, runtime observations, and failures. Qualify full source, cold
-install, exact-HEAD proof, both Forge source/offline matrices, and actual runner
-combinations. Keep temporary qualification packages until jobs terminate and
-evidence is preserved, then retire them. Neither a local pass nor a
-qualification package is a signed Release; diagnostic probes add no permanent
-controller or relaxed deadline.
+Freeze product and source inputs before clean installation. Execute the complete
+applicable check graph with outbound access refused and no inherited cache,
+host path, or credential. Record real platform and runtime observations; a static
+matrix, dry-run, archive presence, or host architecture is not qualification.
+Preserve all terminal job results before removing their exact temporary supply.
 
 ### Bind risk approval to the actual subject
 
-OSV owns one complete raw scan with empty scanner disposition. Retain lock,
-native policy, original findings, streams, and status; the existing input owner
-checks the exact approved finding. Invalid, expired, unapproved,
-warning-bearing, or changed-input reports fail. No filtered second scan or
-blanket waiver exists. Observe npm's public stable release through isolated
-native configuration, fresh cache, and explicit online freshness; retain that
-result with the scan.
+The accepted risk and supply contracts own common auditing and dispositions.
+Retain complete original reports, exact subject identities, permitted use,
+expiry, authenticity, licenses, function, and platform evidence. A lockfile
+report does not qualify components inside a tool or CI image; missing binary
+inventory remains an explicit limit.
 
-This Change consumes four separate human approvals:
+The previous DDWG supply received these separate development approvals. They
+remain exact-artifact evidence only while those artifacts are consumed:
 
-- Locked braces 3.0.3, `GHSA-vfj7-8cjw-p6xm`, for trusted repository development
-  checks and distribution. Its native disposition is in
+- Locked braces 3.0.3, `GHSA-vfj7-8cjw-p6xm`, under the native
   [dependency policy](../../../.config/checks/dependencies/policy.toml).
-- The official Node 26.11.1 Trixie image index
+- Official Node 26.11.1 Trixie image index
   `sha256:32fa97f3363975684b08bf4e8a68a47c7905175cc20275b50b974bbd02aba731`,
-  for controlled development CI at this exact artifact and use.
-- Exact Vale 3.24.0, OSV Scanner 2.6.0, and npm 12.2.0, for trusted local
-  checks, controlled development CI, and their hash-bound offline bundle.
-- The five Lychee 0.24.2 assets pinned in
-  [native supply](../../../.config/supply/native.json), for trusted local checks,
-  controlled development CI, and distribution of those identical assets in the
-  approved hash-bound offline maintenance toolkit.
+  only for the approved controlled development CI use.
+- Exact Vale 3.24.0, OSV Scanner 2.6.0, and npm 12.2.0, for approved trusted
+  checks, controlled development CI, and the same hash-bound offline supply.
+- The five Lychee 0.24.2 assets in
+  [native supply](../../../.config/supply/native.json), for the approved trusted
+  local checks, controlled development CI, and identical-asset distribution.
 
 The braces, native-tool group, and Lychee approvals end at 2026-10-18 00:00 UTC.
-Retain complete reports, exact artifact hashes, and platform acceptance. These
-are not production, arbitrary-untrusted-input, cross-repository, or other-finding
-approvals. Changed artifacts require renewed qualification. The
-[risk boundary](../../../docs/governance/ethos.md#bound-known-findings) states
-the general conditions; it is not an approval ledger.
-
-Until an accepted installed ETHOS subject contract covers the actual consumer,
-keep bounded compatibility at its existing owner. Bind braces version and
-integrity, native finding, permitted paths, and expiry. Retire the disposition
-when fixed, withdrawn, absent, or changed stable supply requires new
-qualification; a clean report without disposition remains valid after an old
-expiry. Migrate the consumer and remove compatibility together, without private
-risk schema, extra gates, or renewed authority from source checks.
-
-Project-lock scans do not qualify components inside Node, npm, native binaries,
-or ETHOS. Audit exact artifacts and component inventories separately; retain
-full raw and binary-symbol evidence and name missing coverage. Lychee
-source-lock advisories and aliases are not its complete shipped-binary
-inventory. Authenticity, bytes, licenses, function, and each platform still
-require acceptance.
-
-Keep KaTeX's patched native renderer through the exact npm override and test
-actual inline/display math, explicit trust, and inherited-option refusal. Use
-the full stable `node:<major>-trixie` image pinned by index digest: checks need
-Git, absent from slim. A new base or bundled npm does not qualify component
-safety or the later npm upgrade. Check upstream bounds, behavior, licenses,
-effects, and raw advisory deltas before rebuilding supply.
+They do not authorize production, arbitrary untrusted input, another repository,
+other findings, or changed artifacts. They also do not require the shared
+product to keep predecessor versions or components. Migrate any retained
+compatibility through its native owner, then retire it when that consumer no
+longer requires it. A later success does not erase a required original failure.
 
 ### Keep both publication peers complete and coherent
 
-Define common graph, platform intent, admission, quality, and release actions
-once in CUE. Peer adapters own events, permissions, runners, credentials, and
-transport; equivalent action lists copied into two branches are still duplicate
-policy. Use accepted ETHOS public generation and non-writing drift checks with
-original stable CUE. Refuse edited projections before effects on either peer.
-Until the installed public route is qualified, preserve working pipelines and
-failures rather than copy the compiler or add a reader dependency.
+Local validation and supplied installation require neither Forge. GitLab is the
+organizational publication source; GitHub is an independent complete repository,
+CI/CD, and distribution peer. Each supplies its own acceptance and downloads.
+GitHub may operate while GitLab is unavailable; missing GitLab acceptance remains
+pending where the final release requires it.
 
-Shared size admission classifies the carrier before applying its metric and
-declared limit. Current authored Markdown uses non-blank physical lines;
-release-owned root Changelog, official OpenSpec artifacts, and declared generated
-output retain their own checks. A metadata label or a same-named file elsewhere
-does not change ownership. Code uses supported language metrics and declared
-policy; a Python-only report or absent policy does not qualify JavaScript.
+Consume one accepted shared CI contract with peer-specific parameters. Its
+product owner chooses the representation and projection mechanism. Qualify
+stable input identity, native non-writing drift refusal, necessary event and
+transport adapters, and actual source/offline jobs. Do not require DDWG to adopt
+CUE, copy the compiler, or author equivalent common action lists twice.
 
-Qualify the accepted product's declared documentation limit and the first
-non-conforming value only on applicable authored Markdown; resolve both from
-the installed public contract rather than copying a numeric ceiling. Keep
-Changelog complete at its existing owner and review OpenSpec by official
-validation and semantic responsibility, not document count.
-Keep execution and Git-selected runner cases at the execution test owner;
-context, stream ordering, and workspace-capacity cases belong to the context
-test owner. Move original cases intact, and share fixtures only where setup
-semantics match. Native Node discovery must include each cohort once without
-replaying another verifier or reducing its selected inputs.
-
-Improve code and test cohesion where it serves their lasting responsibilities;
-do not partition a checker already scheduled for replacement by CUE. Preserve
-discovery, obligations, and diagnostics without minification, hidden input,
-catch-all history, or a private size checker.
-
-Local verification and supplied installation need neither Forge. GitLab is the
-organizational publication plane; GitHub is an independent complete repository,
-CI/CD, and distribution plane. Each qualifies its own exact source, Release,
-downloads, and host jobs. GitHub may accept source and distribute qualified
-releases while GitLab is unavailable; a new release cut still needs both
-matrices. One peer cannot supply evidence for the other.
-
-GitHub source/offline jobs select the same declared Linux x64, Linux ARM64,
-macOS, and Windows hosts. Branch dispatch selects a signed SemVer tag matching
-native tags, event, and source before acquisition. Matrix membership is not
-execution. Changelog keeps neutral version headings and labeled native links
-from declared `publication.peers[].forge_repository`, not guessed Git ports.
-Preserve notes, dates, SemVer, annotations, prepared-release state, and
-ancestry. Reject missing, duplicate, unused, mislabeled, credential-bearing,
-divergent, cross-peer, or wrong-repository links; authenticate each actual
-comparison base and head at its provider. Keep identical source without
-redirects or rewrites.
-
-Preserve one signed graph with merge provenance; native `accepted_ff` advances
-refs to an admitted descendant, not necessarily linear history. Remove GitHub's
-conflicting single-parent property through native protection while retaining
-checks, signatures, administrator enforcement, and no force pushes/deletions.
-Qualify actual protected refs and CI, not a bypass or rewritten accepted graph.
-Consume accepted native history repair at each affected adopter; preserve
-conservation, accepted Python evidence, repaired-baseline admission, and
-original plan recovery. Retire replaced identity code after protected
-acceptance.
+Consume the accepted document-carrier, history, signing, SemVer, and
+Keep a Changelog contracts. Keep useful version notes and labeled native links
+for both declared repositories; test actual comparison objects and ancestry at
+their providers. The selected edition and shared maintenance supply remain
+distinct identities. Prepared notes and future links do not prove publication.
 
 ### Schedule platform capacity without changing trust
 
-Use symmetric purpose/platform job names and native shared source/offline
-templates. Preserve capabilities, exact pins, source selection, commands,
-deadlines, and review/protected identities. Only native executor wiring belongs
-in shell; do not add an installation, acceptance, or rollback controller.
+DDWG declares Linux, macOS, and Windows qualification through its native peers.
+Preserve purpose/platform job names, admitted execution capabilities, resource
+budgets, and independent review/protected identities under the shared CI and
+fleet contracts. Observe actual jobs, guest/platform identity, storage, network,
+and capacity where claimed; an online Runner or container name is not proof.
 
-Protected `dev`/`main` may select the tracked offline digest through
-`DDWG_OFFLINE_CANDIDATE`. Existing jobs fetch their own digest-bound temporary
-qualification package, verify and install it, and exclude redundant source jobs.
-Preserve terminal results and retire the exact package; tag, Release,
-independent download, and isolation qualification remain separate.
-
-Restrict routes to the slash-free `v*` release family before supply; native
-signed SemVer admission still applies. Preserve project locking, tagged-only
-runners, protected refs, and separate review/trusted accounts, workspaces,
-caches, and credentials. One project-scoped Windows resource group spans refs
-and events; it reserves capacity without granting trust or cross-project
-isolation. Registration, polling, clone, and package transport have separate
-boundaries. The fixed HTTP deployment and any registration tunnel do not approve
-or protect other credential-bearing routes; infrastructure owners preserve
-failed transitions and rollback.
+The GitLab administrator's HTTP deployment is fixed. Observe registration,
+polling, clone, and authenticated package requests separately under the
+explicit authorized boundary. Neither a tunnel nor a tag silently approves
+another credential path. Keep capacity scheduling distinct from trust, and use
+native owners for repair or rebuild rather than weakening the quality floor.
 
 ### Retire replaced source and downloads only after absorption
 
-Migrate all consumers before removing textlint, CSpell, write-good, CLI2, their
-unused dependencies, policies, imports, commands, and test interfaces. Remove
-optional retired checkers, aliases, alternate selectors, and second installers
-in the same batch; verify source and the resolved dependency graph.
+Retire a predecessor only after its named consumer has accepted the successor
+or authorized the end of use. Remove duplicate algorithms, generic tests,
+dependencies, configurations, imports, aliases, setup procedures, and common
+specifications in that same batch. Do not keep a port, facade, optional old
+checker, or executable archive as the replacement.
 
-Completed Change copies leave current source only after unique-fact, obligation,
-and incoming-consumer review. Original archive tree
-`cda4b105165ab3a788848f74a58004cbc863edd2` remains in the baseline Git commit;
-full commit/path links on both Forges must return original bytes. Differing
-historical wrapper order, digest representations, or tool choices do not prove
-current authority, corruption, or historical execution. Keep any separately
-edited representation identified at its producer, without restoring retired
-policy. Tests use their own official archive fixtures and retain historical
-format controls.
-
-Keep the latest qualified download, one qualified rollback, and packages with
-current source/CI consumers. Inventory exact native identities, bytes, digests,
-links, jobs, and consumers before deleting; unknown or active resources remain.
-Native retirement preserves signed source, original note prefixes, and evidence,
-adds dated withdrawal, and removes obsolete download links. Verify absence,
-retained hashes, and both inventories; report reclaimed space only from provider
-statistics. Clean owned scratch in each batch. Preserve uniquely consumed failed
-evidence and recovery until their exact consumer releases them.
+Git retains source history; native producers retain required evidence. Use full
+commit/path links and exact bytes for historical review without restoring old
+policy. Before removing a workspace or artifact, preserve uniquely consumed
+failures and recovery at their existing durable owner. Verify native absence and
+retained siblings afterward; report reclaimed provider space only when observed.
+No catch-all archive or indefinite speculative recovery is required.
 
 ### Integrate accepted shared ownership without weakening the floor
 
-Keep only `docs-integrity` and `markdown-format` as default and full proof roots.
-The profile selects one native registry instead of inline gate declarations.
-The integrity command depends on the provider-only `code-behavior` prerequisite;
-ETHOS owns its original Node test attempt, V8 custody, and 180-second total
-budget. The registry reserves two CPU slots; the installed native recipe must
-separately qualify its two-worker limit. The format command retains native
-static verification.
-Do not forward a document command's output as behavior evidence or add a third
-root. ETHOS owns the registry schema and dependency closure; local validation
-checks this repository's topology, not a second graph or schema implementation.
-Consume accepted installed schemas, not prototype fields. Migrate profile,
-checks, tests, and guidance together; retire replaced format, stream-report,
-risk, and history glue only after consumer acceptance.
+DDWG selects `docs-integrity` and `markdown-format` as its default roots through
+the accepted registry. ETHOS owns their applicable prerequisites, evidence, and
+execution. Shared code is qualified at its product; any genuinely retained DDWG
+code receives its own applicable proof. Other adopters keep their own graph.
+An optional descriptor is not invalid merely because it is outside the default
+closure; disconnected required obligations remain invalid.
 
-Replace the test wrapper recipe only through the installed direct-Node contract
-that appends Git-selected tests to an option-only recipe. Preserve explicit
-operands and single-attempt journal validation. A candidate source fix is not
-installed acceptance; keep native proof integration open until the actual
-consumer qualifies it. Node treats glob-like operands as patterns, so the
-existing literal-filename counterexample remains a product gap, not a claim of
-general filename support.
+Consume actual accepted schemas and public interfaces, not prototype fields,
+source recipes, or a packaging smoke result. Preserve complete checks and
+original refusals while a specific capability remains unavailable. Migrate
+profile, consumers, tests, parameters, maintenance guidance, and specification
+copies together. No private task validator, graph checker, or quality gate is
+created by this Change.
 
-Exercise semantics, same-attempt diagnostics, complete selection, single
-execution, and subject applicability. Syntax is not semantics; a Node report may
-omit runtime warnings. Product scopes may jointly cover a property without every
-provider covering each language. Missing prerequisites, authored evidence,
-repeated execution, unapproved or equivalently suppressed warnings, report
-overrides, and unexercised subjects must block proof at the product owner.
+At the same accepted migration, reconcile each remaining specification Purpose
+through admitted source edits. Official deltas do not replace an existing
+Purpose; removing requirements alone must not leave its old ownership claim.
+Do not apply retirement deltas before the successor consumer qualifies.
 
-Official OpenSpec owns task parsing; ETHOS's native document/command plane
-checks authoring against that template and Markdown structure. A parse cannot
-hide copied results or progress prose outside or within a task. Commands, links,
-and wrapped actions remain valid. Qualify actual enforcement without a private
-task schema, duplicate validator, or extra default gate.
+Keep official OpenSpec task form and Markdown structure at their native owners.
+Preserve current task IDs and historical checked state. A task contains its
+action, completion conditions, and evidence references, not copied reports.
+This migration order carries archive dependencies, not another progress ledger.
 
-Keep each checkbox focused on its action and completion check; reference the
-producer rather than copy review coverage or execution results. Preserve existing
-task identities and states when editing prose. As the official template directs,
-archive and post-archive actions remain plain bullets under `Workflow follow-up`,
-outside tracked progress. Repository regressions check native apply output and
-Markdown containment, not fixed sentences or evidence IDs; they do not replace
-the shared task-authoring diagnostic.
-
-Qualify DDWG, AIGW CLI, and Codex Responses Proxy against the same accepted
-product source and wheel, at each installed binding, exact source plan/proof,
-and acceptance. Version labels or another language's success do not substitute.
-Each adopter retains its own Change, lane, ledger, installer, and evidence; DDWG
-consumes joint qualification, not their broader product work or permission to
-edit foreign lanes. Pending dependencies do not stop independent work.
+Qualify DDWG, AIGW, and Proxy against the same accepted product input at their
+actual source and installed bindings. Each keeps its own Change, lane,
+permission, and acceptance owner. A shared requirement does not make every
+unrelated product task a prerequisite for DDWG.
 
 ## Risks / Trade-offs
 
-Native delegation removes duplicate policy, but consumer selection, diagnostics,
-and retirement still need representative public journeys and focused
-regressions. Editorial judgment preserves meaning without mechanically proving
-complete equivalence or adoption. Preserve dissent and evidence limits rather
-than infer quality from tests, a majority, or a polished layout.
+Shared ownership reduces maintenance but only after actual input closure and
+consumer qualification. Premature deletion weakens quality; retaining the old
+implementation indefinitely preserves the wrong architecture. A bounded
+consumer transition with same-batch retirement resolves both risks.
 
-Freeze source and bundle before expensive platform qualification. Compare actual
-build inputs after progress-only commits; refresh exact-HEAD proof separately
-without replacing published tags or bytes. Assess compatibility against the
-effective contract: corrected omissions may be fixes, changed duties need their
-own assessment. Preserve accepted releases.
+Editorial judgment cannot mechanically prove complete equivalence or adoption.
+Preserve dissent and limits. A readable preview, test count, or polished figure
+does not establish the user's highest aesthetic standard.
 
-The next edition is `8.0.0`, assessed against signed `v7.0.12`. That release
-required at-least-monthly and at-least-quarterly reviews; the revised cadence
-lets the accountable owner justify different intervals. Its stable DR-0001
-path has also been removed in favor of the current human–AI name. These are
-observable public-contract changes even though the decisions, review purposes,
-and retained authority remain. They require a major increment; neither a
-`docs` commit label nor restoration of an older duty establishes compatibility.
-Publish the migration in Unreleased notes, update affected agreements and
-links, and preserve all v7 tags, notes, and exact source. Reassess any further
-change before freezing; this preparation is not a released or accepted edition.
-
-Product gaps do not waive admission. An authorized emergency exception covers
-only its exact effect with preserved cause and immediate restoration and
-acceptance; it cannot patch immutable runtime or manufacture proof.
+Freeze source and accepted supply before expensive platform checks. After a
+progress-only commit, compare real build inputs before rebuilding and refresh
+exact-HEAD governance separately. Keep published tags and bytes immutable.
+Classify the final edition against the effective v7.0.12 contract; the prepared
+v8.0.0 is not a release merely because `VERSION` names it.
 
 ## Migration Plan
 
-1. Reproduce the gap at its owner and retain the native failure and distinguishing
-   regression.
-2. Repair implementation, tests, guidance, and references together; migrate
-   consumers and retire replaced code or configuration in the same batch.
-3. Review all current topics and original clauses. Resolve omissions and obsolete
-   rules with justified dispositions, preserving task identities and duties.
-4. Qualify accepted shared quality, formatting, risk, history, CUE, and size
-   contracts at DDWG and the required actual AIGW/Proxy bindings.
-5. Freeze the correctly versioned final source and bundle. Qualify local and
-   cold checks, trusted signature, exact-HEAD proof, both source/offline
-   matrices, Releases, independent download hashes, and every claimed host.
-6. Audit requirements and evidence, sync officially, and retire absorbed resources
+1. Qualify current original-duty and reader work independently of missing shared
+   capabilities. Correct this Change's duplicate standards through official
+   deltas while retaining complete obligations and original evidence.
+2. Bind each common obligation to its accepted ETHOS contract and installed
+   public interface. Reproduce missing consumer inputs there; qualify the
+   complete native floor, original rejection cases, and portable offline supply.
+3. Migrate each actual DDWG consumer and retire its duplicate code, generic tests,
+   dependencies, common configuration, procedures, and specification copies in
+   the same admitted batch. Do not sync removals before successor qualification.
+4. Complete final topic, original-duty, reader, shared quality, risk, history,
+   CI, and carrier acceptance, including required actual AIGW/Proxy bindings.
+5. Freeze correctly classified source and shared supply. Qualify local and cold
+   execution, exact-HEAD proof, both source/offline platform matrices, signed
+   tags, Releases, independent download hashes, and live navigation.
+6. Audit obligations and evidence, sync officially, and retire absorbed resources
    after consumer, hash, permission, and native-inventory checks. Complete archive
-   prerequisites without claiming its future Git effects.
-7. Archive officially, inspect/sign/prove/publish its new OID, observe both source
-   matrices, and natively retire the owned lane, proposal ref, and exact residue.
+   prerequisites without claiming the archive's future Git effects.
+7. Archive officially, inspect/sign/prove/publish the new OID, observe both source
+   matrices, and natively retire the owned lane, proposal refs, and exact residue.
 
-Proposal refs are disposable projections: retire them through native CAS after
-both peers accept the source and declared jobs pass. Later work may recreate
-them; the active lane and Change remain until their obligations close. Archive
-requires completed prerequisites, not evidence of its own future commit. Observe
-post-archive effects through native owners without a second ledger, old-HEAD
-proof, false checkboxes, or premature Goal completion.
+Proposal refs are disposable native projections after both peers accept the
+source and required jobs pass. Active work remains until its declared obligations
+close. Earlier-HEAD proof, false task checks, or a second ledger cannot close
+later archive, publication, or retirement effects.
 
 ## Open Questions
 
-No unresolved choice requires user input. Accepted shared-product distribution
-and actual adopter schemas remain integration prerequisites, not assumed
-implementations or grounds to archive unfinished work.
+No unresolved choice requires user input. Specific shared-product distribution
+and consumer interfaces remain integration prerequisites, not assumed completed
+implementations. Independent work continues while their owners close those gaps.
 
 [baseline-review-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/blob/c8599ce9c91ed5f988abd6b3f3011ac94430283d/openspec/changes/archive/2026-09-30-work-guidance-completeness/design.md
 [baseline-review-github]: https://github.com/HengYangDS/data-department-work-guidelines/blob/c8599ce9c91ed5f988abd6b3f3011ac94430283d/openspec/changes/archive/2026-09-30-work-guidance-completeness/design.md

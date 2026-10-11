@@ -1,540 +1,92 @@
 # Spec Delta
 
-## Purpose
+## ADDED Requirements
 
-Define complete source verification, native proof prerequisites, execution
-evidence, and shared CI admission without replacing OpenSpec or ETHOS authority.
+### Requirement: DDWG proof binds the shared document contract
 
-## MODIFIED Requirements
+DDWG SHALL select `docs-integrity` and `markdown-format` as its two default
+roots through accepted native ETHOS declarations. The product SHALL own their
+complete applicable prerequisites, source binding, evidence, and execution.
+Content-only DDWG SHALL NOT keep a dummy Node suite to prove shared product code
+or impose its selected graph on other adopters.
+
+#### Scenario: The declared default floor is resolved
+
+- **WHEN** installed ETHOS resolves the final DDWG profile
+- **THEN** the two selected document roots retain the complete applicable floor
+  and product-owned prerequisites
+- **AND** required obligations are connected and verified; an unrelated optional
+  descriptor is not invalid merely because it is outside the default closure.
+
+#### Scenario: An authored result attempts to replace proof
+
+- **WHEN** a document report is offered as code behavior, semantics, or acceptance
+- **THEN** the product's native proof contract rejects the substitution
+- **AND** shared code is qualified at ETHOS while retained DDWG code, if any,
+  receives its own applicable native obligations.
+
+#### Scenario: The actual source differs from the proof subject
+
+- **WHEN** a check, plan, commit, or later archive changes the selected source
+- **THEN** the corresponding native evidence identifies the exact applicable source
+- **AND** earlier-source success does not certify the new object or its delivery.
+
+### Requirement: DDWG consumer qualification retains the complete shared floor
+
+DDWG SHALL qualify each replacement through the accepted public installed
+interface on exact repository inputs. Existing tasks SHALL retain distinguishing
+cases and original failures at their producer until the consumer releases them.
+Common test algorithms and execution policy SHALL NOT become DDWG standards.
+
+#### Scenario: Distinguishing selected inputs reach the native owner
+
+- **WHEN** a consumer receives real selected source and a representative
+  adverse case
+- **THEN** the shared owner preserves literal identities, complete selection,
+  original diagnostics, and bounded execution without replay
+- **AND** corrected source passes; a parser result, silent empty run, or static
+  declaration alone does not qualify the consumer.
+
+#### Scenario: A predecessor is retired
+
+- **WHEN** the installed successor qualifies the complete replaced obligation
+- **THEN** shared implementation and regression ownership remain at ETHOS
+- **AND** DDWG retires its duplicate test code and standards in the same migration
+  while retaining necessary content cases and a proved business-specific increment.
+
+#### Scenario: One dependency remains unavailable
+
+- **WHEN** a specific shared capability has not reached accepted installed form
+- **THEN** only its dependent acceptance remains pending
+- **AND** independent content and reader work continues without false completion,
+  archive, or a prerequisite on unrelated product goals.
+
+## REMOVED Requirements
+
+**Reason:** Proof, source execution, diagnostics, CI semantics, capacity, and
+carrier policy are shared product contracts. DDWG declares its selected roots
+and content, not another graph, executor, size rule, or mandatory CUE mechanism.
+
+**Migration:** Tasks 2.33, 2.45, and 2.46 qualify the accepted installed contract
+and actual source/offline jobs before retiring their predecessors and standard
+copies. Generic cases and original failures remain bound to their native
+producer, including captured source evidence
+`640cc1a0f708b9b8411d714f07d084376a8b691469e8518181d213366ab753e6`.
 
 ### Requirement: Default proof and root binding are distinct
 
-The profile SHALL select one native gate registry whose default and full roots
-are only `docs-integrity` and `markdown-format`. Both document commands SHALL use
-repository-relative Node source without shell or executable-bit dependencies.
-Integrity SHALL omit formatting; the format gate SHALL own it and standalone
-verification SHALL run it once. Native behavior and static prerequisites SHALL
-retain their declared kinds, evidence classes, offline policies, and trust.
-
-#### Scenario: Root-binding contract is audited
-
-- **WHEN** the repository validates `.ethos/profile.toml`
-- **THEN** its accepted typed profile selects one native registry with exactly
-  the two document roots
-- **AND** each required native prerequisite and quality axis names its verified
-  owner in the accepted product graph, without another profile descriptor
-- **AND THEN** no optional `repository-root-binding` descriptor is present.
-
-#### Scenario: Root binding is independently exercised
-
-- **WHEN** a contributor invokes installed ETHOS or its Git-common hook
-  protocol evaluates work in a selected worktree
-- **THEN** installed ETHOS and Git-common hooks SHALL bind the selected worktree
-  and enforce current admission without a tracked adapter or optional root gate
-- **AND THEN** no repository shell adapter or optional gate changes the default
-  proof floor.
-
-#### Scenario: Format is checked once per verification path
-
-- **WHEN** a contributor invokes the standalone full verifier
-- **THEN** formatting runs once before the remaining checks
-- **AND WHEN** ETHOS executes the two default proof gates
-- **THEN** `docs-integrity` omits formatting and `markdown-format` owns it.
-
-#### Scenario: A supporting check is disconnected or lacks verification
-
-- **WHEN** a descriptor is outside the default dependency closure or a quality
-  axis names a missing, disconnected, or unverified owner
-- **THEN** the installed product rejects that policy before execution
-- **AND** repository checks do not create a competing graph authority.
-
-#### Scenario: A default gate changes its proof meaning
-
-- **WHEN** the profile swaps a default dimension mapping or changes a gate's
-  native kind, evidence class, offline policy, or trust-bearing status
-- **THEN** the existing profile check rejects that exact contract mismatch
-- **AND** the unchanged two-root policy remains valid with its native
-  prerequisite, without another root or a duplicate lifecycle implementation.
-
-### Requirement: Proof prerequisites retain product ownership
-
-Product-native prerequisites and quality axes SHALL belong to one accepted
-ETHOS gate registry selected by the profile. Default and full proof roots SHALL
-remain `docs-integrity` and `markdown-format`. The integrity command SHALL depend
-on a provider-only behavior prerequisite that owns its original test attempt
-and native coverage. Static verification SHALL remain with the format command.
-Neither inline duplicate declarations nor authored substitute evidence SHALL
-replace that ownership.
-
-#### Scenario: A profile attempts to replace native proof evidence
-
-- **WHEN** a repository forwards a document command's output, adds a third root,
-  or supplies an authored report instead of its product-native prerequisite
-- **THEN** accepted ETHOS refuses proof without changing the repository's two
-  default gate boundary
-- **AND** passing document commands alone do not satisfy behavior, semantics,
-  diagnostics, or subject applicability.
-
-#### Scenario: Document and behavior execution retain distinct evidence
-
-- **WHEN** ETHOS resolves both document roots from the selected native registry
-- **THEN** the behavior prerequisite owns one Git-selected Node test attempt,
-  its native coverage, two reserved CPU slots, and a 180-second total execution
-  budget
-- **AND** the installed native test recipe separately qualifies its two-worker
-  limit; a CPU reservation alone does not set Node concurrency
-- **AND** the document commands retain their own results without replaying tests
-  or claiming that their output proves code behavior.
-
-#### Scenario: Native test paths contain pattern syntax
-
-- **WHEN** a selected test path contains spaces or glob syntax, or a new
-  non-ignored test cohort is added
-- **THEN** the repository test command supplies the complete native Git inventory
-  as literal files to Node's official test-runner API and executes each file once
-- **AND** force-tracked files remain selected while ignored local files stay out
-- **AND** two workers and the 180-second whole-attempt deadline remain enforced;
-  failures, empty execution, and cancellation cannot report success
-- **AND** this repository command does not replace the product-owned behavior
-  prerequisite or qualify its installed input and evidence contract.
-
-### Requirement: Shared source-size admission preserves semantic ownership
-
-Accepted shared admission SHALL classify each selected carrier before applying
-its metric and limit. The documentation ceiling SHALL apply only to current
-authored Markdown; release-owned Changelog, official OpenSpec artifacts, and
-declared generated output SHALL retain their own checks. Code SHALL use
-supported language metrics and declared policy. Admission SHALL preserve meaning
-and source selection without a private checker or hidden input.
-
-#### Scenario: A carrier reaches the admitted boundary
-
-- **WHEN** selected current authored Markdown reaches the inclusive limit
-  declared by the accepted installed product for that carrier and metric
-- **THEN** shared documentation admission accepts source at that limit and
-  refuses otherwise equivalent source one non-blank physical line above it
-  without mutation
-- **AND** both boundary values are resolved from that same accepted contract
-- **AND** supported code is evaluated by its language-specific metric and
-  declared limit, not Markdown length.
-
-#### Scenario: An oversized carrier is reorganized
-
-- **WHEN** an applicable carrier exceeds its own admitted limit and source is
-  divided by semantic responsibility
-- **THEN** every prior requirement, test journey, and versioned release note
-  remains reachable at its declared owner
-- **AND** complete native selection and applicable shared admission are verified
-  before the replaced carrier or implementation is retired
-- **AND** source outside that policy is not divided merely to satisfy its count.
-
-#### Scenario: Release history and official artifacts grow
-
-- **WHEN** root release-owned Changelog, an Unreleased or version section,
-  official OpenSpec artifacts, or declared generated output exceeds the ordinary
-  documentation ceiling
-- **THEN** documentation length alone does not reject those carriers
-- **AND** release form and meaning, official artifact validation, and declared
-  producer checks remain mandatory at their own owners.
-
-#### Scenario: Carrier ownership remains explicit
-
-- **WHEN** current authored documentation receives a history, evidence, or
-  archived metadata label, or another directory contains a same-named Changelog
-- **THEN** that label or name alone does not change its applicable policy
-- **AND** generated-output classification requires its current native producer
-  declaration rather than a local exemption.
-
-## ADDED Requirements
-
 ### Requirement: One portable documentation verifier measures source properties
-
-One locked, shell-independent verifier SHALL check all Git-selected source
-formats supported by pinned native Prettier, including Markdown, code, JSON and
-YAML; native TOML formatting; Markdown lint; native Vale prose; pinned offline
-lychee links and fragments; metadata, English, spacing, decisions and navigation.
-The same repository-relative entry SHALL run locally and on both CI planes.
-Diagram, card, topic and evidence counts SHALL NOT determine validity.
-
-#### Scenario: Official OpenSpec reports success with findings
-
-- **WHEN** the official CLI exits successfully but its complete report contains
-  an INFO, WARNING, or ERROR finding, or the process emits standard error
-- **THEN** the existing verifier rejects the result and preserves the native
-  item, location, severity, and message
-- **AND** findings remain visible when standard error accompanies the report,
-  whether the process succeeds or fails
-- **AND** passing summary totals do not establish a clean source check.
-
-#### Scenario: Native prose has already rejected the source
-
-- **WHEN** native prose reports a source defect through the public integrity
-  command
-- **THEN** the command preserves that finding and fails before unrelated
-  Changelog history or official OpenSpec execution
-- **AND** valid prose still reaches every declared check, all distinct native
-  ancestry checks, and the complete test inventory with unchanged deadlines;
-  no cache, private history implementation, or weaker acceptance is added.
-
-#### Scenario: A strict native command fails with partial diagnostics
-
-- **WHEN** a native archive or source command emits output before failure or
-  timeout while its caller rejects standard error without requesting capture
-- **THEN** the existing process owner preserves both partial output streams
-  once and reports the failure or timeout
-- **AND** a successful command with warning output still fails without losing
-  its partial result; no extra executor or failure-suppression mode is added.
-
-#### Scenario: A contextual error wraps a native refusal
-
-- **WHEN** the process, bundle, or Changelog owner adds context to a native
-  process, filesystem, plugin, or Git error
-- **THEN** the contextual error retains the original error as its cause
-- **AND** the existing refusal message and owned-resource cleanup remain
-  observable; context must not erase native diagnosis.
-
-#### Scenario: Native execution cannot start or reaches its deadline
-
-- **WHEN** a command is missing or reaches its execution deadline
-- **THEN** the existing process error retains the original native error object,
-  including its code and command path
-- **AND** successful output, nonzero exit status, warning refusal, and single
-  replay of partial diagnostics keep their existing behavior.
-
-#### Scenario: Native history resolves one complete selection
-
-- **WHEN** Changelog validation selects its current comparison and tag refs
-- **THEN** one native Git batch resolves every selected reference to a commit
-  before native ancestry checks run for all distinct resolved pairs
-- **AND** missing objects, non-commit observations, incomplete line-delimited
-  output, or native warnings fail without accepting partial history
-- **AND** exact tag/HEAD identity, full test selection, and process deadlines
-  remain unchanged; native batch defaults add no Git version requirement,
-  local ancestry implementation, or cache.
-
-#### Scenario: Official validation evidence is incomplete or wrongly bound
-
-- **WHEN** a native report names another root, omits items or issue arrays,
-  repeats an item identity, omits a category selected by `--all` even when it
-  has no items, or reports counts inconsistent with its items
-- **THEN** the verifier rejects that evidence without a report waiver
-- **AND** official OpenSpec retains responsibility for validation and lifecycle;
-  the consumer does not replace its parser or admission.
-
-#### Scenario: Verification fixtures do not borrow prior local state
-
-- **WHEN** the complete verifier runs in a fresh checkout with the declared
-  tools and locked dependencies but no prior build directory or native cache
-- **THEN** source-link and concurrent-install tests create or model their own
-  exact prerequisites and complete without an earlier verification run
-- **AND** the public source-link test uses compact tracked and candidate source
-  with real Git selection and lychee, not unrelated history or documents
-- **AND** source confinement, exclusive copy, version, and mode-preservation
-  assertions remain unchanged; fixture children are removed afterward.
-
-#### Scenario: A public rejection regression carries only its native prerequisites
-
-- **WHEN** the focused prose/integrity regression runs against a temporary
-  repository
-- **THEN** it uses actual native executables, policies, dependencies, and Git
-  selection with compact positive source and complete local links
-- **AND** both command refusals, unchanged source, ignored-untracked exclusion,
-  force-tracked inclusion, each missing anchor, repair, and cleanup remain
-  checked without cloning unrelated history or repeatedly checking other documents
-- **AND** full source verification still selects every actual repository input
-  and test with the same workers and deadlines; no native report is fabricated.
-
-#### Scenario: Native format and lint fixtures select their complete relevant source
-
-- **WHEN** a focused native format or lint regression runs in a temporary Git
-  repository
-- **THEN** executable, policy, and dependency carriers remain present and are
-  consumed normally without becoming unrelated checked source
-- **AND** native Git inventory retains every sample, literal, ambient-policy
-  counterexample, archive input, and force-tracked source, including the observed
-  Markdown TOML policy; original assertions and deadlines remain unchanged
-- **AND** one formatting attempt uses one fresh native TOML formatter for matching
-  and output, preserving diagnostics and data without a cross-attempt cache
-- **AND** full repository verification still checks all selected source and tests;
-  the temporary fixture is removed after success or failure.
-
-#### Scenario: Navigation links are hidden in non-reader content
-
-- **WHEN** code, a comment, an unlinked image, escaped syntax, an unused
-  definition, or a shadowed reference replaces a required task route
-- **THEN** native Markdown link resolution rejects the missing reader route
-- **AND** those same examples cannot falsely count as repeated topic links.
-
-#### Scenario: A navigation anchor has no readable label
-
-- **WHEN** a required route has an empty label, only whitespace or invisible
-  formatting characters, or a linked image without descriptive alt text
-- **THEN** navigation rejects the missing reader route even if its destination
-  or optional title names the expected file
-- **AND** formatted text and descriptive linked-image alt text remain valid;
-  the native engine still owns link and reference resolution.
-
-#### Scenario: A reader uses a legitimate native Markdown route
-
-- **WHEN** a required route uses a titled, full, collapsed, or shortcut link,
-  a character reference, or a normalized repository-relative path
-- **THEN** navigation resolves its actual destination and first definition
-- **AND** real repeated topic routes remain rejected regardless of spelling;
-  native lychee still checks source targets and fragments.
-
-#### Scenario: A table source link is not visible in its rendered cell
-
-- **WHEN** a cell separator without an escape splits a required navigation
-  link, or places it beyond a GFM table's declared columns
-- **THEN** the existing navigation owner rejects the missing rendered route
-- **AND** ordinary links and escaped-pipe labels inside visible cells remain
-  valid; the official native table extension owns the cell boundaries.
-
-#### Scenario: A topic's reader cue is hidden or merely quoted as code
-
-- **WHEN** the use cue appears only in code, a comment, or an image instead of
-  the visible topic opening
-- **THEN** navigation rejects the missing reader entry
-- **AND** a visible cue with or without emphasis remains valid.
-
-#### Scenario: Native formatting is not narrowed by source location
-
-- **WHEN** Git selects a supported code or document file outside the usual code
-  directories or beneath a normally ignored local-state path
-- **THEN** the public formatter checks and writes that file through native
-  Prettier parser detection, without a private language or directory list
-- **AND** ambient ignore files cannot exempt already selected source.
-
-#### Scenario: Ignored local state is not formatting input
-
-- **WHEN** a defective supported file is untracked and ignored by Git
-- **THEN** both public formatting modes leave it outside their source inventory
-- **AND** unowned code formats fail explicitly rather than silently passing
-  or acquiring an overlapping formatter.
-
-#### Scenario: A diagram is removed without losing meaning
-
-- **WHEN** a redundant diagram is deleted and the remaining document preserves
-  its unique explanation and valid links
-- **THEN** documentation validation passes without a diagram-count waiver or
-  browser installation.
-
-#### Scenario: A public check is invoked without a POSIX shell
-
-- **WHEN** a supported host invokes `npm run verify` without a POSIX shell
-- **THEN** the check uses the same repository-relative Node entrypoint
-- **AND THEN** no repository-authored shell wrapper or browser is needed.
-
-#### Scenario: Multiple suites launch document-tool subprocesses
-
-- **WHEN** the standalone verifier runs its discovered quality-test inventory
-- **THEN** at most two test files execute concurrently on every platform
-- **AND** every discovered file still runs with unchanged failure and deadline
-  admission, without a CPU-dependent default or skipped boundary
-- **AND** a narrow OpenSpec environment regression exercises its actual
-  invocation owner while the canonical graph retains real tool execution.
-
-#### Scenario: A link points to local state that is absent from a clean checkout
-
-- **WHEN** a current source document links to an existing ignored cache file or
-  Git metadata
-- **THEN** the public link check rejects that reference as outside repository
-  source even when the native existence check would pass
-- **AND** tracked and non-ignored candidate references remain valid.
-
-#### Scenario: A directory or alias links to source
-
-- **WHEN** a local link names a source directory or a delivered internal alias
-- **THEN** the boundary accepts it only when both requested and resolved paths
-  belong to the source inventory
-- **AND** an ignored alias to source, or a delivered alias to local or outside
-  state, cannot borrow source ownership.
 
 ### Requirement: Reader interpretation is reviewed without staged adoption theater
 
-Representative member and Agent tasks SHALL be walked through the task routes
-for correct rule selection and interpretation limits. A staged team-use trial
-SHALL NOT be a release gate or substitute for naturally observed use.
-
-#### Scenario: A member or Agent follows a task route
-
-- **WHEN** a representative task requires a decision, data qualification, or
-  delivery boundary
-- **THEN** editorial review verifies that the task route selects the relevant
-  rule and states its interpretation limit
-- **AND THEN** this review is not reported as actual team adoption.
-
 ### Requirement: Product-owned code evidence accompanies document proof
-
-`docs-integrity` SHALL depend on the product's verified native behavior
-prerequisite; `markdown-format` SHALL conjoin its command with native static
-diagnostics.
-Behavior and static-analysis axes SHALL name those owners for one tree. Native
-tests SHALL run the complete Git-selected inventory once.
-Accepted installed ETHOS SHALL enforce semantics, diagnostics, and subject
-applicability on each required repository, refusing missing or misdirected
-evidence and authored substitutes.
-
-#### Scenario: Document command passes but native code fails
-
-- **WHEN** both repository document commands exit successfully but a tracked
-  JavaScript test fails or production module is not exercised
-- **THEN** ETHOS blocks full proof for the behavior axis
-- **AND THEN** a repository-authored test report cannot turn the result green.
-
-#### Scenario: Native code passes but a document command fails
-
-- **WHEN** ETHOS obtains valid native code evidence but the document command
-  for either mapped gate fails
-- **THEN** that gate and full proof remain blocked
-- **AND THEN** native evidence does not excuse a broken document check.
-
-#### Scenario: Both sides of each gate pass
-
-- **WHEN** both document commands and their required native evidence owners pass
-  for the exact committed source
-- **THEN** the two default gates and their necessary prerequisites satisfy the
-  mapped runtime obligations
-- **AND** shared semantic, diagnostic, and subject-applicability acceptance
-  remains a separately verified ETHOS product obligation
-- **AND THEN** no additional default gate or private lifecycle is required.
-
-#### Scenario: Native syntax passes without semantic correctness
-
-- **WHEN** a syntax-valid production function refers to an undefined identifier
-  on a reachable but unexercised branch
-- **THEN** source and proof descriptions distinguish syntax success from static
-  semantic correctness
-- **AND** shared acceptance remains open until the formally accepted installed
-  product establishes the required property.
-
-#### Scenario: Native reports omit an unapproved warning
-
-- **WHEN** native tests emit an unapproved warning, whether or not their
-  selected reports include it
-- **THEN** native tests SHALL preserve the original warning
-- **AND** documentation and completion claims identify any omission from the
-  selected reports
-- **AND** the passing report does not close the shared warning-handling
-  obligation or authorize a repository-private replacement.
-
-#### Scenario: Applicable scopes differ by subject
-
-- **WHEN** the formal product contract permits different native scopes to
-  jointly cover a required property
-- **THEN** qualification checks each subject against its actual obligation
-- **AND** it does not require every provider to cover every language or accept
-  uncovered required subjects.
-
-#### Scenario: One attempt supplies actual behavioral evidence
-
-- **WHEN** the default document check selects its native behavior prerequisite
-- **THEN** the actual native test executor runs the complete selected inventory
-  once and its original reports cover each required production subject
-- **AND** neither a wrapper nor a document gate replays tests or claims another
-  owner's report as its own.
-
-#### Scenario: Equivalent options cannot suppress native diagnostics
-
-- **WHEN** a declared native command uses an equivalent warning-suppression or
-  report-override option, including alternate separators or attached values
-- **THEN** the product rejects the invocation before tests run
-- **AND WHEN** ambient settings attempt to suppress an unapproved native warning
-- **THEN** the original warning remains observable and blocks acceptance.
 
 ### Requirement: Public-command integration has a bounded native execution budget
 
-Tests of the complete public prose and repository commands SHALL retain actual
-current-source execution, defect rejection, corrected-source success, and
-unchanged-source assertions. Their child deadline SHALL use the same finite
-120-second budget as the existing runtime command owner, not a shorter implicit
-performance requirement. A subprocess error SHALL be reported before an exit
-status assertion; a timeout SHALL NOT be mistaken for a rejected source defect.
-
-#### Scenario: A supported host completes a full current-source check
-
-- **WHEN** a real public-command test needs more than 30 seconds but completes
-  within the native 120-second budget
-- **THEN** it may finish its actual selected rules without being canceled early
-- **AND** the expected source defect and unchanged bytes are still asserted.
-
-#### Scenario: A public-command child exceeds the admitted budget
-
-- **WHEN** the child reaches its finite timeout or has an execution error
-- **THEN** the test fails with that actual error before comparing its exit code
-- **AND** it does not skip, retry, or count the timeout as defect rejection.
-
 ### Requirement: Verification reports its native workspace context
-
-Both `check` and `verify` SHALL emit one complete JSON context before validation,
-formatting, or inherited child output. It SHALL identify the real repository,
-commit, tree, tracked changes, Node version, platform, process architecture,
-observed host name, and exact mounted-filesystem byte counts. Read or write errors
-SHALL fail with their native diagnosis. The context SHALL NOT qualify VM identity,
-isolation, throughput, or capacity admission or add a controller or gate.
-
-#### Scenario: A source check reports its actual workspace
-
-- **WHEN** `check` or `verify` begins in a local or hosted workspace
-- **THEN** one native observation identifies the source, runtime, and total,
-  free, and available bytes of its mounted workspace filesystem
-- **AND** decimal integer strings preserve values beyond floating-point precision
-- **AND** runtime architecture identifies the Node process, not the host or guest
-- **AND** its stated limit excludes VM identity, isolation, and throughput.
-
-#### Scenario: A child inherits a pipe with a pending context record
-
-- **WHEN** a context record exceeds the pipe buffer before a synchronous
-  validation or formatter child starts
-- **THEN** the complete context remains one valid JSON line before child output
-- **AND** child output is not inserted into that line or merged with standard
-  error.
-
-#### Scenario: The context output consumer closes its pipe
-
-- **WHEN** the context write fails because its output consumer is closed
-- **THEN** both commands stop before validation or formatting with the native
-  write error
-- **AND** no unhandled stream error replaces the existing diagnosis.
-
-#### Scenario: A native filesystem read fails
-
-- **WHEN** the native workspace filesystem read fails
-- **THEN** verification fails with the original error
-- **AND** it does not fabricate a zero-capacity observation or claim runner
-  qualification.
 
 ### Requirement: Common CI semantics have one CUE owner
 
-Common CI topology, platform intent, admission, quality actions, and release
-qualification SHALL have one CUE owner. Forge YAML SHALL be generated
-projections; peer adapters SHALL own only necessary platform and transport
-differences. Shared actions SHALL use existing native executors. Both peers
-SHALL enforce the same non-writing drift check before effects. Local verification
-and single-peer execution SHALL remain independent of an unavailable peer.
+### Requirement: Shared source-size admission preserves semantic ownership
 
-#### Scenario: Peer adapters preserve the common contract
-
-- **WHEN** GitLab and GitHub projections are generated from the declared CUE source
-- **THEN** both use the same task graph, platform intent, admission, quality
-  actions, and release qualification
-- **AND** peer adapters carry only necessary event mapping, permissions, runner
-  selection, credentials, and asset transport
-- **AND** equivalent shared action lists are not authored separately per peer.
-
-#### Scenario: An authored YAML projection drifts
-
-- **WHEN** a projected task, platform, trigger, or command is edited without its
-  declared CUE source
-- **THEN** generation check refuses before shared quality or release effects on
-  either peer
-- **AND** the check leaves the source and every projection unchanged.
-
-#### Scenario: Only one publication peer is selected
-
-- **WHEN** native execution selects one declared peer while the other is absent
-  or unavailable
-- **THEN** the common task and quality contract remains the same
-- **AND** local and installed offline checks do not acquire an undeclared remote
-- **AND** execution preserves exact signed source identity and claims only the
-  observed peer's acceptance.
+### Requirement: Proof prerequisites retain product ownership
