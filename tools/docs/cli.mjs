@@ -1,36 +1,9 @@
 import {
   assertNodeRuntime,
-  gitFiles,
   reportError,
   root,
   workspaceObservation,
 } from "../runtime.mjs";
-
-function testFiles() {
-  return gitFiles().filter(
-    (relative) =>
-      relative.startsWith("tests/") && relative.endsWith(".test.mjs"),
-  );
-}
-
-async function runTests() {
-  const files = testFiles();
-  if (!files.length) throw new Error("no repository quality tests found");
-  const { run } = await import("node:test");
-  const { spec } = await import("node:test/reporters");
-  const { pipeline } = await import("node:stream/promises");
-  const tests = run({
-    files,
-    cwd: root,
-    concurrency: 2,
-    signal: AbortSignal.timeout(180_000),
-  });
-  tests.on("test:summary", ({ file, success, counts }) => {
-    if (file === undefined && (!success || !counts.tests)) process.exitCode = 1;
-  });
-  await pipeline(tests, new spec(), process.stdout, { end: false });
-  if (process.exitCode) throw new Error("repository quality tests failed");
-}
 
 async function reportVerificationContext() {
   // Finish this record before synchronous children inherit the same stream.
@@ -52,31 +25,20 @@ async function checkRepository() {
     checkLicense,
     checkNavigation,
     checkNoScope,
-    checkProfile,
   } = await import("./governance.mjs");
-  const {
-    checkDocumentMetadata,
-    checkLinks,
-    checkProse,
-    checkTextLayout,
-    lintMarkdown,
-  } = await import("./content.mjs");
-  const { readBundleRecord } = await import("../ci/offline/artifact.mjs");
+  const { checkDocumentMetadata, checkLinks, checkProse, checkTextLayout } =
+    await import("./content.mjs");
   const { validateOpenSpec } = await import("./openspec.mjs");
   const { checkChangelog } = await import("./changelog.mjs");
   const { checkCi } = await import("./ci.mjs");
   const { checkDecisions } = await import("./decisions.mjs");
   checkConfigurationLayout();
-  checkProfile();
   checkLineEndingAttributes();
   checkLicense();
-  const bundle = readBundleRecord();
-  console.log(`PASS source-pinned offline bundle identity: v${bundle.version}`);
   checkNoScope();
   await checkProse();
   checkChangelog();
   validateOpenSpec();
-  lintMarkdown();
   checkDocumentMetadata();
   checkLinks();
   await checkTextLayout();
@@ -95,16 +57,6 @@ try {
       await reportVerificationContext();
       await checkRepository();
       break;
-    case "verify": {
-      if (arguments_.length) throw new Error("verify accepts no arguments");
-      await reportVerificationContext();
-      const { formatSource } = await import("./content.mjs");
-      await formatSource();
-      await checkRepository();
-      await runTests();
-      console.log("PASS repository documentation verification");
-      break;
-    }
     case "format": {
       if (
         arguments_.length > 1 ||
@@ -114,12 +66,6 @@ try {
       }
       const { formatSource } = await import("./content.mjs");
       await formatSource({ check: arguments_[0] === "--check" });
-      break;
-    }
-    case "lint": {
-      if (arguments_.length) throw new Error("lint accepts no arguments");
-      const { lintMarkdown } = await import("./content.mjs");
-      lintMarkdown();
       break;
     }
     case "audit": {
@@ -165,13 +111,9 @@ try {
       checkNavigation();
       break;
     }
-    case "test":
-      if (arguments_.length) throw new Error("test accepts no arguments");
-      await runTests();
-      break;
     default:
       throw new Error(
-        "usage: node tools/docs/cli.mjs verify|check|format|lint|prose|links [--online]|changelog|boundary|navigation|audit|test",
+        "usage: node tools/docs/cli.mjs check|format|prose|links [--online]|changelog|boundary|navigation|audit",
       );
   }
 } catch (error) {

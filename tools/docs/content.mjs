@@ -16,7 +16,7 @@ import tomlPlugin from "@dprint/toml";
 import { isDeepStrictEqual } from "node:util";
 import { parse as parseToml } from "smol-toml";
 import YAML from "yaml";
-import { lint, readConfig } from "markdownlint/sync";
+import { lint } from "markdownlint/sync";
 import { noQualityControl } from "./markdown.mjs";
 import {
   currentMarkdown,
@@ -26,7 +26,6 @@ import {
   root,
   run,
   runNodeTool,
-  sourceMarkdown,
   sourceAttributes,
   temporaryRoot,
 } from "../runtime.mjs";
@@ -157,32 +156,6 @@ export async function formatSource({ check = true } = {}) {
   if (findings.length) throw new Error(findings.join("\n"));
   console.log(
     `PASS native TOML formatting: ${targets.toml.length} source files`,
-  );
-}
-
-export function lintMarkdown({ files = sourceMarkdown(), strings } = {}) {
-  const config = readConfig(
-    filePath(".config/checks/markdown/markdownlint.toml"),
-    [(source) => structuredClone(parseToml(source))],
-  );
-  const results = lint({
-    files: files.map((relative) =>
-      path.isAbsolute(relative) ? relative : filePath(relative),
-    ),
-    strings,
-    config,
-    noInlineConfig: true,
-    customRules: [noQualityControl],
-  });
-  const findings = Object.entries(results).flatMap(([file, errors]) =>
-    errors.map(
-      ({ lineNumber, ruleNames, errorDetail, errorContext }) =>
-        `${file}:${lineNumber} [${ruleNames[0]}] ${errorDetail ?? errorContext ?? "Markdown rule violation"}`,
-    ),
-  );
-  if (findings.length) throw new Error(findings.join("\n"));
-  console.log(
-    `PASS native Markdown policy: ${Object.keys(results).length} source inputs`,
   );
 }
 

@@ -17,11 +17,7 @@ import { syncBuiltinESMExports } from "node:module";
 import { test } from "node:test";
 import { pathToFileURL } from "node:url";
 import { parse as parseToml } from "smol-toml";
-import {
-  formatSource,
-  lintMarkdown,
-  textViolations,
-} from "../../tools/docs/content.mjs";
+import { formatSource, textViolations } from "../../tools/docs/content.mjs";
 import { checkConfigurationLayout } from "../../tools/docs/governance.mjs";
 import { nodeTool, root } from "../../tools/runtime.mjs";
 import { nativeToolBinary } from "../../tools/supply.mjs";
@@ -74,7 +70,7 @@ test("one formatting attempt uses one fresh native TOML formatter", async (conte
 });
 
 test("the text boundary retains TOML syntax without duplicating native formatting", async () => {
-  const toml = ".config/checks/markdown/markdownlint.toml";
+  const toml = ".config/checks/format/toml.toml";
   assert.deepEqual(
     await textViolations(toml, "[MD013]\nline_length = 80\n"),
     [],
@@ -157,16 +153,6 @@ test("the generated Mise lock keeps its native TOML owner", async () => {
   assert.match(
     (await textViolations("unowned.lock", source))[0],
     /no native formatting owner/u,
-  );
-});
-
-test("Markdown checks consume the native concern-local TOML policy", () => {
-  const relative = ".config/checks/markdown/markdownlint.toml";
-  assert.ok(existsSync(path.join(root, relative)), relative);
-  const source = "# Example\n\n<!-- vale off -->\n\nUse the report.\n";
-  assert.throws(
-    () => lintMarkdown({ files: [], strings: { "fixture.md": source } }),
-    /no-quality-control/u,
   );
 });
 

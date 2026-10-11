@@ -9,7 +9,7 @@ product, not this directory index.
 | ----------------------------------------- | ----------------------------------------------------------------------------- |
 | Markdown, code, JSON, and YAML formatting | [Prettier](checks/format/prettier.toml)                                       |
 | TOML formatting                           | [dprint TOML](checks/format/toml.toml)                                        |
-| Non-spacing Markdown checks               | [Markdownlint](checks/markdown/markdownlint.toml)                             |
+| Non-spacing Markdown checks               | [Installed ETHOS policy](../docs/governance/ethos.md#proof-and-configuration) |
 | English prose and department terms        | [Vale](checks/prose/vale.ini), its adjacent styles, and Department vocabulary |
 | Local links and fragments                 | [Lychee](checks/links/lychee.toml)                                            |
 | Project dependency findings               | [OSV dispositions](checks/dependencies/policy.toml)                           |

@@ -149,8 +149,9 @@
       Verify duties, stages, relationships, returns, and limits survive retirement
       of duplicated views; preserve failed routes and retire inspection copies.
       Reference `07833876851f4480c3a4e82a2d94ac720e1306bf69f5b3b5b80d62ce3782a01a`,
-      `326125f9c749324ae88f1a47f5bd4788ad6f72463059e6b78ae770fad3201257`, and
-      `466c69defd3bbd5c8fab06ea3c0103cd6326ca43b69a5df796a8c0a8d518b702`.
+      `326125f9c749324ae88f1a47f5bd4788ad6f72463059e6b78ae770fad3201257`,
+      `466c69defd3bbd5c8fab06ea3c0103cd6326ca43b69a5df796a8c0a8d518b702`, and
+      `8f4833da08b652c0db73f6d93a6dcb542cbf69bd03750453a77c54f970c86cc0`.
 - [x] 2.41 Share editor and Finder exclusions through tracked native Git policy;
       verify fresh-clone selection without ambient exclusions, full source, proof,
       and cold verification. Reference
@@ -188,7 +189,9 @@
         failure, cancellation, and bounded cleanup. Retire generic DDWG tests and
         fixtures and duplicated standard copies after product-consumer acceptance;
         retain only content cases and a demonstrated business-specific increment
-        at their proper owners.
+        at their proper owners. Reference
+        `8d892795af411edf25b9194d39e70c1d2a3ef350b104c490c643d46d6d657b0c` and
+        `419bf2437732d173ecedf40c93fe222b6a6c884491d299f9dac9fa84e21fb220`.
   - [x] 2.46.4 Reconcile design choices, official deltas, and main specifications;
         verify requirements, scenarios, reader routes, strict OpenSpec, and clarity.
         Reference `b309c56769ed6dd824237ce58e2722bd541f29e6174528aa9b7219a07469889c`,
@@ -239,7 +242,9 @@
       official spec sync and archive-readiness verification; preserve unique
       evidence and retire absorbed resources only after consumer checks under the
       [migration plan](design.md#migration-plan). Do not certify equivalence
-      or use.
+      or use. Reference
+      `e108ee5b39cb102ca8683173c4deca6c5387cf872710de09dd3bc7136b28430c` and
+      `8f4833da08b652c0db73f6d93a6dcb542cbf69bd03750453a77c54f970c86cc0`.
 - [x] 3.6 Publish the compatible original-duty correction; verify fresh local
       and installed proof, signed source, assets, and both platform matrices while
       preserving the previously qualified major release.

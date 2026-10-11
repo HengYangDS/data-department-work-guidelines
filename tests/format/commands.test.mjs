@@ -120,7 +120,7 @@ test("native TOML formatting checks literal Git paths and preserves data", () =>
 test("native formatting policy preserves prose and ignores ambient editor settings", () => {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-format-policy-"));
   try {
-    const tomlRelative = ".config/checks/markdown/markdownlint.toml";
+    const tomlRelative = ".config/checks/format/toml.toml";
     cpSync(path.join(root, "tools"), path.join(directory, "tools"), {
       recursive: true,
     });
@@ -332,13 +332,6 @@ test("native formatting policy preserves prose and ignores ambient editor settin
     assert.equal(secondPass.status, 0, secondPass.stderr);
     for (const [relative, bytes] of firstPass)
       assert.deepEqual(readFileSync(path.join(directory, relative)), bytes);
-    const nonSpacing = spawnSync(
-      process.execPath,
-      ["tools/docs/cli.mjs", "lint"],
-      { cwd: directory, encoding: "utf8", timeout: 10_000 },
-    );
-    assert.ifError(nonSpacing.error);
-    assert.equal(nonSpacing.status, 0, nonSpacing.stderr);
   } finally {
     rmSync(directory, { recursive: true, force: true });
     assert.equal(existsSync(directory), false);

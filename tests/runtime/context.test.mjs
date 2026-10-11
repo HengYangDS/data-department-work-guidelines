@@ -15,7 +15,7 @@ test("source context finishes before inherited child output without merging stre
     'process.stderr.write("CHILD_STDERR\\n");',
   ].join(" ");
   const hostname = `fixture-${"x".repeat(262_144)}`;
-  for (const command of ["check", "verify"]) {
+  for (const command of ["check"]) {
     const script = `
     import assert from "node:assert/strict";
     import childProcess from "node:child_process";
@@ -83,7 +83,7 @@ test("source context finishes before inherited child output without merging stre
 });
 
 test("source checks preserve a failed context write before starting validation", () => {
-  for (const command of ["check", "verify"]) {
+  for (const command of ["check"]) {
     const script = `
     import fs from "node:fs";
     import childProcess from "node:child_process";
@@ -126,7 +126,7 @@ test("source checks preserve a failed context write before starting validation",
 });
 
 test("source checks report a closed stdout through their native error owner", async () => {
-  for (const command of ["check", "verify"]) {
+  for (const command of ["check"]) {
     const script = `
     const originalWrite = process.stdout.write.bind(process.stdout);
     process.stdout.write = (chunk, ...arguments_) => {

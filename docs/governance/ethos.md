@@ -136,12 +136,13 @@ success. The same Changelog serves both peers and local readers.
 
 ## Quality and Local State
 
-Run `npm run verify` through the [portable entry](../../tools/docs/cli.mjs).
-It checks native formatting, Markdown, Vale, offline lychee, repository
-boundaries, strict official OpenSpec, and the standalone regression suite.
-[Contributing](../../CONTRIBUTING.md#verify-the-source) owns the commands.
-Installed ETHOS owns the common rules; the
-[configuration map](../../.config/README.md) locates current native inputs.
+Run the source checks in [Contributing](../../CONTRIBUTING.md#verify-the-source).
+The installed full host graph owns native test execution and source-quality
+observations. Repository checks supply the current document, configuration,
+prose, link, and official OpenSpec inputs. Working-edit checks and committed-source
+host verification are separate observations; neither grants repository proof,
+source acceptance, or publication. The [configuration map](../../.config/README.md) locates current native
+inputs without restating common rules.
 
 ### Observe the Execution Environment
 

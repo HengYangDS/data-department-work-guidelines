@@ -43,19 +43,27 @@ npm run verify
 ethos plan --changed --json
 ```
 
-The complete verifier checks format, Markdown, English prose and terms, local
-links and fragments, metadata, navigation, decisions, configuration, CI,
-SemVer/Changelog, official OpenSpec, and the regression suite. It downloads
-nothing. Before online publication, also run `node tools/docs/cli.mjs audit` and
-retain its complete result under the
+`npm run verify` invokes the installed ETHOS full host graph. The two document
+roots cover source checks, formatting, and native code-quality obligations.
+ETHOS selects tests from the committed Git source; there is no repository test
+controller or bare Node discovery command. Host verification needs a coherent
+committed source and does not mint repository proof or source acceptance.
+
+For an uncommitted edit, run `npm run format -- --check` and
+`node tools/docs/cli.mjs check`. The latter checks English prose and terms,
+local links and fragments, metadata, navigation, decisions, configuration, CI,
+SemVer/Changelog, and official OpenSpec. These checks download nothing and do not
+require a frozen release bundle. Inspect a supplied bundle separately before
+installation or release. Before online publication, also run
+`node tools/docs/cli.mjs audit` and retain its complete result under the
 [supply boundary](docs/governance/ethos.md#tool-supply-and-offline-execution).
 
-| When you need to                 | Command                        |
-| -------------------------------- | ------------------------------ |
-| Format the selected source       | `npm run format`               |
-| Check formatting without writing | `npm run format -- --check`    |
-| Check non-spacing Markdown rules | `node tools/docs/cli.mjs lint` |
-| Check spelling, prose, and terms | `npm run prose`                |
+| When you need to                 | Command                                                    |
+| -------------------------------- | ---------------------------------------------------------- |
+| Format the selected source       | `npm run format`                                           |
+| Check formatting without writing | `npm run format -- --check`                                |
+| Check non-spacing Markdown rules | `ethos prove --host --execute --gate markdown-lint --json` |
+| Check spelling, prose, and terms | `npm run prose`                                            |
 
 The [configuration map](.config/README.md) locates each native input; it does not
 restate common standards. Use the installed ETHOS rules and the declared native

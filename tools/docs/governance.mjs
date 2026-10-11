@@ -1,6 +1,5 @@
 import { existsSync, lstatSync, readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
-import { isDeepStrictEqual } from "node:util";
 import { parse as parseToml } from "smol-toml";
 import { nativeTomlFormatter } from "./content.mjs";
 import {
@@ -19,7 +18,6 @@ import {
   root,
   run,
   gitFiles,
-  managedFileExists,
   sourceAttributes,
   filesUnder,
 } from "../runtime.mjs";
@@ -125,7 +123,6 @@ export function checkConfigurationLayout(repository = root) {
     ".config/checks/format/toml.toml",
     ".config/checks/links/lychee.toml",
     dependencyPolicyPath,
-    ".config/checks/markdown/markdownlint.toml",
     ".config/checks/prose/vale.ini",
     ".config/checks/prose/styles/Plain/Concise.yml",
     ".config/checks/prose/styles/Plain/StockPhrases.yml",
@@ -177,46 +174,6 @@ export function checkConfigurationLayout(repository = root) {
     throw new Error(
       "configuration ownership cannot duplicate policy in package.json",
     );
-  const markdown = parseToml(
-    readFileSync(
-      path.join(repository, ".config/checks/markdown/markdownlint.toml"),
-      "utf8",
-    ),
-  );
-  if (
-    Object.keys(markdown).some(
-      (name) =>
-        ![
-          "whitespace",
-          "blank_lines",
-          "indentation",
-          "MD019",
-          "MD021",
-          "MD023",
-          "MD058",
-          "MD060",
-          "MD013",
-          "MD024",
-        ].includes(name),
-    ) ||
-    markdown.whitespace !== false ||
-    markdown.blank_lines !== false ||
-    markdown.indentation !== false ||
-    markdown.MD019 !== false ||
-    markdown.MD021 !== false ||
-    markdown.MD023 !== false ||
-    markdown.MD058 !== false ||
-    markdown.MD060 !== false ||
-    markdown.MD013?.line_length !== 80 ||
-    markdown.MD013?.code_blocks !== false ||
-    markdown.MD013?.tables !== false ||
-    markdown.MD013?.headings !== false ||
-    markdown.MD024?.siblings_only !== true
-  ) {
-    throw new Error(
-      "configuration ownership must preserve native Markdown rule policy",
-    );
-  }
   nativeTomlFormatter(repository);
   const dependencyPolicy = parseDependencyPolicy(
     readFileSync(path.join(repository, dependencyPolicyPath), "utf8"),
@@ -249,150 +206,6 @@ export function checkConfigurationLayout(repository = root) {
       "configuration ownership must keep Vale styles concern-local",
     );
   console.log("PASS configuration ownership: checks, Mise, supply and release");
-}
-
-export function checkProfile(repository = root) {
-  const profile = parseToml(
-    readFileSync(path.join(repository, ".ethos/profile.toml"), "utf8"),
-  );
-  const registryPath = profile.proof?.gate_registry;
-  const sources = new Set(gitFiles(repository));
-  const selectedSource = (source, owner) => {
-    if (
-      typeof source !== "string" ||
-      source.startsWith("-") ||
-      ["\\", ":", "\0"].some((character) => source.includes(character)) ||
-      source.split("/").some((part) => !part || part === "." || part === "..")
-    ) {
-      throw new Error(`${owner} must select portable repository source`);
-    }
-    if (
-      !sources.has(source) ||
-      !managedFileExists(path.join(repository, source), repository)
-    ) {
-      throw new Error(
-        `${owner} must select regular repository source: ${source}`,
-      );
-    }
-  };
-  selectedSource(registryPath, "profile registry");
-  if (
-    ["gates", "code_correctness_gates", "code_correctness_map"].some((key) =>
-      Object.hasOwn(profile.proof, key),
-    )
-  ) {
-    throw new Error(
-      "profile must use one native gate registry, not inline gates",
-    );
-  }
-  // Native ETHOS validates the schema and graph. This is the local document
-  // boundary: two roots, with product-owned code evidence as prerequisites.
-  const registry = parseToml(
-    readFileSync(path.join(repository, registryPath), "utf8"),
-  );
-  const expected = ["docs-integrity", "markdown-format"];
-  if (
-    registry.id !== profile.profile_id ||
-    ![registry.proof_sets?.default, registry.proof_sets?.full].every(
-      (ids) =>
-        Array.isArray(ids) &&
-        isDeepStrictEqual([...ids].sort(), [...expected].sort()),
-    )
-  ) {
-    throw new Error(
-      "profile proof floor must have exactly docs-integrity and markdown-format",
-    );
-  }
-  const gates = new Map(registry.gates?.map((gate) => [gate.id, gate]));
-  const contracts = [
-    {
-      id: "docs-integrity",
-      kind: "test",
-      depends_on: ["code-behavior"],
-      dimensions: ["documentation", "links"],
-      execution_mode: "subprocess",
-      evidence_class: "proof",
-      tool_adapter: "repository-native",
-      providers: [],
-      verification_providers: [],
-    },
-    {
-      id: "markdown-format",
-      kind: "lint",
-      depends_on: [],
-      dimensions: ["static-analysis", "format", "markdown"],
-      execution_mode: "verified-command",
-      evidence_class: "contract",
-      tool_adapter: "ethos",
-      providers: [],
-      verification_providers: [
-        "ethos.adapters.gates.code_quality:static_report",
-      ],
-    },
-    {
-      id: "code-behavior",
-      kind: "test",
-      depends_on: [],
-      dimensions: ["behavior"],
-      execution_mode: "provider",
-      evidence_class: "proof",
-      tool_adapter: "ethos",
-      providers: ["ethos.adapters.gates.code_quality:behavior_report"],
-      verification_providers: [],
-      command: [],
-      timeout_seconds: 180,
-      cpu_reservation: 2,
-    },
-  ];
-  if (
-    gates.size !== contracts.length ||
-    registry.gates.length !== contracts.length
-  ) {
-    throw new Error(
-      "profile must declare only document roots and their native prerequisite",
-    );
-  }
-  for (const contract of contracts) {
-    const gate = gates.get(contract.id);
-    if (
-      !gate ||
-      gate.trust_bearing !== true ||
-      gate.network_policy !== "offline" ||
-      Object.entries(contract).some(
-        ([key, value]) =>
-          !isDeepStrictEqual(
-            gate[key] ?? (Array.isArray(value) ? [] : undefined),
-            value,
-          ),
-      )
-    ) {
-      throw new Error(
-        `profile ${contract.id} must preserve its native document gate contract`,
-      );
-    }
-  }
-  for (const [id, arguments_] of [
-    ["docs-integrity", ["check"]],
-    ["markdown-format", ["format", "--check"]],
-  ]) {
-    const [executable, source, ...actualArguments] =
-      gates.get(id).command ?? [];
-    if (
-      executable !== "node" ||
-      !isDeepStrictEqual(actualArguments, arguments_)
-    ) {
-      throw new Error(
-        `profile ${id} must invoke the portable repository entrypoint`,
-      );
-    }
-    selectedSource(source, `profile ${id} entrypoint`);
-  }
-  if (JSON.stringify(profile.openspec?.material_paths) !== '["**"]') {
-    throw new Error("profile must admit all tracked candidates");
-  }
-  console.log(
-    "PASS ETHOS profile: two document roots with a native behavior prerequisite",
-  );
 }
 
 export function checkNoScope(repository = root) {

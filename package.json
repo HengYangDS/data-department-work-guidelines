@@ -3,10 +3,9 @@
   "private": true,
   "description": "Documentation quality tooling for the data department work guidelines.",
   "scripts": {
-    "verify": "node tools/docs/cli.mjs verify",
+    "verify": "ethos prove --host --execute --full --json",
     "format": "node tools/docs/cli.mjs format",
-    "prose": "node tools/docs/cli.mjs prose",
-    "test": "node tools/docs/cli.mjs test"
+    "prose": "node tools/docs/cli.mjs prose"
   },
   "devDependencies": {
     "@dprint/formatter": "0.5.1",

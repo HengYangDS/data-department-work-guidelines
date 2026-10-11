@@ -12,11 +12,7 @@ import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 import { pathToFileURL } from "node:url";
-import {
-  documentMetadata,
-  lintMarkdown,
-  textViolations,
-} from "../../tools/docs/content.mjs";
+import { documentMetadata, textViolations } from "../../tools/docs/content.mjs";
 import { gitFiles, root } from "../../tools/runtime.mjs";
 
 test("document metadata reads the product-supported title-first carrier", () => {
@@ -87,16 +83,10 @@ test("document metadata rejects incomplete or prematurely closed comments", () =
   }
 });
 
-test("English failures identify a file and line; formatting owns spacing", async () => {
+test("English failures identify the source file and line", async () => {
   assert.match(
     (await textViolations("docs/example.md", "# Heading\n\u4e2d\u6587\n"))[0],
     /docs\/example\.md:2/u,
-  );
-  assert.doesNotThrow(() =>
-    lintMarkdown({
-      files: [],
-      strings: { "docs/example.md": "# Heading\n\n\nText\n" },
-    }),
   );
 });
 
@@ -182,9 +172,6 @@ test("tracked text refuses invalid UTF-8 and NUL while declared binary assets re
 test("native spacing checks archived Markdown; other text keeps its own boundary", async () => {
   const { check, format } = await import("prettier");
   const file = "openspec/changes/archive/example/spec.md";
-  assert.doesNotThrow(() =>
-    lintMarkdown({ files: [], strings: { [file]: "# Example\n\nText.\n" } }),
-  );
   const source = "# Example\n\n\nText.\n";
   const options = { filepath: file };
   assert.equal(await check(source, options), false);

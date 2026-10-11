@@ -93,7 +93,6 @@ test("configuration rejects missing native policy owners", () => {
     ".config/checks/format/prettier.toml",
     ".config/checks/format/toml.toml",
     ".config/checks/links/lychee.toml",
-    ".config/checks/markdown/markdownlint.toml",
     ".config/checks/prose/vale.ini",
     ".config/supply/native.json",
     ".config/release/offline-bundle.json",
@@ -120,35 +119,6 @@ test("configuration rejects package-embedded policy as a second owner", () => {
       /configuration ownership.*package/u,
     );
   });
-});
-
-test("Markdown policy keeps one spacing owner and preserves non-spacing checks", () => {
-  const policy = readFileSync(
-    path.join(root, ".config/checks/markdown/markdownlint.toml"),
-    "utf8",
-  );
-  for (const source of [
-    "[MD013]\nline_length = 0\n",
-    'globs = ["**"]\n',
-    policy.replace("whitespace = false", "whitespace = true"),
-    policy.replace("blank_lines = false", "blank_lines = true"),
-    policy.replace("MD019 = false", "MD019 = true"),
-    policy.replace("MD021 = false", "MD021 = true"),
-    policy.replace("MD060 = false", "MD060 = true"),
-    `${policy}\n[list-item-spacing]\ncheckBlanks = true\n`,
-    `${policy}\n[MD012]\nmaximum = 1\n`,
-  ]) {
-    configurationFixture((directory) => {
-      writeFileSync(
-        path.join(directory, ".config/checks/markdown/markdownlint.toml"),
-        source,
-      );
-      assert.throws(
-        () => governance.checkConfigurationLayout(directory),
-        /preserve native Markdown rule policy/u,
-      );
-    });
-  }
 });
 
 test("configuration cannot delegate ownership through a directory link", () => {
