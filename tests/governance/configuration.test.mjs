@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
 import {
   cpSync,
   existsSync,
@@ -14,6 +15,7 @@ import path from "node:path";
 import { test } from "node:test";
 import * as governance from "../../tools/docs/governance.mjs";
 import { root } from "../../tools/runtime.mjs";
+import { nativeToolBinary } from "../../tools/supply.mjs";
 import { configurationFixture } from "./fixtures.mjs";
 
 test("configuration has separate native concern owners", () => {
@@ -137,11 +139,27 @@ test("native Vale resolves equivalent syntax to the single concern-local styles 
   configurationFixture((directory) => {
     const config = path.join(directory, ".config/checks/prose/vale.ini");
     const original = readFileSync(config, "utf8");
-    writeFileSync(
-      config,
-      original.replace("StylesPath = styles", "StylesPath=styles"),
-    );
-    assert.doesNotThrow(() => governance.checkConfigurationLayout(directory));
+    const implicit = original.replace(/^\[DEFAULT\]\n/u, "");
+    let expected;
+    for (const syntax of [
+      implicit,
+      `[DEFAULT]\n${implicit}`,
+      implicit.replace("StylesPath = styles", "StylesPath=styles"),
+    ]) {
+      writeFileSync(config, syntax);
+      assert.doesNotThrow(() => governance.checkConfigurationLayout(directory));
+      const resolved = spawnSync(
+        nativeToolBinary("vale"),
+        ["--no-global", `--config=${config}`, "ls-config"],
+        { cwd: directory, encoding: "utf8", timeout: 10_000 },
+      );
+      assert.ifError(resolved.error);
+      assert.equal(resolved.status, 0, resolved.stderr);
+      assert.equal(resolved.stderr, "");
+      const effective = JSON.parse(resolved.stdout);
+      if (expected) assert.deepEqual(effective, expected);
+      else expected = effective;
+    }
     cpSync(
       path.join(directory, ".config/checks/prose/styles"),
       path.join(directory, "external-styles"),
