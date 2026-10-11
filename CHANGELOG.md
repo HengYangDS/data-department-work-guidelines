@@ -60,7 +60,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 - Distinguish unknown historical availability from demonstrated late
   availability. Missing evidence leaves point-in-time validity unproved;
   established late values must be replaced or excluded and affected results
-  rerun before they can support use admission.
+  rerun before they can support use admission. Present each case in one
+  full-width item, with its evidence, claim, and correction together.
 - Frame problems against an explicit comparison baseline and build the
   smallest sufficient model before expanding detail. Represent interacting
   causes and cross-cutting constraints without losing reality. Separate

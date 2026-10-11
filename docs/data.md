@@ -135,10 +135,16 @@ feed is a separate decision; the feed checks apply only if that feed is proposed
   authorized decision, and acceptance. Deployment cannot supply missing
   permission.
 
-| What the evidence establishes                            | Historical claim                                                                                           | Next action                                                                                           |
-| -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| First availability is unknown.                           | Point-in-time validity remains unproved; today's corrected series cannot establish what was knowable then. | Obtain the earlier snapshot and correction history; recheck availability before requesting admission. |
-| First availability is later than the simulated decision. | Using that value as information available then is invalid for that earlier decision.                       | Replace or exclude that value and rerun affected results before requesting admission.                 |
+For historical validity, the finding determines the next action:
+
+- **First availability is unknown.** Point-in-time validity remains unproved;
+  today's corrected series cannot establish what was knowable then. Obtain the
+  earlier snapshot and correction history; recheck availability before requesting
+  admission.
+- **First availability is later than the simulated decision.** Using that
+  value as information available then is invalid for that earlier decision.
+  Replace or exclude that value and rerun affected results before requesting
+  admission.
 
 An accurate operational feed does not settle either historical claim. Keep the
 proposed historical use exploratory until its evidence supports that use and

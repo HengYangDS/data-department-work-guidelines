@@ -329,16 +329,14 @@ test("historical research distinguishes missing evidence from demonstrated late 
       relative,
       "Worked decision: revised market history",
     );
-    const table = example.find((token) => token.type === "table");
-    assert.ok(table, "historical availability needs distinct evidence states");
-    const rows = [...walkMarkdown([table])]
-      .filter((token) => token.type === "tableRow")
+    const statements = [...walkMarkdown(example)]
+      .filter((token) => ["paragraph", "tableRow"].includes(token.type))
       .map((token) => markdownText(token).replace(/\s+/gu, " ").trim());
-    const unknown = rows.find((row) =>
-      row.includes("First availability is unknown"),
+    const unknown = statements.find((statement) =>
+      statement.includes("First availability is unknown"),
     );
-    const late = rows.find((row) =>
-      row.includes("First availability is later"),
+    const late = statements.find((statement) =>
+      statement.includes("First availability is later"),
     );
     assert.ok(unknown, "unknown availability must remain distinct");
     assert.match(unknown, /remains unproved/u);
@@ -346,14 +344,42 @@ test("historical research distinguishes missing evidence from demonstrated late 
     assert.ok(late, "demonstrated late availability must remain distinct");
     assert.match(late, /invalid for that earlier decision/u);
     assert.match(late, /Replace or exclude/u);
+    assert.match(late, /rerun affected results before requesting admission/u);
+    assert.notEqual(
+      unknown,
+      late,
+      "evidence states need separate explanations",
+    );
   };
   assertEvidenceStates(source);
+  assertEvidenceStates(`### Worked decision: revised market history
+
+- **First availability is unknown.** Point-in-time validity remains unproved.
+  Obtain the earlier snapshot and correction history before requesting admission.
+- **First availability is later than the simulated decision.** That earlier
+  use is invalid for that earlier decision. Replace or exclude affected values
+  and rerun affected results before requesting admission.
+`);
+  assertEvidenceStates(`### Worked decision: revised market history
+
+| Evidence | Claim | Action |
+| --- | --- | --- |
+| First availability is unknown. | Point-in-time validity remains unproved. | Obtain the earlier snapshot and correction history. |
+| First availability is later than the simulated decision. | Using that value is invalid for that earlier decision. | Replace or exclude affected values and rerun affected results before requesting admission. |
+`);
   assert.throws(
     () =>
       assertEvidenceStates(
         source.replace("invalid for that earlier decision", "remains unproved"),
       ),
     /invalid for that earlier decision/u,
+  );
+  assert.throws(
+    () =>
+      assertEvidenceStates(
+        source.replace("rerun affected results", "request use"),
+      ),
+    /rerun affected results before requesting admission/u,
   );
   assert.throws(
     () =>
