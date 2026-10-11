@@ -37,6 +37,17 @@ test("navigation rejects a missing map, repeated root topic, and missing reader 
   });
 });
 
+test("reader metadata stays hidden rather than becoming visible YAML", () => {
+  fixture((directory) => {
+    const page = path.join(directory, "docs", "data.md");
+    const source = readFileSync(page, "utf8");
+    writeFileSync(page, source.replace("<!--\n", "").replace("-->\n", ""));
+    assert.throws(() => checkNavigation(directory), /leading HTML comment/u);
+    writeFileSync(page, source);
+    assert.doesNotThrow(() => checkNavigation(directory));
+  });
+});
+
 test("task-map hierarchy separates destinations, related reading, and urgent entry", () => {
   const relative = "docs/README.md";
   const source = readFileSync(path.join(root, relative), "utf8");

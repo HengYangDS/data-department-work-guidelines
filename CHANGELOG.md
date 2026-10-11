@@ -28,6 +28,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Use document metadata and reading-order checks from the installed
+  ETHOS registry. Remove the duplicate repository-wide metadata scan; keep
+  the decision checker and its tests until its shared replacement qualifies.
 - Keep the configuration map as navigation to native inputs. Remove its copy
   of shared formatting and prose standards; installed ETHOS owns common rules.
   Executable checks remain required until their replacements qualify.
@@ -134,7 +137,6 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   an observed problem, substantiated material risk, or applicable obligation.
   A bounded trial qualifies the implementation; necessary safeguards do not wait
   for an incident or for admission as department practice.
-
 - Resolve Node and npm from `package.json` through native Mise discovery of
   `.config/mise/config.toml` and its adjacent lock. Remove executable version
   and PATH templates and filename overrides; preserve safe-mode preparation,

@@ -249,24 +249,6 @@ export function documentMetadata(relative, source) {
   return metadata;
 }
 
-export function checkDocumentMetadata() {
-  const files = currentMarkdown();
-  const subjects = new Map();
-  for (const relative of files) {
-    const source = readText(relative);
-    if (relative.startsWith("docs/")) {
-      const { subject } = documentMetadata(relative, source);
-      if (subjects.has(subject)) {
-        throw new Error(
-          `duplicate document subject ${subject}: ${subjects.get(subject)} and ${relative}`,
-        );
-      }
-      subjects.set(subject, relative);
-    }
-  }
-  console.log(`PASS document metadata: ${subjects.size} current pages`);
-}
-
 export function repositoryFileUri(uri, files) {
   const url = new URL(uri);
   if (url.protocol !== "file:") return;

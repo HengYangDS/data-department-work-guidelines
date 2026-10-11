@@ -97,6 +97,14 @@ export function checkNavigation(repository = root) {
         `missing task routes in ${source}: ${missing.join(", ")}`,
       );
   }
+  const pages = new Set(
+    [...routes.keys(), ...normative].filter((page) => page.startsWith("docs/")),
+  );
+  for (const page of pages) {
+    const source = read(page);
+    if (!source.startsWith("<!--\n"))
+      throw new Error(`reader metadata needs a leading HTML comment: ${page}`);
+  }
   const rootRoutes = linksIn(read("README.md"), "README.md");
   const repeated = normative.filter((relative) => rootRoutes.has(relative));
   if (repeated.length)

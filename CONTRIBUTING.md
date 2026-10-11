@@ -22,8 +22,9 @@ push admission; a method-pack plan or decision record grants neither.
 ## Edit a documentation page
 
 For `docs/` pages, copy a current page's leading ETHOS HTML metadata comment.
-Leave one blank line before the H1, the first visible block. The repository
-check guards reading order; ETHOS owns metadata meaning. Keep `node_modules/`
+Leave one blank line before the H1, the first visible block. The installed
+ETHOS registry checks metadata and reading order; repository navigation keeps
+that metadata hidden from readers. Keep `node_modules/`
 and generated output out of Git.
 
 ## Verify the source
@@ -51,12 +52,18 @@ committed source and does not mint repository proof or source acceptance.
 
 For an uncommitted edit, run `npm run format -- --check` and
 `node tools/docs/cli.mjs check`. The latter checks English prose and terms,
-local links and fragments, metadata, navigation, decisions, configuration, CI,
+local links and fragments, navigation, decisions, configuration, CI,
 SemVer/Changelog, and official OpenSpec. These checks download nothing and do not
 require a frozen release bundle. Inspect a supplied bundle separately before
 installation or release. Before online publication, also run
 `node tools/docs/cli.mjs audit` and retain its complete result under the
 [supply boundary](docs/governance/ethos.md#tool-supply-and-offline-execution).
+
+For a document's metadata or first visible block, run
+`ethos prove --host --execute --gate docs-registry --json`. The installed
+registry owns duplicate subjects, metadata syntax, and reader-facing structure;
+the shared floor includes it without a duplicate repository gate. This host check
+does not establish repository proof or source acceptance.
 
 | When you need to                 | Command                                                    |
 | -------------------------------- | ---------------------------------------------------------- |
