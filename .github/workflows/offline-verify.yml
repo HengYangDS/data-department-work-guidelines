@@ -25,13 +25,15 @@ jobs:
     env:
       DDWG_RELEASE_TAG: ${{ github.event.release.tag_name || inputs.tag }}
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # v7.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           ref: refs/tags/${{ github.event.release.tag_name || inputs.tag }}
           fetch-depth: 0
 
       - name: Set up Node 26
-        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        # v7.1.0
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
         with:
           node-version: 26
           check-latest: true
@@ -39,7 +41,9 @@ jobs:
 
       - name: Read the native package-manager declaration
         id: npm-version
-        run: node -e "require('node:fs').appendFileSync(process.env.GITHUB_OUTPUT, 'version=' + require('./package.json').devEngines.packageManager.version + '\n')"
+        run: >-
+          node -e "require('node:fs').appendFileSync(process.env.GITHUB_OUTPUT,
+          'version=' + require('./package.json').devEngines.packageManager.version + '\n')"
 
       - name: Install the declared package manager
         run: npm install --global --ignore-scripts npm@${{ steps.npm-version.outputs.version }}
