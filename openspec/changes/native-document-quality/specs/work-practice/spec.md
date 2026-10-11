@@ -5,7 +5,7 @@
 Define point-of-use decision, data, collaboration, coaching, and feedback duties
 for department work without adding authority or certifying team adoption.
 
-## ADDED Requirements
+## MODIFIED Requirements
 
 ### Requirement: Point-of-use analysis, data, and Agent boundaries
 
@@ -107,6 +107,17 @@ other owners' professional judgments.
 - **AND** a query of a revised value cannot alone establish point-in-time
   validity; when first availability is unknown, exploratory work may continue
   within that stated evidence limit.
+
+#### Scenario: A value became available after a simulated decision
+
+- **WHEN** evidence establishes that a value first became available after the
+  decision time simulated in historical research
+- **THEN** the data topic identifies use of that value as information available
+  at that earlier decision as invalid, rather than merely unproved
+- **AND** it requires replacement or exclusion of the affected values and a new
+  run of the affected analysis before the result can support use admission
+- **AND** it distinguishes that demonstrated defect from missing availability
+  evidence without granting the Agent permission or certifying adoption.
 
 #### Scenario: A data-state label hides an unmet completion condition
 
@@ -328,8 +339,6 @@ delegation SHALL name output format, destination, audience, and detail.
   record, or supervisor approval merely to demonstrate compliance
 - **AND** capability-building work retains joint task-start understanding, while
   extended or interrupted work keeps its continuation state at its existing owner.
-
-## MODIFIED Requirements
 
 ### Requirement: Feedback combines events and periodic review
 

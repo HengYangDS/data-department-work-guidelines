@@ -57,6 +57,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   checks, method selection, change acceptance, and maintainer duties. Engineering
   and professional owners retain implementation and verification, including
   failed and uncovered cases; no separate testing team is required.
+- Distinguish unknown historical availability from demonstrated late
+  availability. Missing evidence leaves point-in-time validity unproved;
+  established late values must be replaced or excluded and affected results
+  rerun before they can support use admission.
 - Frame problems against an explicit comparison baseline and build the
   smallest sufficient model before expanding detail. Represent interacting
   causes and cross-cutting constraints without losing reality. Separate

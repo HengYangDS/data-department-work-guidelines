@@ -242,7 +242,9 @@
       Exercise shared-model change and dependent-consumer retirement in the data
       topic, preserving five professional obligations, lifecycle responsibility,
       authority, interfaces, migration, evidence, failure disposition, and uncovered
-      cases without a new organization model or testing team. Verify final member
+      cases without a new organization model or testing team. Distinguish missing
+      historical availability evidence from demonstrated late availability;
+      verify the different claims and correction actions. Verify final member
       and Agent routes, including actual hosted reading and accessibility limits.
       Complete 2.33, 2.38, 2.40, 2.44, 2.45, 2.46, 3.2, 3.3, 3.4, and 3.13 before
       official spec sync and archive-readiness verification; preserve unique

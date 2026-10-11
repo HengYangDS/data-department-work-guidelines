@@ -319,3 +319,50 @@ test("reasoning checks keep each distinction independently readable", () => {
     /separately readable items/u,
   );
 });
+
+test("historical research distinguishes missing evidence from demonstrated late availability", () => {
+  const relative = "docs/data.md";
+  const source = readFileSync(path.join(root, relative), "utf8");
+  const assertEvidenceStates = (text) => {
+    const example = contentUnderHeading(
+      text,
+      relative,
+      "Worked decision: revised market history",
+    );
+    const table = example.find((token) => token.type === "table");
+    assert.ok(table, "historical availability needs distinct evidence states");
+    const rows = [...walkMarkdown([table])]
+      .filter((token) => token.type === "tableRow")
+      .map((token) => markdownText(token).replace(/\s+/gu, " ").trim());
+    const unknown = rows.find((row) =>
+      row.includes("First availability is unknown"),
+    );
+    const late = rows.find((row) =>
+      row.includes("First availability is later"),
+    );
+    assert.ok(unknown, "unknown availability must remain distinct");
+    assert.match(unknown, /remains unproved/u);
+    assert.match(unknown, /snapshot.*correction history/u);
+    assert.ok(late, "demonstrated late availability must remain distinct");
+    assert.match(late, /invalid for that earlier decision/u);
+    assert.match(late, /Replace or exclude/u);
+  };
+  assertEvidenceStates(source);
+  assert.throws(
+    () =>
+      assertEvidenceStates(
+        source.replace("invalid for that earlier decision", "remains unproved"),
+      ),
+    /invalid for that earlier decision/u,
+  );
+  assert.throws(
+    () =>
+      assertEvidenceStates(
+        source.replace(
+          "First availability is unknown",
+          "First availability is later",
+        ),
+      ),
+    /unknown availability/u,
+  );
+});

@@ -61,10 +61,14 @@ revisions, backfills, and restatements, and whether sample selection, entity
 changes, market calendars, or survival status introduce bias. Explain how
 missingness, delay, conflict, and anomalies affect the conclusion.
 
-If point-in-time consistency cannot be proved, do not automatically call the data
-wrong; lower the strength of the conclusion and stop making research or business
-commitments that exceed the evidence. State confidence, alternative
-explanations, and conclusions the data cannot support.
+Distinguish a missing fact from an established timing defect. If evidence shows
+that a value first became available after a simulated decision, it cannot be
+used as information available at that decision. Replace or exclude the affected
+values and rerun the analysis. If availability is unknown, point-in-time
+validity remains unproved; exploratory analysis may continue within that stated
+limit. Do not make research or business commitments that exceed the evidence.
+State confidence, alternative explanations, and conclusions the data cannot
+support.
 
 ## Admit a Durable Data Asset
 
@@ -117,11 +121,10 @@ use within those conditions, not a label inferred from deployment.
 ### Worked decision: revised market history
 
 **Illustrative case, not a recorded incident.** A vendor republishes historical
-prices after a correction. A researcher wants to backtest a strategy: simulate
-decisions that would have been made before the correction. The question is not
-only whether today's series is accurate, but what was knowable at each decision
-time. Research admission and production admission answer different questions:
-the operational feed checks apply only if that feed is proposed.
+prices after a correction. A researcher wants to backtest a strategy by
+simulating decisions made before that correction. The test needs the values
+available to the researcher at each decision time. Qualifying an operational
+feed is a separate decision; the feed checks apply only if that feed is proposed.
 
 - **Research claim:** Obtain the earlier snapshot, availability time, and
   correction history. Without them, do not call the backtest point-in-time valid.
@@ -132,13 +135,14 @@ the operational feed checks apply only if that feed is proposed.
   authorized decision, and acceptance. Deployment cannot supply missing
   permission.
 
-**Illustrative outcome:** If only today's corrected series is available, the
-backtest's point-in-time validity remains unproved. Keep the proposed historical
-use exploratory; do not treat a result from that file as evidence of what could
-have been known then. The next step is to obtain the earlier snapshot and
-correction history, then recheck availability at each decision time before
-asking the authorized owner to decide on that use. A reliable operational feed
-would not, by itself, resolve this historical question.
+| What the evidence establishes                            | Historical claim                                                                                           | Next action                                                                                           |
+| -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| First availability is unknown.                           | Point-in-time validity remains unproved; today's corrected series cannot establish what was knowable then. | Obtain the earlier snapshot and correction history; recheck availability before requesting admission. |
+| First availability is later than the simulated decision. | Using that value as information available then is invalid for that earlier decision.                       | Replace or exclude that value and rerun affected results before requesting admission.                 |
+
+An accurate operational feed does not settle either historical claim. Keep the
+proposed historical use exploratory until its evidence supports that use and
+the authorized owner has made the admission decision.
 
 An Agent may locate snapshots, compare revisions, or run replay checks within
 its delegation. It cannot decide that the dataset is admitted. The task lead
