@@ -64,6 +64,31 @@ test("task-map hierarchy separates destinations, related reading, and urgent ent
         `the work question needs its direct rule: ${destination}`,
       );
     }
+    const consumerRoutes = tokens
+      .filter((token) => token.type === "listUnordered")
+      .flatMap((list) => {
+        const start = list.children.findIndex(
+          (token) =>
+            token.type === "content" &&
+            markdownLinkDestinations(token.text).includes(
+              "data.md#change-shared-or-production-data",
+            ),
+        );
+        if (start < 0) return [];
+        const end = list.children.findIndex(
+          (token, index) => index > start && token.type === "content",
+        );
+        return list.children
+          .slice(start + 1, end < 0 ? undefined : end)
+          .filter((token) => token.type === "listUnordered")
+          .flatMap((token) => markdownLinkDestinations(token.text));
+      });
+    assert.ok(
+      consumerRoutes.includes(
+        "data.md#worked-change-a-shared-issuer-identifier",
+      ),
+      "shared-data work needs its consumer-migration example as related reading",
+    );
     const destinations = new Set(
       primary.flatMap((links) =>
         links.map((link) => `docs/${link.split("#")[0]}`),
@@ -88,6 +113,23 @@ test("task-map hierarchy separates destinations, related reading, and urgent ent
     );
   };
   assertHierarchy(source);
+  assert.throws(
+    () =>
+      assertHierarchy(
+        source.replace(
+          "(data.md#worked-change-a-shared-issuer-identifier)",
+          "(data.md#assign-modeling-and-lifecycle-decisions)",
+        ),
+      ),
+    /consumer-migration example/u,
+  );
+  const exampleDestination = "data.md#worked-change-a-shared-issuer-identifier";
+  const misplaced = `${source.replace(`(${exampleDestination})`, "(data.md)")}\n[Consumer migration](${exampleDestination})\n`;
+  assert.ok(markdownLinkDestinations(misplaced).includes(exampleDestination));
+  assert.throws(
+    () => assertHierarchy(misplaced),
+    /consumer-migration example/u,
+  );
   assert.throws(
     () => assertHierarchy(source.replace(/^ {2}- /gmu, "  ")),
     /one primary destination per work question/u,
