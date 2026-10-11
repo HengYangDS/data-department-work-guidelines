@@ -307,8 +307,6 @@ reports SHALL name gap, impact, and escalation.
 - **AND** a nearby lifecycle state or planned check cannot fill the gap;
   independent authorized work may continue.
 
-## ADDED Requirements
-
 ### Requirement: New verified facts govern current work
 
 Current topics SHALL prefer verified facts to loyalty to earlier approaches,
