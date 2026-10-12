@@ -147,6 +147,9 @@
       `3078972e5e3cc4b9f4b6903bebae8a7f2a4e25c597600a06385a6ac4852fefca`,
       `e2716d443068e5ef8a3a30b0294c89e8a7c95c3f391b0c2c1654d61d4451d319`,
       `816cb6432b150825c22073cce0a89e6632721aa0477620b44496dab739166162`.
+      Use the exact hosted missing-command case and publication custody in
+      `323b943340c1148de5efd403fa1b860cdec5671840ec8c02aaecb5b408c25214`
+      when qualifying source preparation; it is not full proof or release evidence.
 - [x] 2.39 Isolate cache-rejection fixtures from inherited explicit selectors;
       verify precedence, original failures, both rejection routes, the native
       contribution command, and committed-source proof without changing the caller.
@@ -180,6 +183,9 @@
       verify stable input identity, offline and single-peer use, non-writing drift
       refusal, and actual protected source/offline jobs before retiring the DDWG
       checker, duplicate shared job recipes, and local copies of common CI rules.
+      Reference the actual unprepared-command case in
+      `323b943340c1148de5efd403fa1b860cdec5671840ec8c02aaecb5b408c25214`;
+      qualify the declared product before starting dependent source checks.
 - [ ] 2.46 Complete direct shared consumption and retire redundant source;
       preserve meaning, selected inputs, and distinguishing acceptance cases.
   - [x] 2.46.1 Separate dependency auditing from CI topology; verify all 53
@@ -253,6 +259,10 @@
       or use. Reference
       `e108ee5b39cb102ca8683173c4deca6c5387cf872710de09dd3bc7136b28430c` and
       `8f4833da08b652c0db73f6d93a6dcb542cbf69bd03750453a77c54f970c86cc0`.
+      Preserve the exact collaboration correction and bounded hosted desktop routes
+      in `323b943340c1148de5efd403fa1b860cdec5671840ec8c02aaecb5b408c25214`
+      and `58d0a5695ce161081e003028361f8bb82c8aa43146f7e6e2b7114c7a110d2ad8`;
+      these do not close final-source integration, full accessibility, or this task.
 - [x] 3.6 Publish the compatible original-duty correction; verify fresh local
       and installed proof, signed source, assets, and both platform matrices while
       preserving the previously qualified major release.
