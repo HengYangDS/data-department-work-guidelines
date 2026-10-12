@@ -77,20 +77,37 @@ work, not that duty.
 
 ## Execute and Verify
 
-1. **Set the boundary.** The delegating member defines scope, stop conditions,
-   and acceptance criteria.
-2. **Do the work and return evidence.** The Agent inspects, reasons, and acts
-   within that scope, then returns the source, result, and limits to the member.
-3. **Check the actual work.** The member checks the result and submits the
-   actual work and evidence for acceptance. An authorized acceptor examines
-   them against the agreed conditions.
-4. **Accept or return for review.** If the conditions are unmet, return the work
-   for review within the delegation boundary. If they are met, the authorized
-   acceptor accepts, records the result, and hands it off.
+The Agent investigates and acts within the agreed scope. The member checks the
+actual work and evidence before submitting them for acceptance.
 
-People retain direction, authority, and responsibility throughout. Neither
-delegation nor acceptance expands permission or transfers responsibility.
-An Agent's report cannot substitute for examination of the actual work.
+```mermaid
+---
+config:
+  sequence:
+    mirrorActors: false
+---
+sequenceDiagram
+    accTitle: Delegation, evidence, and authorized acceptance
+    accDescr: A member sets the delegation boundary. An Agent returns work and evidence. The member checks the actual work before an authorized acceptor accepts it or returns it for review within the delegation boundary. Participants represent roles, not necessarily different people. People retain authority and responsibility; acceptance never expands permission.
+    participant Member
+    participant Agent
+    participant Acceptor as Authorized acceptor
+    Member->>Agent: Scope, stop conditions, acceptance criteria
+    Agent-->>Member: Work, sources, results, limits
+    Note over Member,Agent: Member checks the actual work and evidence
+    Member->>Acceptor: Checked work and evidence
+    alt Conditions unmet
+        Acceptor-->>Member: Return for review within the boundary
+    else Conditions met
+        Acceptor-->>Member: Accept, record, and hand off
+    end
+```
+
+These roles may belong to the same person. The authorized acceptor examines the
+work and evidence against the agreed conditions; an Agent's summary cannot
+substitute for that examination. People retain direction, authority, and
+responsibility. Delegation and acceptance do not expand permission or transfer
+responsibility.
 
 ### Check Agent Output
 
