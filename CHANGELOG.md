@@ -28,6 +28,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Validate official OpenSpec artifacts through installed ETHOS and its locked
+  CLI. Remove the duplicate repository validator and report-parser tests; keep the
+  native gate in the document-proof closure.
 - Use the installed native configuration check instead of a fixed DDWG file
   allowlist. Remove its duplicate layout checker and generic fixtures; keep
   remaining format, prose, and risk checks at their actual input consumers.

@@ -52,10 +52,13 @@ committed source and does not mint repository proof or source acceptance.
 
 For an uncommitted edit, run `npm run format -- --check` and
 `node tools/docs/cli.mjs check`. The latter checks English prose and terms,
-local links and fragments, navigation, decisions, configuration, CI,
-SemVer/Changelog, and official OpenSpec. These checks download nothing and do not
-require a frozen release bundle. Inspect a supplied bundle separately before
-installation or release. Before online publication, also run
+local links and fragments, navigation, decisions, configuration, CI, and
+SemVer/Changelog. For official OpenSpec artifacts, run
+`ethos prove --host --execute --gate openspec --json`. ETHOS invokes its locked
+official tool and retains the complete result; DDWG has no second report parser.
+The full graph includes the same native OpenSpec gate. These checks download nothing and do not require a frozen release bundle. Inspect a supplied
+bundle separately before installation or release. Before online publication,
+also run
 `node tools/docs/cli.mjs audit` and retain its complete result under the
 [supply boundary](docs/governance/ethos.md#tool-supply-and-offline-execution).
 

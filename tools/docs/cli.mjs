@@ -27,7 +27,6 @@ async function checkRepository() {
   } = await import("./governance.mjs");
   const { checkLinks, checkProse, checkTextLayout } =
     await import("./content.mjs");
-  const { validateOpenSpec } = await import("./openspec.mjs");
   const { checkChangelog } = await import("./changelog.mjs");
   const { checkCi } = await import("./ci.mjs");
   const { checkDecisions } = await import("./decisions.mjs");
@@ -45,7 +44,6 @@ async function checkRepository() {
   checkNoScope();
   await checkProse();
   checkChangelog();
-  validateOpenSpec();
   checkLinks();
   await checkTextLayout();
   checkDecisions();
