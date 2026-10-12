@@ -8,6 +8,7 @@ product, not this directory index.
 | Check or operation                        | Current native input                                                          |
 | ----------------------------------------- | ----------------------------------------------------------------------------- |
 | Markdown, code, JSON, and YAML formatting | [Prettier](checks/format/prettier.toml)                                       |
+| Configuration syntax and formatting       | [Installed ETHOS](../docs/governance/ethos.md#proof-and-configuration)        |
 | TOML formatting                           | [dprint TOML](checks/format/toml.toml)                                        |
 | Non-spacing Markdown checks               | [Installed ETHOS policy](../docs/governance/ethos.md#proof-and-configuration) |
 | English prose and department terms        | [Vale](checks/prose/vale.ini), its adjacent styles, and Department vocabulary |

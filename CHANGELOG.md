@@ -28,6 +28,11 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Use the installed native configuration check instead of a fixed DDWG file
+  allowlist. Remove its duplicate layout checker and generic fixtures; keep
+  remaining format, prose, and risk checks at their actual input consumers.
+  Link Agent execution preconditions directly from the task map and modeling
+  responsibilities from the shared-identifier example.
 - Use document metadata and reading-order checks from the installed
   ETHOS registry. Remove the duplicate repository-wide metadata scan; keep
   the decision checker and its tests until its shared replacement qualifies.

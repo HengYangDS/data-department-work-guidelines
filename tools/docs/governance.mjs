@@ -1,27 +1,13 @@
-import { existsSync, lstatSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { parse as parseToml } from "smol-toml";
-import { nativeTomlFormatter } from "./content.mjs";
-import {
-  dependencyPolicyPath,
-  parseDependencyPolicy,
-  validateDependencyInput,
-} from "./dependencies.mjs";
 import {
   headingLevel,
   markdownLinkDestinations,
   markdownText,
   markdownTokens,
 } from "./markdown.mjs";
-import {
-  offlineBundleRecordPath,
-  root,
-  run,
-  gitFiles,
-  sourceAttributes,
-  filesUnder,
-} from "../runtime.mjs";
-import { nativeSupplyPath, nativeToolBinary } from "../supply.mjs";
+import { root, gitFiles, sourceAttributes, filesUnder } from "../runtime.mjs";
 
 function linksIn(source, relative) {
   return new Set(
@@ -122,98 +108,6 @@ export function checkNavigation(repository = root) {
       throw new Error(`missing reader entry in ${relative}`);
   }
   console.log("PASS task-oriented navigation; this is not adoption evidence");
-}
-
-export function checkConfigurationLayout(repository = root) {
-  const expectedFiles = new Set([
-    ".config/README.md",
-    ".config/checks/format/prettier.toml",
-    ".config/checks/format/toml.toml",
-    ".config/checks/links/lychee.toml",
-    dependencyPolicyPath,
-    ".config/checks/prose/vale.ini",
-    ".config/checks/prose/styles/Plain/Concise.yml",
-    ".config/checks/prose/styles/Plain/StockPhrases.yml",
-    ".config/checks/prose/styles/config/vocabularies/Department/accept.txt",
-    nativeSupplyPath,
-    ".config/mise/config.toml",
-    ".config/mise/mise.lock",
-    offlineBundleRecordPath,
-  ]);
-  const expectedDirectories = new Set([".config"]);
-  for (const file of expectedFiles) {
-    let directory = path.posix.dirname(file);
-    while (directory !== ".") {
-      expectedDirectories.add(directory);
-      directory = path.posix.dirname(directory);
-    }
-  }
-  const observed = new Set();
-  const inspect = (relative) => {
-    const absolute = path.join(repository, relative);
-    const stat = lstatSync(absolute);
-    if (stat.isSymbolicLink())
-      throw new Error(
-        `configuration ownership cannot follow a link: ${relative}`,
-      );
-    if (stat.isDirectory()) {
-      if (!expectedDirectories.has(relative))
-        throw new Error(`configuration layout has no owner: ${relative}`);
-      for (const name of readdirSync(absolute)) inspect(`${relative}/${name}`);
-    } else if (stat.isFile() && expectedFiles.has(relative)) {
-      observed.add(relative);
-    } else {
-      throw new Error(`configuration ownership is not declared: ${relative}`);
-    }
-  };
-  if (!existsSync(path.join(repository, ".config")))
-    throw new Error("configuration layout is missing");
-  inspect(".config");
-  const missing = [...expectedFiles].filter((file) => !observed.has(file));
-  if (missing.length)
-    throw new Error(
-      `configuration layout is missing owners: ${missing.join(", ")}`,
-    );
-  const packagePath = path.join(repository, "package.json");
-  if (
-    existsSync(packagePath) &&
-    Object.hasOwn(JSON.parse(readFileSync(packagePath, "utf8")), "prettier")
-  )
-    throw new Error(
-      "configuration ownership cannot duplicate policy in package.json",
-    );
-  nativeTomlFormatter(repository);
-  const dependencyPolicy = parseDependencyPolicy(
-    readFileSync(path.join(repository, dependencyPolicyPath), "utf8"),
-  );
-  if (existsSync(path.join(repository, "package-lock.json")))
-    validateDependencyInput(
-      JSON.parse(
-        readFileSync(path.join(repository, "package-lock.json"), "utf8"),
-      ),
-      dependencyPolicy,
-    );
-  const vale = JSON.parse(
-    run(
-      nativeToolBinary("vale"),
-      [
-        "--no-global",
-        `--config=${path.join(repository, ".config/checks/prose/vale.ini")}`,
-        "ls-config",
-      ],
-      { cwd: repository, capture: true, rejectStderr: true, timeout: 10_000 },
-    ),
-  );
-  if (
-    !Array.isArray(vale.Paths) ||
-    vale.Paths.length !== 1 ||
-    path.resolve(vale.Paths[0]) !==
-      path.resolve(repository, ".config/checks/prose/styles")
-  )
-    throw new Error(
-      "configuration ownership must keep Vale styles concern-local",
-    );
-  console.log("PASS configuration ownership: checks, Mise, supply and release");
 }
 
 export function checkNoScope(repository = root) {

@@ -6,8 +6,6 @@ import os from "node:os";
 
 import path from "node:path";
 
-import * as governance from "../../tools/docs/governance.mjs";
-
 import {
   headingLevel,
   headingText,
@@ -52,17 +50,4 @@ export function contentUnderHeading(source, relative, title) {
       index > start && headingLevel(token) > 0 && headingLevel(token) <= level,
   );
   return tokens.slice(start + 1, end < 0 ? undefined : end);
-}
-
-export function configurationFixture(run) {
-  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-config-layout-"));
-  try {
-    cpSync(path.join(root, ".config"), path.join(directory, ".config"), {
-      recursive: true,
-    });
-    assert.doesNotThrow(() => governance.checkConfigurationLayout(directory));
-    run(directory);
-  } finally {
-    rmSync(directory, { recursive: true, force: true });
-  }
 }

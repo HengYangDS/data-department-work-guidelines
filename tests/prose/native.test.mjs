@@ -515,6 +515,30 @@ test("public prose and integrity commands reject the same current-file defect", 
         encoding: "utf8",
         timeout: 120_000,
       });
+    const configuration = path.join(directory, ".config/checks/prose/vale.ini");
+    const nativeConfiguration = readFileSync(configuration, "utf8");
+    const externalStyles = path.join(directory, "external-styles");
+    cpSync(
+      path.join(directory, ".config/checks/prose/styles"),
+      externalStyles,
+      {
+        recursive: true,
+      },
+    );
+    writeFileSync(
+      configuration,
+      nativeConfiguration.replace(
+        "StylesPath = styles",
+        "StylesPath = ../../../external-styles",
+      ),
+    );
+    const misbound = runCheck("prose");
+    assert.ifError(misbound.error);
+    assert.equal(misbound.status, 1, misbound.stdout);
+    assert.match(misbound.stderr, /Vale styles concern-local/u);
+    assert.equal(readFileSync(target, "utf8"), original);
+    writeFileSync(configuration, nativeConfiguration);
+    rmSync(externalStyles, { recursive: true, force: true });
     writeSources(() => "# Source\n\nUse the the report.\n");
     const ignored = runCheck("prose");
     assert.ifError(ignored.error);

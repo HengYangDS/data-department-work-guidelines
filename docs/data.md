@@ -210,7 +210,9 @@ over their owners' authority.
 **Illustrative case, not a recorded incident.** A shared dataset changes its
 issuer identifier. Local tests pass, but a dependent report still joins on the
 old identifier. The new schema may be valid even if the report now matches the
-wrong entities or loses matches.
+wrong entities or loses matches. Apply the
+[modeling and lifecycle responsibilities](#assign-modeling-and-lifecycle-decisions)
+to this change.
 
 Business and data-model owners resolve identity and its time rules, including
 any conflict between domain definitions. Development checks affected joins

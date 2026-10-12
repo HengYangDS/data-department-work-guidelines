@@ -1,6 +1,7 @@
 import {
   assertNodeRuntime,
   reportError,
+  readText,
   workspaceObservation,
 } from "../runtime.mjs";
 
@@ -19,7 +20,6 @@ async function reportVerificationContext() {
 
 async function checkRepository() {
   const {
-    checkConfigurationLayout,
     checkLineEndingAttributes,
     checkLicense,
     checkNavigation,
@@ -31,7 +31,15 @@ async function checkRepository() {
   const { checkChangelog } = await import("./changelog.mjs");
   const { checkCi } = await import("./ci.mjs");
   const { checkDecisions } = await import("./decisions.mjs");
-  checkConfigurationLayout();
+  const {
+    dependencyPolicyPath,
+    parseDependencyPolicy,
+    validateDependencyInput,
+  } = await import("./dependencies.mjs");
+  validateDependencyInput(
+    JSON.parse(readText("package-lock.json")),
+    parseDependencyPolicy(readText(dependencyPolicyPath)),
+  );
   checkLineEndingAttributes();
   checkLicense();
   checkNoScope();

@@ -160,6 +160,24 @@ export async function formatSource({ check = true } = {}) {
 }
 
 export function checkProse(files = currentMarkdown()) {
+  const vale = JSON.parse(
+    run(
+      nativeToolBinary("vale"),
+      [
+        "--no-global",
+        `--config=${path.join(root, ".config/checks/prose/vale.ini")}`,
+        "ls-config",
+      ],
+      { cwd: root, capture: true, rejectStderr: true, timeout: 10_000 },
+    ),
+  );
+  if (
+    !Array.isArray(vale.Paths) ||
+    vale.Paths.length !== 1 ||
+    path.resolve(vale.Paths[0]) !==
+      path.resolve(root, ".config/checks/prose/styles")
+  )
+    throw new Error("native prose must keep Vale styles concern-local");
   if (!files.length)
     throw new Error("no current Markdown files to check for prose");
   const absoluteFiles = files.map((relative) =>

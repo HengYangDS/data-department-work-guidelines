@@ -17,8 +17,11 @@ import { syncBuiltinESMExports } from "node:module";
 import { test } from "node:test";
 import { pathToFileURL } from "node:url";
 import { parse as parseToml } from "smol-toml";
-import { formatSource, textViolations } from "../../tools/docs/content.mjs";
-import { checkConfigurationLayout } from "../../tools/docs/governance.mjs";
+import {
+  formatSource,
+  nativeTomlFormatter,
+  textViolations,
+} from "../../tools/docs/content.mjs";
 import { nodeTool, root } from "../../tools/runtime.mjs";
 import { nativeToolBinary } from "../../tools/supply.mjs";
 
@@ -96,7 +99,7 @@ test("native TOML policy preserves data and agrees with the source format owner"
     });
     const policyPath = path.join(directory, ".config/checks/format/toml.toml");
     const original = readFileSync(policyPath, "utf8");
-    assert.doesNotThrow(() => checkConfigurationLayout(directory));
+    assert.doesNotThrow(() => nativeTomlFormatter(directory));
     for (const [before, after] of [
       ["lineWidth = 80", "lineWidth = 120"],
       ["indentWidth = 2", "indentWidth = 4"],
@@ -114,16 +117,13 @@ test("native TOML policy preserves data and agrees with the source format owner"
       assert.ok(original.includes(before), before);
       writeFileSync(policyPath, original.replace(before, after));
       assert.throws(
-        () => checkConfigurationLayout(directory),
+        () => nativeTomlFormatter(directory),
         /native TOML.*policy/u,
         after,
       );
     }
     writeFileSync(policyPath, `${original}unknownNativeOption = true\n`);
-    assert.throws(
-      () => checkConfigurationLayout(directory),
-      /unknownNativeOption/u,
-    );
+    assert.throws(() => nativeTomlFormatter(directory), /unknownNativeOption/u);
   } finally {
     rmSync(directory, { recursive: true, force: true });
     assert.equal(existsSync(directory), false);

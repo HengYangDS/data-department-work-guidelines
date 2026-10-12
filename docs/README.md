@@ -50,6 +50,7 @@ the same guidance; each topic owns its rules and points to the related work.
   causes harm.
 - [Delegate to an Agent](human-agent.md#delegate-a-boundary-not-a-pile-of-context):
   Set scope, stop conditions, and verification; retain human responsibility.
+  - Before execution: [Check the preconditions](deliver.md#before-acting).
   - Before acceptance: [Check the actual
     output](human-agent.md#check-agent-output).
 - [Coach a member](evolve.md#grow-capability-through-real-work): Review the reasoning
