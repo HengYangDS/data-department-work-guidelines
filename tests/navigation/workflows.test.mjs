@@ -444,3 +444,59 @@ test("historical research distinguishes missing evidence from demonstrated late 
     /unknown availability/u,
   );
 });
+
+test("bounded exploration requires permission even while meaning, quality, or timing remains unknown", () => {
+  const relative = "docs/data.md";
+  const source = readFileSync(path.join(root, relative), "utf8");
+  const assertExplorationBoundary = (text) => {
+    const section = contentUnderHeading(
+      text,
+      relative,
+      "Answer Six Questions First",
+    );
+    const guidance = [...walkMarkdown(section)]
+      .filter((token) => token.type === "paragraph")
+      .map((token) => markdownText(token))
+      .join(" ")
+      .replace(/\s+/gu, " ");
+    assert.match(
+      guidance,
+      /unknown meaning, quality, or historical availability may be explored within an authorized scope/u,
+    );
+    assert.match(
+      guidance,
+      /requires permission for acquisition, processing, and the intended use/u,
+    );
+    assert.match(
+      guidance,
+      /Agents must also stay within their delegated scope/u,
+    );
+    assert.match(
+      guidance,
+      /permission is missing or unclear, stop the affected action and escalate to the authorized decision owner/u,
+    );
+    assert.match(
+      guidance,
+      /Neither may enter a shared, production, or decision path until its meaning, quality, permissions, and reproducibility are qualified for that use/u,
+    );
+  };
+  assertExplorationBoundary(source);
+  const clausePattern = (text) =>
+    new RegExp(
+      text.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&").replaceAll(" ", "\\s+"),
+      "u",
+    );
+  for (const clause of [
+    "Exploration still requires permission for acquisition, processing, and the intended use.",
+    "Agents must also stay within their delegated scope.",
+    "If permission is missing or unclear, stop the affected action and escalate to the authorized decision owner.",
+  ]) {
+    const missing = source.replace(clausePattern(clause), "");
+    assert.notEqual(
+      missing,
+      source,
+      "the refusal must exercise its missing duty",
+    );
+    assert.throws(() => assertExplorationBoundary(missing));
+  }
+});

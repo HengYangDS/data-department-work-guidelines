@@ -15,8 +15,8 @@ a production pipeline, or allowing a business use.
 
 A readable file, attractive chart, or promising model signal does not by itself
 establish that the data may be admitted for a specific use. Keep a proposed use
-exploratory until evidence of its meaning, quality, permission, and
-reproducibility supports that decision.
+exploratory within its authorized scope until evidence of its meaning, quality,
+permission, and reproducibility supports that decision.
 
 Before relying on a result, recheck key findings, reproducibility, and permission
 against [the intended use](#move-from-a-signal-to-controlled-use). Stop a proposed
@@ -39,10 +39,16 @@ must hold. For historical research, preserve
 | How good is it?         | Completeness, accuracy, consistency, timeliness, stability, and anomaly limits. |
 | How may it be used?     | Use cases, permissions, limits, misuse risks, owner, and exit conditions.       |
 
-Data with unanswered questions may support exploration, but must not be
-presented as a durable trusted asset. Exploratory code and temporary data may
-move quickly inside that boundary. Neither may enter a shared, production, or
-decision path until its meaning, quality, permissions, and reproducibility are
+Data with unknown meaning, quality, or historical availability may be explored
+within an authorized scope, but must not be presented as a durable trusted asset.
+Exploration still requires permission for acquisition, processing, and the
+intended use. Agents must also stay within their delegated scope. If permission is
+missing or unclear, stop the affected action and escalate to the authorized
+decision owner.
+
+Exploratory code and temporary data may move quickly inside that boundary.
+Neither may enter a shared, production, or decision path until its meaning,
+quality, permissions, and reproducibility are
 qualified for that use.
 
 Keep source data, production data, experimental results, service views,
@@ -65,8 +71,9 @@ Distinguish a missing fact from an established timing defect. If evidence shows
 that a value first became available after a simulated decision, it cannot be
 used as information available at that decision. Replace or exclude the affected
 values and rerun the analysis. If availability is unknown, point-in-time
-validity remains unproved; exploratory analysis may continue within that stated
-limit. Do not make research or business commitments that exceed the evidence.
+validity remains unproved; authorized exploratory analysis may continue within
+that stated limit. Do not make research or business commitments that exceed the
+evidence.
 State confidence, alternative explanations, and conclusions the data cannot
 support.
 

@@ -71,6 +71,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   checks, method selection, change acceptance, and maintainer duties. Engineering
   and professional owners retain implementation and verification, including
   failed and uncovered cases; no separate testing team is required.
+- Clarify that exploration needs acquisition, processing, and use permission,
+  with Agents bound by delegation. Missing or unclear permission stops the
+  affected action; unknown meaning, quality, or historical availability limits
+  conclusions without prohibiting otherwise authorized exploration.
 - Distinguish unknown historical availability from demonstrated late
   availability. Missing evidence leaves point-in-time validity unproved;
   established late values must be replaced or excluded and affected results

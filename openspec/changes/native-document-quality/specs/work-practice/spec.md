@@ -14,6 +14,11 @@ part needed for the governing decision, and make material gaps, relationships,
 and cross-cutting constraints explicit. Before a change, members and Agents
 SHALL confirm the actual target location, version, environment, current state,
 concurrent work, and recovery path.
+Exploration SHALL require permission for acquisition, processing, and intended
+use; Agents SHALL also stay within their delegated scope. Missing or unclear
+permission SHALL stop the affected action and be escalated to its authorized
+decision owner. Unknown meaning, quality, or historical availability MAY limit
+exploratory claims without stopping otherwise permitted exploration.
 Promotion into shared, production, or decision use SHALL require meaning,
 quality, permission and reproducibility. Agents SHALL review complete current
 claim-matched results, then report evidence, limits, and the delivery state;
@@ -73,6 +78,24 @@ other owners' professional judgments.
   reproducibility before that promotion
 - **AND THEN** exploration remains available without being mislabeled as an
   admitted asset.
+
+#### Scenario: Exploratory acquisition has no established permission
+
+- **WHEN** a member or Agent proposes acquiring, processing, or using exploratory
+  data whose required permission is missing or unclear
+- **THEN** the affected action stops and is escalated through existing authority
+- **AND** unknown meaning, quality, or historical availability cannot supply that
+  permission or extend an Agent's delegation.
+
+#### Scenario: An authorized study lacks meaning, quality, or historical evidence
+
+- **WHEN** acquisition, processing, and intended use are permitted, an Agent stays
+  within its delegation, and meaning, quality, or historical availability remains
+  unresolved
+- **THEN** exploration may continue with matching limits on its conclusions,
+  without requiring full durable-asset admission or a new approval procedure
+- **AND** later promotion into shared, production, or decision use still requires
+  qualification and authorization for that use.
 
 #### Scenario: An Agent completes delegated work
 
