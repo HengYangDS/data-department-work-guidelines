@@ -150,6 +150,9 @@
       Use the exact hosted missing-command case and publication custody in
       `323b943340c1148de5efd403fa1b860cdec5671840ec8c02aaecb5b408c25214`
       when qualifying source preparation; it is not full proof or release evidence.
+      Preserve complete braces reports and remediation tracking while verifying
+      that the user's non-blocking disposition applies to checks, CI, distribution,
+      and releases without accepting other findings.
 - [x] 2.39 Isolate cache-rejection fixtures from inherited explicit selectors;
       verify precedence, original failures, both rejection routes, the native
       contribution command, and committed-source proof without changing the caller.
@@ -263,6 +266,9 @@
       in `323b943340c1148de5efd403fa1b860cdec5671840ec8c02aaecb5b408c25214`
       and `58d0a5695ce161081e003028361f8bb82c8aa43146f7e6e2b7114c7a110d2ad8`;
       these do not close final-source integration, full accessibility, or this task.
+      Retain the bounded shared-model application and source rebinding in
+      `b34554b4a3191b9ee1461ade9d99f21b973e29a285054dba80068b22ed4ddf33`;
+      the in-memory example does not demonstrate production or team adoption.
 - [x] 3.6 Publish the compatible original-duty correction; verify fresh local
       and installed proof, signed source, assets, and both platform matrices while
       preserving the previously qualified major release.

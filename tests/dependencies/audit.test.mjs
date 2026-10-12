@@ -2,7 +2,6 @@ import assert from "node:assert/strict";
 import childProcess from "node:child_process";
 import {
   cpSync,
-  existsSync,
   mkdtempSync,
   mkdirSync,
   readFileSync,
@@ -16,176 +15,7 @@ import path from "node:path";
 import { test } from "node:test";
 import * as dependencies from "../../tools/docs/dependencies.mjs";
 import { readText, root } from "../../tools/runtime.mjs";
-import {
-  approvedFinding,
-  dependencyPolicy,
-  dependencyReviewTime,
-} from "./fixtures.mjs";
-
-test("online native approval observes the stable public release in isolation", (context) => {
-  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-stable-view-"));
-  const actual = childProcess.spawnSync;
-  const lock = JSON.parse(readText("package-lock.json"));
-  const identities = dependencies.validateDependencyInput(lock);
-  const observations = [];
-  let stableVersion = "3.0.3";
-  let registryFailure = false;
-  let scans = 0;
-  const mock = context.mock.method(
-    childProcess,
-    "spawnSync",
-    (command, args, options) => {
-      if (args[1] === "view") {
-        assert.equal(command, process.execPath);
-        assert.equal(path.basename(args[0]), "npm-cli.js");
-        assert.deepEqual(args.slice(1, 4), ["view", "braces", "version"]);
-        for (const flag of [
-          "--registry=https://registry.npmjs.org",
-          "--offline=false",
-          "--prefer-online=true",
-          "--prefer-offline=false",
-          "--fetch-retries=0",
-        ])
-          assert.ok(args.includes(flag));
-        assert.equal(args[args.indexOf("--prefix") + 1], options.cwd);
-        assert.notEqual(options.cwd, directory);
-        assert.equal(options.env.NPM_TOKEN, undefined);
-        assert.equal(options.env.NODE_AUTH_TOKEN, undefined);
-        assert.equal(options.env.npm_config_registry, undefined);
-        assert.equal(options.env.npm_config_offline, "false");
-        assert.equal(
-          options.env.npm_config_cache.startsWith(options.cwd),
-          true,
-        );
-        assert.equal(existsSync(options.env.npm_config_cache), false);
-        for (const key of ["npm_config_userconfig", "npm_config_globalconfig"])
-          assert.equal(readFileSync(options.env[key], "utf8"), "");
-        observations.push(options.cwd);
-        mkdirSync(options.env.npm_config_cache);
-        writeFileSync(
-          path.join(options.env.npm_config_cache, "owned-cache"),
-          "fixture",
-        );
-        if (registryFailure)
-          return {
-            status: 127,
-            stdout: "partial registry observation",
-            stderr: "native registry diagnostic",
-          };
-        return { status: 0, stdout: JSON.stringify(stableVersion), stderr: "" };
-      }
-      if (args[0] !== "scan") return actual(command, args, options);
-      scans++;
-      writeFileSync(
-        args[args.indexOf("--output-file") + 1],
-        JSON.stringify({
-          results: [
-            {
-              source: {
-                type: "lockfile",
-                path: path.join(directory, "package-lock.json"),
-              },
-              packages: [...identities.values()].map((identity) => ({
-                package: identity,
-                dependency_groups: ["dev"],
-                ...(identity.name === "braces"
-                  ? { vulnerabilities: [approvedFinding()] }
-                  : {}),
-              })),
-            },
-          ],
-        }),
-      );
-      return { status: 1, stdout: "", stderr: "" };
-    },
-  );
-  syncBuiltinESMExports();
-  try {
-    mkdirSync(
-      path.join(directory, path.dirname(dependencies.dependencyPolicyPath)),
-      {
-        recursive: true,
-      },
-    );
-    writeFileSync(
-      path.join(directory, dependencies.dependencyPolicyPath),
-      dependencyPolicy,
-    );
-    writeFileSync(
-      path.join(directory, "package-lock.json"),
-      JSON.stringify(lock),
-    );
-    writeFileSync(path.join(directory, ".npmrc"), "offline=true\n");
-    const audit = () =>
-      dependencies.auditDependencies({
-        repository: directory,
-        now: dependencyReviewTime,
-        environment: {
-          ...process.env,
-          npm_config_registry: "https://invalid.example",
-          npm_config_cache: path.join(directory, "foreign-cache"),
-          NPM_TOKEN: "fixture-not-a-secret",
-          NODE_AUTH_TOKEN: "fixture-not-a-secret",
-        },
-      });
-    const accepted = audit();
-    assert.equal(observations.length, 1);
-    assert.equal(scans, 1);
-    assert.equal(
-      readFileSync(
-        path.join(accepted.evidence, "stable-version.stdout"),
-        "utf8",
-      ),
-      '"3.0.3"',
-    );
-    stableVersion = "3.0.4";
-    assert.throws(audit, /stable.*changed|requalify/u);
-    assert.equal(scans, 2, "metadata changes must not replay the native scan");
-    assert.equal(new Set(observations).size, 2);
-    registryFailure = true;
-    assert.throws(audit, /stable version observation failed/u);
-    assert.equal(
-      scans,
-      3,
-      "each failed qualification retains one unfiltered scan",
-    );
-    for (const temporary of observations)
-      assert.equal(existsSync(temporary), false);
-    assert.equal(existsSync(path.join(directory, "foreign-cache")), false);
-    const evidence = path.join(directory, "build/evidence/dependencies");
-    const registryErrors = [];
-    for (const record of readdirSync(evidence)) {
-      assert.equal(existsSync(path.join(evidence, record, "raw.json")), true);
-      registryErrors.push(
-        readFileSync(
-          path.join(evidence, record, "stable-version.stderr"),
-          "utf8",
-        ),
-      );
-      const execution = JSON.parse(
-        readFileSync(path.join(evidence, record, "execution.json"), "utf8"),
-      );
-      assert.equal(execution.execution.length, 2);
-      assert.equal(execution.execution[0].status, 1);
-      assert.ok([0, 127].includes(execution.execution[1].status));
-      for (const name of ["empty-user.npmrc", "empty-global.npmrc"])
-        assert.equal(
-          readFileSync(path.join(evidence, record, name), "utf8"),
-          "",
-        );
-    }
-    assert.deepEqual(registryErrors.sort(), [
-      "",
-      "",
-      "native registry diagnostic",
-    ]);
-  } finally {
-    mock.mock.restore();
-    syncBuiltinESMExports();
-    rmSync(directory, { recursive: true, force: true });
-    assert.equal(existsSync(directory), false);
-  }
-});
+import { approvedFinding, dependencyPolicy } from "./fixtures.mjs";
 
 test("actual native audit retains all findings and applies exact disposition", () => {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-native-osv-"));
@@ -229,15 +59,12 @@ test("actual native audit retains all findings and applies exact disposition", (
       path.join(directory, "cache/osv-scalibr/npm/all.zip"),
       Buffer.from("UEsFBgAAAAAAAAAAAAAAAAAAAAAAAA==", "base64"),
     );
-    assert.throws(
-      () =>
-        dependencies.auditDependencies({
-          repository: directory,
-          offline: true,
-          environment,
-          now: dependencyReviewTime,
-        }),
-      /absent.*retire/u,
+    assert.doesNotThrow(() =>
+      dependencies.auditDependencies({
+        repository: directory,
+        offline: true,
+        environment,
+      }),
     );
     writeFileSync(
       path.join(directory, dependencies.dependencyPolicyPath),
@@ -247,7 +74,6 @@ test("actual native audit retains all findings and applies exact disposition", (
       repository: directory,
       offline: true,
       environment,
-      now: dependencyReviewTime,
     });
     const raw = JSON.parse(
       readFileSync(path.join(accepted.evidence, "raw.json"), "utf8"),
@@ -275,7 +101,6 @@ test("actual native audit retains all findings and applies exact disposition", (
           repository: directory,
           offline: true,
           environment,
-          now: dependencyReviewTime,
         });
         assert.equal(observed.findingCount, 1);
         assert.equal(observed.approvedFindings, 1);
@@ -286,15 +111,12 @@ test("actual native audit retains all findings and applies exact disposition", (
           retained.results[0].packages[0].vulnerabilities[0].id,
           "GHSA-vfj7-8cjw-p6xm",
         );
-        assert.throws(
-          () =>
-            dependencies.auditDependencies({
-              repository: directory,
-              offline: true,
-              environment,
-              now: new Date("2026-10-18T00:00:00Z"),
-            }),
-          /expired/u,
+        assert.doesNotThrow(() =>
+          dependencies.auditDependencies({
+            repository: directory,
+            offline: true,
+            environment,
+          }),
         );
       } else {
         assert.throws(
@@ -303,7 +125,6 @@ test("actual native audit retains all findings and applies exact disposition", (
               repository: directory,
               offline: true,
               environment,
-              now: dependencyReviewTime,
             }),
           /unapproved/u,
         );

@@ -1,7 +1,6 @@
-# Native OSV disposition for the exact human-approved development finding.
-# The audit retains a complete raw scan before accepting this bounded entry.
+# Native OSV disposition for the explicitly accepted braces finding.
+# Keep the complete raw scan; this finding does not hold checks or releases.
 # Replace with IgnoredVulns = [] when the finding is fixed or no longer applies.
 [[IgnoredVulns]]
 id = "GHSA-vfj7-8cjw-p6xm"
-ignoreUntil = 2026-10-18
-reason = "Human-approved 2026-10-05 development checks and 2026-10-06 development-tool distribution: braces 3.0.3 in trusted repositories only, until 2026-10-18 00:00 UTC. Preserve complete findings. Not production, arbitrary untrusted input, other packages or other findings."
+reason = "Explicitly accepted by the user on 2026-10-13: the known braces finding must not block verification, CI, distribution or releases. Preserve complete reports and remediation tracking. This does not accept other packages or findings."

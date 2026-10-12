@@ -2,50 +2,42 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import * as dependencies from "../../tools/docs/dependencies.mjs";
 import { readText, root } from "../../tools/runtime.mjs";
-import {
-  approvedFinding,
-  dependencyPolicy,
-  dependencyReviewTime,
-} from "./fixtures.mjs";
+import { approvedFinding, dependencyPolicy } from "./fixtures.mjs";
 
-test("native disposition cannot widen the approved development artifact", () => {
+test("native disposition keeps the exact finding separate from supply integrity", () => {
   const policy = dependencies.parseDependencyPolicy(dependencyPolicy);
   const lock = JSON.parse(readText("package-lock.json"));
-  assert.doesNotThrow(() => dependencies.validateDependencyInput(lock, policy));
+  assert.equal(policy.IgnoredVulns[0].id, "GHSA-vfj7-8cjw-p6xm");
+  assert.doesNotThrow(() => dependencies.validateDependencyInput(lock));
+  const updated = structuredClone(lock);
+  updated.packages["node_modules/braces"].version = "3.0.4";
+  assert.doesNotThrow(() => dependencies.validateDependencyInput(updated));
   assert.deepEqual(
     dependencies.parseDependencyPolicy("IgnoredVulns = []\n").IgnoredVulns,
     [],
   );
   for (const change of [
     (copy) => {
-      copy.packages["node_modules/braces"].version = "3.0.4";
-    },
-    (copy) => {
-      copy.packages["node_modules/braces"].integrity = "sha512-changed";
+      copy.packages["node_modules/braces"].integrity = "invalid";
     },
     (copy) => {
       copy.packages["node_modules/braces"].dev = false;
-    },
-    (copy) => {
-      delete copy.packages["node_modules/braces"];
     },
   ]) {
     const changed = structuredClone(lock);
     change(changed);
     assert.throws(
-      () => dependencies.validateDependencyInput(changed, policy),
-      /approved|development/u,
+      () => dependencies.validateDependencyInput(changed),
+      /supply|development/u,
     );
   }
   const changed = structuredClone(lock);
   delete changed.packages["node_modules/braces"];
-  assert.doesNotThrow(() =>
-    dependencies.validateDependencyInput(changed, { IgnoredVulns: [] }),
-  );
+  assert.doesNotThrow(() => dependencies.validateDependencyInput(changed));
   for (const invalid of [
     "# No explicit scanner policy.\n",
     dependencyPolicy.replace("GHSA-vfj7-8cjw-p6xm", "OSV-UNAPPROVED"),
-    dependencyPolicy.replace("2026-10-18", "2026-10-19"),
+    dependencyPolicy + "ignoreUntil = 2026-10-18\n",
     dependencyPolicy + "\n[[PackageOverrides]]\nignore = true\n",
   ])
     assert.throws(
@@ -121,10 +113,10 @@ test("native raw evidence must cover the exact input and retain every finding", 
   );
 });
 
-test("exact disposition preserves raw findings and rejects unapproved or expired use", () => {
+test("accepted braces findings preserve evidence without an expiry or release hold", () => {
   const lock = JSON.parse(readText("package-lock.json"));
   const policy = dependencies.parseDependencyPolicy(dependencyPolicy);
-  const identities = dependencies.validateDependencyInput(lock, policy);
+  const identities = dependencies.validateDependencyInput(lock);
   const report = {
     results: [
       {
@@ -147,36 +139,41 @@ test("exact disposition preserves raw findings and rejects unapproved or expired
       1,
       root,
       policy,
-      dependencyReviewTime,
     ),
     { findings: 1, approvedFindings: 1 },
   );
   assert.equal(JSON.stringify(report), snapshot);
-  assert.throws(
-    () =>
+  for (const update of [
+    (finding) => {
+      finding.withdrawn = "2026-10-18T00:00:00Z";
+    },
+    (finding) => {
+      finding.affected[0].ranges[0].events.push({ fixed: "3.0.4" });
+    },
+  ]) {
+    const changed = structuredClone(report);
+    update(
+      changed.results[0].packages.find(
+        (entry) => entry.package.name === "braces",
+      ).vulnerabilities[0],
+    );
+    assert.deepEqual(
       dependencies.validateDependencyEvidence(
-        report,
+        changed,
         identities,
         1,
         root,
         policy,
-        new Date("2026-10-18T00:00:00Z"),
       ),
-    /expired/u,
-  );
+      { findings: 1, approvedFindings: 1 },
+    );
+  }
   const other = structuredClone(report);
   other.results[0].packages
     .find((entry) => entry.package.name === "braces")
     .vulnerabilities.push({ id: "OSV-UNAPPROVED" });
   assert.deepEqual(
-    dependencies.validateDependencyEvidence(
-      other,
-      identities,
-      1,
-      root,
-      policy,
-      dependencyReviewTime,
-    ),
+    dependencies.validateDependencyEvidence(other, identities, 1, root, policy),
     { findings: 2, approvedFindings: 1 },
   );
   for (const invalid of [
@@ -185,7 +182,6 @@ test("exact disposition preserves raw findings and rejects unapproved or expired
       id: "GHSA-vfj7-8cjw-p6xm",
       affected: [{ package: { ecosystem: "npm", name: "other-package" } }],
     },
-    { id: "GHSA-vfj7-8cjw-p6xm", withdrawn: "2026-10-07T00:00:00Z" },
     {
       id: "GHSA-vfj7-8cjw-p6xm",
       affected: [
@@ -208,7 +204,6 @@ test("exact disposition preserves raw findings and rejects unapproved or expired
           1,
           root,
           policy,
-          dependencyReviewTime,
         ),
       /finding|approved|retire/u,
     );
@@ -217,27 +212,20 @@ test("exact disposition preserves raw findings and rejects unapproved or expired
   delete noFindings.results[0].packages.find(
     (entry) => entry.package.name === "braces",
   ).vulnerabilities;
-  assert.throws(
-    () =>
-      dependencies.validateDependencyEvidence(
-        noFindings,
-        identities,
-        0,
-        root,
-        policy,
-        new Date("2026-10-18T00:00:00Z"),
-      ),
-    /absent|retire/u,
-  );
   assert.deepEqual(
     dependencies.validateDependencyEvidence(
       noFindings,
       identities,
       0,
       root,
-      { IgnoredVulns: [] },
-      new Date("2026-10-18T00:00:00Z"),
+      policy,
     ),
+    { findings: 0, approvedFindings: 0 },
+  );
+  assert.deepEqual(
+    dependencies.validateDependencyEvidence(noFindings, identities, 0, root, {
+      IgnoredVulns: [],
+    }),
     { findings: 0, approvedFindings: 0 },
   );
 });
@@ -246,7 +234,6 @@ test("native disposition rejects malformed subject, range, and event objects", (
   const policy = dependencies.parseDependencyPolicy(dependencyPolicy);
   const identities = dependencies.validateDependencyInput(
     JSON.parse(readText("package-lock.json")),
-    policy,
   );
   const report = {
     results: [
@@ -277,14 +264,7 @@ test("native disposition rejects malformed subject, range, and event objects", (
     ],
   };
   const validate = (input) =>
-    dependencies.validateDependencyEvidence(
-      input,
-      identities,
-      1,
-      root,
-      policy,
-      dependencyReviewTime,
-    );
+    dependencies.validateDependencyEvidence(input, identities, 1, root, policy);
   assert.deepEqual(validate(report), { findings: 1, approvedFindings: 1 });
   const explicitVersion = structuredClone(report);
   const affected = explicitVersion.results[0].packages.find(

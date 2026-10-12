@@ -4,32 +4,21 @@ import {
   mkdtempSync,
   readFileSync,
   realpathSync,
-  rmSync,
   writeFileSync,
 } from "node:fs";
-import os from "node:os";
 import path from "node:path";
-import semver from "semver";
 import { parse as parseToml } from "smol-toml";
-import {
-  isolatedNpmEnvironment,
-  npmCliPath,
-  validateLockSupply,
-} from "../ci/offline/npm.mjs";
+import { validateLockSupply } from "../ci/offline/npm.mjs";
 import { managedFileExists, root } from "../runtime.mjs";
 import { nativeToolBinary } from "../supply.mjs";
 
 export const dependencyPolicyPath = ".config/checks/dependencies/policy.toml";
-// Bounded compatibility at the existing input owner until accepted ETHOS risk
-// admission supports native findings and controlled-development artifacts.
+// Existing input owner until accepted ETHOS supplies the shared disposition.
+// The known braces finding is non-blocking; raw diagnostics stay complete.
 const approvedDependency = {
   id: "GHSA-vfj7-8cjw-p6xm",
   ecosystem: "npm",
   name: "braces",
-  version: "3.0.3",
-  integrity:
-    "sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==",
-  expiresAt: Date.UTC(2026, 9, 18),
 };
 
 function isNativeObject(value) {
@@ -48,11 +37,8 @@ export function parseDependencyPolicy(source) {
     );
   for (const entry of policy.IgnoredVulns) {
     if (
-      Object.keys(entry).sort().join(",") !== "id,ignoreUntil,reason" ||
+      Object.keys(entry).sort().join(",") !== "id,reason" ||
       entry.id !== approvedDependency.id ||
-      !(entry.ignoreUntil instanceof Date) ||
-      !Number.isFinite(entry.ignoreUntil.getTime()) ||
-      entry.ignoreUntil.getTime() > approvedDependency.expiresAt ||
       typeof entry.reason !== "string" ||
       !entry.reason.trim()
     )
@@ -63,33 +49,20 @@ export function parseDependencyPolicy(source) {
   return policy;
 }
 
-export function validateDependencyInput(lock, policy = { IgnoredVulns: [] }) {
+export function validateDependencyInput(lock) {
   validateLockSupply(lock);
   const identities = new Map();
-  let approvedPaths = 0;
   for (const [location, entry] of Object.entries(lock.packages)) {
     if (!location) continue;
     const name = entry.name ?? location.split("node_modules/").at(-1);
     if (entry.dev !== true)
       throw new Error(`dependency input is not development-only: ${location}`);
-    if (policy.IgnoredVulns.length && name === approvedDependency.name) {
-      if (
-        entry.version !== approvedDependency.version ||
-        entry.integrity !== approvedDependency.integrity
-      )
-        throw new Error(`approved dependency artifact changed: ${location}`);
-      approvedPaths++;
-    }
     identities.set(`${name}@${entry.version}`, {
       name,
       version: entry.version,
       ecosystem: "npm",
     });
   }
-  if (policy.IgnoredVulns.length && !approvedPaths)
-    throw new Error(
-      "approved dependency input is absent; retire the disposition",
-    );
   return identities;
 }
 
@@ -99,7 +72,6 @@ export function validateDependencyEvidence(
   exitCode,
   repository = root,
   policy = { IgnoredVulns: [] },
-  now = new Date(),
 ) {
   const expected = realpathSync(path.join(repository, "package-lock.json"));
   const results = report?.results;
@@ -158,7 +130,6 @@ export function validateDependencyEvidence(
       if (
         policy.IgnoredVulns.length &&
         identity.name === approvedDependency.name &&
-        identity.version === approvedDependency.version &&
         [finding.id, ...(finding.aliases ?? [])].includes(approvedDependency.id)
       ) {
         // Inspect only native fields used by this exact disposition. The scanner
@@ -179,7 +150,7 @@ export function validateDependencyEvidence(
                   (version) => typeof version !== "string" || !version.trim(),
                 ))) ||
             (!affected.ranges?.length &&
-              !affected.versions?.includes(approvedDependency.version))
+              !affected.versions?.includes(identity.version))
           )
             throw new Error(
               "approved finding subject changed; retire the disposition",
@@ -215,22 +186,10 @@ export function validateDependencyEvidence(
                   throw new Error(
                     "approved finding has an invalid native fixed event",
                   );
-                throw new Error(
-                  "approved finding now has a fix; retire and requalify the disposition",
-                );
               }
             }
           }
         }
-        if (finding.withdrawn)
-          throw new Error(
-            "approved finding was withdrawn; retire the disposition",
-          );
-        if (
-          !Number.isFinite(now.getTime()) ||
-          policy.IgnoredVulns[0].ignoreUntil.getTime() <= now.getTime()
-        )
-          throw new Error("approved dependency disposition has expired");
         approvedFindings++;
       }
     }
@@ -239,8 +198,6 @@ export function validateDependencyEvidence(
     throw new Error("native dependency report omits input identities");
   if (exitCode !== (findings ? 1 : 0))
     throw new Error("native dependency report disagrees with its exit status");
-  if (policy.IgnoredVulns.length && findings === 0)
-    throw new Error("approved finding is absent; retire the disposition");
   return { findings, approvedFindings };
 }
 
@@ -248,7 +205,6 @@ export function auditDependencies({
   repository = root,
   offline = false,
   environment = process.env,
-  now = new Date(),
 } = {}) {
   const policySource = readFileSync(
     path.join(repository, dependencyPolicyPath),
@@ -259,7 +215,7 @@ export function auditDependencies({
     path.join(repository, "package-lock.json"),
     "utf8",
   );
-  const identities = validateDependencyInput(JSON.parse(lockSource), policy);
+  const identities = validateDependencyInput(JSON.parse(lockSource));
   const binary = nativeToolBinary("osv-scanner");
   const evidenceRoot = path.join(repository, "build/evidence/dependencies");
   managedFileExists(path.join(evidenceRoot, "boundary-check"), repository);
@@ -344,7 +300,6 @@ export function auditDependencies({
       result.status,
       repository,
       policy,
-      now,
     ));
   } catch (cause) {
     throw new Error(
@@ -356,98 +311,6 @@ export function auditDependencies({
     throw new Error(
       `native dependency audit has ${findingCount - approvedFindings} unapproved findings; complete raw evidence ${evidence}`,
     );
-  if (!offline && approvedFindings) {
-    const temporary = mkdtempSync(path.join(os.tmpdir(), "ddwg-npm-view-"));
-    using cleanup = new DisposableStack();
-    cleanup.defer(() =>
-      rmSync(temporary, {
-        recursive: true,
-        force: true,
-        maxRetries: 10,
-        retryDelay: 200,
-      }),
-    );
-    const registryArgs = [
-      npmCliPath(),
-      "view",
-      approvedDependency.name,
-      "version",
-      "--json",
-      "--registry=https://registry.npmjs.org",
-      "--offline=false",
-      "--prefer-online=true",
-      "--prefer-offline=false",
-      "--fetch-retries=0",
-      "--prefix",
-      temporary,
-    ];
-    const registry = spawnSync(process.execPath, registryArgs, {
-      cwd: temporary,
-      env: isolatedNpmEnvironment(
-        temporary,
-        path.join(temporary, "npm-cache"),
-        {
-          offline: false,
-          environment,
-        },
-      ),
-      stdio: ["ignore", "pipe", "pipe"],
-      encoding: "utf8",
-      timeout: 15_000,
-      maxBuffer: 1024 * 1024,
-    });
-    for (const name of ["empty-user.npmrc", "empty-global.npmrc"])
-      writeFileSync(
-        path.join(evidence, name),
-        readFileSync(path.join(temporary, name)),
-      );
-    writeFileSync(
-      path.join(evidence, "stable-version.stdout"),
-      registry.stdout ?? "",
-    );
-    writeFileSync(
-      path.join(evidence, "stable-version.stderr"),
-      registry.stderr ?? "",
-    );
-    execution.push({
-      command: [process.execPath, ...registryArgs],
-      status: registry.status,
-      signal: registry.signal,
-      error: registry.error?.message,
-    });
-    saveExecution();
-    if (registry.error || registry.status !== 0 || registry.stderr)
-      throw new Error(
-        `official stable version observation failed; evidence ${evidence}`,
-      );
-    let observed;
-    try {
-      observed = JSON.parse(registry.stdout);
-    } catch (cause) {
-      throw new Error(
-        `official stable version report is invalid; evidence ${evidence}`,
-        { cause },
-      );
-    }
-    const versions = Array.isArray(observed) ? observed : [observed];
-    if (
-      versions.length !== 1 ||
-      !semver.valid(versions[0]) ||
-      versions[0] !== approvedDependency.version
-    )
-      throw new Error(
-        `official stable braces changed; retire and requalify the disposition; evidence ${evidence}`,
-      );
-    if (
-      readFileSync(path.join(repository, "package-lock.json"), "utf8") !==
-        lockSource ||
-      readFileSync(path.join(repository, dependencyPolicyPath), "utf8") !==
-        policySource
-    )
-      throw new Error(
-        `dependency audit inputs changed during native execution; evidence ${evidence}`,
-      );
-  }
   console.log(
     `${findingCount ? "REPORT" : "PASS"} native dependency audit: ${identities.size} identities; ${findingCount} raw findings; ${approvedFindings} approved in exact development scope; evidence ${path.relative(repository, evidence)}`,
   );

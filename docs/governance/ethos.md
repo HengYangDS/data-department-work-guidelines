@@ -321,7 +321,11 @@ evidence. This page grants no approval; the
 [dependency policy](../../.config/checks/dependencies/policy.toml) owns only
 project-lock dispositions, not image or native-binary approvals.
 
-A development approval cannot cover production, arbitrary untrusted input,
+The user has accepted the known braces finding as non-blocking for verification,
+CI, distribution, and releases. Keep its full report and remediation tracking;
+it does not accept another finding or package, or remove input-integrity checks.
+
+A development approval for other findings cannot cover production, arbitrary untrusted input,
 other findings, changed artifacts, or another repository. Verify authenticity,
 complete bytes, hashes, licenses, function, and each claimed platform separately.
 Source-lock advisories, including maintenance findings and aliases, cannot

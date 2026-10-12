@@ -15,11 +15,7 @@ import path from "node:path";
 import { test } from "node:test";
 import * as dependencies from "../../tools/docs/dependencies.mjs";
 import { readText } from "../../tools/runtime.mjs";
-import {
-  approvedFinding,
-  dependencyPolicy,
-  dependencyReviewTime,
-} from "./fixtures.mjs";
+import { approvedFinding, dependencyPolicy } from "./fixtures.mjs";
 
 test("one native audit retains all findings without a filtered second scan", (context) => {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-audit-findings-"));
@@ -89,7 +85,6 @@ test("one native audit retains all findings without a filtered second scan", (co
         dependencies.auditDependencies({
           repository: directory,
           offline: true,
-          now: dependencyReviewTime,
         }),
       /unapproved/u,
     );
