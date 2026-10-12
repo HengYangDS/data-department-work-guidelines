@@ -15,7 +15,7 @@ import path from "node:path";
 import { test } from "node:test";
 import * as dependencies from "../../tools/docs/dependencies.mjs";
 import { readText, root } from "../../tools/runtime.mjs";
-import { approvedFinding, dependencyPolicy } from "./fixtures.mjs";
+import { dependencyPolicy } from "./fixtures.mjs";
 
 test("actual native audit keeps the accepted finding non-blocking after the former expiry", (context) => {
   context.mock.method(Date, "now", () => Date.UTC(2027, 0, 1));
