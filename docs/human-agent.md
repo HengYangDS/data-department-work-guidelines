@@ -88,7 +88,7 @@ config:
 ---
 sequenceDiagram
     accTitle: Delegation, evidence, and authorized acceptance
-    accDescr: A member sets the delegation boundary. An Agent returns work and evidence. The member checks the actual work before an authorized acceptor accepts it or returns it for review within the delegation boundary. Participants represent roles, not necessarily different people. People retain authority and responsibility; acceptance never expands permission.
+    accDescr: A member sets the delegation boundary. An Agent returns work and evidence. The member checks the actual work and evidence before submitting them to an authorized acceptor. If conditions are unmet, the work returns for review within the delegation boundary. If conditions are met, the acceptor accepts the work, records acceptance, and hands off the result. Participants represent roles, not necessarily different people. People retain authority and responsibility; acceptance never expands permission.
     participant Member
     participant Agent
     participant Acceptor as Authorized acceptor
@@ -103,11 +103,15 @@ sequenceDiagram
     end
 ```
 
-These roles may belong to the same person. The authorized acceptor examines the
-work and evidence against the agreed conditions; an Agent's summary cannot
-substitute for that examination. People retain direction, authority, and
-responsibility. Delegation and acceptance do not expand permission or transfer
-responsibility.
+The authorized acceptor checks the actual work and evidence against the agreed
+conditions. If conditions are unmet, the work returns for review within the
+delegation boundary. If conditions are met, the acceptor accepts the work,
+records acceptance, and hands off the result. An Agent's summary cannot
+substitute for that examination.
+
+These roles may belong to the same person. People retain direction, authority,
+and responsibility. Delegation and acceptance do not expand permission or
+transfer responsibility.
 
 ### Check Agent Output
 

@@ -29,7 +29,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 ### Changed
 
 - Show the handoff from Agent work to human verification and authorized
-  acceptance, including a return for review.
+  acceptance. Preserve boundary-limited review, acceptance recording, and
+  handoff in both the diagram and its text.
 - Validate official OpenSpec artifacts through installed ETHOS and its locked
   CLI. Remove the duplicate repository validator and report-parser tests; keep the
   native gate in the document-proof closure.

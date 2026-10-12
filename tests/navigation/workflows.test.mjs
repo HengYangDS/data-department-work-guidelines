@@ -82,6 +82,58 @@ test("collaboration keeps member checks before the Agent execution section", () 
   );
 });
 
+test("collaboration preserves both acceptance outcomes without the diagram", () => {
+  const relative = "docs/human-agent.md";
+  const source = readFileSync(path.join(root, relative), "utf8");
+  const section = contentUnderHeading(source, relative, "Execute and Verify");
+  const diagram = section.find(
+    (token) =>
+      token.type === "codeFenced" && token.text.startsWith("```mermaid"),
+  );
+  assert.ok(diagram, "the delegation example must retain its diagram");
+  const descriptions = [
+    diagram.text
+      .split("\n")
+      .find((line) => line.trimStart().startsWith("accDescr:")),
+    [...walkMarkdown(section)]
+      .filter((token) => token.type === "paragraph")
+      .map((token) => markdownText(token))
+      .join(" "),
+  ];
+  const assertOutcomes = (description) => {
+    const text = description?.replace(/\s+/gu, " ") ?? "";
+    assert.match(
+      text,
+      /conditions are unmet[^.]*returns for review within the delegation boundary/u,
+    );
+    assert.match(
+      text,
+      /conditions are met[^.]*accepts[^.]*records acceptance[^.]*hands off/u,
+    );
+  };
+  for (const description of descriptions) {
+    const text = description.replace(/\s+/gu, " ");
+    assertOutcomes(text);
+    assert.throws(
+      () =>
+        assertOutcomes(
+          text.replace("records acceptance", "announces completion"),
+        ),
+      /records acceptance/u,
+    );
+    assert.throws(
+      () =>
+        assertOutcomes(
+          text.replace(
+            "within the delegation boundary",
+            "under a new delegation",
+          ),
+        ),
+      /delegation boundary/u,
+    );
+  }
+});
+
 test("writing aims do not absorb document-order and sending-review procedures", () => {
   const relative = "docs/communicate.md";
   const source = readFileSync(path.join(root, relative), "utf8");
