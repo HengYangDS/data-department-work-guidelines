@@ -21,14 +21,12 @@ test("source context finishes before inherited child output without merging stre
     import childProcess from "node:child_process";
     import fs from "node:fs";
     import os from "node:os";
-    import path from "node:path";
     import { syncBuiltinESMExports } from "node:module";
-    const originalStat = fs.lstatSync;
-    const originalSpawn = childProcess.spawnSync;
-    const target = ${JSON.stringify(path.join(root, ".config"))};
+    const originalRead = fs.readFileSync;
+    const target = ${JSON.stringify(path.join(root, "package-lock.json"))};
     os.hostname = () => ${JSON.stringify(hostname)};
-    fs.lstatSync = (file, options) => {
-      if (path.resolve(file) !== target) return originalStat(file, options);
+    fs.readFileSync = (file, options) => {
+      if (file !== target) return originalRead(file, options);
       const child = childProcess.spawnSync(
         process.execPath,
         ["--eval", ${JSON.stringify(childSource)}],
@@ -37,19 +35,6 @@ test("source context finishes before inherited child output without merging stre
       assert.ifError(child.error);
       assert.equal(child.status, 0);
       throw new Error("fixture validation stopped after child output");
-    };
-    childProcess.spawnSync = (binary, args, options) => {
-      if (path.basename(args[0] ?? "") === "prettier.cjs") {
-        const child = originalSpawn(
-          process.execPath,
-          ["--eval", ${JSON.stringify(childSource)}],
-          { stdio: "inherit", timeout: 5_000 },
-        );
-        assert.ifError(child.error);
-        assert.equal(child.status, 0);
-        throw new Error("fixture validation stopped after child output");
-      }
-      return originalSpawn(binary, args, options);
     };
     syncBuiltinESMExports();
     process.argv = [process.execPath, ${JSON.stringify(path.join(root, "tools/docs/cli.mjs"))}, ${JSON.stringify(command)}];
@@ -86,27 +71,19 @@ test("source checks preserve a failed context write before starting validation",
   for (const command of ["check"]) {
     const script = `
     import fs from "node:fs";
-    import childProcess from "node:child_process";
-    import path from "node:path";
     import { syncBuiltinESMExports } from "node:module";
     const originalWrite = process.stdout.write.bind(process.stdout);
-    const originalStat = fs.lstatSync;
-    const originalSpawn = childProcess.spawnSync;
+    const originalRead = fs.readFileSync;
     process.stdout.write = (chunk, ...arguments_) => {
       if (!String(chunk).startsWith("INFO ")) return originalWrite(chunk, ...arguments_);
       const callback = arguments_.find((value) => typeof value === "function");
       if (callback) queueMicrotask(() => callback(new Error("fixture context write failed")));
       return false;
     };
-    fs.lstatSync = (file, options) => {
-      if (path.resolve(file) === ${JSON.stringify(path.join(root, ".config"))})
+    fs.readFileSync = (file, options) => {
+      if (file === ${JSON.stringify(path.join(root, "package-lock.json"))})
         throw new Error("validation ran after context write failure");
-      return originalStat(file, options);
-    };
-    childProcess.spawnSync = (binary, args, options) => {
-      if (path.basename(args[0] ?? "") === "prettier.cjs")
-        throw new Error("formatting ran before context write failure");
-      return originalSpawn(binary, args, options);
+      return originalRead(file, options);
     };
     syncBuiltinESMExports();
     process.argv = [process.execPath, ${JSON.stringify(path.join(root, "tools/docs/cli.mjs"))}, ${JSON.stringify(command)}];
