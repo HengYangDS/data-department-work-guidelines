@@ -8,7 +8,7 @@
     "prose": "node tools/docs/cli.mjs prose"
   },
   "devDependencies": {
-    "@dprint/formatter": "0.5.1",
+    "@dprint/formatter": "0.6.0",
     "@dprint/toml": "0.9.0",
     "@fission-ai/openspec": "1.14.1",
     "entities": "8.1.0",
