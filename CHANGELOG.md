@@ -66,10 +66,13 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   rerun before they can support use admission. Present each case in one
   full-width item, with its evidence, claim, and correction together.
 - Frame problems against an explicit comparison baseline and build the
-  smallest sufficient model before expanding detail. Represent interacting
-  causes and cross-cutting constraints without losing reality. Separate
-  discussion, decision readiness, and approval. Deferred decisions need a
-  resolving action and revisit time, including timing-based waits. Routine
+  smallest sufficient model before expanding detail. Keep the classification
+  basis consistent at each level and cover every part needed for the decision.
+  Before a change, confirm the actual target location, version, environment,
+  state, concurrent work, and recovery path through the delivery topic. Represent
+  interacting causes and cross-cutting constraints without losing reality.
+  Separate discussion, decision readiness, and approval. Deferred decisions need
+  a resolving action and revisit time, including timing-based waits. Routine
   work owes its agreed outcome, not exceptional performance every time.
 - Qualify data for its intended use: availability, professional usefulness,
   and permission remain separate judgments. Bounded research keeps its own

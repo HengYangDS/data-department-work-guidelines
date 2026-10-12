@@ -79,11 +79,11 @@ so explicitly.
    one meaning for each concept within the same discussion, then identify
    causal, dependency, constraint, and feedback relationships.
 
-   Choose a useful way to divide the problem and explain how the parts connect
-   to the decision. Show material gaps, shared causes, and cross-cutting
-   constraints; do not force interacting parts into non-overlapping boxes or
-   count the same effect twice. A long list or polished prose cannot substitute
-   for that model.
+   Use one consistent basis to divide the problem at each level. Cover every
+   part needed for the decision and explain how it connects to that decision.
+   Show material gaps, shared causes, and cross-cutting constraints; do not
+   force interacting parts into non-overlapping boxes or count the same effect
+   twice. A long list or polished prose cannot substitute for that model.
 
 2. **Bind the observations.** Attach source and time to important facts; state
    how each unknown affects the decision. Separate observation from explanation.

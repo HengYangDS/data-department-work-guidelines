@@ -123,9 +123,10 @@ before expanding detail; load only relevant material; and advance in reversible,
 verifiable steps within its authority and agreed scope, without incidental
 changes.
 
-Before writing, it must check the target, concurrent work, and recovery
-path. For extended or interrupted work, it must keep the state needed to continue
-in the existing work record. A low-risk task may close in one exchange under the
+Before writing, it must check the
+[execution preconditions](deliver.md#before-acting). For extended or interrupted
+work, it must keep the state needed to continue in the existing work record.
+A low-risk task may close in one exchange under the
 [charter](charter.md#form-follows-risk). Its output must lead with the conclusion
 and evidence, then limits and next steps.
 

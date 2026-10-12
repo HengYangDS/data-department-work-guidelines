@@ -43,12 +43,13 @@ Urgent containment follows [emergencies and exceptions](evolve.md#emergencies-an
 - **What if it goes wrong?** Triggers to pause, degrade, roll back, or hand
   control to a person.
 
-Check the actual target location, current state, concurrent work, and recovery
-path before making a change. Expose critical-path blockers when observed; do
-not wait for dependent work to fail. Activity volume and “active progress” are
-not state changes. If scope or risk materially changes, return to the authorized
-decision owner. Record the change and the decision that resolves it in the
-existing work record so collaborators work from the same commitment.
+Check the actual target location, version, environment, current state,
+concurrent work, and recovery path before making a change. Expose critical-path
+blockers when observed; do not wait for dependent work to fail. Activity volume
+and “active progress” are not state changes. If scope or risk materially changes,
+return to the authorized decision owner. Record the change and the decision
+that resolves it in the existing work record so collaborators work from the
+same commitment.
 
 ## Close the Work
 

@@ -9,8 +9,11 @@ for department work without adding authority or certifying team adoption.
 
 ### Requirement: Point-of-use analysis, data, and Agent boundaries
 
-Analysis SHALL choose a useful decomposition tied to the governing decision and
-make material gaps, relationships, and cross-cutting constraints explicit.
+Analysis SHALL use a consistent classification basis at each level, cover every
+part needed for the governing decision, and make material gaps, relationships,
+and cross-cutting constraints explicit. Before a change, members and Agents
+SHALL confirm the actual target location, version, environment, current state,
+concurrent work, and recovery path.
 Promotion into shared, production, or decision use SHALL require meaning,
 quality, permission and reproducibility. Agents SHALL review complete current
 claim-matched results, then report evidence, limits, and the delivery state;
@@ -37,13 +40,23 @@ other owners' professional judgments.
 #### Scenario: An analysis is split into parts
 
 - **WHEN** a member decomposes a material problem before proposing options
-- **THEN** the decision topic requires a useful decomposition, a link from each
-  part back to the decision, and explicit material gaps, shared causes, and
+- **THEN** the decision topic requires a consistent classification basis at each
+  level, coverage of every part needed for the decision, a link from each part
+  back to that decision, and explicit material gaps, shared causes, and
   cross-cutting constraints without double-counting an effect
 - **AND** the charter's limit against forcing reality into a single model
   applies
 - **AND THEN** a longer list or polished prose does not substitute for the
   missing model.
+
+#### Scenario: A change targets an unverified environment
+
+- **WHEN** a member or Agent is about to change a shared source or system
+- **THEN** the delivery topic requires verification of the actual target
+  location, version, environment, current state, concurrent work, and recovery
+  path before the change
+- **AND** the collaboration topic links to that execution contract; a familiar
+  name or successful check elsewhere does not verify the intended target.
 
 #### Scenario: Decision readiness is mistaken for approval
 
