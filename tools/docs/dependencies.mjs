@@ -312,7 +312,7 @@ export function auditDependencies({
       `native dependency audit has ${findingCount - approvedFindings} unapproved findings; complete raw evidence ${evidence}`,
     );
   console.log(
-    `${findingCount ? "REPORT" : "PASS"} native dependency audit: ${identities.size} identities; ${findingCount} raw findings; ${approvedFindings} approved in exact development scope; evidence ${path.relative(repository, evidence)}`,
+    `${findingCount ? "REPORT" : "PASS"} native dependency audit: ${identities.size} identities; ${findingCount} raw findings; ${approvedFindings} accepted non-blocking findings; evidence ${path.relative(repository, evidence)}`,
   );
   return { evidence, findingCount, approvedFindings };
 }

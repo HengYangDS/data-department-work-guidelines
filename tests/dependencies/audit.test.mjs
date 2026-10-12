@@ -17,7 +17,12 @@ import * as dependencies from "../../tools/docs/dependencies.mjs";
 import { readText, root } from "../../tools/runtime.mjs";
 import { approvedFinding, dependencyPolicy } from "./fixtures.mjs";
 
-test("actual native audit retains all findings and applies exact disposition", () => {
+test("actual native audit keeps the accepted finding non-blocking after the former expiry", (context) => {
+  context.mock.method(Date, "now", () => Date.UTC(2027, 0, 1));
+  const originalLog = console.log;
+  const auditLog = context.mock.method(console, "log", (...args) =>
+    originalLog(...args),
+  );
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-native-osv-"));
   // Fixed native OSV database archives, produced by the official ZIP format.
   const databases = [
@@ -104,6 +109,19 @@ test("actual native audit retains all findings and applies exact disposition", (
         });
         assert.equal(observed.findingCount, 1);
         assert.equal(observed.approvedFindings, 1);
+        assert.match(
+          auditLog.mock.calls.at(-1).arguments[0],
+          /1 accepted non-blocking findings/u,
+        );
+        assert.deepEqual(
+          JSON.parse(
+            readFileSync(
+              path.join(observed.evidence, "execution.json"),
+              "utf8",
+            ),
+          ).execution.map((entry) => entry.status),
+          [1],
+        );
         const retained = JSON.parse(
           readFileSync(path.join(observed.evidence, "raw.json"), "utf8"),
         );

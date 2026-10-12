@@ -299,18 +299,18 @@ runtime reachability, and a failed scan cannot establish a clean audit.
 
 On each hosted plane, retain one complete unfiltered OSV project scan, its exact
 lock and [policy](../../.config/checks/dependencies/policy.toml), streams, and
-status. Apply the exact approved development disposition to that input without
-a second filtered scan. Unapproved findings, expiry, input drift, failed or
-warning-bearing execution, and malformed or incomplete reports fail
-qualification. An approved report still contains a known finding; do not call it
-clean.
+status. Apply the accepted finding disposition without a second filtered scan.
+The known braces finding does not block checks, CI, installation, distribution,
+or releases. Its former expiry, a newer package version, an available fix, or a
+finding's disappearance or withdrawal must not turn that acceptance into a hold.
+Remove the obsolete disposition when it no longer applies as ordinary maintenance,
+not as a prerequisite for delivery. Keep complete reports and remediation tracking;
+an accepted finding is not a clean audit.
 
-Retire the disposition when the finding disappears, is withdrawn, receives an
-official fix, or its stable release changes; qualify the changed inputs again.
-Check public npm stable versions through isolated native configuration, fresh
-cache, and an explicit online operation. Retain its original result with the
-scan. Source checks contact no advisory service and cannot renew use or
-distribution approval.
+Unapproved findings, input drift, failed or warning-bearing execution, and
+malformed or incomplete reports still fail qualification. Other artifact approvals
+keep their own scope and expiry. Source checks contact no advisory service and
+cannot grant or renew those approvals.
 
 ### Bound Known Findings
 

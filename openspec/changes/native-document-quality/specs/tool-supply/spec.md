@@ -52,6 +52,18 @@ their actual owners, without another DDWG manifest or generic bundle product.
 - **AND** that approval neither covers another repository or changed artifact
   nor requires the final product to retain the old tool or runtime.
 
+#### Scenario: The known braces finding is reported
+
+- **WHEN** checks, installation, CI, distribution, or a release reports the
+  user-accepted braces finding `GHSA-vfj7-8cjw-p6xm` or its native alias
+- **THEN** that finding does not block the operation, including after its former
+  expiry or when a newer version, official fix, disappearance, or withdrawal is
+  observed
+- **AND** complete reports and remediation tracking remain available; the finding
+  is not described as fixed or clean
+- **AND** unrelated findings, input integrity, report completeness, execution
+  failures, and other artifacts' approval boundaries remain separately applicable.
+
 #### Scenario: The shared supply replaces the old bundle
 
 - **WHEN** the accepted product qualifies every current replacement consumer
@@ -71,6 +83,9 @@ installed supply, including retained platform and risk cases, before same-batch
 retirement. Original cases and failures remain in native captured source evidence
 `640cc1a0f708b9b8411d714f07d084376a8b691469e8518181d213366ab753e6`.
 No historical Node, npm, or bundle choice is a required final implementation.
+The known braces finding remains non-blocking under the user's current decision;
+the former expiry and release-hold scenario is superseded, not carried into the
+accepted shared replacement.
 
 ### Requirement: Tool supply and portability require executed checks
 
