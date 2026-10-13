@@ -151,6 +151,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Remove a redundant collaboration-diagram note that is too faint in GitHub's
+  dark theme. Keep the verification duty in the message, accessible description,
+  and adjacent prose.
 - Align Change intent and prevention scenarios with practice admission based on
   an observed problem, substantiated material risk, or applicable obligation.
   A bounded trial qualifies the implementation; necessary safeguards do not wait
