@@ -263,8 +263,8 @@
       `e108ee5b39cb102ca8683173c4deca6c5387cf872710de09dd3bc7136b28430c` and
       `8f4833da08b652c0db73f6d93a6dcb542cbf69bd03750453a77c54f970c86cc0`.
       Preserve the exact collaboration correction and bounded hosted desktop routes
-      in `323b943340c1148de5efd403fa1b860cdec5671840ec8c02aaecb5b408c25214`
-      and `58d0a5695ce161081e003028361f8bb82c8aa43146f7e6e2b7114c7a110d2ad8`;
+      in `903fec3a04cc6c25e61849b35e5e07a6cb8dc6bf6ea40c3af35768dd0b5aff6f`
+      and `4bc342fa5e6d57d5e3b708e22a47f0e4fc0582545faac5935d6db4b1c5d0cba6`;
       these do not close final-source integration, full accessibility, or this task.
       Retain the bounded shared-model application and source rebinding in
       `b34554b4a3191b9ee1461ade9d99f21b973e29a285054dba80068b22ed4ddf33`;
