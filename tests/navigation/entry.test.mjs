@@ -88,6 +88,10 @@ test("task-map hierarchy separates destinations, related reading, and urgent ent
       consumerRoutes.includes("data.md#worked-change-a-shared-issuer-identifier"),
       "shared-data work needs its consumer-migration example as related reading",
     );
+    assert.ok(
+      consumerRoutes.includes("data.md#assign-modeling-and-lifecycle-decisions"),
+      "shared-data work needs its modeling decision owner as related reading",
+    );
     const destinations = new Set(
       primary.flatMap((links) => links.map((link) => `docs/${link.split("#")[0]}`)),
     );
@@ -122,6 +126,9 @@ test("task-map hierarchy separates destinations, related reading, and urgent ent
   const misplaced = `${source.replace(`(${exampleDestination})`, "(data.md)")}\n[Consumer migration](${exampleDestination})\n`;
   assert.ok(markdownLinkDestinations(misplaced).includes(exampleDestination));
   assert.throws(() => assertHierarchy(misplaced), /consumer-migration example/u);
+  const modelDestination = "data.md#assign-modeling-and-lifecycle-decisions";
+  const lateModel = `${source.replace(`(${modelDestination})`, "(data.md)")}\n[Modeling](${modelDestination})\n`;
+  assert.throws(() => assertHierarchy(lateModel), /modeling decision owner/u);
   assert.throws(
     () => assertHierarchy(source.replace(/^ {2}- /gmu, "  ")),
     /one primary destination per work question/u,
@@ -132,7 +139,7 @@ test("task-map hierarchy separates destinations, related reading, and urgent ent
   );
 });
 
-test("data entry routes readers to recovery and current qualification", () => {
+test("data entry routes work questions to evidence, ownership, and recovery", () => {
   const relative = "docs/data.md";
   const source = readFileSync(path.join(root, relative), "utf8");
   const introductionOf = (text) => {
@@ -153,6 +160,8 @@ test("data entry routes readers to recovery and current qualification", () => {
     "#change-shared-or-production-data",
     "#move-from-a-signal-to-controlled-use",
     "#admit-a-durable-data-asset",
+    "#preserve-the-historical-point-of-view",
+    "#assign-modeling-and-lifecycle-decisions",
   ]) {
     assert.ok(
       destinations.includes(destination),
@@ -166,6 +175,15 @@ test("data entry routes readers to recovery and current qualification", () => {
     ).includes("#change-shared-or-production-data"),
     false,
     "a link after the first topic section cannot satisfy the reader entry",
+  );
+  const modelDestination = "#assign-modeling-and-lifecycle-decisions";
+  const lateModel = source.replace(`(${modelDestination})`, "(charter.md)");
+  assert.equal(
+    destinationsOf(introductionOf(`${lateModel}\n[Late model](${modelDestination})\n`)).includes(
+      modelDestination,
+    ),
+    false,
+    "model ownership must be reachable before the first topic section",
   );
 });
 

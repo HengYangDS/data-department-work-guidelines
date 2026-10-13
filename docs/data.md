@@ -13,20 +13,22 @@ relations:
 **When to use:** Acquiring data, defining a metric, studying history, deploying
 a production pipeline, or allowing a business use.
 
-A readable file, attractive chart, or promising model signal does not by itself
-establish that the data may be admitted for a specific use. Keep a proposed use
-exploratory within its authorized scope until evidence of its meaning, quality,
-permission, and reproducibility supports that decision.
+Qualify data for a specific use before treating it as trusted. A readable file,
+attractive chart, or promising model signal does not by itself establish its
+meaning, quality, permission, or reproducibility. Keep the proposed use
+exploratory within its authorized scope until the evidence supports it.
 
 Before relying on a result, recheck key findings, reproducibility, and permission
-against [the intended use](#move-from-a-signal-to-controlled-use). Stop a proposed
-controlled use and escalate if its meaning or quality is unverified or permission
-is insufficient. For a shared or production change, also require the
-[operational checks and recovery path](#change-shared-or-production-data).
+for the intended use. Stop the proposed controlled use and escalate if its
+meaning or quality is unverified or permission is insufficient.
 
-For a lasting data asset, [all eight admission conditions](#admit-a-durable-data-asset)
-must hold. For historical research, preserve
-[what was knowable at the time](#preserve-the-historical-point-of-view).
+| Your work question                                   | Read next                                                                        |
+| ---------------------------------------------------- | -------------------------------------------------------------------------------- |
+| Is the asset ready for lasting use?                  | [All eight admission conditions](#admit-a-durable-data-asset) must hold.         |
+| What was knowable at an earlier decision?            | Preserve the [historical point of view](#preserve-the-historical-point-of-view). |
+| Who decides a shared definition or model change?     | [Modeling and lifecycle decisions](#assign-modeling-and-lifecycle-decisions).    |
+| May the result serve this use?                       | [Evidence and use admission](#move-from-a-signal-to-controlled-use).             |
+| What must hold before a shared or production change? | Require [operational checks and recovery](#change-shared-or-production-data).    |
 
 ## Answer Six Questions First
 
@@ -48,8 +50,7 @@ decision owner.
 
 Exploratory code and temporary data may move quickly inside that boundary.
 Neither may enter a shared, production, or decision path until its meaning,
-quality, permissions, and reproducibility are
-qualified for that use.
+quality, permissions, and reproducibility are qualified for that use.
 
 Keep source data, production data, experimental results, service views,
 platform-derived views, and reporting views distinct. Reports,
@@ -74,8 +75,7 @@ values and rerun the analysis. If availability is unknown, point-in-time
 validity remains unproved; authorized exploratory analysis may continue within
 that stated limit. Do not make research or business commitments that exceed the
 evidence.
-State confidence, alternative explanations, and conclusions the data cannot
-support.
+State confidence, alternative explanations, and conclusions the data cannot support.
 
 ## Admit a Durable Data Asset
 
@@ -193,24 +193,24 @@ to make each side's needs and delivery evidence explicit.
 
 ### Assign Modeling and Lifecycle Decisions
 
-Business modeling settles the entities, relationships, rules, and metric
-meanings that the work represents. Data modeling settles grain, identifiers and
-keys, constraints, time and version rules, and how the agreed meaning is
-represented. Name an owner for shared definitions across domains and bring
-conflicting meanings to the authorized domain owners; choosing a convenient
-schema does not resolve that conflict.
+Keep these decisions distinct when planning a data change:
 
-Development must preserve the agreed model in implementation, tests, and
-interfaces. Technical choices need an owner for architecture, compatibility,
-reliability and capacity limits, shared standards, and dependencies within the
-existing mandate. Those decisions do not grant business or use permission.
+| Decision           | What must be settled                                                                                                                                     | Accountable owner                                                         |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Business modeling  | Entities, relationships, rules, and metric meanings.                                                                                                     | Authorized domain owners.                                                 |
+| Data modeling      | Grain, identifiers and keys, constraints, time and version rules, and representation of the agreed meaning.                                              | Named data-model owner; shared definitions need one owner across domains. |
+| Development        | Preservation of the agreed model in implementation, tests, and interfaces.                                                                               | Development owner.                                                        |
+| Technical choices  | Architecture, compatibility, reliability and capacity limits, shared standards, and dependencies.                                                        | Technical owner acting within the existing mandate.                       |
+| Product management | Intended consumers, use, value, acceptance, and evolution; consumer impact, versioning, migration or deprecation notice, and evidence before retirement. | Product owner for the asset or service.                                   |
 
-For a data service or asset, product management must settle intended consumers,
-use, value, acceptance, and evolution. Its owner must address consumer impact,
-versioning, migration or deprecation notice, and evidence before retirement.
+Bring conflicting meanings to the authorized domain owners. Choosing a
+convenient schema does not resolve that conflict, and a technical decision
+cannot grant business or use permission.
+
 Asset governance retains permission and exit controls; production retains
-release and recovery. The task lead coordinates these decisions without taking
-over their owners' authority.
+release and recovery. The task lead coordinates the decisions without taking
+over their owners' authority. Apply the department's existing assignments;
+these responsibilities do not require separate people or teams.
 
 #### Worked change: a shared issuer identifier
 

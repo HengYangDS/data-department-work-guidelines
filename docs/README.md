@@ -36,6 +36,8 @@ the same guidance; each topic owns its rules and points to the related work.
 - [Change shared or production data](data.md#change-shared-or-production-data):
   Check authority, replay, tests, release and recovery, permissions, and stop
   conditions before a controlled change.
+  - Shared definitions: Assign
+    [modeling and lifecycle decisions](data.md#assign-modeling-and-lifecycle-decisions).
   - Consumer migration: Follow the
     [shared-identifier example](data.md#worked-change-a-shared-issuer-identifier).
 - [Verify and close work](deliver.md#close-the-work): Match the deliverable,
