@@ -427,12 +427,14 @@ node tools/ci/offline-bundle.mjs inspect --bundle GITHUB_ASSET
 node tools/ci/offline-bundle.mjs inspect --bundle GITLAB_ASSET
 ```
 
-From the final checkout, run `node tools/docs/cli.mjs links --online` after
-both remote tags exist and require zero broken links. This uses the pinned
-lychee and current Markdown inventory without changing the offline source
-verifier. A prepared Changelog's comparison links return 404 before its tag
-exists; do not waive those errors or count a pre-tag live check as release
-qualification. A lychee pass does not authenticate a Forge destination. Use
+From the final checkout, run
+`ethos prove --host --execute --gate external-links --expect-head OID --json`
+after both remote tags exist and require zero broken links. The installed gate
+uses its supplied Lychee on current Git-selected Markdown. The local DDWG link
+check retains delivered-source membership and confinement and remains offline.
+This host observation does not issue repository proof. A prepared Changelog's
+comparison links return 404 before its tag exists; do not waive those errors
+or count a pre-tag live check as release qualification. A lychee pass does not authenticate a Forge destination. Use
 each provider's native comparison API with the History row's base and head
 refs at its declared repository. Retain the response and confirm both ref
 identities; reject sign-in redirects and responses from another repository,

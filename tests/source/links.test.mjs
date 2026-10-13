@@ -106,23 +106,6 @@ test("pinned lychee rejects a broken local fragment", () => {
   }
 });
 
-test("live link checking is explicit and retains one native policy owner", async () => {
-  const content = await import("../../tools/docs/content.mjs");
-  assert.equal(typeof content.linkCheckArguments, "function");
-  const offline = content.linkCheckArguments("files.txt");
-  const online = content.linkCheckArguments("files.txt", { online: true });
-  assert.equal(offline[0], "--config");
-  assert.equal(offline[1], path.join(root, ".config/checks/links/lychee.toml"));
-  assert.ok(!offline.some((arg) => arg.startsWith("--offline")));
-  assert.ok(online.includes("--offline=false"));
-  assert.deepEqual(
-    online.filter((arg) => arg !== "--offline=false"),
-    offline,
-  );
-  assert.ok(!online.includes("--accept"));
-  assert.equal(online.at(-1), "files.txt");
-});
-
 test("native link extraction refuses warnings before checking targets", (context) => {
   const actualSpawn = childProcess.spawnSync;
   const output = context.mock.method(process.stdout, "write", () => true);
@@ -204,67 +187,18 @@ test("native link policy rejects broken local anchors and makes no network reque
   }
 });
 
-test("native online link policy actually requests the target and rejects HTTP failures", async () => {
-  const { createServer } = await import("node:http");
-  const { linkCheckArguments } = await import("../../tools/docs/content.mjs");
-  let requests = 0;
-  let status = 200;
-  const server = createServer((_request, response) => {
-    requests += 1;
-    response.writeHead(status).end("link fixture");
-  });
-  await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
-  try {
-    using directory = mkdtempDisposableSync(path.join(os.tmpdir(), "ddwg-online-links-"));
-    const source = path.join(directory.path, "source.md");
-    const list = path.join(directory.path, "files.txt");
-    writeFileSync(source, `# Links\n\n[Remote](http://127.0.0.1:${server.address().port}/)\n`);
-    writeFileSync(list, `${source}\n`);
-    const check = async () => {
-      const child = childProcess.spawn(
-        nativeToolBinary("lychee"),
-        linkCheckArguments(list, { online: true }),
-        {
-          cwd: root,
-          stdio: ["ignore", "pipe", "pipe"],
-          timeout: 10_000,
-        },
-      );
-      let output = "";
-      child.stdout.on("data", (bytes) => {
-        output += bytes;
-      });
-      child.stderr.on("data", (bytes) => {
-        output += bytes;
-      });
-      const code = await new Promise((resolve, reject) => {
-        child.once("error", reject);
-        child.once("close", resolve);
-      });
-      return { code, output };
-    };
-    const valid = await check();
-    assert.equal(valid.code, 0, valid.output);
-    assert.ok(requests > 0, "online mode made an actual HTTP request");
-    const beforeFailure = requests;
-    status = 404;
-    const invalid = await check();
-    assert.notEqual(invalid.code, 0, invalid.output);
-    assert.ok(requests > beforeFailure, "the failed request reached the target");
-    assert.match(invalid.output, /404/u);
-  } finally {
-    await new Promise((resolve) => server.close(resolve));
+test("offline source links refuse the retired online mode and incomplete waiver", () => {
+  for (const argument of ["--online", "--allow-incomplete"]) {
+    const result = spawnSync(process.execPath, ["tools/docs/cli.mjs", "links", argument], {
+      cwd: root,
+      encoding: "utf8",
+      timeout: 10_000,
+    });
+    assert.ifError(result.error);
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /links accepts no arguments/u);
+    assert.match(result.stderr, /ethos prove --host --execute --gate external-links/u);
   }
-});
-
-test("link checking rejects an incomplete-mode waiver", () => {
-  const result = spawnSync(
-    process.execPath,
-    ["tools/docs/cli.mjs", "links", "--allow-incomplete"],
-    { cwd: root, encoding: "utf8", timeout: 10_000 },
-  );
-  assert.notEqual(result.status, 0);
-  assert.match(result.stderr, /links accepts only --online/u);
 });
 
 test("the public link check rejects cache and Git state but accepts candidate source", () => {

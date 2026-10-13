@@ -68,11 +68,13 @@ try {
       break;
     }
     case "links": {
-      if (arguments_.length > 1 || (arguments_.length === 1 && arguments_[0] !== "--online")) {
-        throw new Error("links accepts only --online");
+      if (arguments_.length) {
+        throw new Error(
+          "links accepts no arguments; use ethos prove --host --execute --gate external-links for online reachability",
+        );
       }
       const { checkLinks } = await import("./content.mjs");
-      checkLinks({ online: arguments_[0] === "--online" });
+      checkLinks();
       break;
     }
     case "changelog": {
@@ -97,7 +99,7 @@ try {
     }
     default:
       throw new Error(
-        "usage: node tools/docs/cli.mjs check|format|prose|links [--online]|changelog|boundary|navigation|audit",
+        "usage: node tools/docs/cli.mjs check|format|prose|links|changelog|boundary|navigation|audit",
       );
   }
 } catch (error) {

@@ -263,18 +263,17 @@ export function repositoryFileUri(uri, files) {
   }
 }
 
-export function linkCheckArguments(list, { online = false, literalFiles = [] } = {}) {
+export function linkCheckArguments(list, { literalFiles = [] } = {}) {
   return [
     "--config",
     filePath(".config/checks/links/lychee.toml"),
-    ...(online ? ["--offline=false"] : []),
     "--files-from",
     list,
     ...(literalFiles.length ? ["--", ...literalFiles] : []),
   ];
 }
 
-export function checkLinks({ online = false } = {}) {
+export function checkLinks() {
   const source = gitFiles();
   const files = currentMarkdown(source);
   const directory = mkdtempSync(temporaryRoot());
@@ -291,10 +290,10 @@ export function checkLinks({ online = false } = {}) {
       timeout: 60_000,
     });
     for (const uri of links.split(/\r?\n/u).filter(Boolean)) repositoryFileUri(uri.trim(), source);
-    run(lychee, linkCheckArguments(list, { online, literalFiles }), {
+    run(lychee, linkCheckArguments(list, { literalFiles }), {
       timeout: 90_000,
     });
-    console.log(`PASS ${online ? "online" : "offline"} links and repository confinement`);
+    console.log("PASS offline links and repository confinement");
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }

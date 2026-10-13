@@ -28,6 +28,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Use installed ETHOS for explicit external-link reachability. Retire the duplicate
+  online controller and generic tests; retain offline delivered-source and confinement checks.
 - Update OSV Scanner to official 2.7.0 and pin its five maintenance assets.
   Keep the approved development-only scope and expiry, with full findings
   and actual-platform checks.
