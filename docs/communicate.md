@@ -119,8 +119,8 @@ Analysis, proposal, and decision documents should follow this order by default:
 2. Explain the background and problem, then scope, non-goals, and constraints.
 3. Present facts, evidence, and unknowns, then the model and alternative
    explanations, followed by options and trade-offs.
-4. State the recommendation or decision, then risks, limits, and revisit
-   triggers.
+4. State the recommendation or decision. Pair each material risk with the chosen
+   mitigation, then explain remaining risks, limits, and revisit triggers.
 5. Name the action, responsible person, deadline, and acceptance condition.
 
 Appendices hold only supporting detail. Combine or reorder these parts when the

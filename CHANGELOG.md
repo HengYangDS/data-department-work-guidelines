@@ -154,6 +154,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Require decision documents to pair each material risk with its chosen mitigation and
+  explain remaining risks, limits, and revisit triggers.
 - Remove a redundant collaboration-diagram note that is too faint in GitHub's
   dark theme. Place the member between the Agent and authorized acceptor so
   lifelines do not cross message labels. Keep all five messages, both outcomes,
