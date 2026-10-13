@@ -4,7 +4,6 @@ import childProcess from "node:child_process";
 import {
   cpSync,
   existsSync,
-  mkdtempDisposableSync,
   mkdtempSync,
   mkdirSync,
   readFileSync,
