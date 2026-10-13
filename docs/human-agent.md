@@ -89,8 +89,8 @@ config:
 sequenceDiagram
     accTitle: Delegation, evidence, and authorized acceptance
     accDescr: A member sets the delegation boundary. An Agent returns work and evidence. The member checks the actual work and evidence before submitting them to an authorized acceptor. If conditions are unmet, the work returns for review within the delegation boundary. If conditions are met, the acceptor accepts the work, records acceptance, and hands off the result. Participants represent roles, not necessarily different people. People retain authority and responsibility; acceptance never expands permission.
-    participant Member
     participant Agent
+    participant Member
     participant Acceptor as Authorized acceptor
     Member->>Agent: Scope, stop conditions, acceptance criteria
     Agent-->>Member: Work, sources, results, limits
