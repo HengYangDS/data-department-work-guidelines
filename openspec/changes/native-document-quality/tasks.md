@@ -111,6 +111,8 @@
       verify exact integer bytes and read errors locally and in both source matrices
       without inferring VM identity, isolation, or throughput.
 - [ ] 2.38 Prepare shared tools; pass clean contributor, CI, and offline installation.
+      Follow [quality ownership](design.md#give-native-quality-concerns-one-owner) before
+      replacing a current native consumer.
       Follow [supply qualification](design.md#supply-exact-tools-without-a-second-installation-plane)
       for contributor, Windows, protected-source, and offline consumers. Verify stable
       actions, Node/npm and Windows ARM64, Mise discovery, safe mode, checksums, warning-free
