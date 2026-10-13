@@ -118,8 +118,11 @@
       refusal, and warning-free execution; for retained Node, distinguish npm bootstrap
       from checksum enforcement and preserve host owners, Path precedence, credentials,
       and job isolation. Qualify stable actions and Windows ARM64 Node against shared
-      format, risk, and execution contracts with focused tests, full source, cold product
-      install, exact-HEAD proof, and both Forge source/offline matrices. Verify braces
+      [format](design.md#give-native-quality-concerns-one-owner),
+      [risk](design.md#bind-risk-approval-to-the-actual-subject), and
+      [execution](design.md#preserve-native-execution-and-complete-validation-evidence)
+      contracts with focused tests, full source, cold product install, exact-HEAD proof,
+      and both Forge source/offline matrices. Verify braces
       remains non-blocking for checks, CI, distribution, and releases without accepting
       other findings; preserve complete reports, remediation, the hosted missing-command
       case, and qualification evidence before retiring DDWG supply, installer, bundle,
