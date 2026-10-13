@@ -93,11 +93,11 @@
 - [x] 2.32 Retire completed-Change copies after obligation and consumer review; verify
       ancestor bytes, recovery, both-Forge commit/path references, archive controls,
       proof, and cold installation through owned fixtures.
-- [ ] 2.33 Integrate [accepted shared checks](design.md#integrate-accepted-shared-ownership-without-weakening-the-floor)
-      through actual installed ETHOS; qualify documents, formatting, prose, links,
-      official reports, selection, and diagnostics on unchanged files and distinguishing
-      refusals with only two default roots. Retire replaced DDWG checks, common config,
-      procedures, and copied standards in the same accepted migration.
+- [ ] 2.33 Integrate shared checks; pass the native floor before retiring local duplicates.
+      Follow [shared-check qualification](design.md#integrate-accepted-shared-ownership-without-weakening-the-floor)
+      for documents, format, prose, links, official reports, selection, and diagnostics.
+      Preserve two default roots and non-writing refusals on unchanged source.
+      The accepted installed decision contract must enforce all five sections.
 - [x] 2.34 Serialize Windows jobs in one project-scoped resource group; verify
       reservation refusals, real resource waiting, and non-overlap while preserving
       full discovery, two workers, deadlines, and original failures.
@@ -110,23 +110,17 @@
 - [x] 2.37 Report source, runtime, and mounted capacity at the existing verifier;
       verify exact integer bytes and read errors locally and in both source matrices
       without inferring VM identity, isolation, or throughput.
-- [ ] 2.38 Qualify [installed shared tool supply](design.md#supply-exact-tools-without-a-second-installation-plane)
-      through public contributor, Windows, protected-source, and offline commands without
-      injected runtime paths. Explicitly prepare the same product in clean source/offline
-      CI; distinguish changed-source inspection, Change readiness, and committed proof.
-      Where Mise is selected, verify discovery, exact inputs, safe mode, checksum/mismatch
-      refusal, and warning-free execution; for retained Node, distinguish npm bootstrap
-      from checksum enforcement and preserve host owners, Path precedence, credentials,
-      and job isolation. Qualify stable actions and Windows ARM64 Node against shared
-      [format](design.md#give-native-quality-concerns-one-owner),
-      [risk](design.md#bind-risk-approval-to-the-actual-subject), and
-      [execution](design.md#preserve-native-execution-and-complete-validation-evidence)
-      contracts with focused tests, full source, cold product install, exact-HEAD proof,
-      and both Forge source/offline matrices. Verify braces
-      remains non-blocking for checks, CI, distribution, and releases without accepting
-      other findings; preserve complete reports, remediation, the hosted missing-command
-      case, and qualification evidence before retiring DDWG supply, installer, bundle,
-      common manifests, replaced wiring, and probes.
+- [ ] 2.38 Prepare shared tools; pass clean contributor, CI, and offline installation.
+      Follow [supply qualification](design.md#supply-exact-tools-without-a-second-installation-plane)
+      for contributor, Windows, protected-source, and offline consumers. Verify stable
+      actions, Node/npm and Windows ARM64, Mise discovery, safe mode, checksums, warning-free
+      execution, and preserved host owners, Path, credentials, and job isolation.
+      Distinguish npm bootstrap from checksum verification and changed-source readiness from proof.
+      Apply [risk](design.md#bind-risk-approval-to-the-actual-subject) and
+      [execution](design.md#preserve-native-execution-and-complete-validation-evidence) contracts;
+      retire local supply, installer, bundle, manifests, wiring, and probes only after
+      cold installation, exact-HEAD proof, and both source/offline matrices pass.
+      Preserve complete reports; braces must not block checks, CI, distribution, or releases.
 - [x] 2.39 Isolate cache-rejection fixtures from inherited selectors; verify precedence,
       both refusals, the native contribution command, and committed proof while retaining
       original failures and leaving the caller unchanged.
@@ -143,65 +137,60 @@
 - [x] 2.44 Replace obsolete-source restoration with current-duty review; verify seven
       topics against authority, purpose, actionable conditions, cognitive/maintenance cost,
       justified omissions, actual reading paths, and proof; preserve original evidence.
-- [ ] 2.45 Consume one [shared CI projection](design.md#keep-both-publication-peers-complete-and-coherent)
-      for peer YAML and necessary platform adapters; verify stable input identity, offline
-      and single-peer use, non-writing drift refusal, and real protected source/offline
-      jobs before retiring the DDWG checker, duplicate recipes, and copied common CI rules.
-      Qualify product preparation against the hosted missing-command case before source checks.
-- [ ] 2.46 Complete direct shared consumption and retire redundant source; preserve
-      meaning, selected inputs, and distinguishing acceptance through the subtasks below.
+- [ ] 2.45 Migrate peer CI to one shared contract; pass real jobs before retiring copies.
+      Follow [peer qualification](design.md#keep-both-publication-peers-complete-and-coherent)
+      for stable input identity, single-peer/offline use, and non-writing drift refusal.
+      Prepare ETHOS before source checks; retire the checker, recipes, and copied rules.
+- [ ] 2.46 Complete shared consumption; pass all subtasks and retire their local duplicates.
   - [x] 2.46.1 Separate dependency auditing from CI topology; verify all 53 original
         cases, declarations, shared fixtures, nested discovery, worker limits, deadlines,
         and full local execution.
-  - [ ] 2.46.2 Migrate runtime, release, and common validation to installed ETHOS;
-        verify commands, errors, effects, native inputs, and actual acceptance before
-        retiring duplicate code, dependencies, config, guidance, and common specs.
-        Reconcile retained Purpose statements without an interim split or language port.
-  - [ ] 2.46.3 Qualify shared selection, literal paths, one execution, failure,
-        cancellation, diagnostics, and bounded cleanup; retire generic DDWG tests,
-        fixtures, and copied standards only after actual product-consumer acceptance.
-        Retain only content cases and a demonstrated business-specific increment at their proper owners.
+  - [ ] 2.46.2 Migrate runtime and release validation; verify consumers before retirement.
+        Preserve commands, errors, effects, and native inputs. Retire duplicate code,
+        dependencies, configuration, guidance, and common specs; reconcile retained
+        Purpose statements without a second implementation or language port.
+  - [ ] 2.46.3 Qualify shared execution; reject selection and diagnostic failures once.
+        Verify literal paths, failure, cancellation, and bounded cleanup, then retire
+        generic tests, fixtures, and copied standards. Keep only content cases and
+        demonstrated business-specific increments.
   - [x] 2.46.4 Reconcile design, official deltas, and main specs; verify requirements,
         scenarios, reader routes, strict OpenSpec, and clarity.
   - [x] 2.46.5 Preserve complete versioned notes in the sole Changelog owner; verify
         SemVer meaning, tags, and both comparisons without a ceiling or duplicate history.
-  - [ ] 2.46.6 Qualify the public installed carrier policy on final retained source at its
-        actual metric, limit, boundary, and one non-blank physical line above; verify
-        release-history/official-artifact classes, supported code metrics, non-writing
-        refusal, changed plan, and exact-HEAD proof without a private gate, invented exemption,
-        or unsupported coverage claim.
+  - [ ] 2.46.6 Qualify carrier limits; reject one non-blank line above each native boundary.
+        Verify final retained source, actual metrics, release-history/official classes,
+        supported code metrics, non-writing refusal, changed plan, and exact-HEAD proof.
+        No private gate, invented exemption, or unsupported coverage claim is acceptable.
 
 ## 3. Qualification and publication
 
-- [ ] 3.1 Freeze final source and accepted installed product inputs after 2.33, 2.38,
-      2.45, and 2.46; verify format, lint, prose, links, refusals, strict official OpenSpec,
-      diff, platforms, notices, stable supply, complete findings, approvals, and hashes.
-- [ ] 3.2 Install and qualify frozen shared offline supply in a clean environment with outbound
-      access refused and no inherited caches, host paths, or credentials; run full checks
-      and reject missing, changed, or unsupported inputs without downloads, host changes, or weakened
-      admission. Keep document editions separate from tooling; retire the DDWG bundle
-      when its consumers release it.
-- [ ] 3.3 Qualify DDWG, AIGW, and Proxy through their owners on the same accepted ETHOS
-      source/wheel and actual bindings; verify exact-HEAD plan/proof, semantics, complete
+- [ ] 3.1 Freeze final source and shared inputs; pass the complete local quality floor.
+      Requires 2.33, 2.38, 2.45, and 2.46. Verify format, lint, prose, links, refusals,
+      strict OpenSpec, diff, platform inputs, notices, stable supply, complete findings,
+      approvals, and hashes before qualification.
+- [ ] 3.2 Qualify frozen offline supply; run full checks with outbound access refused.
+      Requires 3.1. Reject missing, changed, or unsupported inputs without downloads,
+      inherited caches, host paths, credentials, host changes, or weaker admission.
+      Keep editions separate from tooling; retire the old bundle when its consumers release it.
+- [ ] 3.3 Qualify DDWG, AIGW, and Proxy on the same accepted ETHOS source and wheel.
+      Each owner verifies the actual binding, exact-HEAD plan/proof, semantics, complete
       selection and diagnostics, and one execution.
-- [ ] 3.4 Publish the correctly classified signed edition on both Forges under the
-      [migration plan](design.md#migration-plan); assess compatibility against v7.0.12
-      and qualify prepared v8.0.0 before tagging. Verify source, shared supply, version,
-      tag identity, the same protected graph, source/offline jobs, Releases, independent
-      downloads, and hashes while preserving earlier releases.
-- [ ] 3.5 Complete the [final duty and reader review](design.md#review-original-duties-at-seven-topic-owners)
-      on final source; account for all 62 subsections, five surrounding groups, introductions,
-      and diagrams, justify changes, and resolve every finding. Verify the data shared-model,
-      source-rebinding, and consumer-retirement journey against its five professional duties
-      and stated lifecycle, authority, interface, migration, evidence, failure, and coverage
-      limits, without a new organization or testing team. Distinguish missing historical
-      availability evidence from demonstrated delay; verify the corresponding claims/actions.
-      Inspect collaboration, actual hosted member/Agent routes, and accessibility limits;
-      do not certify equivalence, production, or team use.
+- [ ] 3.4 Publish the signed edition; verify both protected peers and independent downloads.
+      Requires 3.1, 3.2, and 3.3. Follow the [migration plan](design.md#migration-plan),
+      classify compatibility against v7.0.12, and qualify prepared v8.0.0 before tagging.
+      Verify source, shared supply, version, tag, the same protected graph, source/offline
+      jobs, Releases, and hashes; preserve earlier releases.
+- [ ] 3.5 Finish the duty and reader review; resolve every finding on final delivered source.
       Requires 2.33, 2.38, 2.40, 2.44, 2.45, 2.46, 3.2, 3.3, 3.4, and 3.13.
-      Native closure and evidence-preserving retirement follow the
-      [existing migration sequence](design.md#migration-plan).
-      Original commitments: `e701730c62ceecdad92f1be65ad5c31b140e3afe29cfe944a13405767e204011`.
+      Follow the [complete duty review](design.md#review-original-duties-at-seven-topic-owners)
+      for all 62 subsections, five surrounding groups, introductions, diagrams, the data
+      shared-model, source-rebinding, and consumer-retirement journey with its five duties
+      and lifecycle, authority, interface, migration, evidence, failure, and coverage limits.
+      Distinguish unavailable historical evidence from demonstrated delay. Inspect hosted
+      member/Agent routes and accessibility limits without certifying equivalence,
+      production, or team use. Preserve original commitments at
+      `e701730c62ceecdad92f1be65ad5c31b140e3afe29cfe944a13405767e204011`;
+      close and retire through the [migration sequence](design.md#migration-plan).
 - [x] 3.6 Publish the compatible original-duty correction; verify fresh local/installed
       proof, signed source, assets, and both matrices while preserving the qualified major edition.
 - [x] 3.7 Publish the compatible decision-boundary correction; verify exact-source
@@ -220,12 +209,12 @@
 - [x] 3.12 Publish the dual-Forge Changelog correction; verify full source,
       rendering, cold install, proof, signature, both matrices, independent hashes,
       lane retirement, and exact aftercare of superseded downloads.
-- [ ] 3.13 Qualify [accepted history and peer navigation](design.md#keep-both-publication-peers-complete-and-coherent)
-      through adopter owners; verify peers, conserved history, accepted Python evidence,
-      repaired-baseline admission, original-plan recovery, actual bindings, and the same
-      signed merge graph and protected jobs on both peers. Verify administrator enforcement
-      and native force-push/deletion refusal without weakening checks or signatures;
-      retire identity glue after acceptance and preserve failures and partial-effect receipts.
+- [ ] 3.13 Qualify history and peer navigation; verify the same signed protected graph.
+      Follow [peer and history qualification](design.md#keep-both-publication-peers-complete-and-coherent)
+      through adopter owners. Verify conserved history, accepted Python evidence,
+      repaired-baseline admission, original-plan recovery, actual bindings, protected
+      jobs, administrator enforcement, and native force-push/deletion refusal.
+      Retire identity glue after acceptance; preserve failures and partial-effect receipts.
 - [x] 3.14 Publish plain-language, cross-cycle, and offline-supply repairs; verify
       bundle, cold install, proof, signature, both matrices, downloads, and exact aftercare;
       retire absorbed lanes without closing shared integration.
