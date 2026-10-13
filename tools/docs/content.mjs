@@ -32,38 +32,23 @@ import {
 import { nativeToolBinary } from "../supply.mjs";
 
 const requiredMetadata = ["subject", "role", "state", "relations"];
-const cjk =
-  /[\p{Script=Han}\u2e80-\u9fff\uac00-\ud7af\uf900-\ufaff\uff00-\uffef]/u;
-const plainTextIdentities = new Set([
-  "LICENSE",
-  "VERSION",
-  ".gitignore",
-  ".gitattributes",
-]);
+const cjk = /[\p{Script=Han}\u2e80-\u9fff\uac00-\ud7af\uf900-\ufaff\uff00-\uffef]/u;
+const plainTextIdentities = new Set(["LICENSE", "VERSION", ".gitignore", ".gitattributes"]);
 const nativeGeneratedToml = new Set([".config/mise/mise.lock"]);
 export function nativeTomlFormatter(repository = root) {
   const formatter = createFromBuffer(readFileSync(tomlPlugin.getPath()));
   const policyPath = path.join(repository, ".config/checks/format/toml.toml");
-  formatter.setConfig(
-    {},
-    structuredClone(parseToml(readFileSync(policyPath, "utf8"))),
-  );
+  formatter.setConfig({}, structuredClone(parseToml(readFileSync(policyPath, "utf8"))));
   const diagnostics = formatter.getConfigDiagnostics();
   if (diagnostics.length) {
     throw new Error(
       diagnostics
-        .map(
-          ({ propertyName, message }) =>
-            `${policyPath}: ${propertyName}: ${message}`,
-        )
+        .map(({ propertyName, message }) => `${policyPath}: ${propertyName}: ${message}`)
         .join("\n"),
     );
   }
   const sourcePolicy = parseToml(
-    readFileSync(
-      path.join(repository, ".config/checks/format/prettier.toml"),
-      "utf8",
-    ),
+    readFileSync(path.join(repository, ".config/checks/format/prettier.toml"), "utf8"),
   );
   const resolved = formatter.getResolvedConfig();
   const required = {
@@ -78,9 +63,7 @@ export function nativeTomlFormatter(repository = root) {
     commentForceLeadingSpace: false,
     cargoApplyConventions: false,
   };
-  if (
-    Object.entries(required).some(([key, value]) => resolved[key] !== value)
-  ) {
+  if (Object.entries(required).some(([key, value]) => resolved[key] !== value)) {
     throw new Error(
       "native TOML formatting policy must preserve data, comments, and source layout",
     );
@@ -115,10 +98,7 @@ export async function formatTargets(
 
 export async function formatSource({ check = true } = {}) {
   const formatter = nativeTomlFormatter();
-  const targets = await formatTargets(
-    gitFiles(),
-    formatter.getFileMatchingInfo(),
-  );
+  const targets = await formatTargets(gitFiles(), formatter.getFileMatchingInfo());
   if (targets.prettier.length) {
     runNodeTool("prettier", "prettier", [
       "--config",
@@ -154,32 +134,24 @@ export async function formatSource({ check = true } = {}) {
     }
   }
   if (findings.length) throw new Error(findings.join("\n"));
-  console.log(
-    `PASS native TOML formatting: ${targets.toml.length} source files`,
-  );
+  console.log(`PASS native TOML formatting: ${targets.toml.length} source files`);
 }
 
 export function checkProse(files = currentMarkdown()) {
   const vale = JSON.parse(
     run(
       nativeToolBinary("vale"),
-      [
-        "--no-global",
-        `--config=${path.join(root, ".config/checks/prose/vale.ini")}`,
-        "ls-config",
-      ],
+      ["--no-global", `--config=${path.join(root, ".config/checks/prose/vale.ini")}`, "ls-config"],
       { cwd: root, capture: true, rejectStderr: true, timeout: 10_000 },
     ),
   );
   if (
     !Array.isArray(vale.Paths) ||
     vale.Paths.length !== 1 ||
-    path.resolve(vale.Paths[0]) !==
-      path.resolve(root, ".config/checks/prose/styles")
+    path.resolve(vale.Paths[0]) !== path.resolve(root, ".config/checks/prose/styles")
   )
     throw new Error("native prose must keep Vale styles concern-local");
-  if (!files.length)
-    throw new Error("no current Markdown files to check for prose");
+  if (!files.length) throw new Error("no current Markdown files to check for prose");
   const absoluteFiles = files.map((relative) =>
     path.isAbsolute(relative) ? relative : filePath(relative),
   );
@@ -192,8 +164,7 @@ export function checkProse(files = currentMarkdown()) {
   });
   const violations = Object.entries(controls).flatMap(([file, errors]) =>
     errors.map(
-      ({ lineNumber, errorDetail }) =>
-        `${file}:${lineNumber} [no-quality-control] ${errorDetail}`,
+      ({ lineNumber, errorDetail }) => `${file}:${lineNumber} [no-quality-control] ${errorDetail}`,
     ),
   );
   if (violations.length) throw new Error(violations.join("\n"));
@@ -220,9 +191,7 @@ export function checkProse(files = currentMarkdown()) {
 export function documentMetadata(relative, source) {
   const lines = source.split(/\r?\n/u);
   if (lines[0] !== "<!--") {
-    throw new Error(
-      `document metadata requires a title-first carrier: ${relative}`,
-    );
+    throw new Error(`document metadata requires a title-first carrier: ${relative}`);
   }
   const end = lines.indexOf("---", 2);
   if (lines[1] !== "---" || end < 0 || lines[end + 1] !== "-->") {
@@ -233,15 +202,11 @@ export function documentMetadata(relative, source) {
     throw new Error(`invalid document metadata: ${relative}`);
   }
   if (lines[end + 2] !== "" || !/^# \S/u.test(lines[end + 3] ?? "")) {
-    throw new Error(
-      `document title must be the first visible block: ${relative}`,
-    );
+    throw new Error(`document title must be the first visible block: ${relative}`);
   }
   const document = YAML.parseDocument(payload, { uniqueKeys: true });
   if (document.errors.length) {
-    throw new Error(
-      `invalid document metadata: ${relative}: ${document.errors[0].message}`,
-    );
+    throw new Error(`invalid document metadata: ${relative}: ${document.errors[0].message}`);
   }
   const metadata = document.toJS();
   if (!metadata || typeof metadata !== "object") {
@@ -274,19 +239,12 @@ export function repositoryFileUri(uri, files) {
     throw new Error(`nonlocal file link is not portable: ${uri}`);
   }
   const target = fileURLToPath(url);
-  const resolved = existsSync(target)
-    ? realpathSync(target)
-    : path.resolve(target);
-  const relatives = [
-    path.relative(root, target),
-    path.relative(realpathSync(root), resolved),
-  ];
+  const resolved = existsSync(target) ? realpathSync(target) : path.resolve(target);
+  const relatives = [path.relative(root, target), path.relative(realpathSync(root), resolved)];
   if (
     relatives.some(
       (relative) =>
-        relative === ".." ||
-        relative.startsWith(`..${path.sep}`) ||
-        path.isAbsolute(relative),
+        relative === ".." || relative.startsWith(`..${path.sep}`) || path.isAbsolute(relative),
     )
   ) {
     throw new Error(`local link escapes repository root: ${uri}`);
@@ -305,10 +263,7 @@ export function repositoryFileUri(uri, files) {
   }
 }
 
-export function linkCheckArguments(
-  list,
-  { online = false, literalFiles = [] } = {},
-) {
+export function linkCheckArguments(list, { online = false, literalFiles = [] } = {}) {
   return [
     "--config",
     filePath(".config/checks/links/lychee.toml"),
@@ -330,23 +285,16 @@ export function checkLinks({ online = false } = {}) {
     const listedFiles = sourcePaths.filter((file) => !/[\r\n]/u.test(file));
     writeFileSync(list, `${listedFiles.join("\n")}\n`, "utf8");
     const lychee = nativeToolBinary("lychee");
-    const links = run(
-      lychee,
-      ["--dump", ...linkCheckArguments(list, { literalFiles })],
-      {
-        capture: true,
-        rejectStderr: true,
-        timeout: 60_000,
-      },
-    );
-    for (const uri of links.split(/\r?\n/u).filter(Boolean))
-      repositoryFileUri(uri.trim(), source);
+    const links = run(lychee, ["--dump", ...linkCheckArguments(list, { literalFiles })], {
+      capture: true,
+      rejectStderr: true,
+      timeout: 60_000,
+    });
+    for (const uri of links.split(/\r?\n/u).filter(Boolean)) repositoryFileUri(uri.trim(), source);
     run(lychee, linkCheckArguments(list, { online, literalFiles }), {
       timeout: 90_000,
     });
-    console.log(
-      `PASS ${online ? "online" : "offline"} links and repository confinement`,
-    );
+    console.log(`PASS ${online ? "online" : "offline"} links and repository confinement`);
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }
@@ -355,11 +303,7 @@ export function checkLinks({ online = false } = {}) {
 function blankLineError(relative, source) {
   const lines = source.split(/\r?\n/u);
   for (let index = 1; index < lines.length; index += 1) {
-    if (
-      !lines[index].trim() &&
-      !lines[index - 1].trim() &&
-      index < lines.length - 1
-    ) {
+    if (!lines[index].trim() && !lines[index - 1].trim() && index < lines.length - 1) {
       return `${relative}:${index + 1}: consecutive blank lines are not allowed`;
     }
   }
@@ -377,8 +321,7 @@ export async function textViolations(relative, source) {
     }
   }
   for (const [index, line] of source.split(/\r?\n/u).entries()) {
-    if (cjk.test(line))
-      errors.push(`${relative}:${index + 1}: CJK text is not allowed`);
+    if (cjk.test(line)) errors.push(`${relative}:${index + 1}: CJK text is not allowed`);
   }
   const { inferredParser } = await getFileInfo(filePath(relative), {
     ignorePath: [],
@@ -387,13 +330,8 @@ export async function textViolations(relative, source) {
   });
   if (!inferredParser && !toml) {
     const extension = path.extname(relative);
-    if (
-      !plainTextIdentities.has(relative) &&
-      ![".txt", ".ini"].includes(extension)
-    ) {
-      errors.push(
-        `${relative}: no native formatting owner for this text format`,
-      );
+    if (!plainTextIdentities.has(relative) && ![".txt", ".ini"].includes(extension)) {
+      errors.push(`${relative}: no native formatting owner for this text format`);
     } else {
       const error = blankLineError(relative, source);
       if (error) errors.push(error);
@@ -422,9 +360,7 @@ export async function checkTextLayout() {
         plainTextIdentities.has(relative) ||
         [".txt", ".ini"].includes(path.extname(relative))
       ) {
-        errors.push(
-          `${relative}: source with a native text owner cannot be declared binary`,
-        );
+        errors.push(`${relative}: source with a native text owner cannot be declared binary`);
       }
       continue;
     }
@@ -436,9 +372,7 @@ export async function checkTextLayout() {
     try {
       source = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
     } catch (error) {
-      errors.push(
-        `${relative}: text source is not valid UTF-8: ${error.message}`,
-      );
+      errors.push(`${relative}: text source is not valid UTF-8: ${error.message}`);
       continue;
     }
     errors.push(...(await textViolations(relative, source)));

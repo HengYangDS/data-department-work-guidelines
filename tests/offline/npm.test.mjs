@@ -14,10 +14,7 @@ import path from "node:path";
 import { test } from "node:test";
 import { strictVersion } from "../../tools/docs/changelog.mjs";
 import { declaredToolRuntime, root } from "../../tools/runtime.mjs";
-import {
-  isolatedNpmEnvironment,
-  npmCliPath,
-} from "../../tools/ci/offline/npm.mjs";
+import { isolatedNpmEnvironment, npmCliPath } from "../../tools/ci/offline/npm.mjs";
 import { assertNpmResult } from "../offline/fixtures.mjs";
 
 test("Node owns the package-manager bootstrap without a duplicate npm major", () => {
@@ -59,13 +56,7 @@ test("npm CLI is a JavaScript entrypoint on POSIX and Windows layouts", () => {
   assert.match(version.stdout, /^[1-9]\d*\.\d+\.\d+\s*$/u);
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-npm-layout-"));
   try {
-    const cli = path.join(
-      directory,
-      "node_modules",
-      "npm",
-      "bin",
-      "npm-cli.js",
-    );
+    const cli = path.join(directory, "node_modules", "npm", "bin", "npm-cli.js");
     mkdirSync(path.dirname(cli), { recursive: true });
     writeFileSync(path.join(directory, "npm.cmd"), "fixture");
     writeFileSync(cli, "fixture");
@@ -85,21 +76,9 @@ test("npm CLI is a JavaScript entrypoint on POSIX and Windows layouts", () => {
 test("npm entrypoint follows its native execution and Windows prefix authority", () => {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-npm-authority-"));
   try {
-    const adjacent = path.join(
-      directory,
-      "node_modules",
-      "npm",
-      "bin",
-      "npm-cli.js",
-    );
+    const adjacent = path.join(directory, "node_modules", "npm", "bin", "npm-cli.js");
     const prefix = path.join(directory, "global-prefix");
-    const selected = path.join(
-      prefix,
-      "node_modules",
-      "npm",
-      "bin",
-      "npm-cli.js",
-    );
+    const selected = path.join(prefix, "node_modules", "npm", "bin", "npm-cli.js");
     for (const file of [adjacent, selected]) {
       mkdirSync(path.dirname(file), { recursive: true });
       writeFileSync(file, "fixture");
@@ -132,10 +111,7 @@ test("npm entrypoint follows its native execution and Windows prefix authority",
         }),
       /native npm execution entrypoint/u,
     );
-    writeFileSync(
-      path.join(path.dirname(adjacent), "npm-prefix.js"),
-      "process.exit(1)",
-    );
+    writeFileSync(path.join(path.dirname(adjacent), "npm-prefix.js"), "process.exit(1)");
     assert.throws(
       () =>
         npmCliPath({
@@ -153,21 +129,9 @@ test("npm entrypoint follows its native execution and Windows prefix authority",
 test("a direct Windows npm shim does not inherit the bundled prefix route", () => {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-npm-shim-"));
   try {
-    const selected = path.join(
-      directory,
-      "node_modules",
-      "npm",
-      "bin",
-      "npm-cli.js",
-    );
+    const selected = path.join(directory, "node_modules", "npm", "bin", "npm-cli.js");
     const prefix = path.join(directory, "bundled-prefix");
-    const bundled = path.join(
-      prefix,
-      "node_modules",
-      "npm",
-      "bin",
-      "npm-cli.js",
-    );
+    const bundled = path.join(prefix, "node_modules", "npm", "bin", "npm-cli.js");
     for (const file of [selected, bundled]) {
       mkdirSync(path.dirname(file), { recursive: true });
       writeFileSync(file, "fixture");
@@ -252,9 +216,7 @@ test("npm resolution skips non-launcher directories and refuses a broken selecte
 });
 
 test("npm owns exact package-manager admission without duplicate fields", () => {
-  const manifest = JSON.parse(
-    readFileSync(path.join(root, "package.json"), "utf8"),
-  );
+  const manifest = JSON.parse(readFileSync(path.join(root, "package.json"), "utf8"));
   assert.equal(manifest.devEngines.packageManager.name, "npm");
   assert.equal(manifest.devEngines.packageManager.onFail, "error");
   assert.match(
@@ -289,10 +251,7 @@ test("native npm result assertions preserve process failure diagnostics", () => 
         "partial native npm stderr",
         JSON.stringify(process.execPath).slice(1, -1),
       ]) {
-        assert.ok(
-          error.message.includes(value),
-          `missing diagnostic: ${value}`,
-        );
+        assert.ok(error.message.includes(value), `missing diagnostic: ${value}`);
       }
       return true;
     },
@@ -311,17 +270,13 @@ test("native npm rejects mismatched install, ci, and run before effects", () => 
       version: "1.0.0",
       private: true,
       scripts: {
-        effect:
-          "node -e \"require('node:fs').writeFileSync('effect', 'unexpected')\"",
+        effect: "node -e \"require('node:fs').writeFileSync('effect', 'unexpected')\"",
       },
       devEngines: {
         packageManager: { name: "npm", version: "0.0.0", onFail: "error" },
       },
     };
-    writeFileSync(
-      path.join(directory, "package.json"),
-      JSON.stringify(manifest),
-    );
+    writeFileSync(path.join(directory, "package.json"), JSON.stringify(manifest));
     writeFileSync(
       path.join(directory, "package-lock.json"),
       JSON.stringify({
@@ -332,10 +287,7 @@ test("native npm rejects mismatched install, ci, and run before effects", () => 
       }),
     );
     const cli = npmCliPath();
-    const env = isolatedNpmEnvironment(
-      directory,
-      path.join(directory, "cache"),
-    );
+    const env = isolatedNpmEnvironment(directory, path.join(directory, "cache"));
     for (const args of [
       ["install", "--ignore-scripts"],
       ["ci", "--ignore-scripts"],
@@ -351,11 +303,7 @@ test("native npm rejects mismatched install, ci, and run before effects", () => 
       const diagnostic = assertNpmResult(result, 1, args);
       assert.match(result.stderr, /EBADDEVENGINES/u, diagnostic);
       assert.equal(existsSync(marker), false, diagnostic);
-      assert.equal(
-        existsSync(path.join(directory, "node_modules")),
-        false,
-        diagnostic,
-      );
+      assert.equal(existsSync(path.join(directory, "node_modules")), false, diagnostic);
     }
     const version = spawnSync(process.execPath, [cli, "--version"], {
       cwd: directory,
@@ -376,10 +324,7 @@ test("native npm rejects mismatched install, ci, and run before effects", () => 
       version: "0.x",
       onFail: "error",
     };
-    writeFileSync(
-      path.join(directory, "package.json"),
-      JSON.stringify(manifest),
-    );
+    writeFileSync(path.join(directory, "package.json"), JSON.stringify(manifest));
     for (const args of [
       ["install", "--ignore-scripts"],
       ["ci", "--ignore-scripts"],
@@ -395,17 +340,10 @@ test("native npm rejects mismatched install, ci, and run before effects", () => 
       const diagnostic = assertNpmResult(result, 1, args);
       assert.match(result.stderr, /EBADDEVENGINES.*runtime/su, diagnostic);
       assert.equal(existsSync(marker), false, diagnostic);
-      assert.equal(
-        existsSync(path.join(directory, "node_modules")),
-        false,
-        diagnostic,
-      );
+      assert.equal(existsSync(path.join(directory, "node_modules")), false, diagnostic);
     }
     manifest.devEngines.runtime.version = `${process.versions.node.split(".")[0]}.x`;
-    writeFileSync(
-      path.join(directory, "package.json"),
-      JSON.stringify(manifest),
-    );
+    writeFileSync(path.join(directory, "package.json"), JSON.stringify(manifest));
     for (const args of [
       ["install", "--ignore-scripts"],
       ["ci", "--ignore-scripts"],

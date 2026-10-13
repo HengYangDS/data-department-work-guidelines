@@ -20,9 +20,7 @@ import { reportError, root } from "../../tools/runtime.mjs";
 test("asset digest is checked before extraction", () => {
   const bytes = Buffer.from("bounded fixture");
   const sha256 = createHash("sha256").update(bytes).digest("hex");
-  assert.doesNotThrow(() =>
-    assertAssetDigest(bytes, { name: "fixture", sha256 }),
-  );
+  assert.doesNotThrow(() => assertAssetDigest(bytes, { name: "fixture", sha256 }));
   assert.throws(
     () => assertAssetDigest(bytes, { name: "fixture", sha256: "0".repeat(64) }),
     /digest mismatch/u,
@@ -31,18 +29,10 @@ test("asset digest is checked before extraction", () => {
 
 test("archive listing rejects traversal and absolute paths", () => {
   assert.deepEqual(
-    safeArchiveEntries(
-      "lychee-linux/lychee\n",
-      "-rwxr-xr-x 0/0 10 lychee-linux/lychee\n",
-    ),
+    safeArchiveEntries("lychee-linux/lychee\n", "-rwxr-xr-x 0/0 10 lychee-linux/lychee\n"),
     ["lychee-linux/lychee"],
   );
-  for (const member of [
-    "../lychee",
-    "/tmp/lychee",
-    "C:/outside/lychee",
-    "bin\\..\\outside",
-  ]) {
+  for (const member of ["../lychee", "/tmp/lychee", "C:/outside/lychee", "bin\\..\\outside"]) {
     assert.throws(
       () => safeArchiveEntries(`${member}\n`, `-rwxr-xr-x 0/0 10 ${member}\n`),
       /unsafe/u,
@@ -75,26 +65,15 @@ test("installer cleanup uses bounded native retries on its own temporary stage",
   const remove = fsPromises.rm;
   const calls = [];
   let removed = false;
-  const mock = context.mock.method(
-    fsPromises,
-    "rm",
-    async (target, options) => {
-      calls.push({ target, options });
-      await remove(target, options);
-      removed = true;
-    },
-  );
+  const mock = context.mock.method(fsPromises, "rm", async (target, options) => {
+    calls.push({ target, options });
+    await remove(target, options);
+    removed = true;
+  });
   syncBuiltinESMExports();
-  context.mock.method(
-    globalThis,
-    "fetch",
-    async () => new Response(null, { status: 503 }),
-  );
+  context.mock.method(globalThis, "fetch", async () => new Response(null, { status: 503 }));
   try {
-    await assert.rejects(
-      install({ tool: "lychee", downloadSource: "github" }),
-      /HTTP 503/u,
-    );
+    await assert.rejects(install({ tool: "lychee", downloadSource: "github" }), /HTTP 503/u);
     assert.equal(calls.length, 1);
     assert.equal(
       path.dirname(calls[0].target),
@@ -125,39 +104,28 @@ test("installer cleanup uses bounded native retries on its own temporary stage",
 
 test("persistent native installer cleanup errors remain failures", async (context) => {
   let temporary;
-  const failure = Object.assign(
-    new Error("fixture cleanup permission denied"),
-    {
-      code: "EPERM",
-    },
-  );
+  const failure = Object.assign(new Error("fixture cleanup permission denied"), {
+    code: "EPERM",
+  });
   const mock = context.mock.method(fsPromises, "rm", async (target) => {
     temporary = target;
     throw failure;
   });
   syncBuiltinESMExports();
-  context.mock.method(
-    globalThis,
-    "fetch",
-    async () => new Response(null, { status: 503 }),
-  );
+  context.mock.method(globalThis, "fetch", async () => new Response(null, { status: 503 }));
   try {
-    await assert.rejects(
-      install({ tool: "lychee", downloadSource: "github" }),
-      (error) => {
-        assert.ok(error instanceof SuppressedError);
-        assert.equal(error.error, failure);
-        assert.match(error.suppressed.message, /HTTP 503/u);
-        return true;
-      },
-    );
+    await assert.rejects(install({ tool: "lychee", downloadSource: "github" }), (error) => {
+      assert.ok(error instanceof SuppressedError);
+      assert.equal(error.error, failure);
+      assert.match(error.suppressed.message, /HTTP 503/u);
+      return true;
+    });
     assert.match(path.basename(temporary), /^\.install-/u);
     assert.equal(fs.existsSync(temporary), true);
   } finally {
     mock.mock.restore();
     syncBuiltinESMExports();
-    if (temporary)
-      await fsPromises.rm(temporary, { recursive: true, force: true });
+    if (temporary) await fsPromises.rm(temporary, { recursive: true, force: true });
   }
 });
 
@@ -168,9 +136,7 @@ test("native suppressed failures retain primary and cleanup diagnostics", (conte
   const cleanup = Object.assign(new Error("stage removal failed"), {
     code: "EPERM",
   });
-  reportError(
-    new SuppressedError(cleanup, primary, "installation and cleanup failed"),
-  );
+  reportError(new SuppressedError(cleanup, primary, "installation and cleanup failed"));
   assert.deepEqual(lines, [
     "installation and cleanup failed",
     primary.message,
@@ -189,9 +155,7 @@ test("raw native installation publishes verified bytes atomically without archiv
     selected.key,
     selected.binaryName,
   );
-  const temporaryAsset = fs.mkdtempSync(
-    path.join(os.tmpdir(), "ddwg-raw-native-"),
-  );
+  const temporaryAsset = fs.mkdtempSync(path.join(os.tmpdir(), "ddwg-raw-native-"));
   const asset = path.join(temporaryAsset, selected.name);
   const bytes = Buffer.from("bounded raw native fixture");
   fs.writeFileSync(asset, bytes);
@@ -245,8 +209,7 @@ test("raw native installation publishes verified bytes atomically without archiv
       if (command === target || path.basename(command) === selected.name) {
         executions.push(command);
         assert.equal(options.timeout, 10_000);
-        if (command !== target)
-          assert.deepEqual(fs.readFileSync(command), bytes);
+        if (command !== target) assert.deepEqual(fs.readFileSync(command), bytes);
         return { status: 0, stdout: selected.versionOutput, stderr: "" };
       }
       return actualSpawn(command, args, options);
@@ -257,22 +220,12 @@ test("raw native installation publishes verified bytes atomically without archiv
   syncBuiltinESMExports();
   try {
     fs.writeFileSync(asset, "corrupt");
-    await assert.rejects(
-      install({ tool: "osv-scanner", assetFile: asset }),
-      /digest|size/u,
-    );
+    await assert.rejects(install({ tool: "osv-scanner", assetFile: asset }), /digest|size/u);
     assert.equal(published, false);
     fs.writeFileSync(asset, bytes);
-    assert.equal(
-      await install({ tool: "osv-scanner", assetFile: asset }),
-      target,
-    );
+    assert.equal(await install({ tool: "osv-scanner", assetFile: asset }), target);
     assert.equal(published, true);
-    assert.equal(
-      executions.length,
-      1,
-      "one verified copy must not restart the binary",
-    );
+    assert.equal(executions.length, 1, "one verified copy must not restart the binary");
     assert.equal(executions.includes(target), false);
     assert.equal(modes.includes(target), false);
     published = false;
@@ -296,10 +249,7 @@ test("raw native installation publishes verified bytes atomically without archiv
 });
 
 test("native extraction rejects links, duplicates, empty and unpaired listings", () => {
-  assert.deepEqual(
-    safeArchiveEntries("bin/vale\n", "-rwxr-xr-x 0/0 10 bin/vale\n"),
-    ["bin/vale"],
-  );
+  assert.deepEqual(safeArchiveEntries("bin/vale\n", "-rwxr-xr-x 0/0 10 bin/vale\n"), ["bin/vale"]);
   for (const [names, verbose] of [
     ["", ""],
     ["vale\nvale\n", "-rwxr-xr-x 0/0 10 vale\n-rwxr-xr-x 0/0 10 vale\n"],
@@ -307,10 +257,7 @@ test("native extraction rejects links, duplicates, empty and unpaired listings",
     ["vale\n", "hrwxr-xr-x 0/0 0 vale link to outside\n"],
     ["vale\n", ""],
   ]) {
-    assert.throws(
-      () => safeArchiveEntries(names, verbose),
-      /unsafe|incomplete|regular/u,
-    );
+    assert.throws(() => safeArchiveEntries(names, verbose), /unsafe|incomplete|regular/u);
   }
 });
 

@@ -18,10 +18,7 @@ import {
 test("release comparisons cannot skip their immediate predecessor", () => {
   fixture((directory, base) => {
     writeFileSync(path.join(directory, "VERSION"), "4.0.1\n");
-    writeFileSync(
-      path.join(directory, "docs/charter.md"),
-      "> **Guideline edition:** v4.0.1\n",
-    );
+    writeFileSync(path.join(directory, "docs/charter.md"), "> **Guideline edition:** v4.0.1\n");
     const releases =
       "## 4.0.1 - 2026-09-26\n\n### Fixed\n\n- Correct the boundary.\n\n## 4.0.0 - 2026-09-25\n\n### Added\n\n- First release.\n\n";
     const corrected = source(base, releases, "v4.0.1", "v4.0.1");
@@ -35,11 +32,7 @@ test("release comparisons cannot skip their immediate predecessor", () => {
       /comparison must start at previous release v4\.0\.0/u,
     );
     writeFileSync(path.join(directory, "CHANGELOG.md"), corrected);
-    assert.equal(
-      validateChangelog({ repository: directory, selectedTag: "" })
-        .releaseCount,
-      2,
-    );
+    assert.equal(validateChangelog({ repository: directory, selectedTag: "" }).releaseCount, 2);
   });
 });
 
@@ -50,11 +43,7 @@ test("selected release validation refuses source that differs from its committed
     writeFileSync(file, released);
     commit(directory, "prepare clean release source");
     git(directory, "tag", "-a", "v4.0.0", "-m", "fixture release");
-    assert.equal(
-      validateChangelog({ repository: directory, selectedTag: "v4.0.0" })
-        .tagCount,
-      1,
-    );
+    assert.equal(validateChangelog({ repository: directory, selectedTag: "v4.0.0" }).tagCount, 1);
     for (const relative of [
       "CHANGELOG.md",
       "VERSION",
@@ -67,41 +56,21 @@ test("selected release validation refuses source that differs from its committed
       const original = readFileSync(target);
       writeFileSync(target, Buffer.concat([original, Buffer.from("\n")]));
       assert.throws(
-        () =>
-          validateChangelog({ repository: directory, selectedTag: "v4.0.0" }),
-        (error) =>
-          error.message ===
-          `selected release source differs from HEAD: ${relative}`,
+        () => validateChangelog({ repository: directory, selectedTag: "v4.0.0" }),
+        (error) => error.message === `selected release source differs from HEAD: ${relative}`,
       );
       writeFileSync(target, original);
     }
-    writeFileSync(
-      file,
-      released.replace("First release.", "Uncommitted rewritten release."),
-    );
-    assert.equal(
-      validateChangelog({ repository: directory, selectedTag: "" }).tagCount,
-      1,
-    );
+    writeFileSync(file, released.replace("First release.", "Uncommitted rewritten release."));
+    assert.equal(validateChangelog({ repository: directory, selectedTag: "" }).tagCount, 1);
   });
 });
 
 test("direct oldest release links must resolve an annotated commit tag", () => {
   fixture((directory, base) => {
-    writeFileSync(
-      path.join(directory, "CHANGELOG.md"),
-      firstReleaseTagSource(base),
-    );
+    writeFileSync(path.join(directory, "CHANGELOG.md"), firstReleaseTagSource(base));
     commit(directory, "prepare direct oldest release");
-    git(
-      directory,
-      "tag",
-      "-a",
-      "v4.0.0",
-      "HEAD^{tree}",
-      "-m",
-      "non-commit fixture tag",
-    );
+    git(directory, "tag", "-a", "v4.0.0", "HEAD^{tree}", "-m", "non-commit fixture tag");
     assert.throws(
       () => validateChangelog({ repository: directory, selectedTag: "" }),
       /expected commit type|native history reference is not a commit/u,
@@ -125,18 +94,11 @@ test("release tags must be annotated and covered by the changelog", () => {
     git(directory, "tag", "-d", "v4.0.0");
     writeFileSync(
       path.join(directory, "CHANGELOG.md"),
-      preparedSource(
-        base,
-        "## 4.0.0 - 2026-09-25\n\n### Changed\n\n- Released change.\n\n",
-      ),
+      preparedSource(base, "## 4.0.0 - 2026-09-25\n\n### Changed\n\n- Released change.\n\n"),
     );
     commit(directory, "prepare release");
     git(directory, "tag", "-a", "v4.0.0", "-m", "fixture release");
-    assert.equal(
-      validateChangelog({ repository: directory, selectedTag: "v4.0.0" })
-        .tagCount,
-      1,
-    );
+    assert.equal(validateChangelog({ repository: directory, selectedTag: "v4.0.0" }).tagCount, 1);
     writeFileSync(path.join(directory, "later"), "later\n");
     commit(directory, "later source");
     assert.throws(
@@ -172,11 +134,7 @@ test("the oldest annotated release may link directly to its exact tag", () => {
     writeFileSync(changelog, valid);
     commit(directory, "prepare first release");
     git(directory, "tag", "-a", "v4.0.0", "-m", "fixture release");
-    assert.equal(
-      validateChangelog({ repository: directory, selectedTag: "v4.0.0" })
-        .tagCount,
-      1,
-    );
+    assert.equal(validateChangelog({ repository: directory, selectedTag: "v4.0.0" }).tagCount, 1);
 
     writeFileSync(
       changelog,
@@ -206,10 +164,7 @@ test("the oldest annotated release may link directly to its exact tag", () => {
 
 test("an untagged prepared release cannot use the direct-tag exception", () => {
   fixture((directory, base) => {
-    writeFileSync(
-      path.join(directory, "CHANGELOG.md"),
-      firstReleaseTagSource(base),
-    );
+    writeFileSync(path.join(directory, "CHANGELOG.md"), firstReleaseTagSource(base));
     assert.throws(
       () => validateChangelog({ repository: directory, selectedTag: "" }),
       /direct tag link requires an annotated local tag/u,
@@ -261,11 +216,7 @@ test("Unreleased comparison begins at the latest versioned release", () => {
   fixture((directory, base) => {
     writeFileSync(
       path.join(directory, "CHANGELOG.md"),
-      source(
-        base,
-        "## 4.0.0 - 2026-09-25\n\n### Changed\n\n- Released change.\n\n",
-        "v4.0.0",
-      ),
+      source(base, "## 4.0.0 - 2026-09-25\n\n### Changed\n\n- Released change.\n\n", "v4.0.0"),
     );
     commit(directory, "prepare release");
     git(directory, "tag", "-a", "v4.0.0", "-m", "fixture release");
@@ -288,10 +239,7 @@ test("comparison bases must belong to the published ancestry", () => {
     assert.throws(
       () => validateChangelog({ repository: directory, selectedTag: "" }),
       (error) => {
-        assert.match(
-          error.message,
-          /comparison base is not an ancestor: Unreleased/u,
-        );
+        assert.match(error.message, /comparison base is not an ancestor: Unreleased/u);
         assert.equal(error.cause?.message, "git exited 1");
         return true;
       },
@@ -299,10 +247,7 @@ test("comparison bases must belong to the published ancestry", () => {
 
     writeFileSync(
       changelog,
-      preparedSource(
-        sideBase,
-        "## 4.0.0 - 2026-09-25\n\n### Fixed\n\n- Repair a link.\n\n",
-      ),
+      preparedSource(sideBase, "## 4.0.0 - 2026-09-25\n\n### Fixed\n\n- Repair a link.\n\n"),
     );
     commit(directory, "prepare release");
     git(directory, "tag", "-a", "v4.0.0", "-m", "fixture release");

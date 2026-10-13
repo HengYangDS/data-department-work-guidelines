@@ -30,15 +30,8 @@ test("native TOML formatting checks literal Git paths and preserves data", () =>
     cpSync(path.join(root, ".config"), path.join(directory, ".config"), {
       recursive: true,
     });
-    cpSync(
-      path.join(root, "package.json"),
-      path.join(directory, "package.json"),
-    );
-    symlinkSync(
-      path.join(root, "node_modules"),
-      path.join(directory, "node_modules"),
-      "junction",
-    );
+    cpSync(path.join(root, "package.json"), path.join(directory, "package.json"));
+    symlinkSync(path.join(root, "node_modules"), path.join(directory, "node_modules"), "junction");
     const name = "{literal} source.toml";
     const file = path.join(directory, name);
     const source = 'literal = """\nfirst\n\n\nsecond\n"""\n\n\nnext=2\n';
@@ -46,10 +39,7 @@ test("native TOML formatting checks literal Git paths and preserves data", () =>
     mkdirSync(path.join(directory, "build"));
     writeFileSync(path.join(directory, "build", "cache.toml"), "broken = [\n");
     writeFileSync(path.join(directory, "taplo.toml"), "include = []\n");
-    writeFileSync(
-      path.join(directory, "dprint.json"),
-      '{ "excludes": ["**"] }\n',
-    );
+    writeFileSync(path.join(directory, "dprint.json"), '{ "excludes": ["**"] }\n');
     const init = spawnSync("git", ["init", "--quiet", directory], {
       encoding: "utf8",
       timeout: 10_000,
@@ -61,12 +51,7 @@ test("native TOML formatting checks literal Git paths and preserves data", () =>
       timeout: 10_000,
     });
     assert.equal(add.status, 0, add.stderr);
-    assertFixtureSources(directory, [
-      ".gitignore",
-      name,
-      "dprint.json",
-      "taplo.toml",
-    ]);
+    assertFixtureSources(directory, [".gitignore", name, "dprint.json", "taplo.toml"]);
     const invoke = (args) =>
       spawnSync(process.execPath, ["tools/docs/cli.mjs", "format", ...args], {
         cwd: directory,
@@ -81,10 +66,7 @@ test("native TOML formatting checks literal Git paths and preserves data", () =>
     const written = invoke([]);
     assert.ifError(written.error);
     assert.equal(written.status, 0, written.stderr);
-    assert.equal(
-      readFileSync(file, "utf8"),
-      'literal = """\nfirst\n\n\nsecond\n"""\n\nnext = 2\n',
-    );
+    assert.equal(readFileSync(file, "utf8"), 'literal = """\nfirst\n\n\nsecond\n"""\n\nnext = 2\n');
     const clean = invoke(["--check"]);
     assert.ifError(clean.error);
     assert.equal(clean.status, 0, clean.stderr);
@@ -127,19 +109,10 @@ test("native formatting policy preserves prose and ignores ambient editor settin
     cpSync(path.join(root, ".config"), path.join(directory, ".config"), {
       recursive: true,
     });
-    const manifest = JSON.parse(
-      readFileSync(path.join(root, "package.json"), "utf8"),
-    );
+    const manifest = JSON.parse(readFileSync(path.join(root, "package.json"), "utf8"));
     delete manifest.prettier;
-    writeFileSync(
-      path.join(directory, "package.json"),
-      `${JSON.stringify(manifest, null, 2)}\n`,
-    );
-    symlinkSync(
-      path.join(root, "node_modules"),
-      path.join(directory, "node_modules"),
-      "junction",
-    );
+    writeFileSync(path.join(directory, "package.json"), `${JSON.stringify(manifest, null, 2)}\n`);
+    symlinkSync(path.join(root, "node_modules"), path.join(directory, "node_modules"), "junction");
     const initialized = spawnSync("git", ["init", "--quiet", directory], {
       encoding: "utf8",
       timeout: 10_000,
@@ -150,46 +123,46 @@ test("native formatting policy preserves prose and ignores ambient editor settin
       path.join(directory, ".editorconfig"),
       "root = true\n\n[*]\nindent_size = 8\nmax_line_length = 20\n",
     );
-    const sentence = "Keep the report readable without changing its meaning.";
-    writeFileSync(
-      path.join(directory, "README.md"),
-      `# Report\n\n${sentence}\n`,
-    );
-    writeFileSync(
-      path.join(directory, "sample.json"),
-      '{"result":{"ready":true}}\n',
-    );
+    const sentence =
+      "Keep the report readable without changing its meaning, including the original paragraph lines and the evidence that supports each conclusion.";
+    const widthSources = new Map([
+      [
+        "width.mjs",
+        'export const report = ["ownership", "evidence", "permissions", "release", "rollback"];\n',
+      ],
+      [
+        "width.md",
+        '# Width\n\n```js\nexport const report = ["ownership", "evidence", "permissions", "release", "rollback"];\n```\n',
+      ],
+      [
+        "width.toml",
+        'items = ["ownership", "evidence", "permissions", "release", "rollback", "handoff", "revision"]\n',
+      ],
+    ]);
+    for (const [relative, source] of widthSources) {
+      writeFileSync(path.join(directory, relative), source);
+    }
+    writeFileSync(path.join(directory, "README.md"), `# Report\n\n${sentence}\n`);
+    writeFileSync(path.join(directory, "sample.json"), '{"result":{"ready":true}}\n');
     const sources = new Map([
       ["sample.mjs", "export const result={ready:true}\n"],
       ["nested/sample.cjs", "module.exports={ready:true}\n"],
-      [
-        "nested/sample.ts",
-        "export const result:{ready:boolean}={ready:true}\n",
-      ],
+      ["nested/sample.ts", "export const result:{ready:boolean}={ready:true}\n"],
       ["build/tracked.mjs", "export const result={ready:true}\n"],
       ["build/tracked.json", '{"result":{"ready":true}}\n'],
       ["build/tracked.yml", "ready:    true\n"],
       ["quote source.md", "# Report\n\n> First.\n>\n>\n> Second.\n"],
       ["nested quote.md", "# Report\n\n> > First.\n> >\n> >\n> > Second.\n"],
       ["quote boundary.md", "# Report\n\nText.\n> Quoted.\n"],
-      [
-        "openspec/changes/archive/fixture/design.md",
-        "# Historical Design\n\nUse   the report.\n",
-      ],
+      ["openspec/changes/archive/fixture/design.md", "# Historical Design\n\nUse   the report.\n"],
       [".worktrees/tracked.md", "# Source\n\nUse   the report.\n"],
-      [
-        ".worktrees/node_modules/tracked.mjs",
-        "export const result={ready:true}\n",
-      ],
+      [".worktrees/node_modules/tracked.mjs", "export const result={ready:true}\n"],
     ]);
     writeFileSync(
       path.join(directory, ".gitignore"),
       "node_modules/\nbuild/\n.worktrees/\n/tools/\n/.config/\n/package.json\n/node_modules\n",
     );
-    writeFileSync(
-      path.join(directory, ".prettierignore"),
-      `${[...sources.keys()].join("\n")}\n`,
-    );
+    writeFileSync(path.join(directory, ".prettierignore"), `${[...sources.keys()].join("\n")}\n`);
     for (const [relative, source] of sources) {
       const target = path.join(directory, relative);
       mkdirSync(path.dirname(target), { recursive: true });
@@ -203,8 +176,7 @@ test("native formatting policy preserves prose and ignores ambient editor settin
         "--",
         tomlRelative,
         ...[...sources.keys()].filter(
-          (relative) =>
-            relative.startsWith("build/") || relative.startsWith(".worktrees/"),
+          (relative) => relative.startsWith("build/") || relative.startsWith(".worktrees/"),
         ),
       ],
       { cwd: directory, encoding: "utf8", timeout: 10_000 },
@@ -240,31 +212,31 @@ test("native formatting policy preserves prose and ignores ambient editor settin
       "README.md",
       "sample.json",
       tomlRelative,
+      ...widthSources.keys(),
       ...sources.keys(),
       ...literals.keys(),
     ]);
-    const checked = spawnSync(
-      process.execPath,
-      ["tools/docs/cli.mjs", "format", "--check"],
-      { cwd: directory, encoding: "utf8", timeout: 30_000 },
-    );
+    const checked = spawnSync(process.execPath, ["tools/docs/cli.mjs", "format", "--check"], {
+      cwd: directory,
+      encoding: "utf8",
+      timeout: 30_000,
+    });
     assert.ifError(checked.error);
     assert.equal(checked.status, 1, checked.stderr);
+    for (const [relative, source] of widthSources) {
+      assert.equal(readFileSync(path.join(directory, relative), "utf8"), source);
+    }
     for (const relative of sources.keys()) {
       assert.ok(
         checked.stderr.replaceAll("\\", "/").includes(relative),
         `format check omitted ${relative}: ${checked.stderr}`,
       );
     }
-    const result = spawnSync(
-      process.execPath,
-      ["tools/docs/cli.mjs", "format"],
-      {
-        cwd: directory,
-        encoding: "utf8",
-        timeout: 30_000,
-      },
-    );
+    const result = spawnSync(process.execPath, ["tools/docs/cli.mjs", "format"], {
+      cwd: directory,
+      encoding: "utf8",
+      timeout: 30_000,
+    });
     assert.ifError(result.error);
     assert.equal(result.status, 0, result.stderr);
     assert.equal(
@@ -275,19 +247,15 @@ test("native formatting policy preserves prose and ignores ambient editor settin
       readFileSync(path.join(directory, "sample.json"), "utf8"),
       '{ "result": { "ready": true } }\n',
     );
+    for (const [relative, source] of widthSources) {
+      assert.equal(readFileSync(path.join(directory, relative), "utf8"), source);
+    }
     for (const [relative, source] of sources) {
-      assert.notEqual(
-        readFileSync(path.join(directory, relative), "utf8"),
-        source,
-        relative,
-      );
+      assert.notEqual(readFileSync(path.join(directory, relative), "utf8"), source, relative);
     }
     assert.equal(readFileSync(ignored, "utf8"), ignoredSource);
     for (const [relative, source] of literals) {
-      assert.equal(
-        readFileSync(path.join(directory, relative), "utf8"),
-        source,
-      );
+      assert.equal(readFileSync(path.join(directory, relative), "utf8"), source);
     }
     assert.equal(
       readFileSync(path.join(directory, "quote source.md"), "utf8"),
@@ -302,11 +270,11 @@ test("native formatting policy preserves prose and ignores ambient editor settin
       "# Report\n\nText.\n\n> Quoted.\n",
     );
     assert.equal(readFileSync(nativeToml, "utf8"), tomlBefore);
-    const repaired = spawnSync(
-      process.execPath,
-      ["tools/docs/cli.mjs", "format", "--check"],
-      { cwd: directory, encoding: "utf8", timeout: 30_000 },
-    );
+    const repaired = spawnSync(process.execPath, ["tools/docs/cli.mjs", "format", "--check"], {
+      cwd: directory,
+      encoding: "utf8",
+      timeout: 30_000,
+    });
     assert.ifError(repaired.error);
     assert.equal(repaired.status, 0, repaired.stderr);
     const inventory = spawnSync("git", ["ls-files", "-z"], {
@@ -318,16 +286,13 @@ test("native formatting policy preserves prose and ignores ambient editor settin
     assert.equal(inventory.status, 0, inventory.stderr);
     const selected = inventory.stdout.split("\0").filter(Boolean);
     const firstPass = new Map(
-      selected.map((relative) => [
-        relative,
-        readFileSync(path.join(directory, relative)),
-      ]),
+      selected.map((relative) => [relative, readFileSync(path.join(directory, relative))]),
     );
-    const secondPass = spawnSync(
-      process.execPath,
-      ["tools/docs/cli.mjs", "format"],
-      { cwd: directory, encoding: "utf8", timeout: 30_000 },
-    );
+    const secondPass = spawnSync(process.execPath, ["tools/docs/cli.mjs", "format"], {
+      cwd: directory,
+      encoding: "utf8",
+      timeout: 30_000,
+    });
     assert.ifError(secondPass.error);
     assert.equal(secondPass.status, 0, secondPass.stderr);
     for (const [relative, bytes] of firstPass)

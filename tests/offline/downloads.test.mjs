@@ -2,10 +2,7 @@ import assert from "node:assert/strict";
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { test } from "node:test";
-import {
-  acquireGitHubBundle,
-  acquireGitLabBundle,
-} from "../../tools/ci/offline/acquire.mjs";
+import { acquireGitHubBundle, acquireGitLabBundle } from "../../tools/ci/offline/acquire.mjs";
 import { assembleBundle } from "../../tools/ci/offline/build.mjs";
 import { buildFixture, pathExistsForTest } from "../offline/fixtures.mjs";
 
@@ -50,28 +47,20 @@ test("public downloads retain native causes; authenticated downloads expose only
           },
         }),
         (error) => {
-          assert.equal(
-            error.message,
-            `${provider} release bundle download failed`,
-          );
+          assert.equal(error.message, `${provider} release bundle download failed`);
           if (retainedCause) {
             assert.equal(error.cause, native);
           } else {
             assert.notEqual(error.cause, native);
             assert.equal(error.cause.code, "ECONNRESET");
-            assert.doesNotMatch(
-              error.cause.message,
-              /native transport failed|fixture-only/u,
-            );
+            assert.doesNotMatch(error.cause.message, /native transport failed|fixture-only/u);
           }
           return true;
         },
       );
       assert.equal(requests, 1, "transport errors do not cause a retry");
       assert.deepEqual(
-        readdirSync(
-          path.join(inputs.repository, "build/artifacts/offline-bundle"),
-        ),
+        readdirSync(path.join(inputs.repository, "build/artifacts/offline-bundle")),
         [],
       );
     });
@@ -104,10 +93,9 @@ test("offline body-stream failures retain download context and authenticated cla
         JSON.stringify(built),
       );
       for (const phase of ["body", "dispose", "missing", "size-cancel"]) {
-        const original = Object.assign(
-          new Error("fixture-only authenticated body failed"),
-          { code: "ECONNRESET" },
-        );
+        const original = Object.assign(new Error("fixture-only authenticated body failed"), {
+          code: "ECONNRESET",
+        });
         let requests = 0;
         let cancellations = 0;
         await assert.rejects(
@@ -177,9 +165,7 @@ test("offline body-stream failures retain download context and authenticated cla
         assert.equal(requests, 1);
         if (phase === "size-cancel") assert.equal(cancellations, 1);
         assert.deepEqual(
-          readdirSync(
-            path.join(inputs.repository, "build/artifacts/offline-bundle"),
-          ),
+          readdirSync(path.join(inputs.repository, "build/artifacts/offline-bundle")),
           [],
         );
         assert.equal(existsSync(inputs.outputPath), true);
@@ -191,12 +177,7 @@ test("offline body-stream failures retain download context and authenticated cla
 test("GitHub acquisition uses the exact public asset without a CLI or credential", async () => {
   await buildFixture(async (inputs) => {
     const built = assembleBundle(inputs);
-    const recordPath = path.join(
-      inputs.repository,
-      ".config",
-      "release",
-      "offline-bundle.json",
-    );
+    const recordPath = path.join(inputs.repository, ".config", "release", "offline-bundle.json");
     writeFileSync(recordPath, JSON.stringify(built));
     const environment = {
       GITHUB_REPOSITORY: "Example/Repository",
@@ -278,10 +259,7 @@ test("GitHub acquisition uses the exact public asset without a CLI or credential
 test("public GitHub acquisition fails closed and removes only its failed output", async () => {
   for (const [fetcher, expected] of [
     [async () => new Response("missing", { status: 404 }), /HTTP 404/u],
-    [
-      async () => new Response(null, { status: 200 }),
-      /download returned no body/u,
-    ],
+    [async () => new Response(null, { status: 200 }), /download returned no body/u],
     [
       async () => {
         throw new Error("network failed");
@@ -307,12 +285,7 @@ test("public GitHub acquisition fails closed and removes only its failed output"
     await buildFixture(async (inputs) => {
       const built = assembleBundle(inputs);
       writeFileSync(
-        path.join(
-          inputs.repository,
-          ".config",
-          "release",
-          "offline-bundle.json",
-        ),
+        path.join(inputs.repository, ".config", "release", "offline-bundle.json"),
         JSON.stringify(built),
       );
       await assert.rejects(
@@ -329,13 +302,7 @@ test("public GitHub acquisition fails closed and removes only its failed output"
       );
       assert.equal(
         existsSync(
-          path.join(
-            inputs.repository,
-            "build",
-            "artifacts",
-            "offline-bundle",
-            built.fileName,
-          ),
+          path.join(inputs.repository, "build", "artifacts", "offline-bundle", built.fileName),
         ),
         false,
       );

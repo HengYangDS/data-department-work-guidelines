@@ -13,17 +13,12 @@ import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 import { checkNoScope } from "../../tools/docs/governance.mjs";
-import {
-  checkDecisions,
-  validateDecision,
-} from "../../tools/docs/decisions.mjs";
+import { checkDecisions, validateDecision } from "../../tools/docs/decisions.mjs";
 import { root } from "../../tools/runtime.mjs";
 import { sections, decision, fixture } from "../decisions/fixtures.mjs";
 
 test("decision sections and identity remain exact", () => {
-  assert.doesNotThrow(() =>
-    validateDecision("docs/decisions/dr-0001-fixture.md", decision()),
-  );
+  assert.doesNotThrow(() => validateDecision("docs/decisions/dr-0001-fixture.md", decision()));
   assert.throws(
     () =>
       validateDecision(
@@ -44,11 +39,7 @@ test("decision sections and identity remain exact", () => {
 
 test("each required decision section contains readable content", () => {
   for (const heading of sections) {
-    for (const empty of [
-      "",
-      "---",
-      "[source]: https://example.test/evidence",
-    ]) {
+    for (const empty of ["", "---", "[source]: https://example.test/evidence"]) {
       const source = decision().replace(
         `## ${heading}\n\nAn evidence link can describe the ETHOS lifecycle.\n`,
         `## ${heading}\n\n${empty}\n`,
@@ -74,10 +65,7 @@ test("each required decision section contains readable content", () => {
 test("parsed decision content rejects wrapped execution and task progress", async (t) => {
   const cases = [
     ["quoted Bash fence", "> ```bash\n> git status\n> ```"],
-    [
-      "list-nested shell fence",
-      "- Evidence:\n\n  ```sh\n  ethos prove --execute\n  ```",
-    ],
+    ["list-nested shell fence", "- Evidence:\n\n  ```sh\n  ethos prove --execute\n  ```"],
     ["PowerShell fence", '```powershell\nWrite-Output "Task complete"\n```'],
     ["PowerShell short label", '```ps1\nWrite-Output "Task complete"\n```'],
     ["Windows command fence", "```cmd\ndir /b\n```"],
@@ -89,19 +77,12 @@ test("parsed decision content rejects wrapped execution and task progress", asyn
     ["long fenced command", "````text\nethos prove --execute\n```\n````"],
     ["inline command under emphasis", "**`ethos status --json`**"],
     ["opaque HTML command", "<pre>ethos prove --execute</pre>"],
-    [
-      "HTML task carrier",
-      '<ul><li><input type="checkbox" checked>Done</li></ul>',
-    ],
+    ["HTML task carrier", '<ul><li><input type="checkbox" checked>Done</li></ul>'],
   ];
   for (const [name, body] of cases) {
     await t.test(name, () => {
       assert.throws(
-        () =>
-          validateDecision(
-            "docs/decisions/dr-0001-fixture.md",
-            decision({ body }),
-          ),
+        () => validateDecision("docs/decisions/dr-0001-fixture.md", decision({ body })),
         /execution|command invocation|task progress|unsupported HTML/u,
       );
     });
@@ -115,11 +96,7 @@ test("parsed decision headings cannot be forged by a code block or quote", () =>
     "> ## Evidence and Revisit\n> Durable rationale.",
   ]) {
     assert.throws(
-      () =>
-        validateDecision(
-          "docs/decisions/dr-0001-fixture.md",
-          `${missing}\n${wrapper}\n`,
-        ),
+      () => validateDecision("docs/decisions/dr-0001-fixture.md", `${missing}\n${wrapper}\n`),
       /sections/u,
     );
   }
@@ -132,11 +109,7 @@ test("parsed decision headings cannot be forged by a code block or quote", () =>
     /title/u,
   );
   assert.throws(
-    () =>
-      validateDecision(
-        "docs/decisions/dr-0001-fixture.md",
-        `${decision()}\n# Second title\n`,
-      ),
+    () => validateDecision("docs/decisions/dr-0001-fixture.md", `${decision()}\n# Second title\n`),
     /title/u,
   );
 });
@@ -148,11 +121,7 @@ test("decision records have no additional or nested sections", () => {
     "- Rationale:\n\n  ## Context\n\n  This is not a root decision section.",
   ]) {
     assert.throws(
-      () =>
-        validateDecision(
-          "docs/decisions/dr-0001-fixture.md",
-          decision({ body }),
-        ),
+      () => validateDecision("docs/decisions/dr-0001-fixture.md", decision({ body })),
       /sections/u,
     );
   }
@@ -162,9 +131,7 @@ test("native decision headings retain their reader identity", () => {
   const source = decision()
     .replace("## Context", "## **Context**")
     .replace("## Decision", "## &#68;ecision");
-  assert.doesNotThrow(() =>
-    validateDecision("docs/decisions/dr-0001-fixture.md", source),
-  );
+  assert.doesNotThrow(() => validateDecision("docs/decisions/dr-0001-fixture.md", source));
   for (const body of [
     "- \\[x] This is a literal marker, not task progress.",
     "A link may name [ethos status](https://example.test/rationale).",
@@ -202,11 +169,7 @@ test("decision rationale links to code instead of carrying opaque executable blo
     "    A choice has a boundary and a revisit trigger.",
   ]) {
     assert.throws(
-      () =>
-        validateDecision(
-          "docs/decisions/dr-0001-fixture.md",
-          decision({ body }),
-        ),
+      () => validateDecision("docs/decisions/dr-0001-fixture.md", decision({ body })),
       /unsupported code block/u,
     );
   }
@@ -221,9 +184,7 @@ test("decision rationale links to code instead of carrying opaque executable blo
 });
 
 test("public boundary command rejects parsed progress and preserves evidence prose", () => {
-  const directory = mkdtempSync(
-    path.join(os.tmpdir(), "ddwg-decision-command-"),
-  );
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-decision-command-"));
   const sourceRoot = path.join(directory, "repository");
   const record = "docs/decisions/dr-0001-fixture.md";
   try {
@@ -233,15 +194,8 @@ test("public boundary command rejects parsed progress and preserves evidence pro
     cpSync(path.join(root, ".config"), path.join(sourceRoot, ".config"), {
       recursive: true,
     });
-    cpSync(
-      path.join(root, "package.json"),
-      path.join(sourceRoot, "package.json"),
-    );
-    symlinkSync(
-      path.join(root, "node_modules"),
-      path.join(sourceRoot, "node_modules"),
-      "junction",
-    );
+    cpSync(path.join(root, "package.json"), path.join(sourceRoot, "package.json"));
+    symlinkSync(path.join(root, "node_modules"), path.join(sourceRoot, "node_modules"), "junction");
     mkdirSync(path.join(sourceRoot, "docs", "decisions"), { recursive: true });
     const runBoundary = () =>
       spawnSync(process.execPath, ["tools/docs/cli.mjs", "boundary"], {
@@ -260,10 +214,7 @@ test("public boundary command rejects parsed progress and preserves evidence pro
       const result = runBoundary();
       assert.ifError(result.error);
       assert.equal(result.status, 1, result.stderr);
-      assert.match(
-        result.stderr,
-        /execution|task progress|command invocation/u,
-      );
+      assert.match(result.stderr, /execution|task progress|command invocation/u);
       assert.equal(readFileSync(path.join(sourceRoot, record), "utf8"), source);
     }
     const source = decision({
@@ -289,10 +240,7 @@ test("current decision tree rejects date names, superseded records, and method c
     rmSync(path.join(records, "2026-09-25-old.md"));
     writeFileSync(
       path.join(records, "dr-0001-fixture.md"),
-      decision().replace(
-        "decision_status: accepted",
-        "decision_status: superseded",
-      ),
+      decision().replace("decision_status: accepted", "decision_status: superseded"),
     );
     assert.throws(() => checkDecisions(directory), /status/u);
     mkdirSync(path.join(directory, "docs", "superpowers"));
@@ -305,16 +253,10 @@ test("the decision tree rejects reused stable identifiers", () => {
     const records = path.join(directory, "docs", "decisions");
     const second = decision()
       .replace("subject: fixture:DR-0001", "subject: fixture:second-choice")
-      .replace(
-        "canonical_for: fixture choice",
-        "canonical_for: another choice",
-      );
+      .replace("canonical_for: fixture choice", "canonical_for: another choice");
     const duplicate = path.join(records, "dr-0001-second-choice.md");
     writeFileSync(duplicate, second);
-    assert.throws(
-      () => checkDecisions(directory),
-      /duplicate decision ID DR-0001/u,
-    );
+    assert.throws(() => checkDecisions(directory), /duplicate decision ID DR-0001/u);
     rmSync(duplicate);
     writeFileSync(
       path.join(records, "dr-0002-second-choice.md"),

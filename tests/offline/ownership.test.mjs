@@ -19,10 +19,7 @@ import { test } from "node:test";
 import { pathToFileURL } from "node:url";
 import { root } from "../../tools/runtime.mjs";
 import { acquireGitHubBundle } from "../../tools/ci/offline/acquire.mjs";
-import {
-  assembleBundle,
-  buildReleaseBundle,
-} from "../../tools/ci/offline/build.mjs";
+import { assembleBundle, buildReleaseBundle } from "../../tools/ci/offline/build.mjs";
 import { installBundle } from "../../tools/ci/offline/install.mjs";
 import { npmCliPath } from "../../tools/ci/offline/npm.mjs";
 import { verifyBundle } from "../../tools/ci/offline/artifact.mjs";
@@ -41,8 +38,7 @@ test("offline installation requires the managed native output after a successful
           commandRunner: (command, args, options) => {
             if (path.basename(args[0]) === "npm-cli.js") {
               if (args[1] === "--version") return "12.1.0\n";
-              if (args[1] === "ci")
-                mkdirSync(path.join(options.cwd, "node_modules"));
+              if (args[1] === "ci") mkdirSync(path.join(options.cwd, "node_modules"));
             } else if (path.basename(args[0]) === "install-native.mjs") {
               installedTools.push(args[1]);
             }
@@ -52,10 +48,7 @@ test("offline installation requires the managed native output after a successful
       /native install returned without managed lychee/u,
     );
     assert.deepEqual(installedTools, ["lychee"]);
-    assert.equal(
-      existsSync(path.join(inputs.repository, "node_modules")),
-      false,
-    );
+    assert.equal(existsSync(path.join(inputs.repository, "node_modules")), false);
   });
 });
 
@@ -75,21 +68,12 @@ test("an empty npm cache cannot satisfy the actual offline install", () => {
     // NPM_CONFIG_CACHE can otherwise override this test's empty cache.
     const inheritedEnvironment = Object.fromEntries(
       Object.entries(process.env).filter(
-        ([key]) =>
-          !/^npm_config_/iu.test(key) &&
-          !["NPM_TOKEN", "NODE_AUTH_TOKEN"].includes(key),
+        ([key]) => !/^npm_config_/iu.test(key) && !["NPM_TOKEN", "NODE_AUTH_TOKEN"].includes(key),
       ),
     );
     const result = spawnSync(
       process.execPath,
-      [
-        npmCliPath(),
-        "ci",
-        "--offline",
-        "--ignore-scripts",
-        "--no-audit",
-        "--no-fund",
-      ],
+      [npmCliPath(), "ci", "--offline", "--ignore-scripts", "--no-audit", "--no-fund"],
       {
         cwd: directory,
         encoding: "utf8",
@@ -116,9 +100,7 @@ test("an empty npm cache cannot satisfy the actual offline install", () => {
 test("concurrent offline installs refuse before effects across processes and release their reservation", () => {
   buildFixture((inputs) => {
     const built = assembleBundle(inputs);
-    const originalFailure = new Error(
-      "first install deliberately failed before npm ci",
-    );
+    const originalFailure = new Error("first install deliberately failed before npm ci");
     const marker = path.join(inputs.repository, "second-installer-effect");
     let second;
     assert.throws(
@@ -166,14 +148,8 @@ try {
     assert.equal(second.error, undefined, second.stderr);
     assert.equal(second.status, 41, second.stdout + second.stderr);
     assert.equal(existsSync(marker), false);
-    assert.equal(
-      existsSync(path.join(inputs.repository, "node_modules")),
-      false,
-    );
-    assert.deepEqual(
-      readdirSync(path.join(inputs.repository, "build/runtime")),
-      [],
-    );
+    assert.equal(existsSync(path.join(inputs.repository, "node_modules")), false);
+    assert.deepEqual(readdirSync(path.join(inputs.repository, "build/runtime")), []);
     assert.throws(
       () =>
         installBundle({
@@ -186,10 +162,7 @@ try {
         }),
       (error) => error === originalFailure,
     );
-    assert.deepEqual(
-      readdirSync(path.join(inputs.repository, "build/runtime")),
-      [],
-    );
+    assert.deepEqual(readdirSync(path.join(inputs.repository, "build/runtime")), []);
   });
 });
 
@@ -252,8 +225,7 @@ test("offline temporary cleanup preserves the primary failure at each existing o
             packages: {
               "": {},
               "node_modules/fixture": {
-                resolved:
-                  "https://registry.npmjs.org/fixture/-/fixture-1.0.0.tgz",
+                resolved: "https://registry.npmjs.org/fixture/-/fixture-1.0.0.tgz",
                 integrity: "sha512-Zml4dHVyZQ==",
               },
             },
@@ -269,8 +241,7 @@ test("offline temporary cleanup preserves the primary failure at each existing o
       const mocks = [
         context.mock.method(fs, "mkdtempSync", (input, options) => {
           const value = originalTemp(input, options);
-          if (path.basename(String(input)).startsWith(prefix))
-            owned.push(value);
+          if (path.basename(String(input)).startsWith(prefix)) owned.push(value);
           return value;
         }),
         context.mock.method(fs, "rmSync", (target, options) => {
@@ -290,33 +261,24 @@ test("offline temporary cleanup preserves the primary failure at each existing o
             },
           };
         }),
-        context.mock.method(
-          childProcess,
-          "spawnSync",
-          (command, args, options) => {
-            if (
-              (command === "tar" &&
-                args.some((arg) => ["-czf", "-xf"].includes(arg))) ||
-              command === process.execPath
-            )
-              return { error: primary, status: null, stdout: "", stderr: "" };
-            return originalSpawn(command, args, options);
-          },
-        ),
+        context.mock.method(childProcess, "spawnSync", (command, args, options) => {
+          if (
+            (command === "tar" && args.some((arg) => ["-czf", "-xf"].includes(arg))) ||
+            command === process.execPath
+          )
+            return { error: primary, status: null, stdout: "", stderr: "" };
+          return originalSpawn(command, args, options);
+        }),
       ];
       syncBuiltinESMExports();
       try {
         await assert.rejects(
           async () => operation(inputs, built, primary),
           (error) => {
-            assert.ok(
-              error instanceof SuppressedError,
-              `${owner}: ${error.message}`,
-            );
+            assert.ok(error instanceof SuppressedError, `${owner}: ${error.message}`);
             assert.equal(error.error, cleanup);
             assert.ok(
-              error.suppressed === primary ||
-                error.suppressed.cause === primary,
+              error.suppressed === primary || error.suppressed.cause === primary,
               `${owner}: missing original failure`,
             );
             return true;
@@ -325,8 +287,7 @@ test("offline temporary cleanup preserves the primary failure at each existing o
       } finally {
         for (const mocked of mocks) mocked.mock.restore();
         syncBuiltinESMExports();
-        for (const target of owned)
-          originalRm(target, { recursive: true, force: true });
+        for (const target of owned) originalRm(target, { recursive: true, force: true });
       }
     });
   }

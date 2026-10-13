@@ -34,9 +34,7 @@ test("the public check command rejects incomplete-mode waivers", () => {
 });
 
 test("source checking does not require a frozen release artifact", () => {
-  const artifact = pathToFileURL(
-    path.join(root, "tools/ci/offline/artifact.mjs"),
-  ).href;
+  const artifact = pathToFileURL(path.join(root, "tools/ci/offline/artifact.mjs")).href;
   const entry = pathToFileURL(path.join(root, "tools/docs/cli.mjs")).href;
   const script = `
     import { registerHooks } from "node:module";

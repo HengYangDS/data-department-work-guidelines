@@ -3,10 +3,7 @@ import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
 import { reportError, root } from "../runtime.mjs";
 import { buildReleaseBundle } from "./offline/build.mjs";
-import {
-  acquireGitHubBundle,
-  acquireGitLabBundle,
-} from "./offline/acquire.mjs";
+import { acquireGitHubBundle, acquireGitLabBundle } from "./offline/acquire.mjs";
 import { readBundleRecord, verifyBundle } from "./offline/artifact.mjs";
 import { installBundle } from "./offline/install.mjs";
 
@@ -23,13 +20,7 @@ async function cli(argv) {
     strict: true,
     allowPositionals: false,
   }).values;
-  if (
-    mode === "build" &&
-    parsed.assets &&
-    parsed.licenses &&
-    parsed.output &&
-    !parsed.bundle
-  ) {
+  if (mode === "build" && parsed.assets && parsed.licenses && parsed.output && !parsed.bundle) {
     const result = buildReleaseBundle({
       repository: root,
       assetDirectory: path.resolve(parsed.assets),
@@ -70,8 +61,7 @@ async function cli(argv) {
   ) {
     const record = readBundleRecord();
     const bundlePath =
-      parsed.bundle ??
-      path.join(root, "build", "artifacts", "offline-bundle", record.fileName);
+      parsed.bundle ?? path.join(root, "build", "artifacts", "offline-bundle", record.fileName);
     const result =
       mode === "inspect"
         ? verifyBundle({ bundlePath, record })
@@ -86,10 +76,7 @@ async function cli(argv) {
   );
 }
 
-if (
-  process.argv[1] &&
-  path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
-) {
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   cli(process.argv.slice(2)).catch((error) => {
     reportError(error);
     process.exitCode = 1;

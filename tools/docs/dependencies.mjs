@@ -1,11 +1,5 @@
 import { spawnSync } from "node:child_process";
-import {
-  mkdirSync,
-  mkdtempSync,
-  readFileSync,
-  realpathSync,
-  writeFileSync,
-} from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { parse as parseToml } from "smol-toml";
 import { validateLockSupply } from "../ci/offline/npm.mjs";
@@ -32,9 +26,7 @@ export function parseDependencyPolicy(source) {
     !Array.isArray(policy.IgnoredVulns) ||
     policy.IgnoredVulns.length > 1
   )
-    throw new Error(
-      "dependency policy must use the approved native OSV disposition",
-    );
+    throw new Error("dependency policy must use the approved native OSV disposition");
   for (const entry of policy.IgnoredVulns) {
     if (
       Object.keys(entry).sort().join(",") !== "id,reason" ||
@@ -42,9 +34,7 @@ export function parseDependencyPolicy(source) {
       typeof entry.reason !== "string" ||
       !entry.reason.trim()
     )
-      throw new Error(
-        "dependency policy exceeds the approved native OSV disposition",
-      );
+      throw new Error("dependency policy exceeds the approved native OSV disposition");
   }
   return policy;
 }
@@ -80,9 +70,7 @@ export function validateDependencyEvidence(
   const result = results[0];
   let observed;
   try {
-    observed = realpathSync(
-      path.resolve(repository, result.source?.path ?? ""),
-    );
+    observed = realpathSync(path.resolve(repository, result.source?.path ?? ""));
   } catch {
     throw new Error("native dependency report names an unavailable input");
   }
@@ -105,12 +93,9 @@ export function validateDependencyEvidence(
       !Array.isArray(entry.dependency_groups) ||
       entry.dependency_groups.length !== 1 ||
       entry.dependency_groups[0] !== "dev" ||
-      (entry.vulnerabilities !== undefined &&
-        !Array.isArray(entry.vulnerabilities))
+      (entry.vulnerabilities !== undefined && !Array.isArray(entry.vulnerabilities))
     )
-      throw new Error(
-        "native dependency report has incomplete or inconsistent input identities",
-      );
+      throw new Error("native dependency report has incomplete or inconsistent input identities");
     seen.add(key);
     for (const finding of entry.vulnerabilities ?? []) {
       if (
@@ -119,13 +104,9 @@ export function validateDependencyEvidence(
         !finding.id.trim() ||
         (finding.aliases !== undefined &&
           (!Array.isArray(finding.aliases) ||
-            finding.aliases.some(
-              (alias) => typeof alias !== "string" || !alias.trim(),
-            )))
+            finding.aliases.some((alias) => typeof alias !== "string" || !alias.trim())))
       )
-        throw new Error(
-          "native dependency report has an invalid finding identity",
-        );
+        throw new Error("native dependency report has an invalid finding identity");
       findings++;
       if (
         policy.IgnoredVulns.length &&
@@ -142,19 +123,15 @@ export function validateDependencyEvidence(
             !isNativeObject(affected.package) ||
             affected.package.ecosystem !== approvedDependency.ecosystem ||
             affected.package.name !== approvedDependency.name ||
-            (affected.ranges !== undefined &&
-              !Array.isArray(affected.ranges)) ||
+            (affected.ranges !== undefined && !Array.isArray(affected.ranges)) ||
             (affected.versions !== undefined &&
               (!Array.isArray(affected.versions) ||
                 affected.versions.some(
                   (version) => typeof version !== "string" || !version.trim(),
                 ))) ||
-            (!affected.ranges?.length &&
-              !affected.versions?.includes(identity.version))
+            (!affected.ranges?.length && !affected.versions?.includes(identity.version))
           )
-            throw new Error(
-              "approved finding subject changed; retire the disposition",
-            );
+            throw new Error("approved finding subject changed; retire the disposition");
           for (const range of affected.ranges ?? []) {
             if (
               !isNativeObject(range) ||
@@ -167,25 +144,18 @@ export function validateDependencyEvidence(
                   event.introduced.trim(),
               )
             )
-              throw new Error(
-                "approved finding has invalid native range events",
-              );
+              throw new Error("approved finding has invalid native range events");
             for (const event of range.events) {
               if (
                 !isNativeObject(event) ||
                 !["introduced", "fixed", "last_affected", "limit"].some(
-                  (field) =>
-                    typeof event[field] === "string" && event[field].trim(),
+                  (field) => typeof event[field] === "string" && event[field].trim(),
                 )
               )
-                throw new Error(
-                  "approved finding has an invalid native range event",
-                );
+                throw new Error("approved finding has an invalid native range event");
               if (event.fixed !== undefined) {
                 if (typeof event.fixed !== "string" || !event.fixed.trim())
-                  throw new Error(
-                    "approved finding has an invalid native fixed event",
-                  );
+                  throw new Error("approved finding has an invalid native fixed event");
               }
             }
           }
@@ -206,15 +176,9 @@ export function auditDependencies({
   offline = false,
   environment = process.env,
 } = {}) {
-  const policySource = readFileSync(
-    path.join(repository, dependencyPolicyPath),
-    "utf8",
-  );
+  const policySource = readFileSync(path.join(repository, dependencyPolicyPath), "utf8");
   const policy = parseDependencyPolicy(policySource);
-  const lockSource = readFileSync(
-    path.join(repository, "package-lock.json"),
-    "utf8",
-  );
+  const lockSource = readFileSync(path.join(repository, "package-lock.json"), "utf8");
   const identities = validateDependencyInput(JSON.parse(lockSource));
   const binary = nativeToolBinary("osv-scanner");
   const evidenceRoot = path.join(repository, "build/evidence/dependencies");
@@ -266,27 +230,14 @@ export function auditDependencies({
   const saveExecution = () =>
     writeFileSync(
       path.join(evidence, "execution.json"),
-      JSON.stringify(
-        { time: new Date().toISOString(), offline, execution },
-        null,
-        2,
-      ) + "\n",
+      JSON.stringify({ time: new Date().toISOString(), offline, execution }, null, 2) + "\n",
     );
   saveExecution();
+  if (result.error || ![0, 1].includes(result.status) || result.stderr || result.stdout)
+    throw new Error(`native raw audit failed; complete output retained at ${evidence}`);
   if (
-    result.error ||
-    ![0, 1].includes(result.status) ||
-    result.stderr ||
-    result.stdout
-  )
-    throw new Error(
-      `native raw audit failed; complete output retained at ${evidence}`,
-    );
-  if (
-    readFileSync(path.join(repository, "package-lock.json"), "utf8") !==
-      lockSource ||
-    readFileSync(path.join(repository, dependencyPolicyPath), "utf8") !==
-      policySource
+    readFileSync(path.join(repository, "package-lock.json"), "utf8") !== lockSource ||
+    readFileSync(path.join(repository, dependencyPolicyPath), "utf8") !== policySource
   )
     throw new Error(
       `dependency audit inputs changed during native execution; evidence ${evidence}`,
@@ -302,10 +253,9 @@ export function auditDependencies({
       policy,
     ));
   } catch (cause) {
-    throw new Error(
-      `native dependency report is invalid: ${cause.message}; evidence ${evidence}`,
-      { cause },
-    );
+    throw new Error(`native dependency report is invalid: ${cause.message}; evidence ${evidence}`, {
+      cause,
+    });
   }
   if (findingCount !== approvedFindings)
     throw new Error(

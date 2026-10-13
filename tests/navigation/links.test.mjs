@@ -23,11 +23,7 @@ test("navigation requires a rendered link rather than an example or image", () =
       "[documentation map][task-map]\n\n[task-map]: https://example.test/\n\n[task-map]: docs/README.md",
     ]) {
       writeFileSync(entry, original.replace(route, replacement));
-      assert.throws(
-        () => checkNavigation(directory),
-        /missing task routes/u,
-        replacement,
-      );
+      assert.throws(() => checkNavigation(directory), /missing task routes/u, replacement);
     }
   });
 });
@@ -63,8 +59,7 @@ test("navigation follows native GFM table cell boundaries", () => {
     const entry = path.join(directory, "README.md");
     const original = readFileSync(entry, "utf8");
     const route = "[documentation map](docs/README.md)";
-    const table = (cell) =>
-      `\n\n| Task | Entry |\n| --- | --- |\n| Start | ${cell} |\n\n`;
+    const table = (cell) => `\n\n| Task | Entry |\n| --- | --- |\n| Start | ${cell} |\n\n`;
     for (const cell of [route, "[documentation \\| map](docs/README.md)"]) {
       writeFileSync(entry, original.replace(route, table(cell)));
       assert.doesNotThrow(() => checkNavigation(directory), cell);
@@ -74,11 +69,7 @@ test("navigation follows native GFM table cell boundaries", () => {
       "unlinked | [documentation map](docs/README.md)",
     ]) {
       writeFileSync(entry, original.replace(route, table(cell)));
-      assert.throws(
-        () => checkNavigation(directory),
-        /missing task routes/u,
-        cell,
-      );
+      assert.throws(() => checkNavigation(directory), /missing task routes/u, cell);
     }
   });
 });
@@ -99,11 +90,7 @@ test("navigation rejects anchors without readable rendered content", () => {
       "[![&#32;&nbsp;](preview.png)](docs/README.md)",
     ]) {
       writeFileSync(entry, original.replace(route, replacement));
-      assert.throws(
-        () => checkNavigation(directory),
-        /missing task routes/u,
-        replacement,
-      );
+      assert.throws(() => checkNavigation(directory), /missing task routes/u, replacement);
     }
   });
 });
@@ -138,11 +125,7 @@ test("navigation detects real duplicate topic routes without counting examples",
       "[Charter][SS]\n\n[ß]: docs/charter.md",
     ]) {
       writeFileSync(entry, `${original}\n${duplicate}\n`);
-      assert.throws(
-        () => checkNavigation(directory),
-        /repeats topic routes/u,
-        duplicate,
-      );
+      assert.throws(() => checkNavigation(directory), /repeats topic routes/u, duplicate);
     }
     for (const example of [
       "`[Charter](docs/charter.md)`",
@@ -166,11 +149,7 @@ test("navigation requires the reader cue in the visible topic opening", () => {
       "![When to use:](../README.md)",
     ]) {
       writeFileSync(topic, original.replace("**When to use:**", replacement));
-      assert.throws(
-        () => checkNavigation(directory),
-        /missing reader entry/u,
-        replacement,
-      );
+      assert.throws(() => checkNavigation(directory), /missing reader entry/u, replacement);
     }
     writeFileSync(topic, original.replace("**When to use:**", "When to use:"));
     assert.doesNotThrow(() => checkNavigation(directory));

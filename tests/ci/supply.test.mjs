@@ -10,18 +10,12 @@ test("Mise reads development declarations without executable version templates",
   const configuration = parseToml(readText(".config/mise/config.toml"));
   const manifest = JSON.parse(readText("package.json"));
   assert.equal(Object.hasOwn(configuration, "tools"), false);
-  assert.deepEqual(configuration.settings.idiomatic_version_file_enable_tools, [
-    "node",
-    "npm",
-  ]);
+  assert.deepEqual(configuration.settings.idiomatic_version_file_enable_tools, ["node", "npm"]);
   assert.equal(configuration.settings.locked, true);
   assert.equal(configuration.settings.npm.package_manager, "npm");
   assert.equal(configuration.tool_alias.npm, "npm:npm");
   assert.equal(Object.hasOwn(configuration, "env"), false);
-  assert.match(
-    manifest.devEngines.packageManager.version,
-    /^12\.2\.0\+sha512\.[a-f0-9]{128}$/u,
-  );
+  assert.match(manifest.devEngines.packageManager.version, /^12\.2\.0\+sha512\.[a-f0-9]{128}$/u);
   assert.deepEqual(manifest.devEngines.runtime, {
     name: "node",
     version: "26.x",
@@ -50,9 +44,7 @@ test("native shell jobs select locked process runtimes without changing host npm
         "$CI_PROJECT_DIR/.config/mise/config.toml",
         "the native project configuration must remain a job-owned input",
       );
-      assert.ok(
-        job.before_script.flat(10).includes("mise install --locked --jobs=1"),
-      );
+      assert.ok(job.before_script.flat(10).includes("mise install --locked --jobs=1"));
     }
     assert.deepEqual(pipeline[`offline:verify:${system}`].script, [
       "mise exec --locked -- node tools/ci/offline-bundle.mjs acquire-gitlab",
@@ -88,10 +80,7 @@ test("Mise native discovery preserves job-local global configuration isolation",
         "$CI_PROJECT_DIR/build/runtime/work/mise-config",
         name,
       );
-      for (const selector of [
-        "MISE_CONFIG_FILE",
-        "MISE_OVERRIDE_CONFIG_FILENAMES",
-      ])
+      for (const selector of ["MISE_CONFIG_FILE", "MISE_OVERRIDE_CONFIG_FILENAMES"])
         assert.equal(Object.hasOwn(variables, selector), false, name);
     }
   }
@@ -109,9 +98,7 @@ test("Mise native discovery preserves job-local global configuration isolation",
       () =>
         validateCi(
           github,
-          changedGitLab(".docs:native-runtime", (_, job) =>
-            change(job.variables),
-          ),
+          changedGitLab(".docs:native-runtime", (_, job) => change(job.variables)),
           offline,
         ),
       /native runtime and source supply/u,
@@ -162,21 +149,11 @@ test("Windows jobs refresh only their process from the native machine path", () 
 test("both providers refuse to skip the dependency audit", () => {
   assert.throws(
     () =>
-      validateCi(
-        github.replace(
-          "run: node tools/docs/cli.mjs audit",
-          "run: echo skipped",
-        ),
-        gitlab,
-      ),
+      validateCi(github.replace("run: node tools/docs/cli.mjs audit", "run: echo skipped"), gitlab),
     /dependency audit/u,
   );
   assert.throws(
-    () =>
-      validateCi(
-        github,
-        gitlab.replace("- node tools/docs/cli.mjs audit", "- echo skipped"),
-      ),
+    () => validateCi(github, gitlab.replace("- node tools/docs/cli.mjs audit", "- echo skipped")),
     /dependency audit|native source supply/u,
   );
 });
@@ -209,10 +186,7 @@ test("both source planes preserve complete audit evidence after a failure", () =
     );
   const pipeline = YAML.parse(gitlab);
   pipeline[".docs:verify"].artifacts.when = "on_success";
-  assert.throws(
-    () => validateCi(github, YAML.stringify(pipeline), offline),
-    /evidence/u,
-  );
+  assert.throws(() => validateCi(github, YAML.stringify(pipeline), offline), /evidence/u);
 });
 
 test("both providers supply tools without a browser installation", () => {
@@ -254,16 +228,11 @@ test("CI uses the current official Debian base without weakening image pins", ()
 
 test("CI runtime follows the declared stable Node line", () => {
   assert.throws(
-    () =>
-      validateCi(
-        github.replace("node-version: 26", "node-version: 22"),
-        gitlab,
-      ),
+    () => validateCi(github.replace("node-version: 26", "node-version: 22"), gitlab),
     /Node 26/u,
   );
   assert.throws(
-    () =>
-      validateCi(github, gitlab.replace("node:26-trixie", "node:22-trixie")),
+    () => validateCi(github, gitlab.replace("node:26-trixie", "node:22-trixie")),
     /Node 26/u,
   );
 });
@@ -328,10 +297,7 @@ test("package-manager supply cannot bypass native admission or become a second v
     "npm install --global npm@12.1.0",
     ...native["docs:verify:macos"].before_script,
   ];
-  assert.throws(
-    () => validateCi(github, YAML.stringify(native), offline),
-    /platform job/u,
-  );
+  assert.throws(() => validateCi(github, YAML.stringify(native), offline), /platform job/u);
 });
 
 test("both source planes must supply native Vale before verification", () => {
@@ -339,10 +305,7 @@ test("both source planes must supply native Vale before verification", () => {
   workflow.jobs.verify.steps = workflow.jobs.verify.steps.filter(
     (step) => step.run !== "node tools/ci/install-native.mjs vale --download",
   );
-  assert.throws(
-    () => validateCi(YAML.stringify(workflow), gitlab, offline),
-    /supply/u,
-  );
+  assert.throws(() => validateCi(YAML.stringify(workflow), gitlab, offline), /supply/u);
   for (const name of [
     ".docs:source-supply",
     ".docs:native-source-supply",
@@ -359,9 +322,7 @@ test("both source planes must supply native Vale before verification", () => {
               .flat(10)
               .filter(
                 (command) =>
-                  !command.endsWith(
-                    "node tools/ci/install-native.mjs vale --gitlab-package",
-                  ),
+                  !command.endsWith("node tools/ci/install-native.mjs vale --gitlab-package"),
               );
           }),
           offline,
@@ -403,10 +364,7 @@ test("native YAML aliases preserve one source-supply list and reject omissions",
   const runtime = pipeline[".docs:native-runtime"];
   for (const system of ["macos", "windows"]) {
     for (const suffix of ["", ":review"]) {
-      assert.strictEqual(
-        pipeline[`docs:verify:${system}${suffix}`].variables,
-        runtime.variables,
-      );
+      assert.strictEqual(pipeline[`docs:verify:${system}${suffix}`].variables, runtime.variables);
     }
     assert.strictEqual(
       pipeline[`offline:verify:${system}`].before_script,

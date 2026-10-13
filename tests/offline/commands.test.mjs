@@ -35,11 +35,11 @@ test("offline command admission rejects incomplete modes and unknown options bef
     ["install", "--licenses", "unused"],
     ["inspect", "--allow-incomplete"],
   ]) {
-    const result = spawnSync(
-      process.execPath,
-      ["tools/ci/offline-bundle.mjs", ...args],
-      { cwd: root, encoding: "utf8", timeout: 10_000 },
-    );
+    const result = spawnSync(process.execPath, ["tools/ci/offline-bundle.mjs", ...args], {
+      cwd: root,
+      encoding: "utf8",
+      timeout: 10_000,
+    });
     const diagnostic = JSON.stringify({ args, ...result });
     assert.equal(result.error, undefined, diagnostic);
     assert.equal(result.signal, null, diagnostic);

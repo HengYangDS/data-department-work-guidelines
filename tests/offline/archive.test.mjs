@@ -1,13 +1,7 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import childProcess from "node:child_process";
-import {
-  appendFileSync,
-  mkdirSync,
-  readFileSync,
-  rmSync,
-  writeFileSync,
-} from "node:fs";
+import { appendFileSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { syncBuiltinESMExports } from "node:module";
 import path from "node:path";
 import { test } from "node:test";
@@ -45,12 +39,8 @@ test("bundle identity is bound to the exact source inputs", () => {
   ]) {
     assert.throws(() => validateBundleRecord(record(changed), source));
   }
-  assert.throws(() =>
-    validateBundleRecord(record(), { ...source, version: "4.3.0" }),
-  );
-  assert.throws(() =>
-    validateBundleRecord(record(), { ...source, nodeMajor: 22 }),
-  );
+  assert.throws(() => validateBundleRecord(record(), { ...source, version: "4.3.0" }));
+  assert.throws(() => validateBundleRecord(record(), { ...source, nodeMajor: 22 }));
 });
 
 test("bundle archive admits only regular files in its declared roots", () => {
@@ -88,9 +78,7 @@ test("bundle archive admits only regular files in its declared roots", () => {
     "drwxr-xr-x 0/0 0 Jan 1 00:00 ./licenses/vale/",
     "-rw-r--r-- 0/0 10 Jan 1 00:00 ./licenses/vale/LICENSE",
   ].join("\n");
-  assert.doesNotThrow(() =>
-    assertSafeBundleListing(names, verbose, listingSupply),
-  );
+  assert.doesNotThrow(() => assertSafeBundleListing(names, verbose, listingSupply));
   for (const unsafe of [
     "../outside",
     "/tmp/outside",
@@ -122,11 +110,7 @@ test("bundle archive admits only regular files in its declared roots", () => {
     ),
   );
   assert.throws(() =>
-    assertSafeBundleListing(
-      names,
-      verbose.split("\n").slice(0, -1).join("\n"),
-      listingSupply,
-    ),
+    assertSafeBundleListing(names, verbose.split("\n").slice(0, -1).join("\n"), listingSupply),
   );
 });
 
@@ -155,9 +139,7 @@ test("bundle inventory derives raw and archived assets from the same supply mani
     items.map(([name]) => name).join("\n"),
     items.map(([name, type]) => `${type}rwxr-xr-x 0/0 10 ${name}`).join("\n"),
   ];
-  assert.doesNotThrow(() =>
-    assertSafeBundleListing(...listing(members), { tools }),
-  );
+  assert.doesNotThrow(() => assertSafeBundleListing(...listing(members), { tools }));
   for (const extra of [
     "./native/osv-scanner/undeclared",
     "./native/retired/",
@@ -175,9 +157,7 @@ test("bundle inventory derives raw and archived assets from the same supply mani
   assert.throws(
     () =>
       assertSafeBundleListing(
-        ...listing(
-          members.filter(([name]) => !name.endsWith("osv-scanner_linux_arm64")),
-        ),
+        ...listing(members.filter(([name]) => !name.endsWith("osv-scanner_linux_arm64"))),
         { tools },
       ),
     /missing/u,
@@ -191,24 +171,14 @@ test("bundle digest is verified before archive inspection", async () => {
       expected.sha256,
     );
     appendFileSync(bundle, "altered");
-    assert.throws(
-      () => inspectBundle(bundle, expected, source, listingSupply),
-      /digest/u,
-    );
+    assert.throws(() => inspectBundle(bundle, expected, source, listingSupply), /digest/u);
   });
 });
 
 test("bundle inspection rejects incomplete supply", async () => {
-  for (const missing of [
-    { cache: false },
-    { lychee: false },
-    { vale: false },
-  ]) {
+  for (const missing of [{ cache: false }, { lychee: false }, { vale: false }]) {
     await bundleFixture(async (bundle, expected) => {
-      assert.throws(
-        () => inspectBundle(bundle, expected, source, listingSupply),
-        /missing/u,
-      );
+      assert.throws(() => inspectBundle(bundle, expected, source, listingSupply), /missing/u);
     }, missing);
   }
 });
@@ -218,39 +188,24 @@ test("extracted bundle contents agree with source and pinned supply", () => {
     assembleBundle(inputs);
     const extracted = path.join(path.dirname(inputs.outputPath), "extracted");
     mkdirSync(extracted);
-    const result = spawnSync(
-      "tar",
-      ["-xf", inputs.outputPath, "-C", extracted],
-      {
-        encoding: "utf8",
-        timeout: 10_000,
-      },
-    );
+    const result = spawnSync("tar", ["-xf", inputs.outputPath, "-C", extracted], {
+      encoding: "utf8",
+      timeout: 10_000,
+    });
     assert.equal(result.status, 0, result.stderr);
-    assert.doesNotThrow(() =>
-      validateExtractedBundle(extracted, inputs.repository),
-    );
+    assert.doesNotThrow(() => validateExtractedBundle(extracted, inputs.repository));
     const asset = path.join(extracted, "native", "lychee", inputs.assetName);
     const originalAsset = readFileSync(asset);
     writeFileSync(asset, "altered");
-    assert.throws(
-      () => validateExtractedBundle(extracted, inputs.repository),
-      /asset.*digest/u,
-    );
+    assert.throws(() => validateExtractedBundle(extracted, inputs.repository), /asset.*digest/u);
     writeFileSync(asset, originalAsset);
     const license = path.join(extracted, "licenses", "lychee", "LICENSE-MIT");
     const originalLicense = readFileSync(license);
     writeFileSync(license, "altered");
-    assert.throws(
-      () => validateExtractedBundle(extracted, inputs.repository),
-      /license.*digest/u,
-    );
+    assert.throws(() => validateExtractedBundle(extracted, inputs.repository), /license.*digest/u);
     writeFileSync(license, originalLicense);
     rmSync(path.join(extracted, "npm-cache", "_cacache", "index-v5", "entry"));
-    assert.throws(
-      () => validateExtractedBundle(extracted, inputs.repository),
-      /cache.*count/u,
-    );
+    assert.throws(() => validateExtractedBundle(extracted, inputs.repository), /cache.*count/u);
   });
 });
 
@@ -258,16 +213,12 @@ test("bundle extraction retains the current executor's ownership", (context) => 
   buildFixture((inputs) => {
     const built = assembleBundle(inputs);
     const nativeSpawn = childProcess.spawnSync;
-    const extraction = context.mock.method(
-      childProcess,
-      "spawnSync",
-      (command, args, options) => {
-        if (command === "tar" && args.includes("-xf")) {
-          assert.ok(args.includes("--no-same-owner"));
-        }
-        return nativeSpawn(command, args, options);
-      },
-    );
+    const extraction = context.mock.method(childProcess, "spawnSync", (command, args, options) => {
+      if (command === "tar" && args.includes("-xf")) {
+        assert.ok(args.includes("--no-same-owner"));
+      }
+      return nativeSpawn(command, args, options);
+    });
     syncBuiltinESMExports();
     try {
       verifyBundle({
@@ -285,9 +236,7 @@ test("bundle extraction retains the current executor's ownership", (context) => 
             mkdirSync(path.join(inputs.repository, "node_modules"));
           }
           if (path.basename(args[0]) === "install-native.mjs") {
-            const descriptor = readNativeSupply(inputs.repository).tools[
-              args[1]
-            ];
+            const descriptor = readNativeSupply(inputs.repository).tools[args[1]];
             const target = path.join(
               inputs.repository,
               "build/runtime/tool-cache",
@@ -304,8 +253,7 @@ test("bundle extraction retains the current executor's ownership", (context) => 
       });
       assert.equal(
         extraction.mock.calls.filter(
-          ({ arguments: [command, args] }) =>
-            command === "tar" && args.includes("-xf"),
+          ({ arguments: [command, args] }) => command === "tar" && args.includes("-xf"),
         ).length,
         2,
       );
@@ -319,12 +267,7 @@ test("bundle extraction retains the current executor's ownership", (context) => 
 test("tracked bundle identity rejects source drift", () => {
   buildFixture((inputs) => {
     const built = assembleBundle(inputs);
-    const recordPath = path.join(
-      inputs.repository,
-      ".config",
-      "release",
-      "offline-bundle.json",
-    );
+    const recordPath = path.join(inputs.repository, ".config", "release", "offline-bundle.json");
     writeFileSync(recordPath, JSON.stringify(built));
     assert.deepEqual(readBundleRecord(inputs.repository), built);
     writeFileSync(

@@ -20,19 +20,13 @@ test("navigation rejects a missing map, repeated root topic, and missing reader 
     checkNavigation(directory);
     const entry = path.join(directory, "README.md");
     const original = readFileSync(entry, "utf8");
-    writeFileSync(
-      entry,
-      original.replace("(docs/README.md)", "(docs/missing.md)"),
-    );
+    writeFileSync(entry, original.replace("(docs/README.md)", "(docs/missing.md)"));
     assert.throws(() => checkNavigation(directory), /missing task routes/u);
     writeFileSync(entry, `${original}\n[Duplicate](docs/charter.md)\n`);
     assert.throws(() => checkNavigation(directory), /repeats topic routes/u);
     writeFileSync(entry, original);
     const topic = path.join(directory, "docs", "decide.md");
-    writeFileSync(
-      topic,
-      readFileSync(topic, "utf8").replace("**When to use:**", "**Read this:**"),
-    );
+    writeFileSync(topic, readFileSync(topic, "utf8").replace("**When to use:**", "**Read this:**"));
     assert.throws(() => checkNavigation(directory), /missing reader entry/u);
   });
 });
@@ -59,11 +53,7 @@ test("task-map hierarchy separates destinations, related reading, and urgent ent
       .filter((token) => token.type === "content")
       .map((token) => markdownLinkDestinations(token.text));
     for (const links of primary) {
-      assert.equal(
-        links.length,
-        1,
-        "one primary destination per work question",
-      );
+      assert.equal(links.length, 1, "one primary destination per work question");
     }
     const primaryLinks = new Set(primary.flat());
     for (const destination of [
@@ -95,19 +85,13 @@ test("task-map hierarchy separates destinations, related reading, and urgent ent
           .flatMap((token) => markdownLinkDestinations(token.text));
       });
     assert.ok(
-      consumerRoutes.includes(
-        "data.md#worked-change-a-shared-issuer-identifier",
-      ),
+      consumerRoutes.includes("data.md#worked-change-a-shared-issuer-identifier"),
       "shared-data work needs its consumer-migration example as related reading",
     );
     const destinations = new Set(
-      primary.flatMap((links) =>
-        links.map((link) => `docs/${link.split("#")[0]}`),
-      ),
+      primary.flatMap((links) => links.map((link) => `docs/${link.split("#")[0]}`)),
     );
-    const profile = parseToml(
-      readFileSync(path.join(root, ".ethos/profile.toml"), "utf8"),
-    );
+    const profile = parseToml(readFileSync(path.join(root, ".ethos/profile.toml"), "utf8"));
     for (const topic of profile.normative_sources) {
       assert.ok(destinations.has(topic), `${topic} needs a primary work route`);
     }
@@ -137,19 +121,13 @@ test("task-map hierarchy separates destinations, related reading, and urgent ent
   const exampleDestination = "data.md#worked-change-a-shared-issuer-identifier";
   const misplaced = `${source.replace(`(${exampleDestination})`, "(data.md)")}\n[Consumer migration](${exampleDestination})\n`;
   assert.ok(markdownLinkDestinations(misplaced).includes(exampleDestination));
-  assert.throws(
-    () => assertHierarchy(misplaced),
-    /consumer-migration example/u,
-  );
+  assert.throws(() => assertHierarchy(misplaced), /consumer-migration example/u);
   assert.throws(
     () => assertHierarchy(source.replace(/^ {2}- /gmu, "  ")),
     /one primary destination per work question/u,
   );
   assert.throws(
-    () =>
-      assertHierarchy(
-        source.replace("(evolve.md#emergencies-and-exceptions)", "(evolve.md)"),
-      ),
+    () => assertHierarchy(source.replace("(evolve.md#emergencies-and-exceptions)", "(evolve.md)")),
     /urgent containment/u,
   );
 });
@@ -167,9 +145,7 @@ test("data entry routes readers to recovery and current qualification", () => {
     markdownLinkDestinations(tokens.map((token) => token.text).join("\n"));
   const introduction = introductionOf(source);
   const opening = [...walkMarkdown(introduction)].find(
-    (token) =>
-      token.type === "paragraph" &&
-      markdownText(token).startsWith("When to use:"),
+    (token) => token.type === "paragraph" && markdownText(token).startsWith("When to use:"),
   );
   assert.ok(opening, "data work needs a visible point-of-use entry");
   const destinations = destinationsOf(introduction);
@@ -183,15 +159,10 @@ test("data entry routes readers to recovery and current qualification", () => {
       `data entry needs the current recovery and qualification route: ${destination}`,
     );
   }
-  const lateRecovery = source.replaceAll(
-    "(#change-shared-or-production-data)",
-    "(charter.md)",
-  );
+  const lateRecovery = source.replaceAll("(#change-shared-or-production-data)", "(charter.md)");
   assert.equal(
     destinationsOf(
-      introductionOf(
-        `${lateRecovery}\n[Late recovery](#change-shared-or-production-data)\n`,
-      ),
+      introductionOf(`${lateRecovery}\n[Late recovery](#change-shared-or-production-data)\n`),
     ).includes("#change-shared-or-production-data"),
     false,
     "a link after the first topic section cannot satisfy the reader entry",
@@ -220,10 +191,7 @@ test("root entry puts the reading action immediately after the purpose", () => {
       assertComposition(
         source
           .replace(entry, "")
-          .replace(
-            "To change this repository",
-            entry + "To change this repository",
-          ),
+          .replace("To change this repository", entry + "To change this repository"),
       ),
     /reading action follows purpose/u,
   );
@@ -234,19 +202,13 @@ test("emergency containment routes to hard boundaries and both risk entries", ()
   const source = readFileSync(path.join(root, relative), "utf8");
   const tokens = markdownTokens(source, relative);
   const heading = tokens.findIndex(
-    (token) =>
-      headingLevel(token) === 2 &&
-      headingText(token) === "Emergencies and Exceptions",
+    (token) => headingLevel(token) === 2 && headingText(token) === "Emergencies and Exceptions",
   );
   assert.notEqual(heading, -1, "emergency duties need a discoverable section");
   const following = tokens.findIndex(
-    (token, index) =>
-      index > heading && headingLevel(token) > 0 && headingLevel(token) <= 2,
+    (token, index) => index > heading && headingLevel(token) > 0 && headingLevel(token) <= 2,
   );
-  const section = tokens.slice(
-    heading + 1,
-    following < 0 ? undefined : following,
-  );
+  const section = tokens.slice(heading + 1, following < 0 ? undefined : following);
   assert.ok(
     [...walkMarkdown(section)].some(
       (token) => token.type === "paragraph" && markdownText(token).trim(),
@@ -254,16 +216,16 @@ test("emergency containment routes to hard boundaries and both risk entries", ()
     "containment duties must remain under their heading",
   );
   assert.ok(
-    markdownLinkDestinations(
-      section.map((token) => token.text).join("\n"),
-    ).includes("charter.md#four-non-negotiable-boundaries"),
+    markdownLinkDestinations(section.map((token) => token.text).join("\n")).includes(
+      "charter.md#four-non-negotiable-boundaries",
+    ),
     "urgency must retain the canonical truth, authority, and accountability boundaries",
   );
   for (const entry of ["docs/charter.md", "docs/deliver.md"]) {
     assert.ok(
-      markdownLinkDestinations(
-        readFileSync(path.join(root, entry), "utf8"),
-      ).includes("evolve.md#emergencies-and-exceptions"),
+      markdownLinkDestinations(readFileSync(path.join(root, entry), "utf8")).includes(
+        "evolve.md#emergencies-and-exceptions",
+      ),
       `${entry} must route to emergency containment without restating it`,
     );
   }
@@ -296,18 +258,12 @@ test("important-update entry lands on its actionable fields", () => {
     const tokens = markdownTokens(text, relative);
     const start = tokens.findIndex(
       (token) =>
-        headingLevel(token) === 3 &&
-        headingText(token) === "Structure an Important Update",
+        headingLevel(token) === 3 && headingText(token) === "Structure an Important Update",
     );
     assert.notEqual(start, -1, "updates need their own navigable subsection");
-    const fields = tokens
-      .slice(start + 1)
-      .find((token) => !token.type.startsWith("lineEnding"));
+    const fields = tokens.slice(start + 1).find((token) => !token.type.startsWith("lineEnding"));
     assert.equal(fields.type, "listUnordered");
-    assert.equal(
-      fields.children.filter((token) => token.type === "content").length,
-      4,
-    );
+    assert.equal(fields.children.filter((token) => token.type === "content").length, 4);
     assert.match(
       markdownText(fields),
       /Conclusion or present state:.*Basis and impact:.*Decision needed:.*Next action:/su,
@@ -317,10 +273,7 @@ test("important-update entry lands on its actionable fields", () => {
   assert.throws(
     () =>
       assertUpdateSection(
-        source.replace(
-          "### Structure an Important Update",
-          "For an important update:",
-        ),
+        source.replace("### Structure an Important Update", "For an important update:"),
       ),
     /navigable subsection/u,
   );

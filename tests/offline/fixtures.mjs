@@ -1,13 +1,7 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
-import {
-  mkdirSync,
-  mkdtempSync,
-  readFileSync,
-  rmSync,
-  writeFileSync,
-} from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
@@ -50,10 +44,7 @@ export function record(overrides = {}) {
 
 export const source = identityDefaults();
 
-export async function bundleFixture(
-  run,
-  { cache = true, lychee = true, vale = true } = {},
-) {
+export async function bundleFixture(run, { cache = true, lychee = true, vale = true } = {}) {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-bundle-test-"));
   try {
     const stage = path.join(directory, "stage");
@@ -63,35 +54,21 @@ export async function bundleFixture(
     mkdirSync(path.join(stage, "native", "lychee"), { recursive: true });
     mkdirSync(path.join(stage, "native", "vale"));
     mkdirSync(path.join(stage, "licenses", "vale"), { recursive: true });
-    writeFileSync(
-      path.join(stage, "licenses", "vale", "LICENSE"),
-      "Vale fixture license",
-    );
+    writeFileSync(path.join(stage, "licenses", "vale", "LICENSE"), "Vale fixture license");
     if (vale)
       writeFileSync(
         path.join(stage, "native", "vale", "vale-fixture.tar.gz"),
         "pinned Vale archive",
       );
     mkdirSync(path.join(stage, "licenses", "lychee"), { recursive: true });
-    writeFileSync(
-      path.join(stage, "licenses", "lychee", "LICENSE-MIT"),
-      "license fixture",
-    );
+    writeFileSync(path.join(stage, "licenses", "lychee", "LICENSE-MIT"), "license fixture");
     writeFileSync(path.join(stage, "manifest.json"), "{}\n");
     if (cache) {
-      writeFileSync(
-        path.join(stage, "npm-cache", "_cacache", "entry"),
-        "cached package",
-      );
+      writeFileSync(path.join(stage, "npm-cache", "_cacache", "entry"), "cached package");
     }
     if (lychee) {
       writeFileSync(
-        path.join(
-          stage,
-          "native",
-          "lychee",
-          "lychee-aarch64-apple-darwin.tar.gz",
-        ),
+        path.join(stage, "native", "lychee", "lychee-aarch64-apple-darwin.tar.gz"),
         "pinned archive",
       );
     }
@@ -135,10 +112,7 @@ export function buildFixture(run) {
       }),
     );
     writeFileSync(path.join(repository, "package-lock.json"), "fixture lock\n");
-    writeFileSync(
-      path.join(cacheDirectory, "_cacache", "index-v5", "entry"),
-      "cached package",
-    );
+    writeFileSync(path.join(cacheDirectory, "_cacache", "index-v5", "entry"), "cached package");
     const platform = `${process.platform}-${process.arch}`;
     const assetName = `lychee-${platform}.tar.gz`;
     const asset = Buffer.from("pinned lychee asset");

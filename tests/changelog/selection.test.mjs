@@ -23,14 +23,10 @@ test("offline dispatch tag activates release validation from a branch", () => {
         GITHUB_REF_NAME: "main",
       });
     const changelog = path.join(directory, "CHANGELOG.md");
-    const release =
-      "## 4.0.0 - 2026-09-25\n\n### Changed\n\n- Released change.\n\n";
+    const release = "## 4.0.0 - 2026-09-25\n\n### Changed\n\n- Released change.\n\n";
     const prepared = preparedSource(base, release);
     writeFileSync(changelog, prepared);
-    assert.throws(
-      validate,
-      /selected release tag disagrees with VERSION or changelog/u,
-    );
+    assert.throws(validate, /selected release tag disagrees with VERSION or changelog/u);
     commit(directory, "prepare dispatch release");
     git(directory, "tag", "v4.0.0");
     assert.throws(validate, /release tag must be annotated/u);
@@ -50,10 +46,7 @@ test("release environment selectors agree across dispatch and native tags", () =
   fixture((directory, base) => {
     writeFileSync(
       path.join(directory, "CHANGELOG.md"),
-      preparedSource(
-        base,
-        "## 4.0.0 - 2026-09-25\n\n### Changed\n\n- Released change.\n\n",
-      ),
+      preparedSource(base, "## 4.0.0 - 2026-09-25\n\n### Changed\n\n- Released change.\n\n"),
     );
     commit(directory, "prepare selected release");
     git(directory, "tag", "-a", "v4.0.0", "-m", "fixture release");
@@ -68,10 +61,7 @@ test("release environment selectors agree across dispatch and native tags", () =
         CI_COMMIT_TAG: "v4.0.0",
       },
     ]) {
-      assert.equal(
-        validateReleaseEnvironment(directory, selection).tagCount,
-        1,
-      );
+      assert.equal(validateReleaseEnvironment(directory, selection).tagCount, 1);
     }
     for (const selection of [
       {
@@ -119,14 +109,7 @@ test("offline release input refuses branches and nonrelease references", () => {
 
 test("release tag inventory rejects nested non-SemVer names", () => {
   fixture((directory) => {
-    git(
-      directory,
-      "tag",
-      "-a",
-      "v4.0.0/not-a-version",
-      "-m",
-      "invalid release",
-    );
+    git(directory, "tag", "-a", "v4.0.0/not-a-version", "-m", "invalid release");
     assert.throws(
       () => validateChangelog({ repository: directory, selectedTag: "" }),
       /strict SemVer/u,
@@ -137,20 +120,14 @@ test("release tag inventory rejects nested non-SemVer names", () => {
 test("native tag inventory ignores non-release tag namespaces", () => {
   fixture((directory) => {
     git(directory, "tag", "docs/snapshot");
-    assert.equal(
-      validateChangelog({ repository: directory, selectedTag: "" }).tagCount,
-      0,
-    );
+    assert.equal(validateChangelog({ repository: directory, selectedTag: "" }).tagCount, 0);
   });
 });
 
 test("native tag inventory verifies every tag in one Git observation", () => {
   fixture((directory, base) => {
     writeFileSync(path.join(directory, "VERSION"), "4.0.1\n");
-    writeFileSync(
-      path.join(directory, "docs", "charter.md"),
-      "> **Guideline edition:** v4.0.1\n",
-    );
+    writeFileSync(path.join(directory, "docs", "charter.md"), "> **Guideline edition:** v4.0.1\n");
     writeFileSync(
       path.join(directory, "CHANGELOG.md"),
       source(
@@ -195,16 +172,12 @@ test("native tag inventory verifies every tag in one Git observation", () => {
       new Set([${JSON.stringify(`${base}^{commit}`)}, "v4.0.0^{commit}", "v4.0.1^{commit}", "HEAD"]),
     );
   `;
-    const result = spawnSync(
-      process.execPath,
-      ["--input-type=module", "--eval", script],
-      {
-        cwd: directory,
-        encoding: "utf8",
-        input: "",
-        timeout: 30_000,
-      },
-    );
+    const result = spawnSync(process.execPath, ["--input-type=module", "--eval", script], {
+      cwd: directory,
+      encoding: "utf8",
+      input: "",
+      timeout: 30_000,
+    });
     assert.ifError(result.error);
     assert.equal(result.status, 0, result.stderr);
   });
@@ -214,24 +187,17 @@ test("native history resolution requires complete commit observations", (context
   fixture((directory, base) => {
     const changelog = path.join(directory, "CHANGELOG.md");
     const valid = source(base);
-    assert.equal(
-      validateChangelog({ repository: directory, selectedTag: "" }).version,
-      "4.0.0",
-    );
+    assert.equal(validateChangelog({ repository: directory, selectedTag: "" }).version, "4.0.0");
     const nativeSpawn = childProcess.spawnSync;
     let truncate = false;
-    const observation = context.mock.method(
-      childProcess,
-      "spawnSync",
-      (command, args, options) => {
-        const result = nativeSpawn(command, args, options);
-        if (truncate && command === "git" && args[0] === "cat-file") {
-          assert.equal(result.status, 0, result.stderr);
-          return { ...result, stdout: result.stdout.slice(0, -1) };
-        }
-        return result;
-      },
-    );
+    const observation = context.mock.method(childProcess, "spawnSync", (command, args, options) => {
+      const result = nativeSpawn(command, args, options);
+      if (truncate && command === "git" && args[0] === "cat-file") {
+        assert.equal(result.status, 0, result.stderr);
+        return { ...result, stdout: result.stdout.slice(0, -1) };
+      }
+      return result;
+    });
     syncBuiltinESMExports();
     try {
       truncate = true;
@@ -252,10 +218,7 @@ test("native history resolution requires complete commit observations", (context
         /not a commit|warning output/u,
       );
       writeFileSync(changelog, valid);
-      assert.equal(
-        validateChangelog({ repository: directory, selectedTag: "" }).version,
-        "4.0.0",
-      );
+      assert.equal(validateChangelog({ repository: directory, selectedTag: "" }).version, "4.0.0");
     } finally {
       observation.mock.restore();
       syncBuiltinESMExports();

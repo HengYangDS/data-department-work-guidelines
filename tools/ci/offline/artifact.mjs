@@ -1,18 +1,8 @@
 import { createHash } from "node:crypto";
-import {
-  lstatSync,
-  mkdtempDisposableSync,
-  readFileSync,
-  readdirSync,
-} from "node:fs";
+import { lstatSync, mkdtempDisposableSync, readFileSync, readdirSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import {
-  declaredToolRuntime,
-  offlineBundleRecordPath,
-  root,
-  run,
-} from "../../runtime.mjs";
+import { declaredToolRuntime, offlineBundleRecordPath, root, run } from "../../runtime.mjs";
 import { nativeSupplyPath, readNativeSupply } from "../../supply.mjs";
 
 const recordKeys = [
@@ -27,11 +17,7 @@ const recordKeys = [
 ];
 
 export function sha256(value) {
-  return (
-    typeof value === "string" &&
-    /^[0-9a-f]{64}$/u.test(value) &&
-    value !== "0".repeat(64)
-  );
+  return typeof value === "string" && /^[0-9a-f]{64}$/u.test(value) && value !== "0".repeat(64);
 }
 
 export function validateBundleRecord(record, source) {
@@ -48,8 +34,7 @@ export function validateBundleRecord(record, source) {
     record.nodeMajor !== source.nodeMajor ||
     !/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/u.test(record.version) ||
     record.version !== source.version ||
-    record.fileName !==
-      `data-department-work-guidelines-v${record.version}-offline-tools.tar.gz` ||
+    record.fileName !== `data-department-work-guidelines-v${record.version}-offline-tools.tar.gz` ||
     !sha256(record.sha256) ||
     !sha256(record.lockSha256) ||
     !sha256(record.nativeToolsSha256) ||
@@ -69,15 +54,9 @@ export function digestBytes(bytes) {
 
 export function sourceIdentity(repository) {
   const version = readFileSync(path.join(repository, "VERSION"), "utf8").trim();
-  const packageJsonSha256 = digestBytes(
-    readFileSync(path.join(repository, "package.json")),
-  );
-  const lockSha256 = digestBytes(
-    readFileSync(path.join(repository, "package-lock.json")),
-  );
-  const nativeToolsSha256 = digestBytes(
-    readFileSync(path.join(repository, nativeSupplyPath)),
-  );
+  const packageJsonSha256 = digestBytes(readFileSync(path.join(repository, "package.json")));
+  const lockSha256 = digestBytes(readFileSync(path.join(repository, "package-lock.json")));
+  const nativeToolsSha256 = digestBytes(readFileSync(path.join(repository, nativeSupplyPath)));
   const runtime = declaredToolRuntime(repository);
   return {
     version,
@@ -89,9 +68,7 @@ export function sourceIdentity(repository) {
 }
 
 export function readBundleRecord(repository = root) {
-  const record = JSON.parse(
-    readFileSync(path.join(repository, offlineBundleRecordPath), "utf8"),
-  );
+  const record = JSON.parse(readFileSync(path.join(repository, offlineBundleRecordPath), "utf8"));
   return validateBundleRecord(record, sourceIdentity(repository));
 }
 
@@ -99,11 +76,7 @@ function lines(source) {
   return source.split(/\r?\n/u).filter(Boolean);
 }
 
-export function assertSafeBundleListing(
-  namesSource,
-  verboseSource,
-  supply = readNativeSupply(),
-) {
+export function assertSafeBundleListing(namesSource, verboseSource, supply = readNativeSupply()) {
   const names = lines(namesSource);
   const verbose = lines(verboseSource);
   if (!names.length || names.length !== verbose.length) {
@@ -136,9 +109,7 @@ export function assertSafeBundleListing(
       (relative !== "" &&
         pathParts.some(
           (part, partIndex) =>
-            (part === "" && partIndex !== pathParts.length - 1) ||
-            part === "." ||
-            part === "..",
+            (part === "" && partIndex !== pathParts.length - 1) || part === "." || part === "..",
         )) ||
       seen.has(relative)
     ) {
@@ -172,12 +143,7 @@ export function assertSafeBundleListing(
   return names;
 }
 
-export function inspectBundle(
-  bundlePath,
-  record,
-  source,
-  supply = readNativeSupply(),
-) {
+export function inspectBundle(bundlePath, record, source, supply = readNativeSupply()) {
   validateBundleRecord(record, source);
   const archive = path.resolve(bundlePath);
   const stat = lstatSync(archive);
@@ -187,9 +153,7 @@ export function inspectBundle(
   if (path.basename(archive) !== record.fileName) {
     throw new Error("offline bundle file name does not match source");
   }
-  const actual = createHash("sha256")
-    .update(readFileSync(archive))
-    .digest("hex");
+  const actual = createHash("sha256").update(readFileSync(archive)).digest("hex");
   if (actual !== record.sha256) {
     throw new Error("offline bundle digest mismatch");
   }
@@ -210,9 +174,7 @@ export function inspectBundle(
 export function assertRegularTree(directory) {
   const rootStat = lstatSync(directory);
   if (!rootStat.isDirectory() || rootStat.isSymbolicLink()) {
-    throw new Error(
-      `offline bundle cache is not a regular directory: ${directory}`,
-    );
+    throw new Error(`offline bundle cache is not a regular directory: ${directory}`);
   }
   let files = 0;
   for (const entry of readdirSync(directory, { withFileTypes: true })) {
@@ -271,14 +233,10 @@ function sameNames(directory, expected) {
 
 export function validateExtractedBundle(directory, repository) {
   assertRegularTree(directory);
-  if (
-    !sameNames(directory, ["manifest.json", "npm-cache", "native", "licenses"])
-  ) {
+  if (!sameNames(directory, ["manifest.json", "npm-cache", "native", "licenses"])) {
     throw new Error("unexpected offline bundle root member");
   }
-  const manifest = JSON.parse(
-    readFileSync(path.join(directory, "manifest.json"), "utf8"),
-  );
+  const manifest = JSON.parse(readFileSync(path.join(directory, "manifest.json"), "utf8"));
   const source = sourceIdentity(repository);
   if (
     manifest.schemaVersion !== 4 ||
@@ -314,10 +272,7 @@ export function validateExtractedBundle(directory, repository) {
         { name: asset.name, sha256: asset.sha256 },
       ]),
     );
-    if (
-      JSON.stringify(manifest.tools[tool].assets) !==
-      JSON.stringify(expectedAssets)
-    )
+    if (JSON.stringify(manifest.tools[tool].assets) !== JSON.stringify(expectedAssets))
       throw new Error("offline bundle asset manifest differs from source");
     const assetDirectory = path.join(directory, "native", tool);
     if (
@@ -333,15 +288,9 @@ export function validateExtractedBundle(directory, repository) {
     if (!sameNames(licenseDirectory, Object.keys(descriptor.licenses)))
       throw new Error("offline bundle license inventory differs from source");
     const expectedLicenses = Object.fromEntries(
-      Object.entries(descriptor.licenses).map(([name, value]) => [
-        name,
-        value.sha256,
-      ]),
+      Object.entries(descriptor.licenses).map(([name, value]) => [name, value.sha256]),
     );
-    if (
-      JSON.stringify(manifest.tools[tool].licenses) !==
-      JSON.stringify(expectedLicenses)
-    )
+    if (JSON.stringify(manifest.tools[tool].licenses) !== JSON.stringify(expectedLicenses))
       throw new Error("offline bundle license manifest differs from source");
     for (const [name, value] of Object.entries(descriptor.licenses))
       pinnedFile(licenseDirectory, name, value.sha256, "license");
@@ -351,15 +300,8 @@ export function validateExtractedBundle(directory, repository) {
 
 export function verifyBundle({ bundlePath, record, repository = root }) {
   const archive = path.resolve(bundlePath);
-  inspectBundle(
-    archive,
-    record,
-    sourceIdentity(repository),
-    readNativeSupply(repository),
-  );
-  using checking = mkdtempDisposableSync(
-    path.join(os.tmpdir(), "ddwg-bundle-check-"),
-  );
+  inspectBundle(archive, record, sourceIdentity(repository), readNativeSupply(repository));
+  using checking = mkdtempDisposableSync(path.join(os.tmpdir(), "ddwg-bundle-check-"));
   const temporary = checking.path;
   run("tar", ["-xf", archive, "--no-same-owner", "-C", temporary], {
     rejectStderr: true,

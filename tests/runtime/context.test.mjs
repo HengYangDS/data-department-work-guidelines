@@ -51,19 +51,13 @@ test("source context finishes before inherited child output without merging stre
     assert.equal(result.status, 1, result.stderr);
     const lines = result.stdout.trimEnd().split(/\r?\n/u);
     assert.equal(lines.length, 2, "complete INFO precedes one child line");
-    assert.ok(
-      lines[1] === "CHILD_STDOUT",
-      "child output remains a separate line",
-    );
+    assert.ok(lines[1] === "CHILD_STDOUT", "child output remains a separate line");
     assert.ok(lines[0].startsWith("INFO "));
     const context = JSON.parse(lines[0].slice(5));
     assert.equal(context.kind, "repository-verification-context");
     assert.equal(context.repository, fs.realpathSync.native(root));
     assert.equal(context.runtime.hostname, hostname);
-    assert.equal(
-      result.stderr,
-      "CHILD_STDERR\nfixture validation stopped after child output\n",
-    );
+    assert.equal(result.stderr, "CHILD_STDERR\nfixture validation stopped after child output\n");
   }
 });
 
@@ -124,15 +118,11 @@ test("source checks report a closed stdout through their native error owner", as
     process.argv = [process.execPath, ${JSON.stringify(path.join(root, "tools/docs/cli.mjs"))}, ${JSON.stringify(command)}];
     await import(${JSON.stringify(pathToFileURL(path.join(root, "tools/docs/cli.mjs")).href)});
   `;
-    const child = childProcess.spawn(
-      process.execPath,
-      ["--input-type=module"],
-      {
-        cwd: root,
-        stdio: ["pipe", "pipe", "pipe"],
-        timeout: 15_000,
-      },
-    );
+    const child = childProcess.spawn(process.execPath, ["--input-type=module"], {
+      cwd: root,
+      stdio: ["pipe", "pipe", "pipe"],
+      timeout: 15_000,
+    });
     child.stdout.once("close", () => child.stdin.end(script));
     child.stdout.destroy();
     child.stderr.setEncoding("utf8");
@@ -147,11 +137,7 @@ test("source checks report a closed stdout through their native error owner", as
     assert.equal(status, 1, stderr);
     assert.equal(signal, null);
     const lines = stderr.trimEnd().split(/\r?\n/u);
-    assert.equal(
-      lines.length,
-      2,
-      "one native observation and one owned diagnosis",
-    );
+    assert.equal(lines.length, 2, "one native observation and one owned diagnosis");
     const observed = JSON.parse(lines[0]);
     assert.equal(observed.kind, "native-write-error");
     assert.equal(typeof observed.code, "string");
@@ -166,10 +152,7 @@ test("verification context binds native workspace capacity without claiming VM i
   const actual = workspaceObservation();
   assert.equal(actual.kind, "repository-verification-context");
   assert.equal(actual.repository, fs.realpathSync.native(root));
-  assert.equal(
-    actual.source.commit,
-    run("git", ["rev-parse", "HEAD"], { capture: true }).trim(),
-  );
+  assert.equal(actual.source.commit, run("git", ["rev-parse", "HEAD"], { capture: true }).trim());
   assert.equal(
     actual.source.tree,
     run("git", ["rev-parse", "HEAD^{tree}"], { capture: true }).trim(),

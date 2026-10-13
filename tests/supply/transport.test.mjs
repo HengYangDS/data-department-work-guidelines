@@ -64,9 +64,7 @@ test("GitLab package request refuses missing or untrusted CI inputs", () => {
     { CI_JOB_TOKEN: "fixture\u0000only" },
     { CI_JOB_TOKEN: "fixture\u0100only" },
   ]) {
-    assert.throws(() =>
-      gitlabPackageRequest("lychee", asset, { ...valid, ...changed }),
-    );
+    assert.throws(() => gitlabPackageRequest("lychee", asset, { ...valid, ...changed }));
   }
 });
 
@@ -99,12 +97,9 @@ test("native asset streaming admits the exact size and refuses one extra byte", 
   const admitted = Buffer.from("bounded");
   let bytes = admitted;
   const asset = { size: admitted.length };
-  const original = Object.assign(
-    new Error("fixture-only cancellation failed"),
-    {
-      code: "ECONNRESET",
-    },
-  );
+  const original = Object.assign(new Error("fixture-only cancellation failed"), {
+    code: "ECONNRESET",
+  });
   let cancellationFails = false;
   let cancellations = 0;
   context.mock.method(
@@ -127,19 +122,14 @@ test("native asset streaming admits the exact size and refuses one extra byte", 
   for (const authenticated of [false, true]) {
     const request = {
       url: "https://fixture.invalid/asset",
-      ...(authenticated
-        ? { headers: { "JOB-TOKEN": "fixture-only" }, redirect: "error" }
-        : {}),
+      ...(authenticated ? { headers: { "JOB-TOKEN": "fixture-only" }, redirect: "error" } : {}),
     };
     bytes = Buffer.concat([admitted, Buffer.from("!")]);
     cancellationFails = false;
     await assert.rejects(downloadAsset(request, asset), /size limit/u);
     cancellationFails = true;
     await assert.rejects(downloadAsset(request, asset), (error) => {
-      assert.equal(
-        error.message,
-        "native tool download exceeds the size limit",
-      );
+      assert.equal(error.message, "native tool download exceeds the size limit");
       if (authenticated) {
         assert.notEqual(error.cause, original);
         assert.equal(error.cause.code, "ECONNRESET");
@@ -167,9 +157,7 @@ test("native transport errors follow the public and authenticated cause boundary
     await assert.rejects(
       downloadAsset({
         url: "https://fixture.invalid/asset",
-        ...(authenticated
-          ? { headers: { "JOB-TOKEN": "fixture-only" }, redirect: "error" }
-          : {}),
+        ...(authenticated ? { headers: { "JOB-TOKEN": "fixture-only" }, redirect: "error" } : {}),
       }),
       (error) => {
         assert.equal(error.message, "native tool download failed");
@@ -188,10 +176,9 @@ test("native transport errors follow the public and authenticated cause boundary
 });
 
 test("native body-stream and response-disposal errors preserve safe context without exposing authenticated causes", async (context) => {
-  const original = Object.assign(
-    new Error("fixture-only authenticated body failed"),
-    { code: "UND_ERR_BODY_TIMEOUT" },
-  );
+  const original = Object.assign(new Error("fixture-only authenticated body failed"), {
+    code: "UND_ERR_BODY_TIMEOUT",
+  });
   let response;
   let requests = 0;
   context.mock.method(globalThis, "fetch", async () => {
@@ -201,9 +188,7 @@ test("native body-stream and response-disposal errors preserve safe context with
   for (const authenticated of [false, true]) {
     const request = {
       url: "https://fixture.invalid/asset",
-      ...(authenticated
-        ? { headers: { "JOB-TOKEN": "fixture-only" }, redirect: "error" }
-        : {}),
+      ...(authenticated ? { headers: { "JOB-TOKEN": "fixture-only" }, redirect: "error" } : {}),
     };
     for (const phase of ["body", "dispose"]) {
       response =
@@ -243,11 +228,7 @@ test("native body-stream and response-disposal errors preserve safe context with
       });
     }
   }
-  assert.equal(
-    requests,
-    4,
-    "body and disposal failures do not trigger retries",
-  );
+  assert.equal(requests, 4, "body and disposal failures do not trigger retries");
 });
 
 test("real authenticated redirects are refused without forwarding identity", async () => {
@@ -266,10 +247,7 @@ test("real authenticated redirects are refused without forwarding identity", asy
     });
     await assert.rejects(downloadAsset(request), (error) => {
       assert.match(error.cause?.message ?? "", /redirect refused/u);
-      assert.doesNotMatch(
-        `${error.message} ${error.cause?.message}`,
-        /fixture-only/u,
-      );
+      assert.doesNotMatch(`${error.message} ${error.cause?.message}`, /fixture-only/u);
       return true;
     });
     assert.equal(requests.length, 1);
@@ -337,10 +315,7 @@ test("a rejected live HTTP stream closes before test teardown", async () => {
       /native tool download failed: HTTP 500/u,
     );
     assert.equal(
-      await Promise.race([
-        closed.promise,
-        delay(2000, false, { signal: deadline.signal }),
-      ]),
+      await Promise.race([closed.promise, delay(2000, false, { signal: deadline.signal })]),
       true,
       "rejected response must close before fallback teardown",
     );
@@ -357,23 +332,13 @@ test("download failures share one native cause and privacy boundary", () => {
   const native = Object.assign(new Error("fixture-only private transport"), {
     code: "ECONNRESET",
   });
-  const publicFailure = packageTransport.downloadFailure(
-    "download failed",
-    native,
-  );
+  const publicFailure = packageTransport.downloadFailure("download failed", native);
   assert.equal(publicFailure.message, "download failed");
   assert.equal(publicFailure.cause, native);
-  const privateFailure = packageTransport.downloadFailure(
-    "download failed",
-    native,
-    true,
-  );
+  const privateFailure = packageTransport.downloadFailure("download failed", native, true);
   assert.notEqual(privateFailure.cause, native);
   assert.equal(privateFailure.cause.code, "ECONNRESET");
-  assert.equal(
-    privateFailure.cause.message,
-    "package transport connection reset",
-  );
+  assert.equal(privateFailure.cause.message, "package transport connection reset");
   assert.equal(Object.hasOwn(privateFailure.cause, "cause"), false);
   assert.doesNotMatch(privateFailure.cause.message, /fixture-only/u);
   for (const authenticated of [false, true]) {

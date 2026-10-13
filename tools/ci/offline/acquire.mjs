@@ -1,9 +1,4 @@
-import {
-  linkSync,
-  mkdirSync,
-  mkdtempDisposableSync,
-  writeFileSync,
-} from "node:fs";
+import { linkSync, mkdirSync, mkdtempDisposableSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { downloadFailure, projectPackageRequest } from "../gitlab-package.mjs";
 import { managedFileExists, root } from "../../runtime.mjs";
@@ -58,18 +53,11 @@ async function downloadBundle(request, target, fetcher, provider) {
       provider === "GitLab",
     );
   }
-  if (size > limit)
-    throw new Error(`${provider} release bundle exceeds the size limit`);
+  if (size > limit) throw new Error(`${provider} release bundle exceeds the size limit`);
   writeFileSync(target, Buffer.concat(chunks), { flag: "wx" });
 }
 
-async function acquireBundle({
-  repository,
-  record,
-  request,
-  fetcher,
-  provider,
-}) {
+async function acquireBundle({ repository, record, request, fetcher, provider }) {
   const directory = path.join(repository, "build/artifacts/offline-bundle");
   const target = path.join(directory, record.fileName);
   if (managedFileExists(target, repository))

@@ -1,9 +1,4 @@
-import {
-  assertNodeRuntime,
-  reportError,
-  readText,
-  workspaceObservation,
-} from "../runtime.mjs";
+import { assertNodeRuntime, reportError, readText, workspaceObservation } from "../runtime.mjs";
 
 async function reportVerificationContext() {
   // Finish this record before synchronous children inherit the same stream.
@@ -11,30 +6,21 @@ async function reportVerificationContext() {
   await new Promise((resolve, reject) => {
     onWriteError = reject;
     process.stdout.once("error", onWriteError);
-    process.stdout.write(
-      `INFO ${JSON.stringify(workspaceObservation())}\n`,
-      (error) => (error ? reject(error) : resolve()),
+    process.stdout.write(`INFO ${JSON.stringify(workspaceObservation())}\n`, (error) =>
+      error ? reject(error) : resolve(),
     );
   }).finally(() => process.stdout.off("error", onWriteError));
 }
 
 async function checkRepository() {
-  const {
-    checkLineEndingAttributes,
-    checkLicense,
-    checkNavigation,
-    checkNoScope,
-  } = await import("./governance.mjs");
-  const { checkLinks, checkProse, checkTextLayout } =
-    await import("./content.mjs");
+  const { checkLineEndingAttributes, checkLicense, checkNavigation, checkNoScope } =
+    await import("./governance.mjs");
+  const { checkLinks, checkProse, checkTextLayout } = await import("./content.mjs");
   const { checkChangelog } = await import("./changelog.mjs");
   const { checkCi } = await import("./ci.mjs");
   const { checkDecisions } = await import("./decisions.mjs");
-  const {
-    dependencyPolicyPath,
-    parseDependencyPolicy,
-    validateDependencyInput,
-  } = await import("./dependencies.mjs");
+  const { dependencyPolicyPath, parseDependencyPolicy, validateDependencyInput } =
+    await import("./dependencies.mjs");
   validateDependencyInput(
     JSON.parse(readText("package-lock.json")),
     parseDependencyPolicy(readText(dependencyPolicyPath)),
@@ -62,10 +48,7 @@ try {
       await checkRepository();
       break;
     case "format": {
-      if (
-        arguments_.length > 1 ||
-        (arguments_.length === 1 && arguments_[0] !== "--check")
-      ) {
+      if (arguments_.length > 1 || (arguments_.length === 1 && arguments_[0] !== "--check")) {
         throw new Error("format accepts only --check");
       }
       const { formatSource } = await import("./content.mjs");
@@ -85,10 +68,7 @@ try {
       break;
     }
     case "links": {
-      if (
-        arguments_.length > 1 ||
-        (arguments_.length === 1 && arguments_[0] !== "--online")
-      ) {
+      if (arguments_.length > 1 || (arguments_.length === 1 && arguments_[0] !== "--online")) {
         throw new Error("links accepts only --online");
       }
       const { checkLinks } = await import("./content.mjs");

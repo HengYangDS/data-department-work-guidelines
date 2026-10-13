@@ -32,15 +32,7 @@ const subcommands = {
     "publish",
     "status",
   ]),
-  openspec: new Set([
-    "archive",
-    "change",
-    "list",
-    "new",
-    "show",
-    "status",
-    "validate",
-  ]),
+  openspec: new Set(["archive", "change", "list", "new", "show", "status", "validate"]),
   git: new Set([
     "add",
     "branch",
@@ -56,16 +48,7 @@ const subcommands = {
   npm: new Set(["ci", "install", "run", "test"]),
 };
 
-const interpreters = new Set([
-  "bash",
-  "fish",
-  "sh",
-  "zsh",
-  "node",
-  "python",
-  "python3",
-  "pwsh",
-]);
+const interpreters = new Set(["bash", "fish", "sh", "zsh", "node", "python", "python3", "pwsh"]);
 
 const wrappers = new Set(["command", "env", "nice", "nohup", "sudo", "time"]);
 
@@ -75,16 +58,12 @@ const argumentSyntax =
   /^(?:--?[^-\s]|\.{1,2}[\\/]|[\\/]|https?:\/\/|\$)|[\\/]|\.(?:[cm]?js|py|sh)$|[*?]/u;
 
 function commandName(word) {
-  return path.posix
-    .basename(word.replaceAll("\\", "/"))
-    .replace(/\.exe$/iu, "");
+  return path.posix.basename(word.replaceAll("\\", "/")).replace(/\.exe$/iu, "");
 }
 
 function repositoryCommand(word) {
   const normalized = word.replaceAll("\\", "/");
-  return (
-    normalized.startsWith("./scripts/") || normalized.startsWith("./tools/")
-  );
+  return normalized.startsWith("./scripts/") || normalized.startsWith("./tools/");
 }
 
 function knownCommand(word) {
@@ -105,11 +84,7 @@ function invocationWords(words) {
     tokens.shift();
     if (
       !tokens.length ||
-      !(
-        tokens[0].startsWith("-") ||
-        assignment.test(tokens[0]) ||
-        knownCommand(tokens[0])
-      )
+      !(tokens[0].startsWith("-") || assignment.test(tokens[0]) || knownCommand(tokens[0]))
     )
       return false;
     while (tokens.length && !knownCommand(tokens[0])) tokens.shift();
@@ -119,9 +94,7 @@ function invocationWords(words) {
   const name = commandName(executable);
   if (interpreters.has(name)) return argumentSyntax.test(argument);
   if (["curl", "rm"].includes(name))
-    return (
-      tokens.length === 2 || argumentSyntax.test(argument) || argument === "--"
-    );
+    return tokens.length === 2 || argumentSyntax.test(argument) || argument === "--";
   if (repositoryCommand(executable)) return true;
   return (
     Object.hasOwn(subcommands, name) &&
@@ -135,8 +108,7 @@ export function commandInvocation(source) {
     .replace(/^(?:[-*+] |\d+[.)] )/u, "")
     .trim();
   if (!candidate || candidate.startsWith("#")) return false;
-  if (/^(?:\$\s+|[\w.-]+@[\w.-]+(?::[^$#\s]+)?\$\s+)/u.test(candidate))
-    return true;
+  if (/^(?:\$\s+|[\w.-]+@[\w.-]+(?::[^$#\s]+)?\$\s+)/u.test(candidate)) return true;
   const words = [];
   for (const token of parseShell(candidate, (name) => `$${name}`)) {
     if (typeof token === "string") words.push(token);
@@ -172,14 +144,10 @@ export function executionViolation(source, tokens = markdownTokens(source)) {
     }
     if (node.type === "codeFenced" || node.type === "codeIndented")
       return `unsupported code block; execution content belongs outside a DR at line ${line}`;
-    if (
-      node.type === "codeText" &&
-      commandInvocation(markdownText(node, { code: true }))
-    )
+    if (node.type === "codeText" && commandInvocation(markdownText(node, { code: true })))
       return `inline command invocation at line ${line}`;
     if (
-      (["paragraph", "tableContent"].includes(node.type) ||
-        headingLevel(node) > 0) &&
+      (["paragraph", "tableContent"].includes(node.type) || headingLevel(node) > 0) &&
       markdownText(node, { links: false })
         .split(/\r?\n/u)
         .some((value) => commandInvocation(value))
@@ -203,9 +171,7 @@ export function validateDecision(relative, source) {
     throw new Error(`DR identity or status mismatch: ${relative}`);
   }
   const tokens = markdownTokens(source, relative);
-  const headings = [...walkMarkdown(tokens)].filter(
-    (node) => headingLevel(node) > 0,
-  );
+  const headings = [...walkMarkdown(tokens)].filter((node) => headingLevel(node) > 0);
   const titles = headings.filter((node) => headingLevel(node) === 1);
   if (
     titles.length !== 1 ||
@@ -216,12 +182,9 @@ export function validateDecision(relative, source) {
   const sections = headings.filter((node) => node !== titles[0]);
   if (
     sections.some((node) => headingLevel(node) !== 2 || node.parent) ||
-    JSON.stringify(sections.map(headingText)) !==
-      JSON.stringify(requiredSections)
+    JSON.stringify(sections.map(headingText)) !== JSON.stringify(requiredSections)
   ) {
-    throw new Error(
-      `DR sections must be exactly ${requiredSections.join(", ")}: ${relative}`,
-    );
+    throw new Error(`DR sections must be exactly ${requiredSections.join(", ")}: ${relative}`);
   }
   const violation = executionViolation(source, tokens);
   if (violation) throw new Error(`DR contains ${violation}: ${relative}`);
@@ -238,9 +201,7 @@ export function validateDecision(relative, source) {
           markdownText(node, { code: true }).trim(),
       )
     ) {
-      throw new Error(
-        `DR section ${headingText(section)} requires readable content: ${relative}`,
-      );
+      throw new Error(`DR section ${headingText(section)} requires readable content: ${relative}`);
     }
   }
   return expected;

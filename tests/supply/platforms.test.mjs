@@ -6,11 +6,7 @@ import path from "node:path";
 import { test } from "node:test";
 import { manifest, selectedAsset } from "../../tools/ci/install-native.mjs";
 import { root } from "../../tools/runtime.mjs";
-import {
-  managedToolPath,
-  nativeToolPlatform,
-  nativeToolBinary,
-} from "../../tools/supply.mjs";
+import { managedToolPath, nativeToolPlatform, nativeToolBinary } from "../../tools/supply.mjs";
 
 test("official supply declares exactly the supported platform assets", () => {
   assert.deepEqual(Object.keys(manifest.tools.lychee.assets).sort(), [
@@ -22,9 +18,7 @@ test("official supply declares exactly the supported platform assets", () => {
   ]);
   for (const [key, asset] of Object.entries(manifest.tools.lychee.assets)) {
     assert.match(asset.sha256, /^[0-9a-f]{64}$/u);
-    assert.ok(
-      selectedAsset("lychee", ...key.split("-")).url.endsWith(asset.name),
-    );
+    assert.ok(selectedAsset("lychee", ...key.split("-")).url.endsWith(asset.name));
   }
   assert.deepEqual(Object.keys(manifest.tools.lychee.licenses).sort(), [
     "LICENSE-APACHE",
@@ -43,27 +37,14 @@ test("Windows ARM64 Node selects pinned compatible tools without duplicating ass
     assert.equal(selected.key, "win32-x64", tool);
     assert.equal(selected.name, descriptor.assets["win32-x64"].name, tool);
     assert.equal(selected.sha256, descriptor.assets["win32-x64"].sha256, tool);
-    assert.equal(
-      managedToolPath(tool, "win32-arm64"),
-      managedToolPath(tool, "win32-x64"),
-      tool,
-    );
+    assert.equal(managedToolPath(tool, "win32-arm64"), managedToolPath(tool, "win32-x64"), tool);
     const native = structuredClone(manifest);
     native.tools[tool].assets["win32-arm64"] = { name: "native asset fixture" };
-    assert.equal(
-      nativeToolPlatform(tool, "win32-arm64", native),
-      "win32-arm64",
-    );
+    assert.equal(nativeToolPlatform(tool, "win32-arm64", native), "win32-arm64");
     delete native.tools[tool].assets["win32-x64"];
     delete native.tools[tool].assets["win32-arm64"];
-    assert.throws(
-      () => nativeToolPlatform(tool, "win32-arm64", native),
-      /unsupported/u,
-    );
-    assert.throws(
-      () => selectedAsset(tool, "linux", "riscv64"),
-      /unsupported/u,
-    );
+    assert.throws(() => nativeToolPlatform(tool, "win32-arm64", native), /unsupported/u);
+    assert.throws(() => selectedAsset(tool, "linux", "riscv64"), /unsupported/u);
   }
 });
 
@@ -84,16 +65,11 @@ test("all native consumers share the declared managed path", () => {
     }
   }
   assert.throws(() => managedToolPath("constructor"), /unknown native tool/u);
-  assert.throws(
-    () => managedToolPath("lychee", "win32-riscv64"),
-    /unsupported/u,
-  );
+  assert.throws(() => managedToolPath("lychee", "win32-riscv64"), /unsupported/u);
 });
 
 test("managed paths retain their bound manifest without rereading supply", () => {
-  using workspace = fs.mkdtempDisposableSync(
-    path.join(os.tmpdir(), "ddwg-native-path-binding-"),
-  );
+  using workspace = fs.mkdtempDisposableSync(path.join(os.tmpdir(), "ddwg-native-path-binding-"));
   const repository = workspace.path;
   const before = structuredClone(manifest);
   assert.throws(() => managedToolPath("vale", undefined, repository), {
@@ -168,11 +144,7 @@ test("print-spec is read-only and selects this host", () => {
 
 test("one supply manifest declares the selected native tools without a retired entry", () => {
   assert.equal(manifest.schemaVersion, 1);
-  assert.deepEqual(Object.keys(manifest.tools), [
-    "lychee",
-    "vale",
-    "osv-scanner",
-  ]);
+  assert.deepEqual(Object.keys(manifest.tools), ["lychee", "vale", "osv-scanner"]);
   const vale = manifest.tools.vale;
   const platforms = Object.keys(manifest.tools.lychee.assets).sort();
   for (const [tool, descriptor] of Object.entries(manifest.tools)) {
@@ -190,18 +162,9 @@ test("one supply manifest declares the selected native tools without a retired e
   assert.deepEqual(Object.keys(vale.licenses), ["LICENSE"]);
   assert.match(vale.licenses.LICENSE.sha256, /^[0-9a-f]{64}$/u);
   assert.throws(() => selectedAsset("unknown"), /unknown/u);
-  assert.throws(
-    () => selectedAsset("vale", "linux", "riscv64"),
-    /unsupported/u,
-  );
-  assert.equal(
-    fs.existsSync(path.join(root, ".config/tools/lychee.json")),
-    false,
-  );
-  assert.equal(
-    fs.existsSync(path.join(root, "tools/ci/install-lychee.mjs")),
-    false,
-  );
+  assert.throws(() => selectedAsset("vale", "linux", "riscv64"), /unsupported/u);
+  assert.equal(fs.existsSync(path.join(root, ".config/tools/lychee.json")), false);
+  assert.equal(fs.existsSync(path.join(root, "tools/ci/install-lychee.mjs")), false);
 });
 
 test("official OSV supply pins raw binaries and notices for every native host", () => {

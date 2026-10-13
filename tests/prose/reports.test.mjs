@@ -41,22 +41,15 @@ test("source checks reject prose before unrelated native prerequisites", () => {
     assert.equal(readFileSync("README.md", "utf8"), before);
     process.exitCode = 0;
   `;
-  const result = spawnSync(
-    process.execPath,
-    ["--input-type=module", "--eval", script],
-    {
-      cwd: root,
-      encoding: "utf8",
-      input: "",
-      timeout: 20_000,
-    },
-  );
+  const result = spawnSync(process.execPath, ["--input-type=module", "--eval", script], {
+    cwd: root,
+    encoding: "utf8",
+    input: "",
+    timeout: 20_000,
+  });
   assert.ifError(result.error);
   assert.equal(result.status, 0, result.stderr);
-  assert.match(
-    result.stdout,
-    /README\.md:1:1:Vale\.Repetition:fixture repeated word/u,
-  );
+  assert.match(result.stdout, /README\.md:1:1:Vale\.Repetition:fixture repeated word/u);
 });
 
 test("native Vale findings keep their original output without a report schema", (context) => {
@@ -65,19 +58,15 @@ test("native Vale findings keep their original output without a report schema", 
   let status = 0;
   let executions = 0;
   const output = context.mock.method(process.stdout, "write", () => true);
-  const observation = context.mock.method(
-    childProcess,
-    "spawnSync",
-    (command, args, options) => {
-      if (args?.includes("--output=line")) {
-        assert.equal(args.includes("--no-exit"), false);
-        assert.equal(args.includes("--output=JSON"), false);
-        executions += 1;
-        return { status, stdout: report, stderr: "" };
-      }
-      return nativeSpawn(command, args, options);
-    },
-  );
+  const observation = context.mock.method(childProcess, "spawnSync", (command, args, options) => {
+    if (args?.includes("--output=line")) {
+      assert.equal(args.includes("--no-exit"), false);
+      assert.equal(args.includes("--output=JSON"), false);
+      executions += 1;
+      return { status, stdout: report, stderr: "" };
+    }
+    return nativeSpawn(command, args, options);
+  });
   syncBuiltinESMExports();
   try {
     for (const finding of [

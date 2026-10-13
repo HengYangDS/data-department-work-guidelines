@@ -28,13 +28,9 @@ export function npmCliPath({
     return realpathSync(npmExecPath);
   }
   const directories = [
-    ...new Set([
-      ...pathValue.split(path.delimiter),
-      path.dirname(process.execPath),
-    ]),
+    ...new Set([...pathValue.split(path.delimiter), path.dirname(process.execPath)]),
   ].filter(Boolean);
-  const launchers =
-    platform === "win32" ? ["npm.cmd", "npm.exe", "npm"] : ["npm"];
+  const launchers = platform === "win32" ? ["npm.cmd", "npm.exe", "npm"] : ["npm"];
   for (const directory of directories) {
     let selectedLauncher;
     for (const name of launchers) {
@@ -51,15 +47,7 @@ export function npmCliPath({
     if (!selectedLauncher) continue;
     for (const candidate of [
       path.join(directory, "node_modules", "npm", "bin", "npm-cli.js"),
-      path.join(
-        directory,
-        "..",
-        "lib",
-        "node_modules",
-        "npm",
-        "bin",
-        "npm-cli.js",
-      ),
+      path.join(directory, "..", "lib", "node_modules", "npm", "bin", "npm-cli.js"),
     ]) {
       if (pathExists(candidate) && lstatSync(candidate).isFile()) {
         if (
@@ -82,13 +70,7 @@ export function npmCliPath({
             if (!path.isAbsolute(prefix) || /[\r\n]/u.test(prefix)) {
               throw new Error("native Windows npm prefix is invalid");
             }
-            const selected = path.join(
-              prefix,
-              "node_modules",
-              "npm",
-              "bin",
-              "npm-cli.js",
-            );
+            const selected = path.join(prefix, "node_modules", "npm", "bin", "npm-cli.js");
             if (pathExists(selected) && lstatSync(selected).isFile()) {
               return realpathSync(selected);
             }
@@ -97,9 +79,7 @@ export function npmCliPath({
         return realpathSync(candidate);
       }
     }
-    throw new Error(
-      "selected npm launcher has no supported JavaScript entrypoint",
-    );
+    throw new Error("selected npm launcher has no supported JavaScript entrypoint");
   }
   throw new Error("supported npm JavaScript entrypoint is unavailable");
 }
@@ -115,9 +95,7 @@ export function isolatedNpmEnvironment(
   writeFileSync(globalConfig, "");
   const isolated = Object.fromEntries(
     Object.entries(environment).filter(
-      ([key]) =>
-        !/^npm_config_/iu.test(key) &&
-        !["NPM_TOKEN", "NODE_AUTH_TOKEN"].includes(key),
+      ([key]) => !/^npm_config_/iu.test(key) && !["NPM_TOKEN", "NODE_AUTH_TOKEN"].includes(key),
     ),
   );
   return {
@@ -134,11 +112,7 @@ export function isolatedNpmEnvironment(
 }
 
 export function validateLockSupply(lock) {
-  if (
-    lock?.lockfileVersion !== 3 ||
-    !lock.packages ||
-    typeof lock.packages !== "object"
-  ) {
+  if (lock?.lockfileVersion !== 3 || !lock.packages || typeof lock.packages !== "object") {
     throw new Error("offline bundle requires an npm v3 lockfile");
   }
   let count = 0;
@@ -168,9 +142,7 @@ export function validateLockSupply(lock) {
       entry.hasInstallScript ||
       !/^sha512-[A-Za-z0-9+/]+={0,2}$/u.test(entry.integrity ?? "")
     ) {
-      throw new Error(
-        `offline package is not portable public supply: ${location}`,
-      );
+      throw new Error(`offline package is not portable public supply: ${location}`);
     }
     count += 1;
   }

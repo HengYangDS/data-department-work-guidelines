@@ -11,10 +11,7 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-export const root = path.resolve(
-  path.dirname(fileURLToPath(import.meta.url)),
-  "..",
-);
+export const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 export const offlineBundleRecordPath = ".config/release/offline-bundle.json";
 
@@ -34,18 +31,12 @@ export function filesUnder(directory) {
   if (!existsSync(directory)) return [];
   return readdirSync(directory, { withFileTypes: true }).flatMap((item) => {
     const target = path.join(directory, item.name);
-    return item.isDirectory()
-      ? filesUnder(target)
-      : item.isFile()
-        ? [target]
-        : [];
+    return item.isDirectory() ? filesUnder(target) : item.isFile() ? [target] : [];
   });
 }
 
 export function declaredToolRuntime(repository = root) {
-  const { devEngines } = JSON.parse(
-    readFileSync(path.join(repository, "package.json"), "utf8"),
-  );
+  const { devEngines } = JSON.parse(readFileSync(path.join(repository, "package.json"), "utf8"));
   const major = (value, name) => {
     const match = /^([1-9]\d*)\.x$/u.exec(value);
     if (!match) throw new Error(`invalid declared ${name} major`);
@@ -63,9 +54,7 @@ export function declaredToolRuntime(repository = root) {
 export function assertNodeRuntime(version = process.versions.node) {
   const { nodeMajor } = declaredToolRuntime();
   if (Number(version.split(".")[0]) !== nodeMajor) {
-    throw new Error(
-      `repository tools require Node ${nodeMajor}, got ${version}`,
-    );
+    throw new Error(`repository tools require Node ${nodeMajor}, got ${version}`);
   }
 }
 
@@ -77,8 +66,7 @@ export function reportError(error) {
     const current = pending.pop();
     if (seen.has(current)) continue;
     seen.add(current);
-    const message =
-      current instanceof Error ? current.message : String(current);
+    const message = current instanceof Error ? current.message : String(current);
     const code = current instanceof Error ? current.code : undefined;
     const detail =
       typeof code === "string" && !message.includes(code)
@@ -131,10 +119,7 @@ export function run(command, args = [], options = {}) {
     const detail = result.error
       ? `: ${result.error.message}`
       : ` exited ${result.status ?? "without status"}`;
-    throw new Error(
-      `${command}${detail}`,
-      result.error ? { cause: result.error } : undefined,
-    );
+    throw new Error(`${command}${detail}`, result.error ? { cause: result.error } : undefined);
   }
   if (rejectStderr && result.stderr) {
     process.stdout.write(result.stdout ?? "");
@@ -145,17 +130,12 @@ export function run(command, args = [], options = {}) {
 
 export function workspaceObservation(repository = root) {
   const target = realpathSync.native(repository);
-  const git = (args) =>
-    run("git", args, { cwd: target, capture: true, rejectStderr: true }).trim();
-  const [commit, tree] = git(["rev-parse", "HEAD", "HEAD^{tree}"]).split(
-    /\r?\n/u,
-  );
+  const git = (args) => run("git", args, { cwd: target, capture: true, rejectStderr: true }).trim();
+  const [commit, tree] = git(["rev-parse", "HEAD", "HEAD^{tree}"]).split(/\r?\n/u);
   const source = {
     commit,
     tree,
-    trackedChanges: Boolean(
-      git(["status", "--porcelain", "--untracked-files=no"]),
-    ),
+    trackedChanges: Boolean(git(["status", "--porcelain", "--untracked-files=no"])),
   };
   const filesystem = statfsSync(target, { bigint: true });
   return {
@@ -175,21 +155,17 @@ export function workspaceObservation(repository = root) {
       free: String(filesystem.bsize * filesystem.bfree),
       available: String(filesystem.bsize * filesystem.bavail),
     },
-    limit:
-      "Workspace filesystem only; not VM identity, isolation, or throughput.",
+    limit: "Workspace filesystem only; not VM identity, isolation, or throughput.",
   };
 }
 
 export function nodeTool(packageName, binName) {
   const manifestPath = filePath(`node_modules/${packageName}/package.json`);
   if (!existsSync(manifestPath)) {
-    throw new Error(
-      `missing locked ${packageName}; run npm ci --ignore-scripts`,
-    );
+    throw new Error(`missing locked ${packageName}; run npm ci --ignore-scripts`);
   }
   const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
-  const bin =
-    typeof manifest.bin === "string" ? manifest.bin : manifest.bin?.[binName];
+  const bin = typeof manifest.bin === "string" ? manifest.bin : manifest.bin?.[binName];
   if (!bin) {
     throw new Error(`${packageName} has no ${binName} entrypoint`);
   }
@@ -201,24 +177,16 @@ export function nodeTool(packageName, binName) {
 }
 
 export function runNodeTool(packageName, binName, args, options = {}) {
-  return run(
-    process.execPath,
-    [nodeTool(packageName, binName), ...args],
-    options,
-  );
+  return run(process.execPath, [nodeTool(packageName, binName), ...args], options);
 }
 
 export function gitFiles(repository = root) {
-  const output = run(
-    "git",
-    ["ls-files", "--cached", "--others", "--exclude-standard", "-z"],
-    {
-      cwd: repository,
-      capture: true,
-      rejectStderr: true,
-      timeout: 30_000,
-    },
-  );
+  const output = run("git", ["ls-files", "--cached", "--others", "--exclude-standard", "-z"], {
+    cwd: repository,
+    capture: true,
+    rejectStderr: true,
+    timeout: 30_000,
+  });
   return [...new Set(output.split("\0").filter(Boolean))]
     .filter((relative) => {
       try {
@@ -255,15 +223,8 @@ export function sourceAttributes(files = gitFiles(), repository = root) {
       index * 6,
       index * 6 + 6,
     );
-    if (
-      textPath !== relative ||
-      eolPath !== relative ||
-      textName !== "text" ||
-      eolName !== "eol"
-    ) {
-      throw new Error(
-        `native Git text attributes do not identify selected source: ${relative}`,
-      );
+    if (textPath !== relative || eolPath !== relative || textName !== "text" || eolName !== "eol") {
+      throw new Error(`native Git text attributes do not identify selected source: ${relative}`);
     }
     attributes.set(relative, { text, eol });
   }

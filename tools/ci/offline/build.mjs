@@ -22,11 +22,7 @@ import {
   pinnedFile,
   sourceIdentity,
 } from "./artifact.mjs";
-import {
-  boundedNpm,
-  isolatedNpmEnvironment,
-  validateLockSupply,
-} from "./npm.mjs";
+import { boundedNpm, isolatedNpmEnvironment, validateLockSupply } from "./npm.mjs";
 
 export function assembleBundle({
   repository,
@@ -55,9 +51,7 @@ export function assembleBundle({
   const cacheFileCount = assertRegularTree(cache);
   if (!cacheFileCount) throw new Error("offline bundle cache is empty");
   mkdirSync(path.dirname(archive), { recursive: true });
-  using building = mkdtempDisposableSync(
-    path.join(path.dirname(archive), "ddwg-bundle-build-"),
-  );
+  using building = mkdtempDisposableSync(path.join(path.dirname(archive), "ddwg-bundle-build-"));
   const stage = path.join(building.path, "contents");
   mkdirSync(stage);
   const candidate = path.join(building.path, fileName);
@@ -72,23 +66,13 @@ export function assembleBundle({
     mkdirSync(stagedLicenses, { recursive: true });
     const assets = {};
     for (const [platform, asset] of Object.entries(descriptor.assets)) {
-      const input = pinnedFile(
-        path.join(assetDirectory, tool),
-        asset.name,
-        asset.sha256,
-        "asset",
-      );
+      const input = pinnedFile(path.join(assetDirectory, tool), asset.name, asset.sha256, "asset");
       copyFileSync(input, path.join(stagedAssets, asset.name));
       assets[platform] = { name: asset.name, sha256: asset.sha256 };
     }
     const licenses = {};
     for (const [name, license] of Object.entries(descriptor.licenses)) {
-      const input = pinnedFile(
-        path.join(licenseDirectory, tool),
-        name,
-        license.sha256,
-        "license",
-      );
+      const input = pinnedFile(path.join(licenseDirectory, tool), name, license.sha256, "license");
       copyFileSync(input, path.join(stagedLicenses, name));
       licenses[name] = license.sha256;
     }
@@ -100,10 +84,7 @@ export function assembleBundle({
     cacheFileCount,
     tools,
   };
-  writeFileSync(
-    path.join(stage, "manifest.json"),
-    `${JSON.stringify(manifest, null, 2)}\n`,
-  );
+  writeFileSync(path.join(stage, "manifest.json"), `${JSON.stringify(manifest, null, 2)}\n`);
   run("tar", ["--no-xattrs", "-czf", candidate, "-C", stage, "."], {
     timeout: 90_000,
     env: { ...process.env, COPYFILE_DISABLE: "1" },
@@ -128,9 +109,7 @@ export function assembleBundle({
 }
 
 function readmeLicenseNotice(directory, declarations) {
-  const name = readdirSync(directory).find((file) =>
-    /^readme(?:\.md)?$/iu.test(file),
-  );
+  const name = readdirSync(directory).find((file) => /^readme(?:\.md)?$/iu.test(file));
   if (!name) return false;
   // Resolve the native parser only during an online build. Cold installation
   // must remain executable before any npm package is installed.
@@ -141,13 +120,9 @@ function readmeLicenseNotice(directory, declarations) {
     markdownText,
     markdownTokens,
   } = require("../../docs/markdown.mjs");
-  const tokens = markdownTokens(
-    readFileSync(path.join(directory, name), "utf8"),
-    name,
-  );
+  const tokens = markdownTokens(readFileSync(path.join(directory, name), "utf8"), name);
   const start = tokens.findIndex(
-    (node) =>
-      headingLevel(node) > 0 && /^licen[cs]e$/iu.test(headingText(node).trim()),
+    (node) => headingLevel(node) > 0 && /^licen[cs]e$/iu.test(headingText(node).trim()),
   );
   if (start < 0) return false;
   const notice = [];
@@ -165,19 +140,13 @@ function readmeLicenseNotice(directory, declarations) {
   return declarations.some((identifier) => {
     if (!/^[a-z0-9][a-z0-9.+-]*$/iu.test(identifier)) return false;
     const escaped = RegExp.escape(identifier);
-    return new RegExp(
-      `(?:^|[^a-z0-9.+-])${escaped}(?=$|[^a-z0-9.+-])`,
-      "iu",
-    ).test(notice.join("\n"));
+    return new RegExp(`(?:^|[^a-z0-9.+-])${escaped}(?=$|[^a-z0-9.+-])`, "iu").test(
+      notice.join("\n"),
+    );
   });
 }
 
-function nativeFormatterLicenseNotice(
-  installation,
-  directory,
-  manifest,
-  entry,
-) {
+function nativeFormatterLicenseNotice(installation, directory, manifest, entry) {
   if (
     manifest.name !== "@dprint/toml" ||
     manifest.license !== "MIT" ||
@@ -233,9 +202,7 @@ export function checkPackageLicenses(installation, lock) {
   for (const location of Object.keys(lock.packages)) {
     if (!location) continue;
     const packageDirectory = path.join(installation, location);
-    const manifest = JSON.parse(
-      readFileSync(path.join(packageDirectory, "package.json"), "utf8"),
-    );
+    const manifest = JSON.parse(readFileSync(path.join(packageDirectory, "package.json"), "utf8"));
     const declarations =
       typeof manifest.license === "string"
         ? [manifest.license]
@@ -243,12 +210,10 @@ export function checkPackageLicenses(installation, lock) {
     const declared =
       declarations.length > 0 &&
       declarations.every(
-        (identifier) =>
-          typeof identifier === "string" && identifier.trim().length > 0,
+        (identifier) => typeof identifier === "string" && identifier.trim().length > 0,
       );
     const namedNotice = readdirSync(packageDirectory).some((name) => {
-      if (!/^(?:LICENSE|LICENCE|COPYING|NOTICE)(?:[.-]|$)/iu.test(name))
-        return false;
+      if (!/^(?:LICENSE|LICENCE|COPYING|NOTICE)(?:[.-]|$)/iu.test(name)) return false;
       const stat = lstatSync(path.join(packageDirectory, name));
       return stat.isFile() && !stat.isSymbolicLink() && stat.size > 0;
     });
@@ -270,23 +235,14 @@ export function checkPackageLicenses(installation, lock) {
   return count;
 }
 
-export function buildReleaseBundle({
-  repository,
-  assetDirectory,
-  licenseDirectory,
-  outputPath,
-}) {
+export function buildReleaseBundle({ repository, assetDirectory, licenseDirectory, outputPath }) {
   const source = sourceIdentity(repository);
   if (Number.parseInt(process.versions.node, 10) !== source.nodeMajor) {
     throw new Error(`offline bundle builder requires Node ${source.nodeMajor}`);
   }
-  const lock = JSON.parse(
-    readFileSync(path.join(repository, "package-lock.json"), "utf8"),
-  );
+  const lock = JSON.parse(readFileSync(path.join(repository, "package-lock.json"), "utf8"));
   const packageCount = validateLockSupply(lock);
-  using priming = mkdtempDisposableSync(
-    path.join(os.tmpdir(), "ddwg-bundle-prime-"),
-  );
+  using priming = mkdtempDisposableSync(path.join(os.tmpdir(), "ddwg-bundle-prime-"));
   const temporary = priming.path;
   const online = path.join(temporary, "online");
   const offline = path.join(temporary, "offline");
@@ -315,14 +271,11 @@ export function buildReleaseBundle({
     throw new Error("offline package license inventory is incomplete");
   }
   const offlineEnv = { ...onlineEnv, npm_config_offline: "true" };
-  boundedNpm(
-    ["ci", "--offline", "--ignore-scripts", "--no-audit", "--no-fund"],
-    {
-      cwd: offline,
-      env: offlineEnv,
-      timeout: 90_000,
-    },
-  );
+  boundedNpm(["ci", "--offline", "--ignore-scripts", "--no-audit", "--no-fund"], {
+    cwd: offline,
+    env: offlineEnv,
+    timeout: 90_000,
+  });
   return {
     record: assembleBundle({
       repository,

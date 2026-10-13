@@ -2,26 +2,11 @@ import assert from "node:assert/strict";
 import { writeFileSync } from "node:fs";
 import path from "node:path";
 import { test } from "node:test";
-import {
-  strictVersion,
-  validateChangelog,
-} from "../../tools/docs/changelog.mjs";
-import {
-  parseChangelog,
-  source,
-  preparedSource,
-  git,
-  commit,
-  fixture,
-} from "./fixtures.mjs";
+import { strictVersion, validateChangelog } from "../../tools/docs/changelog.mjs";
+import { parseChangelog, source, preparedSource, git, commit, fixture } from "./fixtures.mjs";
 
 test("strict SemVer admits build metadata, not coercions or invalid identifiers", () => {
-  for (const version of [
-    "4.0.0",
-    "4.0.0-rc.1",
-    "4.0.0+build.1",
-    "4.0.0-rc.1+build.2",
-  ]) {
+  for (const version of ["4.0.0", "4.0.0-rc.1", "4.0.0+build.1", "4.0.0-rc.1+build.2"]) {
     assert.equal(strictVersion(version), version);
   }
   for (const version of ["v4.0.0", "04.0.0", "4.0", "4.0.0-01", "4.0.0+"]) {
@@ -56,14 +41,8 @@ test("official yanked headings and category orderings are valid", () => {
   for (const invalid of [
     released.replace("[YANKED]", "[RETRACTED]"),
     released.replace("[YANKED]", "[yanked]"),
-    released.replace(
-      "### Changed\n\n- Change a behavior.",
-      "### Fixed\n\n- Change a behavior.",
-    ),
-    released.replace(
-      "### Changed\n\n- Change a behavior.",
-      "### Quality\n\n- Change a behavior.",
-    ),
+    released.replace("### Changed\n\n- Change a behavior.", "### Fixed\n\n- Change a behavior."),
+    released.replace("### Changed\n\n- Change a behavior.", "### Quality\n\n- Change a behavior."),
   ]) {
     assert.throws(() => parseChangelog(invalid));
   }
@@ -97,10 +76,7 @@ test("a release section cannot hide uncategorized prose", () => {
 
 test("release headings require strict versions, real dates, and descending order", () => {
   const base = "a".repeat(40);
-  const released = source(
-    base,
-    "## 4.0.0 - 2026-09-25\n\n### Changed\n\n- A change.\n\n",
-  );
+  const released = source(base, "## 4.0.0 - 2026-09-25\n\n### Changed\n\n- A change.\n\n");
   assert.equal(parseChangelog(released).sections[1].version, "4.0.0");
   for (const changed of [
     released.replace("2026-09-25", "2026-02-30"),
@@ -117,10 +93,7 @@ test("release headings require strict versions, real dates, and descending order
 
 test("VERSION, charter, and private npm metadata have one owner", () => {
   fixture((directory) => {
-    assert.equal(
-      validateChangelog({ repository: directory, selectedTag: "" }).version,
-      "4.0.0",
-    );
+    assert.equal(validateChangelog({ repository: directory, selectedTag: "" }).version, "4.0.0");
     const charter = path.join(directory, "docs", "charter.md");
     writeFileSync(charter, "> **Guideline edition:** v3.0.0\n");
     assert.throws(
@@ -129,10 +102,7 @@ test("VERSION, charter, and private npm metadata have one owner", () => {
     );
     writeFileSync(charter, "> **Guideline edition:** v4.0.0\n");
     const manifest = path.join(directory, "package.json");
-    writeFileSync(
-      manifest,
-      '{"name":"fixture","version":"4.0.0","private":true}\n',
-    );
+    writeFileSync(manifest, '{"name":"fixture","version":"4.0.0","private":true}\n');
     assert.throws(
       () => validateChangelog({ repository: directory, selectedTag: "" }),
       /second guideline version/u,
@@ -145,15 +115,9 @@ test("only the current version may be a prepared untagged release", () => {
     const changelog = path.join(directory, "CHANGELOG.md");
     writeFileSync(
       changelog,
-      preparedSource(
-        base,
-        "## 4.0.0 - 2026-09-25\n\n### Changed\n\n- Prepared change.\n\n",
-      ),
+      preparedSource(base, "## 4.0.0 - 2026-09-25\n\n### Changed\n\n- Prepared change.\n\n"),
     );
-    assert.equal(
-      validateChangelog({ repository: directory, selectedTag: "" }).pending,
-      "4.0.0",
-    );
+    assert.equal(validateChangelog({ repository: directory, selectedTag: "" }).pending, "4.0.0");
     writeFileSync(
       changelog,
       preparedSource(
@@ -171,17 +135,13 @@ test("only the current version may be a prepared untagged release", () => {
 test("the next edition can keep its notes in Unreleased until the release cut", () => {
   fixture((directory, base) => {
     const changelog = path.join(directory, "CHANGELOG.md");
-    const release =
-      "## 4.0.0 - 2026-09-25\n\n### Changed\n\n- Released change.\n\n";
+    const release = "## 4.0.0 - 2026-09-25\n\n### Changed\n\n- Released change.\n\n";
     writeFileSync(changelog, preparedSource(base, release));
     commit(directory, "cut released edition");
     git(directory, "tag", "-a", "v4.0.0", "-m", "fixture release");
 
     writeFileSync(path.join(directory, "VERSION"), "4.1.0\n");
-    writeFileSync(
-      path.join(directory, "docs", "charter.md"),
-      "> **Guideline edition:** v4.1.0\n",
-    );
+    writeFileSync(path.join(directory, "docs", "charter.md"), "> **Guideline edition:** v4.1.0\n");
     writeFileSync(changelog, source(base, release, "v4.0.0", "v4.0.0"));
     commit(directory, "prepare next edition without a release date");
 
@@ -203,44 +163,27 @@ test("a prepared release has one comparison source before and after tagging", ()
       "## 4.0.0 - 2026-09-25\n\n### Changed\n\n- Prepared change.\n\n",
     );
     writeFileSync(changelog, prepared);
-    assert.equal(
-      validateChangelog({ repository: directory, selectedTag: "" }).pending,
-      "4.0.0",
-    );
+    assert.equal(validateChangelog({ repository: directory, selectedTag: "" }).pending, "4.0.0");
     commit(directory, "prepare release");
     git(directory, "tag", "-a", "v4.0.0", "-m", "fixture release");
-    assert.equal(
-      validateChangelog({ repository: directory, selectedTag: "v4.0.0" })
-        .tagCount,
-      1,
-    );
+    assert.equal(validateChangelog({ repository: directory, selectedTag: "v4.0.0" }).tagCount, 1);
   });
 });
 
 test("prepared release links and Unreleased content cannot hide a post-tag failure", () => {
   fixture((directory, base) => {
     const changelog = path.join(directory, "CHANGELOG.md");
-    const release =
-      "## 4.0.0 - 2026-09-25\n\n### Changed\n\n- Prepared change.\n\n";
+    const release = "## 4.0.0 - 2026-09-25\n\n### Changed\n\n- Prepared change.\n\n";
     for (const [changed, expected] of [
       [source(base, release, "v4.0.0", "v4.0.0"), /Unreleased changes/u],
       [
-        preparedSource(base, release).replaceAll(
-          "v4.0.0...main",
-          `${base}...main`,
-        ),
+        preparedSource(base, release).replaceAll("v4.0.0...main", `${base}...main`),
         /Unreleased comparison must start at v4\.0\.0/u,
       ],
-      [
-        preparedSource(base, release, "main"),
-        /release comparison must end at v4\.0\.0/u,
-      ],
+      [preparedSource(base, release, "main"), /release comparison must end at v4\.0\.0/u],
     ]) {
       writeFileSync(changelog, changed);
-      assert.throws(
-        () => validateChangelog({ repository: directory, selectedTag: "" }),
-        expected,
-      );
+      assert.throws(() => validateChangelog({ repository: directory, selectedTag: "" }), expected);
     }
   });
 });

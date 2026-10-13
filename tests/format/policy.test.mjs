@@ -17,11 +17,7 @@ import { syncBuiltinESMExports } from "node:module";
 import { test } from "node:test";
 import { pathToFileURL } from "node:url";
 import { parse as parseToml } from "smol-toml";
-import {
-  formatSource,
-  nativeTomlFormatter,
-  textViolations,
-} from "../../tools/docs/content.mjs";
+import { formatSource, nativeTomlFormatter, textViolations } from "../../tools/docs/content.mjs";
 import { nodeTool, root } from "../../tools/runtime.mjs";
 import { nativeToolBinary } from "../../tools/supply.mjs";
 
@@ -48,23 +44,15 @@ test("one formatting attempt uses one fresh native TOML formatter", async (conte
     },
   });
   const nativeSpawn = childProcess.spawnSync;
-  const mocked = context.mock.method(
-    childProcess,
-    "spawnSync",
-    (command, args, options) => {
-      if (args?.[0] === nodeTool("prettier", "prettier"))
-        return { status: 0, stdout: "", stderr: "" };
-      return nativeSpawn(command, args, options);
-    },
-  );
+  const mocked = context.mock.method(childProcess, "spawnSync", (command, args, options) => {
+    if (args?.[0] === nodeTool("prettier", "prettier"))
+      return { status: 0, stdout: "", stderr: "" };
+    return nativeSpawn(command, args, options);
+  });
   syncBuiltinESMExports();
   try {
     await formatSource();
-    assert.equal(
-      constructions,
-      1,
-      "matching and formatting share one native instance",
-    );
+    assert.equal(constructions, 1, "matching and formatting share one native instance");
   } finally {
     WebAssembly.Module = NativeModule;
     mocked.mock.restore();
@@ -74,10 +62,7 @@ test("one formatting attempt uses one fresh native TOML formatter", async (conte
 
 test("the text boundary retains TOML syntax without duplicating native formatting", async () => {
   const toml = ".config/checks/format/toml.toml";
-  assert.deepEqual(
-    await textViolations(toml, "[MD013]\nline_length = 80\n"),
-    [],
-  );
+  assert.deepEqual(await textViolations(toml, "[MD013]\nline_length = 80\n"), []);
   assert.match((await textViolations(toml, "[invalid\n"))[0], /invalid TOML/u);
   for (const value of ["3e+20", "3e-20"]) {
     const source = `limit = ${value}\n`;
@@ -101,26 +86,19 @@ test("native TOML policy preserves data and agrees with the source format owner"
     const original = readFileSync(policyPath, "utf8");
     assert.doesNotThrow(() => nativeTomlFormatter(directory));
     for (const [before, after] of [
-      ["lineWidth = 80", "lineWidth = 120"],
+      ["lineWidth = 100", "lineWidth = 80"],
       ["indentWidth = 2", "indentWidth = 4"],
       ['newLineKind = "lf"', 'newLineKind = "crlf"'],
       ['quoteStyle = "maintain"', 'quoteStyle = "preferDouble"'],
       ["sortKeys = false", "sortKeys = true"],
       ["sortArrays = false", "sortArrays = true"],
       ["sortInlineTables = false", "sortInlineTables = true"],
-      [
-        '"comment.forceLeadingSpace" = false',
-        '"comment.forceLeadingSpace" = true',
-      ],
+      ['"comment.forceLeadingSpace" = false', '"comment.forceLeadingSpace" = true'],
       ['"cargo.applyConventions" = false', '"cargo.applyConventions" = true'],
     ]) {
       assert.ok(original.includes(before), before);
       writeFileSync(policyPath, original.replace(before, after));
-      assert.throws(
-        () => nativeTomlFormatter(directory),
-        /native TOML.*policy/u,
-        after,
-      );
+      assert.throws(() => nativeTomlFormatter(directory), /native TOML.*policy/u, after);
     }
     writeFileSync(policyPath, `${original}unknownNativeOption = true\n`);
     assert.throws(() => nativeTomlFormatter(directory), /unknownNativeOption/u);
@@ -141,19 +119,10 @@ test("unowned code formats fail explicitly instead of accepting raw whitespace",
 });
 
 test("the generated Mise lock keeps its native TOML owner", async () => {
-  const source = readFileSync(
-    path.join(root, ".config/mise/mise.lock"),
-    "utf8",
-  );
+  const source = readFileSync(path.join(root, ".config/mise/mise.lock"), "utf8");
   assert.deepEqual(await textViolations(".config/mise/mise.lock", source), []);
-  assert.match(
-    (await textViolations(".config/mise/mise.lock", "not = ["))[0],
-    /invalid TOML/u,
-  );
-  assert.match(
-    (await textViolations("unowned.lock", source))[0],
-    /no native formatting owner/u,
-  );
+  assert.match((await textViolations(".config/mise/mise.lock", "not = ["))[0], /invalid TOML/u);
+  assert.match((await textViolations("unowned.lock", source))[0], /no native formatting owner/u);
 });
 
 test("native formatter controls preserve byte-exact examples at their own parser", async () => {
@@ -196,10 +165,7 @@ test("native formatter controls preserve byte-exact examples at their own parser
     ["fixture.jsonc", '{"message": "// prettier-ignore"}\n'],
     ["fixture.css", 'a::before { content: "/* prettier-ignore */"; }\n'],
     ["fixture.html", "<p>prettier-ignore</p>\n"],
-    [
-      "fixture.graphql",
-      'type Query { result(message: String = "prettier-ignore"): String }\n',
-    ],
+    ["fixture.graphql", 'type Query { result(message: String = "prettier-ignore"): String }\n'],
     ["fixture.hbs", "<p>prettier-ignore</p>\n"],
     ["fixture.toml", "# dprint-ignore\nkey=   1\n"],
   ]) {
@@ -221,9 +187,7 @@ test("only declared plain-text identities bypass native parser ownership", async
 });
 
 test("parser ownership resolves the source path rather than the caller cwd", async () => {
-  using directory = mkdtempDisposableSync(
-    path.join(os.tmpdir(), "ddwg-parser-owner-"),
-  );
+  using directory = mkdtempDisposableSync(path.join(os.tmpdir(), "ddwg-parser-owner-"));
   cpSync(path.join(root, "tools"), path.join(directory.path, "tools"), {
     recursive: true,
   });
@@ -232,35 +196,26 @@ test("parser ownership resolves the source path rather than the caller cwd", asy
     path.join(directory.path, "node_modules"),
     "junction",
   );
-  const source =
-    "#!/usr/bin/env node\nconst value = 1;\n\n\nconsole.log(value);\n";
+  const source = "#!/usr/bin/env node\nconst value = 1;\n\n\nconsole.log(value);\n";
   writeFileSync(path.join(directory.path, "cli"), source);
-  const module = pathToFileURL(
-    path.join(directory.path, "tools/docs/content.mjs"),
-  ).href;
+  const module = pathToFileURL(path.join(directory.path, "tools/docs/content.mjs")).href;
   const script = `
     import assert from "node:assert/strict";
     const { formatTargets, textViolations } = await import(${JSON.stringify(module)});
     assert.deepEqual((await formatTargets(["cli"], { fileExtensions: ["toml"], fileNames: [] })).prettier, ["cli"]);
     assert.deepEqual(await textViolations("cli", ${JSON.stringify(source)}), []);
   `;
-  const result = spawnSync(
-    process.execPath,
-    ["--input-type=module", "--eval", script],
-    {
-      cwd: root,
-      encoding: "utf8",
-      timeout: 15_000,
-    },
-  );
+  const result = spawnSync(process.execPath, ["--input-type=module", "--eval", script], {
+    cwd: root,
+    encoding: "utf8",
+    timeout: 15_000,
+  });
   assert.ifError(result.error);
   assert.equal(result.status, 0, result.stderr);
 });
 
 test("native source tools treat selected filenames as literal inputs", async () => {
-  using directory = mkdtempDisposableSync(
-    path.join(os.tmpdir(), "ddwg-literal-tool-input-"),
-  );
+  using directory = mkdtempDisposableSync(path.join(os.tmpdir(), "ddwg-literal-tool-input-"));
   writeFileSync(
     path.join(directory.path, ".gitignore"),
     "/tools/\n/.config/\n/node_modules/\n/package.json\n",
@@ -271,10 +226,7 @@ test("native source tools treat selected filenames as literal inputs", async () 
   cpSync(path.join(root, ".config"), path.join(directory.path, ".config"), {
     recursive: true,
   });
-  cpSync(
-    path.join(root, "package.json"),
-    path.join(directory.path, "package.json"),
-  );
+  cpSync(path.join(root, "package.json"), path.join(directory.path, "package.json"));
   symlinkSync(
     path.join(root, "node_modules"),
     path.join(directory.path, "node_modules"),
@@ -321,18 +273,13 @@ test("native source tools treat selected filenames as literal inputs", async () 
   const list = path.join(directory.path, "files.txt");
   writeFileSync(target, "# Target\n");
   writeFileSync(list, `${source}\n`);
-  for (const file of literalFiles)
-    writeFileSync(file, "# Links\n\n[Target](target.md#target)\n");
+  for (const file of literalFiles) writeFileSync(file, "# Links\n\n[Target](target.md#target)\n");
   const check = () =>
-    spawnSync(
-      environment.DDWG_LYCHEE_BIN,
-      linkCheckArguments(list, { literalFiles }),
-      {
-        cwd: directory.path,
-        encoding: "utf8",
-        timeout: 15_000,
-      },
-    );
+    spawnSync(environment.DDWG_LYCHEE_BIN, linkCheckArguments(list, { literalFiles }), {
+      cwd: directory.path,
+      encoding: "utf8",
+      timeout: 15_000,
+    });
   const valid = check();
   assert.ifError(valid.error);
   assert.equal(valid.status, 0, valid.stderr);

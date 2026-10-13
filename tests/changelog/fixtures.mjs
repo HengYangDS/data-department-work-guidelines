@@ -59,15 +59,8 @@ export function historyDefinitions(label, base, target, directTag = false) {
     .join("\n");
 }
 
-export function source(
-  base,
-  releases = "",
-  releaseTarget = "main",
-  unreleasedBase = base,
-) {
-  const labels = [...releases.matchAll(/^## (\S+)/gmu)].map(
-    (match) => match[1],
-  );
+export function source(base, releases = "", releaseTarget = "main", unreleasedBase = base) {
+  const labels = [...releases.matchAll(/^## (\S+)/gmu)].map((match) => match[1]);
   const decorated = releases.replace(
     /^## (\S+)(.*)$/gmu,
     (_, label, suffix) => `## ${label}${suffix}\n\n${historyRow(label)}`,
@@ -93,10 +86,7 @@ export function preparedSource(base, releases, releaseTarget = "v4.0.0") {
 }
 
 export function firstReleaseTagSource(base) {
-  return preparedSource(
-    base,
-    "## 4.0.0 - 2026-09-25\n\n### Added\n\n- First release.\n\n",
-  ).replace(
+  return preparedSource(base, "## 4.0.0 - 2026-09-25\n\n### Added\n\n- First release.\n\n").replace(
     historyDefinitions("4.0.0", base, "v4.0.0"),
     historyDefinitions("4.0.0", "", "v4.0.0", true),
   );
@@ -107,15 +97,7 @@ export function git(directory, ...args) {
   mkdirSync(hooks, { recursive: true });
   const result = spawnSync(
     "git",
-    [
-      "-C",
-      directory,
-      "-c",
-      `core.hooksPath=${hooks}`,
-      "-c",
-      "tag.gpgSign=false",
-      ...args,
-    ],
+    ["-C", directory, "-c", `core.hooksPath=${hooks}`, "-c", "tag.gpgSign=false", ...args],
     {
       encoding: "utf8",
       timeout: 15_000,
@@ -134,15 +116,7 @@ export function git(directory, ...args) {
 
 export function commit(directory, message) {
   git(directory, "add", ".");
-  git(
-    directory,
-    "-c",
-    "commit.gpgsign=false",
-    "commit",
-    "--allow-empty",
-    "-qm",
-    message,
-  );
+  git(directory, "-c", "commit.gpgsign=false", "commit", "--allow-empty", "-qm", message);
 }
 
 export function fixture(run) {
@@ -163,14 +137,8 @@ export function fixture(run) {
     );
     mkdirSync(path.join(directory, "docs"));
     writeFileSync(path.join(directory, "VERSION"), "4.0.0\n");
-    writeFileSync(
-      path.join(directory, "docs", "charter.md"),
-      "> **Guideline edition:** v4.0.0\n",
-    );
-    writeFileSync(
-      path.join(directory, "package.json"),
-      '{"name":"fixture","private":true}\n',
-    );
+    writeFileSync(path.join(directory, "docs", "charter.md"), "> **Guideline edition:** v4.0.0\n");
+    writeFileSync(path.join(directory, "package.json"), '{"name":"fixture","private":true}\n');
     writeFileSync(
       path.join(directory, "package-lock.json"),
       '{"name":"fixture","lockfileVersion":3,"packages":{"":{}}}\n',
@@ -184,12 +152,7 @@ export function fixture(run) {
 }
 
 export function validateReleaseEnvironment(repository, selection) {
-  const keys = [
-    "DDWG_RELEASE_TAG",
-    "GITHUB_REF_TYPE",
-    "GITHUB_REF_NAME",
-    "CI_COMMIT_TAG",
-  ];
+  const keys = ["DDWG_RELEASE_TAG", "GITHUB_REF_TYPE", "GITHUB_REF_NAME", "CI_COMMIT_TAG"];
   const original = keys.map((key) => [key, process.env[key]]);
   try {
     for (const key of keys) {

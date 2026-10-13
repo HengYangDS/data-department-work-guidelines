@@ -20,15 +20,12 @@ test("L1 and L2 work records use the full charter boundary at both task routes",
   ]) {
     const source = readFileSync(path.join(root, relative), "utf8");
     const paragraph = [...walkMarkdown(markdownTokens(source, relative))].find(
-      (token) =>
-        token.type === "paragraph" && markdownText(token).startsWith(opening),
+      (token) => token.type === "paragraph" && markdownText(token).startsWith(opening),
     );
     assert.ok(paragraph, relative);
     assert.match(markdownText(paragraph), /\bL1 and L2\b/u, relative);
     assert.ok(
-      markdownLinkDestinations(paragraph.text).includes(
-        "charter.md#form-follows-risk",
-      ),
+      markdownLinkDestinations(paragraph.text).includes("charter.md#form-follows-risk"),
       relative,
     );
   }
@@ -38,11 +35,8 @@ test("collaboration keeps member checks before the Agent execution section", () 
   const relative = "docs/human-agent.md";
   const source = readFileSync(path.join(root, relative), "utf8");
   const assertReaderOrder = (text) => {
-    const headings = markdownTokens(text, relative).filter(
-      (token) => headingLevel(token) > 0,
-    );
-    const locate = (title) =>
-      headings.findIndex((token) => headingText(token) === title);
+    const headings = markdownTokens(text, relative).filter((token) => headingLevel(token) > 0);
+    const locate = (title) => headings.findIndex((token) => headingText(token) === title);
     const shared = locate("Execute and Verify");
     const check = locate("Check Agent Output");
     const agent = locate("Agent Execution");
@@ -52,19 +46,12 @@ test("collaboration keeps member checks before the Agent execution section", () 
       "member acceptance must not be interrupted by the Agent procedure",
     );
     assert.equal(headingLevel(headings[check]), 3);
-    assert.equal(
-      headingLevel(headings[agent]),
-      2,
-      "Agent execution needs a distinct peer section",
-    );
+    assert.equal(headingLevel(headings[agent]), 2, "Agent execution needs a distinct peer section");
     assert.equal(headingLevel(headings[parallel]), 3);
   };
   assertReaderOrder(source);
   assert.throws(
-    () =>
-      assertReaderOrder(
-        source.replace("## Agent Execution", "### Agent Execution"),
-      ),
+    () => assertReaderOrder(source.replace("## Agent Execution", "### Agent Execution")),
     /distinct peer section/u,
   );
   const checkStart = source.indexOf("### Check Agent Output\n");
@@ -87,14 +74,11 @@ test("collaboration preserves both acceptance outcomes without the diagram", () 
   const source = readFileSync(path.join(root, relative), "utf8");
   const section = contentUnderHeading(source, relative, "Execute and Verify");
   const diagram = section.find(
-    (token) =>
-      token.type === "codeFenced" && token.text.startsWith("```mermaid"),
+    (token) => token.type === "codeFenced" && token.text.startsWith("```mermaid"),
   );
   assert.ok(diagram, "the delegation example must retain its diagram");
   const descriptions = [
-    diagram.text
-      .split("\n")
-      .find((line) => line.trimStart().startsWith("accDescr:")),
+    diagram.text.split("\n").find((line) => line.trimStart().startsWith("accDescr:")),
     [...walkMarkdown(section)]
       .filter((token) => token.type === "paragraph")
       .map((token) => markdownText(token))
@@ -106,29 +90,18 @@ test("collaboration preserves both acceptance outcomes without the diagram", () 
       text,
       /conditions are unmet[^.]*returns for review within the delegation boundary/u,
     );
-    assert.match(
-      text,
-      /conditions are met[^.]*accepts[^.]*records acceptance[^.]*hands off/u,
-    );
+    assert.match(text, /conditions are met[^.]*accepts[^.]*records acceptance[^.]*hands off/u);
   };
   for (const description of descriptions) {
     const text = description.replace(/\s+/gu, " ");
     assertOutcomes(text);
     assert.throws(
-      () =>
-        assertOutcomes(
-          text.replace("records acceptance", "announces completion"),
-        ),
+      () => assertOutcomes(text.replace("records acceptance", "announces completion")),
       /records acceptance/u,
     );
     assert.throws(
       () =>
-        assertOutcomes(
-          text.replace(
-            "within the delegation boundary",
-            "under a new delegation",
-          ),
-        ),
+        assertOutcomes(text.replace("within the delegation boundary", "under a new delegation")),
       /delegation boundary/u,
     );
   }
@@ -138,33 +111,17 @@ test("writing aims do not absorb document-order and sending-review procedures", 
   const relative = "docs/communicate.md";
   const source = readFileSync(path.join(root, relative), "utf8");
   const assertComposition = (text) => {
-    const aims = contentUnderHeading(
-      text,
-      relative,
-      "Write for Fidelity, Clarity, and Elegance",
-    );
+    const aims = contentUnderHeading(text, relative, "Write for Fidelity, Clarity, and Elegance");
     assert.deepEqual(
       aims.filter((token) => headingLevel(token) > 0).map(headingText),
       ["Fidelity", "Clarity", "Elegance"],
       "the three writing aims must not absorb practical procedures",
     );
-    const headings = markdownTokens(text, relative).filter(
-      (token) => headingLevel(token) > 0,
-    );
-    for (const title of [
-      "Structure a Decision Document",
-      "Review Before Sending",
-    ]) {
-      assert.equal(
-        headingLevel(headings.find((token) => headingText(token) === title)),
-        2,
-      );
+    const headings = markdownTokens(text, relative).filter((token) => headingLevel(token) > 0);
+    for (const title of ["Structure a Decision Document", "Review Before Sending"]) {
+      assert.equal(headingLevel(headings.find((token) => headingText(token) === title)), 2);
     }
-    const order = contentUnderHeading(
-      text,
-      relative,
-      "Structure a Decision Document",
-    )
+    const order = contentUnderHeading(text, relative, "Structure a Decision Document")
       .map((token) => token.text)
       .join("\n");
     assert.match(order, /by default/u);
@@ -175,10 +132,7 @@ test("writing aims do not absorb document-order and sending-review procedures", 
   assert.throws(
     () =>
       assertComposition(
-        source.replace(
-          "## Structure a Decision Document",
-          "### Structure a Decision Document",
-        ),
+        source.replace("## Structure a Decision Document", "### Structure a Decision Document"),
       ),
     /three writing aims/u,
   );
@@ -188,64 +142,43 @@ test("general risk review and management duties are peers of coaching and cadenc
   const relative = "docs/evolve.md";
   const source = readFileSync(path.join(root, relative), "utf8");
   const assertComposition = (text) => {
-    const headings = markdownTokens(text, relative).filter(
-      (token) => headingLevel(token) > 0,
-    );
-    for (const title of [
-      "Review Critical Risks",
-      "Management Responsibilities",
-    ]) {
+    const headings = markdownTokens(text, relative).filter((token) => headingLevel(token) > 0);
+    for (const title of ["Review Critical Risks", "Management Responsibilities"]) {
       assert.equal(
         headingLevel(headings.find((token) => headingText(token) === title)),
         2,
         "general review and management duties must not be coaching or cadence subtopics",
       );
     }
-    const riskReview = contentUnderHeading(
-      text,
-      relative,
-      "Review Critical Risks",
-    );
+    const riskReview = contentUnderHeading(text, relative, "Review Critical Risks");
     const riskParagraphs = [...walkMarkdown(riskReview)]
       .filter((token) => token.type === "paragraph")
       .map((token) => markdownText(token).replace(/\s+/gu, " ").trim());
-    const minimum = riskParagraphs.find((text) =>
-      text.startsWith("Every task must meet"),
-    );
-    const exceptional = riskParagraphs.find((text) =>
-      text.startsWith("Call a result exceptional"),
-    );
+    const minimum = riskParagraphs.find((text) => text.startsWith("Every task must meet"));
+    const exceptional = riskParagraphs.find((text) => text.startsWith("Call a result exceptional"));
     assert.ok(
       minimum && !minimum.includes("Call a result exceptional"),
       "the minimum duty must not absorb the exceptional-performance standard",
     );
     assert.ok(
-      exceptional &&
-        exceptional.includes("Not every task needs an exceptional result"),
+      exceptional && exceptional.includes("Not every task needs an exceptional result"),
       "the higher standard must retain its applicability limit",
     );
+    assert.ok(riskReview.some((token) => headingText(token) === "Use Scores with Care"));
     assert.ok(
-      riskReview.some((token) => headingText(token) === "Use Scores with Care"),
-    );
-    assert.ok(
-      !contentUnderHeading(
-        text,
-        relative,
-        "Grow Capability Through Real Work",
-      ).some((token) => headingText(token) === "Review Critical Risks"),
+      !contentUnderHeading(text, relative, "Grow Capability Through Real Work").some(
+        (token) => headingText(token) === "Review Critical Risks",
+      ),
     );
   };
   assertComposition(source);
   assert.throws(
     () =>
-      assertComposition(
-        source.replace("## Review Critical Risks", "### Review Critical Risks"),
-      ),
+      assertComposition(source.replace("## Review Critical Risks", "### Review Critical Risks")),
     /coaching or cadence subtopics/u,
   );
   assert.throws(
-    () =>
-      assertComposition(source.replace("reliably.\n\nCall", "reliably. Call")),
+    () => assertComposition(source.replace("reliably.\n\nCall", "reliably. Call")),
     /minimum duty/u,
   );
 });
@@ -267,12 +200,7 @@ test("delivery entry reaches action and completion gates before the loop referen
     );
     assert.deepEqual(
       selected,
-      [
-        "Before Acting",
-        "Close the Work",
-        "The Working Loop",
-        "Name the State, Not the Effort",
-      ],
+      ["Before Acting", "Close the Work", "The Working Loop", "Name the State, Not the Effort"],
       "action and completion gates precede the supporting loop reference",
     );
   };
@@ -283,9 +211,7 @@ test("delivery entry reaches action and completion gates before the loop referen
   assert.throws(
     () =>
       assertComposition(
-        source
-          .replace(loop, "")
-          .replace("## Before Acting\n", loop + "## Before Acting\n"),
+        source.replace(loop, "").replace("## Before Acting\n", loop + "## Before Acting\n"),
       ),
     /supporting loop reference/u,
   );
@@ -295,11 +221,7 @@ test("authority priority exposes four ordered tiers and retains the waiver bound
   const relative = "docs/charter.md";
   const source = readFileSync(path.join(root, relative), "utf8");
   const assertAuthorityOrder = (text) => {
-    const section = contentUnderHeading(
-      text,
-      relative,
-      "Two Kinds of Authority",
-    );
+    const section = contentUnderHeading(text, relative, "Two Kinds of Authority");
     const priority = section.find((token) => token.type === "listOrdered");
     assert.ok(priority, "authority priority must be individually readable");
     const tiers = priority.children
@@ -319,10 +241,7 @@ test("authority priority exposes four ordered tiers and retains the waiver bound
       .map((token) => markdownText(token))
       .join("\n");
     assert.match(limits, /does not grant waiver authority/u);
-    assert.match(
-      limits,
-      /factual evidence does not itself grant permission to act/u,
-    );
+    assert.match(limits, /factual evidence does not itself grant permission to act/u);
   };
   assertAuthorityOrder(source);
   assert.throws(
@@ -337,14 +256,11 @@ test("reasoning checks keep each distinction independently readable", () => {
   const assertChecks = (text) => {
     const tokens = markdownTokens(text, relative);
     const start = tokens.findIndex(
-      (token) =>
-        headingLevel(token) === 3 &&
-        headingText(token) === "Check the Reasoning",
+      (token) => headingLevel(token) === 3 && headingText(token) === "Check the Reasoning",
     );
     assert.notEqual(start, -1);
     const end = tokens.findIndex(
-      (token, index) =>
-        index > start && headingLevel(token) > 0 && headingLevel(token) <= 3,
+      (token, index) => index > start && headingLevel(token) > 0 && headingLevel(token) <= 3,
     );
     const list = tokens
       .slice(start + 1, end < 0 ? undefined : end)
@@ -376,20 +292,14 @@ test("historical research distinguishes missing evidence from demonstrated late 
   const relative = "docs/data.md";
   const source = readFileSync(path.join(root, relative), "utf8");
   const assertEvidenceStates = (text) => {
-    const example = contentUnderHeading(
-      text,
-      relative,
-      "Worked decision: revised market history",
-    );
+    const example = contentUnderHeading(text, relative, "Worked decision: revised market history");
     const statements = [...walkMarkdown(example)]
       .filter((token) => ["paragraph", "tableRow"].includes(token.type))
       .map((token) => markdownText(token).replace(/\s+/gu, " ").trim());
     const unknown = statements.find((statement) =>
       statement.includes("First availability is unknown"),
     );
-    const late = statements.find((statement) =>
-      statement.includes("First availability is later"),
-    );
+    const late = statements.find((statement) => statement.includes("First availability is later"));
     assert.ok(unknown, "unknown availability must remain distinct");
     assert.match(unknown, /remains unproved/u);
     assert.match(unknown, /snapshot.*correction history/u);
@@ -397,11 +307,7 @@ test("historical research distinguishes missing evidence from demonstrated late 
     assert.match(late, /invalid for that earlier decision/u);
     assert.match(late, /Replace or exclude/u);
     assert.match(late, /rerun affected results before requesting admission/u);
-    assert.notEqual(
-      unknown,
-      late,
-      "evidence states need separate explanations",
-    );
+    assert.notEqual(unknown, late, "evidence states need separate explanations");
   };
   assertEvidenceStates(source);
   assertEvidenceStates(`### Worked decision: revised market history
@@ -421,25 +327,17 @@ test("historical research distinguishes missing evidence from demonstrated late 
 `);
   assert.throws(
     () =>
-      assertEvidenceStates(
-        source.replace("invalid for that earlier decision", "remains unproved"),
-      ),
+      assertEvidenceStates(source.replace("invalid for that earlier decision", "remains unproved")),
     /invalid for that earlier decision/u,
   );
   assert.throws(
-    () =>
-      assertEvidenceStates(
-        source.replace("rerun affected results", "request use"),
-      ),
+    () => assertEvidenceStates(source.replace("rerun affected results", "request use")),
     /rerun affected results before requesting admission/u,
   );
   assert.throws(
     () =>
       assertEvidenceStates(
-        source.replace(
-          "First availability is unknown",
-          "First availability is later",
-        ),
+        source.replace("First availability is unknown", "First availability is later"),
       ),
     /unknown availability/u,
   );
@@ -449,11 +347,7 @@ test("bounded exploration requires permission even while meaning, quality, or ti
   const relative = "docs/data.md";
   const source = readFileSync(path.join(root, relative), "utf8");
   const assertExplorationBoundary = (text) => {
-    const section = contentUnderHeading(
-      text,
-      relative,
-      "Answer Six Questions First",
-    );
+    const section = contentUnderHeading(text, relative, "Answer Six Questions First");
     const guidance = [...walkMarkdown(section)]
       .filter((token) => token.type === "paragraph")
       .map((token) => markdownText(token))
@@ -467,10 +361,7 @@ test("bounded exploration requires permission even while meaning, quality, or ti
       guidance,
       /requires permission for acquisition, processing, and the intended use/u,
     );
-    assert.match(
-      guidance,
-      /Agents must also stay within their delegated scope/u,
-    );
+    assert.match(guidance, /Agents must also stay within their delegated scope/u);
     assert.match(
       guidance,
       /permission is missing or unclear, stop the affected action and escalate to the authorized decision owner/u,
@@ -482,21 +373,14 @@ test("bounded exploration requires permission even while meaning, quality, or ti
   };
   assertExplorationBoundary(source);
   const clausePattern = (text) =>
-    new RegExp(
-      text.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&").replaceAll(" ", "\\s+"),
-      "u",
-    );
+    new RegExp(text.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&").replaceAll(" ", "\\s+"), "u");
   for (const clause of [
     "Exploration still requires permission for acquisition, processing, and the intended use.",
     "Agents must also stay within their delegated scope.",
     "If permission is missing or unclear, stop the affected action and escalate to the authorized decision owner.",
   ]) {
     const missing = source.replace(clausePattern(clause), "");
-    assert.notEqual(
-      missing,
-      source,
-      "the refusal must exercise its missing duty",
-    );
+    assert.notEqual(missing, source, "the refusal must exercise its missing duty");
     assert.throws(() => assertExplorationBoundary(missing));
   }
 });

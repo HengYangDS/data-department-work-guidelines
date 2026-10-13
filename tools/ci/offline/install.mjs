@@ -2,11 +2,7 @@ import { mkdirSync, mkdtempDisposableSync, rmSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { managedFileExists, run } from "../../runtime.mjs";
-import {
-  managedToolPath,
-  nativeToolPlatform,
-  readNativeSupply,
-} from "../../supply.mjs";
+import { managedToolPath, nativeToolPlatform, readNativeSupply } from "../../supply.mjs";
 import {
   inspectBundle,
   sourceIdentity,
@@ -15,12 +11,7 @@ import {
 } from "./artifact.mjs";
 import { isolatedNpmEnvironment, npmCliPath, pathExists } from "./npm.mjs";
 
-export function installBundle({
-  bundlePath,
-  record,
-  repository,
-  commandRunner = run,
-}) {
+export function installBundle({ bundlePath, record, repository, commandRunner = run }) {
   const source = sourceIdentity(repository);
   const archive = path.resolve(bundlePath);
   validateBundleRecord(record, source);
@@ -36,10 +27,9 @@ export function installBundle({
     mkdirSync(reservation);
   } catch (error) {
     if (error.code === "EEXIST") {
-      throw new Error(
-        "offline installation already in progress; preserve its reservation",
-        { cause: error },
-      );
+      throw new Error("offline installation already in progress; preserve its reservation", {
+        cause: error,
+      });
     }
     throw error;
   }
@@ -53,29 +43,18 @@ export function installBundle({
   );
   const nodeModules = path.join(repository, "node_modules");
   if (pathExists(nodeModules)) {
-    throw new Error(
-      "node_modules already exists; preserve or remove it explicitly",
-    );
+    throw new Error("node_modules already exists; preserve or remove it explicitly");
   }
   const native = readNativeSupply(repository);
   const platform = `${process.platform}-${process.arch}`;
-  const installations = Object.entries(native.tools).map(
-    ([tool, descriptor]) => {
-      const selectedPlatform = nativeToolPlatform(tool, platform, native);
-      const asset = descriptor.assets[selectedPlatform];
-      const target = managedToolPath(
-        tool,
-        selectedPlatform,
-        repository,
-        native,
-      );
-      return { tool, asset, target };
-    },
-  );
+  const installations = Object.entries(native.tools).map(([tool, descriptor]) => {
+    const selectedPlatform = nativeToolPlatform(tool, platform, native);
+    const asset = descriptor.assets[selectedPlatform];
+    const target = managedToolPath(tool, selectedPlatform, repository, native);
+    return { tool, asset, target };
+  });
   inspectBundle(archive, record, source, native);
-  using extracted = mkdtempDisposableSync(
-    path.join(os.tmpdir(), "ddwg-bundle-install-"),
-  );
+  using extracted = mkdtempDisposableSync(path.join(os.tmpdir(), "ddwg-bundle-install-"));
   const temporary = extracted.path;
   run("tar", ["-xf", archive, "--no-same-owner", "-C", temporary], {
     rejectStderr: true,
@@ -123,12 +102,7 @@ export function installBundle({
     const assetPath = path.join(temporary, "native", tool, asset.name);
     commandRunner(
       process.execPath,
-      [
-        path.join(repository, "tools", "ci", "install-native.mjs"),
-        tool,
-        "--asset",
-        assetPath,
-      ],
+      [path.join(repository, "tools", "ci", "install-native.mjs"), tool, "--asset", assetPath],
       { cwd: repository, timeout: 90_000 },
     );
     if (!managedFileExists(target, repository)) {

@@ -12,30 +12,13 @@ import {
 import { decision } from "../decisions/fixtures.mjs";
 
 test("shell syntax is rejected without rejecting concept prose or evidence links", () => {
-  assert.equal(
-    commandInvocation("ETHOS lifecycle describes current work."),
-    false,
-  );
+  assert.equal(commandInvocation("ETHOS lifecycle describes current work."), false);
   assert.equal(commandInvocation("./scripts/validate-docs.sh"), false);
-  assert.equal(
-    executionViolation(
-      "The evidence link is [source](../../openspec/README.md).",
-    ),
-    "",
-  );
-  assert.match(
-    executionViolation("```bash\nethos status --json\n```"),
-    /code block/u,
-  );
-  assert.match(
-    executionViolation("Run `openspec validate --all --strict`."),
-    /inline command/u,
-  );
+  assert.equal(executionViolation("The evidence link is [source](../../openspec/README.md)."), "");
+  assert.match(executionViolation("```bash\nethos status --json\n```"), /code block/u);
+  assert.match(executionViolation("Run `openspec validate --all --strict`."), /inline command/u);
   assert.match(executionViolation("$ git status"), /shell prompt/u);
-  assert.match(
-    executionViolation("env X=1 ethos plan --changed"),
-    /command invocation/u,
-  );
+  assert.match(executionViolation("env X=1 ethos plan --changed"), /command invocation/u);
 });
 
 test("command classification does not inherit object properties", () => {
@@ -47,10 +30,7 @@ test("command classification does not inherit object properties", () => {
   ]) {
     assert.equal(commandInvocation(source), false);
     assert.doesNotThrow(() =>
-      validateDecision(
-        "docs/decisions/dr-0001-fixture.md",
-        decision({ body: source }),
-      ),
+      validateDecision("docs/decisions/dr-0001-fixture.md", decision({ body: source })),
     );
   }
   assert.equal(commandInvocation("ethos status --json"), true);
@@ -101,10 +81,7 @@ test("native shell tokens preserve quoting and compound invocation boundaries", 
   ]) {
     assert.equal(commandInvocation(source), false, source);
     assert.doesNotThrow(() =>
-      validateDecision(
-        "docs/decisions/dr-0001-fixture.md",
-        decision({ body: source }),
-      ),
+      validateDecision("docs/decisions/dr-0001-fixture.md", decision({ body: source })),
     );
   }
 });
@@ -123,15 +100,7 @@ test("native lexer groups supported operators and preserves quoted text", () => 
   );
   assert.deepEqual(
     parseShell("cat <<(ethos status --json)", (name) => `$${name}`),
-    [
-      "cat",
-      { op: "<" },
-      { op: "<(" },
-      "ethos",
-      "status",
-      "--json",
-      { op: ")" },
-    ],
+    ["cat", { op: "<" }, { op: "<(" }, "ethos", "status", "--json", { op: ")" }],
   );
   assert.deepEqual(parseShell("printf '<<-' '>(value)' '&>>' '$TARGET'"), [
     "printf",
@@ -143,9 +112,7 @@ test("native lexer groups supported operators and preserves quoted text", () => 
 });
 
 test("decision command inspection never evaluates shell input or ambient variables", () => {
-  const directory = mkdtempSync(
-    path.join(os.tmpdir(), "ddwg-command-inspection-"),
-  );
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-command-inspection-"));
   const marker = path.join(directory, "unexpected-execution");
   const previous = process.env.FLAGS;
   try {
@@ -193,10 +160,7 @@ test("native command operands remain words across glob and literal syntax", () =
   ]) {
     assert.equal(commandInvocation(source), false, source);
     assert.doesNotThrow(() =>
-      validateDecision(
-        "docs/decisions/dr-0001-fixture.md",
-        decision({ body: source }),
-      ),
+      validateDecision("docs/decisions/dr-0001-fixture.md", decision({ body: source })),
     );
   }
 });

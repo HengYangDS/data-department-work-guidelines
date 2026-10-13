@@ -6,28 +6,19 @@ import os from "node:os";
 
 import path from "node:path";
 
-import {
-  headingLevel,
-  headingText,
-  markdownTokens,
-} from "../../tools/docs/markdown.mjs";
+import { headingLevel, headingText, markdownTokens } from "../../tools/docs/markdown.mjs";
 
 import { root } from "../../tools/runtime.mjs";
 
 export function fixture(run) {
-  const directory = mkdtempSync(
-    path.join(os.tmpdir(), "ddwg-governance-test-"),
-  );
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-governance-test-"));
   try {
     cpSync(path.join(root, "docs"), path.join(directory, "docs"), {
       recursive: true,
     });
     mkdirSync(path.join(directory, ".ethos"));
     for (const name of ["profile.toml", "gates.toml"]) {
-      cpSync(
-        path.join(root, ".ethos", name),
-        path.join(directory, ".ethos", name),
-      );
+      cpSync(path.join(root, ".ethos", name), path.join(directory, ".ethos", name));
     }
     for (const name of ["README.md", "AGENTS.md"]) {
       cpSync(path.join(root, name), path.join(directory, name));
@@ -46,8 +37,7 @@ export function contentUnderHeading(source, relative, title) {
   assert.notEqual(start, -1, `${relative}: missing ${title}`);
   const level = headingLevel(tokens[start]);
   const end = tokens.findIndex(
-    (token, index) =>
-      index > start && headingLevel(token) > 0 && headingLevel(token) <= level,
+    (token, index) => index > start && headingLevel(token) > 0 && headingLevel(token) <= level,
   );
   return tokens.slice(start + 1, end < 0 ? undefined : end);
 }

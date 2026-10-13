@@ -25,9 +25,7 @@ import {
 import { fixtureGit } from "./fixtures.mjs";
 
 test("shared Git excludes editor state without hiding guidance source", () => {
-  using workspace = mkdtempDisposableSync(
-    path.join(os.tmpdir(), "ddwg-shared-ignore-"),
-  );
+  using workspace = mkdtempDisposableSync(path.join(os.tmpdir(), "ddwg-shared-ignore-"));
   const directory = path.join(workspace.path, "repository");
   const home = path.join(workspace.path, "home");
   mkdirSync(directory);
@@ -46,17 +44,9 @@ test("shared Git excludes editor state without hiding guidance source", () => {
   };
   const git = (args) => fixtureGit(directory, args, { env: environment });
   git(["init", "--quiet"]);
-  writeFileSync(
-    path.join(directory, ".gitignore"),
-    readFileSync(path.join(root, ".gitignore")),
-  );
+  writeFileSync(path.join(directory, ".gitignore"), readFileSync(path.join(root, ".gitignore")));
   writeFileSync(path.join(directory, ".git/info/exclude"), "");
-  const local = [
-    ".idea/workspace.xml",
-    ".serena/cache/record.json",
-    ".DS_Store",
-    "docs/.DS_Store",
-  ];
+  const local = [".idea/workspace.xml", ".serena/cache/record.json", ".DS_Store", "docs/.DS_Store"];
   for (const name of [...local, "docs/decide.md"]) {
     mkdirSync(path.dirname(path.join(directory, name)), { recursive: true });
     writeFileSync(path.join(directory, name), "fixture\n");
@@ -113,12 +103,9 @@ test("fixture Git retains caller inputs and native failures", (context) => {
         error.expected === 0 &&
         error.message.includes(result.stderr.trimEnd()),
     );
-    const nativeError = Object.assign(
-      new Error("native fixture spawn failed"),
-      {
-        code: "ENOENT",
-      },
-    );
+    const nativeError = Object.assign(new Error("native fixture spawn failed"), {
+      code: "ENOENT",
+    });
     result = { error: nativeError, status: null, stdout: "", stderr: "" };
     assert.throws(
       () => fixtureGit(root, args, { env: environment }),
@@ -132,14 +119,10 @@ test("fixture Git retains caller inputs and native failures", (context) => {
 
 test("Git selection excludes worktree deletions and preserves native failure evidence", (context) => {
   mkdirSync(path.join(root, "build"), { recursive: true });
-  const directory = mkdtempSync(
-    path.join(root, "build", "ddwg-git-selection-"),
-  );
+  const directory = mkdtempSync(path.join(root, "build", "ddwg-git-selection-"));
   const previousCeiling = process.env.GIT_CEILING_DIRECTORIES;
   try {
-    process.env.GIT_CEILING_DIRECTORIES = fs.realpathSync.native(
-      path.dirname(directory),
-    );
+    process.env.GIT_CEILING_DIRECTORIES = fs.realpathSync.native(path.dirname(directory));
     const initialized = spawnSync("git", ["init", "--quiet", directory], {
       encoding: "utf8",
       timeout: 30_000,
@@ -166,14 +149,10 @@ test("Git selection excludes worktree deletions and preserves native failure evi
     });
     const nativeSpawn = childProcess.spawnSync;
     let nativeResult;
-    const observation = context.mock.method(
-      childProcess,
-      "spawnSync",
-      (command, args, options) => {
-        nativeResult = nativeSpawn(command, args, options);
-        return nativeResult;
-      },
-    );
+    const observation = context.mock.method(childProcess, "spawnSync", (command, args, options) => {
+      nativeResult = nativeSpawn(command, args, options);
+      return nativeResult;
+    });
     syncBuiltinESMExports();
     try {
       assert.throws(() => gitFiles(directory), /git.*exited/u);
@@ -188,8 +167,7 @@ test("Git selection excludes worktree deletions and preserves native failure evi
       syncBuiltinESMExports();
     }
   } finally {
-    if (previousCeiling === undefined)
-      delete process.env.GIT_CEILING_DIRECTORIES;
+    if (previousCeiling === undefined) delete process.env.GIT_CEILING_DIRECTORIES;
     else process.env.GIT_CEILING_DIRECTORIES = previousCeiling;
     rmSync(directory, { recursive: true, force: true });
     assert.equal(existsSync(directory), false);
@@ -211,9 +189,7 @@ test("current Markdown inventory excludes official archives, not live topics", (
 });
 
 test("native Git roles distinguish executable tests from their fixture support", () => {
-  using workspace = mkdtempDisposableSync(
-    path.join(os.tmpdir(), "ddwg-test-roles-"),
-  );
+  using workspace = mkdtempDisposableSync(path.join(os.tmpdir(), "ddwg-test-roles-"));
   const directory = workspace.path;
   const git = (args) => fixtureGit(directory, args);
   git(["init", "--quiet"]);
@@ -240,20 +216,10 @@ test("native Git roles distinguish executable tests from their fixture support",
       git(["check-attr", "-z", ...source, "ethos-role", "--", ...paths])
         .split("\0")
         .slice(0, -1),
-      paths.flatMap((relative, index) => [
-        relative,
-        "ethos-role",
-        expected[index],
-      ]),
+      paths.flatMap((relative, index) => [relative, "ethos-role", expected[index]]),
     );
   }
-  const selected = git([
-    "ls-files",
-    "--cached",
-    "--others",
-    "--exclude-standard",
-    "-z",
-  ])
+  const selected = git(["ls-files", "--cached", "--others", "--exclude-standard", "-z"])
     .split("\0")
     .filter((relative) => relative.endsWith(".test.mjs"))
     .sort();
@@ -264,23 +230,17 @@ test("native Git attributes bind complete ordered reports to selected paths", (c
   const selected = ["README.md", "docs/with space.md"];
   const nativeSpawn = childProcess.spawnSync;
   const valid =
-    selected
-      .flatMap((file) => [file, "text", "auto", file, "eol", "lf"])
-      .join("\0") + "\0";
+    selected.flatMap((file) => [file, "text", "auto", file, "eol", "lf"]).join("\0") + "\0";
   let report = valid;
-  const observation = context.mock.method(
-    childProcess,
-    "spawnSync",
-    (command, args, options) => {
-      if (command === "git" && args[0] === "check-attr") {
-        assert.deepEqual(args, ["check-attr", "--stdin", "-z", "text", "eol"]);
-        assert.equal(options.cwd, root);
-        assert.equal(options.input, `${selected.join("\0")}\0`);
-        return { status: 0, stdout: report, stderr: "" };
-      }
-      return nativeSpawn(command, args, options);
-    },
-  );
+  const observation = context.mock.method(childProcess, "spawnSync", (command, args, options) => {
+    if (command === "git" && args[0] === "check-attr") {
+      assert.deepEqual(args, ["check-attr", "--stdin", "-z", "text", "eol"]);
+      assert.equal(options.cwd, root);
+      assert.equal(options.input, `${selected.join("\0")}\0`);
+      return { status: 0, stdout: report, stderr: "" };
+    }
+    return nativeSpawn(command, args, options);
+  });
   syncBuiltinESMExports();
   try {
     assert.deepEqual(
@@ -294,10 +254,7 @@ test("native Git attributes bind complete ordered reports to selected paths", (c
       valid.replace("\0text\0", "\0eol\0"),
     ]) {
       report = invalid;
-      assert.throws(
-        () => sourceAttributes(selected),
-        /native Git text attribute/u,
-      );
+      assert.throws(() => sourceAttributes(selected), /native Git text attribute/u);
     }
   } finally {
     observation.mock.restore();

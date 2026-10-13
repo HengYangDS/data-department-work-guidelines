@@ -5,18 +5,10 @@ import { parse as parseToml } from "smol-toml";
 import { headingLevel, markdownTokens, walkMarkdown } from "../markdown.mjs";
 import { root } from "../../runtime.mjs";
 
-const categories = [
-  "Added",
-  "Changed",
-  "Deprecated",
-  "Removed",
-  "Fixed",
-  "Security",
-];
+const categories = ["Added", "Changed", "Deprecated", "Removed", "Fixed", "Security"];
 const releaseHeading = /^## (\S+) - (\d{4}-\d{2}-\d{2})(?: \[YANKED\])?$/u;
 const linkDefinition = /^\[([^\]]+)\]: (https?:\/\/\S+)$/u;
-const historyRow =
-  /^History: \[GitLab\]\[([^\]]+)\] · \[GitHub\]\[([^\]]+)\]$/u;
+const historyRow = /^History: \[GitLab\]\[([^\]]+)\] · \[GitHub\]\[([^\]]+)\]$/u;
 const historyRoutes = {
   gitlab: { comparison: "/-/compare/", tag: "/-/tags/" },
   github: { comparison: "/compare/", tag: "/releases/tag/" },
@@ -24,10 +16,7 @@ const historyRoutes = {
 
 export function publicationPeers(
   repository,
-  source = readFileSync(
-    path.join(repository, ".ethos", "release.toml"),
-    "utf8",
-  ),
+  source = readFileSync(path.join(repository, ".ethos", "release.toml"), "utf8"),
 ) {
   return parseToml(source).publication?.peers;
 }
@@ -37,17 +26,13 @@ function historyPeers(peers) {
     !Array.isArray(peers) ||
     peers.length !== 2 ||
     new Set(peers.map((peer) => peer?.id)).size !== 2 ||
-    peers.some(
-      (peer) => !/^[A-Za-z0-9][A-Za-z0-9._-]*$/u.test(peer?.id ?? ""),
-    ) ||
+    peers.some((peer) => !/^[A-Za-z0-9][A-Za-z0-9._-]*$/u.test(peer?.id ?? "")) ||
     peers
       .map((peer) => peer.provider)
       .sort()
       .join(",") !== "github,gitlab"
   ) {
-    throw new Error(
-      "changelog requires the declared GitLab and GitHub publication peers",
-    );
+    throw new Error("changelog requires the declared GitLab and GitHub publication peers");
   }
   return new Map(
     peers.map((peer) => {
@@ -95,13 +80,7 @@ function historyRef(raw, label) {
 
 function historyDestination(href, repository, provider, label) {
   const url = new URL(href);
-  if (
-    url.origin !== repository.origin ||
-    url.username ||
-    url.password ||
-    url.search ||
-    url.hash
-  ) {
+  if (url.origin !== repository.origin || url.username || url.password || url.search || url.hash) {
     throw new Error(
       `history link does not identify its declared peer repository: ${label} ${provider}`,
     );
@@ -122,10 +101,8 @@ function historyDestination(href, repository, provider, label) {
   }
   if (url.pathname.startsWith(tag)) {
     const target = historyRef(url.pathname.slice(tag.length), label);
-    if (target.includes("/"))
-      throw new Error(`invalid native history tag: ${label}`);
-    if (label === "Unreleased")
-      throw new Error("Unreleased history must be a comparison");
+    if (target.includes("/")) throw new Error(`invalid native history tag: ${label}`);
+    if (label === "Unreleased") throw new Error("Unreleased history must be a comparison");
     return { kind: "tag", target };
   }
   throw new Error(
@@ -147,45 +124,29 @@ export function strictVersion(value) {
 
 function releaseDate(value) {
   const date = new Date(`${value}T00:00:00.000Z`);
-  if (
-    Number.isNaN(date.valueOf()) ||
-    date.toISOString().slice(0, 10) !== value
-  ) {
+  if (Number.isNaN(date.valueOf()) || date.toISOString().slice(0, 10) !== value) {
     throw new Error(`invalid ISO release date: ${value}`);
   }
   return date;
 }
 
-export function parseChangelog(
-  source,
-  { peers = publicationPeers(root) } = {},
-) {
+export function parseChangelog(source, { peers = publicationPeers(root) } = {}) {
   const repositories = historyPeers(peers);
   const blocks = markdownTokens(source, "CHANGELOG.md");
   const headings = new Map(
-    blocks
-      .filter((token) => headingLevel(token))
-      .map((token) => [token.startLine, token]),
+    blocks.filter((token) => headingLevel(token)).map((token) => [token.startLine, token]),
   );
-  const content = blocks.flatMap((token) =>
-    token.type === "content" ? token.children : [],
-  );
+  const content = blocks.flatMap((token) => (token.type === "content" ? token.children : []));
   const paragraphs = new Map(
-    content
-      .filter((token) => token.type === "paragraph")
-      .map((token) => [token.startLine, token]),
+    content.filter((token) => token.type === "paragraph").map((token) => [token.startLine, token]),
   );
   const definitions = new Set(
-    content
-      .filter((token) => token.type === "definition")
-      .map((token) => token.startLine),
+    content.filter((token) => token.type === "definition").map((token) => token.startLine),
   );
   const lines = source.split(/\r?\n/u);
-  if (lines[0] !== "# Changelog")
-    throw new Error("CHANGELOG.md must start with # Changelog");
+  if (lines[0] !== "# Changelog") throw new Error("CHANGELOG.md must start with # Changelog");
   const firstHeading = lines.findIndex((line) => line.startsWith("## "));
-  if (firstHeading < 0)
-    throw new Error("CHANGELOG.md has no Unreleased section");
+  if (firstHeading < 0) throw new Error("CHANGELOG.md has no Unreleased section");
   const introduction = lines.slice(0, firstHeading).join("\n");
   if (
     [...walkMarkdown(blocks)].some(
@@ -194,17 +155,13 @@ export function parseChangelog(
         (token.startLine <= firstHeading || !definitions.has(token.startLine)),
     )
   ) {
-    throw new Error(
-      "history definitions must follow all sections at the Markdown document root",
-    );
+    throw new Error("history definitions must follow all sections at the Markdown document root");
   }
   if (
     !introduction.includes("https://keepachangelog.com/en/1.1.0/") ||
     !introduction.includes("https://semver.org/spec/v2.0.0.html")
   ) {
-    throw new Error(
-      "CHANGELOG.md must identify Keep a Changelog 1.1.0 and SemVer 2.0.0",
-    );
+    throw new Error("CHANGELOG.md must identify Keep a Changelog 1.1.0 and SemVer 2.0.0");
   }
   const sections = [];
   const hrefs = new Map();
@@ -217,11 +174,8 @@ export function parseChangelog(
     const link = linkDefinition.exec(line);
     if (link) {
       if (!definitions.has(number))
-        throw new Error(
-          `history link is not a Markdown definition at line ${number}`,
-        );
-      if (hrefs.has(link[1].toLowerCase()))
-        throw new Error(`duplicate changelog link: ${link[1]}`);
+        throw new Error(`history link is not a Markdown definition at line ${number}`);
+      if (hrefs.has(link[1].toLowerCase())) throw new Error(`duplicate changelog link: ${link[1]}`);
       hrefs.set(link[1].toLowerCase(), link[2]);
       linkDefinitionsStarted = true;
       continue;
@@ -231,14 +185,10 @@ export function parseChangelog(
     }
     if (line.startsWith("## ")) {
       if (headingLevel(headings.get(number) ?? { type: "" }) !== 2)
-        throw new Error(
-          `release heading is not a top-level Markdown section at line ${number}`,
-        );
+        throw new Error(`release heading is not a top-level Markdown section at line ${number}`);
       if (line === "## Unreleased") {
         if (sections.length)
-          throw new Error(
-            `duplicate or misplaced Unreleased section at line ${number}`,
-          );
+          throw new Error(`duplicate or misplaced Unreleased section at line ${number}`);
         section = {
           label: "Unreleased",
           version: "",
@@ -248,20 +198,12 @@ export function parseChangelog(
         };
       } else {
         const match = releaseHeading.exec(line);
-        if (!match)
-          throw new Error(
-            `malformed release heading at line ${number}: ${line}`,
-          );
+        if (!match) throw new Error(`malformed release heading at line ${number}: ${line}`);
         const version = strictVersion(match[1]);
         releaseDate(match[2]);
         const previous = sections.at(-1);
-        if (
-          !previous ||
-          (previous.version && !semver.gt(previous.version, version))
-        ) {
-          throw new Error(
-            "release versions must be unique and strictly newest first",
-          );
+        if (!previous || (previous.version && !semver.gt(previous.version, version))) {
+          throw new Error("release versions must be unique and strictly newest first");
         }
         if (previous?.date && previous.date < match[2]) {
           throw new Error("release dates must be newest first");
@@ -285,33 +227,22 @@ export function parseChangelog(
         category ||
         section.history ||
         paragraphs.get(number)?.text !== line ||
-        paragraphs
-          .get(number)
-          ?.children.filter((token) => token.type === "link").length !== 2 ||
+        paragraphs.get(number)?.children.filter((token) => token.type === "link").length !== 2 ||
         history[1] !== `${section.label}-gitlab` ||
         history[2] !== `${section.label}-github`
       ) {
-        throw new Error(
-          `missing, misplaced, or mislabeled peer history at line ${number}`,
-        );
+        throw new Error(`missing, misplaced, or mislabeled peer history at line ${number}`);
       }
       section.history = true;
       continue;
     }
     if (line.startsWith("### ")) {
       if (headingLevel(headings.get(number) ?? { type: "" }) !== 3)
-        throw new Error(
-          `change category is not a top-level Markdown heading at line ${number}`,
-        );
-      if (!section)
-        throw new Error(
-          `change category precedes Unreleased at line ${number}`,
-        );
+        throw new Error(`change category is not a top-level Markdown heading at line ${number}`);
+      if (!section) throw new Error(`change category precedes Unreleased at line ${number}`);
       const name = line.slice(4);
       if (!categories.includes(name) || section.categories.has(name)) {
-        throw new Error(
-          `noncanonical or repeated category at line ${number}: ${name}`,
-        );
+        throw new Error(`noncanonical or repeated category at line ${number}: ${name}`);
       }
       section.categories.set(name, 0);
       category = name;
@@ -336,8 +267,7 @@ export function parseChangelog(
     if (entry.version && !entry.items)
       throw new Error(`release ${entry.version} has no categorized changes`);
     for (const [name, count] of entry.categories) {
-      if (!count)
-        throw new Error(`${entry.label} ${name} category has no change item`);
+      if (!count) throw new Error(`${entry.label} ${name} category has no change item`);
     }
   }
   const expected = new Set();
@@ -350,12 +280,7 @@ export function parseChangelog(
       expected.add(key.toLowerCase());
       const href = hrefs.get(key.toLowerCase());
       if (!href) throw new Error(`missing history link for ${key}`);
-      const destination = historyDestination(
-        href,
-        repositories.get(provider),
-        provider,
-        label,
-      );
+      const destination = historyDestination(href, repositories.get(provider), provider, label);
       if (common && JSON.stringify(common) !== JSON.stringify(destination)) {
         throw new Error(`peer history refs disagree: ${label}`);
       }
@@ -364,8 +289,7 @@ export function parseChangelog(
     links.set(label, common);
   }
   for (const label of hrefs.keys()) {
-    if (!expected.has(label))
-      throw new Error(`history link has no changelog section: ${label}`);
+    if (!expected.has(label)) throw new Error(`history link has no changelog section: ${label}`);
   }
   return { sections, links };
 }

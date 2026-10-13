@@ -23,9 +23,7 @@ test("archive commands preserve native errors and reject warnings", () => {
       }),
     /warning output/u,
   );
-  const directory = mkdtempSync(
-    path.join(os.tmpdir(), "ddwg-missing-command-"),
-  );
+  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-missing-command-"));
   const missing = path.join(directory, "missing-native-command");
   try {
     assert.throws(
@@ -52,14 +50,10 @@ test("CLI diagnostics retain native causes without repeating command output", (c
   runtime.reportError(new Error("fetch failed", { cause }));
   assert.deepEqual(lines, ["fetch failed", "ECONNREFUSED: connection refused"]);
   lines.length = 0;
-  runtime.reportError(
-    new Error("native command: ECONNREFUSED: connection refused", { cause }),
-  );
+  runtime.reportError(new Error("native command: ECONNREFUSED: connection refused", { cause }));
   assert.deepEqual(lines, ["native command: ECONNREFUSED: connection refused"]);
   lines.length = 0;
-  runtime.reportError(
-    new Error("native command: connection refused", { cause }),
-  );
+  runtime.reportError(new Error("native command: connection refused", { cause }));
   assert.deepEqual(lines, [
     "native command: connection refused",
     "ECONNREFUSED: connection refused",
@@ -74,13 +68,8 @@ test("CLI diagnostics retain native causes without repeating command output", (c
   lines.length = 0;
   const circular = new Error("response disposal failed");
   circular.cause = circular;
-  runtime.reportError(
-    new Error("native download refused: HTTP 500", { cause: circular }),
-  );
-  assert.deepEqual(lines, [
-    "native download refused: HTTP 500",
-    "response disposal failed",
-  ]);
+  runtime.reportError(new Error("native download refused: HTTP 500", { cause: circular }));
+  assert.deepEqual(lines, ["native download refused: HTTP 500", "response disposal failed"]);
   lines.length = 0;
   runtime.reportError(new Error("GitLab release bundle download failed"));
   assert.deepEqual(lines, ["GitLab release bundle download failed"]);
@@ -103,8 +92,7 @@ test("piped native failures preserve diagnostics without duplicate output", () =
       nativeCode: "ETIMEDOUT",
     },
     {
-      child:
-        'process.stdout.write("partial result\\n"); process.stderr.write("native cause\\n");',
+      child: 'process.stdout.write("partial result\\n"); process.stderr.write("native cause\\n");',
       timeout: 5_000,
       failure: /warning output/u,
     },
@@ -115,8 +103,7 @@ test("piped native failures preserve diagnostics without duplicate output", () =
     { rejectStderr: true },
   ]) {
     for (const { child, timeout, failure, nativeCode } of cases) {
-      if (!options.rejectStderr && failure.source === "warning output")
-        continue;
+      if (!options.rejectStderr && failure.source === "warning output") continue;
       const script = [
         'import childProcess from "node:child_process";',
         'import { syncBuiltinESMExports } from "node:module";',
@@ -136,17 +123,15 @@ test("piped native failures preserve diagnostics without duplicate output", () =
         "process.exitCode = 1; }",
         "finally { childProcess.spawnSync = spawn; syncBuiltinESMExports(); }",
       ].join("\n");
-      const result = spawnSync(
-        process.execPath,
-        ["--input-type=module", "--eval", script],
-        { encoding: "utf8", timeout: 10_000 },
-      );
+      const result = spawnSync(process.execPath, ["--input-type=module", "--eval", script], {
+        encoding: "utf8",
+        timeout: 10_000,
+      });
       assert.equal(result.status, 1, result.stderr);
       const streams = JSON.parse(
-        Buffer.from(
-          /native streams: ([A-Za-z0-9+/=]+)/u.exec(result.stderr)[1],
-          "base64",
-        ).toString("utf8"),
+        Buffer.from(/native streams: ([A-Za-z0-9+/=]+)/u.exec(result.stderr)[1], "base64").toString(
+          "utf8",
+        ),
       );
       assert.equal(result.stdout, streams.stdout);
       if (!nativeCode) assert.equal(streams.stdout, "partial result\n");
@@ -156,21 +141,14 @@ test("piped native failures preserve diagnostics without duplicate output", () =
         streams.stderr.split("native cause").length - 1,
       );
       assert.ok(
-        result.stderr.includes(
-          `native execution code: ${nativeCode ?? "none"}`,
-        ),
+        result.stderr.includes(`native execution code: ${nativeCode ?? "none"}`),
         result.stderr,
       );
       assert.ok(
-        result.stderr.includes(
-          `native execution path matches: ${!!nativeCode}`,
-        ),
+        result.stderr.includes(`native execution path matches: ${!!nativeCode}`),
         result.stderr,
       );
-      assert.ok(
-        result.stderr.includes(`has cause property: ${!!nativeCode}`),
-        result.stderr,
-      );
+      assert.ok(result.stderr.includes(`has cause property: ${!!nativeCode}`), result.stderr);
     }
   }
 });

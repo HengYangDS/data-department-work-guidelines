@@ -1,12 +1,6 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import {
-  copyFileSync,
-  existsSync,
-  mkdirSync,
-  readFileSync,
-  writeFileSync,
-} from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { test } from "node:test";
 import { pathToFileURL } from "node:url";
@@ -39,10 +33,7 @@ test("the public offline installer reports its actual package-manager version", 
       mkdirSync(path.dirname(target), { recursive: true });
       copyFileSync(path.join(root, relative), target);
     }
-    const bootstrap = path.join(
-      inputs.repository,
-      "native install #fixture.mjs",
-    );
+    const bootstrap = path.join(inputs.repository, "native install #fixture.mjs");
     writeFileSync(
       bootstrap,
       `import childProcess from "node:child_process";
@@ -91,10 +82,7 @@ syncBuiltinESMExports();
     assert.equal(result.error, undefined, result.stderr);
     assert.equal(result.status, 0, result.stderr);
     assert.equal(result.stderr, "");
-    assert.equal(
-      result.stdout,
-      `PASS offline install: 4.2.0 ${built.sha256} npm 12.1.0\n`,
-    );
+    assert.equal(result.stdout, `PASS offline install: 4.2.0 ${built.sha256} npm 12.1.0\n`);
     assert.ok(existsSync(path.join(inputs.repository, "node_modules")));
   });
 });
@@ -123,15 +111,9 @@ test("installer invokes only the locked offline supply path", () => {
         mkdirSync(path.join(inputs.repository, "node_modules"));
         assert.equal(options.env.npm_config_offline, "true");
         assert.equal(options.env.npm_config_force, "false");
-        assert.notEqual(
-          options.env.npm_config_userconfig,
-          options.env.npm_config_globalconfig,
-        );
+        assert.notEqual(options.env.npm_config_userconfig, options.env.npm_config_globalconfig);
       }
-      if (
-        command === process.execPath &&
-        path.basename(args[0]) === "install-native.mjs"
-      ) {
+      if (command === process.execPath && path.basename(args[0]) === "install-native.mjs") {
         const descriptor = readNativeSupply(inputs.repository).tools[args[1]];
         const target = path.join(
           inputs.repository,
@@ -219,14 +201,8 @@ test("Windows ARM64 offline installation consumes the pinned compatible assets",
     const rawName = rawTool.assets["win32-x64"].name;
     mkdirSync(path.join(inputs.assetDirectory, "osv-scanner"));
     mkdirSync(path.join(inputs.licenseDirectory, "osv-scanner"));
-    writeFileSync(
-      path.join(inputs.assetDirectory, "osv-scanner", rawName),
-      rawBytes,
-    );
-    writeFileSync(
-      path.join(inputs.licenseDirectory, "osv-scanner", "LICENSE"),
-      rawLicense,
-    );
+    writeFileSync(path.join(inputs.assetDirectory, "osv-scanner", rawName), rawBytes);
+    writeFileSync(path.join(inputs.licenseDirectory, "osv-scanner", "LICENSE"), rawLicense);
     native.tools["osv-scanner"] = {
       version: rawTool.version,
       binary: rawTool.binary,
@@ -293,16 +269,10 @@ test("Windows ARM64 offline installation consumes the pinned compatible assets",
             if (args[1] === "osv-scanner") {
               assert.equal(descriptor.format, "binary");
               assert.deepEqual(readFileSync(args[3]), rawBytes);
-              assert.equal(
-                descriptor.assets["win32-x64"].size,
-                rawBytes.byteLength,
-              );
+              assert.equal(descriptor.assets["win32-x64"].size, rawBytes.byteLength);
             }
             assert.deepEqual(args.slice(2, 3), ["--asset"]);
-            assert.equal(
-              path.basename(args[3]),
-              descriptor.assets["win32-x64"].name,
-            );
+            assert.equal(path.basename(args[3]), descriptor.assets["win32-x64"].name);
             const target = path.join(
               inputs.repository,
               "build/runtime/tool-cache",
@@ -325,9 +295,7 @@ test("Windows ARM64 offline installation consumes the pinned compatible assets",
         ["lychee", "vale", "osv-scanner"],
       );
       assert.equal(
-        existsSync(
-          path.join(inputs.repository, "build/runtime/.offline-install"),
-        ),
+        existsSync(path.join(inputs.repository, "build/runtime/.offline-install")),
         false,
       );
     } finally {
@@ -343,10 +311,8 @@ test("offline installation refuses an unsupported tool ABI before package-manage
   buildFixture((inputs) => {
     const native = readNativeSupply(inputs.repository);
     const platform = `${process.platform}-${process.arch}`;
-    const otherPlatform =
-      platform === "linux-arm64" ? "win32-x64" : "linux-arm64";
-    native.tools.lychee.assets[otherPlatform] =
-      native.tools.lychee.assets[platform];
+    const otherPlatform = platform === "linux-arm64" ? "win32-x64" : "linux-arm64";
+    native.tools.lychee.assets[otherPlatform] = native.tools.lychee.assets[platform];
     delete native.tools.lychee.assets[platform];
     writeFileSync(
       path.join(inputs.repository, ".config/supply/native.json"),
@@ -363,17 +329,13 @@ test("offline installation refuses an unsupported tool ABI before package-manage
           commandRunner: (command, args, options) => {
             calls.push({ command, args });
             if (args[1] === "--version") return "12.1.0\n";
-            if (args[1] === "ci")
-              mkdirSync(path.join(options.cwd, "node_modules"));
+            if (args[1] === "ci") mkdirSync(path.join(options.cwd, "node_modules"));
             return "";
           },
         }),
       /unsupported lychee platform/u,
     );
     assert.deepEqual(calls, []);
-    assert.equal(
-      existsSync(path.join(inputs.repository, "node_modules")),
-      false,
-    );
+    assert.equal(existsSync(path.join(inputs.repository, "node_modules")), false);
   });
 });

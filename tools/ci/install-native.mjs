@@ -23,11 +23,7 @@ import {
 
 export const manifest = readNativeSupply();
 
-export function selectedAsset(
-  tool,
-  platform = process.platform,
-  architecture = process.arch,
-) {
+export function selectedAsset(tool, platform = process.platform, architecture = process.arch) {
   const key = nativeToolPlatform(tool, `${platform}-${architecture}`, manifest);
   const descriptor = manifest.tools[tool];
   const asset = descriptor.assets[key];
@@ -38,9 +34,7 @@ export function selectedAsset(
   if (
     !["archive", "binary"].includes(format) ||
     ((format === "binary" || asset.size !== undefined) &&
-      (!Number.isSafeInteger(asset.size) ||
-        asset.size <= 0 ||
-        asset.size > 64 * 1024 * 1024))
+      (!Number.isSafeInteger(asset.size) || asset.size <= 0 || asset.size > 64 * 1024 * 1024))
   )
     throw new Error(`invalid ${tool} asset format or size: ${key}`);
   if (format === "archive" && !/^[0-9a-f]{64}$/u.test(asset.binarySha256 ?? ""))
@@ -57,11 +51,7 @@ export function selectedAsset(
   };
 }
 
-export function gitlabPackageRequest(
-  tool,
-  asset = selectedAsset(tool),
-  environment = process.env,
-) {
+export function gitlabPackageRequest(tool, asset = selectedAsset(tool), environment = process.env) {
   return projectPackageRequest(
     {
       packageName: manifest.tools[tool].gitlab_package_name,
@@ -104,9 +94,7 @@ function binaryFiles(directory, name) {
   return readdirSync(directory, { withFileTypes: true }).flatMap((item) => {
     const target = path.join(directory, item.name);
     if (item.isDirectory()) return binaryFiles(target, name);
-    return item.isFile() &&
-      item.name === name &&
-      !lstatSync(target).isSymbolicLink()
+    return item.isFile() && item.name === name && !lstatSync(target).isSymbolicLink()
       ? [target]
       : [];
   });
@@ -121,9 +109,7 @@ function verifiedCached(target, selected) {
     timeout: 10_000,
   }).trim();
   if (version !== selected.versionOutput) {
-    throw new Error(
-      `existing ${selected.tool} cache entry is invalid: ${target}`,
-    );
+    throw new Error(`existing ${selected.tool} cache entry is invalid: ${target}`);
   }
   return true;
 }
@@ -137,11 +123,7 @@ export async function downloadAsset(request, asset = {}) {
       signal: AbortSignal.timeout(90_000),
     });
   } catch (error) {
-    throw downloadFailure(
-      "native tool download failed",
-      error,
-      Boolean(request.headers),
-    );
+    throw downloadFailure("native tool download failed", error, Boolean(request.headers));
   }
   if (!response.ok) {
     let cause;
@@ -175,8 +157,7 @@ export async function downloadAsset(request, asset = {}) {
       Boolean(request.headers),
     );
   }
-  if (size > limit)
-    throw new Error("native tool download exceeds the size limit");
+  if (size > limit) throw new Error("native tool download exceeds the size limit");
   return Buffer.concat(chunks);
 }
 
@@ -184,19 +165,13 @@ export function assertAssetDigest(bytes, asset) {
   if (asset.size !== undefined && bytes.length !== asset.size)
     throw new Error(`native asset size mismatch: ${asset.name}`);
   const digest = createHash("sha256").update(bytes).digest("hex");
-  if (digest !== asset.sha256)
-    throw new Error(`native asset digest mismatch: ${asset.name}`);
+  if (digest !== asset.sha256) throw new Error(`native asset digest mismatch: ${asset.name}`);
 }
 
-export async function install({
-  tool,
-  assetFile = "",
-  downloadSource = "",
-} = {}) {
+export async function install({ tool, assetFile = "", downloadSource = "" } = {}) {
   if (!["", "github", "gitlab"].includes(downloadSource))
     throw new Error("invalid native tool supply source");
-  if (assetFile && downloadSource)
-    throw new Error("choose one native tool supply path");
+  if (assetFile && downloadSource) throw new Error("choose one native tool supply path");
   const selected = selectedAsset(tool);
   const request = assetFile
     ? null
@@ -211,9 +186,7 @@ export async function install({
   const cached = managedFileExists(target);
   if (!assetFile && !request) {
     if (cached && verifiedCached(target, selected)) return target;
-    throw new Error(
-      `${tool} is not cached; provide --asset PATH, --download, or --gitlab-package`,
-    );
+    throw new Error(`${tool} is not cached; provide --asset PATH, --download, or --gitlab-package`);
   }
   mkdirSync(directory, { recursive: true });
   await using stage = new AsyncDisposableStack();
@@ -277,10 +250,7 @@ export async function install({
   if (!managedFileExists(target) || !readFileSync(target).equals(verifiedBytes))
     throw new Error(`installed ${tool} published bytes failed verification`);
   if (published) {
-    if (
-      process.platform !== "win32" &&
-      (lstatSync(target).mode & 0o777) !== 0o755
-    )
+    if (process.platform !== "win32" && (lstatSync(target).mode & 0o777) !== 0o755)
       throw new Error(`installed ${tool} published mode failed verification`);
   } else if (!verifiedCached(target, selected)) {
     throw new Error(`installed ${tool} failed verification`);
@@ -288,10 +258,7 @@ export async function install({
   return target;
 }
 
-if (
-  process.argv[1] &&
-  path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
-) {
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const [tool, ...args] = process.argv.slice(2);
   const print = args.length === 1 && args[0] === "--print-spec";
   const downloadRequested = args.length === 1 && args[0] === "--download";
@@ -303,16 +270,10 @@ if (
     install({
       tool,
       assetFile: localAsset,
-      downloadSource: gitlabRequested
-        ? "gitlab"
-        : downloadRequested
-          ? "github"
-          : "",
+      downloadSource: gitlabRequested ? "gitlab" : downloadRequested ? "github" : "",
     })
       .then((target) =>
-        console.log(
-          `PASS pinned ${tool} installed: ${path.relative(root, target)}`,
-        ),
+        console.log(`PASS pinned ${tool} installed: ${path.relative(root, target)}`),
       )
       .catch((error) => {
         reportError(error);

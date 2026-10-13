@@ -26,9 +26,7 @@ test("practice admission preserves preventive obligations across current carrier
   ];
   const contract = (paragraphs) => ({
     need: paragraphs.some((text) =>
-      text.includes(
-        "observed problem, substantiated material risk, or applicable obligation",
-      ),
+      text.includes("observed problem, substantiated material risk, or applicable obligation"),
     ),
     safeguards: paragraphs.some(
       (text) =>
@@ -46,13 +44,9 @@ test("practice admission preserves preventive obligations across current carrier
   const selected = Object.fromEntries(
     carriers.map(([relative, title]) => {
       const source = readFileSync(path.join(root, relative), "utf8");
-      const paragraphs = [
-        ...walkMarkdown(contentUnderHeading(source, relative, title)),
-      ]
+      const paragraphs = [...walkMarkdown(contentUnderHeading(source, relative, title))]
         .filter((token) => token.type === "paragraph")
-        .map((token) =>
-          markdownText(token).replace(/\s+/gu, " ").toLowerCase(),
-        );
+        .map((token) => markdownText(token).replace(/\s+/gu, " ").toLowerCase());
       const expected = { need: true, safeguards: true, implementation: true };
       const legacy = paragraphs.map((text) =>
         text.replace(
@@ -62,10 +56,7 @@ test("practice admission preserves preventive obligations across current carrier
       );
       assert.equal(contract(legacy).need, false, relative);
       const waived = paragraphs.map((text) =>
-        text.replace(
-          "whether the obligation applies",
-          "when to admit the practice",
-        ),
+        text.replace("whether the obligation applies", "when to admit the practice"),
       );
       assert.equal(contract(waived).implementation, false, relative);
       return [relative, { actual: contract(paragraphs), expected }];
@@ -79,59 +70,37 @@ test("practice admission preserves preventive obligations across current carrier
 test("OpenSpec readers reach installed validation and separate source checks", () => {
   const source = readFileSync(path.join(root, "openspec", "README.md"), "utf8");
   const assertRoutes = (text) => {
-    const commands = [
-      ...walkMarkdown(markdownTokens(text, "openspec/README.md")),
-    ]
+    const commands = [...walkMarkdown(markdownTokens(text, "openspec/README.md"))]
       .filter((token) => token.type === "codeFlowValue")
       .map((token) => token.text.trim().split(/\s+/u));
     assert.deepEqual(
       commands,
       [
         ["ethos", "status", "--json"],
-        [
-          "ethos",
-          "prove",
-          "--host",
-          "--execute",
-          "--gate",
-          "openspec",
-          "--json",
-        ],
+        ["ethos", "prove", "--host", "--execute", "--gate", "openspec", "--json"],
         ["ethos", "plan", "--changed", "--json"],
       ],
       "installed official validation route",
     );
     assert.ok(
-      markdownLinkDestinations(text).includes(
-        "../CONTRIBUTING.md#verify-the-source",
-      ),
+      markdownLinkDestinations(text).includes("../CONTRIBUTING.md#verify-the-source"),
       "repository source checks retain their separate reader route",
     );
   };
   assertRoutes(source);
   assert.throws(
-    () =>
-      assertRoutes(
-        source.replace(
-          "ethos prove --host --execute --gate openspec --json",
-          "",
-        ),
-      ),
+    () => assertRoutes(source.replace("ethos prove --host --execute --gate openspec --json", "")),
     /installed official validation route/u,
   );
 });
 
 test("lifecycle readers reach current artifacts and source retirement duties", () => {
   const entry = readFileSync(path.join(root, "openspec/README.md"), "utf8");
-  const governancePage = readFileSync(
-    path.join(root, "docs/governance/ethos.md"),
-    "utf8",
-  );
+  const governancePage = readFileSync(path.join(root, "docs/governance/ethos.md"), "utf8");
   const containsRetirementDuty = (tokens) =>
     [...walkMarkdown(tokens)].some(
       (token) =>
-        token.type === "paragraph" &&
-        markdownText(token).includes("completed-Change copies"),
+        token.type === "paragraph" && markdownText(token).includes("completed-Change copies"),
     );
   const assertJourney = (entryText, governanceText) => {
     const links = markdownLinkDestinations(entryText);
@@ -141,10 +110,7 @@ test("lifecycle readers reach current artifacts and source retirement duties", (
       "changes/native-document-quality/design.md",
       "changes/native-document-quality/tasks.md",
     ]) {
-      assert.ok(
-        links.includes(artifact),
-        `missing lifecycle reading route: ${artifact}`,
-      );
+      assert.ok(links.includes(artifact), `missing lifecycle reading route: ${artifact}`);
     }
     const retirement = contentUnderHeading(
       governanceText,
@@ -157,11 +123,7 @@ test("lifecycle readers reach current artifacts and source retirement duties", (
     );
     assert.ok(
       !containsRetirementDuty(
-        contentUnderHeading(
-          governanceText,
-          "docs/governance/ethos.md",
-          "Decision Record Form",
-        ),
+        contentUnderHeading(governanceText, "docs/governance/ethos.md", "Decision Record Form"),
       ),
       "source retirement is not a decision-format rule",
     );
@@ -169,8 +131,7 @@ test("lifecycle readers reach current artifacts and source retirement duties", (
   assertJourney(entry, governancePage);
   const duty = [...walkMarkdown(markdownTokens(governancePage))].find(
     (token) =>
-      token.type === "paragraph" &&
-      markdownText(token).includes("completed-Change copies"),
+      token.type === "paragraph" && markdownText(token).includes("completed-Change copies"),
   );
   assert.ok(duty, "the source retirement duty must have a paragraph owner");
   assert.throws(
@@ -187,15 +148,9 @@ test("governance readers reach Change intent and durable decision rationale", ()
   fixture((directory) => {
     const entry = path.join(directory, "docs/governance/ethos.md");
     const original = readFileSync(entry, "utf8");
-    for (const destination of [
-      "../../openspec/README.md",
-      "../decisions/README.md",
-    ]) {
+    for (const destination of ["../../openspec/README.md", "../decisions/README.md"]) {
       const route = `(${destination})`;
-      assert.ok(
-        original.includes(route),
-        "the governance route must be visible",
-      );
+      assert.ok(original.includes(route), "the governance route must be visible");
       checkNavigation(directory);
       const isTarget = (href) => href.split(/[?#]/u, 1)[0] === destination;
       const partial = original.replace(route, "");
@@ -204,9 +159,7 @@ test("governance readers reach Change intent and durable decision rationale", ()
         assert.doesNotThrow(() => checkNavigation(directory));
       }
       let missing = original;
-      for (const href of new Set(
-        markdownLinkDestinations(original).filter(isTarget),
-      )) {
+      for (const href of new Set(markdownLinkDestinations(original).filter(isTarget))) {
         missing = missing.replaceAll(`(${href})`, "");
       }
       assert.equal(
@@ -253,11 +206,7 @@ test("Change and main-spec readers reach every capability at its owner", () => {
     for (const capability of capabilities) {
       assert.throws(
         () =>
-          assertRoutes(
-            source.replace(`(${prefix}${capability}/spec.md)`, ""),
-            relative,
-            prefix,
-          ),
+          assertRoutes(source.replace(`(${prefix}${capability}/spec.md)`, ""), relative, prefix),
         /must link to the .* owner/u,
       );
     }
@@ -272,9 +221,7 @@ test("task completion routes stay in their Markdown item after prose editing", (
     const list = [...walkMarkdown(markdownTokens(text, relative))].find(
       (token) =>
         token.type === "listUnordered" &&
-        token.children.some(
-          (child) => child.type === "content" && child.text.startsWith(marker),
-        ),
+        token.children.some((child) => child.type === "content" && child.text.startsWith(marker)),
     );
     assert.ok(list, "the selected task must remain a Markdown list item");
     const start = list.children.findIndex(
@@ -287,21 +234,14 @@ test("task completion routes stay in their Markdown item after prose editing", (
     const item = list.children.slice(start, next < 0 ? undefined : next);
     const tokens = [...walkMarkdown(item)];
     assert.ok(
-      tokens.every(
-        (token) => !["codeIndented", "codeFenced"].includes(token.type),
-      ),
+      tokens.every((token) => !["codeIndented", "codeFenced"].includes(token.type)),
       "task actions and completion checks must not become code",
     );
     const paragraphs = tokens.filter((token) => token.type === "paragraph");
     assert.ok(markdownText(paragraphs[0]).startsWith(marker));
-    const links = markdownLinkDestinations(
-      paragraphs.map((token) => token.text).join("\n\n"),
-    );
+    const links = markdownLinkDestinations(paragraphs.map((token) => token.text).join("\n\n"));
     for (const destination of destinations) {
-      assert.ok(
-        links.includes(destination),
-        `missing task route: ${destination}`,
-      );
+      assert.ok(links.includes(destination), `missing task route: ${destination}`);
     }
   };
   assertTaskContainer(source, "2.38", [
@@ -334,9 +274,7 @@ test("official apply tracks every readable item without a second progress sectio
   const relative = "openspec/changes/native-document-quality/tasks.md";
   const source = readFileSync(path.join(root, relative), "utf8");
   const env = Object.fromEntries(
-    Object.entries(process.env).filter(
-      ([key]) => key.toUpperCase() !== "OPENSPEC_TELEMETRY",
-    ),
+    Object.entries(process.env).filter(([key]) => key.toUpperCase() !== "OPENSPEC_TELEMETRY"),
   );
   env.OPENSPEC_TELEMETRY = "0";
   const result = spawnSync(
@@ -359,14 +297,8 @@ test("official apply tracks every readable item without a second progress sectio
   assert.equal(report.root.path, root);
   assert.equal(report.taskTrackingConfigured, true);
   assert.equal(report.progress.total, report.tasks.length);
-  assert.equal(
-    report.progress.complete,
-    report.tasks.filter((task) => task.done).length,
-  );
-  assert.equal(
-    report.progress.remaining,
-    report.tasks.filter((task) => !task.done).length,
-  );
+  assert.equal(report.progress.complete, report.tasks.filter((task) => task.done).length);
+  assert.equal(report.progress.remaining, report.tasks.filter((task) => !task.done).length);
   const tokens = markdownTokens(source, relative);
   const groups = tokens.filter((token) => headingLevel(token) === 2);
   assert.ok(groups.length, "the official checklist has numbered task groups");
@@ -389,19 +321,10 @@ test("official apply tracks every readable item without a second progress sectio
     .flatMap((token) =>
       token.children
         .filter((child) => child.type === "content")
-        .map((child) =>
-          child.children.find((item) => item.type === "paragraph"),
-        ),
+        .map((child) => child.children.find((item) => item.type === "paragraph")),
     )
-    .filter(
-      (token) =>
-        token &&
-        ["[ ] ", "[x] "].some((marker) => token.text.startsWith(marker)),
-    );
-  assert.ok(
-    paragraphs.length,
-    "the active checklist must contain readable work",
-  );
+    .filter((token) => token && ["[ ] ", "[x] "].some((marker) => token.text.startsWith(marker)));
+  assert.ok(paragraphs.length, "the active checklist must contain readable work");
   const expected = paragraphs.map((token) => ({
     description: token.text.split("\n")[0].slice(4),
     done: token.text.startsWith("[x] "),
@@ -415,10 +338,7 @@ test("official apply tracks every readable item without a second progress sectio
     );
   };
   assertCompleteSelection(report.tasks);
-  assert.throws(
-    () => assertCompleteSelection(report.tasks.slice(1)),
-    /every readable task/u,
-  );
+  assert.throws(() => assertCompleteSelection(report.tasks.slice(1)), /every readable task/u);
   for (const task of report.tasks) {
     assert.equal(task.sourcePath, path.join(root, relative));
     const paragraph = paragraphs.find((token) => token.startLine === task.line);

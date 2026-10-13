@@ -48,12 +48,7 @@ const workflowRules = [
   },
   { if: "$CI_COMMIT_BRANCH =~ /^proposal\\//" },
 ];
-const hostMatrix = [
-  "ubuntu-latest",
-  "ubuntu-24.04-arm",
-  "macos-latest",
-  "windows-latest",
-];
+const hostMatrix = ["ubuntu-latest", "ubuntu-24.04-arm", "macos-latest", "windows-latest"];
 
 const npmBootstrap =
   'npm install --global --ignore-scripts "npm@$(node -p \'require("./package.json").devEngines.packageManager.version\')"';
@@ -79,10 +74,7 @@ const selectedNativeSourceSupply = [
   ...nativeRuntimeSupply,
   ...nativeSourceSupply.map((command) => `mise exec --locked -- ${command}`),
 ];
-const windowsSourceSupply = [
-  ...windowsRuntimeEntry,
-  ...selectedNativeSourceSupply,
-];
+const windowsSourceSupply = [...windowsRuntimeEntry, ...selectedNativeSourceSupply];
 const selectedNativeVerifier = `mise exec --locked -- ${verifier}`;
 const selectedNativeOffline = [
   "mise exec --locked -- node tools/ci/offline-bundle.mjs acquire-gitlab",
@@ -101,9 +93,7 @@ function requirePackageManagerSetup(steps, setupNode) {
     setup?.["package-manager-cache"] !== false ||
     setup?.["check-latest"] !== true
   ) {
-    throw new Error(
-      "Node setup must resolve the latest declared runtime without invoking npm",
-    );
+    throw new Error("Node setup must resolve the latest declared runtime without invoking npm");
   }
   const read = steps.findIndex((step) => step.id === "npm-version");
   const install = steps.findIndex(
@@ -114,30 +104,24 @@ function requirePackageManagerSetup(steps, setupNode) {
   const expected =
     "node -e \"require('node:fs').appendFileSync(process.env.GITHUB_OUTPUT, 'version=' + require('./package.json').devEngines.packageManager.version + '\\n')\"";
   if (read <= setupNode || install <= read || steps[read]?.run !== expected) {
-    throw new Error(
-      "package-manager supply must derive the native declaration after Node setup",
-    );
+    throw new Error("package-manager supply must derive the native declaration after Node setup");
   }
   return install;
 }
 
 function parseYaml(source, name) {
   const document = YAML.parseDocument(source, { uniqueKeys: true });
-  if (document.errors.length)
-    throw new Error(`${name}: ${document.errors[0].message}`);
+  if (document.errors.length) throw new Error(`${name}: ${document.errors[0].message}`);
   return document.toJS();
 }
 
 function sourceSupply(job) {
-  return Array.isArray(job?.before_script)
-    ? job.before_script.flat(10)
-    : job?.before_script;
+  return Array.isArray(job?.before_script) ? job.before_script.flat(10) : job?.before_script;
 }
 
 function requireStep(steps, prefix) {
   const index = steps.findIndex(
-    (step) =>
-      typeof step.uses === "string" && step.uses.startsWith(`${prefix}@`),
+    (step) => typeof step.uses === "string" && step.uses.startsWith(`${prefix}@`),
   );
   if (index < 0) throw new Error(`GitHub workflow missing ${prefix}`);
   return { index, step: steps[index] };
@@ -145,19 +129,13 @@ function requireStep(steps, prefix) {
 
 function requireHostedJobExecution(job, kind, hosts) {
   if (job.permissions !== undefined) {
-    throw new Error(
-      `GitHub ${kind} job must inherit read-only workflow permissions`,
-    );
+    throw new Error(`GitHub ${kind} job must inherit read-only workflow permissions`);
   }
   if (kind === "source" && job.env !== undefined) {
-    throw new Error(
-      "GitHub source job cannot override the execution environment",
-    );
+    throw new Error("GitHub source job cannot override the execution environment");
   }
   if (job["timeout-minutes"] !== verificationMinutes[kind]) {
-    throw new Error(
-      `GitHub ${kind} timeout must be ${verificationMinutes[kind]} minutes`,
-    );
+    throw new Error(`GitHub ${kind} timeout must be ${verificationMinutes[kind]} minutes`);
   }
   const strategy = job.strategy ?? {};
   const matrix = strategy.matrix ?? {};
@@ -168,9 +146,7 @@ function requireHostedJobExecution(job, kind, hosts) {
     JSON.stringify(matrix.os) !== JSON.stringify(hosts) ||
     job["runs-on"] !== "${{ matrix.os }}"
   ) {
-    throw new Error(
-      `GitHub ${kind} host matrix must be exact on hosted runners`,
-    );
+    throw new Error(`GitHub ${kind} host matrix must be exact on hosted runners`);
   }
   if (
     job.if !== undefined ||
@@ -207,16 +183,10 @@ function validateOfflineWorkflow(source, nodeMajor) {
       release: { types: ["published"] },
     })
   ) {
-    throw new Error(
-      "offline verification requires a published release trigger",
-    );
+    throw new Error("offline verification requires a published release trigger");
   }
   const job = workflow.jobs?.verify;
-  if (
-    !isDeepStrictEqual(workflow.permissions, { contents: "read" }) ||
-    !job ||
-    job.container
-  ) {
+  if (!isDeepStrictEqual(workflow.permissions, { contents: "read" }) || !job || job.container) {
     throw new Error("offline verification must use read-only hosted runners");
   }
   requireHostedJobExecution(job, "offline", hostMatrix);
@@ -240,22 +210,16 @@ function validateOfflineWorkflow(source, nodeMajor) {
       "fetch-depth": 0,
     })
   ) {
-    throw new Error(
-      "offline release checkout must use full history and the exact tag",
-    );
+    throw new Error("offline release checkout must use full history and the exact tag");
   }
   if (
     checkout.index >= setupNode.index ||
     String(setupNode.step.with?.["node-version"]) !== String(nodeMajor)
   ) {
-    throw new Error(
-      `offline release must configure Node ${nodeMajor} after checkout`,
-    );
+    throw new Error(`offline release must configure Node ${nodeMajor} after checkout`);
   }
   const packageManager = requirePackageManagerSetup(steps, setupNode.index);
-  const commands = steps
-    .slice(packageManager + 1)
-    .filter((step) => typeof step.run === "string");
+  const commands = steps.slice(packageManager + 1).filter((step) => typeof step.run === "string");
   if (
     commands[0]?.run !== "node tools/ci/offline-bundle.mjs acquire-github" ||
     setupNode.index >= steps.indexOf(commands[0])
@@ -278,9 +242,7 @@ function validateGitLabOffline(gitlab, expectedImage) {
   const job = gitlab[".offline:verify"];
   if (!job) throw new Error("GitLab offline verification owner is missing");
   if (job.timeout !== `${verificationMinutes.offline}m`) {
-    throw new Error(
-      `GitLab offline timeout must match its ${verificationMinutes.offline}m peer`,
-    );
+    throw new Error(`GitLab offline timeout must match its ${verificationMinutes.offline}m peer`);
   }
   if (
     job.image !== undefined ||
@@ -296,9 +258,7 @@ function validateGitLabOffline(gitlab, expectedImage) {
     throw new Error("GitLab offline verification needs the declared runner");
   }
   if (!isDeepStrictEqual(job.variables, { GIT_DEPTH: "0" })) {
-    throw new Error(
-      "GitLab offline variables must preserve only full-history selection",
-    );
+    throw new Error("GitLab offline variables must preserve only full-history selection");
   }
   const expectedRules = [
     candidateRule,
@@ -324,9 +284,7 @@ function validateGitLabOffline(gitlab, expectedImage) {
     throw new Error("GitLab offline installation must use the pinned bundle");
   }
   if (commands[2] !== verifier || commands.length !== 3) {
-    throw new Error(
-      "GitLab offline verifier must run the full repository check",
-    );
+    throw new Error("GitLab offline verifier must run the full repository check");
   }
   return validateGitLabLinuxJob(gitlab, "offline", "offline");
 }
@@ -336,19 +294,12 @@ function validateGitLabNativeJobs(gitlab, base, kind, lane) {
     const name = `${base}:${capabilities.system}${lane === "review" ? ":review" : ""}`;
     const capability = capabilities[lane === "review" ? "review" : "protected"];
     const rules =
-      lane === "review"
-        ? reviewRules
-        : lane === "protected"
-          ? protectedRules
-          : undefined;
+      lane === "review" ? reviewRules : lane === "protected" ? protectedRules : undefined;
     const job = gitlab[name];
-    const resourceKeys =
-      capabilities.system === "windows" ? ",resource_group" : "";
-    let suppliedCommands =
-      kind === "source" ? selectedNativeSourceSupply : nativeRuntimeSupply;
+    const resourceKeys = capabilities.system === "windows" ? ",resource_group" : "";
+    let suppliedCommands = kind === "source" ? selectedNativeSourceSupply : nativeRuntimeSupply;
     if (capabilities.system === "windows") {
-      suppliedCommands =
-        kind === "source" ? windowsSourceSupply : windowsRuntimeSupply;
+      suppliedCommands = kind === "source" ? windowsSourceSupply : windowsRuntimeSupply;
       const resource = gitlab["docs:verify:windows"]?.resource_group;
       if (
         typeof resource !== "string" ||
@@ -391,22 +342,14 @@ function validateGitLabNativeJobs(gitlab, base, kind, lane) {
 function validateGitLabLinuxJob(gitlab, phase, lane) {
   const name = `${phase}:verify:linux${lane === "review" ? ":review" : ""}`;
   const job = gitlab[name];
-  const rules =
-    lane === "review"
-      ? reviewRules
-      : lane === "protected"
-        ? protectedRules
-        : undefined;
+  const rules = lane === "review" ? reviewRules : lane === "protected" ? protectedRules : undefined;
   const capability =
-    lane === "review"
-      ? gitlabLinuxReviewCapability
-      : gitlabLinuxProtectedCapability;
+    lane === "review" ? gitlabLinuxReviewCapability : gitlabLinuxProtectedCapability;
   if (
     !job ||
     typeof job !== "object" ||
     Array.isArray(job) ||
-    Object.keys(job).sort().join(",") !==
-      (rules ? "extends,rules,tags" : "extends,tags") ||
+    Object.keys(job).sort().join(",") !== (rules ? "extends,rules,tags" : "extends,tags") ||
     job.extends !== `.${phase}:verify` ||
     JSON.stringify(job.tags) !== JSON.stringify([capability]) ||
     JSON.stringify(job.rules) !== JSON.stringify(rules)
@@ -457,8 +400,7 @@ export function validateCi(
   const supplyOwner = gitlab[".docs:source-supply"];
   if (
     Object.keys(supplyOwner ?? {}).join(",") !== "before_script" ||
-    JSON.stringify(sourceSupply(supplyOwner)) !==
-      JSON.stringify(nativeSourceSupply)
+    JSON.stringify(sourceSupply(supplyOwner)) !== JSON.stringify(nativeSourceSupply)
   ) {
     throw new Error("GitLab native source supply must have one complete owner");
   }
@@ -473,25 +415,15 @@ export function validateCi(
     !isDeepStrictEqual(runtimeOwner.variables, nativeRuntimeVariables) ||
     !isDeepStrictEqual(sourceSupply(runtimeOwner), nativeRuntimeSupply) ||
     Object.keys(selectedSupplyOwner ?? {}).join(",") !== "before_script" ||
-    !isDeepStrictEqual(
-      sourceSupply(selectedSupplyOwner),
-      selectedNativeSourceSupply,
-    ) ||
+    !isDeepStrictEqual(sourceSupply(selectedSupplyOwner), selectedNativeSourceSupply) ||
     Object.keys(windowsRuntimeOwner ?? {}).join(",") !== "before_script" ||
-    !isDeepStrictEqual(
-      sourceSupply(windowsRuntimeOwner),
-      windowsRuntimeSupply,
-    ) ||
+    !isDeepStrictEqual(sourceSupply(windowsRuntimeOwner), windowsRuntimeSupply) ||
     Object.keys(windowsSourceOwner ?? {}).join(",") !== "before_script" ||
     !isDeepStrictEqual(sourceSupply(windowsSourceOwner), windowsSourceSupply)
   ) {
-    throw new Error(
-      "GitLab native runtime and source supply must retain their complete owners",
-    );
+    throw new Error("GitLab native runtime and source supply must retain their complete owners");
   }
-  if (
-    JSON.stringify(gitlab.workflow?.rules) !== JSON.stringify(workflowRules)
-  ) {
+  if (JSON.stringify(gitlab.workflow?.rules) !== JSON.stringify(workflowRules)) {
     throw new Error(
       "GitLab workflow must admit release, accepted, and proposal events without duplicate open-MR pushes",
     );
@@ -512,19 +444,12 @@ export function validateCi(
       "GitHub source triggers must cover accepted and proposal branches, pull requests, and version tags",
     );
   }
-  if (
-    !job ||
-    job.container ||
-    !isDeepStrictEqual(github.permissions, { contents: "read" })
-  ) {
-    throw new Error(
-      "GitHub verification must use a read-only hosted job without a container",
-    );
+  if (!job || job.container || !isDeepStrictEqual(github.permissions, { contents: "read" })) {
+    throw new Error("GitHub verification must use a read-only hosted job without a container");
   }
   requireHostedJobExecution(job, "source", hostMatrix);
   const steps = job.steps;
-  if (!Array.isArray(steps))
-    throw new Error("GitHub verification steps are missing");
+  if (!Array.isArray(steps)) throw new Error("GitHub verification steps are missing");
   for (const step of steps) {
     if (step.uses && !/^[^@]+@[0-9a-f]{40}$/u.test(step.uses)) {
       throw new Error(`GitHub action is not pinned by commit: ${step.uses}`);
@@ -551,9 +476,7 @@ export function validateCi(
     evidenceStep.step.with?.["if-no-files-found"] !== "error" ||
     evidenceStep.index <= steps.findIndex((step) => step.run === auditCommand)
   )
-    throw new Error(
-      "GitHub must preserve complete dependency evidence on every result",
-    );
+    throw new Error("GitHub must preserve complete dependency evidence on every result");
   const expectedSequence = [
     checkout.step.uses,
     setupNode.step.uses,
@@ -585,23 +508,17 @@ export function validateCi(
         step["working-directory"] !== undefined,
     )
   ) {
-    throw new Error(
-      "GitHub source steps cannot override the execution environment",
-    );
+    throw new Error("GitHub source steps cannot override the execution environment");
   }
   const gitlabJob = gitlab[".docs:verify"];
   if (
     JSON.stringify(gitlabJob?.artifacts) !==
     JSON.stringify({ when: "always", paths: ["build/evidence/dependencies/"] })
   )
-    throw new Error(
-      "GitLab must preserve complete dependency evidence on every result",
-    );
+    throw new Error("GitLab must preserve complete dependency evidence on every result");
   const gitlabImage = gitlab.default?.image;
   if (gitlabJob && gitlabJob.timeout !== `${verificationMinutes.source}m`) {
-    throw new Error(
-      `GitLab source timeout must match its ${verificationMinutes.source}m peer`,
-    );
+    throw new Error(`GitLab source timeout must match its ${verificationMinutes.source}m peer`);
   }
   if (
     !gitlabJob ||
@@ -619,9 +536,7 @@ export function validateCi(
     );
   }
   if (!isDeepStrictEqual(gitlabJob.variables, { GIT_DEPTH: "0" })) {
-    throw new Error(
-      "GitLab variables must preserve only full history and release tags",
-    );
+    throw new Error("GitLab variables must preserve only full history and release tags");
   }
   const before = sourceSupply(gitlabJob);
   if (
@@ -631,16 +546,11 @@ export function validateCi(
   ) {
     throw new Error("GitLab dependency audit or locked tool supply is missing");
   }
-  if (
-    JSON.stringify(before) !==
-    JSON.stringify([npmBootstrap, ...nativeSourceSupply])
-  ) {
+  if (JSON.stringify(before) !== JSON.stringify([npmBootstrap, ...nativeSourceSupply])) {
     throw new Error("GitLab tool supply must use its own package registry");
   }
   if (JSON.stringify(gitlabJob.script) !== JSON.stringify([verifier])) {
-    throw new Error(
-      "GitLab must invoke the same repository verifier as GitHub",
-    );
+    throw new Error("GitLab must invoke the same repository verifier as GitHub");
   }
   const gitlabHosts = [
     validateGitLabLinuxJob(gitlab, "docs", "protected"),

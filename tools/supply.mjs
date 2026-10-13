@@ -1,24 +1,15 @@
 import { createHash } from "node:crypto";
-import {
-  accessSync,
-  constants,
-  readFileSync,
-  realpathSync,
-  statSync,
-} from "node:fs";
+import { accessSync, constants, readFileSync, realpathSync, statSync } from "node:fs";
 import path from "node:path";
 import { filePath, managedFileExists, root, run } from "./runtime.mjs";
 
 export const nativeSupplyPath = ".config/supply/native.json";
 export function readNativeSupply(repository = root) {
-  return JSON.parse(
-    readFileSync(path.join(repository, nativeSupplyPath), "utf8"),
-  );
+  return JSON.parse(readFileSync(path.join(repository, nativeSupplyPath), "utf8"));
 }
 
 export function assertNativeBinaryDigest(bytes, asset, tool) {
-  const expected =
-    asset?.format === "binary" ? asset.sha256 : asset?.binarySha256;
+  const expected = asset?.format === "binary" ? asset.sha256 : asset?.binarySha256;
   if (typeof expected !== "string" || !/^[0-9a-f]{64}$/u.test(expected))
     throw new Error(`unpinned ${tool} binary digest`);
   if (createHash("sha256").update(bytes).digest("hex") !== expected)
@@ -27,17 +18,14 @@ export function assertNativeBinaryDigest(bytes, asset, tool) {
 
 function nativeExecutablePath(selected) {
   const windows = process.platform === "win32";
-  if (windows && selected === ".")
-    throw new Error(`native executable not found: ${selected}`);
-  const explicit =
-    path.isAbsolute(selected) || (windows ? /[/\\:]/u : /\//u).test(selected);
+  if (windows && selected === ".") throw new Error(`native executable not found: ${selected}`);
+  const explicit = path.isAbsolute(selected) || (windows ? /[/\\:]/u : /\//u).test(selected);
   const name = windows ? selected.split(/[/\\:]/u).at(-1) : selected;
   const directories = [];
   if (explicit) {
     directories.push("");
   } else if (windows) {
-    if (!Object.hasOwn(process.env, "NoDefaultCurrentDirectoryInExePath"))
-      directories.push(root);
+    if (!Object.hasOwn(process.env, "NoDefaultCurrentDirectoryInExePath")) directories.push(root);
     const search = process.env.PATH ?? "";
     for (let offset = 0; offset < search.length;) {
       const quote = search[offset];
@@ -47,8 +35,7 @@ function nativeExecutablePath(selected) {
       const end = separator < 0 ? search.length : separator;
       let directory = search.slice(offset, end);
       if (quoted) directory = directory.slice(1);
-      if (directory.endsWith('"') || directory.endsWith("'"))
-        directory = directory.slice(0, -1);
+      if (directory.endsWith('"') || directory.endsWith("'")) directory = directory.slice(0, -1);
       if (directory) directories.push(directory);
       offset = end + 1;
     }
@@ -57,9 +44,7 @@ function nativeExecutablePath(selected) {
   }
   const names = windows
     ? [
-        ...(name.indexOf(".") >= 0 && name.indexOf(".") < name.length - 1
-          ? [selected]
-          : []),
+        ...(name.indexOf(".") >= 0 && name.indexOf(".") < name.length - 1 ? [selected] : []),
         `${selected}.com`,
         `${selected}.exe`,
       ]
@@ -70,9 +55,7 @@ function nativeExecutablePath(selected) {
       const prefix = path.parse(original).root;
       const base = path.resolve(root, prefix || ".");
       const candidate =
-        base +
-        (base.endsWith(path.sep) ? "" : path.sep) +
-        original.slice(prefix.length);
+        base + (base.endsWith(path.sep) ? "" : path.sep) + original.slice(prefix.length);
       try {
         if (!statSync(candidate).isFile()) continue;
         accessSync(candidate, windows ? constants.F_OK : constants.X_OK);
@@ -90,12 +73,10 @@ export function nativeToolPlatform(
   platform = `${process.platform}-${process.arch}`,
   manifest = readNativeSupply(),
 ) {
-  if (!Object.hasOwn(manifest.tools, tool))
-    throw new Error(`unknown native tool: ${tool}`);
+  if (!Object.hasOwn(manifest.tools, tool)) throw new Error(`unknown native tool: ${tool}`);
   const assets = manifest.tools[tool].assets;
   if (Object.hasOwn(assets, platform)) return platform;
-  if (platform === "win32-arm64" && Object.hasOwn(assets, "win32-x64"))
-    return "win32-x64";
+  if (platform === "win32-arm64" && Object.hasOwn(assets, "win32-x64")) return "win32-x64";
   throw new Error(`unsupported ${tool} platform: ${platform}`);
 }
 
@@ -134,20 +115,13 @@ export function nativeToolBinary(tool) {
   const managedRoot = filePath("build/runtime/tool-cache");
   const inManagedCache = (candidate) => {
     const relative = path.relative(managedRoot, candidate);
-    return (
-      relative !== ".." &&
-      !relative.startsWith(`..${path.sep}`) &&
-      !path.isAbsolute(relative)
-    );
+    return relative !== ".." && !relative.startsWith(`..${path.sep}`) && !path.isAbsolute(relative);
   };
   const resolved = realpathSync.native(selected);
   if (inManagedCache(selectedPath) || inManagedCache(resolved)) {
     if (path.relative(cached, resolved) !== "")
-      throw new Error(
-        `${tool} managed executable identity does not match its platform pin`,
-      );
-    if (!managedFileExists(selectedPath))
-      throw new Error(`${tool} managed binary is missing`);
+      throw new Error(`${tool} managed executable identity does not match its platform pin`);
+    if (!managedFileExists(selectedPath)) throw new Error(`${tool} managed binary is missing`);
     assertNativeBinaryDigest(
       readFileSync(selected),
       {
@@ -163,9 +137,7 @@ export function nativeToolBinary(tool) {
     timeout: 10_000,
   }).trim();
   if (version !== descriptor.versionOutput) {
-    throw new Error(
-      `${tool} version mismatch: expected ${descriptor.version}, got ${version}`,
-    );
+    throw new Error(`${tool} version mismatch: expected ${descriptor.version}, got ${version}`);
   }
   return selected;
 }

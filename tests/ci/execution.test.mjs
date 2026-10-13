@@ -34,8 +34,7 @@ test("both Forge source and offline jobs retain one bounded deadline", () => {
       if (minutes === undefined) delete job["timeout-minutes"];
       else job["timeout-minutes"] = minutes;
       assert.throws(
-        () =>
-          validateCi(YAML.stringify(source), gitlab, YAML.stringify(release)),
+        () => validateCi(YAML.stringify(source), gitlab, YAML.stringify(release)),
         /GitHub .* timeout/u,
         `${kind}: ${minutes}`,
       );
@@ -45,11 +44,7 @@ test("both Forge source and offline jobs retain one bounded deadline", () => {
 
 test("GitHub source verification cannot be skipped or lose a host", () => {
   for (const [name, change, reason] of [
-    [
-      "job condition",
-      (job) => (job.if = false),
-      /GitHub source job cannot skip/u,
-    ],
+    ["job condition", (job) => (job.if = false), /GitHub source job cannot skip/u],
     [
       "allowed failure",
       (job) => (job["continue-on-error"] = true),
@@ -60,11 +55,7 @@ test("GitHub source verification cannot be skipped or lose a host", () => {
       (job) => (job.strategy.matrix.exclude = [{ os: "windows-latest" }]),
       /GitHub source host matrix/u,
     ],
-    [
-      "skipped verifier",
-      (job) => (job.steps.at(-1).if = false),
-      /GitHub source job cannot skip/u,
-    ],
+    ["skipped verifier", (job) => (job.steps.at(-1).if = false), /GitHub source job cannot skip/u],
     [
       "ignored verifier failure",
       (job) => (job.steps.at(-1)["continue-on-error"] = true),
@@ -73,31 +64,19 @@ test("GitHub source verification cannot be skipped or lose a host", () => {
   ]) {
     const workflow = YAML.parse(github);
     change(workflow.jobs.verify);
-    assert.throws(
-      () => validateCi(YAML.stringify(workflow), gitlab, offline),
-      reason,
-      name,
-    );
+    assert.throws(() => validateCi(YAML.stringify(workflow), gitlab, offline), reason, name);
   }
 });
 
 test("each declared hosted source and offline platform is required", () => {
   for (const kind of ["source", "offline"]) {
-    for (const host of [
-      "ubuntu-latest",
-      "ubuntu-24.04-arm",
-      "macos-latest",
-      "windows-latest",
-    ]) {
+    for (const host of ["ubuntu-latest", "ubuntu-24.04-arm", "macos-latest", "windows-latest"]) {
       const source = YAML.parse(github);
       const release = YAML.parse(offline);
       const job = (kind === "source" ? source : release).jobs.verify;
-      job.strategy.matrix.os = job.strategy.matrix.os.filter(
-        (candidate) => candidate !== host,
-      );
+      job.strategy.matrix.os = job.strategy.matrix.os.filter((candidate) => candidate !== host);
       assert.throws(
-        () =>
-          validateCi(YAML.stringify(source), gitlab, YAML.stringify(release)),
+        () => validateCi(YAML.stringify(source), gitlab, YAML.stringify(release)),
         /GitHub .* host matrix/u,
         `${kind}: ${host}`,
       );
@@ -107,11 +86,7 @@ test("each declared hosted source and offline platform is required", () => {
 
 test("GitHub offline verification cannot be skipped or lose a host", () => {
   for (const [name, change, reason] of [
-    [
-      "job condition",
-      (job) => (job.if = false),
-      /GitHub offline job cannot skip/u,
-    ],
+    ["job condition", (job) => (job.if = false), /GitHub offline job cannot skip/u],
     [
       "allowed failure",
       (job) => (job["continue-on-error"] = true),
@@ -122,11 +97,7 @@ test("GitHub offline verification cannot be skipped or lose a host", () => {
       (job) => (job.strategy.matrix.exclude = [{ os: "windows-latest" }]),
       /GitHub offline host matrix/u,
     ],
-    [
-      "skipped verifier",
-      (job) => (job.steps.at(-1).if = false),
-      /GitHub offline job cannot skip/u,
-    ],
+    ["skipped verifier", (job) => (job.steps.at(-1).if = false), /GitHub offline job cannot skip/u],
     [
       "ignored verifier failure",
       (job) => (job.steps.at(-1)["continue-on-error"] = true),
@@ -135,28 +106,17 @@ test("GitHub offline verification cannot be skipped or lose a host", () => {
   ]) {
     const workflow = YAML.parse(offline);
     change(workflow.jobs.verify);
-    assert.throws(
-      () => validateCi(github, gitlab, YAML.stringify(workflow)),
-      reason,
-      name,
-    );
+    assert.throws(() => validateCi(github, gitlab, YAML.stringify(workflow)), reason, name);
   }
 });
 
 test("GitLab Windows verification shares one project resource without merging trust", () => {
   const pipeline = YAML.parse(gitlab);
-  const jobs = [
-    "docs:verify:windows",
-    "docs:verify:windows:review",
-    "offline:verify:windows",
-  ];
+  const jobs = ["docs:verify:windows", "docs:verify:windows:review", "offline:verify:windows"];
   const resource = pipeline[jobs[0]].resource_group;
   assert.equal(typeof resource, "string");
   assert.ok(resource.trim());
-  assert.ok(
-    !resource.includes("$"),
-    "the resource must not split by event or ref",
-  );
+  assert.ok(!resource.includes("$"), "the resource must not split by event or ref");
   for (const name of jobs) {
     assert.equal(pipeline[name].resource_group, resource, name);
   }
@@ -217,9 +177,7 @@ test("GitLab source and offline jobs use bounded peer-equivalent deadlines", () 
   ]) {
     const pipeline = YAML.parse(gitlab);
     pipeline[jobName].timeout = minutes;
-    assert.doesNotThrow(() =>
-      validateCi(github, YAML.stringify(pipeline), offline),
-    );
+    assert.doesNotThrow(() => validateCi(github, YAML.stringify(pipeline), offline));
     pipeline[jobName].timeout = "1h";
     assert.throws(
       () => validateCi(github, YAML.stringify(pipeline), offline),
@@ -230,16 +188,11 @@ test("GitLab source and offline jobs use bounded peer-equivalent deadlines", () 
 
 test("CI contract refuses a missing checkout and a changed verifier", () => {
   assert.throws(
-    () =>
-      validateCi(
-        github.replace("actions/checkout@", "other/checkout@"),
-        gitlab,
-      ),
+    () => validateCi(github.replace("actions/checkout@", "other/checkout@"), gitlab),
     /missing actions\/checkout/u,
   );
   assert.throws(
-    () =>
-      validateCi(github, gitlab.replace("npm run verify", "npm run partial")),
+    () => validateCi(github, gitlab.replace("npm run verify", "npm run partial")),
     /same repository verifier/u,
   );
 });
@@ -248,10 +201,7 @@ test("CI contract refuses an unpinned action or local runner", () => {
   assert.throws(
     () =>
       validateCi(
-        github.replace(
-          /actions\/setup-node@[0-9a-f]{40}/u,
-          "actions/setup-node@main",
-        ),
+        github.replace(/actions\/setup-node@[0-9a-f]{40}/u, "actions/setup-node@main"),
         gitlab,
       ),
     /not pinned/u,
@@ -264,18 +214,15 @@ test("CI contract refuses an unpinned action or local runner", () => {
 
 test("versioned CI refuses shallow history or missing tag triggers", () => {
   assert.throws(
-    () =>
-      validateCi(github.replace("fetch-depth: 0", "fetch-depth: 1"), gitlab),
+    () => validateCi(github.replace("fetch-depth: 0", "fetch-depth: 1"), gitlab),
     /full history/u,
   );
   assert.throws(
-    () =>
-      validateCi(github.replace('      - "v*"', '      - "other*"'), gitlab),
+    () => validateCi(github.replace('      - "v*"', '      - "other*"'), gitlab),
     /version tags/u,
   );
   assert.throws(
-    () =>
-      validateCi(github, gitlab.replace('GIT_DEPTH: "0"', 'GIT_DEPTH: "1"')),
+    () => validateCi(github, gitlab.replace('GIT_DEPTH: "0"', 'GIT_DEPTH: "1"')),
     /full history/u,
   );
 });
@@ -283,18 +230,11 @@ test("versioned CI refuses shallow history or missing tag triggers", () => {
 test("offline release checkout names the tag namespace explicitly", () => {
   const workflow = YAML.parse(offline);
   const job = workflow.jobs.verify;
-  const checkout = job.steps.find((step) =>
-    step.uses?.startsWith("actions/checkout@"),
-  );
+  const checkout = job.steps.find((step) => step.uses?.startsWith("actions/checkout@"));
   checkout.with.ref = `refs/tags/${job.env.DDWG_RELEASE_TAG}`;
-  assert.doesNotThrow(() =>
-    validateCi(github, gitlab, YAML.stringify(workflow)),
-  );
+  assert.doesNotThrow(() => validateCi(github, gitlab, YAML.stringify(workflow)));
   checkout.with.ref = job.env.DDWG_RELEASE_TAG;
-  assert.throws(
-    () => validateCi(github, gitlab, YAML.stringify(workflow)),
-    /exact tag/u,
-  );
+  assert.throws(() => validateCi(github, gitlab, YAML.stringify(workflow)), /exact tag/u);
 });
 
 test("offline release CI runs the source-pinned bundle on four hosted systems", () => {
@@ -305,36 +245,21 @@ test("offline release CI runs the source-pinned bundle on four hosted systems", 
     "windows-latest",
   ]);
   for (const [changed, reason] of [
-    [
-      offline.replace("types: [published]", "types: [created]"),
-      /published release/u,
-    ],
+    [offline.replace("types: [published]", "types: [created]"), /published release/u],
     [offline.replace("fetch-depth: 0", "fetch-depth: 1"), /full history/u],
     [
-      offline.replace(
-        /actions\/setup-node@[0-9a-f]{40}/u,
-        "actions/setup-node@main",
-      ),
+      offline.replace(/actions\/setup-node@[0-9a-f]{40}/u, "actions/setup-node@main"),
       /not pinned/u,
     ],
     [
-      offline.replace(
-        "run: node tools/ci/offline-bundle.mjs acquire-github",
-        "run: echo skipped",
-      ),
+      offline.replace("run: node tools/ci/offline-bundle.mjs acquire-github", "run: echo skipped"),
       /offline acquisition/u,
     ],
     [
-      offline.replace(
-        "run: node tools/ci/offline-bundle.mjs install",
-        "run: npm ci",
-      ),
+      offline.replace("run: node tools/ci/offline-bundle.mjs install", "run: npm ci"),
       /offline installation/u,
     ],
-    [
-      offline.replace("run: npm run verify", "run: npm run partial"),
-      /offline verifier/u,
-    ],
+    [offline.replace("run: npm run verify", "run: npm run partial"), /offline verifier/u],
     [
       offline.replace(
         "        run: node tools/ci/offline-bundle.mjs acquire-github",

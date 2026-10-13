@@ -23,63 +23,41 @@ test("one native audit retains all findings without a filtered second scan", (co
   const lock = JSON.parse(readText("package-lock.json"));
   const identities = dependencies.validateDependencyInput(lock);
   const reports = [];
-  const mock = context.mock.method(
-    childProcess,
-    "spawnSync",
-    (command, args, options) => {
-      if (args[0] !== "scan") return actual(command, args, options);
-      const report = {
-        results: [
-          {
-            source: {
-              type: "lockfile",
-              path: path.join(directory, "package-lock.json"),
-            },
-            packages: [...identities.values()].map((identity) => ({
-              package: identity,
-              dependency_groups: ["dev"],
-              ...(identity.name === "braces"
-                ? {
-                    vulnerabilities: [
-                      { id: "OSV-EXAMPLE" },
-                      { id: "OSV-UNRELATED" },
-                    ],
-                  }
-                : {}),
-            })),
+  const mock = context.mock.method(childProcess, "spawnSync", (command, args, options) => {
+    if (args[0] !== "scan") return actual(command, args, options);
+    const report = {
+      results: [
+        {
+          source: {
+            type: "lockfile",
+            path: path.join(directory, "package-lock.json"),
           },
-        ],
-      };
-      reports.push(report);
-      assert.ok(args.includes("--no-ignore"));
-      assert.ok(args.includes("--all-vulns"));
-      assert.equal(
-        readFileSync(args[args.indexOf("--config") + 1], "utf8"),
-        "IgnoredVulns = []\n",
-      );
-      writeFileSync(
-        args[args.indexOf("--output-file") + 1],
-        JSON.stringify(report),
-      );
-      return { status: 1, stdout: "", stderr: "" };
-    },
-  );
+          packages: [...identities.values()].map((identity) => ({
+            package: identity,
+            dependency_groups: ["dev"],
+            ...(identity.name === "braces"
+              ? {
+                  vulnerabilities: [{ id: "OSV-EXAMPLE" }, { id: "OSV-UNRELATED" }],
+                }
+              : {}),
+          })),
+        },
+      ],
+    };
+    reports.push(report);
+    assert.ok(args.includes("--no-ignore"));
+    assert.ok(args.includes("--all-vulns"));
+    assert.equal(readFileSync(args[args.indexOf("--config") + 1], "utf8"), "IgnoredVulns = []\n");
+    writeFileSync(args[args.indexOf("--output-file") + 1], JSON.stringify(report));
+    return { status: 1, stdout: "", stderr: "" };
+  });
   syncBuiltinESMExports();
   try {
-    mkdirSync(
-      path.join(directory, path.dirname(dependencies.dependencyPolicyPath)),
-      {
-        recursive: true,
-      },
-    );
-    writeFileSync(
-      path.join(directory, dependencies.dependencyPolicyPath),
-      dependencyPolicy,
-    );
-    writeFileSync(
-      path.join(directory, "package-lock.json"),
-      JSON.stringify(lock),
-    );
+    mkdirSync(path.join(directory, path.dirname(dependencies.dependencyPolicyPath)), {
+      recursive: true,
+    });
+    writeFileSync(path.join(directory, dependencies.dependencyPolicyPath), dependencyPolicy);
+    writeFileSync(path.join(directory, "package-lock.json"), JSON.stringify(lock));
     assert.throws(
       () =>
         dependencies.auditDependencies({
@@ -93,20 +71,13 @@ test("one native audit retains all findings without a filtered second scan", (co
       "build/evidence/dependencies",
       readdirSync(path.join(directory, "build/evidence/dependencies"))[0],
     );
-    assert.equal(
-      reports.length,
-      1,
-      "no filtering or duplicate scan is permitted",
-    );
-    assert.equal(
-      readFileSync(path.join(evidence, "raw.json"), "utf8"),
-      JSON.stringify(reports[0]),
-    );
+    assert.equal(reports.length, 1, "no filtering or duplicate scan is permitted");
+    assert.equal(readFileSync(path.join(evidence, "raw.json"), "utf8"), JSON.stringify(reports[0]));
     assert.equal(existsSync(path.join(evidence, "decision.json")), false);
     assert.deepEqual(
-      JSON.parse(
-        readFileSync(path.join(evidence, "execution.json"), "utf8"),
-      ).execution.map((entry) => entry.status),
+      JSON.parse(readFileSync(path.join(evidence, "execution.json"), "utf8")).execution.map(
+        (entry) => entry.status,
+      ),
       [1],
     );
   } finally {
@@ -122,52 +93,39 @@ test("native audit rejects unapproved findings without filtering evidence", (con
   const lock = JSON.parse(readText("package-lock.json"));
   const identities = dependencies.validateDependencyInput(lock);
   let evidence;
-  const mock = context.mock.method(
-    childProcess,
-    "spawnSync",
-    (command, args, options) => {
-      if (args[0] !== "scan") return actual(command, args, options);
-      const output = args[args.indexOf("--output-file") + 1];
-      evidence = path.dirname(output);
-      writeFileSync(
-        output,
-        JSON.stringify({
-          results: [
-            {
-              source: {
-                type: "lockfile",
-                path: path.join(directory, "package-lock.json"),
-              },
-              packages: [...identities.values()].map((identity) => ({
-                package: identity,
-                dependency_groups: ["dev"],
-                ...(identity.name === "braces"
-                  ? { vulnerabilities: [{ id: "OSV-UNAPPROVED" }] }
-                  : {}),
-              })),
+  const mock = context.mock.method(childProcess, "spawnSync", (command, args, options) => {
+    if (args[0] !== "scan") return actual(command, args, options);
+    const output = args[args.indexOf("--output-file") + 1];
+    evidence = path.dirname(output);
+    writeFileSync(
+      output,
+      JSON.stringify({
+        results: [
+          {
+            source: {
+              type: "lockfile",
+              path: path.join(directory, "package-lock.json"),
             },
-          ],
-        }),
-      );
-      return { status: 1, stdout: "", stderr: "" };
-    },
-  );
+            packages: [...identities.values()].map((identity) => ({
+              package: identity,
+              dependency_groups: ["dev"],
+              ...(identity.name === "braces"
+                ? { vulnerabilities: [{ id: "OSV-UNAPPROVED" }] }
+                : {}),
+            })),
+          },
+        ],
+      }),
+    );
+    return { status: 1, stdout: "", stderr: "" };
+  });
   syncBuiltinESMExports();
   try {
-    mkdirSync(
-      path.join(directory, path.dirname(dependencies.dependencyPolicyPath)),
-      {
-        recursive: true,
-      },
-    );
-    writeFileSync(
-      path.join(directory, dependencies.dependencyPolicyPath),
-      dependencyPolicy,
-    );
-    writeFileSync(
-      path.join(directory, "package-lock.json"),
-      JSON.stringify(lock),
-    );
+    mkdirSync(path.join(directory, path.dirname(dependencies.dependencyPolicyPath)), {
+      recursive: true,
+    });
+    writeFileSync(path.join(directory, dependencies.dependencyPolicyPath), dependencyPolicy);
+    writeFileSync(path.join(directory, "package-lock.json"), JSON.stringify(lock));
     assert.throws(
       () =>
         dependencies.auditDependencies({
@@ -176,12 +134,10 @@ test("native audit rejects unapproved findings without filtering evidence", (con
         }),
       /unapproved/u,
     );
-    const raw = JSON.parse(
-      readFileSync(path.join(evidence, "raw.json"), "utf8"),
-    );
+    const raw = JSON.parse(readFileSync(path.join(evidence, "raw.json"), "utf8"));
     assert.equal(
-      raw.results[0].packages.find((entry) => entry.package.name === "braces")
-        .vulnerabilities[0].id,
+      raw.results[0].packages.find((entry) => entry.package.name === "braces").vulnerabilities[0]
+        .id,
       "OSV-UNAPPROVED",
     );
   } finally {
@@ -198,56 +154,38 @@ test("native audit refuses input drift after scanning", (context) => {
   let calls = 0;
   const lock = JSON.parse(readText("package-lock.json"));
   const identities = dependencies.validateDependencyInput(lock);
-  const mock = context.mock.method(
-    childProcess,
-    "spawnSync",
-    (command, args, options) => {
-      if (args[0] !== "scan") return actual(command, args, options);
-      calls++;
-      const packages = [...identities.values()].map((identity) => ({
-        package: identity,
-        dependency_groups: ["dev"],
-        ...(identity.name === "braces"
-          ? { vulnerabilities: [approvedFinding()] }
-          : {}),
-      }));
-      writeFileSync(
-        args[args.indexOf("--output-file") + 1],
-        JSON.stringify({
-          results: [
-            {
-              source: {
-                type: "lockfile",
-                path: path.join(directory, "package-lock.json"),
-              },
-              packages,
+  const mock = context.mock.method(childProcess, "spawnSync", (command, args, options) => {
+    if (args[0] !== "scan") return actual(command, args, options);
+    calls++;
+    const packages = [...identities.values()].map((identity) => ({
+      package: identity,
+      dependency_groups: ["dev"],
+      ...(identity.name === "braces" ? { vulnerabilities: [approvedFinding()] } : {}),
+    }));
+    writeFileSync(
+      args[args.indexOf("--output-file") + 1],
+      JSON.stringify({
+        results: [
+          {
+            source: {
+              type: "lockfile",
+              path: path.join(directory, "package-lock.json"),
             },
-          ],
-        }),
-      );
-      writeFileSync(
-        path.join(directory, "package-lock.json"),
-        "changed after scan",
-      );
-      return { status: 1, stdout: "", stderr: "" };
-    },
-  );
+            packages,
+          },
+        ],
+      }),
+    );
+    writeFileSync(path.join(directory, "package-lock.json"), "changed after scan");
+    return { status: 1, stdout: "", stderr: "" };
+  });
   syncBuiltinESMExports();
   try {
-    mkdirSync(
-      path.join(directory, path.dirname(dependencies.dependencyPolicyPath)),
-      {
-        recursive: true,
-      },
-    );
-    writeFileSync(
-      path.join(directory, dependencies.dependencyPolicyPath),
-      dependencyPolicy,
-    );
-    writeFileSync(
-      path.join(directory, "package-lock.json"),
-      JSON.stringify(lock),
-    );
+    mkdirSync(path.join(directory, path.dirname(dependencies.dependencyPolicyPath)), {
+      recursive: true,
+    });
+    writeFileSync(path.join(directory, dependencies.dependencyPolicyPath), dependencyPolicy);
+    writeFileSync(path.join(directory, "package-lock.json"), JSON.stringify(lock));
     assert.throws(
       () =>
         dependencies.auditDependencies({

@@ -19,12 +19,7 @@ import {
   gitlabBundleRequest,
 } from "../../tools/ci/offline/acquire.mjs";
 import { assembleBundle } from "../../tools/ci/offline/build.mjs";
-import {
-  digest,
-  record,
-  buildFixture,
-  pathExistsForTest,
-} from "../offline/fixtures.mjs";
+import { digest, record, buildFixture, pathExistsForTest } from "../offline/fixtures.mjs";
 
 test("rejected Forge downloads await response disposal without publishing output", async () => {
   for (const [acquire, environment, provider] of [
@@ -71,21 +66,17 @@ test("rejected Forge downloads await response disposal without publishing output
         await assert.rejects(
           acquire({ repository: inputs.repository, environment, fetcher }),
           (error) =>
-            error.message ===
-              `${provider} release bundle download failed: HTTP 500` &&
+            error.message === `${provider} release bundle download failed: HTTP 500` &&
             (provider === "GitLab" && cleanupFailure !== undefined
               ? error.cause !== cleanupFailure &&
-                error.cause?.message ===
-                  "authenticated package transport failed"
+                error.cause?.message === "authenticated package transport failed"
               : error.cause === cleanupFailure) &&
             Object.hasOwn(error, "cause") === (cleanupFailure !== undefined),
         );
         assert.equal(requests, 1);
         assert.equal(disposed, true);
         assert.deepEqual(
-          readdirSync(
-            path.join(inputs.repository, "build/artifacts/offline-bundle"),
-          ),
+          readdirSync(path.join(inputs.repository, "build/artifacts/offline-bundle")),
           [],
         );
         assert.equal(existsSync(inputs.outputPath), true);
@@ -96,10 +87,7 @@ test("rejected Forge downloads await response disposal without publishing output
 
 test("a failed concurrent acquisition preserves either Forge's verified output", async () => {
   for (const [acquire, environment] of [
-    [
-      acquireGitHubBundle,
-      { GITHUB_REPOSITORY: "Example/Repository", DDWG_RELEASE_TAG: "v4.2.0" },
-    ],
+    [acquireGitHubBundle, { GITHUB_REPOSITORY: "Example/Repository", DDWG_RELEASE_TAG: "v4.2.0" }],
     [
       acquireGitLabBundle,
       {
@@ -153,10 +141,7 @@ test("a failed concurrent acquisition preserves either Forge's verified output",
 
 test("bundle acquisition rejects linked managed parents before remote access", async () => {
   for (const [acquire, environment] of [
-    [
-      acquireGitHubBundle,
-      { GITHUB_REPOSITORY: "Example/Repository", DDWG_RELEASE_TAG: "v4.2.0" },
-    ],
+    [acquireGitHubBundle, { GITHUB_REPOSITORY: "Example/Repository", DDWG_RELEASE_TAG: "v4.2.0" }],
     [
       acquireGitLabBundle,
       {
@@ -168,20 +153,14 @@ test("bundle acquisition rejects linked managed parents before remote access", a
       },
     ],
   ]) {
-    for (const relative of [
-      "build",
-      "build/artifacts",
-      "build/artifacts/offline-bundle",
-    ]) {
+    for (const relative of ["build", "build/artifacts", "build/artifacts/offline-bundle"]) {
       await buildFixture(async (inputs) => {
         const built = assembleBundle(inputs);
         writeFileSync(
           path.join(inputs.repository, ".config/release/offline-bundle.json"),
           JSON.stringify(built),
         );
-        const foreign = mkdtempSync(
-          path.join(os.tmpdir(), "ddwg-acquisition-foreign-"),
-        );
+        const foreign = mkdtempSync(path.join(os.tmpdir(), "ddwg-acquisition-foreign-"));
         const marker = path.join(foreign, "preserved.txt");
         writeFileSync(marker, "existing external content");
         const alias = path.join(inputs.repository, relative);
@@ -202,10 +181,7 @@ test("bundle acquisition rejects linked managed parents before remote access", a
           );
           assert.equal(requests, 0);
           assert.deepEqual(readdirSync(foreign), ["preserved.txt"]);
-          assert.equal(
-            readFileSync(marker, "utf8"),
-            "existing external content",
-          );
+          assert.equal(readFileSync(marker, "utf8"), "existing external content");
         } finally {
           unlinkSync(alias);
           rmSync(foreign, { recursive: true, force: true });
@@ -230,19 +206,12 @@ test("concurrent successful acquisitions converge without replacing a prior targ
       },
       fetcher: async () => new Response(readFileSync(inputs.outputPath)),
     };
-    const results = await Promise.all([
-      acquireGitHubBundle(options),
-      acquireGitHubBundle(options),
-    ]);
+    const results = await Promise.all([acquireGitHubBundle(options), acquireGitHubBundle(options)]);
     assert.deepEqual(
       results.map((result) => result.sha256),
       [built.sha256, built.sha256],
     );
-    const target = path.join(
-      inputs.repository,
-      "build/artifacts/offline-bundle",
-      built.fileName,
-    );
+    const target = path.join(inputs.repository, "build/artifacts/offline-bundle", built.fileName);
     writeFileSync(target, "unqualified existing output");
     await assert.rejects(
       acquireGitHubBundle({
@@ -336,15 +305,9 @@ test("GitLab candidate acquisition verifies exact bytes and retires its download
     });
     assert.equal(result.sha256, built.sha256);
     assert.equal(calls, 1);
-    const directory = path.join(
-      inputs.repository,
-      "build/artifacts/offline-bundle",
-    );
+    const directory = path.join(inputs.repository, "build/artifacts/offline-bundle");
     assert.deepEqual(readdirSync(directory), [built.fileName]);
-    assert.equal(
-      digest(readFileSync(path.join(directory, built.fileName))),
-      built.sha256,
-    );
+    assert.equal(digest(readFileSync(path.join(directory, built.fileName))), built.sha256);
   });
 });
 
@@ -379,16 +342,10 @@ test("GitLab acquisition uses only the same project's pinned release package", a
       { CI_COMMIT_TAG: "v4.1.1" },
       { CI_PIPELINE_SOURCE: "push" },
     ]) {
-      assert.throws(() =>
-        gitlabBundleRequest(built, { ...environment, ...changed }),
-      );
+      assert.throws(() => gitlabBundleRequest(built, { ...environment, ...changed }));
     }
     assert.throws(
-      () =>
-        gitlabBundleRequest(
-          { ...built, fileName: "../outside.tar.gz" },
-          environment,
-        ),
+      () => gitlabBundleRequest({ ...built, fileName: "../outside.tar.gz" }, environment),
       /asset name/u,
     );
     const bytes = readFileSync(inputs.outputPath);

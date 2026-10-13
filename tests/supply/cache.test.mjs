@@ -7,11 +7,7 @@ import os from "node:os";
 import path from "node:path";
 import { syncBuiltinESMExports } from "node:module";
 import { test } from "node:test";
-import {
-  install,
-  manifest,
-  selectedAsset,
-} from "../../tools/ci/install-native.mjs";
+import { install, manifest, selectedAsset } from "../../tools/ci/install-native.mjs";
 import { managedFileExists, root } from "../../tools/runtime.mjs";
 import { nativeToolBinary } from "../../tools/supply.mjs";
 
@@ -133,9 +129,7 @@ test("managed cached binaries verify bytes before version execution", async () =
 });
 
 test("managed files stay inside their selected repository boundary", () => {
-  const temporary = fs.mkdtempSync(
-    path.join(os.tmpdir(), "ddwg-managed-file-"),
-  );
+  const temporary = fs.mkdtempSync(path.join(os.tmpdir(), "ddwg-managed-file-"));
   try {
     const repository = path.join(temporary, "repository");
     fs.mkdirSync(repository);
@@ -145,23 +139,14 @@ test("managed files stay inside their selected repository boundary", () => {
     fs.writeFileSync(target, "existing pinned bytes");
     assert.equal(managedFileExists(target, repository), true);
     if (process.platform === "win32")
-      assert.equal(
-        managedFileExists(target.toUpperCase(), repository.toLowerCase()),
-        true,
-      );
+      assert.equal(managedFileExists(target.toUpperCase(), repository.toLowerCase()), true);
     for (const outside of [
       repository,
       path.join(temporary, "repository-other/tool.bin"),
       path.join(repository, "../foreign.bin"),
     ])
-      assert.throws(
-        () => managedFileExists(outside, repository),
-        /inside the repository/u,
-      );
-    assert.throws(
-      () => managedFileExists(path.dirname(target), repository),
-      /regular/u,
-    );
+      assert.throws(() => managedFileExists(outside, repository), /inside the repository/u);
+    assert.throws(() => managedFileExists(path.dirname(target), repository), /regular/u);
     assert.throws(
       () => managedFileExists(path.join(target, "child.bin"), repository),
       /directory/u,
@@ -205,15 +190,11 @@ test("managed native caches reject links and non-regular entries before executio
           ? { isFile: () => false, isSymbolicLink: () => symbolicLink }
           : actualStat(file, options),
       ),
-      context.mock.method(
-        childProcess,
-        "spawnSync",
-        (command, args, options) => {
-          if (command !== target) return actualSpawn(command, args, options);
-          executions += 1;
-          return { status: 0, stdout: selected.versionOutput, stderr: "" };
-        },
-      ),
+      context.mock.method(childProcess, "spawnSync", (command, args, options) => {
+        if (command !== target) return actualSpawn(command, args, options);
+        executions += 1;
+        return { status: 0, stdout: selected.versionOutput, stderr: "" };
+      }),
     ];
     syncBuiltinESMExports();
     try {
@@ -260,18 +241,12 @@ test("managed cache parent aliases fail before staging or execution", async (con
   ];
   syncBuiltinESMExports();
   try {
-    await assert.rejects(
-      install({ tool: "vale" }),
-      /regular|symbolic|directory/u,
-    );
+    await assert.rejects(install({ tool: "vale" }), /regular|symbolic|directory/u);
     await assert.rejects(
       install({ tool: "vale", assetFile: "absent-asset" }),
       /regular|symbolic|directory/u,
     );
-    assert.throws(
-      () => nativeToolBinary("vale"),
-      /regular|symbolic|directory/u,
-    );
+    assert.throws(() => nativeToolBinary("vale"), /regular|symbolic|directory/u);
     assert.equal(executions, 0);
   } finally {
     for (const mock of mocks) mock.mock.restore();
@@ -322,9 +297,7 @@ test("a supplied install never changes the mode of an existing cache entry", asy
     ),
     context.mock.method(fs, "lstatSync", (file, options) => {
       if (file === target) {
-        return concurrentTarget
-          ? { isFile: () => true, isSymbolicLink: () => false }
-          : undefined;
+        return concurrentTarget ? { isFile: () => true, isSymbolicLink: () => false } : undefined;
       }
       return path.basename(path.dirname(file)) === "extracted"
         ? { isFile: () => true, isSymbolicLink: () => false }
@@ -357,10 +330,7 @@ test("a supplied install never changes the mode of an existing cache entry", asy
               : "";
         return { status: 0, stdout, stderr: "" };
       }
-      if (
-        command === target ||
-        path.basename(path.dirname(command)) === "extracted"
-      ) {
+      if (command === target || path.basename(path.dirname(command)) === "extracted") {
         executions.push(command);
         return { status: 0, stdout: selected.versionOutput, stderr: "" };
       }

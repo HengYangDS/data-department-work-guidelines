@@ -11,16 +11,10 @@ test("GitLab candidate qualification selects only the existing offline jobs", ()
   };
   const exclude = { if: "$DDWG_OFFLINE_CANDIDATE", when: "never" };
   assert.deepEqual(pipeline.workflow.rules.slice(0, 2), [candidate, exclude]);
-  assert.deepEqual(pipeline[".offline:verify"].rules.slice(0, 2), [
-    candidate,
-    exclude,
-  ]);
+  assert.deepEqual(pipeline[".offline:verify"].rules.slice(0, 2), [candidate, exclude]);
   for (const system of ["linux", "macos", "windows"]) {
     for (const suffix of ["", ":review"]) {
-      assert.deepEqual(
-        pipeline[`docs:verify:${system}${suffix}`].rules[0],
-        exclude,
-      );
+      assert.deepEqual(pipeline[`docs:verify:${system}${suffix}`].rules[0], exclude);
     }
   }
   assert.doesNotThrow(() => validateCi(github, gitlab, offline));
@@ -34,10 +28,7 @@ test("GitLab candidate qualification selects only the existing offline jobs", ()
   ]) {
     const changed = structuredClone(pipeline);
     mutate(changed);
-    assert.throws(
-      () => validateCi(github, YAML.stringify(changed), offline),
-      /GitLab/u,
-    );
+    assert.throws(() => validateCi(github, YAML.stringify(changed), offline), /GitLab/u);
   }
 });
 
@@ -69,9 +60,10 @@ test("the CI contract rejects broader GitLab tag routes", () => {
     [".offline:verify", 3],
   ]) {
     const pipeline = YAML.parse(gitlab);
-    pipeline[owner].rules[ruleIndex].if = pipeline[owner].rules[
-      ruleIndex
-    ].if.replace("$CI_COMMIT_TAG =~ /^v[^\\/]*$/", "$CI_COMMIT_TAG");
+    pipeline[owner].rules[ruleIndex].if = pipeline[owner].rules[ruleIndex].if.replace(
+      "$CI_COMMIT_TAG =~ /^v[^\\/]*$/",
+      "$CI_COMMIT_TAG",
+    );
     assert.throws(
       () => validateCi(github, YAML.stringify(pipeline), offline),
       /GitLab/u,
@@ -115,11 +107,7 @@ test("GitLab verification rejects platform-less aliases and runnable shared owne
     ]) {
       const pipeline = YAML.parse(gitlab);
       change(pipeline);
-      assert.throws(
-        () => validateCi(github, YAML.stringify(pipeline), offline),
-        /GitLab/u,
-        phase,
-      );
+      assert.throws(() => validateCi(github, YAML.stringify(pipeline), offline), /GitLab/u, phase);
     }
   }
 });
@@ -175,10 +163,7 @@ test("GitLab offline CI rejects inherited setup and remote includes", () => {
   );
   for (const [name, change] of [
     ["global pre-script", (pipeline) => (pipeline.before_script = ["npm ci"])],
-    [
-      "global variables",
-      (pipeline) => (pipeline.variables = { NPM_CONFIG_OFFLINE: "false" }),
-    ],
+    ["global variables", (pipeline) => (pipeline.variables = { NPM_CONFIG_OFFLINE: "false" })],
   ]) {
     assert.throws(
       () => validateCi(github, changedGitLab("workflow", change), offline),
@@ -239,11 +224,8 @@ test("GitLab Linux review and protected jobs use separate capabilities", () => {
   for (const change of [
     (source) => delete source["docs:verify:linux:review"],
     (source) => delete source["docs:verify:linux"].rules,
-    (source) =>
-      (source["docs:verify:linux:review"].rules =
-        source["docs:verify:linux"].rules),
-    (source) =>
-      (source["docs:verify:linux:review"].inherit = { default: false }),
+    (source) => (source["docs:verify:linux:review"].rules = source["docs:verify:linux"].rules),
+    (source) => (source["docs:verify:linux:review"].inherit = { default: false }),
   ]) {
     assert.throws(
       () =>
@@ -284,20 +266,14 @@ test("GitLab Linux capabilities are exact and role-specific", () => {
   const result = validateCi(github, gitlab, offline);
   assert.equal(result.gitlabHosts[0], "ci-linux-arm64-container-protected");
   assert.equal(result.gitlabReviewHosts[0], "ci-linux-arm64-container");
-  assert.equal(
-    result.gitlabOfflineHosts[0],
-    "ci-linux-arm64-container-protected",
-  );
+  assert.equal(result.gitlabOfflineHosts[0], "ci-linux-arm64-container-protected");
   for (const [jobName, tags] of [
     ["docs:verify:linux", ["ci-linux-arm64-container"]],
     ["docs:verify:linux", ["ci-linux-arm64-docker"]],
     ["docs:verify:linux:review", ["ci-linux-arm64-container-protected"]],
     ["docs:verify:linux:review", ["ci-linux-arm64-docker"]],
     ["offline:verify:linux", ["ci-linux-arm64-container"]],
-    [
-      "offline:verify:linux",
-      ["ci-linux-arm64-container-protected", "ci-linux-arm64-container"],
-    ],
+    ["offline:verify:linux", ["ci-linux-arm64-container-protected", "ci-linux-arm64-container"]],
   ]) {
     assert.throws(
       () =>
@@ -385,19 +361,13 @@ test("GitLab verification owner variables cannot override native execution or su
   for (const owner of [".docs:verify", ".offline:verify"]) {
     const pipeline = YAML.parse(gitlab);
     pipeline[owner].variables.NPM_CONFIG_REGISTRY = "http://other.example.test";
-    assert.throws(
-      () => validateCi(github, YAML.stringify(pipeline), offline),
-      /variables/u,
-    );
+    assert.throws(() => validateCi(github, YAML.stringify(pipeline), offline), /variables/u);
   }
 });
 
 test("GitLab offline release CI runs only after a release asset is available", () => {
   const result = validateCi(github, gitlab, offline);
-  assert.equal(
-    result.gitlabOfflineHosts[0],
-    "ci-linux-arm64-container-protected",
-  );
+  assert.equal(result.gitlabOfflineHosts[0], "ci-linux-arm64-container-protected");
   for (const [changed, reason] of [
     [gitlab.replace(/\n\.offline:verify:[\s\S]*$/u, ""), /GitLab offline/u],
     [
@@ -409,19 +379,10 @@ test("GitLab offline release CI runs only after a release asset is available", (
       }),
       /post-publication/u,
     ],
+    [gitlab.replace("acquire-gitlab", "acquire-github"), /GitLab offline acquisition/u],
+    [gitlab.replace("offline-bundle.mjs install", "npm ci"), /GitLab offline installation/u],
     [
-      gitlab.replace("acquire-gitlab", "acquire-github"),
-      /GitLab offline acquisition/u,
-    ],
-    [
-      gitlab.replace("offline-bundle.mjs install", "npm ci"),
-      /GitLab offline installation/u,
-    ],
-    [
-      gitlab.replace(
-        /(\.offline:verify:[\s\S]*? {4}- )npm run verify/u,
-        "$1npm run partial",
-      ),
+      gitlab.replace(/(\.offline:verify:[\s\S]*? {4}- )npm run verify/u, "$1npm run partial"),
       /GitLab offline verifier/u,
     ],
   ]) {

@@ -39,10 +39,7 @@ test("an ignored local file cannot satisfy a repository source link", () => {
     writeFileSync(target, "# Local Evidence\n\nThis file is not source.\n");
     const relative = path.relative(root, target).split(path.sep).join("/");
     assert.equal(gitFiles().includes(relative), false);
-    assert.throws(
-      () => repositoryFileUri(pathToFileURL(target).href),
-      /not repository source/u,
-    );
+    assert.throws(() => repositoryFileUri(pathToFileURL(target).href), /not repository source/u);
   } finally {
     rmSync(directory, { recursive: true, force: true });
     assert.equal(existsSync(directory), false);
@@ -55,18 +52,10 @@ test("a delivered directory alias must also resolve to repository source", () =>
   try {
     const delivered = path.join(directory, "delivered");
     symlinkSync(path.join(root, "docs"), delivered, "junction");
-    const relativeAlias = path
-      .relative(root, delivered)
-      .split(path.sep)
-      .join("/");
+    const relativeAlias = path.relative(root, delivered).split(path.sep).join("/");
     const sources = [...gitFiles(), relativeAlias];
-    assert.doesNotThrow(() =>
-      repositoryFileUri(pathToFileURL(delivered).href, sources),
-    );
-    assert.throws(
-      () => repositoryFileUri(pathToFileURL(delivered).href),
-      /not repository source/u,
-    );
+    assert.doesNotThrow(() => repositoryFileUri(pathToFileURL(delivered).href, sources));
+    assert.throws(() => repositoryFileUri(pathToFileURL(delivered).href), /not repository source/u);
 
     const local = path.join(directory, "local");
     mkdirSync(local);
@@ -75,25 +64,14 @@ test("a delivered directory alias must also resolve to repository source", () =>
     symlinkSync(local, localAlias, "junction");
     const candidate = path.relative(root, localAlias).split(path.sep).join("/");
     assert.throws(
-      () =>
-        repositoryFileUri(pathToFileURL(localAlias).href, [
-          ...sources,
-          candidate,
-        ]),
+      () => repositoryFileUri(pathToFileURL(localAlias).href, [...sources, candidate]),
       /not repository source/u,
     );
     const outsideAlias = path.join(directory, "outside-alias");
     symlinkSync(path.dirname(root), outsideAlias, "junction");
-    const outsideCandidate = path
-      .relative(root, outsideAlias)
-      .split(path.sep)
-      .join("/");
+    const outsideCandidate = path.relative(root, outsideAlias).split(path.sep).join("/");
     assert.throws(
-      () =>
-        repositoryFileUri(pathToFileURL(outsideAlias).href, [
-          ...sources,
-          outsideCandidate,
-        ]),
+      () => repositoryFileUri(pathToFileURL(outsideAlias).href, [...sources, outsideCandidate]),
       /escapes repository root/u,
     );
   } finally {
@@ -106,10 +84,7 @@ test("pinned lychee rejects a broken local fragment", () => {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-links-test-"));
   try {
     writeFileSync(path.join(directory, "target.md"), "# Present\n");
-    writeFileSync(
-      path.join(directory, "source.md"),
-      "[Missing](target.md#absent)\n",
-    );
+    writeFileSync(path.join(directory, "source.md"), "[Missing](target.md#absent)\n");
     const result = spawnSync(
       nativeToolBinary("lychee"),
       [
@@ -155,24 +130,20 @@ test("native link extraction refuses warnings before checking targets", (context
   let checks = 0;
   let sourceList;
   let nativeOutput;
-  const mock = context.mock.method(
-    childProcess,
-    "spawnSync",
-    (command, args, options) => {
-      const result = actualSpawn(command, args, options);
-      if (args.includes("--dump")) {
-        extractions += 1;
-        sourceList = args[args.indexOf("--files-from") + 1];
-        nativeOutput = result.stdout;
-        return {
-          ...result,
-          stderr: `${result.stderr ?? ""}native link extraction warning\n`,
-        };
-      }
-      if (args.includes("--files-from")) checks += 1;
-      return result;
-    },
-  );
+  const mock = context.mock.method(childProcess, "spawnSync", (command, args, options) => {
+    const result = actualSpawn(command, args, options);
+    if (args.includes("--dump")) {
+      extractions += 1;
+      sourceList = args[args.indexOf("--files-from") + 1];
+      nativeOutput = result.stdout;
+      return {
+        ...result,
+        stderr: `${result.stderr ?? ""}native link extraction warning\n`,
+      };
+    }
+    if (args.includes("--files-from")) checks += 1;
+    return result;
+  });
   syncBuiltinESMExports();
   try {
     assert.throws(
@@ -244,15 +215,10 @@ test("native online link policy actually requests the target and rejects HTTP fa
   });
   await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
   try {
-    using directory = mkdtempDisposableSync(
-      path.join(os.tmpdir(), "ddwg-online-links-"),
-    );
+    using directory = mkdtempDisposableSync(path.join(os.tmpdir(), "ddwg-online-links-"));
     const source = path.join(directory.path, "source.md");
     const list = path.join(directory.path, "files.txt");
-    writeFileSync(
-      source,
-      `# Links\n\n[Remote](http://127.0.0.1:${server.address().port}/)\n`,
-    );
+    writeFileSync(source, `# Links\n\n[Remote](http://127.0.0.1:${server.address().port}/)\n`);
     writeFileSync(list, `${source}\n`);
     const check = async () => {
       const child = childProcess.spawn(
@@ -284,10 +250,7 @@ test("native online link policy actually requests the target and rejects HTTP fa
     status = 404;
     const invalid = await check();
     assert.notEqual(invalid.code, 0, invalid.output);
-    assert.ok(
-      requests > beforeFailure,
-      "the failed request reached the target",
-    );
+    assert.ok(requests > beforeFailure, "the failed request reached the target");
     assert.match(invalid.output, /404/u);
   } finally {
     await new Promise((resolve) => server.close(resolve));
@@ -314,19 +277,11 @@ test("the public link check rejects cache and Git state but accepts candidate so
     assert.ifError(initialized.error);
     assert.equal(initialized.status, 0, initialized.stderr);
     for (const prerequisite of ["tools", ".config", "package.json"]) {
-      cpSync(
-        path.join(root, prerequisite),
-        path.join(directory, prerequisite),
-        {
-          recursive: true,
-        },
-      );
+      cpSync(path.join(root, prerequisite), path.join(directory, prerequisite), {
+        recursive: true,
+      });
     }
-    symlinkSync(
-      path.join(root, "node_modules"),
-      path.join(directory, "node_modules"),
-      "junction",
-    );
+    symlinkSync(path.join(root, "node_modules"), path.join(directory, "node_modules"), "junction");
     const entry = path.join(directory, "README.md");
     const original = "# Source Links\n";
     writeFileSync(entry, original);
@@ -339,31 +294,23 @@ test("the public link check rejects cache and Git state but accepts candidate so
       path.join(directory, ".gitignore"),
       "node_modules/\n/node_modules\n/tools/\n/.config/\n/package.json\nbuild/\n.cache/\n",
     );
-    const added = spawnSync(
-      "git",
-      ["add", "--", ".gitignore", "README.md", "docs/README.md"],
-      { cwd: directory, encoding: "utf8", timeout: 10_000 },
-    );
+    const added = spawnSync("git", ["add", "--", ".gitignore", "README.md", "docs/README.md"], {
+      cwd: directory,
+      encoding: "utf8",
+      timeout: 10_000,
+    });
     assert.ifError(added.error);
     assert.equal(added.status, 0, added.stderr);
-    assertFixtureSources(directory, [
-      ".gitignore",
-      "README.md",
-      "docs/README.md",
-    ]);
+    assertFixtureSources(directory, [".gitignore", "README.md", "docs/README.md"]);
     const check = (target) => {
       const source = `${original}\n[Source reference](${target})\n`;
       writeFileSync(entry, source);
-      const result = spawnSync(
-        process.execPath,
-        ["tools/docs/cli.mjs", "links"],
-        {
-          cwd: directory,
-          encoding: "utf8",
-          timeout: 15_000,
-          env: { ...process.env, DDWG_LYCHEE_BIN: nativeToolBinary("lychee") },
-        },
-      );
+      const result = spawnSync(process.execPath, ["tools/docs/cli.mjs", "links"], {
+        cwd: directory,
+        encoding: "utf8",
+        timeout: 15_000,
+        env: { ...process.env, DDWG_LYCHEE_BIN: nativeToolBinary("lychee") },
+      });
       assert.equal(readFileSync(entry, "utf8"), source);
       return result;
     };
@@ -376,11 +323,7 @@ test("the public link check rejects cache and Git state but accepts candidate so
     assert.ifError(valid.error);
     assert.equal(valid.status, 0, valid.stderr);
 
-    for (const target of [
-      "build/local-only.md",
-      ".cache/local-only.md",
-      ".git/local-only.md",
-    ]) {
+    for (const target of ["build/local-only.md", ".cache/local-only.md", ".git/local-only.md"]) {
       const file = path.join(directory, target);
       mkdirSync(path.dirname(file), { recursive: true });
       writeFileSync(file, "# Local State\n");
@@ -389,12 +332,7 @@ test("the public link check rejects cache and Git state but accepts candidate so
       assert.notEqual(invalid.status, 0, `${target}: ${invalid.stdout}`);
       assert.match(invalid.stderr, /not repository source/u, target);
     }
-    assertFixtureSources(directory, [
-      ".gitignore",
-      "README.md",
-      "docs/README.md",
-      candidate,
-    ]);
+    assertFixtureSources(directory, [".gitignore", "README.md", "docs/README.md", candidate]);
   } finally {
     rmSync(directory, { recursive: true, force: true });
     assert.equal(existsSync(directory), false);

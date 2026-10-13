@@ -43,21 +43,13 @@ test("document metadata reads the product-supported title-first carrier", () => 
 test("document metadata rejects a duplicate key", () => {
   const source =
     "<!--\n---\nsubject: first\nsubject: second\nrole: policy\nstate: canonical\nrelations: {}\n---\n-->\n\n# Fixture\n";
-  assert.throws(
-    () => documentMetadata("docs/fixture.md", source),
-    /invalid document metadata/u,
-  );
+  assert.throws(() => documentMetadata("docs/fixture.md", source), /invalid document metadata/u);
 });
 
 test("document metadata rejects visible declarations and pre-title prose", () => {
-  const metadata =
-    "subject: fixture:guide\nrole: policy\nstate: canonical\nrelations: {}";
+  const metadata = "subject: fixture:guide\nrole: policy\nstate: canonical\nrelations: {}";
   assert.throws(
-    () =>
-      documentMetadata(
-        "docs/fixture.md",
-        `---\n${metadata}\n---\n\n# Fixture\n`,
-      ),
+    () => documentMetadata("docs/fixture.md", `---\n${metadata}\n---\n\n# Fixture\n`),
     /title-first/u,
   );
   assert.throws(
@@ -76,10 +68,7 @@ test("document metadata rejects incomplete or prematurely closed comments", () =
   const premature =
     '<!--\n---\nsubject: fixture:guide\nrole: policy\nstate: canonical\nrelations:\n  canonical_for: "unsafe --> suffix"\n---\n-->\n\n# Fixture\n';
   for (const source of [incomplete, premature]) {
-    assert.throws(
-      () => documentMetadata("docs/fixture.md", source),
-      /invalid document metadata/u,
-    );
+    assert.throws(() => documentMetadata("docs/fixture.md", source), /invalid document metadata/u);
   }
 });
 
@@ -92,16 +81,13 @@ test("English failures identify the source file and line", async () => {
 
 test("English source checks include supplementary Han characters", async () => {
   assert.match(
-    (await textViolations("docs/example.md", "# Heading\n\u{20000}\n"))[0] ??
-      "",
+    (await textViolations("docs/example.md", "# Heading\n\u{20000}\n"))[0] ?? "",
     /docs\/example\.md:2: CJK text/u,
   );
 });
 
 test("tracked text refuses invalid UTF-8 and NUL while declared binary assets remain reachable", () => {
-  using directory = mkdtempDisposableSync(
-    path.join(os.tmpdir(), "ddwg-source-bytes-"),
-  );
+  using directory = mkdtempDisposableSync(path.join(os.tmpdir(), "ddwg-source-bytes-"));
   cpSync(path.join(root, "tools"), path.join(directory.path, "tools"), {
     recursive: true,
   });
@@ -122,9 +108,7 @@ test("tracked text refuses invalid UTF-8 and NUL while declared binary assets re
     "* text=auto eol=lf\nasset.bin -text\n",
   );
   writeFileSync(path.join(directory.path, "asset.bin"), Buffer.from([0, 255]));
-  const module = pathToFileURL(
-    path.join(directory.path, "tools/docs/content.mjs"),
-  ).href;
+  const module = pathToFileURL(path.join(directory.path, "tools/docs/content.mjs")).href;
   const command = [
     "--input-type=module",
     "--eval",
@@ -163,10 +147,7 @@ test("tracked text refuses invalid UTF-8 and NUL while declared binary assets re
   });
   assert.ifError(hidden.error);
   assert.notEqual(hidden.status, 0);
-  assert.match(
-    hidden.stderr,
-    /README\.md:.*native text owner cannot be declared binary/u,
-  );
+  assert.match(hidden.stderr, /README\.md:.*native text owner cannot be declared binary/u);
 });
 
 test("native spacing checks archived Markdown; other text keeps its own boundary", async () => {
@@ -190,16 +171,12 @@ test("native spacing checks archived Markdown; other text keeps its own boundary
 test("retired quality owners are absent from current source and dependencies", () => {
   const retiredPackage =
     /(?:^|\/)(?:@textlint|@cspell|cspell[^/]*|textlint[^/]*|write-good|markdownlint-cli2(?:-formatter-default)?)(?:\/|$)/u;
-  const lock = JSON.parse(
-    readFileSync(path.join(root, "package-lock.json"), "utf8"),
-  );
+  const lock = JSON.parse(readFileSync(path.join(root, "package-lock.json"), "utf8"));
   assert.deepEqual(
     Object.keys(lock.packages).filter((name) => retiredPackage.test(name)),
     [],
   );
-  const currentCode = gitFiles().filter((name) =>
-    /^(?:tools|tests)\/.*\.mjs$/u.test(name),
-  );
+  const currentCode = gitFiles().filter((name) => /^(?:tools|tests)\/.*\.mjs$/u.test(name));
   for (const name of currentCode) {
     if (!existsSync(path.join(root, name))) continue;
     const source = readFileSync(path.join(root, name), "utf8");
@@ -218,11 +195,7 @@ test("retired quality owners are absent from current source and dependencies", (
     "markdownlint-cli2",
     "markdownlint-cli2-formatter-default",
   ]) {
-    assert.equal(
-      existsSync(path.join(root, "node_modules", name)),
-      false,
-      name,
-    );
+    assert.equal(existsSync(path.join(root, "node_modules", name)), false, name);
   }
   for (const name of [
     ".config/tools/textlint.json",

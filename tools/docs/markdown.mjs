@@ -23,8 +23,7 @@ export function markdownTokens(source, name = "document.md") {
       },
     ],
   });
-  if (!Array.isArray(tokens))
-    throw new Error("native Markdown structure is unavailable");
+  if (!Array.isArray(tokens)) throw new Error("native Markdown structure is unavailable");
   return tokens;
 }
 
@@ -40,13 +39,10 @@ export function* walkMarkdown(tokens) {
 
 export function headingLevel(token) {
   if (token.type === "atxHeading") {
-    return token.children.find((child) => child.type === "atxHeadingSequence")
-      .text.length;
+    return token.children.find((child) => child.type === "atxHeadingSequence").text.length;
   }
   if (token.type === "setextHeading") {
-    return token.children
-      .find((child) => child.type === "setextHeadingLine")
-      .text.startsWith("-")
+    return token.children.find((child) => child.type === "setextHeadingLine").text.startsWith("-")
       ? 2
       : 1;
   }
@@ -54,11 +50,9 @@ export function headingLevel(token) {
 }
 
 export function markdownText(token, { links = true, code = false } = {}) {
-  if (token.type === "data" || token.type === "characterEscapeValue")
-    return token.text;
+  if (token.type === "data" || token.type === "characterEscapeValue") return token.text;
   if (token.type === "characterReference") return decodeHTML(token.text);
-  if (token.type === "lineEnding" || token.type === "lineEndingBlank")
-    return "\n";
+  if (token.type === "lineEnding" || token.type === "lineEndingBlank") return "\n";
   if (token.type === "codeText") {
     return code
       ? token.children
@@ -91,16 +85,12 @@ export function markdownText(token, { links = true, code = false } = {}) {
     token.type.startsWith("undefinedReference")
   )
     return " ";
-  return token.children
-    .map((child) => markdownText(child, { links, code }))
-    .join("");
+  return token.children.map((child) => markdownText(child, { links, code })).join("");
 }
 
 export function headingText(token) {
   return token.children
-    .filter((child) =>
-      ["atxHeadingText", "setextHeadingText"].includes(child.type),
-    )
+    .filter((child) => ["atxHeadingText", "setextHeadingText"].includes(child.type))
     .map((child) => markdownText(child, { code: true }))
     .join("");
 }
@@ -121,11 +111,7 @@ export function markdownLinkDestinations(source) {
     },
     onclosetag(name) {
       if (name === "a" && anchor) {
-        if (
-          /[^\p{White_Space}\p{Default_Ignorable_Code_Point}]/u.test(
-            anchor.label,
-          )
-        )
+        if (/[^\p{White_Space}\p{Default_Ignorable_Code_Point}]/u.test(anchor.label))
           destinations.push(anchor.destination);
         anchor = undefined;
       }
@@ -140,14 +126,12 @@ export function markdownLinkDestinations(source) {
 }
 
 // Match Vale's native comment controls after HTML decoding, not prose mentions.
-const valeControl =
-  /^vale (?:on|off|styles? = [^\r\n]*|[^\r\n]+ = (?:YES|NO|on|off))$/u;
+const valeControl = /^vale (?:on|off|styles? = [^\r\n]*|[^\r\n]+ = (?:YES|NO|on|off))$/u;
 
 /** @type {import("markdownlint").Rule} */
 export const noQualityControl = {
   names: ["no-quality-control"],
-  description:
-    "Prose rules are configured by the repository, not document comments",
+  description: "Prose rules are configured by the repository, not document comments",
   tags: ["comments"],
   parser: "micromark",
   function(params, onError) {
@@ -158,9 +142,7 @@ export const noQualityControl = {
       if (token.type === "htmlFlow" || token.type === "htmlText") {
         new Parser({
           oncomment(comment) {
-            const consumer = valeControl.test(decodeHTML(comment).trim())
-              ? "Vale"
-              : "";
+            const consumer = valeControl.test(decodeHTML(comment).trim()) ? "Vale" : "";
             if (consumer) {
               onError({
                 lineNumber: token.startLine,
