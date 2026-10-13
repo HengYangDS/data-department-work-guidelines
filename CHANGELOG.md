@@ -28,6 +28,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Update OSV Scanner to official 2.7.0 and pin its five maintenance assets.
+  Keep the approved development-only scope and expiry, with full findings
+  and actual-platform checks.
 - Show the handoff from Agent work to human verification and authorized
   acceptance. Preserve boundary-limited review, acceptance recording, and
   handoff in both the diagram and its text.

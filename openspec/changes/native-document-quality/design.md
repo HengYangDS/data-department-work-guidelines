@@ -239,8 +239,10 @@ remain exact-artifact evidence only while those artifacts are consumed:
 - Official Node 26.11.1 Trixie image index
   `sha256:32fa97f3363975684b08bf4e8a68a47c7905175cc20275b50b974bbd02aba731`,
   only for the approved controlled development CI use.
-- Exact Vale 3.24.0, OSV Scanner 2.6.0, and npm 12.2.0, for approved trusted
+- Exact Vale 3.24.0, OSV Scanner 2.7.0, and npm 12.2.0, for approved trusted
   checks, controlled development CI, and the same hash-bound offline supply.
+  The user approved the OSV successor on 2026-10-13 under the same scope and
+  expiry; the complete findings and actual-platform qualification remain required.
 - The five Lychee 0.24.2 assets in
   [native supply](../../../.config/supply/native.json), for the approved trusted
   local checks, controlled development CI, and identical-asset distribution.
