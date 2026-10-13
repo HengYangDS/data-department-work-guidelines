@@ -31,6 +31,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 - Route data-work questions directly to historical evidence, use admission,
   modeling decisions, and operational safeguards. Compare model and lifecycle
   responsibilities without adding roles or changing permission and migration duties.
+- Preserve applicable data-use judgments when stages combine, and keep feedback
+  review results with the existing work evidence.
 - Use installed ETHOS for explicit external-link reachability. Retire the duplicate
   online controller and generic tests; retain offline delivered-source and confinement checks.
 - Update OSV Scanner to official 2.7.0 and pin its five maintenance assets.

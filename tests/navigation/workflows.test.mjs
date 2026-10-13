@@ -384,3 +384,45 @@ test("bounded exploration requires permission even while meaning, quality, or ti
     assert.throws(() => assertExplorationBoundary(missing));
   }
 });
+
+test("data use preserves applicable judgments and keeps feedback review with work evidence", () => {
+  const relative = "docs/data.md";
+  const source = readFileSync(path.join(root, relative), "utf8");
+  const assertUseJudgments = (text) => {
+    const section = contentUnderHeading(text, relative, "Move from a Signal to Controlled Use");
+    const opening = [...walkMarkdown(section)].find((token) => token.type === "paragraph");
+    assert.match(markdownText(opening), /preserve every applicable judgment/u);
+    const list = section.find((token) => token.type === "listUnordered");
+    assert.ok(list, "the six use judgments must remain separately readable");
+    const items = list.children.filter((token) => token.type === "content");
+    assert.deepEqual(
+      items.map((token) => markdownText(token).split(":")[0]),
+      ["Opportunity", "Exploration", "Reproduction", "Production", "Admission", "Feedback"],
+    );
+    const feedback = items.at(-1);
+    assert.match(
+      markdownText(feedback).replace(/\s+/gu, " "),
+      /Keep the review result and any changed judgment/u,
+    );
+    assert.ok(
+      markdownLinkDestinations(feedback.text).includes(
+        "deliver.md#evidence-sets-the-limit-of-the-claim",
+      ),
+      "feedback review must use the existing work evidence, not a new record store",
+    );
+  };
+  assertUseJudgments(source);
+  assert.throws(
+    () => assertUseJudgments(source.replace("preserve every applicable judgment", "move quickly")),
+    /preserve every applicable judgment/u,
+  );
+  const withoutReview = source.replace(
+    /Keep the review result and any changed judgment/u,
+    "Continue",
+  );
+  assert.throws(
+    () =>
+      assertUseJudgments(`${withoutReview}\nKeep the review result and any changed judgment.\n`),
+    /Keep the review result and any changed judgment/u,
+  );
+});

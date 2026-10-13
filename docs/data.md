@@ -98,6 +98,7 @@ specific completion claim through [execution and delivery](deliver.md).
 ## Move from a Signal to Controlled Use
 
 Use the questions below for the intended use, not as a mandatory pipeline.
+Combine stages where useful, but preserve every applicable judgment.
 Research need not become production; production needs its operational
 safeguards. Admission precedes use that requires permission, even when
 production evidence is gathered earlier. Revisit the affected value, meaning,
@@ -115,7 +116,8 @@ authorizes a new use.
 - **Admission:** May it serve this use? Establish acceptance, permissions,
   lineage, limits, veto, and exit conditions.
 - **Feedback:** Do results support continued use? Review use feedback, quality
-  trends, cost, and incidents.
+  trends, cost, and incidents. Keep the review result and any changed judgment
+  with the [existing work evidence](deliver.md#evidence-sets-the-limit-of-the-claim).
 
 “Technically possible” is not “worth doing”; “a signal exists” is not
 “production-ready”; “deployed” is not “admitted for every use.” Label exploratory,
