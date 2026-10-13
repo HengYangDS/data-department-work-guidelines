@@ -190,18 +190,18 @@
       tag identity, the same protected graph, source/offline jobs, Releases, independent
       downloads, and hashes while preserving earlier releases.
 - [ ] 3.5 Complete the [final duty and reader review](design.md#review-original-duties-at-seven-topic-owners)
-      on final source: cover all 62 subsections, five surrounding groups, introductions,
-      and diagrams; justify changes and resolve every finding. Exercise shared-model
-      change, source rebinding, and consumer retirement in the data topic, preserving five professional
-      obligations, lifecycle responsibility, authority, interfaces, migration, evidence,
-      failures, and uncovered cases without a new organization or testing team.
-      Distinguish missing historical availability evidence from demonstrated delay and
-      verify their different claims/actions; inspect the collaboration boundary, real hosted member/Agent routes
-      and accessibility limits without certifying equivalence, production, or team use.
-      After 2.33, 2.38, 2.40, 2.44, 2.45, 2.46, 3.2, 3.3, 3.4, and 3.13, complete official
-      sync and archive-readiness checks, preserve unique evidence, then retire absorbed
-      resources only after consumer checks. Original commitments and comparison references:
-      `e701730c62ceecdad92f1be65ad5c31b140e3afe29cfe944a13405767e204011`.
+      on final source; account for all 62 subsections, five surrounding groups, introductions,
+      and diagrams, justify changes, and resolve every finding. Verify the data shared-model,
+      source-rebinding, and consumer-retirement journey against its five professional duties
+      and stated lifecycle, authority, interface, migration, evidence, failure, and coverage
+      limits, without a new organization or testing team. Distinguish missing historical
+      availability evidence from demonstrated delay; verify the corresponding claims/actions.
+      Inspect collaboration, actual hosted member/Agent routes, and accessibility limits;
+      do not certify equivalence, production, or team use.
+      Requires 2.33, 2.38, 2.40, 2.44, 2.45, 2.46, 3.2, 3.3, 3.4, and 3.13.
+      Native closure and evidence-preserving retirement follow the
+      [existing migration sequence](design.md#migration-plan).
+      Original commitments: `e701730c62ceecdad92f1be65ad5c31b140e3afe29cfe944a13405767e204011`.
 - [x] 3.6 Publish the compatible original-duty correction; verify fresh local/installed
       proof, signed source, assets, and both matrices while preserving the qualified major edition.
 - [x] 3.7 Publish the compatible decision-boundary correction; verify exact-source
