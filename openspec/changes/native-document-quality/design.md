@@ -277,6 +277,11 @@ edition, rebuild unchanged supply, recreate the tag, or use GitHub evidence to
 claim GitLab success. All-peer checks remain necessary for all-peer completion,
 not for an independently qualified peer's release or bounded aftercare.
 
+Source duty and reader reviews continue independently of publication. Final
+hosted reading uses the delivered source on the selected peer; it does not wait
+for GitLab delivery or the aggregate completion of history and peer tasks.
+Unobserved GitLab reading routes remain part of its deferred verification.
+
 Consume one accepted shared CI contract with peer-specific parameters. Its
 product owner chooses the representation and projection mechanism. Qualify
 stable input identity, native non-writing drift refusal, necessary event and

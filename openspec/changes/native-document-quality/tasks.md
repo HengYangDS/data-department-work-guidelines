@@ -187,7 +187,10 @@
       Release, live links, and hashes; preserve earlier releases. GitLab unavailability
       does not block GitHub; deferred delivery remains in 3.13.
 - [ ] 3.5 Finish the duty and reader review; resolve every finding on final delivered source.
-      Requires 2.33, 2.38, 2.40, 2.44, 2.45, 2.46, 3.2, 3.3, 3.4, and 3.13.
+      Continue source review without waiting for release or deferred peer delivery.
+      Final review requires 2.33, 2.38, 2.40, 2.44, 2.46, 3.2, and 3.3 for applicable
+      consumers, plus the selected peer's 2.45 and 3.4 delivery. It does not require
+      GitLab delivery in 3.13; verify those reading routes when GitLab returns.
       Follow the [complete duty review](design.md#review-original-duties-at-seven-topic-owners)
       for all 62 subsections, five surrounding groups, introductions, diagrams, the data
       shared-model, source-rebinding, and consumer-retirement journey with its five duties
@@ -220,6 +223,8 @@
       through adopter owners. Verify conserved history, accepted Python evidence,
       repaired-baseline admission, original-plan recovery, actual bindings, protected
       jobs, administrator enforcement, and native force-push/deletion refusal.
+      Apply each check to its own consumer; this task's aggregate open state does
+      not block independent source review or a qualified selected-peer release.
       When GitLab returns, publish the existing signed edition and exact assets;
       verify GitLab's own source/offline jobs, Release, links, and retrieved hashes.
       Owner: this Change's maintainer; review on restored access, no later than 2026-10-18.
