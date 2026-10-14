@@ -28,6 +28,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Shorten remaining implementation and release tasks while preserving their
+  identities, unchecked state, acceptance conditions, and original Git evidence.
+  Resume GitLab qualification through its restored connection; each peer still
+  owns its own checks, delivery, and cleanup.
 - Route data-work questions directly to historical evidence, use admission,
   modeling decisions, and operational safeguards. Compare model and lifecycle
   responsibilities without adding roles or changing permission and migration duties.
