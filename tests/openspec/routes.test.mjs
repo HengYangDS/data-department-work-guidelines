@@ -326,7 +326,7 @@ test("official apply tracks every readable item without a second progress sectio
     .filter((token) => token && ["[ ] ", "[x] "].some((marker) => token.text.startsWith(marker)));
   assert.ok(paragraphs.length, "the active checklist must contain readable work");
   const expected = paragraphs.map((token) => ({
-    description: token.text.split("\n")[0].slice(4),
+    description: token.text.slice(4),
     done: token.text.startsWith("[x] "),
     line: token.startLine,
   }));
@@ -339,6 +339,14 @@ test("official apply tracks every readable item without a second progress sectio
   };
   assertCompleteSelection(report.tasks);
   assert.throws(() => assertCompleteSelection(report.tasks.slice(1)), /every readable task/u);
+  const continued = paragraphs.find((token) => token.text.includes(". "));
+  const continuation = continued.text.slice(4).indexOf(". ");
+  const truncated = report.tasks.map((task) =>
+    task.line === continued.startLine
+      ? { ...task, description: task.description.slice(0, continuation + 1) }
+      : task,
+  );
+  assert.throws(() => assertCompleteSelection(truncated), /every readable task/u);
   for (const task of report.tasks) {
     assert.equal(task.sourcePath, path.join(root, relative));
     const paragraph = paragraphs.find((token) => token.startLine === task.line);

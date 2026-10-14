@@ -166,6 +166,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Keep shared-tool quality guidance reachable from its complete task description.
+  Check native task extraction against full descriptions, and keep the public
+  prose-check fixture independent of host Git templates.
 - Remove the cross-Forge release prerequisite. A qualified GitHub edition can
   publish while GitLab is unavailable; GitLab later receives the same signed
   objects and assets after its own checks. Keep missing delivery and link

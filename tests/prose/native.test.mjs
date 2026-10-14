@@ -338,12 +338,17 @@ test("real Vale control comments cannot disable prose checks", () => {
 test("public prose and integrity commands reject the same current-file defect", () => {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-prose-entry-"));
   try {
-    const initialized = spawnSync("git", ["init", "--quiet", directory], {
+    const initialized = spawnSync("git", ["init", "--template=", "--quiet", directory], {
       encoding: "utf8",
       timeout: 30_000,
     });
     assert.ifError(initialized.error);
     assert.equal(initialized.status, 0, initialized.stderr);
+    assert.equal(
+      existsSync(path.join(directory, ".git", "hooks")),
+      false,
+      "the native observation fixture must not inherit the host Git template",
+    );
     const committed = spawnSync(
       "git",
       [
