@@ -77,6 +77,21 @@ test("collaboration preserves both acceptance outcomes without the diagram", () 
     (token) => token.type === "codeFenced" && token.text.startsWith("```mermaid"),
   );
   assert.ok(diagram, "the delegation example must retain its diagram");
+  const assertMemberReview = (text) => {
+    const steps = text.split("\n").map((line) => line.trim());
+    const returned = steps.indexOf("Agent-->>Member: Work, sources,<br/>results, limits");
+    const reviewed = steps.indexOf("Member->>Member: Check actual work<br/>and evidence");
+    const submitted = steps.indexOf("Member->>Acceptor: Checked work<br/>and evidence");
+    assert.ok(
+      returned >= 0 && returned < reviewed && reviewed < submitted,
+      "the member must perform the actual review before submitting work for acceptance",
+    );
+  };
+  assertMemberReview(diagram.text);
+  assert.throws(
+    () => assertMemberReview(diagram.text.replace("Member->>Member:", "Agent->>Agent:")),
+    /member must perform the actual review/u,
+  );
   const descriptions = [
     diagram.text.split("\n").find((line) => line.trimStart().startsWith("accDescr:")),
     [...walkMarkdown(section)]

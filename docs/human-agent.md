@@ -94,7 +94,7 @@ sequenceDiagram
     participant Acceptor as Authorized acceptor
     Member->>Agent: Scope, stop conditions,<br/>acceptance criteria
     Agent-->>Member: Work, sources,<br/>results, limits
-    Note over Member: Check actual work and evidence
+    Member->>Member: Check actual work<br/>and evidence
     Member->>Acceptor: Checked work<br/>and evidence
     alt Conditions unmet
         Acceptor-->>Member: Return for review<br/>within the boundary
