@@ -121,7 +121,8 @@
       Apply [risk](design.md#bind-risk-approval-to-the-actual-subject) and
       [execution](design.md#preserve-native-execution-and-complete-validation-evidence) contracts;
       retire local supply, installer, bundle, manifests, wiring, and probes only after
-      cold installation, exact-HEAD proof, and both source/offline matrices pass.
+      cold installation, exact-HEAD proof, and each migrated consumer's source/offline
+      matrix passes. An unavailable peer holds only its own migration.
       Preserve complete reports; braces must not block checks, CI, distribution, or releases.
 - [x] 2.39 Isolate cache-rejection fixtures from inherited selectors; verify precedence,
       both refusals, the native contribution command, and committed proof while retaining
@@ -143,6 +144,7 @@
       Follow [peer qualification](design.md#keep-both-publication-peers-complete-and-coherent)
       for stable input identity, single-peer/offline use, and non-writing drift refusal.
       Prepare ETHOS before source checks; retire the checker, recipes, and copied rules.
+      Qualify each peer independently; unavailable GitLab jobs do not block GitHub.
 - [ ] 2.46 Complete shared consumption; pass all subtasks and retire their local duplicates.
   - [x] 2.46.1 Separate dependency auditing from CI topology; verify all 53 original
         cases, declarations, shared fixtures, nested discovery, worker limits, deadlines,
@@ -167,7 +169,8 @@
 ## 3. Qualification and publication
 
 - [ ] 3.1 Freeze final source and shared inputs; pass the complete local quality floor.
-      Requires 2.33, 2.38, 2.45, and 2.46. Verify format, lint, prose, links, refusals,
+      Requires the local consumers in 2.33, 2.38, and 2.46; selected-peer CI from 2.45
+      gates that peer only. Verify format, lint, prose, links, refusals,
       strict OpenSpec, diff, platform inputs, notices, stable supply, complete findings,
       approvals, and hashes before qualification.
 - [ ] 3.2 Qualify frozen offline supply; run full checks with outbound access refused.
@@ -177,11 +180,12 @@
 - [ ] 3.3 Qualify DDWG, AIGW, and Proxy on the same accepted ETHOS source and wheel.
       Each owner verifies the actual binding, exact-HEAD plan/proof, semantics, complete
       selection and diagnostics, and one execution.
-- [ ] 3.4 Publish the signed edition; verify both protected peers and independent downloads.
-      Requires 3.1, 3.2, and 3.3. Follow the [migration plan](design.md#migration-plan),
+- [ ] 3.4 Publish the signed edition on an available peer; verify its independent download.
+      Requires 3.1, 3.2, and 3.3 for applicable consumers. Follow the [migration plan](design.md#migration-plan),
       classify compatibility against v7.0.12, and qualify prepared v8.0.0 before tagging.
-      Verify source, shared supply, version, tag, the same protected graph, source/offline
-      jobs, Releases, and hashes; preserve earlier releases.
+      Verify its protected graph, source/offline jobs, source, supply, version, tag,
+      Release, live links, and hashes; preserve earlier releases. GitLab unavailability
+      does not block GitHub; deferred delivery remains in 3.13.
 - [ ] 3.5 Finish the duty and reader review; resolve every finding on final delivered source.
       Requires 2.33, 2.38, 2.40, 2.44, 2.45, 2.46, 3.2, 3.3, 3.4, and 3.13.
       Follow the [complete duty review](design.md#review-original-duties-at-seven-topic-owners)
@@ -216,6 +220,9 @@
       through adopter owners. Verify conserved history, accepted Python evidence,
       repaired-baseline admission, original-plan recovery, actual bindings, protected
       jobs, administrator enforcement, and native force-push/deletion refusal.
+      When GitLab returns, publish the existing signed edition and exact assets;
+      verify GitLab's own source/offline jobs, Release, links, and retrieved hashes.
+      Owner: this Change's maintainer; review on restored access, no later than 2026-10-18.
       Retire identity glue after acceptance; preserve failures and partial-effect receipts.
 - [x] 3.14 Publish plain-language, cross-cycle, and offline-supply repairs; verify
       bundle, cold install, proof, signature, both matrices, downloads, and exact aftercare;

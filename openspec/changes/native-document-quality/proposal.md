@@ -68,6 +68,9 @@ been established.
 - Publish the same admitted source graph independently on GitLab and GitHub.
   Consume native version, history, signing, release, and download contracts;
   verify each peer's own jobs, tags, assets, navigation, and retained downloads.
+  Select each peer explicitly. GitLab unavailability must not block a qualified
+  GitHub release; later GitLab delivery uses the same signed objects and remains
+  an open obligation until its own acceptance is observed.
 - Preserve task IDs, checked historical work, original failures, and required
   evidence. Retire replaced current carriers without rewriting Git history,
   retrospectively certifying earlier work, or leaving a second progress ledger.

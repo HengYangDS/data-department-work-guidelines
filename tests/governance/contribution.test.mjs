@@ -5,6 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 import { parse as parseToml } from "smol-toml";
+import { parse as parseShell } from "shell-quote";
 import { checkLineEndingAttributes, checkLicense } from "../../tools/docs/governance.mjs";
 import {
   headingLevel,
@@ -16,6 +17,43 @@ import {
 } from "../../tools/docs/markdown.mjs";
 import { root } from "../../tools/runtime.mjs";
 import { contentUnderHeading } from "./fixtures.mjs";
+
+test("release examples select a peer for protected source and tag publication", () => {
+  const relative = "CONTRIBUTING.md";
+  const source = readFileSync(path.join(root, relative), "utf8");
+  const assertPeerSelection = (text) => {
+    const section = contentUnderHeading(text, relative, "4. Cut and tag the release");
+    const commands = section
+      .filter((token) => token.type === "codeFenced")
+      .flatMap((token) =>
+        [...walkMarkdown(token.children)]
+          .filter((child) => child.type === "codeFlowValue")
+          .map((child) => parseShell(child.text)),
+      )
+      .filter((argv) => argv[0] === "ethos" && argv[1] === "publish");
+    assert.equal(commands.length, 2, "source and tag need separate publication previews");
+    const expectedRefs = [["refs/heads/dev", "refs/heads/main"], ["refs/tags/vX.Y.Z"]];
+    for (const [index, argv] of commands.entries()) {
+      assert.equal(argv[argv.indexOf("--peer") + 1], "github", "select the publication peer");
+      const refs = argv.flatMap((argument, position) =>
+        argument === "--ref" ? [argv[position + 1]] : [],
+      );
+      assert.deepEqual(refs, expectedRefs[index], "publish only the declared source or tag");
+      assert.ok(argv.includes("--probe-remote"), "bind the selected peer's live ref");
+      assert.equal(argv[argv.indexOf("--expect-head") + 1], "OID", "bind the proved source");
+      assert.ok(!argv.includes("--apply"), "derive the receipt before applying it");
+    }
+  };
+  assertPeerSelection(source);
+  assert.throws(
+    () => assertPeerSelection(source.replaceAll("--peer github ", "")),
+    /select the publication peer/u,
+  );
+  assert.throws(
+    () => assertPeerSelection(source.replace("refs/heads/dev", "refs/heads/candidate/dev")),
+    /publish only the declared source or tag/u,
+  );
+});
 
 test("source checking precedes conditional tool preparation without hiding inputs", () => {
   const relative = "CONTRIBUTING.md";

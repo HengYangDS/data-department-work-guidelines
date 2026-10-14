@@ -72,12 +72,14 @@ boundaries.
 Local verification contacts neither Forge. GitLab is the organization's primary
 publication plane. GitHub independently provides the complete repository,
 CI/CD, updates, and distribution, including during a GitLab outage. An outage
-update requires native ETHOS admission, actual GitHub publication, checking the
-published ref, and its source jobs. Do not raw-push around a native refusal.
+release requires native ETHOS admission and GitHub's own release evidence.
+Select that peer explicitly; do not raw-push around a native refusal.
 
-Qualified releases remain available during an outage. A new edition still needs
-[both release-cut checks](#versioned-releases); a GitHub result cannot qualify
-GitLab, or vice versa.
+Release acceptance is per peer, not a two-Forge transaction. GitLab's absence
+does not block a GitHub release that meets the [release checks](#versioned-releases).
+Keep GitLab publication, CI, downloads, and live links pending in the existing
+Change. When it returns, publish the same signed objects and verify its own
+results; do not create a different edition or rewrite the published tag.
 
 Publish only `dev`, `main`, `proposal/*`, and ETHOS-admitted signed release tags.
 `candidate/dev` and `work/*` stay local. The
@@ -85,9 +87,9 @@ Publish only `dev`, `main`, `proposal/*`, and ETHOS-admitted signed release tags
 [release declaration](../../.ethos/release.toml) own admission without operator
 keys or host paths.
 
-Publish the same signed commit graph to both Forges, including governed merge
-commits. Fast-forward acceptance advances a ref to a descendant; it does not
-require single-parent history. Do not squash or rewrite accepted history to
+Publish the same signed commit graph to each Forge when available, including
+governed merge commits. Fast-forward acceptance advances a ref to a descendant;
+it does not require single-parent history. Do not squash or rewrite accepted history to
 satisfy a peer's configuration. Keep `dev` and `main` protected, require the
 declared source checks and trusted signatures, and forbid force pushes and
 deletions. Remote rules must admit the governed graph; GitHub's linear-history
@@ -120,12 +122,17 @@ same refs on both peers.
   cut. One untagged dated heading is allowed only while that exact release-cut
   source is committed and proved before tagging. Do not fabricate a sequence
   from older untagged editions; they remain in Git history.
-- Require both Forges' declared source jobs at the exact release-cut commit
-  before signing its annotated `vX.Y.Z` tag, which must match committed `VERSION`.
-  An earlier proposal or later Changelog edit has a different identity.
-- Observe the tag, Release, and asset on each Forge. A heading, branch, or CI
-  result is not a release. New commits, including archive commits, require a
-  trusted SSH signature and correct attribution; each clone supplies its own
+- Require the selected Forge's declared source jobs at the exact release-cut
+  commit before first signing its annotated `vX.Y.Z` tag, which must match
+  committed `VERSION`. An earlier proposal or later Changelog edit has a
+  different identity. A later peer must qualify that same source before
+  receiving the existing tag; do not sign another object for it.
+- Observe the selected Forge's tag, Release, asset, complete offline jobs, and
+  independently retrieved hashes. Its live links must resolve after their
+  targets exist; another peer's unavailable links remain pending, not passed.
+  A heading, branch, or CI result is not a release. New commits, including
+  archive commits, require a trusted SSH signature and correct attribution;
+  each clone supplies its own
   identity, public signing-key path, and protected external trust anchor.
 
 The default integrity gate and both CI planes reject malformed Changelog
@@ -389,8 +396,10 @@ Keep downloads for the latest qualified release and one qualified rollback,
 plus native packages consumed by source or CI. Before retirement, verify exact
 identities and consumers. Preserve signed tags, source, original release notes,
 and historical evidence; remove withdrawn download links and add a dated notice.
-Recheck retained hashes and both Forge inventories. Report reclaimed space only
-from provider confirmation. [Contributing](../../CONTRIBUTING.md#retire-superseded-downloads)
+Recheck retained hashes and the affected Forge's inventory. Retire downloads
+only after their successor qualifies on that same Forge; an outage on the other
+Forge does not block this aftercare or release its consumers. Report reclaimed
+space only from provider confirmation. [Contributing](../../CONTRIBUTING.md#retire-superseded-downloads)
 owns the procedure.
 
 ### Local Evidence and Workspaces

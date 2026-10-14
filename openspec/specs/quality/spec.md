@@ -304,11 +304,11 @@ command to achieve this presentation.
 
 ### Requirement: Live links qualify the published edition
 
-Source verification SHALL keep pinned lychee's local link and fragment checks
-offline. The release route SHALL expose a separate, explicit live check of the
-same current Markdown inventory after the version tag exists on both Forges.
-Broken external links, including a 404 for a comparison URL, SHALL remain a
-failure rather than an accepted status or an unreported exclusion.
+Source link checks SHALL remain offline. Release qualification SHALL use pinned
+Lychee on current Markdown to check non-peer external links and the selected
+peer after its targets exist. Broken in-scope links, including comparison
+404s, SHALL fail. Unavailable unselected-peer links SHALL remain explicitly
+scoped and pending, not block the selected release or be reported as passed.
 
 #### Scenario: A version is prepared but not tagged
 
@@ -319,10 +319,11 @@ failure rather than an accepted status or an unreported exclusion.
 
 #### Scenario: The version tag is published
 
-- **WHEN** both remote tags exist and release qualification runs
+- **WHEN** the selected peer's tag exists and release qualification runs
 - **THEN** the explicit live link check uses the pinned lychee and current
-  Markdown inventory
-- **AND THEN** any broken external link prevents a complete release claim.
+  Markdown inventory for non-peer external links and the selected peer
+- **AND THEN** any broken in-scope link prevents that peer's complete release claim
+- **AND THEN** unavailable unselected-peer links remain pending, not passed.
 
 ### Requirement: Native English prose and terminology checks
 

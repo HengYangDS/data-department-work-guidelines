@@ -5,10 +5,11 @@
 ### Requirement: DDWG has two complete publication peers
 
 DDWG SHALL declare GitLab as its organizational publication source and GitHub
-as an independent complete repository, CI/CD, and distribution peer through the
-accepted native publication contract. Local validation and installation SHALL
-need neither peer. Each peer SHALL qualify its own declared source and offline
-Linux, macOS, and Windows execution, publication, and download results.
+as an independent complete repository, CI/CD, and distribution peer through
+native ETHOS. Local validation and installation SHALL need neither peer.
+Each peer SHALL qualify its own source and offline Linux, macOS, and Windows
+execution, publication, and downloads. An unavailable unselected peer SHALL
+NOT block a qualified release on the selected peer.
 
 #### Scenario: Both peers accept the document source
 
@@ -19,10 +20,25 @@ Linux, macOS, and Windows execution, publication, and download results.
 
 #### Scenario: GitLab is unavailable
 
-- **WHEN** only GitHub is available for update or distribution
-- **THEN** its accepted native route may operate independently
+- **WHEN** GitLab is unavailable and GitHub meets its own release requirements
+- **THEN** GitHub's native route publishes the signed edition independently
 - **AND** local checks and supplied installation remain available
-- **AND** the unobserved GitLab delivery stays pending rather than completed.
+- **AND** unobserved GitLab source, CI, Release, downloads, and live links stay
+  pending rather than block GitHub or be reported as completed.
+
+#### Scenario: GitLab becomes available after a GitHub release
+
+- **WHEN** the maintainer resumes the deferred GitLab delivery
+- **THEN** GitLab qualifies the same source through its own required jobs
+- **AND** its native route publishes the existing signed tag and exact asset bytes
+- **AND** GitLab's Release, downloads, and navigation are verified without
+  recreating the edition or borrowing GitHub acceptance.
+
+#### Scenario: The selected peer fails a required check
+
+- **WHEN** GitHub is selected but its source or offline matrix fails or is incomplete
+- **THEN** GitHub release acceptance remains incomplete
+- **AND** GitLab unavailability does not waive that defect or the common quality floor.
 
 #### Scenario: A platform has not executed the final inputs
 
@@ -54,13 +70,15 @@ while maintenance-tool supply remains a separate product artifact.
 - **AND** unchanged notes remain readable without redirecting one peer's reader
   exclusively to the other peer or another repository.
 
-#### Scenario: A release is published
+#### Scenario: A release is published on the selected peer
 
-- **WHEN** both native release routes publish the declared edition
+- **WHEN** the selected native release route publishes the declared edition
 - **THEN** source, signatures, tags, notes, shared supply identity, and independent
   download bytes match their admitted subjects
-- **AND** live links are checked after their target exists on each peer;
-  source verification does not silently accept a future or broken target.
+- **AND** selected-peer live links are checked after their targets exist;
+  source verification does not silently accept a future or broken target
+- **AND** an unselected peer's unavailable links remain pending without
+  invalidating the selected peer's verified delivery.
 
 #### Scenario: Downloads or a work lane are retired
 
@@ -76,9 +94,10 @@ while maintenance-tool supply remains a separate product artifact.
 standards belong to ETHOS and their native execution owners. DDWG supplies
 publication peers and platform requirements, not another release implementation.
 
-**Migration:** Existing publication tasks qualify the accepted shared contracts
-on each peer before removing duplicate code, CI policy, procedures, and standard
-copies. Original requirements, scenarios, and failures remain in native
+**Migration:** Existing publication tasks qualify each migrated consumer before
+removing its duplicate code, CI policy, procedures, and standard copies.
+An unavailable peer holds only its own migration, not a qualified peer's release.
+Original requirements, scenarios, and failures remain in native
 captured source evidence
 `640cc1a0f708b9b8411d714f07d084376a8b691469e8518181d213366ab753e6`.
 Required actual platform, runner, transport, and release evidence stays separate.

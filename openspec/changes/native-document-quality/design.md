@@ -265,7 +265,17 @@ Local validation and supplied installation require neither Forge. GitLab is the
 organizational publication source; GitHub is an independent complete repository,
 CI/CD, and distribution peer. Each supplies its own acceptance and downloads.
 GitHub may operate while GitLab is unavailable; missing GitLab acceptance remains
-pending where the final release requires it.
+pending in this Change, not a prerequisite for GitHub's release. Select one peer
+through native publication admission. Qualify that peer's protected source,
+release-cut jobs, signed tag, Release, offline jobs, independently retrieved
+bytes, and live navigation. Other public links remain checked; an unselected
+peer's unavailable links retain their exact scope and pending status.
+
+Create the signed release object once. When GitLab returns, qualify its own
+source jobs and publish that same object and artifact bytes. Do not bump the
+edition, rebuild unchanged supply, recreate the tag, or use GitHub evidence to
+claim GitLab success. All-peer checks remain necessary for all-peer completion,
+not for an independently qualified peer's release or bounded aftercare.
 
 Consume one accepted shared CI contract with peer-specific parameters. Its
 product owner chooses the representation and projection mechanism. Qualify
@@ -370,8 +380,10 @@ v8.0.0 is not a release merely because `VERSION` names it.
 4. Complete final topic, original-duty, reader, shared quality, risk, history,
    CI, and carrier acceptance, including required actual AIGW/Proxy bindings.
 5. Freeze correctly classified source and shared supply. Qualify local and cold
-   execution, exact-HEAD proof, both source/offline platform matrices, signed
-   tags, Releases, independent download hashes, and live navigation.
+   execution and exact-HEAD proof. Publish on an available peer after its own
+   source/offline platform checks; verify the signed tag, Release, independent
+   download hashes, and live navigation. An unavailable peer holds only its own
+   delivery; later synchronize and qualify the same objects there.
 6. Audit obligations and evidence, sync officially, and retire absorbed resources
    after consumer, hash, permission, and native-inventory checks. Complete archive
    prerequisites without claiming the archive's future Git effects.

@@ -162,9 +162,17 @@ credential reachability. Runners SHALL be tagged-only: review
 #### Scenario: Release-cut source differs from an earlier accepted source
 
 - **WHEN** a release-cut commit is selected as the version tag's source
-- **THEN** both Forges' declared source jobs run and pass at that exact commit
-  before its signed version tag is created
-- **AND THEN** an earlier green job or a peer's result cannot qualify the tag.
+- **THEN** the selected Forge's declared source jobs run and pass at that exact
+  commit before its signed version tag is first created
+- **AND THEN** an earlier green job or another peer's result cannot qualify it
+- **AND THEN** an unavailable unselected Forge does not block the selected release.
+
+#### Scenario: A second Forge receives an already published edition
+
+- **WHEN** the same edition is later published to another Forge
+- **THEN** that Forge's own source jobs pass at the same release-cut commit
+- **AND THEN** native admission publishes the existing signed tag object,
+  unchanged notes, and identical asset bytes without recreating the edition.
 
 ### Requirement: Version identity follows SemVer compatibility
 
@@ -307,12 +315,12 @@ SHALL own versions, platform assets and notices.
 
 ### Requirement: Offline verification supply is a separately observed release asset
 
-Each release SHALL publish one source-bound bundle with the same verified
-SHA-256 on both Forges. Its identity SHALL bind the package manifest, lockfile
-and native supply manifest. It SHALL exclude credentials, host paths,
-`node_modules/` and ETHOS state. Each Forge SHALL acquire its own asset and run
-full offline installation and verification on Linux, macOS and Windows at the
-exact tag. After acquisition, use SHALL require neither Forge.
+Each release peer SHALL publish identical source-bound bundle bytes and
+qualify its own Linux, macOS, and Windows offline execution at the exact tag.
+The bundle SHALL bind package, lockfile, and native-supply manifests; exclude
+credentials, host paths, `node_modules/`, and ETHOS state; and require neither
+Forge after acquisition. An unavailable unselected peer SHALL NOT block the
+selected release.
 
 #### Scenario: Both Forges publish the release bundle
 
@@ -326,8 +334,8 @@ exact tag. After acquisition, use SHALL require neither Forge.
 
 #### Scenario: Each Forge runs its own offline platform check
 
-- **WHEN** both Forge Releases expose the same verified bundle
-- **THEN** each Forge's post-publication Linux, macOS, and Windows jobs acquire
+- **WHEN** a selected Forge Release exposes the verified bundle
+- **THEN** that Forge's post-publication Linux, macOS, and Windows jobs acquire
   the bundle from that Forge and run its full offline installer and verifier
 - **AND** each result identifies its own source tag, bundle digest, and
   execution platform rather than borrowing a peer's result.
@@ -428,17 +436,20 @@ lifecycle command.
   pinned package and tool-supply manifests
 - **THEN** the contributor route identifies the exact build inputs and release
   checks without relying on an earlier chat or this host's directories
-- **AND THEN** the signed tag, both Forge Releases, matching asset digests, and
-  full offline host results are observed as separate facts before completion.
+- **AND THEN** the signed tag, selected Forge Release, matching asset digest,
+  and full offline host results are observed before that peer's completion
+- **AND THEN** unobserved other-peer delivery remains an open obligation.
 
 #### Scenario: One publication or host qualification is missing
 
 - **WHEN** a Forge Release, retrieved asset digest, or declared host's complete
   offline run has not been observed at the selected source
-- **THEN** the release guidance keeps that claim open while reporting the
+- **THEN** the release guidance keeps that peer's claim open while reporting the
   checks that actually passed
 - **AND THEN** an earlier tag job, local source check, or peer Forge result does
-  not substitute for the missing observation.
+  not substitute for the missing observation
+- **AND THEN** an unavailable unselected Forge does not prevent independently
+  qualified publication on the selected Forge.
 
 ### Requirement: Remote download retention is bounded and truthful
 

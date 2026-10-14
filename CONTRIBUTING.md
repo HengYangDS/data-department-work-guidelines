@@ -257,6 +257,13 @@ the current checkout. They are not literal filenames or credentials. Follow the
 installed ETHOS verdict at every source transition; these commands do not grant
 Change authority.
 
+Select one publication peer for each operation. GitLab's organizational role
+does not make its availability a prerequisite for GitHub. During a GitLab
+outage, complete GitHub's own source, release, download, and platform checks;
+leave only GitLab's delivery open in the existing Change. Later synchronize
+the same commit graph, signed tag, notes, and asset bytes without recreating
+the edition. The steps below apply to each selected peer independently.
+
 ### 1. Prepare the edition
 
 Prepare the version under the official Change. Review the public rule and
@@ -330,7 +337,7 @@ earlier when their obligations are complete. Archive creates a new commit:
 inspect its attribution and signature, then prove its new OID. Do not
 raw-push around an ETHOS refusal.
 
-For release-before-tag qualification on GitLab, first accept the source on
+When GitLab is selected, first accept the source on
 protected `dev` or `main`. Upload the inspected bundle through the native
 project Package Registry API as
 `offline-qualification/sha256-DIGEST/FILE_NAME`, using the actual bundle
@@ -357,20 +364,33 @@ inspected file and digest for
 both uploads, not an earlier checkout's qualification alone.
 
 Repeat the fresh-checkout offline installation, full verification, and ETHOS
-proof from Step 3, and follow the native acceptance continuation. Use
-`ethos publish --json` and its current continuation to publish the admitted
-`dev` and `main` source before creating a tag. Re-read both remote refs and
-require every declared source job to pass on each Forge at this release-cut
-commit; an earlier proposal or accepted SHA does not qualify it. If either
-matrix is missing or fails, stop and correct the source under the active
-Change.
+proof from Step 3, and follow the native acceptance continuation. Run
+the publication preview for the selected peer, then follow its exact
+receipt continuation. For example, for GitHub:
+
+```text
+ethos publish --peer github --ref refs/heads/dev --ref refs/heads/main --probe-remote --expect-head OID --json
+```
+
+Re-read that peer's protected `dev` and `main` refs and require every declared
+source job to pass at this release-cut commit. An earlier proposal or accepted
+SHA does not qualify it. A missing or failed selected-peer matrix stops that
+peer's release; an unavailable unselected peer does not.
 
 Only then sign an annotated `vX.Y.Z` tag on that same proved commit,
-run `git tag -v vX.Y.Z`, and publish the tag through ETHOS. Re-read both
-remote tags before creating either Release.
+run `git tag -v vX.Y.Z`, and preview its publication through ETHOS:
 
-GitLab's SSH remote does not
-identify the configured API scheme, host, or port. Set `GITLAB_HOST` in the
+```text
+ethos publish --peer github --ref refs/tags/vX.Y.Z --probe-remote --expect-head OID --json
+```
+
+Follow the current receipt continuation and re-read that peer's exact tag
+object and peeled commit before creating its Release. For later GitLab
+synchronization, repeat the source checks with `--peer gitlab` and publish the
+existing tag only after its own source matrix passes. Never recreate the tag.
+
+When GitLab is selected, its SSH remote does not identify the configured API
+scheme, host, or port. Set `GITLAB_HOST` in the
 caller's environment to the configured API host and port, not the SSH port.
 
 Check that `glab auth status` shows the administrator-supplied API scheme and
@@ -381,12 +401,12 @@ project's path and project ID. For unattended calls, set
 `GH_PROMPT_DISABLED=1` or `GLAB_NO_PROMPT=1` as applicable, close stdin, and
 enforce a caller-owned deadline; stop on authentication failure.
 
-### 5. Publish on both Forges
+### 5. Publish on the selected Forge
 
 Use the same reviewed release notes from the prepared Changelog section on
 both Forges. `RELEASE_NOTES_FILE` is a temporary copy of that section, not a
-new tracked history. Only after each remote tag exists at the proved commit,
-create the Release and attach the same bundle bytes:
+new tracked history. After the selected remote tag exists at the proved commit,
+run only that provider's command to create its Release and attach the same bundle bytes:
 
 ```text
 gh release create vX.Y.Z BUNDLE_PATH --verify-tag --notes-file RELEASE_NOTES_FILE --repo OWNER/REPO
@@ -417,8 +437,9 @@ call an ARM64 host running x64 tools native x86_64 verification.
 
 ### 6. Verify independent downloads
 
-Download the asset from each Release into a separate empty directory and
-inspect both files against the committed record:
+Download the asset from the selected Release into an empty directory and
+inspect it against the committed record. Run only the selected provider's
+download command and the matching inspection:
 
 ```text
 gh release download vX.Y.Z --repo OWNER/REPO --pattern BUNDLE_NAME --dir GITHUB_DIR
@@ -427,29 +448,53 @@ node tools/ci/offline-bundle.mjs inspect --bundle GITHUB_ASSET
 node tools/ci/offline-bundle.mjs inspect --bundle GITLAB_ASSET
 ```
 
-From the final checkout, run
-`ethos prove --host --execute --gate external-links --expect-head OID --json`
-after both remote tags exist and require zero broken links. The installed gate
-uses its supplied Lychee on current Git-selected Markdown. The local DDWG link
-check retains delivered-source membership and confinement and remains offline.
-This host observation does not issue repository proof. A prepared Changelog's
-comparison links return 404 before its tag exists; do not waive those errors
-or count a pre-tag live check as release qualification. A lychee pass does not authenticate a Forge destination. Use
-each provider's native comparison API with the History row's base and head
-refs at its declared repository. Retain the response and confirm both ref
+From the final checkout, check all non-peer external links and the selected
+peer's links with the supplied native Lychee on current Git-selected Markdown.
+Resolve any unselected-peer URL filter from the declared repository identity;
+record its exact scope and keep those links pending. Do not permanently exclude
+GitLab, report a whole-inventory pass, or exclude a selected-peer failure.
+An unavailable unselected peer does not block this release.
+
+Use Lychee's native file-list input, not a second link controller:
+
+```text
+lychee --config .config/checks/links/lychee.toml --offline=false --scheme http --scheme https --cache=false --exclude UNSELECTED_PEER_URL_PATTERN --files-from MARKDOWN_FILE_LIST
+```
+
+`MARKDOWN_FILE_LIST` contains the current Git-selected Markdown paths, one per
+line. `UNSELECTED_PEER_URL_PATTERN` is an anchored, escaped expression for only
+the unselected repository URL from `.ethos/release.toml`; it must not match the
+selected peer or unrelated links. Use the exact supplied Lychee binary and
+record its source binding, arguments, raw result, and deferred URL scope. Omit
+`--exclude` when all peers are in scope. This check does not grant publication
+authority or certify an unselected peer.
+
+For a whole-inventory observation after both peers' targets exist, run
+`ethos prove --host --execute --gate external-links --expect-head OID --json`.
+Retain its complete report even when one peer is unavailable; that result does
+not invalidate independently verified delivery to the other peer. The local
+DDWG link check remains offline and guards delivered-source membership and
+confinement. Neither host observation issues repository proof.
+A prepared Changelog's comparison links return 404 before its tag exists;
+do not waive selected-peer errors or count a pre-tag check as release acceptance.
+A Lychee pass does not authenticate a Forge destination. Use the selected
+provider's native comparison API with the History row's base and head refs at
+its declared repository. Retain the response and confirm both ref
 identities; reject sign-in redirects and responses from another repository,
 as [governance](docs/governance/ethos.md#versioned-releases) requires.
 
-Check each Forge's exact refs, Release object, source CI, and complete
+Check the selected Forge's exact refs, Release object, source CI, and complete
 offline runs at the selected tag. One successful host or peer proves nothing
-about another. Retire only the landed Work Lane and disposable temporary refs
+about another. Keep unobserved peer delivery in the existing Change until its
+own checks pass. Retire only the landed Work Lane and disposable temporary refs
 through ETHOS; preserve immutable tags, the candidate train, foreign work,
 and historical Runner bindings still serving earlier releases.
 
 ## Retire superseded downloads
 
-Keep attached assets for the latest qualified edition and one qualified rollback
-on both Forges. Keep native tool packages consumed by their source or current
+Keep attached assets for the latest edition qualified on each Forge and one
+qualified rollback on that Forge. A release on GitHub does not release an
+older GitLab asset's consumers. Keep native tool packages consumed by source or current
 CI. Signed tags, source revisions, original release notes, and historical
 verification remain available; they do not require every binary to stay online
 indefinitely.
@@ -466,12 +511,13 @@ indefinitely.
    Remove their download links and append a dated withdrawal notice to each
    affected Release, preserving the original notes. Retired editions are not
    still advertised as available offline distributions.
-4. Re-read both inventories and retained file digests. Check the current and
+4. Re-read each affected inventory and retained file digests. Check the current and
    rollback download routes, confirm exact retired resources are absent, and
    preserve the before/after evidence with the producing Change. Report storage
    reduction only after the provider's statistics confirm it.
 
-Run this aftercare after a qualified release supersedes its predecessor, rather
-than accumulating a new full bundle for every intermediate correction. The
+Run this aftercare when a release qualifies on the affected Forge and supersedes
+its predecessor, rather than accumulating a new full bundle for every intermediate
+correction. The
 [governance boundary](docs/governance/ethos.md#evidence-and-retirement) defines
 what may retire; this procedure does not grant authority over another project.

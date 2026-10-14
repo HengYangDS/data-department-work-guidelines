@@ -162,6 +162,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Remove the cross-Forge release prerequisite. A qualified GitHub edition can
+  publish while GitLab is unavailable; GitLab later receives the same signed
+  objects and assets after its own checks. Keep missing delivery and link
+  evidence pending without waiving selected-peer failures.
 - Require decision documents to pair each material risk with its chosen mitigation and
   explain remaining risks, limits, and revisit triggers.
 - Remove a redundant collaboration-diagram note that is too faint in GitHub's
