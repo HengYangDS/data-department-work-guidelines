@@ -83,7 +83,6 @@ actual work and evidence before submitting them for acceptance.
 ```mermaid
 ---
 config:
-  theme: neutral
   sequence:
     mirrorActors: false
 ---
