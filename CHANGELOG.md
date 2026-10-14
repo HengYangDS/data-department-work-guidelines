@@ -166,6 +166,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Wrap the collaboration diagram's message labels for easier desktop reading,
+  keeping every role, message, condition, and acceptance boundary unchanged.
 - Keep shared-tool quality guidance reachable from its complete task description.
   Check native task extraction against full descriptions, and keep the public
   prose-check fixture independent of host Git templates.
