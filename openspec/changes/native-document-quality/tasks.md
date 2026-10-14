@@ -227,6 +227,8 @@
       not block independent source review or a qualified selected-peer release.
       When GitLab returns, publish the existing signed edition and exact assets;
       verify GitLab's own source/offline jobs, Release, links, and retrieved hashes.
+      Retire each peer's absorbed proposal refs after its own acceptance and required
+      jobs; an unavailable peer holds only its own unresolved projections.
       Owner: this Change's maintainer; review on restored access, no later than 2026-10-18.
       Retire identity glue after acceptance; preserve failures and partial-effect receipts.
 - [x] 3.14 Publish plain-language, cross-cycle, and offline-supply repairs; verify

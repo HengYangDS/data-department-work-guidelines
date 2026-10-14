@@ -392,13 +392,18 @@ v8.0.0 is not a release merely because `VERSION` names it.
 6. Audit obligations and evidence, sync officially, and retire absorbed resources
    after consumer, hash, permission, and native-inventory checks. Complete archive
    prerequisites without claiming the archive's future Git effects.
-7. Archive officially, inspect/sign/prove/publish the new OID, observe both source
-   matrices, and natively retire the owned lane, proposal refs, and exact residue.
+7. Archive officially, inspect/sign/prove/publish the new OID, observe each peer's
+   applicable source matrix, and natively retire the owned lane, proposal refs,
+   and exact residue after their consumers release them.
 
-Proposal refs are disposable native projections after both peers accept the
-source and required jobs pass. Active work remains until its declared obligations
-close. Earlier-HEAD proof, false task checks, or a second ledger cannot close
-later archive, publication, or retirement effects.
+Retire a proposal ref on a peer after that peer accepts its exact source and
+required jobs pass, once no active review needs it. Completed GitHub aftercare
+does not wait for GitLab; preserve GitLab's unresolved review refs until their
+own acceptance. Retire local projections through native ETHOS after accepted
+absorption and evidence preservation, not merely after a remote accepts them.
+Active work remains until its declared obligations close. Earlier-HEAD proof,
+false task checks, or a second ledger cannot close later archive, publication,
+or retirement effects.
 
 ## Open Questions
 
