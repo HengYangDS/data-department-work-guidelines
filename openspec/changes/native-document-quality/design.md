@@ -259,8 +259,9 @@ expiry: it must not hold verification, CI, distribution, or releases. Preserve
 its complete report and remediation tracking. This acceptance does not extend
 to other findings, packages, or changed tool artifacts.
 
-The earlier native-tool group and Lychee approvals still end at
-2026-10-18 00:00 UTC; Taplo's approval ends at 2026-11-13 00:00 UTC.
+The user extended the development-approval deadline to 2026-11-13. Keep
+each approval bound to its original artifact and permitted use; the date
+change does not admit another finding or replacement asset.
 They do not authorize production, arbitrary untrusted input, another repository,
 other findings, or changed artifacts. They also do not require the shared
 product to keep predecessor versions or components. Migrate any retained
