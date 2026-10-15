@@ -45,7 +45,7 @@ substitute for a missing authorization or lifecycle result.
 Source acceptance and delivery to the two Forges require separate observations.
 GitLab remains the organization release plane; GitHub has an independent
 complete repository and CI/CD plane. Candidate and work branches remain local.
-The [current governance contract](../governance/ethos.md) owns publishable refs;
+The [current governance contract](../governance/README.md) owns publishable refs;
 it also owns runner boundaries and default gates. The
 [contributor route](../../CONTRIBUTING.md) owns procedures; the native
 [profile](../../.ethos/profile.toml) owns its actual fields. Completed Changes
@@ -61,7 +61,7 @@ reaffirms that boundary without claiming the original adoption followed a later
 lifecycle. Both links identify exact historical sources, not the current
 product or repository state.
 These records explain the choice, not current product behavior or
-remote delivery. [Repository governance](../governance/ethos.md) and the
+remote delivery. [Repository governance](../governance/README.md) and the
 [official OpenSpec workspace](../../openspec/README.md) own the current rules.
 
 Revisit the product and adopter boundary if the official mechanism cannot bind

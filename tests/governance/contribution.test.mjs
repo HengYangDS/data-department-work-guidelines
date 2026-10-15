@@ -193,7 +193,7 @@ test("source checking precedes conditional tool preparation without hiding input
 });
 
 test("platform qualification separates common, architecture, and tool evidence", () => {
-  const relative = "docs/governance/ethos.md";
+  const relative = "docs/governance/README.md";
   const source = readFileSync(path.join(root, relative), "utf8");
   const assertLayers = (text) => {
     const tokens = markdownTokens(text, relative);

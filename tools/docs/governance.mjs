@@ -52,9 +52,9 @@ export function checkNavigation(repository = root) {
     throw new Error("missing normative source list");
   const routes = new Map([
     ["README.md", ["docs/README.md"]],
-    ["AGENTS.md", ["docs/README.md", "docs/charter.md", "docs/governance/ethos.md"]],
+    ["AGENTS.md", ["docs/README.md", "docs/charter.md", "docs/governance/README.md"]],
     ["docs/README.md", normative],
-    ["docs/governance/ethos.md", ["openspec/README.md", "docs/decisions/README.md"]],
+    ["docs/governance/README.md", ["openspec/README.md", "docs/decisions/README.md"]],
     ["docs/decisions/README.md", ["docs/README.md", "openspec/README.md"]],
   ]);
   for (const [source, targets] of routes) {

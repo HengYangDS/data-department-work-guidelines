@@ -19,7 +19,7 @@ import {
 test("one neutral changelog exposes native history for both declared peers", () => {
   const valid = source("a".repeat(40));
   assert.equal(parseChangelog(valid).links.size, 1);
-  assert.match(valid, /^## Unreleased$/mu);
+  assert.match(valid, /^## \[Unreleased\]$/mu);
   assert.match(
     valid,
     /History: \[GitLab\]\[Unreleased-gitlab\] · \[GitHub\]\[Unreleased-github\]/u,
@@ -41,7 +41,7 @@ test("single-peer, hidden, mislabeled, and unused history navigation is rejected
       "History: [Source][Unreleased-gitlab] · [Mirror][Unreleased-github]",
     ),
     valid.replace(historyRow("Unreleased"), ""),
-    valid.replace("## Unreleased", "## [Unreleased]"),
+    valid.replace("## [Unreleased]", "## Unreleased"),
     valid.replace(/^\[Unreleased-gitlab\]:[^\n]*\n/mu, ""),
     valid + historyDefinitions("Ghost", "a".repeat(40), "main") + "\n",
     valid + historyDefinitions("Unreleased", "a".repeat(40), "main") + "\n",
@@ -186,7 +186,7 @@ test("earlier or case-folded reference definitions cannot shadow checked peer li
   for (const key of ["Unreleased-github", "unreleased-GITHUB", "Unreleased-gitlab"]) {
     const shadow = `[${key}]: https://other.example.invalid/redirect\n\n`;
     assert.throws(
-      () => parseChangelog(valid.replace("## Unreleased", "\n" + shadow + "## Unreleased")),
+      () => parseChangelog(valid.replace("## [Unreleased]", "\n" + shadow + "## [Unreleased]")),
       /history|definition|duplicate/u,
     );
   }
@@ -197,7 +197,7 @@ test("quote- and list-nested definitions cannot shadow visible peer destinations
   for (const prefix of ["> ", "- "]) {
     const hidden = `${prefix}[Unreleased-github]: https://other.example.invalid/redirect\n\n`;
     assert.throws(
-      () => parseChangelog(valid.replace("## Unreleased", hidden + "## Unreleased")),
+      () => parseChangelog(valid.replace("## [Unreleased]", hidden + "## [Unreleased]")),
       /history|definition|duplicate/u,
     );
   }

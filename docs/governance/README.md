@@ -111,7 +111,7 @@ A parser or commit label cannot decide compatibility.
 
 [`CHANGELOG.md`](../../CHANGELOG.md) follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/).
 Use the six standard categories without duplicates; their order may vary and
-`[YANKED]` is valid. Keep neutral version headings and one History row offering
+`[YANKED]` is valid. Use bracketed headings, including `[Unreleased]`, and one History row offering
 both GitLab and GitHub. The oldest tagged edition may link to its exact tag;
 later editions compare adjacent tags. The [release declaration](../../.ethos/release.toml)
 owns each Forge's web identity independently of Git transport. Use GitLab
@@ -148,7 +148,7 @@ The installed full host graph owns native test execution and source-quality
 observations. Repository checks supply the current document, configuration,
 prose, link, and official OpenSpec inputs. Working-edit checks and committed-source
 host verification are separate observations; neither grants repository proof,
-source acceptance, or publication. The [configuration map](../../.config/README.md) locates current native
+source acceptance, or publication. The [configuration map](configuration.md) locates current native
 inputs without restating common rules.
 
 ### Observe the Execution Environment

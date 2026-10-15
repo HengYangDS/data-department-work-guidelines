@@ -126,7 +126,7 @@ export function nativeToolBinary(tool) {
       readFileSync(selected),
       {
         ...descriptor.assets[platform],
-        format: descriptor.format ?? "archive",
+        format: descriptor.assets[platform].format ?? descriptor.format ?? "archive",
       },
       tool,
     );

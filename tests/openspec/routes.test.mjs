@@ -96,7 +96,7 @@ test("OpenSpec readers reach installed validation and separate source checks", (
 
 test("lifecycle readers reach current artifacts and source retirement duties", () => {
   const entry = readFileSync(path.join(root, "openspec/README.md"), "utf8");
-  const governancePage = readFileSync(path.join(root, "docs/governance/ethos.md"), "utf8");
+  const governancePage = readFileSync(path.join(root, "docs/governance/README.md"), "utf8");
   const containsRetirementDuty = (tokens) =>
     [...walkMarkdown(tokens)].some(
       (token) =>
@@ -114,7 +114,7 @@ test("lifecycle readers reach current artifacts and source retirement duties", (
     }
     const retirement = contentUnderHeading(
       governanceText,
-      "docs/governance/ethos.md",
+      "docs/governance/README.md",
       "Evidence and Retirement",
     );
     assert.ok(
@@ -123,7 +123,7 @@ test("lifecycle readers reach current artifacts and source retirement duties", (
     );
     assert.ok(
       !containsRetirementDuty(
-        contentUnderHeading(governanceText, "docs/governance/ethos.md", "Decision Record Form"),
+        contentUnderHeading(governanceText, "docs/governance/README.md", "Decision Record Form"),
       ),
       "source retirement is not a decision-format rule",
     );
@@ -146,7 +146,7 @@ test("lifecycle readers reach current artifacts and source retirement duties", (
 
 test("governance readers reach Change intent and durable decision rationale", () => {
   fixture((directory) => {
-    const entry = path.join(directory, "docs/governance/ethos.md");
+    const entry = path.join(directory, "docs/governance/README.md");
     const original = readFileSync(entry, "utf8");
     for (const destination of ["../../openspec/README.md", "../decisions/README.md"]) {
       const route = `(${destination})`;
@@ -170,7 +170,7 @@ test("governance readers reach Change intent and durable decision rationale", ()
       writeFileSync(entry, missing);
       assert.throws(
         () => checkNavigation(directory),
-        /missing task routes in docs\/governance\/ethos\.md/u,
+        /missing task routes in docs\/governance\/README\.md/u,
       );
       writeFileSync(entry, original);
     }
@@ -323,7 +323,8 @@ test("official apply tracks every readable item without a second progress sectio
         .filter((child) => child.type === "content")
         .map((child) => child.children.find((item) => item.type === "paragraph")),
     )
-    .filter((token) => token && ["[ ] ", "[x] "].some((marker) => token.text.startsWith(marker)));
+    .filter((token) => token && ["[ ] ", "[x] "].some((marker) => token.text.startsWith(marker)))
+    .sort((left, right) => left.startLine - right.startLine);
   assert.ok(paragraphs.length, "the active checklist must contain readable work");
   const expected = paragraphs.map((token) => ({
     description: token.text.slice(4),

@@ -6,7 +6,7 @@ import { headingLevel, markdownTokens, walkMarkdown } from "../markdown.mjs";
 import { root } from "../../runtime.mjs";
 
 const categories = ["Added", "Changed", "Deprecated", "Removed", "Fixed", "Security"];
-const releaseHeading = /^## (\S+) - (\d{4}-\d{2}-\d{2})(?: \[YANKED\])?$/u;
+const releaseHeading = /^## \[([^\]\s]+)\] - (\d{4}-\d{2}-\d{2})(?: \[YANKED\])?$/u;
 const linkDefinition = /^\[([^\]]+)\]: (https?:\/\/\S+)$/u;
 const historyRow = /^History: \[GitLab\]\[([^\]]+)\] · \[GitHub\]\[([^\]]+)\]$/u;
 const historyRoutes = {
@@ -186,7 +186,7 @@ export function parseChangelog(source, { peers = publicationPeers(root) } = {}) 
     if (line.startsWith("## ")) {
       if (headingLevel(headings.get(number) ?? { type: "" }) !== 2)
         throw new Error(`release heading is not a top-level Markdown section at line ${number}`);
-      if (line === "## Unreleased") {
+      if (line === "## [Unreleased]") {
         if (sections.length)
           throw new Error(`duplicate or misplaced Unreleased section at line ${number}`);
         section = {

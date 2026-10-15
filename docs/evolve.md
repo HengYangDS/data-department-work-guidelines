@@ -241,5 +241,5 @@ complete the record, and review the cause. Repeated emergency exceptions of
 the same kind must be handled as a mechanism problem.
 
 Specific rule changes still follow
-[repository governance](governance/ethos.md). Team adoption must be shown
+[repository governance](governance/README.md). Team adoption must be shown
 through real work, not inferred from publication.

@@ -60,10 +60,10 @@ export function historyDefinitions(label, base, target, directTag = false) {
 }
 
 export function source(base, releases = "", releaseTarget = "main", unreleasedBase = base) {
-  const labels = [...releases.matchAll(/^## (\S+)/gmu)].map((match) => match[1]);
+  const labels = [...releases.matchAll(/^## \[([^\]]+)\]/gmu)].map((match) => match[1]);
   const decorated = releases.replace(
-    /^## (\S+)(.*)$/gmu,
-    (_, label, suffix) => `## ${label}${suffix}\n\n${historyRow(label)}`,
+    /^## \[([^\]]+)\](.*)$/gmu,
+    (_, label, suffix) => `## [${label}]${suffix}\n\n${historyRow(label)}`,
   );
   const definitions = [
     historyDefinitions("Unreleased", unreleasedBase, "main"),
@@ -75,7 +75,7 @@ export function source(base, releases = "", releaseTarget = "main", unreleasedBa
       ),
     ),
   ].join("\n");
-  return `${intro}## Unreleased\n\n${historyRow("Unreleased")}\n\n### Changed\n\n- Describe a real change.\n\n${decorated}${definitions}\n`;
+  return `${intro}## [Unreleased]\n\n${historyRow("Unreleased")}\n\n### Changed\n\n- Describe a real change.\n\n${decorated}${definitions}\n`;
 }
 
 export function preparedSource(base, releases, releaseTarget = "v4.0.0") {
@@ -86,7 +86,10 @@ export function preparedSource(base, releases, releaseTarget = "v4.0.0") {
 }
 
 export function firstReleaseTagSource(base) {
-  return preparedSource(base, "## 4.0.0 - 2026-09-25\n\n### Added\n\n- First release.\n\n").replace(
+  return preparedSource(
+    base,
+    "## [4.0.0] - 2026-09-25\n\n### Added\n\n- First release.\n\n",
+  ).replace(
     historyDefinitions("4.0.0", base, "v4.0.0"),
     historyDefinitions("4.0.0", "", "v4.0.0", true),
   );

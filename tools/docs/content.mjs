@@ -11,8 +11,6 @@ import path from "node:path";
 import os from "node:os";
 import { fileURLToPath } from "node:url";
 import { getFileInfo } from "prettier";
-import { createFromBuffer } from "@dprint/formatter";
-import tomlPlugin from "@dprint/toml";
 import { isDeepStrictEqual } from "node:util";
 import { parse as parseToml } from "smol-toml";
 import YAML from "yaml";
@@ -33,56 +31,39 @@ import { nativeToolBinary } from "../supply.mjs";
 
 const requiredMetadata = ["subject", "role", "state", "relations"];
 const cjk = /[\p{Script=Han}\u2e80-\u9fff\uac00-\ud7af\uf900-\ufaff\uff00-\uffef]/u;
-const plainTextIdentities = new Set(["LICENSE", "VERSION", ".gitignore", ".gitattributes"]);
+const plainTextIdentities = new Set([
+  "LICENSE",
+  "VERSION",
+  ".gitignore",
+  ".gitattributes",
+  ".editorconfig",
+]);
 const nativeGeneratedToml = new Set([".config/mise/mise.lock"]);
-export function nativeTomlFormatter(repository = root) {
-  const formatter = createFromBuffer(readFileSync(tomlPlugin.getPath()));
-  const policyPath = path.join(repository, ".config/checks/format/toml.toml");
-  formatter.setConfig({}, structuredClone(parseToml(readFileSync(policyPath, "utf8"))));
-  const diagnostics = formatter.getConfigDiagnostics();
-  if (diagnostics.length) {
-    throw new Error(
-      diagnostics
-        .map(({ propertyName, message }) => `${policyPath}: ${propertyName}: ${message}`)
-        .join("\n"),
-    );
-  }
+export function nativeTomlConfiguration(repository = root) {
+  const policyPath = path.join(repository, ".config/checks/taplo/taplo.toml");
+  const { formatting } = parseToml(readFileSync(policyPath, "utf8"));
   const sourcePolicy = parseToml(
-    readFileSync(path.join(repository, ".config/checks/format/prettier.toml"), "utf8"),
+    readFileSync(path.join(repository, ".config/checks/prettier/prettier.toml"), "utf8"),
   );
-  const resolved = formatter.getResolvedConfig();
   const required = {
-    lineWidth: sourcePolicy.printWidth,
-    indentWidth: sourcePolicy.tabWidth,
-    newLineKind: "lf",
-    useTabs: false,
-    quoteStyle: "maintain",
-    sortKeys: false,
-    sortArrays: false,
-    sortInlineTables: false,
-    commentForceLeadingSpace: false,
-    cargoApplyConventions: false,
+    column_width: sourcePolicy.printWidth,
+    indent_string: " ".repeat(sourcePolicy.tabWidth),
+    crlf: false,
+    reorder_keys: false,
+    trailing_newline: true,
   };
-  if (Object.entries(required).some(([key, value]) => resolved[key] !== value)) {
-    throw new Error(
-      "native TOML formatting policy must preserve data, comments, and source layout",
-    );
+  if (Object.entries(required).some(([key, value]) => formatting?.[key] !== value)) {
+    throw new Error("native TOML policy must agree with source width, indentation, and data order");
   }
-  return formatter;
+  return policyPath;
 }
 
-export async function formatTargets(
-  files = gitFiles(),
-  matching = nativeTomlFormatter().getFileMatchingInfo(),
-) {
+export async function formatTargets(files = gitFiles()) {
   const targets = { prettier: [], toml: [] };
   for (const relative of files) {
     const absolute = filePath(relative);
     if (!existsSync(absolute) || !lstatSync(absolute).isFile()) continue;
-    if (
-      matching.fileExtensions.includes(path.extname(relative).slice(1)) ||
-      matching.fileNames.includes(path.basename(relative))
-    ) {
+    if (relative.endsWith(".toml")) {
       targets.toml.push(relative);
       continue;
     }
@@ -97,12 +78,50 @@ export async function formatTargets(
 }
 
 export async function formatSource({ check = true } = {}) {
-  const formatter = nativeTomlFormatter();
-  const targets = await formatTargets(gitFiles(), formatter.getFileMatchingInfo());
+  const configuration = nativeTomlConfiguration();
+  const targets = await formatTargets();
+  const taplo = targets.toml.length ? nativeToolBinary("taplo") : "";
+  const changes = new Map();
+  const findings = [];
+  for (const relative of targets.toml) {
+    const source = readText(relative);
+    try {
+      const formatted = run(
+        taplo,
+        [
+          "format",
+          "--config",
+          configuration,
+          "--no-auto-config",
+          "--colors",
+          "never",
+          "--stdin-filepath",
+          filePath(relative),
+          "-",
+        ],
+        {
+          input: source,
+          capture: true,
+          rejectStderr: true,
+          env: { ...process.env, RUST_LOG: "warn" },
+        },
+      );
+      if (!isDeepStrictEqual(parseToml(source), parseToml(formatted))) {
+        throw new Error("native formatting changes TOML data");
+      }
+      if (formatted !== source) {
+        if (check) findings.push(`${relative}: native TOML formatting differs`);
+        else changes.set(relative, formatted);
+      }
+    } catch (error) {
+      findings.push(`${relative}: ${error.message}`);
+    }
+  }
+  if (findings.length) throw new Error(findings.join("\n"));
   if (targets.prettier.length) {
     runNodeTool("prettier", "prettier", [
       "--config",
-      ".config/checks/format/prettier.toml",
+      ".config/checks/prettier/prettier.toml",
       "--no-editorconfig",
       "--ignore-path",
       os.devNull,
@@ -112,28 +131,7 @@ export async function formatSource({ check = true } = {}) {
       ...targets.prettier.map(filePath),
     ]);
   }
-  const findings = [];
-  for (const relative of targets.toml) {
-    const source = readText(relative);
-    let formatted;
-    try {
-      formatted = formatter.formatText({
-        filePath: relative,
-        fileText: source,
-      });
-      if (!isDeepStrictEqual(parseToml(source), parseToml(formatted))) {
-        throw new Error("native formatting changes TOML data");
-      }
-    } catch (error) {
-      findings.push(`${relative}: ${error.message}`);
-      continue;
-    }
-    if (formatted !== source) {
-      if (check) findings.push(`${relative}: native TOML formatting differs`);
-      else writeFileSync(filePath(relative), formatted);
-    }
-  }
-  if (findings.length) throw new Error(findings.join("\n"));
+  for (const [relative, formatted] of changes) writeFileSync(filePath(relative), formatted);
   console.log(`PASS native TOML formatting: ${targets.toml.length} source files`);
 }
 
@@ -141,14 +139,14 @@ export function checkProse(files = currentMarkdown()) {
   const vale = JSON.parse(
     run(
       nativeToolBinary("vale"),
-      ["--no-global", `--config=${path.join(root, ".config/checks/prose/vale.ini")}`, "ls-config"],
+      ["--no-global", `--config=${path.join(root, ".config/checks/vale/vale.ini")}`, "ls-config"],
       { cwd: root, capture: true, rejectStderr: true, timeout: 10_000 },
     ),
   );
   if (
     !Array.isArray(vale.Paths) ||
     vale.Paths.length !== 1 ||
-    path.resolve(vale.Paths[0]) !== path.resolve(root, ".config/checks/prose/styles")
+    path.resolve(vale.Paths[0]) !== path.resolve(root, ".config/checks/vale/styles")
   )
     throw new Error("native prose must keep Vale styles concern-local");
   if (!files.length) throw new Error("no current Markdown files to check for prose");
@@ -172,7 +170,7 @@ export function checkProse(files = currentMarkdown()) {
     nativeToolBinary("vale"),
     [
       "--no-global",
-      `--config=${filePath(".config/checks/prose/vale.ini")}`,
+      `--config=${filePath(".config/checks/vale/vale.ini")}`,
       "--output=line",
       "--no-color",
       ...absoluteFiles,
@@ -266,7 +264,7 @@ export function repositoryFileUri(uri, files) {
 export function linkCheckArguments(list, { literalFiles = [] } = {}) {
   return [
     "--config",
-    filePath(".config/checks/links/lychee.toml"),
+    filePath(".config/checks/lychee/lychee.toml"),
     "--files-from",
     list,
     ...(literalFiles.length ? ["--", ...literalFiles] : []),

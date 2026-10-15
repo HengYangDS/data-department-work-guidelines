@@ -78,10 +78,10 @@ test("collaboration preserves both acceptance outcomes without the diagram", () 
   );
   assert.ok(diagram, "the delegation example must retain its diagram");
   const assertMemberReview = (text) => {
-    const steps = text.split("\n").map((line) => line.trim());
-    const returned = steps.indexOf("Agent-->>Member: Work, sources,<br/>results, limits");
-    const reviewed = steps.indexOf("Member->>Member: Check actual work<br/>and evidence");
-    const submitted = steps.indexOf("Member->>Acceptor: Checked work<br/>and evidence");
+    const steps = text.split("\n").map((line) => line.replaceAll("<br/>", " ").trim());
+    const returned = steps.indexOf("Agent-->>Member: Work, sources, results, limits");
+    const reviewed = steps.indexOf("Member->>Member: Check actual work and evidence");
+    const submitted = steps.indexOf("Member->>Acceptor: Checked work and evidence");
     assert.ok(
       returned >= 0 && returned < reviewed && reviewed < submitted,
       "the member must perform the actual review before submitting work for acceptance",

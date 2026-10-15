@@ -246,13 +246,20 @@ remain exact-artifact evidence only while those artifacts are consumed:
 - The five Lychee 0.24.2 assets in
   [native supply](../../../.config/supply/native.json), for the approved trusted
   local checks, controlled development CI, and identical-asset distribution.
+- The six official Taplo 0.10.0 assets in the same native supply, for trusted
+  repository checks, controlled development CI, and the identical offline
+  maintenance assets. The user approved this exact development scope on
+  2026-10-15 and extended its expiry to 2026-11-13 00:00 UTC. Retain complete
+  source reports, asset and binary hashes, and actual-platform qualification;
+  source-lock findings do not establish their applicability to every binary.
 
 On 2026-10-13, the user accepted the known braces finding without a blocking
 expiry: it must not hold verification, CI, distribution, or releases. Preserve
 its complete report and remediation tracking. This acceptance does not extend
 to other findings, packages, or changed tool artifacts.
 
-The native-tool group and Lychee approvals still end at 2026-10-18 00:00 UTC.
+The earlier native-tool group and Lychee approvals still end at
+2026-10-18 00:00 UTC; Taplo's approval ends at 2026-11-13 00:00 UTC.
 They do not authorize production, arbitrary untrusted input, another repository,
 other findings, or changed artifacts. They also do not require the shared
 product to keep predecessor versions or components. Migrate any retained

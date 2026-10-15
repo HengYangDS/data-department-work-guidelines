@@ -4,7 +4,7 @@ This guide is for maintainers who change, check, or publish the repository.
 Reading or applying the guidelines requires no software installation.
 
 Find the rule's owner through the [task map](docs/README.md). Before editing,
-read [repository governance](docs/governance/ethos.md), run the installed
+read [repository governance](docs/governance/README.md), run the installed
 `ethos status --json` in the intended Work Lane, and obtain passing
 `ethos lane prewrite` admission for the exact paths. Keep progress in the selected
 official Change's `tasks.md`. The installed Git-common hooks enforce commit and
@@ -60,7 +60,7 @@ The full graph includes the same native OpenSpec gate. These checks download not
 bundle separately before installation or release. Before online publication,
 also run
 `node tools/docs/cli.mjs audit` and retain its complete result under the
-[supply boundary](docs/governance/ethos.md#tool-supply-and-offline-execution).
+[supply boundary](docs/governance/README.md#tool-supply-and-offline-execution).
 
 For a document's metadata or first visible block, run
 `ethos prove --host --execute --gate docs-registry --json`. The installed
@@ -75,7 +75,7 @@ does not establish repository proof or source acceptance.
 | Check non-spacing Markdown rules | `ethos prove --host --execute --gate markdown-lint --json` |
 | Check spelling, prose, and terms | `npm run prose`                                            |
 
-The [configuration map](.config/README.md) locates each native input; it does not
+The [configuration map](docs/governance/configuration.md) locates each native input; it does not
 restate common standards. Use the installed ETHOS rules and the declared native
 formatters. Review meaning at the [communication](docs/communicate.md) and
 relevant task owner: a passing style check cannot establish factual accuracy,
@@ -228,9 +228,9 @@ executor's ownership. Third-party notices remain intact; the repository's MIT
 grant does not relicense those packages.
 
 Install ETHOS separately for Change admission and proof. Follow the
-[supply contract](docs/governance/ethos.md#tool-supply-and-offline-execution) for
+[supply contract](docs/governance/README.md#tool-supply-and-offline-execution) for
 artifact risk and full platform qualification, and
-[quality and local state](docs/governance/ethos.md#quality-and-local-state) for
+[quality and local state](docs/governance/README.md#quality-and-local-state) for
 source selection. Acquiring an asset online does not prove offline execution.
 Git's tracked `.gitattributes` supplies LF on Windows too; do not replace it with
 a host-specific setting.
@@ -246,7 +246,7 @@ Use a scoped
 [Conventional Commit](https://www.conventionalcommits.org/en/v1.0.0/) subject,
 for example `docs(guidance): clarify data-use boundaries`. Judge compatibility
 from the actual public rule, route, or contributor-command change, not its label.
-The [release contract](docs/governance/ethos.md#versioned-releases) defines SemVer,
+The [release contract](docs/governance/README.md#versioned-releases) defines SemVer,
 Changelog structure, signed tags, and independent Forge acceptance.
 
 ## Publish a release
@@ -431,7 +431,7 @@ Require the returned project ID to match this repository, `tag` to be
 be `api` or `web`. A mismatch is not release qualification. Require the
 `offline:verify:linux`, `offline:verify:macos`, and `offline:verify:windows`
 jobs, not only the tag-push `docs:verify:<os>` jobs. Apply the
-[Windows ARM64 supply boundary](docs/governance/ethos.md#tool-supply-and-offline-execution)
+[Windows ARM64 supply boundary](docs/governance/README.md#tool-supply-and-offline-execution)
 for architecture observations and managed-asset selection evidence. Do not
 call an ARM64 host running x64 tools native x86_64 verification.
 
@@ -458,7 +458,7 @@ An unavailable unselected peer does not block this release.
 Use Lychee's native file-list input, not a second link controller:
 
 ```text
-lychee --config .config/checks/links/lychee.toml --offline=false --scheme http --scheme https --cache=false --exclude UNSELECTED_PEER_URL_PATTERN --files-from MARKDOWN_FILE_LIST
+lychee --config .config/checks/lychee/lychee.toml --offline=false --scheme http --scheme https --cache=false --exclude UNSELECTED_PEER_URL_PATTERN --files-from MARKDOWN_FILE_LIST
 ```
 
 `MARKDOWN_FILE_LIST` contains the current Git-selected Markdown paths, one per
@@ -481,7 +481,7 @@ A Lychee pass does not authenticate a Forge destination. Use the selected
 provider's native comparison API with the History row's base and head refs at
 its declared repository. Retain the response and confirm both ref
 identities; reject sign-in redirects and responses from another repository,
-as [governance](docs/governance/ethos.md#versioned-releases) requires.
+as [governance](docs/governance/README.md#versioned-releases) requires.
 
 Check the selected Forge's exact refs, Release object, source CI, and complete
 offline runs at the selected tag. One successful host or peer proves nothing
@@ -519,5 +519,5 @@ indefinitely.
 Run this aftercare when a release qualifies on the affected Forge and supersedes
 its predecessor, rather than accumulating a new full bundle for every intermediate
 correction. The
-[governance boundary](docs/governance/ethos.md#evidence-and-retirement) defines
+[governance boundary](docs/governance/README.md#evidence-and-retirement) defines
 what may retire; this procedure does not grant authority over another project.

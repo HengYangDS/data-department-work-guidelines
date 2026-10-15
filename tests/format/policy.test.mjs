@@ -1,6 +1,5 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import childProcess from "node:child_process";
 import {
   cpSync,
   existsSync,
@@ -13,12 +12,11 @@ import {
 } from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { syncBuiltinESMExports } from "node:module";
 import { test } from "node:test";
 import { pathToFileURL } from "node:url";
 import { parse as parseToml } from "smol-toml";
-import { formatSource, nativeTomlFormatter, textViolations } from "../../tools/docs/content.mjs";
-import { nodeTool, root } from "../../tools/runtime.mjs";
+import { nativeTomlConfiguration, textViolations } from "../../tools/docs/content.mjs";
+import { root } from "../../tools/runtime.mjs";
 import { nativeToolBinary } from "../../tools/supply.mjs";
 
 test("native structured formats preserve literal blank lines", async () => {
@@ -34,34 +32,8 @@ test("native structured formats preserve literal blank lines", async () => {
   }
 });
 
-test("one formatting attempt uses one fresh native TOML formatter", async (context) => {
-  const NativeModule = WebAssembly.Module;
-  let constructions = 0;
-  WebAssembly.Module = new Proxy(NativeModule, {
-    construct(target, args) {
-      constructions += 1;
-      return Reflect.construct(target, args);
-    },
-  });
-  const nativeSpawn = childProcess.spawnSync;
-  const mocked = context.mock.method(childProcess, "spawnSync", (command, args, options) => {
-    if (args?.[0] === nodeTool("prettier", "prettier"))
-      return { status: 0, stdout: "", stderr: "" };
-    return nativeSpawn(command, args, options);
-  });
-  syncBuiltinESMExports();
-  try {
-    await formatSource();
-    assert.equal(constructions, 1, "matching and formatting share one native instance");
-  } finally {
-    WebAssembly.Module = NativeModule;
-    mocked.mock.restore();
-    syncBuiltinESMExports();
-  }
-});
-
 test("the text boundary retains TOML syntax without duplicating native formatting", async () => {
-  const toml = ".config/checks/format/toml.toml";
+  const toml = ".config/checks/taplo/taplo.toml";
   assert.deepEqual(await textViolations(toml, "[MD013]\nline_length = 80\n"), []);
   assert.match((await textViolations(toml, "[invalid\n"))[0], /invalid TOML/u);
   for (const value of ["3e+20", "3e-20"]) {
@@ -82,26 +54,20 @@ test("native TOML policy preserves data and agrees with the source format owner"
     cpSync(path.join(root, ".config"), path.join(directory, ".config"), {
       recursive: true,
     });
-    const policyPath = path.join(directory, ".config/checks/format/toml.toml");
+    const policyPath = path.join(directory, ".config/checks/taplo/taplo.toml");
     const original = readFileSync(policyPath, "utf8");
-    assert.doesNotThrow(() => nativeTomlFormatter(directory));
+    assert.equal(nativeTomlConfiguration(directory), policyPath);
     for (const [before, after] of [
-      ["lineWidth = 100", "lineWidth = 80"],
-      ["indentWidth = 2", "indentWidth = 4"],
-      ['newLineKind = "lf"', 'newLineKind = "crlf"'],
-      ['quoteStyle = "maintain"', 'quoteStyle = "preferDouble"'],
-      ["sortKeys = false", "sortKeys = true"],
-      ["sortArrays = false", "sortArrays = true"],
-      ["sortInlineTables = false", "sortInlineTables = true"],
-      ['"comment.forceLeadingSpace" = false', '"comment.forceLeadingSpace" = true'],
-      ['"cargo.applyConventions" = false', '"cargo.applyConventions" = true'],
+      ["column_width = 100", "column_width = 80"],
+      ['indent_string = "  "', 'indent_string = "    "'],
+      ["crlf = false", "crlf = true"],
+      ["reorder_keys = false", "reorder_keys = true"],
+      ["trailing_newline = true", "trailing_newline = false"],
     ]) {
       assert.ok(original.includes(before), before);
       writeFileSync(policyPath, original.replace(before, after));
-      assert.throws(() => nativeTomlFormatter(directory), /native TOML.*policy/u, after);
+      assert.throws(() => nativeTomlConfiguration(directory), /native TOML.*policy/u, after);
     }
-    writeFileSync(policyPath, `${original}unknownNativeOption = true\n`);
-    assert.throws(() => nativeTomlFormatter(directory), /unknownNativeOption/u);
   } finally {
     rmSync(directory, { recursive: true, force: true });
     assert.equal(existsSync(directory), false);
@@ -167,7 +133,7 @@ test("native formatter controls preserve byte-exact examples at their own parser
     ["fixture.html", "<p>prettier-ignore</p>\n"],
     ["fixture.graphql", 'type Query { result(message: String = "prettier-ignore"): String }\n'],
     ["fixture.hbs", "<p>prettier-ignore</p>\n"],
-    ["fixture.toml", "# dprint-ignore\nkey=   1\n"],
+    ["fixture.toml", "# A literal source comment\nkey=   1\n"],
   ]) {
     assert.deepEqual(await textViolations(relative, source), [], relative);
   }
@@ -181,7 +147,7 @@ test("only declared plain-text identities bypass native parser ownership", async
       name,
     );
   }
-  for (const name of ["LICENSE", "VERSION", ".gitignore", ".gitattributes"]) {
+  for (const name of ["LICENSE", "VERSION", ".gitignore", ".gitattributes", ".editorconfig"]) {
     assert.deepEqual(await textViolations(name, "Plain text.\n"), [], name);
   }
 });
@@ -202,7 +168,7 @@ test("parser ownership resolves the source path rather than the caller cwd", asy
   const script = `
     import assert from "node:assert/strict";
     const { formatTargets, textViolations } = await import(${JSON.stringify(module)});
-    assert.deepEqual((await formatTargets(["cli"], { fileExtensions: ["toml"], fileNames: [] })).prettier, ["cli"]);
+    assert.deepEqual((await formatTargets(["cli"])).prettier, ["cli"]);
     assert.deepEqual(await textViolations("cli", ${JSON.stringify(source)}), []);
   `;
   const result = spawnSync(process.execPath, ["--input-type=module", "--eval", script], {
@@ -244,6 +210,7 @@ test("native source tools treat selected filenames as literal inputs", async () 
   const environment = {
     ...process.env,
     DDWG_LYCHEE_BIN: /[/\\]/u.test(lychee) ? path.resolve(lychee) : lychee,
+    DDWG_TAPLO_BIN: path.resolve(nativeToolBinary("taplo")),
   };
   const invoke = (command) =>
     spawnSync(process.execPath, ["tools/docs/cli.mjs", ...command], {

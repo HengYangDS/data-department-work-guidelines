@@ -23,7 +23,7 @@ test("offline dispatch tag activates release validation from a branch", () => {
         GITHUB_REF_NAME: "main",
       });
     const changelog = path.join(directory, "CHANGELOG.md");
-    const release = "## 4.0.0 - 2026-09-25\n\n### Changed\n\n- Released change.\n\n";
+    const release = "## [4.0.0] - 2026-09-25\n\n### Changed\n\n- Released change.\n\n";
     const prepared = preparedSource(base, release);
     writeFileSync(changelog, prepared);
     assert.throws(validate, /selected release tag disagrees with VERSION or changelog/u);
@@ -46,7 +46,7 @@ test("release environment selectors agree across dispatch and native tags", () =
   fixture((directory, base) => {
     writeFileSync(
       path.join(directory, "CHANGELOG.md"),
-      preparedSource(base, "## 4.0.0 - 2026-09-25\n\n### Changed\n\n- Released change.\n\n"),
+      preparedSource(base, "## [4.0.0] - 2026-09-25\n\n### Changed\n\n- Released change.\n\n"),
     );
     commit(directory, "prepare selected release");
     git(directory, "tag", "-a", "v4.0.0", "-m", "fixture release");
@@ -132,8 +132,8 @@ test("native tag inventory verifies every tag in one Git observation", () => {
       path.join(directory, "CHANGELOG.md"),
       source(
         base,
-        "## 4.0.1 - 2026-09-26\n\n### Fixed\n\n- Correct a boundary.\n\n" +
-          "## 4.0.0 - 2026-09-25\n\n### Added\n\n- First release.\n\n",
+        "## [4.0.1] - 2026-09-26\n\n### Fixed\n\n- Correct a boundary.\n\n" +
+          "## [4.0.0] - 2026-09-25\n\n### Added\n\n- First release.\n\n",
         "v4.0.1",
         "v4.0.1",
       ),

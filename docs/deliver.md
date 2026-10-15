@@ -77,7 +77,7 @@ directory or report to prove effort.
 
 For data delivery, see
 [data quality and adoption](data.md); for this repository's source lifecycle,
-see [repository governance](governance/ethos.md).
+see [repository governance](governance/README.md).
 
 ## The Working Loop
 

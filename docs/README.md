@@ -80,7 +80,7 @@ Temporary methods, project-specific facts, and records of actual work stay in
 the system that produced them. Link to those sources; do not copy them into a
 second set of general guidelines.
 
-[OpenSpec and ETHOS](governance/ethos.md) own repository change authority and
+[OpenSpec and ETHOS](governance/README.md) own repository change authority and
 historical-source recovery and retirement. [Decision records](decisions/README.md)
 keep choices that current rules alone cannot explain. Historical sources provide
 context, not current rules or proof.

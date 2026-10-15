@@ -31,7 +31,7 @@ function proseBatch(sources) {
       nativeToolBinary("vale"),
       [
         "--no-global",
-        `--config=${path.join(root, ".config/checks/prose/vale.ini")}`,
+        `--config=${path.join(root, ".config/checks/vale/vale.ini")}`,
         "--output=JSON",
         "--no-exit",
         "--no-color",
@@ -170,7 +170,7 @@ test("native prose reports diagnosed stock phrases without requiring a rewrite",
       nativeToolBinary("vale"),
       [
         "--no-global",
-        `--config=${path.join(root, ".config/checks/prose/vale.ini")}`,
+        `--config=${path.join(root, ".config/checks/vale/vale.ini")}`,
         "--no-color",
         "--output=JSON",
         "test",
@@ -179,7 +179,7 @@ test("native prose reports diagnosed stock phrases without requiring a rewrite",
       ],
       { cwd: root, encoding: "utf8", timeout: 30_000 },
     );
-  const style = path.join(root, ".config/checks/prose/styles/Plain");
+  const style = path.join(root, ".config/checks/vale/styles/Plain");
   const valid = verifyRules(style);
   assert.ifError(valid.error);
   assert.equal(valid.status, 0, valid.stderr);
@@ -403,9 +403,10 @@ test("public prose and integrity commands reject the same current-file defect", 
     const target = path.join(directory, "README.md");
     const original = "# Source\n\nThe result is verified.\n\n[MIT License](LICENSE)\n";
     writeFileSync(target, original);
+    mkdirSync(path.join(directory, "docs/governance"), { recursive: true });
     writeFileSync(
-      path.join(directory, ".config/README.md"),
-      "# Configuration\n\n[Source](../README.md)\n",
+      path.join(directory, "docs/governance/configuration.md"),
+      "# Configuration\n\n[Source](../../README.md)\n",
     );
     const defective = `${original}\nUse the the report.\n`;
     const environment = {
@@ -422,7 +423,7 @@ test("public prose and integrity commands reject the same current-file defect", 
     assert.equal(observedSource.status, 0, observedSource.stderr);
     assert.deepEqual(
       observedSource.stdout.split("\0").filter((file) => file.endsWith(".md")),
-      [".config/README.md", "README.md"],
+      ["README.md", "docs/governance/configuration.md"],
       "the public defect journey must not rescan unrelated documents",
     );
     writeFileSync(target, defective);
@@ -475,10 +476,10 @@ test("public prose and integrity commands reject the same current-file defect", 
         encoding: "utf8",
         timeout: 120_000,
       });
-    const configuration = path.join(directory, ".config/checks/prose/vale.ini");
+    const configuration = path.join(directory, ".config/checks/vale/vale.ini");
     const nativeConfiguration = readFileSync(configuration, "utf8");
     const externalStyles = path.join(directory, "external-styles");
-    cpSync(path.join(directory, ".config/checks/prose/styles"), externalStyles, {
+    cpSync(path.join(directory, ".config/checks/vale/styles"), externalStyles, {
       recursive: true,
     });
     writeFileSync(

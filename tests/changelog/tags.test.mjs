@@ -20,7 +20,7 @@ test("release comparisons cannot skip their immediate predecessor", () => {
     writeFileSync(path.join(directory, "VERSION"), "4.0.1\n");
     writeFileSync(path.join(directory, "docs/charter.md"), "> **Guideline edition:** v4.0.1\n");
     const releases =
-      "## 4.0.1 - 2026-09-26\n\n### Fixed\n\n- Correct the boundary.\n\n## 4.0.0 - 2026-09-25\n\n### Added\n\n- First release.\n\n";
+      "## [4.0.1] - 2026-09-26\n\n### Fixed\n\n- Correct the boundary.\n\n## [4.0.0] - 2026-09-25\n\n### Added\n\n- First release.\n\n";
     const corrected = source(base, releases, "v4.0.1", "v4.0.1");
     const skipped = corrected.replaceAll("v4.0.0...v4.0.1", `${base}...v4.0.1`);
     writeFileSync(path.join(directory, "CHANGELOG.md"), skipped);
@@ -94,7 +94,7 @@ test("release tags must be annotated and covered by the changelog", () => {
     git(directory, "tag", "-d", "v4.0.0");
     writeFileSync(
       path.join(directory, "CHANGELOG.md"),
-      preparedSource(base, "## 4.0.0 - 2026-09-25\n\n### Changed\n\n- Released change.\n\n"),
+      preparedSource(base, "## [4.0.0] - 2026-09-25\n\n### Changed\n\n- Released change.\n\n"),
     );
     commit(directory, "prepare release");
     git(directory, "tag", "-a", "v4.0.0", "-m", "fixture release");
@@ -114,7 +114,7 @@ test("tagged release links identify the tag, not a moving branch", () => {
       path.join(directory, "CHANGELOG.md"),
       preparedSource(
         base,
-        "## 4.0.0 - 2026-09-25\n\n### Changed\n\n- Released change.\n\n",
+        "## [4.0.0] - 2026-09-25\n\n### Changed\n\n- Released change.\n\n",
         "main",
       ),
     );
@@ -177,11 +177,11 @@ test("later tagged releases cannot use the first-release link exception", () => 
     git(directory, "tag", "-a", "v3.0.0", "-m", "older fixture release");
     const changelog = [
       intro,
-      "## Unreleased",
+      "## [Unreleased]",
       "",
       historyRow("Unreleased"),
       "",
-      "## 4.0.0 - 2026-09-25",
+      "## [4.0.0] - 2026-09-25",
       "",
       historyRow("4.0.0"),
       "",
@@ -189,7 +189,7 @@ test("later tagged releases cannot use the first-release link exception", () => 
       "",
       "- Fix the current version.",
       "",
-      "## 3.0.0 - 2026-09-24",
+      "## [3.0.0] - 2026-09-24",
       "",
       historyRow("3.0.0"),
       "",
@@ -216,7 +216,7 @@ test("Unreleased comparison begins at the latest versioned release", () => {
   fixture((directory, base) => {
     writeFileSync(
       path.join(directory, "CHANGELOG.md"),
-      source(base, "## 4.0.0 - 2026-09-25\n\n### Changed\n\n- Released change.\n\n", "v4.0.0"),
+      source(base, "## [4.0.0] - 2026-09-25\n\n### Changed\n\n- Released change.\n\n", "v4.0.0"),
     );
     commit(directory, "prepare release");
     git(directory, "tag", "-a", "v4.0.0", "-m", "fixture release");
@@ -247,7 +247,7 @@ test("comparison bases must belong to the published ancestry", () => {
 
     writeFileSync(
       changelog,
-      preparedSource(sideBase, "## 4.0.0 - 2026-09-25\n\n### Fixed\n\n- Repair a link.\n\n"),
+      preparedSource(sideBase, "## [4.0.0] - 2026-09-25\n\n### Fixed\n\n- Repair a link.\n\n"),
     );
     commit(directory, "prepare release");
     git(directory, "tag", "-a", "v4.0.0", "-m", "fixture release");

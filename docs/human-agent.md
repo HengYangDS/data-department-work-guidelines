@@ -93,13 +93,13 @@ sequenceDiagram
     participant Member
     participant Acceptor as Authorized acceptor
     Member->>Agent: Scope, stop conditions,<br/>acceptance criteria
-    Agent-->>Member: Work, sources,<br/>results, limits
-    Member->>Member: Check actual work<br/>and evidence
-    Member->>Acceptor: Checked work<br/>and evidence
+    Agent-->>Member: Work, sources, results, limits
+    Member->>Member: Check actual work and evidence
+    Member->>Acceptor: Checked work and evidence
     alt Conditions unmet
-        Acceptor-->>Member: Return for review<br/>within the boundary
+        Acceptor-->>Member: Return for review within the boundary
     else Conditions met
-        Acceptor-->>Member: Accept, record,<br/>and hand off
+        Acceptor-->>Member: Accept, record, and hand off
     end
 ```
 

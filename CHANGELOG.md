@@ -6,11 +6,11 @@ This file follows
 follow [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html).
 
 For release states and publication rules, see the
-[release contract](docs/governance/ethos.md#versioned-releases).
+[release contract](docs/governance/README.md#versioned-releases).
 Earlier branch editions had no versioned release tags; their original records
 remain in Git history rather than being relabeled as formal SemVer releases.
 
-## Unreleased
+## [Unreleased]
 
 History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
@@ -28,6 +28,13 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Group check configuration by native tool, move its reading map into governance
+  documentation, and add EditorConfig defaults for consistent editing.
+- Replace the dprint TOML adapter with official Taplo 0.10.0. Bind the six native
+  assets and complete publisher notice to the existing supplier; source formatting
+  uses the same explicit policy for checks and fixes.
+- Use canonical bracketed release headings while preserving version dates,
+  notes, and native navigation for both Forges.
 - Shorten remaining implementation and release tasks while preserving their
   identities, unchecked state, acceptance conditions, and original Git evidence.
   Resume GitLab qualification through its restored connection; each peer still
@@ -44,7 +51,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   and actual-platform checks.
 - Show the handoff from Agent work to human verification and authorized
   acceptance. Preserve boundary-limited review, acceptance recording, and
-  handoff in both the diagram and its text. Use a neutral visual theme
+  handoff in both the diagram and its text; remove redundant label breaks
+  without changing those responsibilities. Use a neutral visual theme
   rather than assigning decorative colors to roles.
 - Validate official OpenSpec artifacts through installed ETHOS and its locked
   CLI. Remove the duplicate repository validator and report-parser tests; keep the
@@ -247,7 +255,7 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   rendering. Preserve ordinary math, Markdownlint tokens, and explicit trust
   through the existing consumer without waiving the dependency finding.
 
-## 7.0.12 - 2026-10-04
+## [7.0.12] - 2026-10-04
 
 History: [GitLab][7.0.12-gitlab] · [GitHub][7.0.12-github]
 
@@ -316,7 +324,7 @@ History: [GitLab][7.0.12-gitlab] · [GitHub][7.0.12-github]
   consumer review. Historical references retain exact Git provenance on both
   Forges; original source, tags, and verification evidence remain unchanged.
 
-## 7.0.11 - 2026-10-03
+## [7.0.11] - 2026-10-03
 
 History: [GitLab][7.0.11-gitlab] · [GitHub][7.0.11-github]
 
@@ -326,7 +334,7 @@ History: [GitLab][7.0.11-gitlab] · [GitHub][7.0.11-github]
   preserving compound-command boundaries, quoted text, and ordinary rationale
   without executing inspected input.
 
-## 7.0.10 - 2026-10-03
+## [7.0.10] - 2026-10-03
 
 History: [GitLab][7.0.10-gitlab] · [GitHub][7.0.10-github]
 
@@ -339,7 +347,7 @@ History: [GitLab][7.0.10-gitlab] · [GitHub][7.0.10-github]
   native-tool caches. Source confinement, exclusive installation, and retained
   cache permissions remain required.
 
-## 7.0.9 - 2026-10-02
+## [7.0.9] - 2026-10-02
 
 History: [GitLab][7.0.9-gitlab] · [GitHub][7.0.9-github]
 
@@ -351,7 +359,7 @@ History: [GitLab][7.0.9-gitlab] · [GitHub][7.0.9-github]
 - Balance native prose tests across the bounded workers and batch independent
   samples without losing inputs, findings, or source-preservation checks.
 
-## 7.0.8 - 2026-10-02
+## [7.0.8] - 2026-10-02
 
 History: [GitLab][7.0.8-gitlab] · [GitHub][7.0.8-github]
 
@@ -364,7 +372,7 @@ History: [GitLab][7.0.8-gitlab] · [GitHub][7.0.8-github]
   repeating unrelated repository prerequisites. Full source verification still
   executes the real pinned tool.
 
-## 7.0.7 - 2026-10-02
+## [7.0.7] - 2026-10-02
 
 History: [GitLab][7.0.7-gitlab] · [GitHub][7.0.7-github]
 
@@ -384,7 +392,7 @@ History: [GitLab][7.0.7-gitlab] · [GitHub][7.0.7-github]
   source checks suppress OpenSpec's outbound requests for
   that invocation without changing the user's global settings.
 
-## 7.0.6 - 2026-10-02
+## [7.0.6] - 2026-10-02
 
 History: [GitLab][7.0.6-gitlab] · [GitHub][7.0.6-github]
 
@@ -395,7 +403,7 @@ History: [GitLab][7.0.6-gitlab] · [GitHub][7.0.6-github]
   at the declared repositories. Version headings remain local; one unchanged
   source serves both platforms and offline readers.
 
-## 7.0.5 - 2026-10-02
+## [7.0.5] - 2026-10-02
 
 History: [GitLab][7.0.5-gitlab] · [GitHub][7.0.5-github]
 
@@ -421,7 +429,7 @@ History: [GitLab][7.0.5-gitlab] · [GitHub][7.0.5-github]
   diagnostic, or subject-applicability contract. This documentation correction
   does not claim an ETHOS product repair or cross-adopter acceptance.
 
-## 7.0.4 - 2026-10-01
+## [7.0.4] - 2026-10-01
 
 History: [GitLab][7.0.4-gitlab] · [GitHub][7.0.4-github]
 
@@ -454,7 +462,7 @@ History: [GitLab][7.0.4-gitlab] · [GitHub][7.0.4-github]
   and required tool packages. Superseded attachments retire with an explicit
   notice while signed tags, original notes, and source history remain.
 
-## 7.0.3 - 2026-10-01
+## [7.0.3] - 2026-10-01
 
 History: [GitLab][7.0.3-gitlab] · [GitHub][7.0.3-github]
 
@@ -467,7 +475,7 @@ History: [GitLab][7.0.3-gitlab] · [GitHub][7.0.3-github]
   misplaced or linked configuration, and verified native selection without
   ambient editor settings. Public commands and department duties are unchanged.
 
-## 7.0.2 - 2026-10-01
+## [7.0.2] - 2026-10-01
 
 History: [GitLab][7.0.2-gitlab] · [GitHub][7.0.2-github]
 
@@ -483,7 +491,7 @@ History: [GitLab][7.0.2-gitlab] · [GitHub][7.0.2-github]
   success; persistent errors still fail instead of leaving temporary state
   unnoticed.
 
-## 7.0.1 - 2026-10-01
+## [7.0.1] - 2026-10-01
 
 History: [GitLab][7.0.1-gitlab] · [GitHub][7.0.1-github]
 
@@ -501,7 +509,7 @@ History: [GitLab][7.0.1-gitlab] · [GitHub][7.0.1-github]
 - Presented data ownership in a compact responsibility table without adding
   roles, forms, meetings, or a competing rule source.
 
-## 7.0.0 - 2026-10-01
+## [7.0.0] - 2026-10-01
 
 History: [GitLab][7.0.0-gitlab] · [GitHub][7.0.0-github]
 
@@ -529,7 +537,7 @@ History: [GitLab][7.0.0-gitlab] · [GitHub][7.0.0-github]
 - The textlint, CSpell, and write-good pipelines, their packages, configuration,
   and parser adapters. No alternate or optional retired checker remains.
 
-## 6.1.1 - 2026-10-01
+## [6.1.1] - 2026-10-01
 
 History: [GitLab][6.1.1-gitlab] · [GitHub][6.1.1-github]
 
@@ -542,7 +550,7 @@ History: [GitLab][6.1.1-gitlab] · [GitHub][6.1.1-github]
   blocks or raw HTML that could hide task progress. Ordinary Markdown, inline
   terms and evidence links remain valid. Department duties are unchanged.
 
-## 6.1.0 - 2026-10-01
+## [6.1.0] - 2026-10-01
 
 History: [GitLab][6.1.0-gitlab] · [GitHub][6.1.0-github]
 
@@ -562,7 +570,7 @@ History: [GitLab][6.1.0-gitlab] · [GitHub][6.1.0-github]
 - Bound native temporary-stage cleanup retries after the Windows tool installer
   reported a removal failure; persistent errors still fail.
 
-## 6.0.1 - 2026-10-01
+## [6.0.1] - 2026-10-01
 
 History: [GitLab][6.0.1-gitlab] · [GitHub][6.0.1-github]
 
@@ -572,7 +580,7 @@ History: [GitLab][6.0.1-gitlab] · [GitHub][6.0.1-github]
   rebuilt source-bound offline supply. Department rules and tool dependencies
   remain unchanged.
 
-## 6.0.0 - 2026-10-01
+## [6.0.0] - 2026-10-01
 
 History: [GitLab][6.0.0-gitlab] · [GitHub][6.0.0-github]
 
@@ -594,7 +602,7 @@ History: [GitLab][6.0.0-gitlab] · [GitHub][6.0.0-github]
 - The implicit GitHub CLI and credential requirement for public bundle
   downloads. The existing Node runtime retrieves the exact pinned asset.
 
-## 5.2.4 - 2026-09-30
+## [5.2.4] - 2026-09-30
 
 History: [GitLab][5.2.4-gitlab] · [GitHub][5.2.4-github]
 
@@ -604,7 +612,7 @@ History: [GitLab][5.2.4-gitlab] · [GitHub][5.2.4-github]
   source-bound offline bundle. Direct tool versions, working rules, and reader
   routes remain unchanged.
 
-## 5.2.3 - 2026-09-30
+## [5.2.3] - 2026-09-30
 
 History: [GitLab][5.2.3-gitlab] · [GitHub][5.2.3-github]
 
@@ -617,7 +625,7 @@ History: [GitLab][5.2.3-gitlab] · [GitHub][5.2.3-github]
   authority to accept the work, and that a blocked dependency leaves independent
   authorized work available.
 
-## 5.2.2 - 2026-09-30
+## [5.2.2] - 2026-09-30
 
 History: [GitLab][5.2.2-gitlab] · [GitHub][5.2.2-github]
 
@@ -627,7 +635,7 @@ History: [GitLab][5.2.2-gitlab] · [GitHub][5.2.2-github]
   and rebuilt its source-bound offline supply. Direct tool versions and the
   team's working rules remain unchanged.
 
-## 5.2.1 - 2026-09-30
+## [5.2.1] - 2026-09-30
 
 History: [GitLab][5.2.1-gitlab] · [GitHub][5.2.1-github]
 
@@ -636,7 +644,7 @@ History: [GitLab][5.2.1-gitlab] · [GitHub][5.2.1-github]
 - Split GitLab Linux review from protected source and offline jobs, with
   separate Runner capabilities and regression checks for cross-boundary routes.
 
-## 5.2.0 - 2026-09-30
+## [5.2.0] - 2026-09-30
 
 History: [GitLab][5.2.0-gitlab] · [GitHub][5.2.0-github]
 
@@ -658,7 +666,7 @@ History: [GitLab][5.2.0-gitlab] · [GitHub][5.2.0-github]
 - Isolated the empty-cache offline test from inherited Windows npm configuration
   so a warm CI cache cannot mask a missing offline package.
 
-## 5.1.0 - 2026-09-29
+## [5.1.0] - 2026-09-29
 
 History: [GitLab][5.1.0-gitlab] · [GitHub][5.1.0-github]
 
@@ -683,7 +691,7 @@ History: [GitLab][5.1.0-gitlab] · [GitHub][5.1.0-github]
 - Kept registry metadata available to ETHOS while making the title the first
   visible content on GitLab and GitHub guidance pages.
 
-## 5.0.6 - 2026-09-29
+## [5.0.6] - 2026-09-29
 
 History: [GitLab][5.0.6-gitlab] · [GitHub][5.0.6-github]
 
@@ -696,7 +704,7 @@ History: [GitLab][5.0.6-gitlab] · [GitHub][5.0.6-github]
 - Removed the second Node test run from ETHOS's document gate while keeping the
   standalone verifier's full test coverage.
 
-## 5.0.5 - 2026-09-29
+## [5.0.5] - 2026-09-29
 
 History: [GitLab][5.0.5-gitlab] · [GitHub][5.0.5-github]
 
@@ -706,7 +714,7 @@ History: [GitLab][5.0.5-gitlab] · [GitHub][5.0.5-github]
   the one-blank-line rule to every repository text candidate, including archives
   and files without filename extensions.
 
-## 5.0.4 - 2026-09-28
+## [5.0.4] - 2026-09-28
 
 History: [GitLab][5.0.4-gitlab] · [GitHub][5.0.4-github]
 
@@ -715,7 +723,7 @@ History: [GitLab][5.0.4-gitlab] · [GitHub][5.0.4-github]
 - Kept explicitly selected files in the spelling check even when a CSpell ignore
   rule matches them; refreshed the locked CSpell tool and offline supply.
 
-## 5.0.3 - 2026-09-28
+## [5.0.3] - 2026-09-28
 
 History: [GitLab][5.0.3-gitlab] · [GitHub][5.0.3-github]
 
@@ -734,7 +742,7 @@ History: [GitLab][5.0.3-gitlab] · [GitHub][5.0.3-github]
   delegation constraints and verification time, correction signals, actionable
   status updates, and the boundary for making Agent output a durable fact.
 
-## 5.0.2 - 2026-09-27
+## [5.0.2] - 2026-09-27
 
 History: [GitLab][5.0.2-gitlab] · [GitHub][5.0.2-github]
 
@@ -743,7 +751,7 @@ History: [GitLab][5.0.2-gitlab] · [GitHub][5.0.2-github]
 - Removed host-specific extended attributes from the offline bundle and made
   archive warnings fail verification instead of silently passing on Linux.
 
-## 5.0.1 - 2026-09-27
+## [5.0.1] - 2026-09-27
 
 History: [GitLab][5.0.1-gitlab] · [GitHub][5.0.1-github]
 
@@ -753,7 +761,7 @@ History: [GitLab][5.0.1-gitlab] · [GitHub][5.0.1-github]
   category ordering, and first-release tag link while retaining release identity
   and comparison-ancestry checks.
 
-## 5.0.0 - 2026-09-27
+## [5.0.0] - 2026-09-27
 
 History: [GitLab][5.0.0-gitlab] · [GitHub][5.0.0-github]
 
@@ -777,7 +785,7 @@ History: [GitLab][5.0.0-gitlab] · [GitHub][5.0.0-github]
 - Reorganized canonical OpenSpec requirement prose to satisfy native strict
   validation without changing department work obligations.
 
-## 4.2.1 - 2026-09-26
+## [4.2.1] - 2026-09-26
 
 History: [GitLab][4.2.1-gitlab] · [GitHub][4.2.1-github]
 
@@ -788,7 +796,7 @@ History: [GitLab][4.2.1-gitlab] · [GitHub][4.2.1-github]
   refuses redirects, altered bytes, and mismatched tags before installation;
   hosted success remains a separate release acceptance requirement.
 
-## 4.2.0 - 2026-09-26
+## [4.2.0] - 2026-09-26
 
 History: [GitLab][4.2.0-gitlab] · [GitHub][4.2.0-github]
 
@@ -799,7 +807,7 @@ History: [GitLab][4.2.0-gitlab] · [GitHub][4.2.0-github]
   either Forge during installation. Bundled third-party tools retain their own
   licenses; the repository's MIT grant remains for its source and documentation.
 
-## 4.1.1 - 2026-09-26
+## [4.1.1] - 2026-09-26
 
 History: [GitLab][4.1.1-gitlab] · [GitHub][4.1.1-github]
 
@@ -808,7 +816,7 @@ History: [GitLab][4.1.1-gitlab] · [GitHub][4.1.1-github]
 - Made GitLab CI obtain its SHA-256-pinned lychee archive from the same
   project's package registry instead of depending on GitHub Releases.
 
-## 4.1.0 - 2026-09-26
+## [4.1.0] - 2026-09-26
 
 History: [GitLab][4.1.0-gitlab] · [GitHub][4.1.0-github]
 
@@ -822,7 +830,7 @@ History: [GitLab][4.1.0-gitlab] · [GitHub][4.1.0-github]
   stop and scope checks, and accountable management boundaries in the existing
   English topic pages. The rejected fixed meeting cadence remains out.
 
-## 4.0.1 - 2026-09-26
+## [4.0.1] - 2026-09-26
 
 History: [GitLab][4.0.1-gitlab] · [GitHub][4.0.1-github]
 
@@ -831,7 +839,7 @@ History: [GitLab][4.0.1-gitlab] · [GitHub][4.0.1-github]
 - Reject history comparisons outside a release's ancestry and repair the
   `v4.0.0` comparison after the signed history rewrite.
 
-## 4.0.0 - 2026-09-26
+## [4.0.0] - 2026-09-26
 
 History: [GitLab][4.0.0-gitlab] · [GitHub][4.0.0-github]
 

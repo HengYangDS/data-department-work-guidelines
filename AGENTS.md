@@ -6,7 +6,7 @@ This repository holds the Data Department work guidelines. Start at the
 An Agent may investigate and execute within a delegated scope; people retain
 authorization, acceptance, and responsibility for consequences.
 
-Before changing tracked source, read [repository governance](docs/governance/ethos.md)
+Before changing tracked source, read [repository governance](docs/governance/README.md)
 and run `ethos status --json` from the intended worktree. Follow its current
 `verdict`, gaps, next action, and continuation. Material work belongs to one
 selected official OpenSpec Change in an owned, leased Work Lane. Obtain a passing

@@ -14,6 +14,11 @@ import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 import { root } from "../../tools/runtime.mjs";
+import { nativeToolBinary } from "../../tools/supply.mjs";
+
+function formatEnvironment() {
+  return { ...process.env, DDWG_TAPLO_BIN: path.resolve(nativeToolBinary("taplo")) };
+}
 import { assertFixtureSources } from "../source/fixtures.mjs";
 
 test("native TOML formatting checks literal Git paths and preserves data", () => {
@@ -39,7 +44,6 @@ test("native TOML formatting checks literal Git paths and preserves data", () =>
     mkdirSync(path.join(directory, "build"));
     writeFileSync(path.join(directory, "build", "cache.toml"), "broken = [\n");
     writeFileSync(path.join(directory, "taplo.toml"), "include = []\n");
-    writeFileSync(path.join(directory, "dprint.json"), '{ "excludes": ["**"] }\n');
     const init = spawnSync("git", ["init", "--quiet", directory], {
       encoding: "utf8",
       timeout: 10_000,
@@ -51,10 +55,11 @@ test("native TOML formatting checks literal Git paths and preserves data", () =>
       timeout: 10_000,
     });
     assert.equal(add.status, 0, add.stderr);
-    assertFixtureSources(directory, [".gitignore", name, "dprint.json", "taplo.toml"]);
+    assertFixtureSources(directory, [".gitignore", name, "taplo.toml"]);
     const invoke = (args) =>
       spawnSync(process.execPath, ["tools/docs/cli.mjs", "format", ...args], {
         cwd: directory,
+        env: formatEnvironment(),
         encoding: "utf8",
         timeout: 30_000,
       });
@@ -85,13 +90,16 @@ test("native TOML formatting checks literal Git paths and preserves data", () =>
     assert.ifError(preserved.error);
     assert.equal(preserved.status, 0, preserved.stderr);
     assert.equal(readFileSync(file, "utf8"), retained);
-    const policy = path.join(directory, ".config/checks/format/toml.toml");
+    const policy = path.join(directory, ".config/checks/taplo/taplo.toml");
     const policyBefore = readFileSync(policy, "utf8");
-    writeFileSync(policy, `${policyBefore}unknownNativeOption = true\n`);
+    writeFileSync(
+      policy,
+      policyBefore.replace("allowed_blank_lines = 1", 'allowed_blank_lines = "invalid"'),
+    );
     const diagnostic = invoke(["--check"]);
     assert.ifError(diagnostic.error);
     assert.equal(diagnostic.status, 1, diagnostic.stderr);
-    assert.match(diagnostic.stderr, /unknownNativeOption/u);
+    assert.match(diagnostic.stderr, /invalid type|allowed_blank_lines/u);
     assert.equal(readFileSync(file, "utf8"), retained);
   } finally {
     rmSync(directory, { recursive: true, force: true });
@@ -102,7 +110,7 @@ test("native TOML formatting checks literal Git paths and preserves data", () =>
 test("native formatting policy preserves prose and ignores ambient editor settings", () => {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-format-policy-"));
   try {
-    const tomlRelative = ".config/checks/format/toml.toml";
+    const tomlRelative = ".config/checks/taplo/taplo.toml";
     cpSync(path.join(root, "tools"), path.join(directory, "tools"), {
       recursive: true,
     });
@@ -218,6 +226,7 @@ test("native formatting policy preserves prose and ignores ambient editor settin
     ]);
     const checked = spawnSync(process.execPath, ["tools/docs/cli.mjs", "format", "--check"], {
       cwd: directory,
+      env: formatEnvironment(),
       encoding: "utf8",
       timeout: 30_000,
     });
@@ -234,6 +243,7 @@ test("native formatting policy preserves prose and ignores ambient editor settin
     }
     const result = spawnSync(process.execPath, ["tools/docs/cli.mjs", "format"], {
       cwd: directory,
+      env: formatEnvironment(),
       encoding: "utf8",
       timeout: 30_000,
     });
@@ -272,6 +282,7 @@ test("native formatting policy preserves prose and ignores ambient editor settin
     assert.equal(readFileSync(nativeToml, "utf8"), tomlBefore);
     const repaired = spawnSync(process.execPath, ["tools/docs/cli.mjs", "format", "--check"], {
       cwd: directory,
+      env: formatEnvironment(),
       encoding: "utf8",
       timeout: 30_000,
     });
@@ -290,6 +301,7 @@ test("native formatting policy preserves prose and ignores ambient editor settin
     );
     const secondPass = spawnSync(process.execPath, ["tools/docs/cli.mjs", "format"], {
       cwd: directory,
+      env: formatEnvironment(),
       encoding: "utf8",
       timeout: 30_000,
     });
