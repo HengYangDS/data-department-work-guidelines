@@ -62,12 +62,12 @@ test("source checking precedes conditional tool preparation without hiding input
     const editing = contentUnderHeading(text, relative, "Edit a documentation page");
     assert.match(
       editing.map((token) => token.text).join("\n"),
-      /leading ETHOS HTML metadata comment.*node_modules.*generated output/su,
+      /native YAML front matter.*node_modules.*generated output/su,
       "documentation metadata and Git duties need their own editing section",
     );
     const section = contentUnderHeading(text, relative, "Verify the source");
     assert.ok(
-      !section.some((token) => token.text.includes("leading ETHOS HTML metadata")),
+      !section.some((token) => token.text.includes("native YAML front matter")),
       "document editing is not a source-check step",
     );
     const locate = (title) => section.findIndex((token) => headingText(token) === title);

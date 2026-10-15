@@ -1,4 +1,3 @@
-<!--
 ---
 subject: data-department-work-guidelines:decide
 role: policy
@@ -6,7 +5,6 @@ state: canonical
 relations:
   canonical_for: problem framing analysis and decisions
 ---
--->
 
 # Analysis and Decisions
 

@@ -7,6 +7,7 @@ import {
   markdownText,
   markdownTokens,
 } from "./markdown.mjs";
+import { documentMetadata } from "./content.mjs";
 import { root, gitFiles, sourceAttributes, filesUnder } from "../runtime.mjs";
 
 function linksIn(source, relative) {
@@ -67,8 +68,7 @@ export function checkNavigation(repository = root) {
   );
   for (const page of pages) {
     const source = read(page);
-    if (!source.startsWith("<!--\n"))
-      throw new Error(`reader metadata needs a leading HTML comment: ${page}`);
+    documentMetadata(page, source);
   }
   const rootRoutes = linksIn(read("README.md"), "README.md");
   const repeated = normative.filter((relative) => rootRoutes.has(relative));

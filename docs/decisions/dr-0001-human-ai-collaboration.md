@@ -1,4 +1,3 @@
-<!--
 ---
 subject: data-department-work-guidelines:DR-0001-human-intelligence-collaboration
 role: decision
@@ -9,7 +8,6 @@ decision_date: 2026-07-12
 relations:
   canonical_for: human–AI collaboration terminology
 ---
--->
 
 # DR-0001: Human–AI Collaboration (Accepted)
 

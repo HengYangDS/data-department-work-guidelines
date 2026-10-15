@@ -13,11 +13,16 @@ import path from "node:path";
 import { test } from "node:test";
 import { pathToFileURL } from "node:url";
 import { documentMetadata, textViolations } from "../../tools/docs/content.mjs";
+import {
+  headingLevel,
+  markdownLinkDestinations,
+  markdownTokens,
+  walkMarkdown,
+} from "../../tools/docs/markdown.mjs";
 import { gitFiles, root } from "../../tools/runtime.mjs";
 
-test("document metadata reads the product-supported title-first carrier", () => {
+test("document metadata reads native YAML front matter", () => {
   const source = [
-    "<!--",
     "---",
     "subject: fixture:guide",
     "role: policy",
@@ -25,7 +30,6 @@ test("document metadata reads the product-supported title-first carrier", () => 
     "relations:",
     "  canonical_for: reader guidance",
     "---",
-    "-->",
     "",
     "# Fixture",
     "",
@@ -42,34 +46,67 @@ test("document metadata reads the product-supported title-first carrier", () => 
 
 test("document metadata rejects a duplicate key", () => {
   const source =
-    "<!--\n---\nsubject: first\nsubject: second\nrole: policy\nstate: canonical\nrelations: {}\n---\n-->\n\n# Fixture\n";
+    "---\nsubject: first\nsubject: second\nrole: policy\nstate: canonical\nrelations: {}\n---\n\n# Fixture\n";
   assert.throws(() => documentMetadata("docs/fixture.md", source), /invalid document metadata/u);
 });
 
-test("document metadata rejects visible declarations and pre-title prose", () => {
+test("document metadata rejects HTML carriers and pre-title prose", () => {
   const metadata = "subject: fixture:guide\nrole: policy\nstate: canonical\nrelations: {}";
   assert.throws(
-    () => documentMetadata("docs/fixture.md", `---\n${metadata}\n---\n\n# Fixture\n`),
-    /title-first/u,
+    () => documentMetadata("docs/fixture.md", `<!--\n---\n${metadata}\n---\n-->\n\n# Fixture\n`),
+    /native YAML front matter/u,
   );
   assert.throws(
     () =>
       documentMetadata(
         "docs/fixture.md",
-        `<!--\n---\n${metadata}\n---\n-->\n\nA visible preface.\n\n# Fixture\n`,
+        `---\n${metadata}\n---\n\nA visible preface.\n\n# Fixture\n`,
       ),
     /first visible block/u,
   );
 });
 
-test("document metadata rejects incomplete or prematurely closed comments", () => {
-  const incomplete =
-    "<!--\n---\nsubject: fixture:guide\nrole: policy\nstate: canonical\nrelations: {}\n---\n# Fixture\n";
-  const premature =
-    '<!--\n---\nsubject: fixture:guide\nrole: policy\nstate: canonical\nrelations:\n  canonical_for: "unsafe --> suffix"\n---\n-->\n\n# Fixture\n';
-  for (const source of [incomplete, premature]) {
-    assert.throws(() => documentMetadata("docs/fixture.md", source), /invalid document metadata/u);
-  }
+test("document metadata rejects incomplete YAML without treating literal markers as HTML", () => {
+  const metadata = "subject: fixture:guide\nrole: policy\nstate: canonical\nrelations:";
+  assert.throws(
+    () =>
+      documentMetadata(
+        "docs/fixture.md",
+        `---\n${metadata}\n  canonical_for: reader guidance\n\n# Fixture\n`,
+      ),
+    /invalid document metadata/u,
+  );
+  assert.equal(
+    documentMetadata(
+      "docs/fixture.md",
+      `---\n${metadata}\n  canonical_for: "arrow --> marker"\n---\n\n# Fixture\n`,
+    ).relations.canonical_for,
+    "arrow --> marker",
+  );
+});
+
+test("native front matter stays outside reader headings and links with physical source lines", () => {
+  const source = [
+    "---",
+    "subject: fixture:guide",
+    "role: policy",
+    "state: canonical",
+    "relations:",
+    '  canonical_for: "[Metadata only](missing.md)"',
+    "---",
+    "",
+    "# Fixture",
+    "",
+    "Reader [target](target.md).",
+    "",
+  ].join("\n");
+  const headings = [...walkMarkdown(markdownTokens(source, "docs/fixture.md"))].filter(
+    headingLevel,
+  );
+  assert.equal(headings.length, 1);
+  assert.equal(headings[0].text, "# Fixture");
+  assert.equal(headings[0].startLine, 9);
+  assert.deepEqual(markdownLinkDestinations(source), ["target.md"]);
 });
 
 test("English failures identify the source file and line", async () => {

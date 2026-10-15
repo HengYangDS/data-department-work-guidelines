@@ -15,7 +15,6 @@ export function decision({
   body = "An evidence link can describe the ETHOS lifecycle.",
 } = {}) {
   return [
-    "<!--",
     "---",
     "subject: fixture:DR-0001",
     "role: decision",
@@ -25,7 +24,6 @@ export function decision({
     "relations:",
     "  canonical_for: fixture choice",
     "---",
-    "-->",
     "",
     "# DR-0001: Fixture choice",
     "",

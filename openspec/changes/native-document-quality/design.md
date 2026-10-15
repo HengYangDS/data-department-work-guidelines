@@ -163,8 +163,9 @@ are techniques, not substitute definitions or machine-certified outcomes.
 Qualify raw Markdown, normal Forge rendering, and Agent retrieval on the same
 content. Resolve visible labels and real heading targets through native tools;
 check actual in-page and cross-file journeys where claimed. Preserve list,
-quote, table, and conditional meaning, and keep metadata out of the visible
-reader preamble through the accepted document representation.
+quote, table, and conditional meaning. Carry registry metadata in native YAML
+front matter; the H1 starts the document body. Observe each Forge's actual
+representation rather than promise identical rendering.
 
 Retain original visual relationships when they aid judgment; use simpler text,
 a table, or a purposeful figure when it communicates them better. Do not add

@@ -31,14 +31,14 @@ test("navigation rejects a missing map, repeated root topic, and missing reader 
   });
 });
 
-test("reader metadata stays hidden rather than becoming visible YAML", () => {
+test("reader metadata uses native YAML rather than an HTML wrapper", () => {
   fixture((directory) => {
     const page = path.join(directory, "docs", "data.md");
-    const source = readFileSync(page, "utf8");
-    writeFileSync(page, source.replace("<!--\n", "").replace("-->\n", ""));
-    assert.throws(() => checkNavigation(directory), /leading HTML comment/u);
+    const source = readFileSync(page, "utf8").replace("<!--\n", "").replace("-->\n", "");
     writeFileSync(page, source);
     assert.doesNotThrow(() => checkNavigation(directory));
+    writeFileSync(page, `<!--\n${source.replace("\n\n#", "\n-->\n\n#")}`);
+    assert.throws(() => checkNavigation(directory), /native YAML front matter/u);
   });
 });
 

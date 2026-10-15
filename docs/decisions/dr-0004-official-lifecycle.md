@@ -1,4 +1,3 @@
-<!--
 ---
 subject: data-department-work-guidelines:DR-0004-official-lifecycle
 role: decision
@@ -9,7 +8,6 @@ decision_date: 2026-09-25
 relations:
   canonical_for: official repository change lifecycle boundary
 ---
--->
 
 # DR-0004: Official Change Lifecycle (Accepted)
 

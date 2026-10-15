@@ -1,4 +1,3 @@
-<!--
 ---
 subject: data-department-work-guidelines:deliver
 role: policy
@@ -6,7 +5,6 @@ state: canonical
 relations:
   canonical_for: execution validation and completion claims
 ---
--->
 
 # Execution and Delivery
 

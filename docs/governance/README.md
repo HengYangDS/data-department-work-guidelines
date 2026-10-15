@@ -1,4 +1,3 @@
-<!--
 ---
 subject: data-department-work-guidelines:repository-governance
 role: policy
@@ -6,7 +5,6 @@ state: canonical
 relations:
   canonical_for: repository change and delivery boundaries
 ---
--->
 
 # Repository Change and Release
 
@@ -214,8 +212,8 @@ Follow the [decision register's form](../decisions/README.md#add-only-a-decision
 stable IDs, lowercase filenames, matching titles, accepted metadata, and its five
 root sections with readable rationale. Keep tasks, code blocks, execution and
 acceptance narratives, and release operations with their Change or producing
-record. Extra headings, mismatched identities, and HTML beyond the leading
-registry comment are invalid.
+record. Extra headings, mismatched identities, and HTML in the record body are
+invalid.
 
 The [decision checker](../../tools/docs/decisions.mjs) must accept ordinary
 rationale, tables, inline terms, bare paths, and evidence links without evaluating

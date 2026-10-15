@@ -1,4 +1,3 @@
-<!--
 ---
 subject: data-department-work-guidelines:evolve
 role: policy
@@ -6,7 +5,6 @@ state: canonical
 relations:
   canonical_for: learning review and rule evolution
 ---
--->
 
 # Practice and Evolution
 

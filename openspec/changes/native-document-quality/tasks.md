@@ -15,7 +15,7 @@
 - [x] 2.5 Repair inherited-property command classification, duplicate decision IDs, and empty sections; reject execution without evaluating it or rejecting readable rationale.
 - [x] 2.6 Reject literal and variable decision command operands while preserving globs; verify execution remains distinct from ordinary descriptions.
 - [x] 2.7 Await bounded asynchronous installer cleanup; verify ordering, persistent errors, and actual Windows source CI installation.
-- [ ] 2.8 Migrate configuration and bindings to the accepted repository paradigm; verify native consumers, inline proof prerequisites, canonical tool carriers, Changelog grammar, and peer names before retiring their predecessors.
+- [ ] 2.8 Migrate configuration and bindings to the accepted repository paradigm; verify native consumers, inline proof prerequisites, canonical tool carriers, native document front matter, shared commit grammar, Changelog grammar, and peer names before retiring their predecessors.
 - [x] 2.9 Bind links to Git-selected source; accept file, directory, and internal-alias routes while rejecting ignored state and escaping aliases.
 - [x] 2.10 Name GitLab jobs by purpose and platform with shared hidden templates; verify execution, admission, selectors, and symmetric naming.
 - [x] 2.11 Rewrite governance, decisions, and contribution guidance by reader question; verify duties, durable rationale, alternatives, evidence, links, prose, and rendering.

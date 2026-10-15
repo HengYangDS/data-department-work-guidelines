@@ -28,6 +28,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Carry document metadata as native YAML front matter, with one body heading
+  and source-accurate diagnostics. Retire hidden HTML metadata carriers without
+  changing department duties or decision identities.
 - Group check configuration by native tool, move its reading map into governance
   documentation, and add EditorConfig defaults for consistent editing.
 - Replace the dprint TOML adapter with official Taplo 0.10.0. Bind the six native

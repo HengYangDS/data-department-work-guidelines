@@ -1,4 +1,3 @@
-<!--
 ---
 subject: data-department-work-guidelines:decisions
 role: index
@@ -6,7 +5,6 @@ state: canonical
 relations:
   canonical_for: durable decision register
 ---
--->
 
 # Decision Records
 

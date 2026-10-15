@@ -1,4 +1,3 @@
-<!--
 ---
 subject: data-department-work-guidelines:communicate
 role: policy
@@ -6,7 +5,6 @@ state: canonical
 relations:
   canonical_for: oral communication writing and escalation
 ---
--->
 
 # Communication
 

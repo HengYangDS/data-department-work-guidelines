@@ -125,15 +125,8 @@ export function commandInvocation(source) {
 export function executionViolation(source, tokens = markdownTokens(source)) {
   for (const node of walkMarkdown(tokens)) {
     const line = node.startLine;
-    if (node.type === "htmlFlow" || node.type === "htmlText") {
-      const registry =
-        node.startLine === 1 &&
-        node.startColumn === 1 &&
-        !node.parent &&
-        node.text.startsWith("<!--\n---\n") &&
-        node.text.endsWith("\n---\n-->");
-      if (!registry) return `unsupported HTML at line ${line}`;
-    }
+    if (node.type === "htmlFlow" || node.type === "htmlText")
+      return `unsupported HTML at line ${line}`;
     if (node.type === "paragraph" && /^\[[ xX]\](?:\s|$)/u.test(node.text)) {
       let parent = node.parent;
       while (parent) {

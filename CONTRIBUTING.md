@@ -21,10 +21,10 @@ push admission; a method-pack plan or decision record grants neither.
 
 ## Edit a documentation page
 
-For `docs/` pages, copy a current page's leading ETHOS HTML metadata comment.
-Leave one blank line before the H1, the first visible block. The installed
-ETHOS registry checks metadata and reading order; repository navigation keeps
-that metadata hidden from readers. Keep `node_modules/`
+For `docs/` pages, copy a current page's native YAML front matter.
+Leave one blank line before the H1, the first block of the document body.
+The installed ETHOS registry checks metadata and reading order; native
+Markdown readers treat the header as data, not body content. Keep `node_modules/`
 and generated output out of Git.
 
 ## Verify the source

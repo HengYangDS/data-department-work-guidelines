@@ -1,4 +1,3 @@
-<!--
 ---
 subject: data-department-work-guidelines:configuration
 role: reference
@@ -6,7 +5,6 @@ state: canonical
 relations:
   current_owner: README.md
 ---
--->
 
 # Configuration
 

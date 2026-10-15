@@ -1,4 +1,3 @@
-<!--
 ---
 subject: data-department-work-guidelines:documentation
 role: index
@@ -6,7 +5,6 @@ state: canonical
 relations:
   canonical_for: guidance navigation
 ---
--->
 
 # Start with the Work Question
 

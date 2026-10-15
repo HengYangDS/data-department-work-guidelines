@@ -1,4 +1,3 @@
-<!--
 ---
 subject: data-department-work-guidelines:human-agent
 role: policy
@@ -6,7 +5,6 @@ state: canonical
 relations:
   canonical_for: human agent delegation verification and responsibility
 ---
--->
 
 # Human–AI Collaboration
 

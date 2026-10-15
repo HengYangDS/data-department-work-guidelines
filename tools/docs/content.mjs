@@ -155,7 +155,6 @@ export function checkProse(files = currentMarkdown()) {
   );
   const controls = lint({
     files: absoluteFiles,
-    frontMatter: null,
     noInlineConfig: true,
     config: { default: false, "no-quality-control": true },
     customRules: [noQualityControl],
@@ -188,18 +187,15 @@ export function checkProse(files = currentMarkdown()) {
 
 export function documentMetadata(relative, source) {
   const lines = source.split(/\r?\n/u);
-  if (lines[0] !== "<!--") {
-    throw new Error(`document metadata requires a title-first carrier: ${relative}`);
+  if (lines[0] !== "---") {
+    throw new Error(`document metadata requires native YAML front matter: ${relative}`);
   }
-  const end = lines.indexOf("---", 2);
-  if (lines[1] !== "---" || end < 0 || lines[end + 1] !== "-->") {
+  const end = lines.indexOf("---", 1);
+  if (end < 0) {
     throw new Error(`invalid document metadata: ${relative}`);
   }
-  const payload = lines.slice(2, end).join("\n");
-  if (payload.includes("-->") || payload.includes("--!>")) {
-    throw new Error(`invalid document metadata: ${relative}`);
-  }
-  if (lines[end + 2] !== "" || !/^# \S/u.test(lines[end + 3] ?? "")) {
+  const payload = lines.slice(1, end).join("\n");
+  if (lines[end + 1] !== "" || !/^# \S/u.test(lines[end + 2] ?? "")) {
     throw new Error(`document title must be the first visible block: ${relative}`);
   }
   const document = YAML.parseDocument(payload, { uniqueKeys: true });
@@ -207,7 +203,7 @@ export function documentMetadata(relative, source) {
     throw new Error(`invalid document metadata: ${relative}: ${document.errors[0].message}`);
   }
   const metadata = document.toJS();
-  if (!metadata || typeof metadata !== "object") {
+  if (!metadata || typeof metadata !== "object" || Array.isArray(metadata)) {
     throw new Error(`invalid document metadata mapping: ${relative}`);
   }
   for (const key of requiredMetadata) {

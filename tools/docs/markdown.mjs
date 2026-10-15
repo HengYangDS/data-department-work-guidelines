@@ -4,11 +4,11 @@ import { Parser } from "htmlparser2";
 import { micromark } from "micromark";
 import { gfmTable, gfmTableHtml } from "micromark-extension-gfm-table";
 
-export function markdownTokens(source, name = "document.md") {
+function parseMarkdown(source, name) {
   let tokens;
+  let frontMatterLines = 0;
   lint({
     strings: { [name]: source },
-    frontMatter: null,
     noInlineConfig: true,
     config: { default: false, "document-structure": true },
     customRules: [
@@ -19,12 +19,39 @@ export function markdownTokens(source, name = "document.md") {
         parser: "micromark",
         function(params) {
           tokens = params.parsers.micromark.tokens;
+          frontMatterLines = params.frontMatterLines.length;
         },
       },
     ],
   });
   if (!Array.isArray(tokens)) throw new Error("native Markdown structure is unavailable");
-  return tokens;
+  return {
+    tokens,
+    frontMatterLines,
+    body: frontMatterLines
+      ? source
+          .split(/\r\n|\n|\r/u)
+          .slice(frontMatterLines)
+          .join("\n")
+      : source,
+  };
+}
+
+export function markdownTokens(source, name = "document.md") {
+  const { tokens, frontMatterLines } = parseMarkdown(source, name);
+  if (!frontMatterLines) return tokens;
+  function sourceCoordinates(token, parent) {
+    const mapped = {
+      ...token,
+      startLine: token.startLine + frontMatterLines,
+      endLine: token.endLine + frontMatterLines,
+      parent,
+      children: [],
+    };
+    mapped.children = token.children.map((child) => sourceCoordinates(child, mapped));
+    return mapped;
+  }
+  return tokens.map((token) => sourceCoordinates(token, undefined));
 }
 
 export function* walkMarkdown(tokens) {
@@ -117,7 +144,7 @@ export function markdownLinkDestinations(source) {
       }
     },
   }).end(
-    micromark(source, {
+    micromark(parseMarkdown(source, "document.md").body, {
       extensions: [gfmTable()],
       htmlExtensions: [gfmTableHtml()],
     }),
