@@ -53,7 +53,7 @@
 - [x] 2.43 Isolate Git configuration through an owned empty file; verify unchanged selection assertions locally and in both Windows jobs, preserving refusal and cleanup.
 - [x] 2.44 Replace obsolete-source restoration with current-duty review; verify seven topics against authority, purpose, actionable conditions, cognitive/maintenance cost, justified omissions, actual reading paths, and proof; preserve original evidence.
 - [ ] 2.45 Migrate each peer to the accepted [CI contract](design.md#keep-both-publication-peers-complete-and-coherent); install ETHOS before checks and pass stable-input, independent/offline, non-writing-drift, and actual source/offline-job acceptance before retiring peer predecessors.
-- [ ] 2.46 Complete every shared-consumption subtask; retire all qualified local duplicates.
+- [ ] 2.46 Complete every shared-consumption subtask; after actual consumer acceptance, delete `tools/`, the private Node maintenance package, and replaced configuration, tests, guidance, and common specs in the same batch.
   - [x] 2.46.1 Separate dependency auditing from CI topology; verify all 53 original cases, declarations, shared fixtures, nested discovery, worker limits, deadlines, and full local execution.
   - [ ] 2.46.2 Qualify runtime and release validation through accepted ETHOS commands at actual consumers; retire duplicate code, dependencies, configuration, guidance, and common specs in the same batch, reconciling retained Purpose statements.
   - [ ] 2.46.3 Qualify shared execution on literal paths, selection/diagnostic failures, cancellation, and bounded cleanup from one attempt; retire generic tests, fixtures, and standards, retaining only content cases and proved business-specific increments.
