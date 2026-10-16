@@ -80,10 +80,10 @@ Change. When it returns, publish the same signed objects and verify its own
 results; do not create a different edition or rewrite the published tag.
 
 Publish only `dev`, `main`, `proposal/*`, and ETHOS-admitted signed release tags.
-`candidate/dev` and `work/*` stay local. The
-[workspace policy](../../.ethos/workspace.toml) and
-[release declaration](../../.ethos/release.toml) own admission without operator
-keys or host paths.
+`candidate/dev` and `work/*` stay local. The installed ETHOS repository paradigm
+owns branch roles, commit grammar, and mandatory SSH signatures. The
+[release declaration](../../.ethos/release.toml) binds the accepted fast-forward
+mirror and publication peers without operator keys or host paths.
 
 Publish the same signed commit graph to each Forge when available, including
 governed merge commits. Fast-forward acceptance advances a ref to a descendant;

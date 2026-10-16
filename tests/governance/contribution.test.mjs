@@ -4,7 +4,6 @@ import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } 
 import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
-import { parse as parseToml } from "smol-toml";
 import { parse as parseShell } from "shell-quote";
 import { checkLineEndingAttributes, checkLicense } from "../../tools/docs/governance.mjs";
 import {
@@ -282,13 +281,6 @@ test("MIT license, entry, and package metadata must agree", () => {
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }
-});
-
-test("DDWG inherits native commit grammar and requires SSH signatures", () => {
-  const workspace = parseToml(readFileSync(path.join(root, ".ethos/workspace.toml"), "utf8"));
-  assert.equal(Object.hasOwn(workspace.commit_policy, "subject_pattern"), false);
-  assert.equal(workspace.commit_policy.signing_required, true);
-  assert.equal(workspace.commit_policy.signing_format, "ssh");
 });
 
 test("Git checkout normalizes text independently of host autocrlf", () => {

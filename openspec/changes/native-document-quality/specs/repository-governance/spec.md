@@ -33,11 +33,12 @@ implementations through this official Change.
 
 ### Requirement: DDWG selects native source and branch parameters
 
-DDWG SHALL declare `dev`, `main`, `candidate/dev`, `work/`, and `proposal/` through
-ETHOS's accepted native branch contract. Only `dev`, `main`, and `proposal/*`
-SHALL be published to its declared Forges. Official OpenSpec SHALL carry material
-intent, with the existing tasks as the sole progress ledger. Native shared
-contracts SHALL own admission, signatures, history repair, proof, and closure.
+DDWG SHALL use ETHOS's fixed native branch roles and mandatory SSH signatures
+without restating them in repository policy. Its release declaration SHALL bind
+the accepted fast-forward mirror and publication peers. Only `dev`, `main`, and
+`proposal/*` SHALL be published to those peers. Official OpenSpec SHALL own
+material intent and task progress; native shared contracts SHALL own admission,
+proof, history repair, and closure.
 
 #### Scenario: A contributor changes tracked source
 
