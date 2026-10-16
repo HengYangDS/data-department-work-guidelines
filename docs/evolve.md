@@ -218,7 +218,7 @@ system-design defects.
 ## Emergencies and Exceptions
 
 When a data error, production failure, or permission or compliance breach
-threatens people, data, production, downstream use, or compliance:
+threatens data, production, downstream use, or compliance:
 
 1. **Whoever discovers it** takes containment steps within their existing
    authority and notifies the responsible data or production owner.

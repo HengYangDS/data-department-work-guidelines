@@ -61,6 +61,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 - Define fidelity, clarity, and elegance as separate writing aims. Preserve facts,
   qualifications, responsibility, fluency, and aesthetic and cultural judgment in answers,
   updates, meeting records, and escalations, without fixed deletion quotas or layouts.
+- Keep emergency containment specific to data, production, downstream use, and compliance;
+  management safeguards for people who disclose problems remain a separate duty.
 - Use native YAML front matter, one body heading, tool-grouped configuration, and EditorConfig.
   Prettier 3.9.10 owns Markdown spacing at width 100 with preserved prose wrapping;
   Taplo 0.10.0 owns TOML formatting and smol-toml 1.9.1 parses it. Keep tight and loose lists,

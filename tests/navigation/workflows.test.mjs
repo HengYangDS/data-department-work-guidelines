@@ -253,6 +253,24 @@ test("general risk review and management duties are peers of coaching and cadenc
   assert.throws(() => assertComposition(merged), /minimum duty/u);
 });
 
+test("data-incident containment uses the department's actual affected scope", () => {
+  const relative = "docs/evolve.md";
+  const source = readFileSync(path.join(root, relative), "utf8");
+  const trigger = (text) =>
+    markdownText(
+      [...walkMarkdown(contentUnderHeading(text, relative, "Emergencies and Exceptions"))].find(
+        (token) => token.type === "paragraph",
+      ),
+    )
+      .replace(/\s+/gu, " ")
+      .trim();
+  assert.equal(
+    trigger(source),
+    "When a data error, production failure, or permission or compliance breach " +
+      "threatens data, production, downstream use, or compliance:",
+  );
+});
+
 test("delivery entry reaches action and completion gates before the loop reference", () => {
   const relative = "docs/deliver.md";
   const source = readFileSync(path.join(root, relative), "utf8");
