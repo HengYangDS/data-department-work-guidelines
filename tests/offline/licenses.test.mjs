@@ -1,17 +1,9 @@
 import assert from "node:assert/strict";
-import {
-  cpSync,
-  existsSync,
-  mkdirSync,
-  mkdtempSync,
-  readFileSync,
-  rmSync,
-  writeFileSync,
-} from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
-import { root, run as runCommand } from "../../tools/runtime.mjs";
+import { run as runCommand } from "../../tools/runtime.mjs";
 import { assembleBundle, checkPackageLicenses } from "../../tools/ci/offline/build.mjs";
 import { validateExtractedBundle } from "../../tools/ci/offline/artifact.mjs";
 import { buildFixture } from "../offline/fixtures.mjs";

@@ -7,7 +7,6 @@ import {
   mkdtempDisposableSync,
   readFileSync,
   readdirSync,
-  realpathSync,
   writeFileSync,
 } from "node:fs";
 import os from "node:os";
