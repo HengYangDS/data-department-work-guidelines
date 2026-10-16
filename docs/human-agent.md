@@ -87,7 +87,7 @@ config:
 ---
 sequenceDiagram
     accTitle: Delegation, evidence, and authorized acceptance
-    accDescr: A member sets the delegation boundary. An Agent returns work and evidence. The member checks the actual work and evidence before submitting them to an authorized acceptor. If conditions are unmet, the work returns for review within the delegation boundary. If conditions are met, the acceptor accepts the work, records acceptance, and hands off the result. Participants represent roles, not necessarily different people. People retain authority and responsibility; acceptance never expands permission.
+    accDescr: A member sets the delegation boundary. An Agent returns work and evidence. The member checks the actual work and evidence before submitting them to an authorized acceptor. If conditions are unmet, the work returns for revision within the delegation boundary. If conditions are met, the acceptor accepts the work, records acceptance, and hands off the result. Participants represent roles, not necessarily different people. People retain authority and responsibility; acceptance never expands permission.
     participant Agent
     participant Member
     participant Acceptor as Authorized acceptor
@@ -96,14 +96,14 @@ sequenceDiagram
     Member->>Member: Check actual work and evidence
     Member->>Acceptor: Checked work and evidence
     alt Conditions unmet
-        Acceptor-->>Member: Return for review within the boundary
+        Acceptor-->>Member: Return for revision within the boundary
     else Conditions met
         Acceptor-->>Member: Accept, record, and hand off
     end
 ```
 
 The authorized acceptor checks the actual work and evidence against the agreed
-conditions. If conditions are unmet, the work returns for review within the
+conditions. If conditions are unmet, the work returns for revision within the
 delegation boundary. If conditions are met, the acceptor accepts the work,
 records acceptance, and hands off the result. An Agent's summary cannot
 substitute for that examination.

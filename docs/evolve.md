@@ -111,8 +111,9 @@ Agents. Fluency, effort, or Agent efficiency cannot offset these hard risks:
 - Repeated manual rescue without a mechanism to prevent recurrence.
 
 Every task must meet the [hard
-boundaries](charter.md#four-non-negotiable-boundaries). Critical
-responsibilities should be performed independently and reliably.
+boundaries](charter.md#four-non-negotiable-boundaries). A member should reliably
+carry critical responsibilities within their competence and authority, without
+depending on repeated rescue. Required review and acceptance still apply.
 
 Call a result exceptional only when it produces evidenced net benefit, transfers
 a method,

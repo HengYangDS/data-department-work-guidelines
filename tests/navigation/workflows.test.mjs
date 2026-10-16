@@ -103,7 +103,7 @@ test("collaboration preserves both acceptance outcomes without the diagram", () 
     const text = description?.replace(/\s+/gu, " ") ?? "";
     assert.match(
       text,
-      /conditions are unmet[^.]*returns for review within the delegation boundary/u,
+      /conditions are unmet[^.]*returns for revision within the delegation boundary/u,
     );
     assert.match(text, /conditions are met[^.]*accepts[^.]*records acceptance[^.]*hands off/u);
   };
@@ -120,6 +120,62 @@ test("collaboration preserves both acceptance outcomes without the diagram", () 
       /delegation boundary/u,
     );
   }
+});
+
+test("L2 review checks evidence without imposing another team or role", () => {
+  const relative = "docs/charter.md";
+  const source = readFileSync(path.join(root, relative), "utf8");
+  const assertReview = (text) => {
+    const section = contentUnderHeading(text, relative, "Form Follows Risk");
+    const guidance = section.map(markdownText).join(" ").replace(/\s+/gu, " ");
+    assert.match(guidance, /independent review, and human acceptance/u);
+    assert.match(
+      guidance,
+      /Independent review examines the actual facts, reasoning, changes, and evidence/u,
+    );
+    assert.match(guidance, /rather than accepting the author's or Agent's own account/u);
+    assert.match(
+      guidance,
+      /The applicable policy or authorized decision determines who must review/u,
+    );
+    assert.match(guidance, /If it requires a separate reviewer, the author cannot fill that role/u);
+    assert.match(
+      guidance,
+      /otherwise, do not add a person or team merely to label the review independent/u,
+    );
+  };
+  assertReview(source);
+  assert.throws(() => assertReview(source.replace("rather than accepting", "by accepting")));
+  const dataPath = "docs/data.md";
+  const data = readFileSync(path.join(root, dataPath), "utf8");
+  const review = contentUnderHeading(data, dataPath, "Own Implementation and Verification");
+  assert.ok(
+    review.some((token) =>
+      markdownLinkDestinations(token.text).includes("charter.md#form-follows-risk"),
+    ),
+    "data review must use the charter's applicable risk-level safeguard",
+  );
+});
+
+test("risk escalation maps the recommendation to a bounded scheduling choice", () => {
+  const relative = "docs/communicate.md";
+  const source = readFileSync(path.join(root, relative), "utf8");
+  const assertEscalation = (text) => {
+    const section = contentUnderHeading(text, relative, "Escalate Risk in Four Parts");
+    const quote = section.find((token) => token.type === "blockQuote");
+    const guidance = markdownText(quote).replace(/\s+/gu, " ");
+    assert.match(guidance, /recommend leaving this historical result out of the planned release/u);
+    assert.match(guidance, /release proceeds without this result/u);
+    assert.match(guidance, /alternative is to reschedule this result, which delays it/u);
+    assert.match(guidance, /before the release window/u);
+    assert.match(guidance, /Evidence gathering continues within the existing delegation/u);
+    assert.match(
+      guidance,
+      /use remains pending until the evidence supports it and the owner admits it/u,
+    );
+  };
+  assertEscalation(source);
+  assert.throws(() => assertEscalation(source.replace("owner admits it", "Agent approves it")));
 });
 
 test("writing aims do not absorb document-order and sending-review procedures", () => {
@@ -192,10 +248,9 @@ test("general risk review and management duties are peers of coaching and cadenc
       assertComposition(source.replace("## Review Critical Risks", "### Review Critical Risks")),
     /coaching or cadence subtopics/u,
   );
-  assert.throws(
-    () => assertComposition(source.replace("reliably.\n\nCall", "reliably. Call")),
-    /minimum duty/u,
-  );
+  const merged = source.replace("still apply.\n\nCall", "still apply. Call");
+  assert.notEqual(merged, source, "the negative case must join the two real paragraphs");
+  assert.throws(() => assertComposition(merged), /minimum duty/u);
 });
 
 test("delivery entry reaches action and completion gates before the loop reference", () => {

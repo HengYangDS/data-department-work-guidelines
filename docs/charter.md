@@ -107,6 +107,13 @@ exists.
 | L1: standard  | Cross-role or extended work, competing options, or material uncertainty.                                                      | Record the problem, options, execution path, and acceptance in the existing work record.                                        |
 | L2: high risk | Production, funds, sensitive data, security or compliance, deletion or overwrite, irreversibility, or an external commitment. | Obtain a written decision and explicit authorization, a rollback or degradation path, independent review, and human acceptance. |
 
+Independent review examines the actual facts, reasoning, changes, and evidence,
+rather than accepting the author's or Agent's own account. The applicable policy
+or authorized decision determines who must review. If it requires a separate
+reviewer, the author cannot fill that role; otherwise, do not add a person or
+team merely to label the review independent. Technical checks support this
+review; they do not replace judgment, authorization, or human acceptance.
+
 For urgent containment, follow [emergencies and exceptions](evolve.md#emergencies-and-exceptions).
 
 Do not call a task L0 merely to avoid a necessary record. Within every level,

@@ -262,8 +262,9 @@ Before handing over a result, its owner must identify:
 
 Keep these details with the
 [existing work evidence](deliver.md#evidence-sets-the-limit-of-the-claim).
-Risk may require specialist or independent review under the existing authority.
-Review does not remove implementation quality responsibility or require a
+Apply the [charter's risk-level safeguards](charter.md#form-follows-risk), including
+independent review for L2 work. The existing authority may also require specialist
+review. Neither removes implementation quality responsibility or requires a
 new testing team. Verification supports acceptance, use admission, and release
 decisions; passing checks cannot grant them.
 

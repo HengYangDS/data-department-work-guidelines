@@ -97,8 +97,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 - Restore direct routes to historical data evidence, use decisions, modeling responsibilities,
   operational safeguards, and Agent preconditions. Keep shared-tool quality guidance reachable
   from full task descriptions and require decision rationale to pair risks with chosen controls,
-  remaining limits, and revisit triggers. Distinguish rescheduling an unqualified
-  historical result from approving its use; authorized evidence work can continue.
+  remaining limits, and revisit triggers. Match the escalation recommendation to
+  its options and costs without confusing rescheduling with use approval;
+  authorized evidence work can continue. Clarify L2 evidence review and policy-defined
+  reviewer separation without requiring another team; return unmet work for revision.
 - Let a qualified peer publish while the other is unavailable. The returning peer receives
   the same signed objects and assets after its own checks. Keep missing delivery and links
   pending and retire absorbed proposal refs per accepted peer, preserving active reviews

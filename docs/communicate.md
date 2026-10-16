@@ -152,15 +152,16 @@ fraction or fixed document shape is a writing standard.
 > verified when those values became knowable. Using today's file could make the
 > result depend on information unavailable at the simulated decision.
 >
-> I have kept the file exploratory. I recommend deferring this use while we
-> obtain the earlier snapshot and correction history and recheck availability.
-> This delays the historical result but avoids presenting hindsight as
-> point-in-time evidence.
+> I have kept the file exploratory. I recommend leaving this historical result
+> out of the planned release while we obtain the earlier snapshot and correction
+> history and recheck availability. The release proceeds without this result;
+> it avoids presenting hindsight as point-in-time evidence. The alternative is
+> to reschedule this result, which delays it and requires a new deadline.
 >
-> Before the planned release window, the authorized decision owner for this use
-> needs to choose whether to move this result's deadline or leave it out of the
-> release. Evidence gathering continues within the existing delegation; this
-> use remains pending until the evidence supports it and the owner admits it.”
+> The authorized decision owner for this use needs to choose between these
+> options before the release window. Evidence gathering continues within the
+> existing delegation; this use remains pending until the evidence supports it
+> and the owner admits it.”
 
 ## Replace Vague Assurances with Checkable Statements
 
