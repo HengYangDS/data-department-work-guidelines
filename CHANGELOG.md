@@ -53,6 +53,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   default, interface responsibilities, complete L1/L2 records, and every agreed completion
   condition. Managers resolve cross-domain conflicts and long-standing decisions promptly.
   Routine work owes its agreed outcome, not exceptional performance on every occasion.
+- Let feedback revisit the affected judgment rather than restart valid work. Define the
+  task again for changed subjects, outcomes, or boundaries; keep action and acceptance duties.
 - Admit preventive practice for an observed problem, substantiated material risk, or
   applicable duty. Retain bounded trials, ownership, net-benefit evidence, review, and exit;
   mandatory safeguards need not wait for an incident or practice admission. Address recurring

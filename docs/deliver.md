@@ -86,8 +86,11 @@ see [repository governance](governance/README.md).
 5. **Verify** current evidence.
 6. **Learn** what to retain, revise, or retire.
 
-New evidence or changed risk returns to Frame. The six stages organize the work;
-they do not replace the duties above.
+These actions guide the work; they are not mandatory separate stages. When
+evidence or risk changes, review the affected judgment. Frame the task again when the
+subject, outcome, or boundaries change; retain verified parts whose inputs and
+conditions still hold. Combine or revisit actions as needed, preserving every
+applicable duty above.
 
 ## Name the State, Not the Effort
 

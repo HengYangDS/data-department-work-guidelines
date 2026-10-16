@@ -305,6 +305,39 @@ test("delivery entry reaches action and completion gates before the loop referen
   );
 });
 
+test("working feedback revisits the affected judgment without restarting valid work", () => {
+  const relative = "docs/deliver.md";
+  const source = readFileSync(path.join(root, relative), "utf8");
+  const assertFeedbackScope = (text) => {
+    const section = contentUnderHeading(text, relative, "The Working Loop");
+    const actions = section.find((token) => token.type === "listOrdered");
+    assert.ok(actions, "the working loop retains its six actions");
+    assert.equal(actions.children.filter((token) => token.type === "content").length, 6);
+    const guidance = [...walkMarkdown(section)]
+      .filter((token) => token.type === "paragraph")
+      .map(markdownText)
+      .join(" ")
+      .replace(/\s+/gu, " ");
+    assert.match(guidance, /not mandatory separate stages/u);
+    assert.match(guidance, /review the affected judgment/u);
+    assert.match(guidance, /Frame the task again when the subject, outcome, or boundaries change/u);
+    assert.match(guidance, /retain verified parts whose inputs and conditions still hold/u);
+    assert.match(guidance, /preserving every applicable duty above/u);
+  };
+  assertFeedbackScope(source);
+  assert.throws(
+    () => assertFeedbackScope(source.replace("review the affected judgment", "restart every task")),
+    /affected judgment/u,
+  );
+  assert.throws(
+    () =>
+      assertFeedbackScope(
+        source.replace(/whose inputs and\s+conditions still hold/u, "without checking validity"),
+      ),
+    /inputs and conditions/u,
+  );
+});
+
 test("authority priority exposes four ordered tiers and retains the waiver boundary", () => {
   const relative = "docs/charter.md";
   const source = readFileSync(path.join(root, relative), "utf8");
