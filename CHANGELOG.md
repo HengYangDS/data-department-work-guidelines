@@ -16,246 +16,123 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Added
 
-- Share Git exclusions for editor state and Finder metadata in fresh clones,
-  while keeping guideline source selected for checking.
-- Qualify a frozen offline bundle through GitLab's protected-source route
-  before release. Reuse offline jobs; the temporary package is not a signed
-  Release and does not replay source verification.
-- Report source identity, runtime, host name, and mounted workspace capacity
-  before validation children write output. Preserve exact bytes and native
-  failures in separate output and error streams. These observations establish
-  neither VM identity, host architecture, isolation, nor throughput.
+- Add shared Git exclusions for editor state and Finder metadata without excluding
+  guideline source from checks.
+- Add protected-source offline qualification before a GitLab release. A temporary
+  qualification package is not a signed Release or a substitute for source checks.
 
 ### Changed
 
-- Carry document metadata as native YAML front matter, with one body heading
-  and source-accurate diagnostics. Retire hidden HTML metadata carriers without
-  changing department duties or decision identities.
-- Group check configuration by native tool, move its reading map into governance
-  documentation, and add EditorConfig defaults for consistent editing.
-- Replace the dprint TOML adapter with official Taplo 0.10.0. Bind the six native
-  assets and complete publisher notice to the existing supplier; source formatting
-  uses the same explicit policy for checks and fixes.
-- Use canonical bracketed release headings while preserving version dates,
-  notes, and native navigation for both Forges.
-- Shorten remaining implementation and release tasks while preserving their
-  identities, unchecked state, acceptance conditions, and original Git evidence.
-  Resume GitLab qualification through its restored connection; each peer still
-  owns its own checks, delivery, and cleanup.
-- Route data-work questions directly to historical evidence, use admission,
-  modeling decisions, and operational safeguards. Compare model and lifecycle
-  responsibilities without adding roles or changing permission and migration duties.
-- Preserve applicable data-use judgments when stages combine, and keep feedback
-  review results with the existing work evidence.
-- Use installed ETHOS for explicit external-link reachability. Retire the duplicate
-  online controller and generic tests; retain offline delivered-source and confinement checks.
-- Update OSV Scanner to official 2.7.0 and pin its five maintenance assets.
-  Keep the approved development-only scope and expiry, with full findings
-  and actual-platform checks.
-- Show member verification before authorized acceptance in the collaboration
-  diagram and its text. Preserve boundary-limited review, acceptance recording,
-  and handoff. Use native classic styling without fixing a light theme, so
-  the renderer can retain contrast in light and dark reading.
-- Validate official OpenSpec artifacts through installed ETHOS and its locked
-  CLI. Remove the duplicate repository validator and report-parser tests; keep the
-  native gate in the document-proof closure.
-- Use the installed native configuration check instead of a fixed DDWG file
-  allowlist. Remove its duplicate layout checker and generic fixtures; keep
-  remaining format, prose, and risk checks at their actual input consumers.
-  Link Agent execution preconditions directly from the task map and modeling
-  responsibilities from the shared-identifier example.
-- Use document metadata and reading-order checks from the installed
-  ETHOS registry. Remove the duplicate repository-wide metadata scan; keep
-  the decision checker and its tests until its shared replacement qualifies.
-- Keep the configuration map as navigation to native inputs. Remove its copy
-  of shared formatting and prose standards; installed ETHOS owns common rules.
-  Executable checks remain required until their replacements qualify.
-- Prepare v8.0.0 for incompatible review duties and reader routes. Replace
-  unconditional review minima with accountable, risk-adjusted intervals.
-  Preserve calibration, mechanism review, and practice and capability review
-  with weekly, monthly, and quarterly defaults, owners, and actionable results.
-  Justified changes do not impose fixed sample counts or meeting lengths; see
-  the [current review cadence](docs/evolve.md#cadence-and-responsibilities).
-  Update links to [DR-0001's renamed path](docs/decisions/dr-0001-human-ai-collaboration.md)
-  and use topic indexes for section links. Recheck work agreements and links
-  before upgrading; published v7 editions remain unchanged.
-- Organize the seven-topic task map around direction, data, delivery, and
-  collaboration. Place examples beside their practice and split long sections
-  at the reader's decision. Keep procedures in Contributing, configuration in
-  its map, and authority and proof in governance. OpenSpec tasks retain actions,
-  completion checks, IDs, and states, with archive follow-up outside progress;
-  decisions retain durable rationale. Retired drafts are comparison inputs,
-  not current rules or a restoration target. Temporary approvals and integration
-  state stay with their Change and policy; historical evidence uses immutable
-  source links.
-- Clarify data responsibilities across acquisition, production, analysis and
-  modeling, data science, development, platforms, infrastructure, product and
-  technical management, governance, and delivery. Use existing authority for
-  business meaning, data models, implementation, product lifecycle, and technical
-  choices. Preserve consumer migration, compatibility, permission, entry and stop
-  checks, method selection, change acceptance, and maintainer duties. Engineering
-  and professional owners retain implementation and verification, including
-  failed and uncovered cases; no separate testing team is required.
-- Clarify that exploration needs acquisition, processing, and use permission,
-  with Agents bound by delegation. Missing or unclear permission stops the
-  affected action; unknown meaning, quality, or historical availability limits
-  conclusions without prohibiting otherwise authorized exploration.
-- Distinguish unknown historical availability from demonstrated late
-  availability. Missing evidence leaves point-in-time validity unproved;
-  established late values must be replaced or excluded and affected results
-  rerun before they can support use admission. Present each case in one
-  full-width item, with its evidence, claim, and correction together.
-- Frame problems against an explicit comparison baseline and build the
-  smallest sufficient model before expanding detail. Keep the classification
-  basis consistent at each level and cover every part needed for the decision.
-  Before a change, confirm the actual target location, version, environment,
-  state, concurrent work, and recovery path through the delivery topic. Represent
-  interacting causes and cross-cutting constraints without losing reality.
-  Separate discussion, decision readiness, and approval. Deferred decisions need
-  a resolving action and revisit time, including timing-based waits. Routine
-  work owes its agreed outcome, not exceptional performance every time.
-- Qualify data for its intended use: availability, professional usefulness,
-  and permission remain separate judgments. Bounded research keeps its own
-  evidence and authorization; shared or production changes require operational
-  checks and recovery. Downstream feedback revisits value, meaning, and quality
-  without granting another use. Publication does not establish observed use,
-  and unmet completion conditions leave the work unfinished.
-- Admit preventive practice for an observed need, evidenced risk, or current
-  duty without requiring a prior incident or a unique method. Keep trial,
-  benefit, ownership, review, and exit, with mandatory safeguards in force.
-  Address recurrence and concentrated tacit knowledge before harm; target coaching
-  and reusable prevention at actual need and risk. Practice, calibration, and
-  acceptance retain their owners. Routine work, repetition, and discussion do
-  not require another approval, file, fixed fact count, or redundant Agent recital.
-- State fidelity, clarity, and elegance as distinct writing aims: preserve
-  meaning, convey it accurately and fluently, and exercise aesthetic judgment
-  with artistic and cultural refinement. Editing techniques serve these aims;
-  no deletion fraction or fixed arrangement defines good writing. Preserve
-  facts, limits, responsibility, and expressive quality, and replace vague
-  assurances in answers, updates, meeting records, and escalations.
-- Update Prettier to 3.9.10 for its Markdown table parsing fix. Let native
-  formatting alone own Markdown spacing, preserving prose wrapping, tight and
-  loose list structure, code fences, and byte-exact examples. Retain independent
-  non-spacing checks and remove the competing list-spacing implementation.
-- Update the native TOML formatter to 0.9.0 and TOML parser to 1.9.1,
-  including malformed exponent rejection. Pin compatible dependencies and
-  audited Markdown parser and terminal-width fixes. Source and offline Node
-  setup use action 7.1.0 with one explicit version input and no automatic
-  package-manager cache. Refresh the digest-pinned official Node 26 CI image
-  on its supported Debian base.
-- Let Windows ARM64 Node select pinned compatible x64 tools through the
-  same installer, cache, and bundle. Use portable selectors and report the
-  actual installed npm version. Preserve actual input and runtime evidence
-  without another advisory-expiry gate. Asset selection and host architecture
-  establish neither platform execution, timeout recovery, nor network isolation.
-- Run every Git-selected test as a literal file through Node's official
-  runner, including pattern syntax in filenames and new cohorts. Keep fixture
-  support distinct from executable tests, all static checks, two workers, the
-  declared deadline, and native failures and cancellations. Group dependency
-  tests by policy, execution, and evidence; load only the selected command's
-  modules. Share native Git setup and fresh offline identity defaults without
-  coupling expected inputs to production or losing caller-specific environments.
-  Remove repeated observations without dropping source controls or distinct
-  ancestry checks.
-- Configure one ETHOS gate registry with only `docs-integrity` and
-  `markdown-format` as default document roots. Require the product's original
-  native test attempt as their behavior prerequisite. Document output cannot
-  substitute for installed-product qualification.
-- Allow governed merges in the same signed graph on both Forges while
-  retaining protected branches, required checks, and signature enforcement.
-  GitHub source checks include Linux ARM64 alongside Linux x64, macOS, and
-  Windows, matching the offline platform contract. Actual hosted execution
-  remains a separate acceptance requirement.
+- Prepare v8.0.0 for incompatible review duties and reader routes. Weekly calibration,
+  monthly mechanism review, and quarterly practice and capability review retain their
+  purposes, owners, and useful results; justified intervals replace unconditional
+  minima, fixed sample counts, and prescribed meeting lengths. Recheck work agreements,
+  [review cadence](docs/evolve.md#cadence-and-responsibilities), topic section links,
+  and [DR-0001's renamed path](docs/decisions/dr-0001-human-ai-collaboration.md) before
+  upgrading. Published v7 editions remain unchanged.
+- Organize the seven-topic task map around direction, data, delivery, and collaboration.
+  Put examples beside their practice and keep procedures in Contributing, authority in
+  governance, and configuration in its reading map. Decisions retain durable rationale;
+  OpenSpec tasks retain bounded actions, completion checks, stable IDs, and truthful states.
+- Clarify responsibility across data acquisition, production, analysis, modeling,
+  data science, development, platforms, infrastructure, product and technical management,
+  governance, and delivery. Existing owners decide business meaning, data models,
+  implementation, lifecycle, and technical choices. Professional and engineering owners
+  verify their work, including failed and uncovered cases; no separate testing team is required.
+- Separate data availability, professional usefulness, and permission for the intended use.
+  Acquisition, processing, exploration, and use need their applicable authorization;
+  Agents remain within delegation. Unknown meaning, quality, or historical availability
+  limits conclusions without stopping otherwise authorized exploration. Proven late
+  availability requires replacement or exclusion and rerunning affected results before use.
+  Shared changes also require compatibility, consumer migration, operational checks,
+  acceptance, recovery, and maintainer responsibility. Combined stages retain these judgments.
+- Frame decisions against a comparison baseline with the smallest sufficient model,
+  consistent classification, interacting causes, and cross-cutting constraints.
+  Separate discussion, readiness, and approval; deferred decisions need a resolving
+  action and revisit time, including timing-based waits. Preserve the justified single-lead
+  default, interface responsibilities, complete L1/L2 records, and every agreed completion
+  condition. Managers resolve cross-domain conflicts and long-standing decisions promptly.
+  Routine work owes its agreed outcome, not exceptional performance on every occasion.
+- Admit preventive practice for an observed problem, substantiated material risk, or
+  applicable duty. Retain bounded trials, ownership, net-benefit evidence, review, and exit;
+  mandatory safeguards need not wait for an incident or practice admission. Address recurring
+  problems and concentrated tacit knowledge through coaching and reusable prevention.
+  Downstream feedback revisits value, meaning, and quality without granting another use.
+- Define fidelity, clarity, and elegance as separate writing aims. Preserve facts,
+  qualifications, responsibility, fluency, and aesthetic and cultural judgment in answers,
+  updates, meeting records, and escalations, without fixed deletion quotas or layouts.
+- Use native YAML front matter, one body heading, tool-grouped configuration, and EditorConfig.
+  Prettier 3.9.10 owns Markdown spacing at width 100 with preserved prose wrapping;
+  Taplo 0.10.0 owns TOML formatting and smol-toml 1.9.1 parses it. Keep tight and loose lists,
+  literal examples, and native checks and fixes consistent, with independent non-spacing lint.
+- Use installed ETHOS for official OpenSpec validation, external-link reachability,
+  document metadata, reading order, configuration checks, and inherited commit grammar.
+  Keep `docs-integrity` and `markdown-format` as the two default roots with the product's
+  native behavior-test prerequisite. Remaining local checks stay until their actual
+  installed replacements qualify; document output does not prove shared-product acceptance.
+- Resolve Node and npm from `package.json` through native Mise configuration and lock
+  discovery. Remove executable version and PATH templates and filename overrides;
+  preserve safe-mode preparation, global settings, and job isolation. Mise checks npm's
+  declared SHA-512 on acquisition; npm bootstrap alone does not enforce that checksum.
+  Windows ARM64 Node can select pinned compatible x64 tools without emulating Node itself.
+- Admit the same governed signed merge graph on both Forges while retaining protected
+  branches, required checks, and signatures. GitHub's source matrix includes Linux ARM64
+  alongside Linux x64, macOS, and Windows. GitLab Windows jobs share one project-scoped
+  resource group, with unchanged verification coverage, deadlines, and trust boundaries.
 
 ### Removed
 
-- Remove duplicated work-loop, data-use, and human–Agent diagrams, custom
-  diagram CSS, disconnected blocks, and two wide data-use tables. Ordered steps,
-  local evidence lists, and existing decision and role tables preserve stages,
-  relationships, return conditions, and authority limits.
+- Remove duplicate work-loop and data-use diagrams, custom diagram CSS, disconnected
+  blocks, and wide data-use tables. Ordered steps, local evidence, and existing decision
+  and role tables retain stages, relationships, return conditions, and authority limits.
+- Remove replaced online-link, OpenSpec-report, metadata, configuration, and list-spacing
+  checks and their generic fixtures. Keep common standards with their installed owner,
+  historical source in Git, and unresolved obligations with the active Change.
 
 ### Fixed
 
-- Wrap the collaboration diagram's message labels for easier desktop reading,
-  keeping every role, message, condition, and acceptance boundary unchanged.
-- Keep shared-tool quality guidance reachable from its complete task description.
-  Check native task extraction against full descriptions, and keep the public
-  prose-check fixture independent of host Git templates.
-- Remove the cross-Forge release prerequisite. A qualified GitHub edition can
-  publish while GitLab is unavailable; GitLab later receives the same signed
-  objects and assets after its own checks. Keep missing delivery and link
-  evidence pending without waiving selected-peer failures. Retire each peer's
-  absorbed proposal refs after its own acceptance, without waiting for another
-  peer's delivery or discarding active reviews and necessary evidence.
-- Require decision documents to pair each material risk with its chosen mitigation and
-  explain remaining risks, limits, and revisit triggers.
-- Remove a redundant collaboration-diagram note that is too faint in GitHub's
-  dark theme. Place the member between the Agent and authorized acceptor so
-  lifelines do not cross message labels. Keep all five messages, both outcomes,
-  and the verification duty in the accessible description and adjacent prose.
-- Align Change intent and prevention scenarios with practice admission based on
-  an observed problem, substantiated material risk, or applicable obligation.
-  A bounded trial qualifies the implementation; necessary safeguards do not wait
-  for an incident or for admission as department practice.
-- Resolve Node and npm from `package.json` through native Mise discovery of
-  `.config/mise/config.toml` and its adjacent lock. Remove executable version
-  and PATH templates and filename overrides; preserve safe-mode preparation,
-  global credential security, and job-local isolation. Mise checks the declared
-  npm SHA-512 on acquisition; npm bootstrap acceptance alone does not enforce it.
-- Keep original statuses, warnings, errors, partial output, and cleanup
-  causes from verification, installation, bundle construction, and downloads.
-  Preserve Vale's native report and exit status; prose and link-extraction
-  warnings fail strict checks even after a successful exit. Public download
-  errors retain their causes; authenticated failures expose safe categories.
-  Close rejected responses before returning and publish verified tools atomically.
-  Concurrent installation cannot remove another attempt's output, and downloads
-  enforce the actual size boundary without retries or unverified publication.
-- Keep source and fixtures within declared Git inputs, including worktree
-  deletions, literal filenames, encoding, text attributes, and formatter controls,
-  without skipping valid code or data examples. Preserve NUL-path refusal and
-  each proof gate's evidence and network boundaries. Windows Git uses an owned
-  empty configuration file; deleted-repository fixtures cannot discover an
-  enclosing worktree. Cache tests are isolated from host selectors without
-  changing the contributor's tools or tying unrelated prose to advisory dates.
-  Git failures retain the same attempt's complete localized diagnostics.
-  Installer, runtime, and offline cache paths retain their operation's already-read
-  supply manifest, rather than resolve asset and cache identities from separate
-  file reads.
-- Bind release notes and metadata to tagged source and comparisons to
-  adjacent releases. GitLab commands use the configured repository URL and
-  verify the returned pipeline's project, tag, commit, and source. An offline
-  dispatch selects the explicit release tag even from a branch; conflicting or
-  wrong-source refs fail. Reuse frozen bundles for notes-only changes and rebuild
-  after package changes. Preserve CI filters, checkout, and permissions. Working
-  source, signed releases, live links, authenticated history, and single-peer
-  outage updates remain distinct from complete dual-Forge release acceptance.
-- Make emergency containment reachable from the charter and delivery pages.
-  Address people, data, production, downstream results, permission, and compliance
-  through discoverer containment, responsible-person follow-through, escalation,
-  and correction checks. Managers retain the separate duty to support members
-  who honestly expose problems.
-- Reserve one project-scoped Windows resource group across GitLab review,
-  protected-source, and offline jobs. Require both Forges' declared deadlines
-  without reducing verification coverage or changing trust boundaries.
-- Restore the justified single-lead default, interface needs, and complete
-  L1/L2 record duties. Managers must resolve cross-domain conflicts and
-  long-standing decisions promptly. Delivery preserves professional judgment and
-  local rules reference shared guidance. Every completion claim needs all agreed
-  conditions and current matching verification; Agent work stays within the
-  delegated goal, scope, and stop conditions. Blocked reports state impact, and
-  verified facts take precedence over old tools, identities, and sunk costs.
+- Make the human–Agent diagram readable in light and dark themes: wrap message labels,
+  remove the faint redundant note, and avoid crossing lifelines. Preserve every role,
+  message, outcome, verification duty, authorized acceptance, acceptance record, and handoff.
+- Restore direct routes to historical data evidence, use decisions, modeling responsibilities,
+  operational safeguards, and Agent preconditions. Keep shared-tool quality guidance reachable
+  from full task descriptions and require decision rationale to pair risks with chosen controls,
+  remaining limits, and revisit triggers.
+- Let a qualified peer publish while the other is unavailable. The returning peer receives
+  the same signed objects and assets after its own checks. Keep missing delivery and links
+  pending and retire absorbed proposal refs per accepted peer, preserving active reviews
+  and required evidence. Publication does not establish observed team use.
+- Bind release notes, metadata, and comparisons to tagged source and adjacent releases.
+  Reject wrong-project pipelines and conflicting dispatch refs. Reuse frozen bundles for
+  notes-only changes, rebuild after package changes, and retain checkout, filters, and permissions.
+- Keep source and fixture selection faithful to Git: literal filenames, worktree deletions,
+  encoding, text attributes, parser controls, and valid embedded examples remain covered.
+  Run every selected test through Node's official runner with two workers and the existing
+  deadline. Keep fixture support separate, fresh clones independent of host templates and
+  caches, and static checks, warning rejection, and cancellation intact.
+- Preserve each attempt's statuses, warnings, errors, partial output, and cleanup causes
+  across validation, installation, bundle construction, and downloads. Report source identity,
+  runtime, host name, and exact mounted capacity before children produce output; these do not
+  prove VM identity, host architecture, isolation, or throughput. Keep native Git and Vale
+  diagnostics, reject linked or escaping inputs before access, enforce download limits,
+  publish verified tools atomically, and preserve concurrent attempts and foreign bytes.
+- Make emergency containment reachable from charter and delivery guidance. Cover people,
+  data, production, downstream results, permissions, and compliance through discoverer
+  containment, responsible-person follow-through, escalation, and correction checks.
+  Managers support members who honestly expose problems; local rules preserve professional judgment.
 
 ### Security
 
-- Evaluate one complete native dependency scan against only the exact,
-  expiring development approval. Project dependencies, the CI image, native-tool
-  group, and separately approved Lychee assets retain their own bindings. Reject
-  unrelated or incomplete findings, changed artifacts, expired approvals, and
-  stale dispositions; keep the original scan and failures. Do not treat every
-  advisory as approved or extend development permission to other uses.
-- Update the native math renderer so inherited options cannot grant trusted
-  rendering. Preserve ordinary math, Markdownlint tokens, and explicit trust
-  through the existing consumer without waiving the dependency finding.
+- Keep the accepted braces finding non-blocking for checks, CI, installation, distribution,
+  and releases, with complete reports and remediation tracking. Other findings and changed
+  artifacts retain their own exact approvals, use limits, and expiry.
+- Refresh pinned tools and their official notices, including OSV Scanner 2.7.0, Markdown
+  parser and terminal-width fixes, setup-node 7.1.0, and the digest-bound stable Node 26 CI
+  image. Keep complete project, image, native-tool, and Lychee findings with their actual
+  subjects; source-lock reports do not establish complete shipped-binary coverage.
+  Unrelated, incomplete, expired, or stale dispositions still fail qualification.
+- Prevent inherited math-renderer options from granting trusted rendering. Preserve ordinary
+  math, Markdownlint tokens, and explicit trust without waiving the dependency finding.
 
 ## [7.0.12] - 2026-10-04
 
