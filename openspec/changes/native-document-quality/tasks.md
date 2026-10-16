@@ -15,7 +15,7 @@
 - [x] 2.5 Repair inherited-property command classification, duplicate decision IDs, and empty sections; reject execution without evaluating it or rejecting readable rationale.
 - [x] 2.6 Reject literal and variable decision command operands while preserving globs; verify execution remains distinct from ordinary descriptions.
 - [x] 2.7 Await bounded asynchronous installer cleanup; verify ordering, persistent errors, and actual Windows source CI installation.
-- [ ] 2.8 Finish accepted-paradigm migration: qualify the inline two-root dependency closure and consumed supply carriers, then pass native carrier, consumer, YAML-front-matter, commit, Changelog, and peer checks before retiring predecessor bindings.
+- [ ] 2.8 Finish accepted-paradigm migration: qualify preserved native Mise version inputs, the inline two-root dependency closure, and consumed supply carriers; pass native carrier, front-matter, commit, Changelog, and peer checks before retiring predecessor bindings.
 - [x] 2.9 Bind links to Git-selected source; accept file, directory, and internal-alias routes while rejecting ignored state and escaping aliases.
 - [x] 2.10 Name GitLab jobs by purpose and platform with shared hidden templates; verify execution, admission, selectors, and symmetric naming.
 - [x] 2.11 Rewrite governance, decisions, and contribution guidance by reader question; verify duties, durable rationale, alternatives, evidence, links, prose, and rendering.
@@ -40,7 +40,7 @@
 - [x] 2.30 Replace Markdownlint CLI2 with native core on Git-selected Markdown; verify TOML options, controls, literal paths, diagnostics, and every case, then retire the wrapper and unused dependencies after cold supply and both matrices.
 - [x] 2.31 Repair the [official OpenSpec report consumer](design.md#preserve-native-execution-and-complete-validation-evidence); verify complete reports, findings, root identity, extraction, Windows paths, cleanup, cold installation, proof, sync, and both matrices; retain failures.
 - [x] 2.32 Retire completed-Change copies after obligation and consumer review; verify ancestor bytes, recovery, both-Forge commit/path references, archive controls, proof, and cold installation through owned fixtures.
-- [ ] 2.33 Qualify installed ETHOS's [complete document floor](design.md#integrate-accepted-shared-ownership-without-weakening-the-floor), two default roots, and non-writing refusals; retire local document checks after consumer acceptance.
+- [ ] 2.33 Qualify installed ETHOS's [complete document floor](design.md#integrate-accepted-shared-ownership-without-weakening-the-floor), including Vale prose and terminology, five-section non-execution DR checks, two default roots, and non-writing refusals; retire local checks only after actual consumer acceptance.
 - [x] 2.34 Serialize Windows jobs in one project-scoped resource group; verify reservation refusals, real resource waiting, and non-overlap while preserving full discovery, two workers, deadlines, and original failures.
 - [x] 2.35 Await disposal of rejected tool and release responses; verify native status, cleanup causes, credential redirects, real HTTP error streams, concurrent output, full source, and both matrices without retries or fallback.
 - [x] 2.36 Bind timeout evidence to one native attempt's command, streams, status, signal, and error; preserve the one-second fixture deadline and qualify focused cases, full source, committed proof, cold installation, and both matrices.
