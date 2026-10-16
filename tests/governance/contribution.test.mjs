@@ -284,26 +284,11 @@ test("MIT license, entry, and package metadata must agree", () => {
   }
 });
 
-test("native commit policy rejects unscoped or vague subjects", () => {
+test("DDWG inherits native commit grammar and requires SSH signatures", () => {
   const workspace = parseToml(readFileSync(path.join(root, ".ethos/workspace.toml"), "utf8"));
+  assert.equal(Object.hasOwn(workspace.commit_policy, "subject_pattern"), false);
   assert.equal(workspace.commit_policy.signing_required, true);
-  const subject = new RegExp(workspace.commit_policy.subject_pattern);
-  for (const valid of [
-    "fix(quality): bind fixture identity to its own repository",
-    "docs(guidance)!: restore risk-scaled work rules",
-    "chore(openspec): archive completed change",
-  ]) {
-    assert.equal(subject.test(valid), true, valid);
-  }
-  for (const invalid of [
-    "update docs",
-    "docs: change everything",
-    "WIP",
-    "fix(quality): ",
-    "fix(quality): vague. ",
-  ]) {
-    assert.equal(subject.test(invalid), false, invalid);
-  }
+  assert.equal(workspace.commit_policy.signing_format, "ssh");
 });
 
 test("Git checkout normalizes text independently of host autocrlf", () => {
