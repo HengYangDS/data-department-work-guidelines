@@ -52,11 +52,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 - Update OSV Scanner to official 2.7.0 and pin its five maintenance assets.
   Keep the approved development-only scope and expiry, with full findings
   and actual-platform checks.
-- Show the handoff from Agent work to human verification and authorized
-  acceptance. Preserve boundary-limited review, acceptance recording, and
-  handoff in both the diagram and its text; remove redundant label breaks
-  without changing those responsibilities. Use a neutral visual theme
-  rather than assigning decorative colors to roles.
+- Show member verification before authorized acceptance in the collaboration
+  diagram and its text. Preserve boundary-limited review, acceptance recording,
+  and handoff. Use native classic styling without fixing a light theme, so
+  the renderer can retain contrast in light and dark reading.
 - Validate official OpenSpec artifacts through installed ETHOS and its locked
   CLI. Remove the duplicate repository validator and report-parser tests; keep the
   native gate in the document-proof closure.
