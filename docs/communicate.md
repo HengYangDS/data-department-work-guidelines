@@ -147,19 +147,20 @@ fraction or fixed document shape is a writing standard.
 4. **Decision:** Give the options, costs, recommendation, and person who must
    decide by when.
 
-> **Illustrative escalation:** “Do not promote the revised price history yet.
-> The vendor changed earlier values, but we have not verified when those values
-> became knowable. A historical simulation with today's file may answer a
-> hindsight question rather than the one we need.
+> **Illustrative escalation:** “Do not admit the revised price history for this
+> historical simulation yet. The vendor changed earlier values, but we have not
+> verified when those values became knowable. Using today's file could make the
+> result depend on information unavailable at the simulated decision.
 >
-> I have kept the file exploratory. I recommend deferring this use. That delays
-> the study but avoids
-> presenting hindsight as point-in-time evidence. We can reconsider when the
-> earlier snapshot and replay evidence are available.
+> I have kept the file exploratory. I recommend deferring this use while we
+> obtain the earlier snapshot and correction history and recheck availability.
+> This delays the historical result but avoids presenting hindsight as
+> point-in-time evidence.
 >
-> Before the planned release window, the decision owner for this use needs to
-> choose: defer it, or obtain the
-> snapshot and rerun the check.”
+> Before the planned release window, the authorized decision owner for this use
+> needs to choose whether to move this result's deadline or leave it out of the
+> release. Evidence gathering continues within the existing delegation; this
+> use remains pending until the evidence supports it and the owner admits it.”
 
 ## Replace Vague Assurances with Checkable Statements
 
