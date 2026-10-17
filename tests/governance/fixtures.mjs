@@ -17,9 +17,7 @@ export function fixture(run) {
       recursive: true,
     });
     mkdirSync(path.join(directory, ".ethos"));
-    for (const name of ["profile.toml", "gates.toml"]) {
-      cpSync(path.join(root, ".ethos", name), path.join(directory, ".ethos", name));
-    }
+    cpSync(path.join(root, ".ethos/profile.toml"), path.join(directory, ".ethos/profile.toml"));
     for (const name of ["README.md", "AGENTS.md"]) {
       cpSync(path.join(root, name), path.join(directory, name));
     }

@@ -335,7 +335,7 @@ No catch-all archive or indefinite speculative recovery is required.
 ### Integrate accepted shared ownership without weakening the floor
 
 DDWG selects `docs-integrity` and `markdown-format` as its default roots through
-the accepted registry. ETHOS owns their applicable prerequisites, evidence, and
+the accepted profile. ETHOS owns their applicable prerequisites, evidence, and
 execution. Shared code is qualified at its product; any genuinely retained DDWG
 code receives its own applicable proof. Other adopters keep their own graph.
 An optional descriptor is not invalid merely because it is outside the default

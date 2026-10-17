@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { test } from "node:test";
 import { parse as parseToml } from "smol-toml";
@@ -14,11 +14,30 @@ test("DDWG verification uses the installed full native graph", () => {
 });
 
 test("DDWG keeps two roots and product-owned Markdown and code observations", () => {
-  const registry = parseToml(readFileSync(path.join(root, ".ethos/gates.toml"), "utf8"));
-  assert.deepEqual(registry.proof_sets.default, ["docs-integrity", "markdown-format"]);
-  assert.deepEqual(registry.proof_sets.full, registry.proof_sets.default);
-  const gates = new Map(registry.gates.map((gate) => [gate.id, gate]));
+  const { proof } = parseToml(readFileSync(path.join(root, ".ethos/profile.toml"), "utf8"));
+  assert.deepEqual(proof.code_correctness_gates, ["docs-integrity", "markdown-format"]);
+  assert.equal(Object.hasOwn(proof, "gate_registry"), false);
+  assert.equal(existsSync(path.join(root, ".ethos/gates.toml")), false);
+  assert.deepEqual(
+    { ...proof.code_correctness_map },
+    {
+      behavior: "code-behavior",
+      "static-analysis": "markdown-format",
+    },
+  );
+  assert.equal(proof.gates.length, 3);
+  const gates = new Map(proof.gates.map((gate) => [gate.id, gate]));
+  assert.equal(gates.size, proof.gates.length);
+  assert.deepEqual(gates.get("docs-integrity").command, ["node", "tools/docs/cli.mjs", "check"]);
   assert.deepEqual(gates.get("docs-integrity").depends_on, ["code-behavior"]);
+  assert.deepEqual(gates.get("markdown-format").command, [
+    "node",
+    "tools/docs/cli.mjs",
+    "format",
+    "--check",
+  ]);
+  assert.equal(gates.get("code-behavior").timeout_seconds, 180);
+  assert.equal(gates.get("code-behavior").cpu_reservation, 2);
   assert.deepEqual(gates.get("code-behavior").providers, [
     "ethos.adapters.gates.code_quality:behavior_report",
   ]);

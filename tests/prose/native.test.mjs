@@ -372,7 +372,6 @@ test("public prose and integrity commands reject the same current-file defect", 
     assert.equal(committed.status, 0, committed.stderr);
     const required = new Set([
       ".ethos/profile.toml",
-      ".ethos/gates.toml",
       ".gitattributes",
       "LICENSE",
       "VERSION",

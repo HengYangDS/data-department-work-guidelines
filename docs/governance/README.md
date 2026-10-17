@@ -172,11 +172,12 @@ validation; OpenSpec still owns validation and lifecycle.
 
 ### Proof and Configuration
 
-The [profile](../../.ethos/profile.toml) selects one native
-[gate registry](../../.ethos/gates.toml), with `docs-integrity` and
-`markdown-format` as its default roots. ETHOS owns the schema, graph, resource
-reservations, and evidence. The integrity root requires its provider-only
-behavior prerequisite: one complete native Node test attempt under the declared
+The [profile](../../.ethos/profile.toml) declares `docs-integrity` and
+`markdown-format` as its two default roots, with their native prerequisites
+in the same file. Installed ETHOS compiles their full dependency closure and
+owns the schema, execution, resource reservations, and evidence. The integrity
+root requires its provider-only behavior prerequisite: one complete native Node
+test attempt under the declared
 worker limit and deadline. Require the full prerequisite closure and document
 commands to pass for the exact committed tree; document output or a
 repository-authored report cannot substitute for that behavior attempt.
