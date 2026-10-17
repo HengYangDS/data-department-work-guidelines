@@ -9,19 +9,11 @@ for department work without adding authority or certifying team adoption.
 
 ### Requirement: Point-of-use analysis, data, and Agent boundaries
 
-Analysis SHALL use a consistent classification basis at each level, cover every
-part needed for the governing decision, and make material gaps, relationships,
-and cross-cutting constraints explicit. Before a change, members and Agents
-SHALL confirm the actual target location, version, environment, current state,
-concurrent work, and recovery path.
-Exploration SHALL require permission for acquisition, processing, and intended
-use; Agents SHALL also stay within their delegated scope. Missing or unclear
-permission SHALL stop the affected action and be escalated to its authorized
-decision owner. Unknown meaning, quality, or historical availability MAY limit
-exploratory claims without stopping otherwise permitted exploration.
-Promotion into shared, production, or decision use SHALL require meaning,
-quality, permission and reproducibility. Agents SHALL review complete current
-claim-matched results, then report evidence, limits, and the delivery state;
+Analysis SHALL use a consistent classification basis at each level, cover the
+governing decision's needs, and expose material gaps, relationships and
+cross-cutting constraints. Shared, production or decision use SHALL require
+meaning, quality, permission and reproducibility. Agents SHALL review complete
+current claim-matched results and report evidence, limits and delivery state;
 people SHALL retain responsibility. Delivery coordination SHALL NOT replace
 other owners' professional judgments.
 
@@ -56,8 +48,8 @@ other owners' professional judgments.
 
 #### Scenario: A change targets an unverified environment
 
-- **WHEN** a member or Agent is about to change a shared source or system
-- **THEN** the delivery topic requires verification of the actual target
+- **WHEN** a member or Agent is about to make a change
+- **THEN** members and Agents SHALL verify the actual target
   location, version, environment, current state, concurrent work, and recovery
   path before the change
 - **AND** the collaboration topic links to that execution contract; a familiar
@@ -79,11 +71,14 @@ other owners' professional judgments.
 - **AND THEN** exploration remains available without being mislabeled as an
   admitted asset.
 
-#### Scenario: Exploratory acquisition has no established permission
+#### Scenario: Exploratory data is acquired, processed, or used
 
 - **WHEN** a member or Agent proposes acquiring, processing, or using exploratory
-  data whose required permission is missing or unclear
-- **THEN** the affected action stops and is escalated through existing authority
+  data
+- **THEN** exploration SHALL require permission for acquisition, processing, and
+  intended use; Agents SHALL also stay within their delegated scope
+- **AND** missing or unclear permission SHALL stop the affected action and be
+  escalated to its authorized decision owner through existing authority
 - **AND** unknown meaning, quality, or historical availability cannot supply that
   permission or extend an Agent's delegation.
 
@@ -92,7 +87,9 @@ other owners' professional judgments.
 - **WHEN** acquisition, processing, and intended use are permitted, an Agent stays
   within its delegation, and meaning, quality, or historical availability remains
   unresolved
-- **THEN** exploration may continue with matching limits on its conclusions,
+- **THEN** unknown meaning, quality, or historical availability MAY limit
+  exploratory claims without stopping otherwise permitted exploration
+- **AND** exploration may continue with matching limits on its conclusions,
   without requiring full durable-asset admission or a new approval procedure
 - **AND** later promotion into shared, production, or decision use still requires
   qualification and authorization for that use.
@@ -481,24 +478,8 @@ Production owners SHALL ensure reliable long-term operation. Platform owners
 SHALL abstract repeated cross-domain capability. Governance owners SHALL operate
 admission, permissions, lineage, review, veto and exit in the workflow. Delivery
 owners SHALL expose priorities, resources, dependencies, risks and open decisions.
-These responsibilities SHALL NOT be presented as mutually exclusive departments
-or an exhaustive job taxonomy. Existing organizational role and authority
-assignments SHALL select actual owners; these guidelines SHALL NOT maintain
-another seat or reporting matrix. Work SHALL distinguish outputs, activities,
-accountable ownership, decision mandates and acceptance. Business and data
-modeling, development, product management and technical management SHALL retain
-explicit responsibility for their distinct decisions. Shared interfaces SHALL
-NOT transfer responsibility or authority; suitable use, technical approval and
-passing tests SHALL NOT grant permission. Engineering owners SHALL retain
-responsibility from requirements and design through implementation,
-verification, release, operational feedback and improvement as applicable.
-Professional owners SHALL verify their judgments and models. Verification SHALL
-identify agreed criteria, affected interfaces and migrations, actual inputs,
-version, environment, method, results, failed and uncovered cases, their
-disposition and unresolved-risk owners in existing work evidence. Risk-based
-specialist or independent review SHALL NOT transfer implementation responsibility
-or require a separate testing team. Verification SHALL NOT grant acceptance,
-use admission or release authority. Owners SHALL be accountable.
+Shared interfaces SHALL NOT transfer responsibility or authority. Owners SHALL
+remain accountable.
 
 #### Scenario: Research does not need a production feed
 
@@ -548,6 +529,8 @@ use admission or release authority. Owners SHALL be accountable.
   governance reviewer changes business meaning through an admission review
 - **THEN** the data topic preserves professional judgment and permission as
   distinct responsibilities
+- **AND** suitable use, technical approval and passing tests SHALL NOT grant
+  permission
 - **AND** a shared interface or accountable task lead cannot grant the missing
   authority.
 
@@ -561,16 +544,23 @@ use admission or release authority. Owners SHALL be accountable.
 - **AND** tests, a written checklist, or a deployment cannot substitute for it;
   acceptance follows the work's existing authority and does not add a ceremony.
 
-#### Scenario: Responsibility perspectives are mistaken for departments
+#### Scenario: Data work assigns responsibilities
 
-- **WHEN** a task assigns domain, production, platform, governance and delivery
-  responsibilities
+- **WHEN** department work assigns outputs, activities, ownership, decisions or
+  acceptance
 - **THEN** the data topic SHALL explain that they may overlap in one person or
   team and are not an exhaustive list of department jobs
+- **AND** these responsibilities SHALL NOT be presented as mutually exclusive
+  departments
 - **AND** existing organizational role and authority assignments SHALL select
   actual owners without a second seat or reporting matrix in these guidelines
 - **AND** each important result or decision SHALL have an accountable owner,
   decision mandate and acceptor in the existing work or product record
+- **AND** work SHALL distinguish outputs, activities, accountable ownership,
+  decision mandates and acceptance
+- **AND** business and data modeling, development, product management and
+  technical management SHALL retain explicit responsibility for their distinct
+  decisions
 - **AND** the assignments SHALL NOT require a new team, record or approval step.
 
 #### Scenario: A cross-domain model change preserves syntax but changes meaning
@@ -598,17 +588,22 @@ use admission or release authority. Owners SHALL be accountable.
 - **AND** no local passing test SHALL substitute for an unresolved consumer
   migration or the required permission.
 
-#### Scenario: A local test passes while dependent use remains unverified
+#### Scenario: Engineering and professional work requires verification
 
-- **WHEN** a changed shared dataset or interface passes local tests while an
-  affected consumer join or migration remains failed or unverified
-- **THEN** the engineering owner SHALL retain implementation and verification
+- **WHEN** work includes engineering, professional judgment or a model
+- **THEN** professional owners SHALL verify their judgments and models
+- **AND** engineering owners SHALL retain implementation and verification
   responsibility rather than hand quality to a separate testing stage
-- **AND** the responsible professional owners SHALL verify the affected meaning
-  and model; the existing work evidence SHALL identify agreed criteria, actual
-  inputs, version, environment, method and results, failures, uncovered cases,
-  their disposition and the owner of any unresolved risk
-- **AND** any specialist or independent review SHALL follow risk and current
-  authority without relieving the implementer of quality responsibility
-- **AND** the passing local test SHALL NOT establish consumer acceptance,
-  permission for use or release authority.
+- **AND** engineering owners SHALL retain responsibility from requirements and
+  design through implementation, verification, release, operational feedback and
+  improvement as applicable
+- **AND** existing work evidence SHALL identify agreed criteria, affected interfaces and
+  migrations, actual inputs, version, environment, method, results, failed and
+  uncovered cases, their disposition and unresolved-risk owners
+- **AND** risk-based specialist or independent review SHALL follow current
+  authority without transferring implementation responsibility or requiring a
+  separate testing team
+- **AND** verification SHALL NOT grant acceptance, use admission or release
+  authority; a passing local test SHALL NOT establish consumer acceptance,
+  permission for use or release authority while an affected interface or
+  migration remains failed or unverified.
