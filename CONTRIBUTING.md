@@ -167,7 +167,7 @@ to jobs.
 
 ### Supply native checks
 
-Use the Vale, lychee, and OSV Scanner versions in the
+Use the Vale, lychee, Taplo, and OSV Scanner versions in the
 [native supply manifest](.config/supply/native.json). Your existing installation
 owner may supply them. To install already supplied assets in the repository's
 managed cache, use:
@@ -175,10 +175,11 @@ managed cache, use:
 ```text
 node tools/ci/install-native.mjs vale --asset VALE_ARCHIVE
 node tools/ci/install-native.mjs lychee --asset LYCHEE_ARCHIVE
+node tools/ci/install-native.mjs taplo --asset TAPLO_ARCHIVE
 node tools/ci/install-native.mjs osv-scanner --asset OSV_BINARY
 ```
 
-The verifier selects `DDWG_VALE_BIN`, `DDWG_LYCHEE_BIN`, or
+The verifier selects `DDWG_VALE_BIN`, `DDWG_LYCHEE_BIN`, `DDWG_TAPLO_BIN`, or
 `DDWG_OSV_SCANNER_BIN` first, then an existing managed-cache entry, and only
 then PATH when that entry is absent. Set the relevant selector to use an
 existing host installation instead of the cache. A selected invalid binary
@@ -289,12 +290,8 @@ notice. It installs locked npm packages online to prime the bundle; missing
 native assets and notices are never downloaded implicitly.
 
 For npm packages, notices may be dedicated license files or an explicit readme
-License section
-agreeing with the package's native license declaration; code examples and
-incidental mentions do not qualify. The locked
-TOML plugin carries its complete MIT notice through its native Wasm API. The
-builder verifies that original notice and plugin identity without adding or
-rewriting package files.
+License section agreeing with the package's native license declaration.
+Code examples and incidental mentions do not qualify.
 
 Choose a fresh output path under
 `build/artifacts/offline-bundle/`, with the basename
