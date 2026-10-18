@@ -75,47 +75,21 @@ work, not that duty.
 
 ## Execute and Verify
 
-The Agent investigates and acts within the agreed scope. The member checks the
-actual work and evidence before submitting them for acceptance.
+1. The member gives the Agent the scope, stop conditions, and acceptance criteria.
+2. The Agent works within that scope and returns the work, sources, results, and limits.
+3. The member checks the actual work and evidence, then submits the checked work
+   and evidence to the authorized acceptor.
+4. The authorized acceptor checks the work and evidence against the agreed conditions.
 
-```mermaid
----
-config:
-  look: classic
-  sequence:
-    mirrorActors: false
-    actorMargin: 36
-    width: 120
-    height: 56
-    actorFontSize: 18
-    messageFontSize: 18
----
-sequenceDiagram
-    accTitle: Delegation, evidence, and authorized acceptance
-    accDescr: A member sets the delegation boundary. An Agent returns work and evidence. The member checks the actual work and evidence before submitting them to an authorized acceptor. If conditions are unmet, the work returns for revision within the delegation boundary. If conditions are met, the acceptor accepts the work, records acceptance, and hands off the result. Participants represent roles, not necessarily different people. People retain authority and responsibility; acceptance never expands permission.
-    participant Agent
-    participant Member
-    participant Acceptor as Authorized<br/>acceptor
-    Member->>Agent: Scope, stop conditions,<br/>acceptance criteria
-    Agent-->>Member: Work, sources,<br/>results, limits
-    Member->>Member: Check actual work<br/>and evidence
-    Member->>Acceptor: Checked work<br/>and evidence
-    alt Conditions unmet
-        Acceptor-->>Member: Return for revision<br/>within the boundary
-    else Conditions met
-        Acceptor-->>Member: Accept, record,<br/>and hand off
-    end
-```
+| Conditions | Response                                                                   |
+| ---------- | -------------------------------------------------------------------------- |
+| Unmet      | Return the work to the member for revision within the delegation boundary. |
+| Met        | Accept the work, record acceptance, and hand off the result.               |
 
-The authorized acceptor checks the actual work and evidence against the agreed
-conditions. If conditions are unmet, the work returns for revision within the
-delegation boundary. If conditions are met, the acceptor accepts the work,
-records acceptance, and hands off the result. An Agent's summary cannot
-substitute for that examination.
-
-These roles may belong to the same person. People retain direction, authority,
-and responsibility. Delegation and acceptance do not expand permission or
-transfer responsibility.
+An Agent's summary cannot substitute for examination of the actual work and
+evidence. These roles may belong to the same person. People retain direction,
+authority, and responsibility; delegation and acceptance do not expand permission
+or transfer responsibility.
 
 ### Check Agent Output
 

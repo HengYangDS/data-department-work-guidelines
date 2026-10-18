@@ -69,56 +69,59 @@ test("collaboration keeps member checks before the Agent execution section", () 
   );
 });
 
-test("collaboration preserves both acceptance outcomes without the diagram", () => {
+test("collaboration makes review and both acceptance outcomes readable without a renderer", () => {
   const relative = "docs/human-agent.md";
   const source = readFileSync(path.join(root, relative), "utf8");
-  const section = contentUnderHeading(source, relative, "Execute and Verify");
-  const diagram = section.find(
-    (token) => token.type === "codeFenced" && token.text.startsWith("```mermaid"),
-  );
-  assert.ok(diagram, "the delegation example must retain its diagram");
-  const assertMemberReview = (text) => {
-    const steps = text.split("\n").map((line) => line.replaceAll("<br/>", " ").trim());
-    const returned = steps.indexOf("Agent-->>Member: Work, sources, results, limits");
-    const reviewed = steps.indexOf("Member->>Member: Check actual work and evidence");
-    const submitted = steps.indexOf("Member->>Acceptor: Checked work and evidence");
-    assert.ok(
-      returned >= 0 && returned < reviewed && reviewed < submitted,
-      "the member must perform the actual review before submitting work for acceptance",
-    );
-  };
-  assertMemberReview(diagram.text);
-  assert.throws(
-    () => assertMemberReview(diagram.text.replace("Member->>Member:", "Agent->>Agent:")),
-    /member must perform the actual review/u,
-  );
-  const descriptions = [
-    diagram.text.split("\n").find((line) => line.trimStart().startsWith("accDescr:")),
-    [...walkMarkdown(section)]
+  const assertContract = (text) => {
+    const section = contentUnderHeading(text, relative, "Execute and Verify");
+    const ordered = section.find((token) => token.type === "listOrdered");
+    assert.ok(ordered, "delegation, review, and acceptance must be individually readable");
+    const steps = ordered.children
+      .filter((token) => token.type === "content")
+      .map((token) => markdownText(token).replace(/\s+/gu, " ").trim());
+    assert.equal(steps.length, 4);
+    for (const [index, meaning] of [
+      /^The member gives the Agent the scope, stop conditions, and acceptance criteria\.$/u,
+      /^The Agent works within that scope and returns the work, sources, results, and limits\.$/u,
+      /^The member checks the actual work and evidence, then submits the checked work and evidence to the authorized acceptor\.$/u,
+      /^The authorized acceptor checks the work and evidence against the agreed conditions\.$/u,
+    ].entries()) {
+      assert.match(steps[index], meaning);
+    }
+    const outcomes = [...walkMarkdown(section)]
+      .filter((token) => token.type === "tableRow")
+      .map((row) =>
+        row.children
+          .filter((token) => token.type === "tableData")
+          .map((token) => markdownText(token).replace(/\s+/gu, " ").trim()),
+      )
+      .filter((cells) => cells.length);
+    assert.deepEqual(outcomes, [
+      ["Unmet", "Return the work to the member for revision within the delegation boundary."],
+      ["Met", "Accept the work, record acceptance, and hand off the result."],
+    ]);
+    const limits = [...walkMarkdown(section)]
       .filter((token) => token.type === "paragraph")
-      .map((token) => markdownText(token))
-      .join(" "),
-  ];
-  const assertOutcomes = (description) => {
-    const text = description?.replace(/\s+/gu, " ") ?? "";
+      .map(markdownText)
+      .join(" ")
+      .replace(/\s+/gu, " ");
+    assert.match(limits, /Agent's summary cannot substitute for examination/u);
+    assert.match(limits, /These roles may belong to the same person/u);
     assert.match(
-      text,
-      /conditions are unmet[^.]*returns for revision within the delegation boundary/u,
+      limits,
+      /People retain direction, authority, and responsibility; delegation and acceptance do not expand permission or transfer responsibility/u,
     );
-    assert.match(text, /conditions are met[^.]*accepts[^.]*records acceptance[^.]*hands off/u);
   };
-  for (const description of descriptions) {
-    const text = description.replace(/\s+/gu, " ");
-    assertOutcomes(text);
-    assert.throws(
-      () => assertOutcomes(text.replace("records acceptance", "announces completion")),
-      /records acceptance/u,
-    );
-    assert.throws(
-      () =>
-        assertOutcomes(text.replace("within the delegation boundary", "under a new delegation")),
-      /delegation boundary/u,
-    );
+  assertContract(source);
+  for (const [before, after] of [
+    ["The member checks the actual work", "The Agent checks the actual work"],
+    ["within the delegation boundary", "under a new delegation"],
+    ["record acceptance", "announce completion"],
+    ["do not expand permission", "expand permission"],
+  ]) {
+    const changed = source.replace(before, after);
+    assert.notEqual(changed, source, "the negative case must change the actual source");
+    assert.throws(() => assertContract(changed));
   }
 });
 
