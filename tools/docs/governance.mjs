@@ -74,10 +74,11 @@ export function checkNavigation(repository = root) {
   const repeated = normative.filter((relative) => rootRoutes.has(relative));
   if (repeated.length) throw new Error(`root entry repeats topic routes: ${repeated.join(", ")}`);
   if (
+    existsSync(path.join(repository, "docs/superpowers")) ||
     existsSync(path.join(repository, "docs/history/README.md")) ||
     existsSync(path.join(repository, "guidelines.md"))
   ) {
-    throw new Error("retired root monolith or redundant history page remains");
+    throw new Error("retired root monolith, history page, or method carrier remains");
   }
   for (const relative of normative.filter((item) => item !== "docs/charter.md")) {
     if (!hasReaderOpening(read(relative), relative))

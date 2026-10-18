@@ -52,7 +52,7 @@ committed source and does not mint repository proof or source acceptance.
 
 For an uncommitted edit, run `npm run format -- --check` and
 `node tools/docs/cli.mjs check`. The latter checks English prose and terms,
-local links and fragments, navigation, decisions, configuration, CI, and
+local links and fragments, navigation, configuration, CI, and
 SemVer/Changelog. For official OpenSpec artifacts, run
 `ethos prove --host --execute --gate openspec --json`. ETHOS invokes its locked
 official tool and retains the complete result; DDWG has no second report parser.
@@ -62,11 +62,12 @@ also run
 `node tools/docs/cli.mjs audit` and retain its complete result under the
 [supply boundary](docs/governance/README.md#tool-supply-and-offline-execution).
 
-For a document's metadata or first visible block, run
+For document metadata, reading order, or decision-record validation, run
 `ethos prove --host --execute --gate docs-registry --json`. The installed
-registry owns duplicate subjects, metadata syntax, and reader-facing structure;
-the shared floor includes it without a duplicate repository gate. This host check
-does not establish repository proof or source acceptance.
+registry owns duplicate subjects, metadata syntax, reader-facing structure, and
+non-execution decision rationale. The shared floor binds that provider as the
+`document-registry` prerequisite of `docs-integrity`, without a duplicate checker.
+This host check does not establish repository proof or source acceptance.
 
 | When you need to                 | Command                                                    |
 | -------------------------------- | ---------------------------------------------------------- |

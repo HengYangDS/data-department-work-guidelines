@@ -30,7 +30,7 @@ static-analysis = "markdown-format"
 id = "docs-integrity"
 kind = "test"
 command = ["node", "tools/docs/cli.mjs", "check"]
-depends_on = ["code-behavior"]
+depends_on = ["code-behavior", "document-registry"]
 asset_classes = ["markdown-docs", "javascript-code"]
 dimensions = ["documentation", "links"]
 evidence_class = "proof"
@@ -59,3 +59,13 @@ trust_bearing = true
 network_policy = "offline"
 timeout_seconds = 180
 cpu_reservation = 2
+
+[[proof.gates]]
+id = "document-registry"
+kind = "docs"
+providers = ["ethos.surface.cli.root.reference:docs_registry_report"]
+asset_classes = ["markdown-docs"]
+dimensions = ["documentation", "decision-records"]
+evidence_class = "contract"
+trust_bearing = true
+network_policy = "offline"

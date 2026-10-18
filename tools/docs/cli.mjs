@@ -18,7 +18,6 @@ async function checkRepository() {
   const { checkLinks, checkProse, checkTextLayout } = await import("./content.mjs");
   const { checkChangelog } = await import("./changelog.mjs");
   const { checkCi } = await import("./ci.mjs");
-  const { checkDecisions } = await import("./decisions.mjs");
   const { dependencyPolicyPath, parseDependencyPolicy, validateDependencyInput } =
     await import("./dependencies.mjs");
   validateDependencyInput(
@@ -32,7 +31,6 @@ async function checkRepository() {
   checkChangelog();
   checkLinks();
   await checkTextLayout();
-  checkDecisions();
   checkNavigation();
   checkCi();
   console.log("PASS repository source checks");
@@ -83,14 +81,6 @@ try {
       checkChangelog();
       break;
     }
-    case "boundary": {
-      if (arguments_.length) throw new Error("boundary accepts no arguments");
-      const { checkNoScope } = await import("./governance.mjs");
-      const { checkDecisions } = await import("./decisions.mjs");
-      checkDecisions();
-      checkNoScope();
-      break;
-    }
     case "navigation": {
       if (arguments_.length) throw new Error("navigation accepts no arguments");
       const { checkNavigation } = await import("./governance.mjs");
@@ -99,7 +89,7 @@ try {
     }
     default:
       throw new Error(
-        "usage: node tools/docs/cli.mjs check|format|prose|links|changelog|boundary|navigation|audit",
+        "usage: node tools/docs/cli.mjs check|format|prose|links|changelog|navigation|audit",
       );
   }
 } catch (error) {

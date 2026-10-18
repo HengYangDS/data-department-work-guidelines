@@ -176,9 +176,10 @@ The [profile](../../.ethos/profile.toml) declares `docs-integrity` and
 `markdown-format` as its two default roots, with their native prerequisites
 in the same file. Installed ETHOS compiles their full dependency closure and
 owns the schema, execution, resource reservations, and evidence. The integrity
-root requires its provider-only behavior prerequisite: one complete native Node
-test attempt under the declared
-worker limit and deadline. Require the full prerequisite closure and document
+root requires native document-registry and behavior prerequisites. The registry
+checks document metadata and decision records; the behavior provider requires
+one complete native Node test attempt under the declared worker limit and
+deadline. Require the full prerequisite closure and document
 commands to pass for the exact committed tree; document output or a
 repository-authored report cannot substitute for that behavior attempt.
 
@@ -216,12 +217,13 @@ acceptance narratives, and release operations with their Change or producing
 record. Extra headings, mismatched identities, and HTML in the record body are
 invalid.
 
-The [decision checker](../../tools/docs/decisions.mjs) must accept ordinary
-rationale, tables, inline terms, bare paths, and evidence links without evaluating
-shell input or consulting ambient variables. It cannot cover every command
-dialect or judge durable reasoning. Reviewers move execution and acceptance
-narratives to their producing record; a structural pass alone does not establish
-a sound decision.
+The `document-registry` prerequisite binds installed ETHOS's registry provider
+for structural validation and command inspection. Ordinary rationale, tables,
+inline terms, bare paths, and evidence links remain valid; inspection never
+executes the input. DDWG has no
+second decision parser. Reviewers assess the lasting choice and move execution
+and acceptance narratives to their producing record; a structural pass alone
+does not establish a sound decision.
 
 ## Tool Supply and Offline Execution
 

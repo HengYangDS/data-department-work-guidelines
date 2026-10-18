@@ -72,10 +72,12 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   Taplo 0.10.0 owns TOML formatting and smol-toml 1.9.1 parses it. Keep tight and loose lists,
   literal examples, and native checks and fixes consistent, with independent non-spacing lint.
 - Use installed ETHOS for official OpenSpec validation, external-link reachability,
-  document metadata, reading order, configuration checks, and inherited commit grammar.
+  document metadata, reading order, decision records, configuration checks, and inherited
+  commit grammar.
   Keep `docs-integrity` and `markdown-format` as the two default roots with the product's
-  native behavior-test prerequisite. Remaining local checks stay until their actual
-  installed replacements qualify; document output does not prove shared-product acceptance.
+  native document-registry and behavior-test prerequisites. Remaining local checks stay
+  until their actual installed replacements qualify; document output does not prove
+  shared-product acceptance.
 - Resolve Node and npm from `package.json` through native Mise configuration and lock
   discovery. Remove executable version and PATH templates and filename overrides;
   preserve safe-mode preparation, global settings, and job isolation. Mise checks npm's
@@ -91,9 +93,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 - Remove duplicate work-loop and data-use diagrams, custom diagram CSS, disconnected
   blocks, and wide data-use tables. Ordered steps, local evidence, and existing decision
   and role tables retain stages, relationships, return conditions, and authority limits.
-- Remove replaced online-link, OpenSpec-report, metadata, configuration, and list-spacing
-  checks and their generic fixtures. Keep common standards with their installed owner,
-  historical source in Git, and unresolved obligations with the active Change.
+- Remove replaced online-link, OpenSpec-report, metadata, configuration, list-spacing,
+  and decision checks and their generic fixtures. Keep common standards with their installed
+  owner, historical source in Git, and unresolved obligations with the active Change.
 
 ### Fixed
 

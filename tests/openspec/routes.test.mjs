@@ -1,9 +1,9 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { test } from "node:test";
-import { checkNavigation } from "../../tools/docs/governance.mjs";
+import { checkNavigation, checkNoScope } from "../../tools/docs/governance.mjs";
 import {
   headingLevel,
   headingText,
@@ -355,4 +355,19 @@ test("official apply tracks every readable item without a second progress sectio
     assert.ok(paragraph.text.includes(task.description));
     assert.ok(markdownText(paragraph, { code: true }).trim());
   }
+});
+
+test("current task routes reject retired method and private scope carriers", () => {
+  fixture((directory) => {
+    assert.doesNotThrow(() => checkNavigation(directory));
+    assert.doesNotThrow(() => checkNoScope(directory));
+    const methods = path.join(directory, "docs", "superpowers");
+    mkdirSync(methods);
+    assert.throws(() => checkNavigation(directory), /retired.*carrier/u);
+    rmSync(methods, { recursive: true });
+    const change = path.join(directory, "openspec", "changes", "fixture");
+    mkdirSync(change, { recursive: true });
+    writeFileSync(path.join(change, "scope.toml"), "schema_version = 1\n");
+    assert.throws(() => checkNoScope(directory), /scope companion/u);
+  });
 });
