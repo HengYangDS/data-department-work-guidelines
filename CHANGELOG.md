@@ -65,8 +65,6 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 - Define fidelity, clarity, and elegance as separate writing aims. Preserve facts,
   qualifications, responsibility, fluency, and aesthetic and cultural judgment in answers,
   updates, meeting records, and escalations, without fixed deletion quotas or layouts.
-- Keep emergency containment specific to data, production, downstream use, and compliance;
-  management safeguards for people who disclose problems remain a separate duty.
 - Use native YAML front matter, one body heading, tool-grouped configuration, and EditorConfig.
   Prettier 3.9.10 owns Markdown spacing at width 100 with preserved prose wrapping;
   Taplo 0.10.0 owns TOML formatting and smol-toml 1.9.1 parses it. Keep tight and loose lists,
@@ -99,9 +97,6 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
-- Make the human–Agent diagram readable in light and dark themes: wrap message labels,
-  remove the faint redundant note, and avoid crossing lifelines. Preserve every role,
-  message, outcome, verification duty, authorized acceptance, acceptance record, and handoff.
 - Restore direct routes to historical data evidence, use decisions, modeling responsibilities,
   operational safeguards, and Agent preconditions. Keep shared-tool quality guidance reachable
   from full task descriptions and require decision rationale to pair risks with chosen controls,
@@ -127,10 +122,11 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   prove VM identity, host architecture, isolation, or throughput. Keep native Git and Vale
   diagnostics, reject linked or escaping inputs before access, enforce download limits,
   publish verified tools atomically, and preserve concurrent attempts and foreign bytes.
-- Make emergency containment reachable from charter and delivery guidance. Cover people,
-  data, production, downstream results, permissions, and compliance through discoverer
-  containment, responsible-person follow-through, escalation, and correction checks.
-  Managers support members who honestly expose problems; local rules preserve professional judgment.
+- Make emergency containment reachable from charter and delivery guidance. Cover data,
+  production, downstream results, permissions, and compliance through discoverer containment,
+  responsible-person follow-through, escalation, and correction checks. Management safeguards
+  for members who honestly disclose problems remain a separate duty; local rules preserve
+  professional judgment.
 
 ### Security
 
