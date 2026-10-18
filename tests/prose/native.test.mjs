@@ -130,7 +130,7 @@ test("native prose ignores inherited Vale configuration and styles paths", () =>
     );
     assert.ok(findings.some(({ Check }) => Check === "Vale.Spelling"));
     assert.ok(findings.some(({ Check }) => Check === "Vale.Repetition"));
-    assert.ok(findings.some(({ Check }) => Check === "Plain.Concise"));
+    assert.ok(findings.some(({ Check }) => Check === "plain.concise"));
   } finally {
     if (config === undefined) delete process.env.VALE_CONFIG_PATH;
     else process.env.VALE_CONFIG_PATH = config;
@@ -148,7 +148,7 @@ test("native prose rules reject repeated words, filler and term variants", () =>
     ),
   );
   assert.ok(
-    findings.some(({ Check, Match }) => Check === "Plain.Concise" && Match === "in order to"),
+    findings.some(({ Check, Match }) => Check === "plain.concise" && Match === "in order to"),
   );
   assert.ok(findings.some(({ Check }) => Check === "Vale.Terms"));
   assert.ok(findings.every(({ Line, Span }) => Line === 1 && Span[0] > 0));
@@ -161,7 +161,8 @@ test("native prose reports diagnosed stock phrases without requiring a rewrite",
   ]);
   assert.ok(
     findings.some(
-      ({ Check, Match }) => Check === "Plain.StockPhrases" && Match === "rich tapestry of insights",
+      ({ Check, Match }) =>
+        Check === "plain.stock-phrases" && Match === "rich tapestry of insights",
     ),
   );
   assert.deepEqual(validProse, []);
@@ -179,7 +180,7 @@ test("native prose reports diagnosed stock phrases without requiring a rewrite",
       ],
       { cwd: root, encoding: "utf8", timeout: 30_000 },
     );
-  const style = path.join(root, ".config/checks/vale/styles/Plain");
+  const style = path.join(root, ".config/checks/vale/styles/plain");
   const valid = verifyRules(style);
   assert.ifError(valid.error);
   assert.equal(valid.status, 0, valid.stderr);
@@ -189,9 +190,9 @@ test("native prose reports diagnosed stock phrases without requiring a rewrite",
   assert.ok(report.results.every(({ passed }) => passed));
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-rule-coverage-"));
   try {
-    const rules = path.join(directory, "Plain");
+    const rules = path.join(directory, "plain");
     cpSync(style, rules, { recursive: true });
-    const defective = path.join(rules, "StockPhrases.yml");
+    const defective = path.join(rules, "stock-phrases.yml");
     writeFileSync(
       defective,
       readFileSync(defective, "utf8").replace(

@@ -46,7 +46,7 @@ been established.
   responsibility, consumer migration, permissions, and recovery explicit at
   their existing topic owners. Review real reading paths rather than infer
   understanding from shorter prose, a graph, or a test count.
-- Declare English content, Department vocabulary, necessary native inputs,
+- Declare English content, department vocabulary, necessary native inputs,
   supported platforms, and the two publication peers through accepted contracts.
   Inherit shared formatting, lint, prose, links, decision, carrier, and source
   policies. Preserve meaningful literals and complete diagnostics without

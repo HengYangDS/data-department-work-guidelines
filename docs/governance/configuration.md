@@ -19,7 +19,7 @@ product, not this directory index.
 | Configuration syntax and formatting       | [Installed ETHOS](../governance/README.md#proof-and-configuration)                            |
 | TOML formatting                           | [Taplo](../../.config/checks/taplo/taplo.toml)                                                |
 | Non-spacing Markdown checks               | [Installed ETHOS policy](../governance/README.md#proof-and-configuration)                     |
-| English prose and department terms        | [Vale](../../.config/checks/vale/vale.ini), its adjacent styles, and Department vocabulary    |
+| English prose and department terms        | [Vale](../../.config/checks/vale/vale.ini), its adjacent styles, and department vocabulary    |
 | Local links and fragments                 | [Lychee](../../.config/checks/lychee/lychee.toml)                                             |
 | Project dependency findings               | [OSV dispositions](../../.config/checks/dependencies/policy.toml)                             |
 | Native tool acquisition                   | [Supply manifest](../../.config/supply/native.json)                                           |
