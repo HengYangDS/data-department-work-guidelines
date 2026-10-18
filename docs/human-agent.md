@@ -59,8 +59,11 @@ boundary.
 | Reviewer         | Independently check facts, changes, and evidence.                         | State findings and limits; review alone does not authorize action.                     |
 | Acceptor         | Confirm agreed completion when authorized.                                | Make the acceptance decision after examining the actual work.                          |
 
-A task lead may also decide or accept when authorized. The lead's title alone
-grants neither power.
+The task lead remains responsible for the judgment submitted with delegated
+work and its end-to-end result. That judgment does not replace the
+[professional and use decisions](data.md#assign-modeling-and-lifecycle-decisions)
+owned by others. A task lead may also decide or accept when authorized; the
+lead's title alone grants neither power.
 
 Review and acceptance require examination of facts, reasoning, changes, and
 evidence. The author's or Agent's own account must not substitute for that

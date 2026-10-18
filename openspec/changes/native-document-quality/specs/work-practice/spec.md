@@ -113,6 +113,8 @@ other owners' professional judgments.
   another authorized decision owner
 - **THEN** the collaboration topic keeps the goal, boundary, risk, final
   judgment, end-to-end result, and escalation with the task lead
+- **AND** the lead's judgment of delegated work does not replace other owners'
+  professional judgments or decisions about permitted use
 - **AND** that responsibility does not itself grant decision or acceptance
   authority.
 

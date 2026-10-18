@@ -104,6 +104,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   its options and costs without confusing rescheduling with use approval;
   authorized evidence work can continue. Clarify L2 evidence review and policy-defined
   reviewer separation without requiring another team; return unmet work for revision.
+  Keep the task lead's judgment of delegated work distinct from professional judgments
+  and use decisions owned by others.
 - Let a qualified peer publish while the other is unavailable. The returning peer receives
   the same signed objects and assets after its own checks. Keep missing delivery and links
   pending and retire absorbed proposal refs per accepted peer, preserving active reviews
