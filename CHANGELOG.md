@@ -23,13 +23,14 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
-- Prepare v8.0.0 for incompatible review duties and reader routes. Weekly calibration,
-  monthly mechanism review, and quarterly practice and capability review retain their
-  purposes, owners, and useful results; justified intervals replace unconditional
-  minima, fixed sample counts, and prescribed meeting lengths. Recheck work agreements,
-  [review cadence](docs/evolve.md#cadence-and-responsibilities), topic section links,
-  and [DR-0001's renamed path](docs/decisions/dr-0001-human-ai-collaboration.md) before
-  upgrading. Published v7 editions remain unchanged.
+- Prepare v8.0.0 for incompatible review duties and reader routes. Replace v7.0.12's
+  minimum monthly and quarterly review frequencies with defaults the responsible owner
+  may adjust for a recorded reason and next review time. Preserve the review purposes
+  and useful results; add weekly judgment calibration as a default. Before upgrading,
+  recheck work agreements and [review cadence](docs/evolve.md#cadence-and-responsibilities),
+  update links from `docs/governance/ethos.md` to [repository governance](docs/governance/README.md),
+  and update [DR-0001's renamed path](docs/decisions/dr-0001-human-ai-collaboration.md)
+  and affected topic anchors. Published v7 editions remain unchanged.
 - Organize the seven-topic task map around direction, data, delivery, and collaboration.
   Put examples beside their practice and keep procedures in Contributing, authority in
   governance, and configuration in its reading map. Decisions retain durable rationale;
