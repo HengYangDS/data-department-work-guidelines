@@ -4,19 +4,24 @@
 
 ### Requirement: DDWG proof binds the shared document contract
 
-DDWG SHALL select `docs-integrity` and `markdown-format` as its two default
-roots through accepted native ETHOS declarations. The product SHALL own their
-complete applicable prerequisites, source binding, evidence, and execution.
-Content-only DDWG SHALL NOT keep a dummy Node suite to prove shared product code
-or impose its selected graph on other adopters.
+DDWG SHALL inherit the complete applicable shared floor through its accepted
+minimal ETHOS binding. Common obligations SHALL retain one product owner with
+actual input, policy and evidence bindings. DDWG SHALL consume native composition
+without copied or duplicate local execution contracts. Retained executable
+source SHALL keep applicable native obligations; content-only DDWG SHALL NOT
+keep a dummy suite to prove shared product code.
 
 #### Scenario: The declared default floor is resolved
 
 - **WHEN** installed ETHOS resolves the final DDWG profile
-- **THEN** the two selected document roots retain the complete applicable floor
-  and product-owned prerequisites
-- **AND** required obligations are connected and verified; an unrelated optional
-  descriptor is not invalid merely because it is outside the default closure.
+- **THEN** the actual selected source receives the complete applicable shared
+  floor with product-owned identities and prerequisites
+- **AND** native composition preserves each gate identity and its input and
+  policy binding without duplicate local orchestration
+- **AND** retained executable source cannot lose its behavior or static obligations
+  merely because the repository is described as documentation-only
+- **AND** retired document-root names SHALL NOT require aliases or duplicate
+  common bindings.
 
 #### Scenario: An authored result attempts to replace proof
 
@@ -64,8 +69,8 @@ Common test algorithms and execution policy SHALL NOT become DDWG standards.
 ## REMOVED Requirements
 
 **Reason:** Proof, source execution, diagnostics, CI semantics, capacity, and
-carrier policy are shared product contracts. DDWG declares its selected roots
-and content, not another graph, executor, size rule, or mandatory CUE mechanism.
+carrier policy are shared product contracts. DDWG declares its source and
+necessary parameters, not another graph, executor, size rule, or CI mechanism.
 
 **Migration:** Tasks 2.33, 2.45, and 2.46 qualify the accepted installed contract
 and actual source/offline jobs before retiring their predecessors and standard

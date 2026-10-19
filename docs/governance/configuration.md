@@ -38,10 +38,12 @@ the project configuration and adjacent lock, then scopes the selected runtime
 to its child command. [Runtime preparation](../../CONTRIBUTING.md#prepare-the-runtime-and-dependencies)
 owns setup and CI isolation.
 
-Run the declared fix and check commands on the same Git-selected inputs. Native
-formatting preserves literal examples and prose wrapping; a style check does
-not establish factual accuracy or semantic fidelity. For wording and reader
-judgment, use the [communication guidance](../communicate.md).
+Run `mise run check` and `mise run fix --expect-head OID` on the same Git-selected
+inputs, substituting the current commit OID. Both invoke installed ETHOS's native
+formatter; preview uses `ethos lane format --json`. Fix requires exact Work Lane
+admission before writing. Native formatting preserves literal examples and prose
+wrapping; a style check does not establish factual accuracy or semantic fidelity.
+For wording and reader judgment, use the [communication guidance](../communicate.md).
 
 Review an input change with its consumers and current findings. Keep each
 native check until its accepted replacement qualifies the same source and

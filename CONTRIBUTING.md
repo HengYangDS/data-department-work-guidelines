@@ -50,7 +50,7 @@ ETHOS selects tests from the committed Git source; there is no repository test
 controller or bare Node discovery command. Host verification needs a coherent
 committed source and does not mint repository proof or source acceptance.
 
-For an uncommitted edit, run `npm run format -- --check` and
+For an uncommitted edit, run `mise run check` and
 `node tools/docs/cli.mjs check`. The latter checks English prose and terms,
 local links and fragments, navigation, configuration, CI, and
 SemVer/Changelog. For official OpenSpec artifacts, run
@@ -70,12 +70,23 @@ non-execution decision rationale. The shared floor binds that provider as the
 `document-registry` prerequisite of `docs-integrity`, without a duplicate checker.
 This host check does not establish repository proof or source acceptance.
 
-| When you need to                    | Command                         |
-| ----------------------------------- | ------------------------------- |
-| Format the selected source          | `npm run format`                |
-| Check formatting without writing    | `npm run format -- --check`     |
-| Check Markdown and source integrity | `node tools/docs/cli.mjs check` |
-| Check spelling, prose, and terms    | `npm run prose`                 |
+| When you need to                    | Command                          |
+| ----------------------------------- | -------------------------------- |
+| Preview selected source formatting  | `ethos lane format --json`       |
+| Check formatting without writing    | `mise run check`                 |
+| Apply admitted formatting           | `mise run fix --expect-head OID` |
+| Check Markdown and source integrity | `node tools/docs/cli.mjs check`  |
+| Check spelling, prose, and terms    | `npm run prose`                  |
+
+`check` and `fix` invoke the installed ETHOS formatter directly. Replace `OID`
+with the current `git rev-parse HEAD` result. Preview and check leave source
+unchanged; fix prepares the complete patch and requires current Work Lane
+admission and unchanged source bytes before writing. Pass literal source paths to
+limit either task. Original Prettier and Taplo retain their native configuration
+and byte ownership; locks and official OpenSpec artifacts keep separate owners.
+These maintenance tasks are not repository proof. The existing proof and fixture
+consumers remain until their full shared replacement qualifies; they do not
+require another formatter implementation for this new entry.
 
 The source check includes non-spacing Markdown lint. Keep using it until its
 installed shared replacement qualifies in this repository.

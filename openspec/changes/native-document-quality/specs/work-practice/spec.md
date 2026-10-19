@@ -107,6 +107,18 @@ other owners' professional judgments.
   accepting the consequential result; the author's or Agent's account cannot
   substitute for that inspection.
 
+#### Scenario: Delegated work reaches review and acceptance
+
+- **WHEN** an Agent returns delegated work
+- **THEN** the member SHALL examine the actual work and evidence before presenting
+  them to the authorized acceptor
+- **AND** acceptance SHALL compare the agreed conditions: unmet work returns for
+  revision within the delegation; met work is accepted, recorded and handed off
+- **AND** those roles MAY belong to the same person unless current authority
+  requires a separate reviewer; no extra person or team is added for a label
+- **AND** delegation and acceptance SHALL NOT expand permission or transfer
+  responsibility; the complete decision remains readable without a diagram.
+
 #### Scenario: A task lead delegates the final judgment
 
 - **WHEN** a task lead delegates analysis or execution and sends the result to

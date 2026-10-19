@@ -53,10 +53,11 @@ been established.
   defining their parsers or settings again in this repository.
 - Preserve the requested stable lowercase, five-section decision form through
   its shared owner, without a local schema or duplicate standard.
-- Keep `docs-integrity` and `markdown-format` as the selected DDWG default roots.
-  The product owns their applicable prerequisites and evidence. Other adopters
-  retain their own applicable graph; optional descriptors are not invalid merely
-  because they are outside the default closure.
+- Consume the applicable shared ETHOS floor directly from the minimal repository
+  binding. Keep common gate identities and execution metadata at the product
+  owner; retire the two old document roots with their orchestration. Do not add
+  aliases or repeat providers to preserve those names. Retained executable source
+  keeps its applicable native obligations until its consumers migrate.
 - Use the product's accepted shared CI contract. Its owner selects the source
   representation and projection mechanism; DDWG supplies peer and platform
   parameters. Qualify non-writing drift refusal and actual source/offline jobs

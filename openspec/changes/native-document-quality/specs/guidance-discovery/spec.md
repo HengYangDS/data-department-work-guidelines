@@ -68,6 +68,25 @@ reports SHALL name gap, impact, and escalation.
 - **AND** a reading form, available route, or Agent report cannot establish
   permission, acceptance, adoption, or improved team outcomes.
 
+#### Scenario: A work question leads only to a broad topic
+
+- **WHEN** the task map routes shared-data work, an important update, an emergency,
+  or a completion decision
+- **THEN** the primary link SHALL reach the section that owns that action
+- **AND** shared-data related reading SHALL expose modeling responsibility and
+  consumer migration beneath that work question, not in unrelated late links
+- **AND** the urgent route SHALL be available before routine work routes.
+
+#### Scenario: A reader opens a topic or the repository
+
+- **WHEN** a member or Agent starts reading the repository or a normative topic
+- **THEN** the repository opening SHALL lead from purpose to the sole task map
+  without repeating its topic inventory
+- **AND** each topic opening SHALL state when to use it and lead to its applicable
+  action, evidence, ownership and recovery sections before background detail
+- **AND** a code example, unused reference, hidden label or image without a
+  readable destination SHALL NOT substitute for the actual reader route.
+
 #### Scenario: A project rule conflicts with department guidance
 
 - **WHEN** a member authors, applies, or reviews a local project rule

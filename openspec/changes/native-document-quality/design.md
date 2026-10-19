@@ -106,7 +106,7 @@ regression policy remain at their product owners.
 | Peer and edition selection      | [Publication binding](specs/publication/spec.md)          | Declared repositories, platforms, and version.             |
 | Native authority                | [Governance binding](specs/repository-governance/spec.md) | Repository and branch parameters.                          |
 | Decisions and document carriers | Shared document contract                                  | Stable lowercase decision identities and actual rationale. |
-| Source execution and proof      | ETHOS command plane                                       | Applicable source and selected document roots.             |
+| Source execution and proof      | ETHOS command plane                                       | Actual source and applicable shared obligations.           |
 | Tool supply and diagnostics     | Installed product                                         | Necessary consumer inputs, not another supply manifest.    |
 | CI, history, and release        | Shared native contract and each Forge                     | Peers, platforms, document version, and meaningful notes.  |
 
@@ -334,12 +334,16 @@ No catch-all archive or indefinite speculative recovery is required.
 
 ### Integrate accepted shared ownership without weakening the floor
 
-DDWG selects `docs-integrity` and `markdown-format` as its default roots through
-the accepted profile. ETHOS owns their applicable prerequisites, evidence, and
-execution. Shared code is qualified at its product; any genuinely retained DDWG
-code receives its own applicable proof. Other adopters keep their own graph.
-An optional descriptor is not invalid merely because it is outside the default
-closure; disconnected required obligations remain invalid.
+The final profile binds repository identity, the seven normative topic owners,
+and material OpenSpec paths. Installed ETHOS selects the applicable shared floor
+from actual source. Common gate identities, execution metadata, source binding,
+and prerequisites stay at that product owner. Preserve each actual input and
+policy binding without duplicate local orchestration. Retire the old
+`docs-integrity` and `markdown-format` orchestration rather than preserve their
+names through aliases or repeat common providers. Shared code is qualified at
+its product; any retained DDWG executable source keeps its own applicable proof.
+A source declaration or an empty code inventory cannot certify execution,
+consumer migration, or the complete content and quality contract.
 
 Consume actual accepted schemas and public interfaces, not prototype fields,
 source recipes, or a packaging smoke result. Preserve complete checks and
