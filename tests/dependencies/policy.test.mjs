@@ -2,11 +2,31 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import * as dependencies from "../../tools/docs/dependencies.mjs";
 import { readText, root } from "../../tools/runtime.mjs";
-import { approvedFinding, dependencyPolicy } from "./fixtures.mjs";
+import { approvedFinding, dependencyPolicy, historicalBracesLock } from "./fixtures.mjs";
+
+test("current locked supply does not require a historical finding package", () => {
+  const lock = JSON.parse(readText("package-lock.json"));
+  const identities = dependencies.validateDependencyInput(lock);
+  const report = {
+    results: [
+      {
+        source: { type: "lockfile", path: "package-lock.json" },
+        packages: [...identities.values()].map((identity) => ({
+          package: identity,
+          dependency_groups: ["dev"],
+        })),
+      },
+    ],
+  };
+  assert.deepEqual(dependencies.validateDependencyEvidence(report, identities, 0), {
+    findings: 0,
+    approvedFindings: 0,
+  });
+});
 
 test("native disposition keeps the exact finding separate from supply integrity", () => {
   const policy = dependencies.parseDependencyPolicy(dependencyPolicy);
-  const lock = JSON.parse(readText("package-lock.json"));
+  const lock = historicalBracesLock();
   assert.equal(policy.IgnoredVulns[0].id, "GHSA-vfj7-8cjw-p6xm");
   assert.doesNotThrow(() => dependencies.validateDependencyInput(lock));
   const updated = structuredClone(lock);
@@ -38,7 +58,7 @@ test("native disposition keeps the exact finding separate from supply integrity"
 });
 
 test("native raw evidence must cover the exact input and retain every finding", () => {
-  const lock = JSON.parse(readText("package-lock.json"));
+  const lock = historicalBracesLock();
   const identities = dependencies.validateDependencyInput(lock);
   const report = {
     results: [
@@ -95,7 +115,7 @@ test("native raw evidence must cover the exact input and retain every finding", 
 });
 
 test("accepted braces findings preserve evidence without an expiry or release hold", () => {
-  const lock = JSON.parse(readText("package-lock.json"));
+  const lock = historicalBracesLock();
   const policy = dependencies.parseDependencyPolicy(dependencyPolicy);
   const identities = dependencies.validateDependencyInput(lock);
   const report = {
@@ -184,9 +204,7 @@ test("accepted braces findings preserve evidence without an expiry or release ho
 
 test("native disposition rejects malformed subject, range, and event objects", () => {
   const policy = dependencies.parseDependencyPolicy(dependencyPolicy);
-  const identities = dependencies.validateDependencyInput(
-    JSON.parse(readText("package-lock.json")),
-  );
+  const identities = dependencies.validateDependencyInput(historicalBracesLock());
   const report = {
     results: [
       {

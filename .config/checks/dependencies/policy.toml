@@ -1,6 +1,2 @@
-# Native OSV disposition for the explicitly accepted braces finding.
-# Keep the complete raw scan; this finding does not hold checks or releases.
-# Replace with IgnoredVulns = [] when the finding is fixed or no longer applies.
-[[IgnoredVulns]]
-id = "GHSA-vfj7-8cjw-p6xm"
-reason = "Explicitly accepted by the user on 2026-10-13: the known braces finding must not block verification, CI, distribution or releases. Preserve complete reports and remediation tracking. This does not accept other packages or findings."
+# No project-lock findings currently require a disposition.
+IgnoredVulns = []

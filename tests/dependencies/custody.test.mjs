@@ -15,12 +15,12 @@ import path from "node:path";
 import { test } from "node:test";
 import * as dependencies from "../../tools/docs/dependencies.mjs";
 import { readText } from "../../tools/runtime.mjs";
-import { approvedFinding, dependencyPolicy } from "./fixtures.mjs";
+import { dependencyPolicy, historicalBracesLock } from "./fixtures.mjs";
 
 test("one native audit retains all findings without a filtered second scan", (context) => {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-audit-findings-"));
   const actual = childProcess.spawnSync;
-  const lock = JSON.parse(readText("package-lock.json"));
+  const lock = historicalBracesLock();
   const identities = dependencies.validateDependencyInput(lock);
   const reports = [];
   const mock = context.mock.method(childProcess, "spawnSync", (command, args, options) => {
@@ -90,7 +90,7 @@ test("one native audit retains all findings without a filtered second scan", (co
 test("native audit rejects unapproved findings without filtering evidence", (context) => {
   const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-audit-approval-"));
   const actual = childProcess.spawnSync;
-  const lock = JSON.parse(readText("package-lock.json"));
+  const lock = historicalBracesLock();
   const identities = dependencies.validateDependencyInput(lock);
   let evidence;
   const mock = context.mock.method(childProcess, "spawnSync", (command, args, options) => {
@@ -160,7 +160,6 @@ test("native audit refuses input drift after scanning", (context) => {
     const packages = [...identities.values()].map((identity) => ({
       package: identity,
       dependency_groups: ["dev"],
-      ...(identity.name === "braces" ? { vulnerabilities: [approvedFinding()] } : {}),
     }));
     writeFileSync(
       args[args.indexOf("--output-file") + 1],
@@ -177,7 +176,7 @@ test("native audit refuses input drift after scanning", (context) => {
       }),
     );
     writeFileSync(path.join(directory, "package-lock.json"), "changed after scan");
-    return { status: 1, stdout: "", stderr: "" };
+    return { status: 0, stdout: "", stderr: "" };
   });
   syncBuiltinESMExports();
   try {

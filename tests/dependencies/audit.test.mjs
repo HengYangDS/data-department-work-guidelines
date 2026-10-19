@@ -14,8 +14,8 @@ import { syncBuiltinESMExports } from "node:module";
 import path from "node:path";
 import { test } from "node:test";
 import * as dependencies from "../../tools/docs/dependencies.mjs";
-import { readText, root } from "../../tools/runtime.mjs";
-import { dependencyPolicy } from "./fixtures.mjs";
+import { root } from "../../tools/runtime.mjs";
+import { dependencyPolicy, historicalBracesLock } from "./fixtures.mjs";
 
 test("actual native audit keeps the accepted finding non-blocking after the former expiry", (context) => {
   context.mock.method(Date, "now", () => Date.UTC(2027, 0, 1));
@@ -33,13 +33,9 @@ test("actual native audit keeps the accepted finding non-blocking after the form
     });
     // Native scanner fixtures expose every finding through the same policy.
     writeFileSync(path.join(directory, dependencies.dependencyPolicyPath), dependencyPolicy);
-    const braces = JSON.parse(readText("package-lock.json")).packages["node_modules/braces"];
     writeFileSync(
       path.join(directory, "package-lock.json"),
-      JSON.stringify({
-        lockfileVersion: 3,
-        packages: { "": {}, "node_modules/braces": braces },
-      }),
+      JSON.stringify(historicalBracesLock()),
     );
     mkdirSync(path.join(directory, "cache/osv-scalibr/npm"), {
       recursive: true,
@@ -72,7 +68,7 @@ test("actual native audit keeps the accepted finding non-blocking after the form
     });
     const raw = JSON.parse(readFileSync(path.join(accepted.evidence, "raw.json"), "utf8"));
     const rawBytes = readFileSync(path.join(accepted.evidence, "raw.json"));
-    assert.equal(raw.results[0].packages[0].vulnerabilities, undefined);
+    assert.ok(raw.results[0].packages.every((entry) => entry.vulnerabilities === undefined));
     assert.deepEqual(
       JSON.parse(
         readFileSync(path.join(accepted.evidence, "execution.json"), "utf8"),
@@ -102,7 +98,11 @@ test("actual native audit keeps the accepted finding non-blocking after the form
           [1],
         );
         const retained = JSON.parse(readFileSync(path.join(observed.evidence, "raw.json"), "utf8"));
-        assert.equal(retained.results[0].packages[0].vulnerabilities[0].id, "GHSA-vfj7-8cjw-p6xm");
+        assert.equal(
+          retained.results[0].packages.find((entry) => entry.package.name === "braces")
+            .vulnerabilities[0].id,
+          "GHSA-vfj7-8cjw-p6xm",
+        );
         assert.doesNotThrow(() =>
           dependencies.auditDependencies({
             repository: directory,
@@ -131,8 +131,8 @@ test("actual native audit keeps the accepted finding non-blocking after the form
         );
         assert.ok(
           reports.some((report) =>
-            report.results[0].packages[0].vulnerabilities?.some(
-              (finding) => finding.id === "OSV-FIXTURE-UNRELATED",
+            report.results[0].packages.some((entry) =>
+              entry.vulnerabilities?.some((finding) => finding.id === "OSV-FIXTURE-UNRELATED"),
             ),
           ),
         );
