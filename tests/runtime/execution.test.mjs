@@ -57,5 +57,6 @@ test("source checking does not require a frozen release artifact", () => {
   });
   assert.ifError(result.error);
   assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /PASS native Markdown lint: \d+ source inputs/u);
   assert.match(result.stdout, /PASS repository source checks/u);
 });

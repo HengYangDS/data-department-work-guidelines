@@ -13,18 +13,18 @@ owns the commands; [repository governance](../governance/README.md) owns
 change and acceptance boundaries. Common rules come from the installed ETHOS
 product, not this directory index.
 
-| Check or operation                        | Current native input                                                                          |
-| ----------------------------------------- | --------------------------------------------------------------------------------------------- |
-| Markdown, code, JSON, and YAML formatting | [Prettier](../../.config/checks/prettier/prettier.toml)                                       |
-| Configuration syntax and formatting       | [Installed ETHOS](../governance/README.md#proof-and-configuration)                            |
-| TOML formatting                           | [Taplo](../../.config/checks/taplo/taplo.toml)                                                |
-| Non-spacing Markdown checks               | [Installed ETHOS policy](../governance/README.md#proof-and-configuration)                     |
-| English prose and department terms        | [Vale](../../.config/checks/vale/vale.ini), its adjacent styles, and department vocabulary    |
-| Local links and fragments                 | [Lychee](../../.config/checks/lychee/lychee.toml)                                             |
-| Project dependency findings               | [OSV dispositions](../../.config/checks/dependencies/policy.toml)                             |
-| Native tool acquisition                   | [Supply manifest](../../.config/supply/native.json)                                           |
-| CI Node and npm selection                 | [Mise configuration](../../.config/mise/config.toml) and [lock](../../.config/mise/mise.lock) |
-| Offline artifact inspection               | [Bundle identity](../../.config/release/offline-bundle.json)                                  |
+| Check or operation                        | Current native input                                                                               |
+| ----------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Markdown, code, JSON, and YAML formatting | [Prettier](../../.config/checks/prettier/prettier.toml)                                            |
+| Configuration syntax and formatting       | [Installed ETHOS](../governance/README.md#proof-and-configuration)                                 |
+| TOML formatting                           | [Taplo](../../.config/checks/taplo/taplo.toml)                                                     |
+| Non-spacing Markdown checks               | [Markdownlint core](../../tools/docs/content.mjs), using its official Prettier compatibility style |
+| English prose and department terms        | [Vale](../../.config/checks/vale/vale.ini), its adjacent styles, and department vocabulary         |
+| Local links and fragments                 | [Lychee](../../.config/checks/lychee/lychee.toml)                                                  |
+| Project dependency findings               | [OSV dispositions](../../.config/checks/dependencies/policy.toml)                                  |
+| Native tool acquisition                   | [Supply manifest](../../.config/supply/native.json)                                                |
+| CI Node and npm selection                 | [Mise configuration](../../.config/mise/config.toml) and [lock](../../.config/mise/mise.lock)      |
+| Offline artifact inspection               | [Bundle identity](../../.config/release/offline-bundle.json)                                       |
 
 ## Change a native input
 

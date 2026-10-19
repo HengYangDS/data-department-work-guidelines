@@ -15,6 +15,7 @@ import { isDeepStrictEqual } from "node:util";
 import { parse as parseToml } from "smol-toml";
 import YAML from "yaml";
 import { lint } from "markdownlint/sync";
+import prettierMarkdownStyle from "markdownlint/style/prettier" with { type: "json" };
 import { noQualityControl } from "./markdown.mjs";
 import {
   currentMarkdown,
@@ -25,6 +26,7 @@ import {
   run,
   runNodeTool,
   sourceAttributes,
+  sourceMarkdown,
   temporaryRoot,
 } from "../runtime.mjs";
 import { nativeToolBinary } from "../supply.mjs";
@@ -133,6 +135,23 @@ export async function formatSource({ check = true } = {}) {
   }
   for (const [relative, formatted] of changes) writeFileSync(filePath(relative), formatted);
   console.log(`PASS native TOML formatting: ${targets.toml.length} source files`);
+}
+
+export function lintMarkdown({ files = sourceMarkdown(), strings } = {}) {
+  const results = lint({
+    files: files.map((relative) => (path.isAbsolute(relative) ? relative : filePath(relative))),
+    strings,
+    config: { ...prettierMarkdownStyle, MD024: { siblings_only: true } },
+    noInlineConfig: true,
+  });
+  const findings = Object.entries(results).flatMap(([file, errors]) =>
+    errors.map(
+      ({ lineNumber, ruleNames, errorDetail, errorContext }) =>
+        `${file}:${lineNumber} [${ruleNames[0]}] ${errorDetail ?? errorContext ?? "Markdown rule violation"}`,
+    ),
+  );
+  if (findings.length) throw new Error(findings.join("\n"));
+  console.log(`PASS native Markdown lint: ${Object.keys(results).length} source inputs`);
 }
 
 export function checkProse(files = currentMarkdown()) {

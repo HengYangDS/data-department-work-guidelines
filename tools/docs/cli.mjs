@@ -15,7 +15,7 @@ async function reportVerificationContext() {
 async function checkRepository() {
   const { checkLineEndingAttributes, checkLicense, checkNavigation, checkNoScope } =
     await import("./governance.mjs");
-  const { checkLinks, checkProse, checkTextLayout } = await import("./content.mjs");
+  const { checkLinks, checkProse, checkTextLayout, lintMarkdown } = await import("./content.mjs");
   const { checkChangelog } = await import("./changelog.mjs");
   const { checkCi } = await import("./ci.mjs");
   const { dependencyPolicyPath, parseDependencyPolicy, validateDependencyInput } =
@@ -28,6 +28,7 @@ async function checkRepository() {
   checkLicense();
   checkNoScope();
   await checkProse();
+  lintMarkdown();
   checkChangelog();
   checkLinks();
   await checkTextLayout();
