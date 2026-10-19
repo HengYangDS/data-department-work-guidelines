@@ -57,7 +57,7 @@
   - [x] 2.46.1 Separate dependency auditing from CI topology; verify all 53 original cases, declarations, shared fixtures, nested discovery, worker limits, deadlines, and full local execution.
   - [ ] 2.46.2 Qualify runtime and release validation through accepted ETHOS commands at actual consumers; retire duplicate code, dependencies, configuration, guidance, and common specs in the same batch, reconciling retained Purpose statements.
   - [ ] 2.46.3 Qualify shared execution on literal paths, selection/diagnostic failures, cancellation, and bounded cleanup from one attempt; retire generic tests, fixtures, and standards, retaining only content cases and proved business-specific increments.
-  - [x] 2.46.4 Reconcile design, official deltas, and main specs; verify requirements, scenarios, reader routes, strict OpenSpec, and clarity.
+  - [x] 2.46.4 Reconcile design, official deltas, and main specs; verify requirements, scenarios, reader routes, strict OpenSpec, and clarity. Official seven-spec rebuild and package-independent MIT grant: `b2ae38ec6ddb17d79786724ae9cd332aef80da6a668805cf0e09937fca00617d`.
   - [x] 2.46.5 Preserve complete versioned notes in the sole Changelog owner; verify SemVer meaning, tags, and both comparisons without a ceiling or duplicate history.
   - [ ] 2.46.6 Qualify native limits for retained-source, release-history, and official carrier classes: supported metrics, non-writing refusal one non-blank line above each limit, changed-source plan, and exact-HEAD proof. Add no private gate or invented exemption. Installed Markdown carrier controls: `38e08bf3ab335abbdbf51b54ecf4040e7929eab1fc74c1617829265ae9b132c4`; final plan/proof remain open.
 
