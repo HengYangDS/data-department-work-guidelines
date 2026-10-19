@@ -143,7 +143,11 @@ effects. The package-manager version includes native SHA-512 metadata: Mise
 checks it when acquiring npm; npm's own installer accepts the metadata but
 does not enforce that declared checksum. Prepare tools through the destination's
 existing installation owner; do not bypass admission with `--force` or an
-override. Install locked dependencies with `npm ci --ignore-scripts`.
+override. Run `mise run bootstrap` to prepare the declared Node and npm, then
+install locked dependencies with `npm ci --ignore-scripts`. Bootstrap uses
+native Mise and the existing lock; it does not install ETHOS, project packages,
+or the native check tools. Those consumers keep their separate preparation
+below until the shared supply migration qualifies.
 
 Use Mise 2026.10.14 or later, as required by the
 [project configuration](.config/mise/config.toml). Earlier versions can reject
