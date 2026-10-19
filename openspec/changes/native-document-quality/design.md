@@ -237,8 +237,8 @@ remain exact-artifact evidence only while those artifacts are consumed:
 
 - Locked braces 3.0.3, `GHSA-vfj7-8cjw-p6xm`, under the native
   [dependency policy](../../../.config/checks/dependencies/policy.toml).
-- Official Node 26.11.1 Trixie image index
-  `sha256:32fa97f3363975684b08bf4e8a68a47c7905175cc20275b50b974bbd02aba731`,
+- Official Node 26.12.0 Trixie image index
+  `sha256:1b84b89ada025e3b14543cbb837ffaa1c1b5273b841c5b94dd1a8f9c1d8cf7fe`,
   only for the approved controlled development CI use.
 - Exact Vale 3.24.0, OSV Scanner 2.7.0, and npm 12.2.0, for approved trusted
   checks, controlled development CI, and the same hash-bound offline supply.
