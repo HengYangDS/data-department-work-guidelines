@@ -134,6 +134,12 @@ does not enforce that declared checksum. Prepare tools through the destination's
 existing installation owner; do not bypass admission with `--force` or an
 override. Install locked dependencies with `npm ci --ignore-scripts`.
 
+Use Mise 2026.10.14 or later, as required by the
+[project configuration](.config/mise/config.toml). Earlier versions can reject
+the checksum-bearing npm lock entry or warn and run an ambient npm instead.
+Upgrade through the destination's existing installation owner before preparing
+tools; the version floor rejects unsupported Mise before a child command runs.
+
 GitLab's macOS and Windows jobs use the existing Mise installation with the
 [project runtime configuration](.config/mise/config.toml) and its
 [native lock](.config/mise/mise.lock). Mise installs selected versions under

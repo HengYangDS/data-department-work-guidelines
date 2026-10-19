@@ -1,4 +1,4 @@
-min_version = "2026.10.7"
+min_version = "2026.10.14"
 
 # package.json owns both development versions and npm archive integrity.
 # The native idiomatic parser needs no executable template or second declaration.
