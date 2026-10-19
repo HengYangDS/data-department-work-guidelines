@@ -59,6 +59,39 @@ proof, history repair, and closure.
   are separately observed at their new source binding
 - **AND** earlier checks and historical task state do not certify those effects.
 
+## MODIFIED Requirements
+
+### Requirement: Repository reuse rights have one MIT grant
+
+The repository SHALL include one standard MIT license granting reuse of its
+source and documentation and naming its copyright holder. Its public entry
+SHALL link to that grant. Any retained package metadata SHALL declare MIT
+consistently. Verification SHALL reject missing or inconsistent license
+declarations and SHALL NOT infer rights from visibility. A documentation-only
+repository SHALL NOT retain a package solely to carry license metadata.
+
+#### Scenario: A reader checks reuse rights
+
+- **WHEN** a reader opens the repository's public entry
+- **THEN** the entry leads to the standard MIT license
+- **AND** any retained package metadata declares the same SPDX identifier
+- **AND THEN** no unaccepted draft license is presented as current.
+
+#### Scenario: License metadata diverges
+
+- **WHEN** the license file, public entry, or retained package metadata disagrees
+  about the grant
+- **THEN** repository verification rejects the source
+- **AND THEN** a public Git remote alone does not override the discrepancy.
+
+#### Scenario: Shared maintenance replaces the private package
+
+- **WHEN** accepted installed ETHOS consumers replace the private maintenance
+  package and its metadata is retired in the same migration
+- **THEN** the repository retains its standard MIT license and public license link
+- **AND** verification checks those actual declarations without requiring a dummy
+  package or treating the absent package metadata as a conflicting grant.
+
 ## REMOVED Requirements
 
 **Reason:** Shared admission, evidence, task, signing, identity, branch, and
