@@ -56,8 +56,9 @@ local links and fragments, navigation, configuration, CI, and
 SemVer/Changelog. For official OpenSpec artifacts, run
 `ethos prove --host --execute --gate openspec --json`. ETHOS invokes its locked
 official tool and retains the complete result; DDWG has no second report parser.
-The full graph includes the same native OpenSpec gate. These checks download nothing and do not require a frozen release bundle. Inspect a supplied
-bundle separately before installation or release. Before online publication,
+Run this gate separately: the current two-root host graph does not include it.
+These checks download nothing and do not require a frozen release bundle.
+Inspect a supplied bundle separately before installation or release. Before online publication,
 also run
 `node tools/docs/cli.mjs audit` and retain its complete result under the
 [supply boundary](docs/governance/README.md#tool-supply-and-offline-execution).
