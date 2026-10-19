@@ -23,9 +23,9 @@ push admission; a method-pack plan or decision record grants neither.
 
 For `docs/` pages, copy a current page's native YAML front matter.
 Leave one blank line before the H1, the first block of the document body.
-The installed ETHOS registry checks metadata and reading order; native
-Markdown readers treat the header as data, not body content. Keep `node_modules/`
-and generated output out of Git.
+The installed ETHOS registry checks metadata and reading order. Display depends
+on the Markdown reader: GitHub shows this metadata as a table above the title.
+Keep `node_modules/` and generated output out of Git.
 
 ## Verify the source
 
