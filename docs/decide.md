@@ -71,6 +71,13 @@ lead; it does not become a fact without verification. If the subject,
 definition, comparison criterion, or time cutoff changes during discussion, say
 so explicitly.
 
+For example, a pipeline log records 4 timeouts in 12 runs of the same revision
+in one test environment. This is an illustrative observation about those runs,
+not the production failure rate. Upstream throttling is a hypothesis; compare
+request and rate-limit timestamps before naming it as the cause. Judge release
+readiness against the agreed completion conditions. Preserve the failed runs
+when checking a repair; a later success does not erase them.
+
 ## Use the Smallest Sufficient Model
 
 1. **Model the relationships.** Define the central concepts and subjects. Keep

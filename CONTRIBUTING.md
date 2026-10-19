@@ -69,12 +69,15 @@ non-execution decision rationale. The shared floor binds that provider as the
 `document-registry` prerequisite of `docs-integrity`, without a duplicate checker.
 This host check does not establish repository proof or source acceptance.
 
-| When you need to                 | Command                                                    |
-| -------------------------------- | ---------------------------------------------------------- |
-| Format the selected source       | `npm run format`                                           |
-| Check formatting without writing | `npm run format -- --check`                                |
-| Check non-spacing Markdown rules | `ethos prove --host --execute --gate markdown-lint --json` |
-| Check spelling, prose, and terms | `npm run prose`                                            |
+| When you need to                    | Command                         |
+| ----------------------------------- | ------------------------------- |
+| Format the selected source          | `npm run format`                |
+| Check formatting without writing    | `npm run format -- --check`     |
+| Check Markdown and source integrity | `node tools/docs/cli.mjs check` |
+| Check spelling, prose, and terms    | `npm run prose`                 |
+
+The source check includes non-spacing Markdown lint. Keep using it until its
+installed shared replacement qualifies in this repository.
 
 The [configuration map](docs/governance/configuration.md) locates each native input; it does not
 restate common standards. Use the installed ETHOS rules and the declared native
