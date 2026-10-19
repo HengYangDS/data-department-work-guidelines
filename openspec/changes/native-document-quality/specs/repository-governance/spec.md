@@ -33,12 +33,12 @@ implementations through this official Change.
 
 ### Requirement: DDWG selects native source and branch parameters
 
-DDWG SHALL use ETHOS's fixed native branch roles and mandatory SSH signatures
-without restating them in repository policy. Its release declaration SHALL bind
-the accepted fast-forward mirror and publication peers. Only `dev`, `main`, and
-`proposal/*` SHALL be published to those peers. Official OpenSpec SHALL own
-material intent and task progress; native shared contracts SHALL own admission,
-proof, history repair, and closure.
+DDWG SHALL inherit ETHOS's fixed branch roles and mandatory SSH signatures
+without restating them. Its release declaration SHALL bind the accepted
+fast-forward mirror and publication peers. Published branches SHALL be limited
+to `dev`, `main`, and `proposal/*`; release tags SHALL follow the native signed
+release contract. Official OpenSpec SHALL own material intent and task progress;
+native contracts SHALL own admission, proof, history repair, and closure.
 
 #### Scenario: A contributor changes tracked source
 
@@ -51,6 +51,14 @@ proof, history repair, and closure.
 - **WHEN** the publication route selects `work/*` or `candidate/dev`
 - **THEN** the accepted native branch policy refuses that remote effect
 - **AND** a declared proposal may proceed only under its actual admission.
+
+#### Scenario: A document version tag is selected
+
+- **WHEN** publication selects a declared document version tag rather than a branch
+- **THEN** the native signed release contract governs its admission and source
+  version; the branch allowlist does not exclude it
+- **AND** a matching tag name alone does not prove its signature, source acceptance,
+  publication, or any peer's release checks.
 
 #### Scenario: The completed Change is archived
 
