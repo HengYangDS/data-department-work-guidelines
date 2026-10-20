@@ -242,7 +242,3 @@ export function managedFileExists(target, repository = root) {
     throw new Error(`managed entry is not a regular file: ${selected}`);
   return true;
 }
-
-export function temporaryRoot() {
-  return path.join(os.tmpdir(), "ddwg-docs-");
-}
