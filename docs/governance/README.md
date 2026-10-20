@@ -157,6 +157,10 @@ The [profile](../../.ethos/profile.toml) still declares two temporary roots:
 applicable shared closure. `source-format` checks selected source once, without
 a second formatter provider in the local root.
 
+The remaining repository text check covers English and source-byte integrity.
+It does not parse TOML, classify formatter ownership, or impose a raw blank-line
+rule; installed `source-format` and `config-quality` own native layout and syntax.
+
 | Concern                                | Current consumer                                          | Ownership boundary                                                              |
 | -------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------- |
 | Metadata and decision structure        | Installed `docs-registry`.                                | The shared contract owns identity, structure, and non-execution inspection.     |

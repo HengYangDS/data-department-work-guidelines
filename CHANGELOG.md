@@ -89,6 +89,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Removed
 
+- Remove the duplicate TOML parser, formatter-ownership classifier, and raw
+  blank-line rule from the repository text check, with their generic fixtures.
+  Installed ETHOS owns syntax and layout; the remaining text-byte checks stay
+  until their shared replacement qualifies.
 - Remove the duplicate local-link checker, its command, and generic fixtures.
   Use installed `markdown-links` on committed source in the shared proof floor;
   working-edit checks do not establish committed-link acceptance.

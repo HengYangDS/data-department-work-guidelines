@@ -1,7 +1,6 @@
 import { existsSync, lstatSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { getFileInfo } from "prettier";
-import { parse as parseToml } from "smol-toml";
 import { lint } from "markdownlint/sync";
 import { noQualityControl } from "./markdown.mjs";
 import { currentMarkdown, filePath, gitFiles, root, run, sourceAttributes } from "../runtime.mjs";
@@ -15,7 +14,6 @@ const plainTextIdentities = new Set([
   ".gitattributes",
   ".editorconfig",
 ]);
-const nativeGeneratedToml = new Set([".config/mise/mise.lock"]);
 export function checkProse(files = currentMarkdown()) {
   const vale = JSON.parse(
     run(
@@ -66,42 +64,10 @@ export function checkProse(files = currentMarkdown()) {
   );
 }
 
-function blankLineError(relative, source) {
-  const lines = source.split(/\r?\n/u);
-  for (let index = 1; index < lines.length; index += 1) {
-    if (!lines[index].trim() && !lines[index - 1].trim() && index < lines.length - 1) {
-      return `${relative}:${index + 1}: consecutive blank lines are not allowed`;
-    }
-  }
-  return "";
-}
-
-export async function textViolations(relative, source) {
+export function textViolations(relative, source) {
   const errors = [];
-  const toml = relative.endsWith(".toml") || nativeGeneratedToml.has(relative);
-  if (toml) {
-    try {
-      parseToml(source);
-    } catch (error) {
-      errors.push(`${relative}: invalid TOML: ${error.message}`);
-    }
-  }
   for (const [index, line] of source.split(/\r?\n/u).entries()) {
     if (cjk.test(line)) errors.push(`${relative}:${index + 1}: CJK text is not allowed`);
-  }
-  const { inferredParser } = await getFileInfo(filePath(relative), {
-    ignorePath: [],
-    withNodeModules: true,
-    resolveConfig: false,
-  });
-  if (!inferredParser && !toml) {
-    const extension = path.extname(relative);
-    if (!plainTextIdentities.has(relative) && ![".txt", ".ini"].includes(extension)) {
-      errors.push(`${relative}: no native formatting owner for this text format`);
-    } else {
-      const error = blankLineError(relative, source);
-      if (error) errors.push(error);
-    }
   }
   return errors;
 }
@@ -141,8 +107,8 @@ export async function checkTextLayout() {
       errors.push(`${relative}: text source is not valid UTF-8: ${error.message}`);
       continue;
     }
-    errors.push(...(await textViolations(relative, source)));
+    errors.push(...textViolations(relative, source));
   }
   if (errors.length) throw new Error(errors.join("\n"));
-  console.log("PASS English source and native or plain-text spacing ownership");
+  console.log("PASS retained English and text-byte checks; installed ETHOS owns formatting");
 }

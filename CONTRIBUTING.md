@@ -62,6 +62,10 @@ SemVer/Changelog. For official OpenSpec artifacts, run
 official tool and retains the complete result; DDWG has no second report parser.
 Use this scoped command while editing OpenSpec, without rerunning the full check.
 These checks download nothing and do not require a frozen release bundle.
+For configuration changes, run
+`ethos prove --host --execute --gate config-quality --json`.
+Installed ETHOS owns native syntax and formatting; the remaining repository
+text check covers English and source-byte integrity, not a second layout policy.
 Inspect a supplied bundle separately before installation or release. Before online publication,
 also run
 `node tools/docs/cli.mjs audit` and retain its complete result under the

@@ -123,24 +123,6 @@ test("tracked text refuses invalid UTF-8 and NUL while declared binary assets re
   assert.match(hidden.stderr, /README\.md:.*native text owner cannot be declared binary/u);
 });
 
-test("native spacing checks archived Markdown; other text keeps its own boundary", async () => {
-  const { check, format } = await import("prettier");
-  const file = "openspec/changes/archive/example/spec.md";
-  const source = "# Example\n\n\nText.\n";
-  const options = { filepath: file };
-  assert.equal(await check(source, options), false);
-  const formatted = await format(source, options);
-  assert.equal(formatted, "# Example\n\nText.\n");
-  assert.equal(await check(formatted, options), true);
-  for (const name of ["LICENSE", ".config/README.txt", ".config/example.ini"]) {
-    assert.deepEqual(await textViolations(name, "First\n\nSecond\n"), []);
-    assert.match(
-      (await textViolations(name, "First\n\n\nSecond\n"))[0],
-      /:3: consecutive blank lines/u,
-    );
-  }
-});
-
 test("retired quality owners are absent from current source and dependencies", () => {
   const retiredPackage =
     /(?:^|\/)(?:@textlint|@cspell|cspell[^/]*|textlint[^/]*|write-good|markdownlint-cli2(?:-formatter-default)?)(?:\/|$)/u;
