@@ -12,15 +12,10 @@ import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 import { pathToFileURL } from "node:url";
-import {
-  headingLevel,
-  markdownLinkDestinations,
-  markdownTokens,
-  walkMarkdown,
-} from "../../tools/docs/markdown.mjs";
+import { headingLevel, markdownTokens, walkMarkdown } from "../../tools/docs/markdown.mjs";
 import { gitFiles, root } from "../../tools/runtime.mjs";
 
-test("native front matter stays outside reader headings and links with physical source lines", () => {
+test("native front matter stays outside reader headings with physical source lines", () => {
   const source = [
     "---",
     "subject: fixture:guide",
@@ -41,7 +36,6 @@ test("native front matter stays outside reader headings and links with physical 
   assert.equal(headings.length, 1);
   assert.equal(headings[0].text, "# Fixture");
   assert.equal(headings[0].startLine, 9);
-  assert.deepEqual(markdownLinkDestinations(source), ["target.md"]);
 });
 
 test("tracked text refuses invalid UTF-8 and NUL while declared binary assets remain reachable", () => {

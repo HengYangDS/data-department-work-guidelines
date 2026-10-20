@@ -8,10 +8,7 @@
   },
   "devDependencies": {
     "entities": "8.1.0",
-    "htmlparser2": "12.0.0",
     "markdownlint": "0.42.0",
-    "micromark": "4.0.3",
-    "micromark-extension-gfm-table": "2.1.2",
     "prettier": "3.9.10",
     "semver": "7.8.5",
     "shell-quote": "1.12.0",

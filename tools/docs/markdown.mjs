@@ -1,8 +1,5 @@
 import { decodeHTML } from "entities";
 import { lint } from "markdownlint/sync";
-import { Parser } from "htmlparser2";
-import { micromark } from "micromark";
-import { gfmTable, gfmTableHtml } from "micromark-extension-gfm-table";
 
 function parseMarkdown(source, name) {
   let tokens;
@@ -28,12 +25,6 @@ function parseMarkdown(source, name) {
   return {
     tokens,
     frontMatterLines,
-    body: frontMatterLines
-      ? source
-          .split(/\r\n|\n|\r/u)
-          .slice(frontMatterLines)
-          .join("\n")
-      : source,
   };
 }
 
@@ -120,34 +111,4 @@ export function headingText(token) {
     .filter((child) => ["atxHeadingText", "setextHeadingText"].includes(child.type))
     .map((child) => markdownText(child, { code: true }))
     .join("");
-}
-
-export function markdownLinkDestinations(source) {
-  const destinations = [];
-  let anchor;
-  new Parser({
-    onopentag(name, attributes) {
-      if (name === "a" && attributes.href !== undefined) {
-        anchor = { destination: attributes.href, label: "" };
-      } else if (name === "img" && anchor) {
-        anchor.label += attributes.alt ?? "";
-      }
-    },
-    ontext(text) {
-      if (anchor) anchor.label += text;
-    },
-    onclosetag(name) {
-      if (name === "a" && anchor) {
-        if (/[^\p{White_Space}\p{Default_Ignorable_Code_Point}]/u.test(anchor.label))
-          destinations.push(anchor.destination);
-        anchor = undefined;
-      }
-    },
-  }).end(
-    micromark(parseMarkdown(source, "document.md").body, {
-      extensions: [gfmTable()],
-      htmlExtensions: [gfmTableHtml()],
-    }),
-  );
-  return destinations;
 }

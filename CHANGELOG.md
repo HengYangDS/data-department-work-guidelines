@@ -97,6 +97,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   and their private tests. The installed shared provider retains Codespell, Vale rules,
   native severity and diagnostics. Keep only a temporary spelling/vocabulary increment
   until shared spelling qualifies this corpus; CI and offline supply migration remain open.
+- Remove the private navigation controller, route tables, fixed reader cue, CLI branch,
+  generic fixtures, unused link-render helper, and its exclusive dependencies. Keep
+  the task map, reader duties, actual member/Agent journey
+  review, and native link/registry checks; no replacement route validator is added.
 - Remove tests that freeze guideline wording, titles, paragraph positions, and reading order.
   Keep substantive duties in their topic and specification owners; source checks cannot
   certify meaning or reader understanding. Retain tests for executable repository checks

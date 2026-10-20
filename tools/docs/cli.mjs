@@ -13,7 +13,7 @@ async function reportVerificationContext() {
 }
 
 async function checkRepository() {
-  const { checkLineEndingAttributes, checkLicense, checkNavigation, checkNoScope } =
+  const { checkLineEndingAttributes, checkLicense, checkNoScope } =
     await import("./governance.mjs");
   const { checkSourceBytes } = await import("./content.mjs");
   const { checkChangelog } = await import("./changelog.mjs");
@@ -29,7 +29,6 @@ async function checkRepository() {
   checkNoScope();
   checkChangelog();
   await checkSourceBytes();
-  checkNavigation();
   checkCi();
   console.log("PASS repository source checks");
 }
@@ -55,14 +54,8 @@ try {
       checkChangelog();
       break;
     }
-    case "navigation": {
-      if (arguments_.length) throw new Error("navigation accepts no arguments");
-      const { checkNavigation } = await import("./governance.mjs");
-      checkNavigation();
-      break;
-    }
     default:
-      throw new Error("usage: node tools/docs/cli.mjs check|changelog|navigation|audit");
+      throw new Error("usage: node tools/docs/cli.mjs check|changelog|audit");
   }
 } catch (error) {
   reportError(error);

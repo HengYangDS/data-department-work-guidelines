@@ -30,7 +30,7 @@ permission, acceptance, and retirement boundaries.
 | ---------------------------------------------------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------------- |
 | [Official OpenSpec Change](../../openspec/README.md) | Material intent, requirements, design, and progress in `tasks.md`.                   | Does not authorize a write or publication.                 |
 | Installed ETHOS                                      | Changed-path attribution, lane lease, admission, proof, acceptance, and publication. | Acts on current source and policy, not remembered results. |
-| Repository checks                                    | Document quality, reader routes, decision shape, and declared configuration.         | Do not replace OpenSpec lifecycle or ETHOS admission.      |
+| Repository checks                                    | Source-byte integrity, release history, and retained repository checks.              | Do not replace OpenSpec lifecycle or ETHOS admission.      |
 | [Decision record](../decisions/README.md)            | Durable rationale and rejected alternatives.                                         | Does not hold tasks, command output, or acceptance logs.   |
 
 Use the [official workspace](../../openspec/README.md) for artifact roles and
@@ -185,6 +185,12 @@ Run the full applicable closure on the exact committed tree and keep its origina
 diagnostics. Document output cannot replace behavior evidence; syntax alone
 cannot establish static correctness. Tests and structural checks also cannot
 establish factual accuracy, semantic fidelity, reader understanding, or team use.
+
+The task map and topic owners retain reader navigation. Review actual member and
+Agent journeys for scope, authority, next action, and stop conditions; do not use
+a private route table, fixed opening phrase, or paragraph position as acceptance.
+Installed link and registry checks verify their declared structures, not whether
+a reader understands the guidance.
 
 ### Source Links and Decision Records
 
