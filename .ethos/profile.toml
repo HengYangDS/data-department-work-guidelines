@@ -30,7 +30,7 @@ static-analysis = "markdown-format"
 id = "docs-integrity"
 kind = "test"
 command = ["node", "tools/docs/cli.mjs", "check"]
-depends_on = ["code-behavior", "document-registry"]
+depends_on = ["code-behavior", "document-registry", "markdown-lint"]
 asset_classes = ["markdown-docs", "javascript-code"]
 dimensions = ["documentation", "links"]
 evidence_class = "proof"
@@ -61,6 +61,16 @@ trust_bearing = true
 network_policy = "offline"
 timeout_seconds = 180
 cpu_reservation = 2
+
+[[proof.gates]]
+id = "markdown-lint"
+kind = "lint"
+providers = ["ethos.adapters.gates.tool:markdown_lint_report"]
+asset_classes = ["markdown-docs"]
+dimensions = ["markdown", "documentation"]
+evidence_class = "contract"
+trust_bearing = true
+network_policy = "offline"
 
 [[proof.gates]]
 id = "document-registry"

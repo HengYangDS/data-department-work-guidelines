@@ -50,8 +50,11 @@ ETHOS selects tests from the committed Git source; there is no repository test
 controller or bare Node discovery command. Host verification needs a coherent
 committed source and does not mint repository proof or source acceptance.
 
-For an uncommitted edit, run `mise run check` and
-`node tools/docs/cli.mjs check`. The latter checks English prose and terms,
+For an uncommitted edit, run `mise run check`,
+`ethos prove --host --execute --gate markdown-lint --json`, and
+`node tools/docs/cli.mjs check`. The shared lint gate checks Git-selected working
+Markdown without writing, including non-ignored candidate files. The repository
+command checks English prose and terms,
 local links and fragments, navigation, configuration, CI, and
 SemVer/Changelog. For official OpenSpec artifacts, run
 `ethos prove --host --execute --gate openspec --json`. ETHOS invokes its locked
@@ -88,8 +91,9 @@ These maintenance tasks are not repository proof. The existing proof and fixture
 consumers remain until their full shared replacement qualifies; they do not
 require another formatter implementation for this new entry.
 
-The source check includes non-spacing Markdown lint. Keep using it until its
-installed shared replacement qualifies in this repository.
+The installed `markdown-lint` prerequisite owns non-spacing checks alongside
+the native formatter. It runs through the full committed-source host graph
+and the explicit working-edit command above; DDWG has no second lint driver.
 
 The [configuration map](docs/governance/configuration.md) locates each native input; it does not
 restate common standards. Use the installed ETHOS rules and the declared native

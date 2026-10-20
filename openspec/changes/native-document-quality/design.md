@@ -135,6 +135,15 @@ are insufficient.
 Qualify fix and check on identical declared inputs and verify an unchanged
 second fix. The shared formatter owns spacing; other lint must not overrule
 accepted container structure or treat code/data literals as visual padding.
+
+Markdown lint follows the required reading and semantic contract, not every
+predecessor rule. MD033 is an optional output-medium restriction on otherwise
+valid raw HTML; MD036 heuristically treats a one-line emphasis paragraph as a
+heading. Neither is a universal DDWG obligation. Actual headings retain the
+shared parser and outline checks. Preserve format, structural findings, literal
+paths, selected working edits, and non-writing rejection through the shared
+provider; do not copy optional rules into a department increment.
+
 Generic execution and parser regressions belong to their product. Existing
 DDWG cases are migration inputs, not a mandate to keep their file layout,
 algorithms, worker counts, or executor afterward.

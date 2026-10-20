@@ -95,8 +95,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 - Remove replaced online-link, OpenSpec-report, metadata, configuration, list-spacing,
   and decision checks and their generic fixtures. Retire the repository formatter, its
   command and package script, and replaced formatting fixtures after native check/fix
-  qualification. Keep common standards with their installed
-  owner, historical source in Git, and unresolved obligations with the active Change.
+  qualification. Retire the non-spacing Markdown lint driver and generic tests;
+  the installed shared gate covers working edits and committed proof. Keep common standards
+  with their installed owner, historical source in Git, and unresolved obligations with the
+  active Change.
 
 ### Fixed
 

@@ -28,12 +28,20 @@ test("DDWG keeps two roots and product-owned Markdown and code observations", ()
   const gates = new Map(proof.gates.map((gate) => [gate.id, gate]));
   assert.equal(gates.size, proof.gates.length);
   assert.deepEqual(gates.get("docs-integrity").command, ["node", "tools/docs/cli.mjs", "check"]);
-  assert.deepEqual(gates.get("docs-integrity").depends_on, ["code-behavior", "document-registry"]);
+  assert.deepEqual(gates.get("docs-integrity").depends_on, [
+    "code-behavior",
+    "document-registry",
+    "markdown-lint",
+  ]);
   assert.deepEqual(gates.get("markdown-format").providers, [
     "ethos.adapters.gates.formatting:source_format_report",
     "ethos.adapters.gates.code_quality:static_report",
   ]);
   assert.equal(Object.hasOwn(gates.get("markdown-format"), "command"), false);
+  assert.deepEqual(gates.get("markdown-lint").providers, [
+    "ethos.adapters.gates.tool:markdown_lint_report",
+  ]);
+  assert.equal(Object.hasOwn(gates.get("markdown-lint"), "command"), false);
   assert.deepEqual(gates.get("document-registry").providers, [
     "ethos.surface.cli.root.reference:docs_registry_report",
   ]);
