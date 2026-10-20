@@ -91,6 +91,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Removed
 
+- Remove the whole-file character blacklist. New authored prose still requires English;
+  quoted originals, historical text, and meaningful literals keep their bytes.
 - Remove the duplicate TOML parser, formatter-ownership classifier, and raw
   blank-line rule from the repository text check, with their generic fixtures.
   Installed ETHOS owns syntax and layout; the remaining text-byte checks stay

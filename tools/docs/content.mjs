@@ -6,7 +6,6 @@ import { noQualityControl } from "./markdown.mjs";
 import { currentMarkdown, filePath, gitFiles, root, run, sourceAttributes } from "../runtime.mjs";
 import { nativeToolBinary } from "../supply.mjs";
 
-const cjk = /[\p{Script=Han}\u2e80-\u9fff\uac00-\ud7af\uf900-\ufaff\uff00-\uffef]/u;
 const plainTextIdentities = new Set([
   "LICENSE",
   "VERSION",
@@ -64,15 +63,7 @@ export function checkProse(files = currentMarkdown()) {
   );
 }
 
-export function textViolations(relative, source) {
-  const errors = [];
-  for (const [index, line] of source.split(/\r?\n/u).entries()) {
-    if (cjk.test(line)) errors.push(`${relative}:${index + 1}: CJK text is not allowed`);
-  }
-  return errors;
-}
-
-export async function checkTextLayout() {
+export async function checkSourceBytes() {
   const errors = [];
   const files = gitFiles();
   const attributes = sourceAttributes(files);
@@ -100,15 +91,13 @@ export async function checkTextLayout() {
       errors.push(`${relative}: text source contains a NUL byte`);
       continue;
     }
-    let source;
     try {
-      source = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+      new TextDecoder("utf-8", { fatal: true }).decode(bytes);
     } catch (error) {
       errors.push(`${relative}: text source is not valid UTF-8: ${error.message}`);
       continue;
     }
-    errors.push(...textViolations(relative, source));
   }
   if (errors.length) throw new Error(errors.join("\n"));
-  console.log("PASS retained English and text-byte checks; installed ETHOS owns formatting");
+  console.log("PASS retained source-byte checks; installed ETHOS owns formatting");
 }

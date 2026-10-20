@@ -12,7 +12,6 @@ import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 import { pathToFileURL } from "node:url";
-import { textViolations } from "../../tools/docs/content.mjs";
 import {
   headingLevel,
   markdownLinkDestinations,
@@ -45,20 +44,6 @@ test("native front matter stays outside reader headings and links with physical 
   assert.deepEqual(markdownLinkDestinations(source), ["target.md"]);
 });
 
-test("English failures identify the source file and line", async () => {
-  assert.match(
-    (await textViolations("docs/example.md", "# Heading\n\u4e2d\u6587\n"))[0],
-    /docs\/example\.md:2/u,
-  );
-});
-
-test("English source checks include supplementary Han characters", async () => {
-  assert.match(
-    (await textViolations("docs/example.md", "# Heading\n\u{20000}\n"))[0] ?? "",
-    /docs\/example\.md:2: CJK text/u,
-  );
-});
-
 test("tracked text refuses invalid UTF-8 and NUL while declared binary assets remain reachable", () => {
   using directory = mkdtempDisposableSync(path.join(os.tmpdir(), "ddwg-source-bytes-"));
   cpSync(path.join(root, "tools"), path.join(directory.path, "tools"), {
@@ -85,7 +70,7 @@ test("tracked text refuses invalid UTF-8 and NUL while declared binary assets re
   const command = [
     "--input-type=module",
     "--eval",
-    `const { checkTextLayout } = await import(${JSON.stringify(module)}); await checkTextLayout();`,
+    `const { checkSourceBytes } = await import(${JSON.stringify(module)}); await checkSourceBytes();`,
   ];
   for (const [bytes, message] of [
     [Buffer.from([0xc3, 0x28]), /README\.md:.*UTF-8/u],
@@ -101,7 +86,10 @@ test("tracked text refuses invalid UTF-8 and NUL while declared binary assets re
     assert.notEqual(result.status, 0, result.stdout);
     assert.match(result.stderr, message);
   }
-  writeFileSync(path.join(directory.path, "README.md"), "# Valid source\n");
+  writeFileSync(
+    path.join(directory.path, "README.md"),
+    "# Valid source\n\nQuoted original: \u201c\u4fe1\u3001\u8fbe\u3001\u96c5\u201d.\n\nLiteral: `\u{20000}`.\n",
+  );
   const valid = spawnSync(process.execPath, command, {
     cwd: directory.path,
     encoding: "utf8",

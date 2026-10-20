@@ -28,6 +28,11 @@ on the actual page. Display depends on the Markdown reader: GitHub shows this
 metadata as a table above the title.
 Keep `node_modules/` and generated output out of Git.
 
+Write new guidance, comments, and operational text in English with the
+department's terminology. Preserve quoted originals, captured historical text,
+and meaningful code or data literals. Review authored prose in context; a
+character blacklist cannot establish language or translation quality.
+
 ## Verify the source
 
 The full check requires [installed ETHOS](#make-ethos-available), the declared
@@ -65,7 +70,8 @@ These checks download nothing and do not require a frozen release bundle.
 For configuration changes, run
 `ethos prove --host --execute --gate config-quality --json`.
 Installed ETHOS owns native syntax and formatting; the remaining repository
-text check covers English and source-byte integrity, not a second layout policy.
+text check covers source-byte integrity, not language detection or another layout
+policy. Prose tools support the English editorial review; they do not replace it.
 Inspect a supplied bundle separately before installation or release. Before online publication,
 also run
 `node tools/docs/cli.mjs audit` and retain its complete result under the

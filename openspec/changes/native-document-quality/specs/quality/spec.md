@@ -19,9 +19,13 @@ SHALL assess faithful meaning, clarity, and reading quality.
 
 #### Scenario: A candidate changes the language or meaning
 
-- **WHEN** selected current source reintroduces Chinese prose or changes a duty
-- **THEN** the shared language check rejects the wrong language and the
-  existing original-duty review assesses the meaning change
+- **WHEN** a candidate introduces new authored prose outside the declared English
+  language or changes a duty
+- **THEN** editorial review requires English prose and the existing original-duty
+  review assesses the meaning change
+- **AND** quoted originals, captured historical text, and meaningful code or data
+  literals retain their bytes; a whole-file character blacklist cannot replace
+  contextual language review
 - **AND** a passing language or style report does not certify translation,
   complete equivalence, or team use.
 
