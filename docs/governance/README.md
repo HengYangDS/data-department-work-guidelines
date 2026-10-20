@@ -33,30 +33,17 @@ permission, acceptance, and retirement boundaries.
 | Repository checks                                    | Document quality, reader routes, decision shape, and declared configuration.         | Do not replace OpenSpec lifecycle or ETHOS admission.      |
 | [Decision record](../decisions/README.md)            | Durable rationale and rejected alternatives.                                         | Does not hold tasks, command output, or acceptance logs.   |
 
-The selected OpenSpec Change owns intent, requirements, design, and progress.
-ETHOS compiles its acceptance conditions into a temporary Commitment for
-admission and proof. A private scope companion, tracked claim ledger,
-method-pack plan, or local script cannot supply another lifecycle.
+Use the [official workspace](../../openspec/README.md) for artifact roles and
+the [contributor procedure](../../CONTRIBUTING.md) for exact write, check, and
+publication steps. The installed `ethos status --json` result identifies the
+current product contracts in `governance_context.agent_guidance.sources`.
+Read those version-matched references for shared admission, proof, and retirement
+rules; this page adds no second contract.
 
-Follow the [official artifact rules](../../openspec/config.yaml). Specifications
-own observable requirements; design owns choices and migration order; tasks
-own actions, completion checks, and checkbox state. Keep execution results with
-their producer. An artifact may parse correctly and still violate those
-boundaries.
-
-1. Before a tracked write, run installed ETHOS status in the intended worktree.
-   Follow its verdict, gaps, next action, and continuation; obtain passing
-   prewrite admission for the exact paths and current state.
-2. Before acceptance, run repository checks and the changed-source plan. Commit
-   with the trusted signer and execute full proof against that commit's OID.
-   Installed Git-common hooks enforce commit and push admission. Apply the
-   [supply boundary](#tool-supply-and-offline-execution) before online publication.
-3. Before closure, complete every declared obligation and observe each required
-   delivery. A Change may reach `dev` while delivery remains outstanding; do not
-   archive that unfinished work.
-4. After official archive, inspect the new commit's attribution and signature,
-   prove its OID, and verify publication and CI. Only then retire the absorbed
-   lane through ETHOS. Earlier-HEAD evidence does not prove this new commit.
+Acceptance into `dev` does not close outstanding delivery. Complete this
+Change's declared obligations before official archive, then qualify the new
+archive commit's signature, proof, and publication before retiring its lane.
+Earlier-HEAD evidence cannot establish those later effects.
 
 ## Source, Two Forges, and Actual Use
 
@@ -142,59 +129,54 @@ success. The same Changelog serves both peers and local readers.
 ## Quality and Local State
 
 Run the source checks in [Contributing](../../CONTRIBUTING.md#verify-the-source).
-The installed full host graph owns native test execution and source-quality
-observations. Repository checks supply the current document, configuration,
-prose, link, and official OpenSpec inputs. Working-edit checks and committed-source
-host verification are separate observations; neither grants repository proof,
-source acceptance, or publication. The [configuration map](configuration.md) locates current native
-inputs without restating common rules.
+Working-edit checks and committed-source host verification are separate
+observations; neither grants repository proof, source acceptance, or publication.
+The [configuration map](configuration.md) locates native inputs.
 
 ### Observe the Execution Environment
 
-The source check records path, commit, tree, tracked changes, Node version and
-platform, process architecture, `hostname`, and exact workspace-capacity bytes.
-Keep native read errors as failures. These observations do not establish VM
-identity, host architecture, isolation, or throughput: the runner owner must
-verify guest and host separately. A mounted workspace may differ from the guest
-root volume.
-
-Host names belong in diagnostic evidence, never portable target configuration.
-The [tool-supply boundary](#tool-supply-and-offline-execution) owns tool-selection
-evidence.
+The source check records path, commit, tree, tracked changes, Node version,
+platform, process architecture, host name, and exact workspace-capacity bytes.
+Read errors fail the check. These diagnostics do not establish VM identity,
+host architecture, isolation, or throughput; the runner owner verifies guest
+and host separately. A mounted workspace may differ from the guest root volume.
+Host names belong in evidence, never portable configuration.
 
 ### Preserve Official OpenSpec Results
 
-Official OpenSpec reports must identify this repository, unique typed items,
-complete diagnostics, and consistent native counts for both `--all` categories,
-including empty ones. INFO, WARNING, ERROR, or process standard error fails the
-strict check without discarding the report. Totals alone do not prove clean
-validation; OpenSpec still owns validation and lifecycle.
+Installed ETHOS invokes its supplied official OpenSpec tool and retains the
+complete native result under the product validation contract. Use the
+[workspace procedure](../../openspec/README.md), not a repository report parser.
+A summary or successful parse cannot replace clean validation or the lifecycle.
 
 ### Proof and Configuration
 
-The [profile](../../.ethos/profile.toml) declares `docs-integrity` and
-`markdown-format` as its two default roots. Installed ETHOS adds applicable
-shared checks from the actual source to the default and full graphs, including
-`docs-registry` and `markdown-lint`, without duplicate repository descriptors.
-It owns the schema, execution, resource reservations, and evidence. The integrity
-root also requires its native behavior prerequisite.
-The shared `source-format` gate formats the selected source once. The temporary
-`markdown-format` root retains static semantics only; it does not duplicate the
-formatter. The registry checks document metadata and decision records; the behavior provider requires
-one complete native Node test attempt under the declared worker limit and
-deadline. Require the full prerequisite closure and document
-commands to pass for the exact committed tree; document output or a
-repository-authored report cannot substitute for that behavior attempt.
+The [profile](../../.ethos/profile.toml) still declares two temporary roots:
+`docs-integrity` calls the repository check with a native behavior prerequisite;
+`markdown-format` supplies static analysis only. Installed ETHOS owns their
+applicable shared closure. `source-format` checks selected source once, without
+a second formatter provider in the local root.
 
-Require applicable static semantics and complete diagnostics from the same
-attempt. Syntax may pass despite a reachable undefined identifier, and a Node
-report may omit runtime warnings. Accepted native providers may jointly cover a
-property; each need not cover every language. A shared-quality claim requires
-the accepted installed product and its actual adopter qualification.
+| Concern                                          | Current consumer                                          | Ownership boundary                                                          |
+| ------------------------------------------------ | --------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Metadata and decision structure                  | Installed `docs-registry`.                                | The shared contract owns identity, structure, and non-execution inspection. |
+| Source formatting and Markdown lint              | Installed `source-format` and `markdown-lint`.            | Native formatters own layout; shared lint owns non-spacing checks.          |
+| Official artifacts and configuration             | Installed OpenSpec and configuration checks.              | Use supplied validation and native inputs, without a repository parser.     |
+| Retained executable source                       | Native behavior and static providers.                     | Keep applicable obligations while repository code remains.                  |
+| English, terms, local links, and release history | Repository check, alongside the applicable shared checks. | Complete replacement still needs actual-consumer qualification.             |
+| Tool supply, offline execution, and CI           | Current repository supply and job consumers.              | Public product supply and CI integration remain unfinished.                 |
 
-Repository checks guard this repository's placement and selection; they do not
-copy ETHOS schemas or establish universal enforcement. Test totals, format, and
-prose checks do not prove factual accuracy, semantic fidelity, or understanding.
+The selected Change owns remaining integration and its evidence. Shared rules
+or source code alone do not qualify a replacement. Keep each current consumer
+until the accepted installed successor covers its complete duty, then retire
+the duplicate implementation, configuration, tests, and guidance in that same
+migration. Unrelated product work does not hold an independently qualified
+replacement.
+
+Run the full applicable closure on the exact committed tree and keep its original
+diagnostics. Document output cannot replace behavior evidence; syntax alone
+cannot establish static correctness. Tests and structural checks also cannot
+establish factual accuracy, semantic fidelity, reader understanding, or team use.
 
 ### Source Links and Decision Records
 
@@ -213,20 +195,12 @@ external qualification. Gate failure remains failure regardless of local files.
 
 #### Decision Record Form
 
-Follow the [decision register's form](../decisions/README.md#add-only-a-decision-worth-keeping):
-stable IDs, lowercase filenames, matching titles, accepted metadata, and its five
-root sections with readable rationale. Keep tasks, code blocks, execution and
-acceptance narratives, and release operations with their Change or producing
-record. Extra headings, mismatched identities, and HTML in the record body are
-invalid.
-
-The shared `docs-registry` gate performs structural validation and command
-inspection through the applicable default and full graphs. Ordinary rationale, tables,
-inline terms, bare paths, and evidence links remain valid; inspection never
-executes the input. DDWG has no
-second decision parser. Reviewers assess the lasting choice and move execution
-and acceptance narratives to their producing record; a structural pass alone
-does not establish a sound decision.
+The [decision register](../decisions/README.md#add-only-a-decision-worth-keeping)
+helps reviewers decide whether a lasting choice needs a record. Installed
+`docs-registry` owns its identity, metadata, section structure, and command
+inspection, without executing the input or requiring a second DDWG parser.
+Reviewers assess the rationale and trade-offs; a structural pass cannot establish
+a sound decision or current delivery.
 
 ## Tool Supply and Offline Execution
 

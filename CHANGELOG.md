@@ -110,6 +110,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 - Correct contributor guidance: the full native graph includes official OpenSpec
   validation; registry checks do not establish reading order or reader understanding.
+- Separate qualified shared checks from unfinished repository consumers in governance
+  guidance. Use installed ETHOS contracts for shared validation and decision structure;
+  retain local link, prose, history, supply, and CI obligations until their replacements qualify.
 - Restore direct routes to historical data evidence, use decisions, modeling responsibilities,
   operational safeguards, and Agent preconditions. Keep shared-tool quality guidance reachable
   from full task descriptions and require decision rationale to pair risks with chosen controls,
