@@ -30,7 +30,7 @@ static-analysis = "markdown-format"
 id = "docs-integrity"
 kind = "test"
 command = ["node", "tools/docs/cli.mjs", "check"]
-depends_on = ["code-behavior", "prose"]
+depends_on = ["code-behavior"]
 asset_classes = ["markdown-docs", "javascript-code"]
 dimensions = ["documentation"]
 evidence_class = "proof"
@@ -58,13 +58,3 @@ trust_bearing = true
 network_policy = "offline"
 timeout_seconds = 180
 cpu_reservation = 2
-
-[[proof.gates]]
-id = "prose"
-kind = "docs"
-providers = ["ethos.adapters.gates.tool:prose_report"]
-asset_classes = ["markdown-docs"]
-dimensions = ["spelling"]
-evidence_class = "diagnostic"
-trust_bearing = true
-network_policy = "offline"

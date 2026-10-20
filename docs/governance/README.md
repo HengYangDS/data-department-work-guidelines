@@ -152,7 +152,7 @@ A summary or successful parse cannot replace clean validation or the lifecycle.
 ### Proof and Configuration
 
 The [profile](../../.ethos/profile.toml) still declares two temporary roots:
-`docs-integrity` calls the remaining repository checks after native behavior and prose checks;
+`docs-integrity` calls the remaining repository checks after native behavior;
 `markdown-format` supplies static analysis only. Installed ETHOS owns their
 applicable shared closure. `source-format` checks selected source once, without
 a second formatter provider in the local root.
