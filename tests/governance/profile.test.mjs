@@ -4,6 +4,7 @@ import path from "node:path";
 import { test } from "node:test";
 import { parse as parseToml } from "smol-toml";
 import { root } from "../../tools/runtime.mjs";
+import { contentUnderHeading } from "./fixtures.mjs";
 
 test("DDWG verification uses the installed full native graph", () => {
   const manifest = JSON.parse(readFileSync(path.join(root, "package.json"), "utf8"));
@@ -11,6 +12,26 @@ test("DDWG verification uses the installed full native graph", () => {
   assert.equal(manifest.scripts.verify, "ethos prove --host --execute --full --json");
   assert.equal(release.publication.local_verification_command, manifest.scripts.verify);
   assert.equal(Object.hasOwn(manifest.scripts, "test"), false);
+});
+
+test("contributor guidance distinguishes full verification from reader judgment", () => {
+  const source = readFileSync(path.join(root, "CONTRIBUTING.md"), "utf8");
+  const checkGuidance = (text) => {
+    const section = contentUnderHeading(text, "CONTRIBUTING.md", "Run the full source check")
+      .map((token) => token.text)
+      .join("\n")
+      .replace(/\s+/gu, " ");
+    assert.match(section, /full graph includes official OpenSpec validation/u);
+    assert.ok(!section.includes("does not include it"));
+    assert.match(section, /registry validation does not establish reading order/u);
+  };
+  checkGuidance(source);
+  assert.throws(() =>
+    checkGuidance(source.replace("includes official OpenSpec", "excludes official OpenSpec")),
+  );
+  assert.throws(() =>
+    checkGuidance(source.replace("does not establish reading order", "establishes reading order")),
+  );
 });
 
 test("DDWG keeps two roots and product-owned Markdown and code observations", () => {

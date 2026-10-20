@@ -71,7 +71,7 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   Taplo 0.10.0 owns TOML formatting and smol-toml 1.9.1 parses it. Keep tight and loose lists,
   literal examples, and native checks and fixes consistent, with independent non-spacing lint.
 - Use installed ETHOS for official OpenSpec validation, external-link reachability,
-  document metadata, reading order, decision records, source formatting, configuration
+  document metadata, decision records, source formatting, configuration
   checks, and inherited commit grammar.
   Keep `docs-integrity` and `markdown-format` as the two default roots with the product's
   native shared document checks and behavior-test prerequisite. Remaining local checks stay
@@ -108,6 +108,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Correct contributor guidance: the full native graph includes official OpenSpec
+  validation; registry checks do not establish reading order or reader understanding.
 - Restore direct routes to historical data evidence, use decisions, modeling responsibilities,
   operational safeguards, and Agent preconditions. Keep shared-tool quality guidance reachable
   from full task descriptions and require decision rationale to pair risks with chosen controls,

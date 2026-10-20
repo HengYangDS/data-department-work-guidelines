@@ -45,8 +45,9 @@ is unavailable.
 npm run verify
 ```
 
-`npm run verify` invokes the installed ETHOS full host graph. The two document
-roots cover source checks, formatting, and native code-quality obligations.
+`npm run verify` invokes the installed ETHOS full host graph. ETHOS combines the
+two temporary document roots with applicable shared checks. The full graph
+includes official OpenSpec validation, formatting, and native code-quality obligations.
 ETHOS selects tests from the committed Git source; there is no repository test
 controller or bare Node discovery command. Host verification needs a coherent
 committed source and does not mint repository proof or source acceptance.
@@ -60,19 +61,21 @@ local links and fragments, navigation, configuration, CI, and
 SemVer/Changelog. For official OpenSpec artifacts, run
 `ethos prove --host --execute --gate openspec --json`. ETHOS invokes its locked
 official tool and retains the complete result; DDWG has no second report parser.
-Run this gate separately: the current two-root host graph does not include it.
+Use this scoped command while editing OpenSpec, without rerunning the full check.
 These checks download nothing and do not require a frozen release bundle.
 Inspect a supplied bundle separately before installation or release. Before online publication,
 also run
 `node tools/docs/cli.mjs audit` and retain its complete result under the
 [supply boundary](docs/governance/README.md#tool-supply-and-offline-execution).
 
-For document metadata, reading order, or decision-record validation, run
+For document metadata or decision-record validation, run
 `ethos prove --host --execute --gate docs-registry --json`. The installed
 registry owns duplicate subjects, metadata syntax, reader-facing structure, and
 non-execution decision rationale. ETHOS adds its shared `docs-registry` gate to
 the applicable default and full graphs, without a local descriptor or duplicate checker.
-This host check does not establish repository proof or source acceptance.
+Review the actual page: registry validation does not establish reading order
+or reader understanding. This host check does not establish repository proof
+or source acceptance.
 
 | When you need to                    | Command                          |
 | ----------------------------------- | -------------------------------- |
