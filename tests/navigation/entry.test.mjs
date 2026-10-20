@@ -31,17 +31,6 @@ test("navigation rejects a missing map, repeated root topic, and missing reader 
   });
 });
 
-test("reader metadata uses native YAML rather than an HTML wrapper", () => {
-  fixture((directory) => {
-    const page = path.join(directory, "docs", "data.md");
-    const source = readFileSync(page, "utf8").replace("<!--\n", "").replace("-->\n", "");
-    writeFileSync(page, source);
-    assert.doesNotThrow(() => checkNavigation(directory));
-    writeFileSync(page, `<!--\n${source.replace("\n\n#", "\n-->\n\n#")}`);
-    assert.throws(() => checkNavigation(directory), /native YAML front matter/u);
-  });
-});
-
 test("task-map hierarchy separates destinations, related reading, and urgent entry", () => {
   const relative = "docs/README.md";
   const source = readFileSync(path.join(root, relative), "utf8");

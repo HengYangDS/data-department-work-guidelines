@@ -96,7 +96,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   and decision checks and their generic fixtures. Retire the repository formatter, its
   command and package script, and replaced formatting fixtures after native check/fix
   qualification. Retire the non-spacing Markdown lint driver and generic tests;
-  the installed shared gate covers working edits and committed proof. Keep common standards
+  the installed shared gate covers working edits and committed proof. Retire the duplicate
+  YAML metadata parser and generic fixtures; the installed registry owns metadata.
+  Remove the private exact title-offset restriction without changing current page layout.
+  Keep common standards
   with their installed owner, historical source in Git, and unresolved obligations with the
   active Change.
 

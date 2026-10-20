@@ -15,7 +15,7 @@ SHALL assess faithful meaning, clarity, and reading quality.
 - **WHEN** the reader follows the task map to a department work question
 - **THEN** one English topic owns its duties, authority, conditions, and limits
 - **AND** machine metadata is declared as native YAML front matter for the
-  accepted registry, and the H1 starts the document body.
+  accepted registry, and an H1 identifies the reader-facing title.
 
 #### Scenario: A candidate changes the language or meaning
 

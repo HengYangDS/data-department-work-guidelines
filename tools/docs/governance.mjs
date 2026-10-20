@@ -7,7 +7,6 @@ import {
   markdownText,
   markdownTokens,
 } from "./markdown.mjs";
-import { documentMetadata } from "./content.mjs";
 import { root, gitFiles, sourceAttributes, filesUnder } from "../runtime.mjs";
 
 function linksIn(source, relative) {
@@ -62,13 +61,6 @@ export function checkNavigation(repository = root) {
     const found = linksIn(read(source), source);
     const missing = targets.filter((target) => !found.has(target));
     if (missing.length) throw new Error(`missing task routes in ${source}: ${missing.join(", ")}`);
-  }
-  const pages = new Set(
-    [...routes.keys(), ...normative].filter((page) => page.startsWith("docs/")),
-  );
-  for (const page of pages) {
-    const source = read(page);
-    documentMetadata(page, source);
   }
   const rootRoutes = linksIn(read("README.md"), "README.md");
   const repeated = normative.filter((relative) => rootRoutes.has(relative));

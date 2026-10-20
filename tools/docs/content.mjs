@@ -11,7 +11,6 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { getFileInfo } from "prettier";
 import { parse as parseToml } from "smol-toml";
-import YAML from "yaml";
 import { lint } from "markdownlint/sync";
 import { noQualityControl } from "./markdown.mjs";
 import {
@@ -25,7 +24,6 @@ import {
 } from "../runtime.mjs";
 import { nativeToolBinary } from "../supply.mjs";
 
-const requiredMetadata = ["subject", "role", "state", "relations"];
 const cjk = /[\p{Script=Han}\u2e80-\u9fff\uac00-\ud7af\uf900-\ufaff\uff00-\uffef]/u;
 const plainTextIdentities = new Set([
   "LICENSE",
@@ -83,47 +81,6 @@ export function checkProse(files = currentMarkdown()) {
   console.log(
     `PASS native Vale spelling, prose and terminology: ${files.length} current Markdown files`,
   );
-}
-
-export function documentMetadata(relative, source) {
-  const lines = source.split(/\r?\n/u);
-  if (lines[0] !== "---") {
-    throw new Error(`document metadata requires native YAML front matter: ${relative}`);
-  }
-  const end = lines.indexOf("---", 1);
-  if (end < 0) {
-    throw new Error(`invalid document metadata: ${relative}`);
-  }
-  const payload = lines.slice(1, end).join("\n");
-  if (lines[end + 1] !== "" || !/^# \S/u.test(lines[end + 2] ?? "")) {
-    throw new Error(`document title must be the first visible block: ${relative}`);
-  }
-  const document = YAML.parseDocument(payload, { uniqueKeys: true });
-  if (document.errors.length) {
-    throw new Error(`invalid document metadata: ${relative}: ${document.errors[0].message}`);
-  }
-  const metadata = document.toJS();
-  if (!metadata || typeof metadata !== "object" || Array.isArray(metadata)) {
-    throw new Error(`invalid document metadata mapping: ${relative}`);
-  }
-  for (const key of requiredMetadata) {
-    if (!(key in metadata)) {
-      throw new Error(`missing ${key} metadata: ${relative}`);
-    }
-  }
-  for (const key of ["subject", "role", "state"]) {
-    if (typeof metadata[key] !== "string" || !metadata[key]) {
-      throw new Error(`invalid ${key} metadata: ${relative}`);
-    }
-  }
-  if (
-    !metadata.relations ||
-    typeof metadata.relations !== "object" ||
-    Array.isArray(metadata.relations)
-  ) {
-    throw new Error(`invalid relations metadata: ${relative}`);
-  }
-  return metadata;
 }
 
 export function repositoryFileUri(uri, files) {

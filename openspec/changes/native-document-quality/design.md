@@ -173,8 +173,14 @@ Qualify raw Markdown, normal Forge rendering, and Agent retrieval on the same
 content. Resolve visible labels and real heading targets through native tools;
 check actual in-page and cross-file journeys where claimed. Preserve list,
 quote, table, and conditional meaning. Carry registry metadata in native YAML
-front matter; the H1 starts the document body. Observe each Forge's actual
+front matter; an H1 identifies its reader-facing title. Observe each Forge's actual
 representation rather than promise identical rendering.
+
+The installed registry owns metadata syntax and identity. Retire the duplicate
+YAML parser and its generic fixtures; do not preserve its exact title-offset
+regex as a department rule. Keep the existing title-first page layout without
+rejecting otherwise valid plain front matter followed by introductory prose.
+Department task routes and point-of-use guidance keep their content owners.
 
 Retain original visual relationships when they aid judgment; use simpler text,
 a table, or a purposeful figure when it communicates them better. Do not add
