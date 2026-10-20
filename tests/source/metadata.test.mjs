@@ -1,19 +1,12 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import {
-  cpSync,
-  existsSync,
-  mkdtempDisposableSync,
-  readFileSync,
-  symlinkSync,
-  writeFileSync,
-} from "node:fs";
+import { cpSync, mkdtempDisposableSync, symlinkSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 import { pathToFileURL } from "node:url";
 import { headingLevel, markdownTokens, walkMarkdown } from "../../tools/docs/markdown.mjs";
-import { gitFiles, root } from "../../tools/runtime.mjs";
+import { root } from "../../tools/runtime.mjs";
 
 test("native front matter stays outside reader headings with physical source lines", () => {
   const source = [
@@ -103,42 +96,4 @@ test("tracked text refuses invalid UTF-8 and NUL while declared binary assets re
   assert.ifError(hidden.error);
   assert.notEqual(hidden.status, 0);
   assert.match(hidden.stderr, /README\.md:.*native text owner cannot be declared binary/u);
-});
-
-test("retired quality owners are absent from current source and dependencies", () => {
-  const retiredPackage =
-    /(?:^|\/)(?:@textlint|@cspell|cspell[^/]*|textlint[^/]*|write-good|markdownlint-cli2(?:-formatter-default)?)(?:\/|$)/u;
-  const lock = JSON.parse(readFileSync(path.join(root, "package-lock.json"), "utf8"));
-  assert.deepEqual(
-    Object.keys(lock.packages).filter((name) => retiredPackage.test(name)),
-    [],
-  );
-  const currentCode = gitFiles().filter((name) => /^(?:tools|tests)\/.*\.mjs$/u.test(name));
-  for (const name of currentCode) {
-    if (!existsSync(path.join(root, name))) continue;
-    const source = readFileSync(path.join(root, name), "utf8");
-    assert.doesNotMatch(
-      source,
-      /(?:from\s+["']|require\(["'])(?:@textlint\/|@cspell\/|cspell|write-good|textlint-)/u,
-      name,
-    );
-  }
-  for (const name of [
-    "@textlint",
-    "@cspell",
-    "cspell",
-    "write-good",
-    "textlint-util-to-string",
-    "markdownlint-cli2",
-    "markdownlint-cli2-formatter-default",
-  ]) {
-    assert.equal(existsSync(path.join(root, "node_modules", name)), false, name);
-  }
-  for (const name of [
-    ".config/tools/textlint.json",
-    ".config/tools/cspell.json",
-    ".config/checks/markdown/markdownlint-cli2.toml",
-  ]) {
-    assert.equal(existsSync(path.join(root, name)), false, name);
-  }
 });

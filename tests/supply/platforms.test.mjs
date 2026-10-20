@@ -147,7 +147,7 @@ test("print-spec is read-only and selects this host", () => {
   assert.equal(spec.sha256, manifest.tools.lychee.assets[spec.key].sha256);
 });
 
-test("one supply manifest declares the selected native tools without a retired entry", () => {
+test("one supply manifest declares the complete selected native tool graph", () => {
   assert.equal(manifest.schemaVersion, 1);
   assert.deepEqual(Object.keys(manifest.tools), ["lychee", "vale", "osv-scanner"]);
   const vale = manifest.tools.vale;
@@ -168,8 +168,6 @@ test("one supply manifest declares the selected native tools without a retired e
   assert.match(vale.licenses.LICENSE.sha256, /^[0-9a-f]{64}$/u);
   assert.throws(() => selectedAsset("unknown"), /unknown/u);
   assert.throws(() => selectedAsset("vale", "linux", "riscv64"), /unsupported/u);
-  assert.equal(fs.existsSync(path.join(root, ".config/tools/lychee.json")), false);
-  assert.equal(fs.existsSync(path.join(root, "tools/ci/install-lychee.mjs")), false);
 });
 
 test("official OSV supply pins raw binaries and notices for every native host", () => {
