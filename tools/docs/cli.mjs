@@ -15,7 +15,7 @@ async function reportVerificationContext() {
 async function checkRepository() {
   const { checkLineEndingAttributes, checkLicense, checkNavigation, checkNoScope } =
     await import("./governance.mjs");
-  const { checkLinks, checkProse, checkTextLayout } = await import("./content.mjs");
+  const { checkProse, checkTextLayout } = await import("./content.mjs");
   const { checkChangelog } = await import("./changelog.mjs");
   const { checkCi } = await import("./ci.mjs");
   const { dependencyPolicyPath, parseDependencyPolicy, validateDependencyInput } =
@@ -29,7 +29,6 @@ async function checkRepository() {
   checkNoScope();
   await checkProse();
   checkChangelog();
-  checkLinks();
   await checkTextLayout();
   checkNavigation();
   checkCi();
@@ -57,16 +56,6 @@ try {
       await checkProse();
       break;
     }
-    case "links": {
-      if (arguments_.length) {
-        throw new Error(
-          "links accepts no arguments; use ethos prove --host --execute --gate external-links for online reachability",
-        );
-      }
-      const { checkLinks } = await import("./content.mjs");
-      checkLinks();
-      break;
-    }
     case "changelog": {
       if (arguments_.length) throw new Error("changelog accepts no arguments");
       const { checkChangelog } = await import("./changelog.mjs");
@@ -80,9 +69,7 @@ try {
       break;
     }
     default:
-      throw new Error(
-        "usage: node tools/docs/cli.mjs check|prose|links|changelog|navigation|audit",
-      );
+      throw new Error("usage: node tools/docs/cli.mjs check|prose|changelog|navigation|audit");
   }
 } catch (error) {
   reportError(error);

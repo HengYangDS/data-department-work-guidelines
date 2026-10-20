@@ -1,27 +1,10 @@
-import {
-  existsSync,
-  lstatSync,
-  mkdtempSync,
-  readFileSync,
-  realpathSync,
-  rmSync,
-  writeFileSync,
-} from "node:fs";
+import { existsSync, lstatSync, readFileSync } from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 import { getFileInfo } from "prettier";
 import { parse as parseToml } from "smol-toml";
 import { lint } from "markdownlint/sync";
 import { noQualityControl } from "./markdown.mjs";
-import {
-  currentMarkdown,
-  filePath,
-  gitFiles,
-  root,
-  run,
-  sourceAttributes,
-  temporaryRoot,
-} from "../runtime.mjs";
+import { currentMarkdown, filePath, gitFiles, root, run, sourceAttributes } from "../runtime.mjs";
 import { nativeToolBinary } from "../supply.mjs";
 
 const cjk = /[\p{Script=Han}\u2e80-\u9fff\uac00-\ud7af\uf900-\ufaff\uff00-\uffef]/u;
@@ -81,73 +64,6 @@ export function checkProse(files = currentMarkdown()) {
   console.log(
     `PASS native Vale spelling, prose and terminology: ${files.length} current Markdown files`,
   );
-}
-
-export function repositoryFileUri(uri, files) {
-  const url = new URL(uri);
-  if (url.protocol !== "file:") return;
-  if (url.hostname && url.hostname !== "localhost") {
-    throw new Error(`nonlocal file link is not portable: ${uri}`);
-  }
-  const target = fileURLToPath(url);
-  const resolved = existsSync(target) ? realpathSync(target) : path.resolve(target);
-  const relatives = [path.relative(root, target), path.relative(realpathSync(root), resolved)];
-  if (
-    relatives.some(
-      (relative) =>
-        relative === ".." || relative.startsWith(`..${path.sep}`) || path.isAbsolute(relative),
-    )
-  ) {
-    throw new Error(`local link escapes repository root: ${uri}`);
-  }
-  const sources = files ?? gitFiles();
-  const directory = existsSync(resolved) && lstatSync(resolved).isDirectory();
-  for (const item of relatives) {
-    const relative = item.split(path.sep).join("/");
-    const prefix = relative ? `${relative}/` : "";
-    if (
-      !sources.includes(relative) &&
-      !(directory && sources.some((source) => source.startsWith(prefix)))
-    ) {
-      throw new Error(`local link is not repository source: ${uri}`);
-    }
-  }
-}
-
-export function linkCheckArguments(list, { literalFiles = [] } = {}) {
-  return [
-    "--config",
-    filePath(".config/checks/lychee/lychee.toml"),
-    "--files-from",
-    list,
-    ...(literalFiles.length ? ["--", ...literalFiles] : []),
-  ];
-}
-
-export function checkLinks() {
-  const source = gitFiles();
-  const files = currentMarkdown(source);
-  const directory = mkdtempSync(temporaryRoot());
-  try {
-    const list = path.join(directory, "files.txt");
-    const sourcePaths = files.map(filePath);
-    const literalFiles = sourcePaths.filter((file) => /[\r\n]/u.test(file));
-    const listedFiles = sourcePaths.filter((file) => !/[\r\n]/u.test(file));
-    writeFileSync(list, `${listedFiles.join("\n")}\n`, "utf8");
-    const lychee = nativeToolBinary("lychee");
-    const links = run(lychee, ["--dump", ...linkCheckArguments(list, { literalFiles })], {
-      capture: true,
-      rejectStderr: true,
-      timeout: 60_000,
-    });
-    for (const uri of links.split(/\r?\n/u).filter(Boolean)) repositoryFileUri(uri.trim(), source);
-    run(lychee, linkCheckArguments(list, { literalFiles }), {
-      timeout: 90_000,
-    });
-    console.log("PASS offline links and repository confinement");
-  } finally {
-    rmSync(directory, { recursive: true, force: true });
-  }
 }
 
 function blankLineError(relative, source) {

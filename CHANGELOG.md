@@ -70,7 +70,7 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   Prettier 3.9.10 owns Markdown spacing at width 100 with preserved prose wrapping;
   installed ETHOS supplies Taplo for TOML formatting and smol-toml 1.9.1 parses it. Keep tight and loose lists,
   literal examples, and native checks and fixes consistent, with independent non-spacing lint.
-- Use installed ETHOS for official OpenSpec validation, external-link reachability,
+- Use installed ETHOS for official OpenSpec validation, local links and fragments, external-link reachability,
   document metadata, decision records, source formatting, configuration
   checks, and inherited commit grammar.
   Keep `docs-integrity` and `markdown-format` as the two default roots with the product's
@@ -89,6 +89,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Removed
 
+- Remove the duplicate local-link checker, its command, and generic fixtures.
+  Use installed `markdown-links` on committed source in the shared proof floor;
+  working-edit checks do not establish committed-link acceptance.
 - Remove the unused separate Taplo binary from DDWG supply, CI downloads, and offline
   inventory. Installed ETHOS supplies the formatter; the native TOML binding remains.
 - Remove the duplicate repository OpenSpec package and its generic apply test.

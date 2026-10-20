@@ -412,7 +412,6 @@ test("public prose and integrity commands reject the same current-file defect", 
     const environment = {
       ...process.env,
       DDWG_VALE_BIN: nativeToolBinary("vale"),
-      DDWG_LYCHEE_BIN: nativeToolBinary("lychee"),
     };
     const observedSource = spawnSync(
       "git",
@@ -460,7 +459,6 @@ test("public prose and integrity commands reject the same current-file defect", 
     assert.equal(valid.status, 0, valid.stderr);
     const sources = [".superpowers", ".worktrees", "build"].map((prefix) => ({
       relative: `${prefix}/source.md`,
-      anchor: `missing-${prefix.replace(/^\./u, "")}-anchor`,
     }));
     const writeSources = (content) => {
       for (const source of sources) {
@@ -510,12 +508,6 @@ test("public prose and integrity commands reject the same current-file defect", 
     assert.match(invalidProse.stdout, /Vale\.Repetition:.*repeated/u);
     for (const { relative } of sources)
       assert.ok(invalidProse.stdout.replaceAll("\\", "/").includes(relative));
-    writeSources(({ anchor }) => `# Source\n\n[Entry](../README.md#${anchor})\n`);
-    const invalidLink = runCheck("links");
-    assert.ifError(invalidLink.error);
-    assert.equal(invalidLink.status, 1, invalidLink.stdout);
-    for (const { anchor } of sources)
-      assert.ok(invalidLink.stdout.includes(anchor), invalidLink.stdout);
     writeSources(() => "# Source\n\nThe result is verified.\n");
     const repaired = runCheck("prose");
     assert.ifError(repaired.error);

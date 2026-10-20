@@ -56,8 +56,7 @@ For an uncommitted edit, run `mise run check`,
 `ethos prove --host --execute --gate markdown-lint --json`, and
 `node tools/docs/cli.mjs check`. The shared lint gate checks Git-selected working
 Markdown without writing, including non-ignored candidate files. The repository
-command checks English prose and terms,
-local links and fragments, navigation, configuration, CI, and
+command checks English prose and terms, navigation, configuration, CI, and
 SemVer/Changelog. For official OpenSpec artifacts, run
 `ethos prove --host --execute --gate openspec --json`. ETHOS invokes its locked
 official tool and retains the complete result; DDWG has no second report parser.
@@ -67,6 +66,14 @@ Inspect a supplied bundle separately before installation or release. Before onli
 also run
 `node tools/docs/cli.mjs audit` and retain its complete result under the
 [supply boundary](docs/governance/README.md#tool-supply-and-offline-execution).
+
+For local links and fragments, commit the reviewed source and run
+`ethos prove --host --execute --gate markdown-links --json`. The installed
+provider checks the committed delivery, refusing changed bytes, missing targets,
+broken headings, and paths outside delivered source. ETHOS includes this gate in
+the applicable default and full graphs, without a local descriptor or duplicate
+checker. Working edits and non-ignored candidate files remain available to the
+formatter, lint, and repository checks; they are not committed-link acceptance.
 
 For document metadata or decision-record validation, run
 `ethos prove --host --execute --gate docs-registry --json`. The installed

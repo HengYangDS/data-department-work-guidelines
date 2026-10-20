@@ -8,7 +8,6 @@ import { pathToFileURL } from "node:url";
 import { parse as parseToml } from "smol-toml";
 import { textViolations } from "../../tools/docs/content.mjs";
 import { root } from "../../tools/runtime.mjs";
-import { nativeToolBinary } from "../../tools/supply.mjs";
 
 test("native structured formats preserve literal blank lines", async () => {
   for (const [name, source] of [
@@ -142,76 +141,4 @@ test("parser ownership resolves the source path rather than the caller cwd", asy
   });
   assert.ifError(result.error);
   assert.equal(result.status, 0, result.stderr);
-});
-
-test("native source links treat selected filenames as literal inputs", async () => {
-  using directory = mkdtempDisposableSync(path.join(os.tmpdir(), "ddwg-literal-tool-input-"));
-  writeFileSync(
-    path.join(directory.path, ".gitignore"),
-    "/tools/\n/.config/\n/node_modules/\n/package.json\n",
-  );
-  cpSync(path.join(root, "tools"), path.join(directory.path, "tools"), {
-    recursive: true,
-  });
-  cpSync(path.join(root, ".config"), path.join(directory.path, ".config"), {
-    recursive: true,
-  });
-  cpSync(path.join(root, "package.json"), path.join(directory.path, "package.json"));
-  symlinkSync(
-    path.join(root, "node_modules"),
-    path.join(directory.path, "node_modules"),
-    "junction",
-  );
-  const initialized = spawnSync("git", ["init", "--quiet", directory.path], {
-    encoding: "utf8",
-    timeout: 10_000,
-  });
-  assert.ifError(initialized.error);
-  assert.equal(initialized.status, 0, initialized.stderr);
-  const source = path.join(directory.path, "--write.md");
-  writeFileSync(source, "# Native Source\n\n-  Item\n");
-  const lychee = nativeToolBinary("lychee");
-  const environment = {
-    ...process.env,
-    DDWG_LYCHEE_BIN: /[/\\]/u.test(lychee) ? path.resolve(lychee) : lychee,
-  };
-  const invoke = (command) =>
-    spawnSync(process.execPath, ["tools/docs/cli.mjs", ...command], {
-      cwd: directory.path,
-      env: environment,
-      encoding: "utf8",
-      timeout: 30_000,
-    });
-  const { linkCheckArguments } = await import("../../tools/docs/content.mjs");
-  const literalFiles = [
-    process.platform === "win32" ? "--dump.md" : "with\nline.md",
-    "with space.md",
-  ].map((name) => path.join(directory.path, name));
-  const target = path.join(directory.path, "target.md");
-  const list = path.join(directory.path, "files.txt");
-  writeFileSync(target, "# Target\n");
-  writeFileSync(list, `${source}\n`);
-  for (const file of literalFiles) writeFileSync(file, "# Links\n\n[Target](target.md#target)\n");
-  const check = () =>
-    spawnSync(environment.DDWG_LYCHEE_BIN, linkCheckArguments(list, { literalFiles }), {
-      cwd: directory.path,
-      encoding: "utf8",
-      timeout: 15_000,
-    });
-  const valid = check();
-  assert.ifError(valid.error);
-  assert.equal(valid.status, 0, valid.stderr);
-  writeFileSync(literalFiles[0], "# Links\n\n[Missing](target.md#absent)\n");
-  const broken = check();
-  assert.ifError(broken.error);
-  assert.notEqual(broken.status, 0);
-  assert.match(`${broken.stdout}${broken.stderr}`, /absent|fragment/iu);
-  const rejected = invoke(["links"]);
-  assert.ifError(rejected.error);
-  assert.notEqual(rejected.status, 0);
-  assert.match(`${rejected.stdout}${rejected.stderr}`, /absent|fragment/iu);
-  writeFileSync(literalFiles[0], "# Links\n\n[Target](target.md#target)\n");
-  const corrected = invoke(["links"]);
-  assert.ifError(corrected.error);
-  assert.equal(corrected.status, 0, corrected.stderr);
 });

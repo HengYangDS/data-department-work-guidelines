@@ -176,6 +176,15 @@ quote, table, and conditional meaning. Carry registry metadata in native YAML
 front matter; an H1 identifies its reader-facing title. Observe each Forge's actual
 representation rather than promise identical rendering.
 
+Installed `markdown-links` owns local-link and fragment verification on the
+committed delivery. Use its applicable shared default and full floor, without
+another descriptor or DDWG link driver. Compare the predecessor and installed
+provider on the same source and native policy before deletion; preserve literal
+input selection, delivered aliases, confinement, warnings, and missing-fragment
+refusals. Working-edit checks do not qualify committed links. Retain native
+Lychee configuration and any still-consumed supply until their own migration
+qualifies; generic link fixtures retire with the replaced implementation.
+
 The installed registry owns metadata syntax and identity. Retire the duplicate
 YAML parser and its generic fixtures; do not preserve its exact title-offset
 regex as a department rule. Keep the existing title-first page layout without

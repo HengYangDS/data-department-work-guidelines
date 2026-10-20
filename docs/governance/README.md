@@ -152,19 +152,20 @@ A summary or successful parse cannot replace clean validation or the lifecycle.
 ### Proof and Configuration
 
 The [profile](../../.ethos/profile.toml) still declares two temporary roots:
-`docs-integrity` calls the repository check with a native behavior prerequisite;
+`docs-integrity` calls the remaining repository checks with a native behavior prerequisite;
 `markdown-format` supplies static analysis only. Installed ETHOS owns their
 applicable shared closure. `source-format` checks selected source once, without
 a second formatter provider in the local root.
 
-| Concern                                          | Current consumer                                          | Ownership boundary                                                          |
-| ------------------------------------------------ | --------------------------------------------------------- | --------------------------------------------------------------------------- |
-| Metadata and decision structure                  | Installed `docs-registry`.                                | The shared contract owns identity, structure, and non-execution inspection. |
-| Source formatting and Markdown lint              | Installed `source-format` and `markdown-lint`.            | Native formatters own layout; shared lint owns non-spacing checks.          |
-| Official artifacts and configuration             | Installed OpenSpec and configuration checks.              | Use supplied validation and native inputs, without a repository parser.     |
-| Retained executable source                       | Native behavior and static providers.                     | Keep applicable obligations while repository code remains.                  |
-| English, terms, local links, and release history | Repository check, alongside the applicable shared checks. | Complete replacement still needs actual-consumer qualification.             |
-| Tool supply, offline execution, and CI           | Current repository supply and job consumers.              | Public product supply and CI integration remain unfinished.                 |
+| Concern                                | Current consumer                                          | Ownership boundary                                                              |
+| -------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| Metadata and decision structure        | Installed `docs-registry`.                                | The shared contract owns identity, structure, and non-execution inspection.     |
+| Source formatting and Markdown lint    | Installed `source-format` and `markdown-lint`.            | Native formatters own layout; shared lint owns non-spacing checks.              |
+| Official artifacts and configuration   | Installed OpenSpec and configuration checks.              | Use supplied validation and native inputs, without a repository parser.         |
+| Retained executable source             | Native behavior and static providers.                     | Keep applicable obligations while repository code remains.                      |
+| Local links and fragments              | Installed `markdown-links` in the shared floor.           | The shared provider owns committed targets, headings, aliases, and diagnostics. |
+| English, terms, and release history    | Repository check, alongside the applicable shared checks. | Complete replacement still needs actual-consumer qualification.                 |
+| Tool supply, offline execution, and CI | Current repository supply and job consumers.              | Public product supply and CI integration remain unfinished.                     |
 
 The selected Change owns remaining integration and its evidence. Shared rules
 or source code alone do not qualify a replacement. Keep each current consumer
@@ -182,16 +183,20 @@ establish factual accuracy, semantic fidelity, reader understanding, or team use
 
 #### Source Link Selection
 
-Git selects tracked and non-ignored candidate source. Resolve every local link
-and image under the repository root, rejecting ignored build/cache/history,
-private paths, control files, tracked-link escapes, and symlinked directory
-routes. Explicit fragments match actual headings. A directory may route to its
-native `index.md` or `README.md`; a delivered internal file alias is valid only
-when its complete target is selected source. Missing targets and cyclic,
-escaping, ignored, or dangling aliases fail; links never adopt untracked private
-files. An ignored supplied bundle is a separate explicit verification input.
-Use pinned lychee for offline checks and its explicit online operation for
-external qualification. Gate failure remains failure regardless of local files.
+Installed `markdown-links` checks the exact committed delivery without network
+access. Changed or uncommitted source is not a qualified delivery. Native Lychee
+resolves link destinations and headings; ETHOS checks delivered membership, internal aliases,
+source identity, warnings, and complete diagnostics. Missing headings, ignored
+local state, escaping or dangling aliases, and changed bytes fail the check.
+A delivered directory or internal alias is valid only when its target belongs
+to that source. An ignored supplied bundle is a separate explicit verification
+input. The [contributor procedure](../../CONTRIBUTING.md#run-the-full-source-check)
+owns the command; DDWG keeps no duplicate link implementation.
+
+Formatting and lint can examine working edits and non-ignored candidate files.
+That selection does not establish committed-link acceptance. External reachability
+uses the installed `external-links` gate and the selected peer's actual endpoints.
+A successful local check cannot establish remote availability or publication.
 
 #### Decision Record Form
 
