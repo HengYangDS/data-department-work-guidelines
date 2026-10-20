@@ -63,21 +63,28 @@ For an uncommitted edit, run `mise run check`,
 Markdown without writing, including non-ignored candidate files. The repository
 command checks source bytes, Git text attributes, MIT license metadata, CI,
 dependency declarations, and SemVer/Changelog.
+
 `npm run prose` invokes the installed shared prose provider: Codespell, shipped
 Vale rules, and a temporary repository spelling increment. The full graph
 requires that gate before `docs-integrity`; the local command alone does not
 check prose. The increment remains until shared spelling qualifies the same
 corpus and vocabulary. Native Vale severity controls blocking; advisory findings
-remain in the report without becoming errors. For official OpenSpec artifacts, run
+remain in the report without becoming errors.
+
+For official OpenSpec artifacts, run
 `ethos prove --host --execute --gate openspec --json`. ETHOS invokes its locked
 official tool and retains the complete result; DDWG has no second report parser.
 Use this scoped command while editing OpenSpec, without rerunning the full check.
 These checks download nothing and do not require a frozen release bundle.
+
 For configuration changes, run
 `ethos prove --host --execute --gate config-quality --json`.
 Installed ETHOS owns native syntax and formatting; the remaining repository
 text check covers source-byte integrity, not language detection or another layout
-policy. Prose tools support the English editorial review; they do not replace it.
+policy.
+
+Prose tools support the English editorial review; they do not replace it.
+
 Inspect a supplied bundle separately before installation or release. Before online publication,
 also run
 `node tools/docs/cli.mjs audit` and retain its complete result under the
