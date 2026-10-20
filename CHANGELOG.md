@@ -101,6 +101,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   Remove the private exact title-offset restriction without changing current page layout.
   Remove duplicate registry and Markdown lint descriptors; ETHOS adds its applicable
   shared checks to default and full graphs from the selected source.
+  Remove the repeated formatting provider; the shared `source-format` gate owns
+  formatting while the remaining local root supplies static analysis.
   Keep common standards with their installed owner, historical source in Git, and unresolved obligations with the
   active Change.
 

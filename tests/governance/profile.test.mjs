@@ -30,7 +30,6 @@ test("DDWG keeps two roots and product-owned Markdown and code observations", ()
   assert.deepEqual(gates.get("docs-integrity").command, ["node", "tools/docs/cli.mjs", "check"]);
   assert.deepEqual(gates.get("docs-integrity").depends_on, ["code-behavior"]);
   assert.deepEqual(gates.get("markdown-format").providers, [
-    "ethos.adapters.gates.formatting:source_format_report",
     "ethos.adapters.gates.code_quality:static_report",
   ]);
   assert.equal(Object.hasOwn(gates.get("markdown-format"), "command"), false);

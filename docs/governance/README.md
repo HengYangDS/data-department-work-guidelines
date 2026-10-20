@@ -178,9 +178,9 @@ shared checks from the actual source to the default and full graphs, including
 `docs-registry` and `markdown-lint`, without duplicate repository descriptors.
 It owns the schema, execution, resource reservations, and evidence. The integrity
 root also requires its native behavior prerequisite.
-The format root uses the installed native source-format provider and static semantics, not
-a repository formatter. The registry
-checks document metadata and decision records; the behavior provider requires
+The shared `source-format` gate formats the selected source once. The temporary
+`markdown-format` root retains static semantics only; it does not duplicate the
+formatter. The registry checks document metadata and decision records; the behavior provider requires
 one complete native Node test attempt under the declared worker limit and
 deadline. Require the full prerequisite closure and document
 commands to pass for the exact committed tree; document output or a
