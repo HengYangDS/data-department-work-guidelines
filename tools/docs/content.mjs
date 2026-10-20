@@ -8,7 +8,6 @@ import {
   writeFileSync,
 } from "node:fs";
 import path from "node:path";
-import os from "node:os";
 import { fileURLToPath } from "node:url";
 import { getFileInfo } from "prettier";
 import { parse as parseToml } from "smol-toml";
@@ -20,7 +19,6 @@ import {
   currentMarkdown,
   filePath,
   gitFiles,
-  readText,
   root,
   run,
   sourceAttributes,
