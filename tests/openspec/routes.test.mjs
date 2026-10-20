@@ -1,12 +1,10 @@
 import assert from "node:assert/strict";
-import { spawnSync } from "node:child_process";
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { test } from "node:test";
 import { checkNavigation, checkNoScope } from "../../tools/docs/governance.mjs";
 import {
   headingLevel,
-  headingText,
   markdownLinkDestinations,
   markdownText,
   markdownTokens,
@@ -267,93 +265,6 @@ test("task completion routes stay in their Markdown item after prose editing", (
       () => assertTaskContainer(prefix + misplaced, "1.1", [destination]),
       /must not become code|missing task route/u,
     );
-  }
-});
-
-test("official apply tracks every readable item without a second progress section", () => {
-  const relative = "openspec/changes/native-document-quality/tasks.md";
-  const source = readFileSync(path.join(root, relative), "utf8");
-  const env = Object.fromEntries(
-    Object.entries(process.env).filter(([key]) => key.toUpperCase() !== "OPENSPEC_TELEMETRY"),
-  );
-  env.OPENSPEC_TELEMETRY = "0";
-  const result = spawnSync(
-    process.execPath,
-    [
-      path.join(root, "node_modules/@fission-ai/openspec/bin/openspec.js"),
-      "instructions",
-      "apply",
-      "--change",
-      "native-document-quality",
-      "--json",
-    ],
-    { cwd: root, env, encoding: "utf8", timeout: 10_000 },
-  );
-  assert.ifError(result.error);
-  assert.equal(result.status, 0);
-  assert.equal(result.stderr, "");
-  const report = JSON.parse(result.stdout);
-  assert.equal(report.changeName, "native-document-quality");
-  assert.equal(report.root.path, root);
-  assert.equal(report.taskTrackingConfigured, true);
-  assert.equal(report.progress.total, report.tasks.length);
-  assert.equal(report.progress.complete, report.tasks.filter((task) => task.done).length);
-  assert.equal(report.progress.remaining, report.tasks.filter((task) => !task.done).length);
-  const tokens = markdownTokens(source, relative);
-  const groups = tokens.filter((token) => headingLevel(token) === 2);
-  assert.ok(groups.length, "the official checklist has numbered task groups");
-  assert.ok(
-    groups.every((token) => /^\d+\.\s/u.test(headingText(token))),
-    "task progress must not acquire an unnumbered status section",
-  );
-  const designRelative = "openspec/changes/native-document-quality/design.md";
-  const migration = contentUnderHeading(
-    readFileSync(path.join(root, designRelative), "utf8"),
-    designRelative,
-    "Migration Plan",
-  );
-  assert.ok(
-    migration.some((token) => token.type === "listOrdered"),
-    "the design retains the migration dependency order",
-  );
-  const paragraphs = [...walkMarkdown(tokens)]
-    .filter((token) => token.type === "listUnordered")
-    .flatMap((token) =>
-      token.children
-        .filter((child) => child.type === "content")
-        .map((child) => child.children.find((item) => item.type === "paragraph")),
-    )
-    .filter((token) => token && ["[ ] ", "[x] "].some((marker) => token.text.startsWith(marker)))
-    .sort((left, right) => left.startLine - right.startLine);
-  assert.ok(paragraphs.length, "the active checklist must contain readable work");
-  const expected = paragraphs.map((token) => ({
-    description: token.text.slice(4),
-    done: token.text.startsWith("[x] "),
-    line: token.startLine,
-  }));
-  const assertCompleteSelection = (tasks) => {
-    assert.deepEqual(
-      tasks.map(({ description, done, line }) => ({ description, done, line })),
-      expected,
-      "native apply must preserve every readable task in source order",
-    );
-  };
-  assertCompleteSelection(report.tasks);
-  assert.throws(() => assertCompleteSelection(report.tasks.slice(1)), /every readable task/u);
-  const continued = paragraphs.find((token) => token.text.includes(". "));
-  const continuation = continued.text.slice(4).indexOf(". ");
-  const truncated = report.tasks.map((task) =>
-    task.line === continued.startLine
-      ? { ...task, description: task.description.slice(0, continuation + 1) }
-      : task,
-  );
-  assert.throws(() => assertCompleteSelection(truncated), /every readable task/u);
-  for (const task of report.tasks) {
-    assert.equal(task.sourcePath, path.join(root, relative));
-    const paragraph = paragraphs.find((token) => token.startLine === task.line);
-    assert.ok(paragraph, "each native task is readable, not code or a comment");
-    assert.ok(paragraph.text.includes(task.description));
-    assert.ok(markdownText(paragraph, { code: true }).trim());
   }
 });
 

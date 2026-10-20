@@ -89,6 +89,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Removed
 
+- Remove the duplicate repository OpenSpec package and its generic apply test.
+  Installed ETHOS supplies the official CLI and validates the same active Change;
+  department-specific task and practice checks remain.
 - Remove duplicate work-loop and data-use diagrams, custom diagram CSS, disconnected
   blocks, and wide data-use tables. Ordered steps, local evidence, and existing decision
   and role tables retain stages, relationships, return conditions, and authority limits.
