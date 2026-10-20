@@ -53,8 +53,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   as separate judgments.
 - Frame decisions against a comparison baseline with the smallest sufficient model,
   consistent classification, interacting causes, and cross-cutting constraints.
-  Separate discussion, readiness, and approval; deferred decisions need a resolving
-  action and revisit time, including timing-based waits. Preserve the justified single-lead
+  Separate discussion, readiness, and approval; meeting records identify each decision's
+  authorized owner, actual date, and basis, and each action's owner, deadline, and completion
+  condition. Deferred decisions need a resolving action and revisit time, including
+  timing-based waits. Preserve the justified single-lead
   default, interface responsibilities, complete L1/L2 records, and every agreed completion
   condition. Managers resolve cross-domain conflicts and long-standing decisions promptly.
   Routine work owes its agreed outcome, not exceptional performance on every occasion.

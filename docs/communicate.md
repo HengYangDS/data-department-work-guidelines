@@ -64,10 +64,11 @@ options. When the discussion drifts, return to the question that needs a
 decision. Locate disagreement in facts,
 inference, values, resources, or authority.
 
-Afterward, keep only the conclusion,
-basis, decision, actions, open points, and risks. Each decision and action has
-an owner, deadline, and completion criterion. A discussion may improve the shared
-model without reaching a decision; name that change and the remaining question.
+Afterward, keep the conclusion, basis, decisions, actions, open points, and risks.
+Record each decision with its authorized owner, actual date, and basis; give
+each action an owner, deadline, and completion criterion. A discussion may
+improve the shared model without reaching a decision; name that change and the
+remaining question.
 Do not present understanding as approval or activity as resolution.
 
 Challenge propositions, evidence, and costs, not personalities or motives.
