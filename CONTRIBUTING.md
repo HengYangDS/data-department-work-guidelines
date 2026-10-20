@@ -70,8 +70,8 @@ also run
 For document metadata, reading order, or decision-record validation, run
 `ethos prove --host --execute --gate docs-registry --json`. The installed
 registry owns duplicate subjects, metadata syntax, reader-facing structure, and
-non-execution decision rationale. The shared floor binds that provider as the
-`document-registry` prerequisite of `docs-integrity`, without a duplicate checker.
+non-execution decision rationale. ETHOS adds its shared `docs-registry` gate to
+the applicable default and full graphs, without a local descriptor or duplicate checker.
 This host check does not establish repository proof or source acceptance.
 
 | When you need to                    | Command                          |
@@ -92,8 +92,8 @@ These maintenance tasks are not repository proof. The existing proof and fixture
 consumers remain until their full shared replacement qualifies; they do not
 require another formatter implementation for this new entry.
 
-The installed `markdown-lint` prerequisite owns non-spacing checks alongside
-the native formatter. It runs through the full committed-source host graph
+The installed `markdown-lint` gate owns non-spacing checks alongside
+the native formatter. ETHOS includes it in the applicable default and full graphs
 and the explicit working-edit command above; DDWG has no second lint driver.
 
 The [configuration map](docs/governance/configuration.md) locates each native input; it does not

@@ -173,10 +173,11 @@ validation; OpenSpec still owns validation and lifecycle.
 ### Proof and Configuration
 
 The [profile](../../.ethos/profile.toml) declares `docs-integrity` and
-`markdown-format` as its two default roots, with their native prerequisites
-in the same file. Installed ETHOS compiles their full dependency closure and
-owns the schema, execution, resource reservations, and evidence. The integrity
-root requires native document-registry, Markdown lint, and behavior prerequisites.
+`markdown-format` as its two default roots. Installed ETHOS adds applicable
+shared checks from the actual source to the default and full graphs, including
+`docs-registry` and `markdown-lint`, without duplicate repository descriptors.
+It owns the schema, execution, resource reservations, and evidence. The integrity
+root also requires its native behavior prerequisite.
 The format root uses the installed native source-format provider and static semantics, not
 a repository formatter. The registry
 checks document metadata and decision records; the behavior provider requires
@@ -219,8 +220,8 @@ acceptance narratives, and release operations with their Change or producing
 record. Extra headings, mismatched identities, and HTML in the record body are
 invalid.
 
-The `document-registry` prerequisite binds installed ETHOS's registry provider
-for structural validation and command inspection. Ordinary rationale, tables,
+The shared `docs-registry` gate performs structural validation and command
+inspection through the applicable default and full graphs. Ordinary rationale, tables,
 inline terms, bare paths, and evidence links remain valid; inspection never
 executes the input. DDWG has no
 second decision parser. Reviewers assess the lasting choice and move execution

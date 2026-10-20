@@ -74,7 +74,7 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   document metadata, reading order, decision records, source formatting, configuration
   checks, and inherited commit grammar.
   Keep `docs-integrity` and `markdown-format` as the two default roots with the product's
-  native document-registry and behavior-test prerequisites. Remaining local checks stay
+  native shared document checks and behavior-test prerequisite. Remaining local checks stay
   until their actual installed replacements qualify; document output does not prove
   shared-product acceptance.
 - Resolve Node and npm from `package.json` through native Mise configuration and lock
@@ -99,8 +99,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   the installed shared gate covers working edits and committed proof. Retire the duplicate
   YAML metadata parser and generic fixtures; the installed registry owns metadata.
   Remove the private exact title-offset restriction without changing current page layout.
-  Keep common standards
-  with their installed owner, historical source in Git, and unresolved obligations with the
+  Remove duplicate registry and Markdown lint descriptors; ETHOS adds its applicable
+  shared checks to default and full graphs from the selected source.
+  Keep common standards with their installed owner, historical source in Git, and unresolved obligations with the
   active Change.
 
 ### Fixed
