@@ -159,27 +159,6 @@ export function workspaceObservation(repository = root) {
   };
 }
 
-export function nodeTool(packageName, binName) {
-  const manifestPath = filePath(`node_modules/${packageName}/package.json`);
-  if (!existsSync(manifestPath)) {
-    throw new Error(`missing locked ${packageName}; run npm ci --ignore-scripts`);
-  }
-  const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
-  const bin = typeof manifest.bin === "string" ? manifest.bin : manifest.bin?.[binName];
-  if (!bin) {
-    throw new Error(`${packageName} has no ${binName} entrypoint`);
-  }
-  const resolved = path.resolve(path.dirname(manifestPath), bin);
-  if (!existsSync(resolved)) {
-    throw new Error(`missing ${packageName} entrypoint: ${bin}`);
-  }
-  return resolved;
-}
-
-export function runNodeTool(packageName, binName, args, options = {}) {
-  return run(process.execPath, [nodeTool(packageName, binName), ...args], options);
-}
-
 export function gitFiles(repository = root) {
   const output = run("git", ["ls-files", "--cached", "--others", "--exclude-standard", "-z"], {
     cwd: repository,
