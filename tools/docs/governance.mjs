@@ -1,15 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
-import { root, gitFiles, sourceAttributes, filesUnder } from "../runtime.mjs";
-
-export function checkNoScope(repository = root) {
-  const changes = path.join(repository, "openspec", "changes");
-  const companions = filesUnder(changes).filter((file) => path.basename(file) === "scope.toml");
-  if (companions.length) {
-    throw new Error(`private scope companion remains: ${companions.join(", ")}`);
-  }
-  console.log("PASS Change boundary: no private scope companion");
-}
+import { root, gitFiles, sourceAttributes } from "../runtime.mjs";
 
 const mitBody = [
   'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:',

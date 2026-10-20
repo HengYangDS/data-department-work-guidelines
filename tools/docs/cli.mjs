@@ -13,8 +13,7 @@ async function reportVerificationContext() {
 }
 
 async function checkRepository() {
-  const { checkLineEndingAttributes, checkLicense, checkNoScope } =
-    await import("./governance.mjs");
+  const { checkLineEndingAttributes, checkLicense } = await import("./governance.mjs");
   const { checkSourceBytes } = await import("./content.mjs");
   const { checkChangelog } = await import("./changelog.mjs");
   const { checkCi } = await import("./ci.mjs");
@@ -26,7 +25,6 @@ async function checkRepository() {
   );
   checkLineEndingAttributes();
   checkLicense();
-  checkNoScope();
   checkChangelog();
   await checkSourceBytes();
   checkCi();

@@ -3,7 +3,6 @@ import {
   existsSync,
   lstatSync,
   readFileSync,
-  readdirSync,
   realpathSync,
   statfsSync,
 } from "node:fs";
@@ -25,14 +24,6 @@ export function filePath(relative) {
 
 export function readText(relative) {
   return readFileSync(filePath(relative), "utf8");
-}
-
-export function filesUnder(directory) {
-  if (!existsSync(directory)) return [];
-  return readdirSync(directory, { withFileTypes: true }).flatMap((item) => {
-    const target = path.join(directory, item.name);
-    return item.isDirectory() ? filesUnder(target) : item.isFile() ? [target] : [];
-  });
 }
 
 export function declaredToolRuntime(repository = root) {
