@@ -92,7 +92,6 @@ when checking a repair; a later success does not erase them.
 
 2. **Bind the observations.** Attach source and time to important facts; state
    how each unknown affects the decision. Separate observation from explanation.
-
 3. **Test the hypotheses.** Offer falsifiable hypotheses. Check counterexamples,
    the baseline, and the option of not acting. Prefer the smallest experiment
    that distinguishes plausible explanations.
