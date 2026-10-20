@@ -23,8 +23,9 @@ push admission; a method-pack plan or decision record grants neither.
 
 For `docs/` pages, copy a current page's native YAML front matter.
 Separate metadata and reader content with one blank line; use an H1 for the title.
-The installed ETHOS registry checks metadata and reading order. Display depends
-on the Markdown reader: GitHub shows this metadata as a table above the title.
+Installed ETHOS validates metadata and document roles. Review the reading order
+on the actual page. Display depends on the Markdown reader: GitHub shows this
+metadata as a table above the title.
 Keep `node_modules/` and generated output out of Git.
 
 ## Verify the source
