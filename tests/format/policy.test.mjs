@@ -1,21 +1,12 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import {
-  cpSync,
-  existsSync,
-  mkdtempDisposableSync,
-  mkdtempSync,
-  readFileSync,
-  rmSync,
-  symlinkSync,
-  writeFileSync,
-} from "node:fs";
+import { cpSync, mkdtempDisposableSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 import { pathToFileURL } from "node:url";
 import { parse as parseToml } from "smol-toml";
-import { nativeTomlConfiguration, textViolations } from "../../tools/docs/content.mjs";
+import { textViolations } from "../../tools/docs/content.mjs";
 import { root } from "../../tools/runtime.mjs";
 import { nativeToolBinary } from "../../tools/supply.mjs";
 
@@ -45,32 +36,6 @@ test("the text boundary retains TOML syntax without duplicating native formattin
     const source = `limit = ${value}\n`;
     assert.throws(() => parseToml(source));
     assert.match((await textViolations(toml, source))[0], /invalid TOML/u);
-  }
-});
-
-test("native TOML policy preserves data and agrees with the source format owner", () => {
-  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-toml-policy-"));
-  try {
-    cpSync(path.join(root, ".config"), path.join(directory, ".config"), {
-      recursive: true,
-    });
-    const policyPath = path.join(directory, ".config/checks/taplo/taplo.toml");
-    const original = readFileSync(policyPath, "utf8");
-    assert.equal(nativeTomlConfiguration(directory), policyPath);
-    for (const [before, after] of [
-      ["column_width = 100", "column_width = 80"],
-      ['indent_string = "  "', 'indent_string = "    "'],
-      ["crlf = false", "crlf = true"],
-      ["reorder_keys = false", "reorder_keys = true"],
-      ["trailing_newline = true", "trailing_newline = false"],
-    ]) {
-      assert.ok(original.includes(before), before);
-      writeFileSync(policyPath, original.replace(before, after));
-      assert.throws(() => nativeTomlConfiguration(directory), /native TOML.*policy/u, after);
-    }
-  } finally {
-    rmSync(directory, { recursive: true, force: true });
-    assert.equal(existsSync(directory), false);
   }
 });
 
@@ -167,8 +132,7 @@ test("parser ownership resolves the source path rather than the caller cwd", asy
   const module = pathToFileURL(path.join(directory.path, "tools/docs/content.mjs")).href;
   const script = `
     import assert from "node:assert/strict";
-    const { formatTargets, textViolations } = await import(${JSON.stringify(module)});
-    assert.deepEqual((await formatTargets(["cli"])).prettier, ["cli"]);
+    const { textViolations } = await import(${JSON.stringify(module)});
     assert.deepEqual(await textViolations("cli", ${JSON.stringify(source)}), []);
   `;
   const result = spawnSync(process.execPath, ["--input-type=module", "--eval", script], {
@@ -180,7 +144,7 @@ test("parser ownership resolves the source path rather than the caller cwd", asy
   assert.equal(result.status, 0, result.stderr);
 });
 
-test("native source tools treat selected filenames as literal inputs", async () => {
+test("native source links treat selected filenames as literal inputs", async () => {
   using directory = mkdtempDisposableSync(path.join(os.tmpdir(), "ddwg-literal-tool-input-"));
   writeFileSync(
     path.join(directory.path, ".gitignore"),
@@ -210,7 +174,6 @@ test("native source tools treat selected filenames as literal inputs", async () 
   const environment = {
     ...process.env,
     DDWG_LYCHEE_BIN: /[/\\]/u.test(lychee) ? path.resolve(lychee) : lychee,
-    DDWG_TAPLO_BIN: path.resolve(nativeToolBinary("taplo")),
   };
   const invoke = (command) =>
     spawnSync(process.execPath, ["tools/docs/cli.mjs", ...command], {
@@ -219,18 +182,6 @@ test("native source tools treat selected filenames as literal inputs", async () 
       encoding: "utf8",
       timeout: 30_000,
     });
-  const unformatted = invoke(["format", "--check"]);
-  assert.ifError(unformatted.error);
-  assert.notEqual(unformatted.status, 0);
-  assert.match(unformatted.stderr, /Code style issues/u);
-  const formatted = invoke(["format"]);
-  assert.ifError(formatted.error);
-  assert.equal(formatted.status, 0, formatted.stderr);
-  const rechecked = invoke(["format", "--check"]);
-  assert.ifError(rechecked.error);
-  assert.equal(rechecked.status, 0, rechecked.stderr);
-  assert.equal(readFileSync(source, "utf8"), "# Native Source\n\n- Item\n");
-
   const { linkCheckArguments } = await import("../../tools/docs/content.mjs");
   const literalFiles = [
     process.platform === "win32" ? "--dump.md" : "with\nline.md",

@@ -176,7 +176,9 @@ The [profile](../../.ethos/profile.toml) declares `docs-integrity` and
 `markdown-format` as its two default roots, with their native prerequisites
 in the same file. Installed ETHOS compiles their full dependency closure and
 owns the schema, execution, resource reservations, and evidence. The integrity
-root requires native document-registry and behavior prerequisites. The registry
+root requires native document-registry and behavior prerequisites. The format
+root uses the installed native source-format provider and static semantics, not
+a repository formatter. The registry
 checks document metadata and decision records; the behavior provider requires
 one complete native Node test attempt under the declared worker limit and
 deadline. Require the full prerequisite closure and document

@@ -40,8 +40,10 @@ network_policy = "offline"
 [[proof.gates]]
 id = "markdown-format"
 kind = "lint"
-command = ["node", "tools/docs/cli.mjs", "format", "--check"]
-verification_providers = ["ethos.adapters.gates.code_quality:static_report"]
+providers = [
+  "ethos.adapters.gates.formatting:source_format_report",
+  "ethos.adapters.gates.code_quality:static_report",
+]
 asset_classes = ["markdown-docs", "javascript-code"]
 dimensions = ["static-analysis", "format", "markdown"]
 evidence_class = "contract"

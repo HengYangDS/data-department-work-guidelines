@@ -46,14 +46,6 @@ try {
       await reportVerificationContext();
       await checkRepository();
       break;
-    case "format": {
-      if (arguments_.length > 1 || (arguments_.length === 1 && arguments_[0] !== "--check")) {
-        throw new Error("format accepts only --check");
-      }
-      const { formatSource } = await import("./content.mjs");
-      await formatSource({ check: arguments_[0] === "--check" });
-      break;
-    }
     case "audit": {
       if (arguments_.length) throw new Error("audit accepts no arguments");
       const { auditDependencies } = await import("./dependencies.mjs");
@@ -90,7 +82,7 @@ try {
     }
     default:
       throw new Error(
-        "usage: node tools/docs/cli.mjs check|format|prose|links|changelog|navigation|audit",
+        "usage: node tools/docs/cli.mjs check|prose|links|changelog|navigation|audit",
       );
   }
 } catch (error) {
