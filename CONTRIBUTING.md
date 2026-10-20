@@ -58,11 +58,16 @@ controller or bare Node discovery command. Host verification needs a coherent
 committed source and does not mint repository proof or source acceptance.
 
 For an uncommitted edit, run `mise run check`,
-`ethos prove --host --execute --gate markdown-lint --json`, and
-`node tools/docs/cli.mjs check`. The shared lint gate checks Git-selected working
+`ethos prove --host --execute --gate markdown-lint --json`,
+`npm run prose`, and `node tools/docs/cli.mjs check`. The shared lint gate checks Git-selected working
 Markdown without writing, including non-ignored candidate files. The repository
-command checks English prose and terms, navigation, configuration, CI, and
-SemVer/Changelog. For official OpenSpec artifacts, run
+command checks source bytes, navigation, configuration, CI, and SemVer/Changelog.
+`npm run prose` invokes the installed shared prose provider: Codespell, shipped
+Vale rules, and a temporary repository spelling increment. The full graph
+requires that gate before `docs-integrity`; the local command alone does not
+check prose. The increment remains until shared spelling qualifies the same
+corpus and vocabulary. Native Vale severity controls blocking; advisory findings
+remain in the report without becoming errors. For official OpenSpec artifacts, run
 `ethos prove --host --execute --gate openspec --json`. ETHOS invokes its locked
 official tool and retains the complete result; DDWG has no second report parser.
 Use this scoped command while editing OpenSpec, without rerunning the full check.

@@ -55,3 +55,4 @@ Taplo
 Trixie
 Vale
 Wasm
+Codespell

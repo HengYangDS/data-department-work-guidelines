@@ -151,36 +151,3 @@ export function markdownLinkDestinations(source) {
   );
   return destinations;
 }
-
-// Match Vale's native comment controls after HTML decoding, not prose mentions.
-const valeControl = /^vale (?:on|off|styles? = [^\r\n]*|[^\r\n]+ = (?:YES|NO|on|off))$/u;
-
-/** @type {import("markdownlint").Rule} */
-export const noQualityControl = {
-  names: ["no-quality-control"],
-  description: "Prose rules are configured by the repository, not document comments",
-  tags: ["comments"],
-  parser: "micromark",
-  function(params, onError) {
-    const pending = [...params.parsers.micromark.tokens];
-    while (pending.length) {
-      const token = pending.pop();
-      pending.push(...token.children);
-      if (token.type === "htmlFlow" || token.type === "htmlText") {
-        new Parser({
-          oncomment(comment) {
-            const consumer = valeControl.test(decodeHTML(comment).trim()) ? "Vale" : "";
-            if (consumer) {
-              onError({
-                lineNumber: token.startLine,
-                detail: `Remove the ${consumer} control comment; correct the source or its governed policy.`,
-              });
-            }
-          },
-        }).end(token.text);
-      }
-    }
-  },
-};
-
-export default noQualityControl;

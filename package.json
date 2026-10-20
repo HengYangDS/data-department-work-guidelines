@@ -4,7 +4,7 @@
   "description": "Documentation quality tooling for the data department work guidelines.",
   "scripts": {
     "verify": "ethos prove --host --execute --full --json",
-    "prose": "node tools/docs/cli.mjs prose"
+    "prose": "ethos prove --host --execute --gate prose --json"
   },
   "devDependencies": {
     "entities": "8.1.0",

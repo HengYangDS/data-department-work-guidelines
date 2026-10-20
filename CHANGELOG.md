@@ -74,11 +74,11 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   Prettier 3.9.10 owns Markdown spacing at width 100 with preserved prose wrapping;
   installed ETHOS supplies Taplo for TOML formatting and smol-toml 1.9.1 parses it. Keep tight and loose lists,
   literal examples, and native checks and fixes consistent, with independent non-spacing lint.
-- Use installed ETHOS for official OpenSpec validation, local links and fragments, external-link reachability,
+- Use installed ETHOS for prose, official OpenSpec validation, local links and fragments, external-link reachability,
   document metadata, decision records, source formatting, configuration
   checks, and inherited commit grammar.
   Keep `docs-integrity` and `markdown-format` as the two default roots with the product's
-  native shared document checks and behavior-test prerequisite. Remaining local checks stay
+  native shared document checks and behavior/prose prerequisites. Remaining local checks stay
   until their actual installed replacements qualify; document output does not prove
   shared-product acceptance.
 - Resolve Node and npm from `package.json` through native Mise configuration and lock
@@ -93,6 +93,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Removed
 
+- Remove the local prose controller, CLI branch, suppression parser, duplicate plain styles,
+  and their private tests. The installed shared provider retains Codespell, Vale rules,
+  native severity and diagnostics. Keep only a temporary spelling/vocabulary increment
+  until shared spelling qualifies this corpus; CI and offline supply migration remain open.
 - Remove tests that freeze guideline wording, titles, paragraph positions, and reading order.
   Keep substantive duties in their topic and specification owners; source checks cannot
   certify meaning or reader understanding. Retain tests for executable repository checks
@@ -135,7 +139,7 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   validation; registry checks do not establish reading order or reader understanding.
 - Separate qualified shared checks from unfinished repository consumers in governance
   guidance. Use installed ETHOS contracts for shared validation and decision structure;
-  retain local link, prose, history, supply, and CI obligations until their replacements qualify.
+  retain working/candidate-link, history, supply, and CI obligations until their replacements qualify.
 - Restore direct routes to historical data evidence, use decisions, modeling responsibilities,
   operational safeguards, and Agent preconditions. Keep shared-tool quality guidance reachable
   from full task descriptions and require decision rationale to pair risks with chosen controls,

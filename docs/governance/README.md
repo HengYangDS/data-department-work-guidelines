@@ -152,7 +152,7 @@ A summary or successful parse cannot replace clean validation or the lifecycle.
 ### Proof and Configuration
 
 The [profile](../../.ethos/profile.toml) still declares two temporary roots:
-`docs-integrity` calls the remaining repository checks with a native behavior prerequisite;
+`docs-integrity` calls the remaining repository checks after native behavior and prose checks;
 `markdown-format` supplies static analysis only. Installed ETHOS owns their
 applicable shared closure. `source-format` checks selected source once, without
 a second formatter provider in the local root.
@@ -170,7 +170,8 @@ without rewriting quoted originals, historical text, or meaningful literals.
 | Official artifacts and configuration   | Installed OpenSpec and configuration checks.              | Use supplied validation and native inputs, without a repository parser.         |
 | Retained executable source             | Native behavior and static providers.                     | Keep applicable obligations while repository code remains.                      |
 | Local links and fragments              | Installed `markdown-links` in the shared floor.           | The shared provider owns committed targets, headings, aliases, and diagnostics. |
-| English, terms, and release history    | Repository check, alongside the applicable shared checks. | Complete replacement still needs actual-consumer qualification.                 |
+| English prose and terms                | Installed `prose`, with a temporary spelling increment.   | Shared spelling still needs corpus and vocabulary qualification.                |
+| Release history                        | Repository check, alongside the applicable shared checks. | Complete replacement still needs actual-consumer qualification.                 |
 | Tool supply, offline execution, and CI | Current repository supply and job consumers.              | Public product supply and CI integration remain unfinished.                     |
 
 The selected Change owns remaining integration and its evidence. Shared rules

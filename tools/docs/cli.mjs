@@ -15,7 +15,7 @@ async function reportVerificationContext() {
 async function checkRepository() {
   const { checkLineEndingAttributes, checkLicense, checkNavigation, checkNoScope } =
     await import("./governance.mjs");
-  const { checkProse, checkSourceBytes } = await import("./content.mjs");
+  const { checkSourceBytes } = await import("./content.mjs");
   const { checkChangelog } = await import("./changelog.mjs");
   const { checkCi } = await import("./ci.mjs");
   const { dependencyPolicyPath, parseDependencyPolicy, validateDependencyInput } =
@@ -27,7 +27,6 @@ async function checkRepository() {
   checkLineEndingAttributes();
   checkLicense();
   checkNoScope();
-  await checkProse();
   checkChangelog();
   await checkSourceBytes();
   checkNavigation();
@@ -50,12 +49,6 @@ try {
       auditDependencies();
       break;
     }
-    case "prose": {
-      if (arguments_.length) throw new Error("prose accepts no arguments");
-      const { checkProse } = await import("./content.mjs");
-      await checkProse();
-      break;
-    }
     case "changelog": {
       if (arguments_.length) throw new Error("changelog accepts no arguments");
       const { checkChangelog } = await import("./changelog.mjs");
@@ -69,7 +62,7 @@ try {
       break;
     }
     default:
-      throw new Error("usage: node tools/docs/cli.mjs check|prose|changelog|navigation|audit");
+      throw new Error("usage: node tools/docs/cli.mjs check|changelog|navigation|audit");
   }
 } catch (error) {
   reportError(error);
