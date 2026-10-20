@@ -93,6 +93,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Removed
 
+- Remove tests that freeze guideline wording, titles, paragraph positions, and reading order.
+  Keep substantive duties in their topic and specification owners; source checks cannot
+  certify meaning or reader understanding. Retain tests for executable repository checks
+  until their installed replacements qualify.
 - Remove the whole-file character blacklist. New authored prose still requires English;
   quoted originals, historical text, and meaningful literals keep their bytes.
 - Remove the duplicate TOML parser, formatter-ownership classifier, and raw
