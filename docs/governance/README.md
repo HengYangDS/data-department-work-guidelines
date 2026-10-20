@@ -194,7 +194,11 @@ input. The [contributor procedure](../../CONTRIBUTING.md#run-the-full-source-che
 owns the command; DDWG keeps no duplicate link implementation.
 
 Formatting and lint can examine working edits and non-ignored candidate files.
-That selection does not establish committed-link acceptance. External reachability
+That selection does not establish committed-link acceptance. The [existing quality
+requirement](../../openspec/specs/quality/spec.md#requirement-local-references-resolve-to-delivered-source)
+also covers tracked working edits and non-ignored candidate links. Shared
+qualification of those inputs remains pending; do not infer it from committed
+checks or remove the requirement. External reachability
 uses the installed `external-links` gate and the selected peer's actual endpoints.
 A successful local check cannot establish remote availability or publication.
 

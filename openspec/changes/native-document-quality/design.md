@@ -181,7 +181,10 @@ committed delivery. Use its applicable shared default and full floor, without
 another descriptor or DDWG link driver. Compare the predecessor and installed
 provider on the same source and native policy before deletion; preserve literal
 input selection, delivered aliases, confinement, warnings, and missing-fragment
-refusals. Working-edit checks do not qualify committed links. Retain native
+refusals. The current tracked-working and non-ignored candidate-link obligation
+remains required until an installed native input interface qualifies it; committed
+acceptance covers only its own scope. Working-edit format or lint does not fill
+that link gap. Retain native
 Lychee configuration and any still-consumed supply until their own migration
 qualifies; generic link fixtures retire with the replaced implementation.
 

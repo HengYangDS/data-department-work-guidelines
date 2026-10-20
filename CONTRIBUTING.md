@@ -74,6 +74,9 @@ broken headings, and paths outside delivered source. ETHOS includes this gate in
 the applicable default and full graphs, without a local descriptor or duplicate
 checker. Working edits and non-ignored candidate files remain available to the
 formatter, lint, and repository checks; they are not committed-link acceptance.
+Working and candidate links remain required by the [current source contract](openspec/specs/quality/spec.md#requirement-local-references-resolve-to-delivered-source).
+The installed link interface has not yet qualified that scope. Keep this
+acceptance pending; the other working-edit checks do not cover it.
 
 For document metadata or decision-record validation, run
 `ethos prove --host --execute --gate docs-registry --json`. The installed
