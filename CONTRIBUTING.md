@@ -200,7 +200,7 @@ to jobs.
 
 ### Supply native checks
 
-Use the Vale, lychee, Taplo, and OSV Scanner versions in the
+Use the Vale, lychee, and OSV Scanner versions in the
 [native supply manifest](.config/supply/native.json). Your existing installation
 owner may supply them. To install already supplied assets in the repository's
 managed cache, use:
@@ -208,11 +208,10 @@ managed cache, use:
 ```text
 node tools/ci/install-native.mjs vale --asset VALE_ARCHIVE
 node tools/ci/install-native.mjs lychee --asset LYCHEE_ARCHIVE
-node tools/ci/install-native.mjs taplo --asset TAPLO_ARCHIVE
 node tools/ci/install-native.mjs osv-scanner --asset OSV_BINARY
 ```
 
-The verifier selects `DDWG_VALE_BIN`, `DDWG_LYCHEE_BIN`, `DDWG_TAPLO_BIN`, or
+The verifier selects `DDWG_VALE_BIN`, `DDWG_LYCHEE_BIN`, or
 `DDWG_OSV_SCANNER_BIN` first, then an existing managed-cache entry, and only
 then PATH when that entry is absent. Set the relevant selector to use an
 existing host installation instead of the cache. A selected invalid binary
@@ -220,6 +219,10 @@ fails; the verifier does not silently fall back. Managed binaries must match
 the pinned platform bytes before startup. The host installation owner remains
 responsible for external binary provenance; both routes require the declared
 exact version.
+
+The installed ETHOS formatter supplies Taplo itself. Keep the repository's
+[TOML configuration](.config/checks/taplo/taplo.toml); no separate Taplo binary,
+selector, or download is needed.
 
 ### Acquire supplied assets
 

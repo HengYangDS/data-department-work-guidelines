@@ -68,7 +68,7 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   updates, meeting records, and escalations, without fixed deletion quotas or layouts.
 - Use native YAML front matter, one body heading, tool-grouped configuration, and EditorConfig.
   Prettier 3.9.10 owns Markdown spacing at width 100 with preserved prose wrapping;
-  Taplo 0.10.0 owns TOML formatting and smol-toml 1.9.1 parses it. Keep tight and loose lists,
+  installed ETHOS supplies Taplo for TOML formatting and smol-toml 1.9.1 parses it. Keep tight and loose lists,
   literal examples, and native checks and fixes consistent, with independent non-spacing lint.
 - Use installed ETHOS for official OpenSpec validation, external-link reachability,
   document metadata, decision records, source formatting, configuration
@@ -89,6 +89,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Removed
 
+- Remove the unused separate Taplo binary from DDWG supply, CI downloads, and offline
+  inventory. Installed ETHOS supplies the formatter; the native TOML binding remains.
 - Remove the duplicate repository OpenSpec package and its generic apply test.
   Installed ETHOS supplies the official CLI and validates the same active Change;
   department-specific task and practice checks remain.

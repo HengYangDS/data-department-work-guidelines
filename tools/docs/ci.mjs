@@ -58,7 +58,6 @@ const nativeSourceSupply = [
   auditCommand,
   "node tools/ci/install-native.mjs lychee --gitlab-package",
   "node tools/ci/install-native.mjs vale --gitlab-package",
-  "node tools/ci/install-native.mjs taplo --gitlab-package",
 ];
 const nativeRuntimeVariables = {
   MISE_CONFIG_DIR: "$CI_PROJECT_DIR/build/runtime/work/mise-config",
@@ -489,7 +488,6 @@ export function validateCi(
     evidenceStep.step.uses,
     "node tools/ci/install-native.mjs lychee --download",
     "node tools/ci/install-native.mjs vale --download",
-    "node tools/ci/install-native.mjs taplo --download",
     verifier,
   ];
   if (

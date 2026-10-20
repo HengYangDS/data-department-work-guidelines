@@ -1,5 +1,4 @@
 import { createHash } from "node:crypto";
-import { gunzipSync } from "node:zlib";
 import {
   linkSync,
   lstatSync,
@@ -33,13 +32,9 @@ export function selectedAsset(tool, platform = process.platform, architecture = 
   }
   const format = asset.format ?? descriptor.format ?? "archive";
   if (
-    !["archive", "binary", "gzip"].includes(format) ||
-    ((format === "binary" || format === "gzip" || asset.size !== undefined) &&
-      (!Number.isSafeInteger(asset.size) || asset.size <= 0 || asset.size > 64 * 1024 * 1024)) ||
-    ((format === "gzip" || asset.binarySize !== undefined) &&
-      (!Number.isSafeInteger(asset.binarySize) ||
-        asset.binarySize <= 0 ||
-        asset.binarySize > 64 * 1024 * 1024))
+    !["archive", "binary"].includes(format) ||
+    ((format === "binary" || asset.size !== undefined) &&
+      (!Number.isSafeInteger(asset.size) || asset.size <= 0 || asset.size > 64 * 1024 * 1024))
   )
     throw new Error(`invalid ${tool} asset format or size: ${key}`);
   if (format !== "binary" && !/^[0-9a-f]{64}$/u.test(asset.binarySha256 ?? ""))
@@ -211,10 +206,7 @@ export async function install({ tool, assetFile = "", downloadSource = "" } = {}
   assertAssetDigest(bytes, selected);
   writeFileSync(archive, bytes);
   let candidate = archive;
-  if (selected.format === "gzip") {
-    candidate = path.join(temporary, binaryName);
-    writeFileSync(candidate, gunzipSync(bytes, { maxOutputLength: selected.binarySize }));
-  } else if (selected.format === "archive") {
+  if (selected.format === "archive") {
     safeArchiveEntries(
       run("tar", ["-tf", archive], {
         capture: true,
@@ -239,8 +231,6 @@ export async function install({ tool, assetFile = "", downloadSource = "" } = {}
     candidate = candidates[0];
   }
   const verifiedBytes = readFileSync(candidate);
-  if (selected.binarySize !== undefined && verifiedBytes.length !== selected.binarySize)
-    throw new Error(`${tool} binary size mismatch`);
   assertNativeBinaryDigest(verifiedBytes, selected, tool);
   if (process.platform !== "win32") chmodSync(candidate, 0o755);
   const version = run(candidate, ["--version"], {

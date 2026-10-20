@@ -8,7 +8,6 @@ import os from "node:os";
 import path from "node:path";
 import { syncBuiltinESMExports } from "node:module";
 import { test } from "node:test";
-import { gzipSync } from "node:zlib";
 import {
   assertAssetDigest,
   install,
@@ -145,141 +144,124 @@ test("native suppressed failures retain primary and cleanup diagnostics", (conte
   ]);
 });
 
-for (const format of ["binary", "gzip"]) {
-  test(`${format} native installation verifies bytes and version before atomic publication`, async (context) => {
-    const descriptor = manifest.tools["osv-scanner"];
-    assert.ok(descriptor, "raw supply must be declared before installation");
-    const selected = selectedAsset("osv-scanner");
-    const target = path.join(
-      root,
-      "build/runtime/tool-cache/osv-scanner",
-      selected.version,
-      selected.key,
-      selected.binaryName,
-    );
-    const temporaryAsset = fs.mkdtempSync(path.join(os.tmpdir(), "ddwg-raw-native-"));
-    const asset = path.join(temporaryAsset, selected.name);
-    const bytes = Buffer.from("bounded raw native fixture");
-    const packaged = format === "gzip" ? gzipSync(bytes) : bytes;
-    fs.writeFileSync(asset, packaged);
-    const pin = descriptor.assets[selected.key];
-    const original = { ...pin };
-    const actualSpawn = childProcess.spawnSync;
-    const actualStat = fs.lstatSync;
-    const actualRead = fs.readFileSync;
-    const actualChmod = fs.chmodSync;
-    const actualTemporary = fs.mkdtempSync;
-    const modes = [];
-    const stages = [];
-    const executions = [];
-    let published = false;
-    let corruptCopy = false;
-    let versionOutput = selected.versionOutput;
-    const mocks = [
-      context.mock.method(fs, "mkdtempSync", (...args) => {
-        const stage = actualTemporary(...args);
-        stages.push(stage);
-        return stage;
-      }),
-      context.mock.method(fs, "lstatSync", (file, options) =>
-        file === target
-          ? published
-            ? { isFile: () => true, isSymbolicLink: () => false, mode: 0o755 }
-            : undefined
-          : actualStat(file, options),
-      ),
-      context.mock.method(fs, "readFileSync", (file, options) =>
-        file === target && published
-          ? corruptCopy
-            ? Buffer.from("changed copied bytes")
-            : bytes
-          : actualRead(file, options),
-      ),
-      context.mock.method(fs, "chmodSync", (file, mode) => {
-        modes.push(file);
-        actualChmod(file, mode);
-      }),
-      context.mock.method(fs, "copyFileSync", () => {
-        throw new Error("native tool publication must not expose a partial copy");
-      }),
-      context.mock.method(fs, "linkSync", (source, destination) => {
-        assert.deepEqual(fs.readFileSync(source), bytes);
-        assert.equal(path.dirname(path.dirname(source)), path.dirname(target));
-        assert.equal(destination, target);
-        published = true;
-      }),
-      context.mock.method(childProcess, "spawnSync", (command, args, options) => {
-        assert.notEqual(command, "tar", "raw and gzip assets need no archive executor");
-        if (
-          command === target ||
-          path.basename(command) === selected.name ||
-          path.basename(command) === selected.binaryName
-        ) {
-          executions.push(command);
-          assert.equal(options.timeout, 10_000);
-          if (command !== target) assert.deepEqual(fs.readFileSync(command), bytes);
-          return { status: 0, stdout: versionOutput, stderr: "" };
-        }
-        return actualSpawn(command, args, options);
-      }),
-    ];
-    Object.assign(pin, {
-      format,
-      sha256: createHash("sha256").update(packaged).digest("hex"),
-      size: packaged.length,
-      binarySha256: createHash("sha256").update(bytes).digest("hex"),
-      binarySize: bytes.length,
-    });
-    syncBuiltinESMExports();
-    try {
-      fs.writeFileSync(asset, "corrupt");
-      await assert.rejects(install({ tool: "osv-scanner", assetFile: asset }), /digest|size/u);
-      assert.equal(published, false);
-      fs.writeFileSync(asset, packaged);
-      if (format === "gzip") {
-        pin.binarySize = bytes.length - 1;
-        await assert.rejects(install({ tool: "osv-scanner", assetFile: asset }), {
-          code: "ERR_BUFFER_TOO_LARGE",
-        });
-        assert.equal(published, false);
-        assert.equal(executions.length, 0);
-        pin.binarySize = bytes.length;
-        pin.binarySha256 = "0".repeat(64);
-        await assert.rejects(install({ tool: "osv-scanner", assetFile: asset }), /binary digest/u);
-        assert.equal(published, false);
-        assert.equal(executions.length, 0);
-        pin.binarySha256 = createHash("sha256").update(bytes).digest("hex");
+test("binary native installation verifies bytes and version before atomic publication", async (context) => {
+  const descriptor = manifest.tools["osv-scanner"];
+  assert.ok(descriptor, "raw supply must be declared before installation");
+  const selected = selectedAsset("osv-scanner");
+  const target = path.join(
+    root,
+    "build/runtime/tool-cache/osv-scanner",
+    selected.version,
+    selected.key,
+    selected.binaryName,
+  );
+  const temporaryAsset = fs.mkdtempSync(path.join(os.tmpdir(), "ddwg-raw-native-"));
+  const asset = path.join(temporaryAsset, selected.name);
+  const bytes = Buffer.from("bounded raw native fixture");
+  const packaged = bytes;
+  fs.writeFileSync(asset, packaged);
+  const pin = descriptor.assets[selected.key];
+  const original = { ...pin };
+  const actualSpawn = childProcess.spawnSync;
+  const actualStat = fs.lstatSync;
+  const actualRead = fs.readFileSync;
+  const actualChmod = fs.chmodSync;
+  const actualTemporary = fs.mkdtempSync;
+  const modes = [];
+  const stages = [];
+  const executions = [];
+  let published = false;
+  let corruptCopy = false;
+  let versionOutput = selected.versionOutput;
+  const mocks = [
+    context.mock.method(fs, "mkdtempSync", (...args) => {
+      const stage = actualTemporary(...args);
+      stages.push(stage);
+      return stage;
+    }),
+    context.mock.method(fs, "lstatSync", (file, options) =>
+      file === target
+        ? published
+          ? { isFile: () => true, isSymbolicLink: () => false, mode: 0o755 }
+          : undefined
+        : actualStat(file, options),
+    ),
+    context.mock.method(fs, "readFileSync", (file, options) =>
+      file === target && published
+        ? corruptCopy
+          ? Buffer.from("changed copied bytes")
+          : bytes
+        : actualRead(file, options),
+    ),
+    context.mock.method(fs, "chmodSync", (file, mode) => {
+      modes.push(file);
+      actualChmod(file, mode);
+    }),
+    context.mock.method(fs, "copyFileSync", () => {
+      throw new Error("native tool publication must not expose a partial copy");
+    }),
+    context.mock.method(fs, "linkSync", (source, destination) => {
+      assert.deepEqual(fs.readFileSync(source), bytes);
+      assert.equal(path.dirname(path.dirname(source)), path.dirname(target));
+      assert.equal(destination, target);
+      published = true;
+    }),
+    context.mock.method(childProcess, "spawnSync", (command, args, options) => {
+      assert.notEqual(command, "tar", "raw assets need no archive executor");
+      if (
+        command === target ||
+        path.basename(command) === selected.name ||
+        path.basename(command) === selected.binaryName
+      ) {
+        executions.push(command);
+        assert.equal(options.timeout, 10_000);
+        if (command !== target) assert.deepEqual(fs.readFileSync(command), bytes);
+        return { status: 0, stdout: versionOutput, stderr: "" };
       }
-      versionOutput = "wrong version";
-      await assert.rejects(install({ tool: "osv-scanner", assetFile: asset }), /version mismatch/u);
-      assert.equal(published, false);
-      versionOutput = selected.versionOutput;
-      assert.equal(await install({ tool: "osv-scanner", assetFile: asset }), target);
-      assert.equal(published, true);
-      assert.equal(executions.length, 2, "one verified copy must not restart the binary");
-      assert.equal(executions.includes(target), false);
-      assert.equal(modes.includes(target), false);
-      published = false;
-      corruptCopy = true;
-      await assert.rejects(
-        install({ tool: "osv-scanner", assetFile: asset }),
-        /copied.*bytes|verification/u,
-      );
-      assert.equal(executions.length, 3);
-      assert.equal(stages.length, format === "gzip" ? 6 : 4);
-      assert.equal(
-        stages.every((stage) => !fs.existsSync(stage)),
-        true,
-      );
-    } finally {
-      for (const key of Object.keys(pin)) delete pin[key];
-      Object.assign(pin, original);
-      for (const mock of mocks) mock.mock.restore();
-      syncBuiltinESMExports();
-      await fsPromises.rm(temporaryAsset, { recursive: true, force: true });
-    }
+      return actualSpawn(command, args, options);
+    }),
+  ];
+  Object.assign(pin, {
+    format: "binary",
+    sha256: createHash("sha256").update(packaged).digest("hex"),
+    size: packaged.length,
+    binarySha256: createHash("sha256").update(bytes).digest("hex"),
   });
-}
+  syncBuiltinESMExports();
+  try {
+    fs.writeFileSync(asset, "corrupt");
+    await assert.rejects(install({ tool: "osv-scanner", assetFile: asset }), /digest|size/u);
+    assert.equal(published, false);
+    fs.writeFileSync(asset, packaged);
+    versionOutput = "wrong version";
+    await assert.rejects(install({ tool: "osv-scanner", assetFile: asset }), /version mismatch/u);
+    assert.equal(published, false);
+    versionOutput = selected.versionOutput;
+    assert.equal(await install({ tool: "osv-scanner", assetFile: asset }), target);
+    assert.equal(published, true);
+    assert.equal(executions.length, 2, "one verified copy must not restart the binary");
+    assert.equal(executions.includes(target), false);
+    assert.equal(modes.includes(target), false);
+    published = false;
+    corruptCopy = true;
+    await assert.rejects(
+      install({ tool: "osv-scanner", assetFile: asset }),
+      /copied.*bytes|verification/u,
+    );
+    assert.equal(executions.length, 3);
+    assert.equal(stages.length, 4);
+    assert.equal(
+      stages.every((stage) => !fs.existsSync(stage)),
+      true,
+    );
+  } finally {
+    for (const key of Object.keys(pin)) delete pin[key];
+    Object.assign(pin, original);
+    for (const mock of mocks) mock.mock.restore();
+    syncBuiltinESMExports();
+    await fsPromises.rm(temporaryAsset, { recursive: true, force: true });
+  }
+});
 
 test("native extraction rejects links, duplicates, empty and unpaired listings", () => {
   assert.deepEqual(safeArchiveEntries("bin/vale\n", "-rwxr-xr-x 0/0 10 bin/vale\n"), ["bin/vale"]);

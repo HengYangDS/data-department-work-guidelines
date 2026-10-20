@@ -262,7 +262,7 @@ remain exact-artifact evidence only while those artifacts are consumed:
 - The five Lychee 0.24.2 assets in
   [native supply](../../../.config/supply/native.json), for the approved trusted
   local checks, controlled development CI, and identical-asset distribution.
-- The six official Taplo 0.10.0 assets in the same native supply, for trusted
+- The six official Taplo 0.10.0 assets from the previous DDWG supply, for trusted
   repository checks, controlled development CI, and the identical offline
   maintenance assets. The user approved this exact development scope on
   2026-10-15 and extended its expiry to 2026-11-13 00:00 UTC. Retain complete

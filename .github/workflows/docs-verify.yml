@@ -72,8 +72,5 @@ jobs:
       - name: Supply pinned Vale
         run: node tools/ci/install-native.mjs vale --download
 
-      - name: Supply pinned Taplo
-        run: node tools/ci/install-native.mjs taplo --download
-
       - name: Verify documentation and governance boundaries
         run: npm run verify

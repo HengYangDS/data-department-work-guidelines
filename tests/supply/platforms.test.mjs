@@ -109,21 +109,21 @@ test("native tool identities must name declared manifest entries", () => {
 });
 
 test("native assets validate every declared size before supply effects", () => {
-  for (const tool of ["lychee", "osv-scanner", "taplo"]) {
+  for (const tool of ["lychee", "osv-scanner"]) {
     const selected = selectedAsset(tool);
     const pin = manifest.tools[tool].assets[selected.key];
     const original = { ...pin };
     try {
-      for (const field of ["size", "binarySize"]) {
-        for (const size of ["unbounded", -1, 64 * 1024 * 1024 + 1]) {
-          pin[field] = size;
-          assert.throws(() => selectedAsset(tool), /format|size/u);
-        }
-        if (Object.hasOwn(original, field)) pin[field] = original[field];
-        else delete pin[field];
+      for (const size of ["unbounded", -1, 64 * 1024 * 1024 + 1]) {
+        pin.size = size;
+        assert.throws(() => selectedAsset(tool), /format|size/u);
       }
       pin.size = 32;
       assert.equal(selectedAsset(tool).size, 32);
+      pin.format = "gzip";
+      pin.binarySize = 32;
+      pin.binarySha256 = "0".repeat(64);
+      assert.throws(() => selectedAsset(tool), /format/u);
     } finally {
       for (const key of Object.keys(pin)) delete pin[key];
       Object.assign(pin, original);
@@ -149,13 +149,13 @@ test("print-spec is read-only and selects this host", () => {
 
 test("one supply manifest declares the selected native tools without a retired entry", () => {
   assert.equal(manifest.schemaVersion, 1);
-  assert.deepEqual(Object.keys(manifest.tools), ["lychee", "vale", "osv-scanner", "taplo"]);
+  assert.deepEqual(Object.keys(manifest.tools), ["lychee", "vale", "osv-scanner"]);
   const vale = manifest.tools.vale;
   const platforms = Object.keys(manifest.tools.lychee.assets).sort();
   for (const [tool, descriptor] of Object.entries(manifest.tools)) {
     assert.deepEqual(
       Object.keys(descriptor.assets).sort(),
-      tool === "taplo" ? [...platforms, "win32-arm64"].sort() : platforms,
+      platforms,
       `${tool} supply must match the complete supported tool graph`,
     );
   }
@@ -170,24 +170,6 @@ test("one supply manifest declares the selected native tools without a retired e
   assert.throws(() => selectedAsset("vale", "linux", "riscv64"), /unsupported/u);
   assert.equal(fs.existsSync(path.join(root, ".config/tools/lychee.json")), false);
   assert.equal(fs.existsSync(path.join(root, "tools/ci/install-lychee.mjs")), false);
-});
-
-test("official Taplo supply pins the current native version, six assets, and complete notice", () => {
-  const descriptor = manifest.tools.taplo;
-  assert.ok(descriptor, "the existing native supplier must declare Taplo");
-  assert.equal(descriptor.version, "0.10.0");
-  assert.equal(descriptor.versionOutput, "taplo 0.10.0");
-  for (const [key, asset] of Object.entries(descriptor.assets)) {
-    const selected = selectedAsset("taplo", ...key.split("-"));
-    assert.equal(selected.format, key.startsWith("win32-") ? "archive" : "gzip");
-    assert.match(selected.binarySha256, /^[0-9a-f]{64}$/u);
-    assert.ok(selected.size > 0 && selected.size < 64 * 1024 * 1024);
-    assert.ok(selected.binarySize > 0 && selected.binarySize < 64 * 1024 * 1024);
-    assert.match(selected.url, /tamasfe\/taplo\/releases\/download\/0\.10\.0\//u);
-    assert.equal(selected.name, asset.name);
-  }
-  assert.deepEqual(Object.keys(descriptor.licenses), ["LICENSE"]);
-  assert.match(descriptor.licenses.LICENSE.sha256, /^[0-9a-f]{64}$/u);
 });
 
 test("official OSV supply pins raw binaries and notices for every native host", () => {
