@@ -61,7 +61,8 @@ For an uncommitted edit, run `mise run check`,
 `ethos prove --host --execute --gate markdown-lint --json`,
 `npm run prose`, and `node tools/docs/cli.mjs check`. The shared lint gate checks Git-selected working
 Markdown without writing, including non-ignored candidate files. The repository
-command checks source bytes, navigation, configuration, CI, and SemVer/Changelog.
+command checks source bytes, Git text attributes, MIT license metadata, CI,
+dependency declarations, and SemVer/Changelog.
 `npm run prose` invokes the installed shared prose provider: Codespell, shipped
 Vale rules, and a temporary repository spelling increment. The full graph
 requires that gate before `docs-integrity`; the local command alone does not
@@ -102,13 +103,13 @@ Review the actual page: registry validation does not establish reading order
 or reader understanding. This host check does not establish repository proof
 or source acceptance.
 
-| When you need to                    | Command                          |
-| ----------------------------------- | -------------------------------- |
-| Preview selected source formatting  | `ethos lane format --json`       |
-| Check formatting without writing    | `mise run check`                 |
-| Apply admitted formatting           | `mise run fix --expect-head OID` |
-| Check Markdown and source integrity | `node tools/docs/cli.mjs check`  |
-| Check spelling, prose, and terms    | `npm run prose`                  |
+| When you need to                     | Command                          |
+| ------------------------------------ | -------------------------------- |
+| Preview selected source formatting   | `ethos lane format --json`       |
+| Check formatting without writing     | `mise run check`                 |
+| Apply admitted formatting            | `mise run fix --expect-head OID` |
+| Check source, release, and CI inputs | `node tools/docs/cli.mjs check`  |
+| Check spelling, prose, and terms     | `npm run prose`                  |
 
 `check` and `fix` invoke the installed ETHOS formatter directly. Replace `OID`
 with the current `git rev-parse HEAD` result. Preview and check leave source
@@ -225,22 +226,23 @@ to jobs.
 
 ### Supply native checks
 
-Use the Vale, lychee, and OSV Scanner versions in the
+Installed ETHOS supplies the Vale and Lychee binaries for its prose and link
+gates. Those gates use the shipped policy and applicable repository inputs;
+DDWG's toolkit installers and binary selectors do not select their executables.
+
+The remaining repository dependency audit uses the OSV Scanner version in the
 [native supply manifest](.config/supply/native.json). Your existing installation
-owner may supply them. To install already supplied assets in the repository's
+owner may supply it. To install an already supplied asset in the repository's
 managed cache, use:
 
 ```text
-node tools/ci/install-native.mjs vale --asset VALE_ARCHIVE
-node tools/ci/install-native.mjs lychee --asset LYCHEE_ARCHIVE
 node tools/ci/install-native.mjs osv-scanner --asset OSV_BINARY
 ```
 
-The verifier selects `DDWG_VALE_BIN`, `DDWG_LYCHEE_BIN`, or
-`DDWG_OSV_SCANNER_BIN` first, then an existing managed-cache entry, and only
-then PATH when that entry is absent. Set the relevant selector to use an
+That audit selects `DDWG_OSV_SCANNER_BIN` first, then an existing managed-cache
+entry, and only then PATH when that entry is absent. Set the selector to use an
 existing host installation instead of the cache. A selected invalid binary
-fails; the verifier does not silently fall back. Managed binaries must match
+fails; the audit does not silently fall back. Managed binaries must match
 the pinned platform bytes before startup. The host installation owner remains
 responsible for external binary provenance; both routes require the declared
 exact version.
