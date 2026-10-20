@@ -49,6 +49,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   availability requires replacement or exclusion and rerunning affected results before use.
   Shared changes also require compatibility, consumer migration, operational checks,
   acceptance, recovery, and maintainer responsibility. Combined stages retain these judgments.
+  Describe feasibility, value, production qualification, permission, and observed adoption
+  as separate judgments.
 - Frame decisions against a comparison baseline with the smallest sufficient model,
   consistent classification, interacting causes, and cross-cutting constraints.
   Separate discussion, readiness, and approval; deferred decisions need a resolving

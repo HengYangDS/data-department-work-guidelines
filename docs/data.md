@@ -117,13 +117,14 @@ authorizes a new use.
   trends, cost, and incidents. Keep the review result and any changed judgment
   with the [existing work evidence](deliver.md#evidence-sets-the-limit-of-the-claim).
 
-“Technically possible” is not “worth doing”; “a signal exists” is not
-“production-ready”; “deployed” is not “admitted for every use.” Label exploratory,
-temporary, limited-use, awaiting verification, and admitted states separately.
-“Let's use it and see” does not erase risk.
+Evaluate feasibility and business value separately. A useful signal still needs
+production qualification before operational deployment. Permission is specific
+to a use and its conditions; deployment does not authorize other uses.
 
-Admission permits a specified use under stated conditions. Adoption is observed
-use within those conditions, not a label inferred from deployment.
+Label data as exploratory, temporary, limited-use, awaiting verification, or
+admitted according to the evidence and permission for that use. Starting to use
+it does not resolve an open risk. Adoption is observed use within the admitted
+conditions, not a state inferred from deployment.
 
 ### Worked decision: revised market history
 
