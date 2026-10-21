@@ -73,9 +73,10 @@ carrier policy are shared product contracts. DDWG declares its source and
 necessary parameters, not another graph, executor, size rule, or CI mechanism.
 
 **Migration:** Tasks 2.33, 2.45, and 2.46 qualify the accepted installed contract
-and actual source/offline jobs before retiring their predecessors and standard
-copies. Generic cases and original failures remain bound to their native
-producer, including captured source evidence
+and its actual consumer inputs before retiring predecessors and standard copies.
+Final-source proof and hosted source/offline jobs follow in 3.3.1, 3.4, and 3.13;
+an unavailable peer holds only its own acceptance. Generic cases and original
+failures remain bound to their native producer, including captured source evidence
 `640cc1a0f708b9b8411d714f07d084376a8b691469e8518181d213366ab753e6`.
 
 ### Requirement: Default proof and root binding are distinct

@@ -422,13 +422,17 @@ v8.0.0 is not a release merely because `VERSION` names it.
 3. Migrate each actual DDWG consumer and retire its duplicate code, generic tests,
    dependencies, common configuration, procedures, and specification copies in
    the same admitted batch. Do not sync removals before successor qualification.
-4. Complete final topic, original-duty, reader, shared quality, risk, history,
-   CI, and carrier acceptance, including required actual AIGW/Proxy bindings.
+4. Finish local topic, original-duty, reader, shared quality, risk, history,
+   and carrier checks on the migrated source. Qualify shared interfaces before
+   retirement; final-source proof and hosted jobs validate the resulting source
+   afterward. They cannot be prerequisites for producing that same source.
 5. Freeze correctly classified source and shared supply. Qualify local and cold
-   execution and exact-HEAD proof. Publish on an available peer after its own
-   source/offline platform checks; verify the signed tag, Release, independent
-   download hashes, and live navigation. An unavailable peer holds only its own
-   delivery; later synchronize and qualify the same objects there.
+   execution and exact-HEAD plan/proof, then accept the source locally through
+   ETHOS. Qualify actual AIGW/Proxy bindings on the same product inputs without
+   holding local DDWG acceptance for unrelated work. Publish on an available
+   peer after its own source/offline platform checks; verify the signed tag,
+   Release, independent download hashes, and live navigation. An unavailable
+   peer holds only its own delivery; later qualify the same objects there.
 6. Audit obligations and evidence, sync officially, and retire absorbed resources
    after consumer, hash, permission, and native-inventory checks. Complete archive
    prerequisites without claiming the archive's future Git effects.
