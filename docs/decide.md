@@ -16,8 +16,10 @@ its depth. Do not begin by filling a template or collecting material. If the
 decision owner or subject is unknown, pause the affected action; test a proposed
 answer against shared criteria, counterexamples, and stated limits.
 
-For an unclear task, [frame the problem](#frame-the-right-problem). For a
-clear choice, [compare options](#make-the-choice-comparable-and-actionable).
+For an unclear task, [frame the problem](#frame-the-right-problem). For an
+anomaly or failed result, [diagnose the cause and prevention
+gap](#diagnose-a-failure-and-its-prevention-gap). For a clear choice,
+[compare options](#make-the-choice-comparable-and-actionable).
 [Record the choice and next action](#record-the-choice-and-next-action) after
 an authorized decision.
 

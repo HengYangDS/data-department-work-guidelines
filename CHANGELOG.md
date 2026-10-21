@@ -32,6 +32,7 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   and update [DR-0001's renamed path](docs/decisions/dr-0001-human-ai-collaboration.md)
   and affected topic anchors. Published v7 editions remain unchanged.
 - Organize the seven-topic task map around direction, data, delivery, and collaboration.
+  Link failure diagnosis directly from the task map and analysis opening.
   Put examples beside their practice and keep procedures in Contributing, authority in
   governance, and configuration in its reading map. Decisions retain durable rationale;
   OpenSpec tasks retain bounded actions, completion checks, stable IDs, and truthful states.

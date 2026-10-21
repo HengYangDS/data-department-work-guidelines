@@ -23,6 +23,9 @@ the same guidance; each topic owns its rules and points to the related work.
   hypotheses and name the decision owner and revisit conditions.
   - Options: [Make the choice
     comparable](decide.md#make-the-choice-comparable-and-actionable).
+- [Diagnose a failure](decide.md#diagnose-a-failure-and-its-prevention-gap):
+  Explain the cause, why it escaped prevention or detection, and how to verify
+  the repair.
 
 ## Data and Delivery
 
