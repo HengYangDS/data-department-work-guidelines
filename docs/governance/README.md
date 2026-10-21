@@ -158,7 +158,7 @@ applicable shared closure. `source-format` checks selected source once, without
 a second formatter provider in the local root.
 
 The remaining repository text check covers source-byte integrity. It does not
-detect language, parse TOML, classify formatter ownership, or impose a raw
+assess English prose, parse TOML contents, run a formatter, or impose a raw
 blank-line rule; installed `source-format` and `config-quality` own native layout
 and syntax. Review new authored text for English and department terminology
 without rewriting quoted originals, historical text, or meaningful literals.
