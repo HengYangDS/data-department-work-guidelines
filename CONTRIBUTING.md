@@ -66,8 +66,8 @@ dependency declarations, and SemVer/Changelog.
 
 `npm run prose` invokes the installed shared prose provider: Codespell, shipped
 Vale rules, and a temporary repository spelling increment. The full graph
-requires that gate before `docs-integrity`; the local command alone does not
-check prose. The increment remains until shared spelling qualifies the same
+includes the shared prose gate; the local command alone does not check prose.
+The increment remains until shared spelling qualifies the same
 corpus and vocabulary. Native Vale severity controls blocking; advisory findings
 remain in the report without becoming errors.
 
