@@ -95,13 +95,13 @@ specific completion claim through [execution and delivery](deliver.md).
 
 ## Move from a Signal to Controlled Use
 
-Use the questions below for the intended use, not as a mandatory pipeline.
-Combine stages where useful, but preserve every applicable judgment.
-Research need not become production; production needs its operational
-safeguards. Admission precedes use that requires permission, even when
-production evidence is gathered earlier. Revisit the affected value, meaning,
-or quality judgment when facts or use change. Neither deployment nor feedback
-authorizes a new use.
+For the proposed use, answer each applicable question below. These are not
+mandatory stages; combine them when useful. Research need not become
+production, but operational deployment requires production qualification and
+safeguards. Obtain permission before a use that requires it, even if production
+evidence is ready. Revisit the affected value, meaning, or quality judgment when
+facts or intended use change; deployment and feedback do not authorize another
+use.
 
 - **Opportunity:** Is evaluation worthwhile? Establish the business question,
   value hypothesis, source, and information boundary.
@@ -117,14 +117,11 @@ authorizes a new use.
   trends, cost, and incidents. Keep the review result and any changed judgment
   with the [existing work evidence](deliver.md#evidence-sets-the-limit-of-the-claim).
 
-Evaluate feasibility and business value separately. A useful signal still needs
-production qualification before operational deployment. Permission is specific
-to a use and its conditions; deployment does not authorize other uses.
-
-Label data as exploratory, temporary, limited-use, awaiting verification, or
-admitted according to the evidence and permission for that use. Starting to use
-it does not resolve an open risk. Adoption is observed use within the admitted
-conditions, not a state inferred from deployment.
+Assess technical feasibility and business value separately. Label data according
+to its evidence and permission: exploratory, temporary, limited-use, awaiting
+verification, or admitted. Starting to use it does not resolve an open risk.
+Admission permits a specified use under stated conditions; adoption is observed
+use within them, not inferred from deployment.
 
 ### Worked decision: revised market history
 
