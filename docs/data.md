@@ -226,6 +226,23 @@ owner identifies dependent consumers and their migration. Production plans
 release and recovery, and governance confirms permission and exit conditions.
 The task lead coordinates the unresolved decisions.
 
+Compare the old and proposed joins on the same source snapshot and reporting
+cutoff. Agree on the expected entities, reporting grain, and valid time ranges
+with the business and data-model owners before interpreting the differences:
+
+- Compare old and proposed match status to identify lost and newly matched
+  entities. Investigate unmatched rows, distinguishing intended coverage changes
+  from missing or incorrect mappings.
+- Inspect one-to-many matches for duplicate report rows and inflated aggregates.
+  A valid identifier column does not establish the expected join cardinality.
+- Inspect renamed, merged, or split entities at the affected dates. Confirm that
+  the mapping preserves the agreed identity and time rules for historical uses.
+
+Trace material differences through the dependent report to the underlying rows.
+Matching row counts or totals alone cannot establish that the same entities
+were matched. Keep the comparison, unexplained differences, and the report
+owner's verification with the existing migration evidence.
+
 Before retiring the old interface, establish that each affected consumer has
 migrated or that the authorized owner has ended its use. A deprecation notice
 alone does not establish completed migration. Identify failed and unverified

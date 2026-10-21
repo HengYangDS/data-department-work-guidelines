@@ -51,6 +51,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   acceptance, recovery, and maintainer responsibility. Combined stages retain these judgments.
   Describe feasibility, value, production qualification, permission, and observed adoption
   as separate judgments.
+  In the shared-identifier example, compare old and proposed joins at the same snapshot
+  and cutoff; inspect match changes, duplicate rows, and historical identity mappings.
 - Frame decisions against a comparison baseline with the smallest sufficient model,
   consistent classification, interacting causes, and cross-cutting constraints.
   Separate discussion, readiness, and approval; meeting records identify each decision's
