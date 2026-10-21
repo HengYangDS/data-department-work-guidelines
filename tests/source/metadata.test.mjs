@@ -5,31 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 import { pathToFileURL } from "node:url";
-import { headingLevel, markdownTokens, walkMarkdown } from "../../tools/docs/markdown.mjs";
 import { root } from "../../tools/runtime.mjs";
-
-test("native front matter stays outside reader headings with physical source lines", () => {
-  const source = [
-    "---",
-    "subject: fixture:guide",
-    "role: policy",
-    "state: canonical",
-    "relations:",
-    '  canonical_for: "[Metadata only](missing.md)"',
-    "---",
-    "",
-    "# Fixture",
-    "",
-    "Reader [target](target.md).",
-    "",
-  ].join("\n");
-  const headings = [...walkMarkdown(markdownTokens(source, "docs/fixture.md"))].filter(
-    headingLevel,
-  );
-  assert.equal(headings.length, 1);
-  assert.equal(headings[0].text, "# Fixture");
-  assert.equal(headings[0].startLine, 9);
-});
 
 test("tracked text refuses invalid UTF-8 and NUL while declared binary assets remain reachable", () => {
   using directory = mkdtempDisposableSync(path.join(os.tmpdir(), "ddwg-source-bytes-"));

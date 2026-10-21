@@ -1,9 +1,8 @@
 import { decodeHTML } from "entities";
 import { lint } from "markdownlint/sync";
 
-function parseMarkdown(source, name) {
+export function markdownTokens(source, name = "document.md") {
   let tokens;
-  let frontMatterLines = 0;
   lint({
     strings: { [name]: source },
     noInlineConfig: true,
@@ -16,33 +15,12 @@ function parseMarkdown(source, name) {
         parser: "micromark",
         function(params) {
           tokens = params.parsers.micromark.tokens;
-          frontMatterLines = params.frontMatterLines.length;
         },
       },
     ],
   });
   if (!Array.isArray(tokens)) throw new Error("native Markdown structure is unavailable");
-  return {
-    tokens,
-    frontMatterLines,
-  };
-}
-
-export function markdownTokens(source, name = "document.md") {
-  const { tokens, frontMatterLines } = parseMarkdown(source, name);
-  if (!frontMatterLines) return tokens;
-  function sourceCoordinates(token, parent) {
-    const mapped = {
-      ...token,
-      startLine: token.startLine + frontMatterLines,
-      endLine: token.endLine + frontMatterLines,
-      parent,
-      children: [],
-    };
-    mapped.children = token.children.map((child) => sourceCoordinates(child, mapped));
-    return mapped;
-  }
-  return tokens.map((token) => sourceCoordinates(token, undefined));
+  return tokens;
 }
 
 export function* walkMarkdown(tokens) {
