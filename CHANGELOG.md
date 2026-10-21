@@ -56,6 +56,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   and cutoff; inspect match changes, duplicate rows, and historical identity mappings.
 - Frame decisions against a comparison baseline with the smallest sufficient model,
   consistent classification, interacting causes, and cross-cutting constraints.
+  Clarify that verified facts correct judgments without granting permission or
+  waiving an authorized commitment; report the conflict and its impact to its owner.
   Separate discussion, readiness, and approval; meeting records identify each decision's
   authorized owner, actual date, and basis, and each action's owner, deadline, and completion
   condition. Deferred decisions need a resolving action and revisit time, including

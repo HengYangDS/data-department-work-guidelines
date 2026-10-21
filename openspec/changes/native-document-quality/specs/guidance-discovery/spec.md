@@ -9,7 +9,7 @@ six task boundaries, work states, evidence limits, and learning triggers.
 Problem resolution, tested bounded judgment, and system improvement SHALL stay
 distinct. Topics SHALL expose start, stop, and verification cues without
 duplicate cards or a monolith. Practice admission SHALL remain distinct
-from mandatory prevention. Verified facts outrank prior commitments; Blocked
+from mandatory prevention. Facts correct judgments, not permissions; blocked
 reports SHALL name gap, impact, and escalation.
 
 #### Scenario: A current topic inherits an obsolete rule
@@ -188,6 +188,14 @@ reports SHALL name gap, impact, and escalation.
   document, or prior investment
 - **THEN** the charter requires correcting the judgment from those facts
 - **AND** loyalty or sunk cost does not justify preserving the old position.
+
+#### Scenario: Verified facts conflict with an authorized commitment
+
+- **WHEN** verified facts contradict the basis of an authorized commitment
+- **THEN** the responsible actor SHALL correct the factual judgment and report
+  the conflict and its impact to the authorized owner
+- **AND** the facts SHALL NOT grant permission, waive the commitment, or
+  authorize an action outside the applicable boundaries.
 
 #### Scenario: A delay or recurring dispute escapes mechanism analysis
 
