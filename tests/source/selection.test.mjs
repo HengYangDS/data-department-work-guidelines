@@ -15,13 +15,7 @@ import os from "node:os";
 import path from "node:path";
 import { syncBuiltinESMExports } from "node:module";
 import { test } from "node:test";
-import {
-  currentMarkdown,
-  gitFiles,
-  root,
-  sourceAttributes,
-  sourceMarkdown,
-} from "../../tools/runtime.mjs";
+import { gitFiles, root, sourceAttributes } from "../../tools/runtime.mjs";
 import { fixtureGit } from "./fixtures.mjs";
 
 test("shared Git excludes editor state without hiding guidance source", () => {
@@ -172,20 +166,6 @@ test("Git selection excludes worktree deletions and preserves native failure evi
     rmSync(directory, { recursive: true, force: true });
     assert.equal(existsSync(directory), false);
   }
-});
-
-test("current Markdown inventory excludes official archives, not live topics", () => {
-  const files = [
-    "README.md",
-    "docs/decide.md",
-    ".superpowers/source.md",
-    ".worktrees/source.md",
-    "build/source.md",
-    "node_modules/source.md",
-    "openspec/changes/archive/old/spec.md",
-  ];
-  assert.deepEqual(sourceMarkdown(files), files);
-  assert.deepEqual(currentMarkdown(files), files.slice(0, -1));
 });
 
 test("native Git roles distinguish executable tests from their fixture support", () => {

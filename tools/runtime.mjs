@@ -164,10 +164,6 @@ export function gitFiles(repository = root) {
     .sort();
 }
 
-export function sourceMarkdown(files = gitFiles()) {
-  return files.filter((relative) => relative.endsWith(".md"));
-}
-
 export function sourceAttributes(files = gitFiles(), repository = root) {
   if (!files.length) return new Map();
   const output = run("git", ["check-attr", "--stdin", "-z", "text", "eol"], {
@@ -193,12 +189,6 @@ export function sourceAttributes(files = gitFiles(), repository = root) {
     attributes.set(relative, { text, eol });
   }
   return attributes;
-}
-
-export function currentMarkdown(files = gitFiles()) {
-  return sourceMarkdown(files).filter(
-    (relative) => !relative.startsWith("openspec/changes/archive/"),
-  );
 }
 
 export function managedFileExists(target, repository = root) {
