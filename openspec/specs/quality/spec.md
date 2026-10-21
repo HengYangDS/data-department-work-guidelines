@@ -261,10 +261,10 @@ formatter-accepted structure or issue a duplicate spacing verdict.
 - **AND** recognized shebang source, ordinary text and structured literals keep
   their native spacing rules regardless of the caller's working directory.
 
-#### Scenario: Source bytes would bypass English checks
+#### Scenario: Source bytes would bypass text checks
 
-- **WHEN** text source contains NUL, invalid UTF-8, or a binary declaration for
-  a known text format
+- **WHEN** text source contains NUL or invalid UTF-8, including a native text
+  carrier with `-text` declared for byte preservation
 - **THEN** the verifier rejects that source with its path
 - **AND** declared binary assets remain reachable without being interpreted
   as prose, while effective text attributes require LF.
@@ -514,17 +514,24 @@ records SHALL NOT gain converters, duplicate copies, or old-path fallback.
 Known plain-text identities, extensions, and native parsers SHALL define text
 ownership; files without extensions SHALL NOT default to plain text. Unowned code,
 invalid UTF-8, and NUL SHALL fail with a source path. Effective Git attributes
-SHALL identify binaries and require LF for text; known text SHALL NOT evade
-checks through a binary declaration. Symlinks SHALL remain excluded from text
-interpretation. Plain UTF-8 text SHALL receive native spacing checks.
+SHALL select LF normalization or explicit binary/byte-preservation ownership;
+`-text` SHALL NOT exempt a native text carrier from byte checks. Symlinks SHALL
+remain excluded from text interpretation. Plain UTF-8 text SHALL receive native spacing checks.
 
 #### Scenario: An undeclared carrier would evade source checks
 
-- **WHEN** an input without an extension has no native owner, or known text declares
-  binary content or contains invalid UTF-8 or NUL
+- **WHEN** an input without an extension has no native owner, or native text
+  contains invalid UTF-8 or NUL, including under `-text`
 - **THEN** source validation refuses with its path rather than skipping it
 - **AND** declared binary assets, source aliases, and native structured formats
   retain their own interpretation boundaries.
+
+#### Scenario: Git preserves a native text carrier's exact bytes
+
+- **WHEN** a valid UTF-8 text carrier declares `-text`
+- **THEN** byte checks accept it without changing its bytes
+- **AND** Git performs no text normalization; the native formatter and other
+  non-spacing checks retain their own selection and preservation controls.
 
 ### Requirement: Native selected inputs retain literal identity
 

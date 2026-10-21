@@ -144,6 +144,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Accept valid byte-exact text declared with Git `-text` while retaining UTF-8
+  and NUL checks for native text carriers. Preserve declared binary assets and
+  leave inspected bytes unchanged.
 - Correct contributor guidance: the full native graph includes official OpenSpec
   validation; registry checks do not establish reading order or reader understanding.
 - Separate qualified shared checks from unfinished repository consumers in governance
