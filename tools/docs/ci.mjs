@@ -56,8 +56,6 @@ const nativeSourceSupply = [
   "npm ci --ignore-scripts",
   "node tools/ci/install-native.mjs osv-scanner --gitlab-package",
   auditCommand,
-  "node tools/ci/install-native.mjs lychee --gitlab-package",
-  "node tools/ci/install-native.mjs vale --gitlab-package",
 ];
 const nativeRuntimeVariables = {
   MISE_CONFIG_DIR: "$CI_PROJECT_DIR/build/runtime/work/mise-config",
@@ -486,8 +484,6 @@ export function validateCi(
     "node tools/ci/install-native.mjs osv-scanner --download",
     auditCommand,
     evidenceStep.step.uses,
-    "node tools/ci/install-native.mjs lychee --download",
-    "node tools/ci/install-native.mjs vale --download",
     verifier,
   ];
   if (

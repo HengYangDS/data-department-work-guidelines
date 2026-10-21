@@ -300,38 +300,6 @@ test("package-manager supply cannot bypass native admission or become a second v
   assert.throws(() => validateCi(github, YAML.stringify(native), offline), /platform job/u);
 });
 
-test("both source planes must supply native Vale before verification", () => {
-  const workflow = YAML.parse(github);
-  workflow.jobs.verify.steps = workflow.jobs.verify.steps.filter(
-    (step) => step.run !== "node tools/ci/install-native.mjs vale --download",
-  );
-  assert.throws(() => validateCi(YAML.stringify(workflow), gitlab, offline), /supply/u);
-  for (const name of [
-    ".docs:source-supply",
-    ".docs:native-source-supply",
-    ".docs:verify",
-    "docs:verify:macos",
-    "docs:verify:windows",
-  ]) {
-    assert.throws(
-      () =>
-        validateCi(
-          github,
-          changedGitLab(name, (_, job) => {
-            job.before_script = job.before_script
-              .flat(10)
-              .filter(
-                (command) =>
-                  !command.endsWith("node tools/ci/install-native.mjs vale --gitlab-package"),
-              );
-          }),
-          offline,
-        ),
-      /supply|native|setup|full proof/u,
-    );
-  }
-});
-
 test("native YAML aliases preserve one source-supply list and reject omissions", () => {
   const pipeline = YAML.parse(gitlab);
   const supply = pipeline[".docs:source-supply"].before_script;

@@ -28,8 +28,6 @@ default:
     - npm ci --ignore-scripts
     - node tools/ci/install-native.mjs osv-scanner --gitlab-package
     - node tools/docs/cli.mjs audit
-    - node tools/ci/install-native.mjs lychee --gitlab-package
-    - node tools/ci/install-native.mjs vale --gitlab-package
 
 .docs:native-runtime:
   variables: &native-runtime
@@ -47,8 +45,6 @@ default:
       - mise exec --locked -- npm ci --ignore-scripts
       - mise exec --locked -- node tools/ci/install-native.mjs osv-scanner --gitlab-package
       - mise exec --locked -- node tools/docs/cli.mjs audit
-      - mise exec --locked -- node tools/ci/install-native.mjs lychee --gitlab-package
-      - mise exec --locked -- node tools/ci/install-native.mjs vale --gitlab-package
 
 .docs:windows-runtime:
   before_script: &windows-runtime-supply

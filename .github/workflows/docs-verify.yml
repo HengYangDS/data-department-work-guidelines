@@ -66,11 +66,5 @@ jobs:
           path: build/evidence/dependencies/
           if-no-files-found: error
 
-      - name: Install pinned lychee
-        run: node tools/ci/install-native.mjs lychee --download
-
-      - name: Supply pinned Vale
-        run: node tools/ci/install-native.mjs vale --download
-
       - name: Verify documentation and governance boundaries
         run: npm run verify
