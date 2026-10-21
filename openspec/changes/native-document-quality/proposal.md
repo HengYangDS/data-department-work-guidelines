@@ -60,8 +60,10 @@ been established.
   keeps its applicable native obligations until its consumers migrate.
 - Use the product's accepted shared CI contract. Its owner selects the source
   representation and projection mechanism; DDWG supplies peer and platform
-  parameters. Qualify non-writing drift refusal and actual source/offline jobs
-  before retiring duplicate local CI policy.
+  parameters. Qualify its installed entrypoint, actual consumer inputs, and
+  non-writing drift refusal before retiring duplicate local CI policy. Prove
+  and accept the resulting source locally, then qualify each available peer's
+  actual source/offline jobs and publication.
 - Keep document editions separate from shared maintenance-tool distribution.
   Qualify the exact accepted product supply in local and offline consumers.
   Retire the former DDWG generic bundle when its named consumers release it;
