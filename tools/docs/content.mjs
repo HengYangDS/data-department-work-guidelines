@@ -25,14 +25,12 @@ export async function checkSourceBytes() {
         resolveConfig: false,
       });
       if (
-        inferredParser ||
-        path.extname(relative) === ".toml" ||
-        plainTextIdentities.has(relative) ||
-        [".txt", ".ini"].includes(path.extname(relative))
-      ) {
-        errors.push(`${relative}: source with a native text owner cannot be declared binary`);
-      }
-      continue;
+        !inferredParser &&
+        path.extname(relative) !== ".toml" &&
+        !plainTextIdentities.has(relative) &&
+        ![".txt", ".ini"].includes(path.extname(relative))
+      )
+        continue;
     }
     if (bytes.includes(0)) {
       errors.push(`${relative}: text source contains a NUL byte`);

@@ -1,13 +1,13 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { cpSync, mkdtempDisposableSync, symlinkSync, writeFileSync } from "node:fs";
+import { cpSync, mkdtempDisposableSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 import { pathToFileURL } from "node:url";
 import { root } from "../../tools/runtime.mjs";
 
-test("tracked text refuses invalid UTF-8 and NUL while declared binary assets remain reachable", () => {
+test("text checks preserve byte-exact source without letting Git attributes hide invalid bytes", () => {
   using directory = mkdtempDisposableSync(path.join(os.tmpdir(), "ddwg-source-bytes-"));
   cpSync(path.join(root, "tools"), path.join(directory.path, "tools"), {
     recursive: true,
@@ -64,12 +64,28 @@ test("tracked text refuses invalid UTF-8 and NUL while declared binary assets re
     path.join(directory.path, ".gitattributes"),
     "* text=auto eol=lf\nasset.bin -text\nREADME.md -text\n",
   );
-  const hidden = spawnSync(process.execPath, command, {
+  const preserved = readFileSync(path.join(directory.path, "README.md"));
+  const byteExact = spawnSync(process.execPath, command, {
     cwd: directory.path,
     encoding: "utf8",
     timeout: 15_000,
   });
-  assert.ifError(hidden.error);
-  assert.notEqual(hidden.status, 0);
-  assert.match(hidden.stderr, /README\.md:.*native text owner cannot be declared binary/u);
+  assert.ifError(byteExact.error);
+  assert.equal(byteExact.status, 0, byteExact.stderr);
+  assert.deepEqual(readFileSync(path.join(directory.path, "README.md")), preserved);
+  for (const [bytes, message] of [
+    [Buffer.from([0xc3, 0x28]), /README\.md:.*UTF-8/u],
+    [Buffer.from("Readable\0hidden\n"), /README\.md:.*NUL/u],
+  ]) {
+    writeFileSync(path.join(directory.path, "README.md"), bytes);
+    const result = spawnSync(process.execPath, command, {
+      cwd: directory.path,
+      encoding: "utf8",
+      timeout: 15_000,
+    });
+    assert.ifError(result.error);
+    assert.notEqual(result.status, 0, result.stdout);
+    assert.match(result.stderr, message);
+    assert.deepEqual(readFileSync(path.join(directory.path, "README.md")), bytes);
+  }
 });
