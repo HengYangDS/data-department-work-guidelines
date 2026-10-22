@@ -61,8 +61,8 @@ For an uncommitted edit, run `mise run check`,
 `ethos prove --host --execute --gate markdown-lint --json`,
 `npm run prose`, and `node tools/docs/cli.mjs check`. The shared lint gate checks Git-selected working
 Markdown without writing, including non-ignored candidate files. The repository
-command checks source bytes, MIT license metadata, CI,
-dependency declarations, and SemVer/Changelog.
+command checks CI, dependency declarations, and SemVer/Changelog.
+Installed ETHOS checks authored-source bytes and the repository license grant.
 Installed ETHOS checks effective Git text and line-ending attributes through
 its repository paradigm; DDWG keeps no second implementation.
 
@@ -81,9 +81,8 @@ These checks download nothing and do not require a frozen release bundle.
 
 For configuration changes, run
 `ethos prove --host --execute --gate config-quality --json`.
-Installed ETHOS owns native syntax and formatting; the remaining repository
-text check covers source-byte integrity, not language detection or another layout
-policy.
+Installed ETHOS owns native syntax, formatting, and authored-source byte
+integrity. These checks do not establish language or translation quality.
 
 Prose tools support the English editorial review; they do not replace it.
 

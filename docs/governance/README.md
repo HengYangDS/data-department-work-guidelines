@@ -30,7 +30,7 @@ permission, acceptance, and retirement boundaries.
 | ---------------------------------------------------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------------- |
 | [Official OpenSpec Change](../../openspec/README.md) | Material intent, requirements, design, and progress in `tasks.md`.                   | Does not authorize a write or publication.                 |
 | Installed ETHOS                                      | Changed-path attribution, lane lease, admission, proof, acceptance, and publication. | Acts on current source and policy, not remembered results. |
-| Repository checks                                    | Source-byte integrity, release history, and retained repository checks.              | Do not replace OpenSpec lifecycle or ETHOS admission.      |
+| Repository checks                                    | Release history, CI, and retained dependency checks.                                 | Do not replace OpenSpec lifecycle or ETHOS admission.      |
 | [Decision record](../decisions/README.md)            | Durable rationale and rejected alternatives.                                         | Does not hold tasks, command output, or acceptance logs.   |
 
 Use the [official workspace](../../openspec/README.md) for artifact roles and
@@ -156,10 +156,9 @@ The [profile](../../.ethos/profile.toml) still declares two temporary roots:
 applicable shared closure. `source-format` checks selected source once, without
 a second formatter provider in the local root.
 
-The remaining repository text check covers source-byte integrity. It does not
-assess English prose, parse TOML contents, run a formatter, or impose a raw
-blank-line rule; installed `source-format` and `config-quality` own native layout
-and syntax. Review new authored text for English and department terminology
+Installed `source-format` checks authored-source byte integrity before native
+layout; `config-quality` owns configuration syntax. These checks do not establish
+English prose quality or impose a second raw blank-line rule. Review new authored text for English and department terminology
 without rewriting quoted originals, historical text, or meaningful literals.
 
 | Concern                                | Current consumer                                          | Ownership boundary                                                              |

@@ -1,8 +1,6 @@
 import { assertNodeRuntime, reportError, readText } from "../runtime.mjs";
 
 async function checkRepository() {
-  const { checkLicense } = await import("./governance.mjs");
-  const { checkSourceBytes } = await import("./content.mjs");
   const { checkChangelog } = await import("./changelog.mjs");
   const { checkCi } = await import("./ci.mjs");
   const { dependencyPolicyPath, parseDependencyPolicy, validateDependencyInput } =
@@ -11,9 +9,7 @@ async function checkRepository() {
     JSON.parse(readText("package-lock.json")),
     parseDependencyPolicy(readText(dependencyPolicyPath)),
   );
-  checkLicense();
   checkChangelog();
-  await checkSourceBytes();
   checkCi();
   console.log("PASS repository source checks");
 }
