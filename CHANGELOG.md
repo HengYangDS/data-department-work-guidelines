@@ -36,8 +36,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   Put examples beside their practice and keep procedures in Contributing, authority in
   governance, and configuration in its reading map. Decisions retain durable rationale;
   OpenSpec tasks retain bounded actions, completion checks, stable IDs, and truthful states.
-- Explain Agent delegation, member review, and authorized acceptance with readable steps
-  and two explicit outcomes instead of a diagram; preserve responsibility and permission limits.
+- Explain Agent delegation, member review, and authorized acceptance with a compact
+  relationship diagram, readable steps, and two explicit outcomes; preserve responsibility
+  and permission limits.
 - Clarify responsibility across data acquisition, production, analysis, modeling,
   data science, development, platforms, infrastructure, product and technical management,
   governance, and delivery. Existing owners decide business meaning, data models,
