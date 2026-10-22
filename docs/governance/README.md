@@ -226,22 +226,12 @@ a sound decision or current delivery.
 
 ## Tool Supply and Offline Execution
 
-Reading the guidelines requires no installation. Maintainers and CI use the
-optional bundle to supply quality checks without downloads. Install ETHOS
-separately for Change admission and proof; it is not included in that bundle.
-
-[`package.json`](../../package.json) owns the Node line and exact npm version
-through `devEngines`, with `onFail: error`. npm rejects a mismatch before
-`install`, `ci`, and `run`; ephemeral CI acquires that npm first. Mise acquisition
-enforces the declared checksum. npm accepting checksum metadata does not verify
-integrity.
-
-Shell CI selects each command's runtime through the existing Mise installation,
-[project configuration](../../.config/mise/config.toml), and
-[native lock](../../.config/mise/mise.lock). Keep host npm, Runner services, and
-each maintained host's installation owner unchanged. Local and offline checks
-never upgrade them. Do not use `--force` or an admission override. Tracked
-`.gitattributes` keeps LF on every OS.
+Reading the guidelines requires no installation. Until the shared supply
+migration is accepted, maintainers and CI use the existing source-bound toolkit
+and install ETHOS separately. [Contributing](../../CONTRIBUTING.md#prepare-the-runtime-and-dependencies)
+owns Node/npm preparation, binary selection, acquisition, and offline commands.
+Those procedures preserve the destination's installation owner and global
+configuration; local checks do not upgrade host tools or Runner services.
 
 | Operation            | Supply boundary                                        |
 | -------------------- | ------------------------------------------------------ |
@@ -252,47 +242,36 @@ never upgrade them. Do not use `--force` or an admission override. Tracked
 
 ### Select and Verify Native Tools
 
-The [supply manifest](../../.config/supply/native.json) pins platform archives,
-raw binary sizes, executable digests, and upstream notices. The
-[bundle record](../../.config/release/offline-bundle.json) binds the edition,
-Node major, complete package manifest, lockfile, and native supply. Include the
-complete npm cache, declared native assets, and notices. The bundle does not
-change third-party licenses or duplicate npm policy.
-
-Verify bytes before extraction or execution. Before checking a version, resolve
-PATH names and direct selectors to a native file, respecting Windows quoting
-and executable suffixes. A matching version cannot admit altered bytes.
-Package-manager binaries retain their installation owner's trust boundary;
-do not claim they are byte-equivalent to release assets.
+The [supply manifest](../../.config/supply/native.json) owns platform assets and
+upstream notices. The [bundle record](../../.config/release/offline-bundle.json)
+binds the toolkit to its source, locks, native supply, and Node major. Verify
+complete bytes before extraction or execution. Version output alone cannot
+admit altered bytes, and a package-manager installation is not proof of
+byte-equivalence to a release asset. The repository's MIT grant does not
+relicense supplied packages.
 
 ### Acquire Supplied Assets
 
-Use the [tool acquisition procedure](../../CONTRIBUTING.md#acquire-supplied-assets)
-for download, cache publication, and extraction. It preserves the declared
-artifact identity, credential boundary, original diagnostics, and the
-destination executor's ownership; it grants no use or distribution approval.
+Follow the [acquisition procedure](../../CONTRIBUTING.md#acquire-supplied-assets).
+It preserves bounded downloads, credential boundaries, concurrent callers,
+permissions, original diagnostics, and cleanup of only the caller's temporary
+stage. Acquisition grants no use or distribution approval.
 
 ### Qualify Each Platform
 
-CI bootstraps Node/npm and acquires the exact asset before offline execution.
-That whole job is not network-isolation proof. Qualify cold local use separately
-with fresh HOME, no inherited configuration/cache, and denied remote connections.
-Run the full graph on every claimed host with actual npm recorded.
+Run the complete declared graph on each claimed platform. Observe host,
+Node-process, and tool architectures separately; a declared asset or container
+name does not qualify an ABI. Prefer native ARM64 Node on Windows ARM64. A tool
+without a native ARM64 asset may use its declared pinned x64 asset under
+emulation; that does not require x64 Node.
 
-Declaring a platform asset does not qualify that ABI. Verify each claimed
-platform through its actual executor. On Windows ARM64, prefer native ARM64
-Node. When the manifest has no ARM64 tool
-asset, use its declared pinned x64 asset under Windows emulation. Tool
-compatibility does not require emulating Node too. Qualify the actual
-combination and record host, Node-process, and tool architectures separately.
-
-For managed tools, invoke
-`node tools/ci/install-native.mjs TOOL --print-spec` with the same Node executable
-used for verification. Record its selected asset `key` and digests, not a cache
-directory name.
-The installation owner supplies provenance for an external executable.
-Independently download and hash each Forge asset; a pin or install preview is
-not platform acceptance.
+Qualify cold offline use separately with fresh HOME, no inherited configuration
+or cache, and denied remote connections. A job that first downloads its tools
+is not whole-job network-isolation evidence. For a managed tool, run
+`node tools/ci/install-native.mjs TOOL --print-spec` with the verification
+command's Node executable. Record the selected asset key and hashes, not cache
+directory names. The installation owner supplies external executable provenance.
+Independently retrieve and hash each Forge asset.
 
 ### Audit Dependencies and Artifacts
 
@@ -328,9 +307,9 @@ evidence. This page grants no approval; the
 [dependency policy](../../.config/checks/dependencies/policy.toml) owns only
 project-lock dispositions, not image or native-binary approvals.
 
-The user has accepted the known braces finding as non-blocking for verification,
-CI, distribution, and releases. Keep its full report and remediation tracking;
-it does not accept another finding or package, or remove input-integrity checks.
+The [project-lock disposition](#project-lock-reports) makes the known braces
+finding non-blocking without accepting other findings or removing integrity
+checks.
 
 A development approval for other findings cannot cover production, arbitrary untrusted input,
 other findings, changed artifacts, or another repository. Verify authenticity,
