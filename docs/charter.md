@@ -159,8 +159,6 @@ maintainers to organize calibration and revisions. A task lead, authorized
 decision owner, and acceptor may be the same person when policy permits;
 do not infer one role's authority from another.
 
-**Guideline edition:** v8.0.0
-
-This label alone does not establish released content. Working branches may
-include [Unreleased changes](../CHANGELOG.md#unreleased); use the signed tag
-for the exact release.
+[`VERSION`](../VERSION) identifies the edition in preparation or the last
+release. Working branches may include [Unreleased changes](../CHANGELOG.md#unreleased);
+use the signed tag for exact released content.

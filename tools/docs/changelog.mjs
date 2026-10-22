@@ -44,13 +44,6 @@ export function validateChangelog({ repository = root, selectedTag = selectedRel
   };
   const version = readSource("VERSION").trim();
   strictVersion(version);
-  const charter = readSource("docs/charter.md");
-  const editions = [...charter.matchAll(/\*\*Guideline edition:\*\* v([^\s]+)/gu)].map(
-    (match) => match[1],
-  );
-  if (editions.length !== 1 || editions[0] !== version) {
-    throw new Error(`charter edition must match VERSION ${version}`);
-  }
   const packageManifest = JSON.parse(readSource("package.json"));
   const lock = JSON.parse(readSource("package-lock.json"));
   if (

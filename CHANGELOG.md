@@ -100,6 +100,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Removed
 
+- Remove the duplicate edition label and its charter-specific parser and fixtures.
+  The charter links to `VERSION`; version notes and signed-release checks retain
+  their existing owners.
 - Remove the local prose controller, CLI branch, suppression parser, duplicate plain styles,
   and their private tests. The installed shared provider retains Codespell, Vale rules,
   native severity and diagnostics. Keep only a temporary spelling/vocabulary increment

@@ -110,16 +110,9 @@ test("release headings require strict versions, real dates, and descending order
   }
 });
 
-test("VERSION, charter, and private npm metadata have one owner", () => {
+test("private npm metadata does not duplicate VERSION", () => {
   fixture((directory) => {
     assert.equal(validateChangelog({ repository: directory, selectedTag: "" }).version, "4.0.0");
-    const charter = path.join(directory, "docs", "charter.md");
-    writeFileSync(charter, "> **Guideline edition:** v3.0.0\n");
-    assert.throws(
-      () => validateChangelog({ repository: directory, selectedTag: "" }),
-      /charter edition/u,
-    );
-    writeFileSync(charter, "> **Guideline edition:** v4.0.0\n");
     const manifest = path.join(directory, "package.json");
     writeFileSync(manifest, '{"name":"fixture","version":"4.0.0","private":true}\n');
     assert.throws(
@@ -160,7 +153,6 @@ test("the next edition can keep its notes in Unreleased until the release cut", 
     git(directory, "tag", "-a", "v4.0.0", "-m", "fixture release");
 
     writeFileSync(path.join(directory, "VERSION"), "4.1.0\n");
-    writeFileSync(path.join(directory, "docs", "charter.md"), "> **Guideline edition:** v4.1.0\n");
     writeFileSync(changelog, source(base, release, "v4.0.0", "v4.0.0"));
     commit(directory, "prepare next edition without a release date");
 

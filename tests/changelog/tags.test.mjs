@@ -18,7 +18,6 @@ import {
 test("release comparisons cannot skip their immediate predecessor", () => {
   fixture((directory, base) => {
     writeFileSync(path.join(directory, "VERSION"), "4.0.1\n");
-    writeFileSync(path.join(directory, "docs/charter.md"), "> **Guideline edition:** v4.0.1\n");
     const releases =
       "## [4.0.1] - 2026-09-26\n\n### Fixed\n\n- Correct the boundary.\n\n## [4.0.0] - 2026-09-25\n\n### Added\n\n- First release.\n\n";
     const corrected = source(base, releases, "v4.0.1", "v4.0.1");
@@ -47,7 +46,6 @@ test("selected release validation refuses source that differs from its committed
     for (const relative of [
       "CHANGELOG.md",
       "VERSION",
-      "docs/charter.md",
       "package.json",
       "package-lock.json",
       ".ethos/release.toml",

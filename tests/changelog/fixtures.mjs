@@ -138,9 +138,7 @@ export function fixture(run) {
         )
         .join("\n"),
     );
-    mkdirSync(path.join(directory, "docs"));
     writeFileSync(path.join(directory, "VERSION"), "4.0.0\n");
-    writeFileSync(path.join(directory, "docs", "charter.md"), "> **Guideline edition:** v4.0.0\n");
     writeFileSync(path.join(directory, "package.json"), '{"name":"fixture","private":true}\n');
     writeFileSync(
       path.join(directory, "package-lock.json"),

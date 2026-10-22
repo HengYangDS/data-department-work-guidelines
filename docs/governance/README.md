@@ -83,7 +83,7 @@ requirement conflicts with that contract.
 ## Versioned Releases
 
 [`VERSION`](../../VERSION) holds the released identity between release cuts and
-the next edition during preparation; the [charter](../charter.md) displays it.
+the next edition during preparation. The charter links to this single value.
 Working source may contain [Unreleased changes](../../CHANGELOG.md#unreleased).
 Only the signed tag identifies exact release content. The private npm manifest
 carries no second release version.

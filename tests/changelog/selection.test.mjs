@@ -127,7 +127,6 @@ test("native tag inventory ignores non-release tag namespaces", () => {
 test("native tag inventory verifies every tag in one Git observation", () => {
   fixture((directory, base) => {
     writeFileSync(path.join(directory, "VERSION"), "4.0.1\n");
-    writeFileSync(path.join(directory, "docs", "charter.md"), "> **Guideline edition:** v4.0.1\n");
     writeFileSync(
       path.join(directory, "CHANGELOG.md"),
       source(
