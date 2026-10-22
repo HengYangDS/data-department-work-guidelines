@@ -52,7 +52,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   Shared changes also require compatibility, consumer migration, operational checks,
   acceptance, recovery, and maintainer responsibility. Combined stages retain these judgments.
   Describe feasibility, value, production qualification, permission, and observed adoption
-  as separate judgments.
+  as separate judgments. Pair each of the eight durable-asset conditions with the
+  evidence to inspect, using the existing work record.
   In the shared-identifier example, compare old and proposed joins at the same snapshot
   and cutoff; inspect match changes, duplicate rows, and historical identity mappings.
 - Frame decisions against a comparison baseline with the smallest sufficient model,

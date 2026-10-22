@@ -79,14 +79,16 @@ State confidence, alternative explanations, and conclusions the data cannot supp
 
 Before data enters a lasting work system, **all eight conditions must hold**:
 
-- Its meaning is explainable.
-- Its source is traceable.
-- Its time is identifiable.
-- Its process is reproducible.
-- Its quality is verifiable.
-- Its operation is observable.
-- Its owner is identifiable.
-- Its use is bounded.
+| Condition                    | What to inspect                                                              |
+| ---------------------------- | ---------------------------------------------------------------------------- |
+| Its meaning is explainable.  | The subject, fields, metric, grain, units, and business meaning.             |
+| Its source is traceable.     | The original source, acquisition method, source of truth, and authorization. |
+| Its time is identifiable.    | Event and availability times, revisions, and backfills for the intended use. |
+| Its process is reproducible. | Replayable inputs, transformation logic, versions, and outputs.              |
+| Its quality is verifiable.   | Agreed quality requirements, checks, anomalies, and limits.                  |
+| Its operation is observable. | Monitoring, backfill, and recovery for its operational role.                 |
+| Its owner is identifiable.   | The accountable owner, decision mandate, and acceptor.                       |
+| Its use is bounded.          | Permitted consumers and uses, restrictions, and exit conditions.             |
 
 If any condition is unmet, label the data exploratory, temporary, limited-use,
 or awaiting verification. A limited use requires its own evidence and
