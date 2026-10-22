@@ -526,26 +526,33 @@ record its exact scope and keep those links pending. Do not permanently exclude
 GitLab, report a whole-inventory pass, or exclude a selected-peer failure.
 An unavailable unselected peer does not block this release.
 
-Use Lychee's native file-list input, not a second link controller:
+Run the shipped Lychee policy and repository increment separately on the same
+native file-list input. Both results are required; merging the policies or
+running only one changes the checks. Resolve `LYCHEE_BINARY` and
+`SHIPPED_LYCHEE_POLICY` from the qualified ETHOS installation, not an ambient
+tool or a copied host path:
 
 ```text
-lychee --config .config/checks/lychee/lychee.toml --offline=false --scheme http --scheme https --cache=false --exclude UNSELECTED_PEER_URL_PATTERN --files-from MARKDOWN_FILE_LIST
+LYCHEE_BINARY --config SHIPPED_LYCHEE_POLICY --offline=false --scheme http --scheme https --cache=false --no-progress --no-ignore --hidden --exclude UNSELECTED_PEER_URL_PATTERN --files-from MARKDOWN_FILE_LIST
+LYCHEE_BINARY --config .config/checks/lychee/lychee.toml --offline=false --scheme http --scheme https --cache=false --no-progress --no-ignore --hidden --exclude UNSELECTED_PEER_URL_PATTERN --files-from MARKDOWN_FILE_LIST
 ```
 
 `MARKDOWN_FILE_LIST` contains the current Git-selected Markdown paths, one per
 line. `UNSELECTED_PEER_URL_PATTERN` is an anchored, escaped expression for only
 the unselected repository URL from `.ethos/release.toml`; it must not match the
-selected peer or unrelated links. Use the exact supplied Lychee binary and
-record its source binding, arguments, raw result, and deferred URL scope. Omit
-`--exclude` when all peers are in scope. This check does not grant publication
-authority or certify an unselected peer.
+selected peer or unrelated links. Use the same supplied binary, input list, and
+URL scope for both policies. Retain each policy's identity, arguments, raw result,
+and deferred URLs. Omit `--exclude` from both commands when all peers are in
+scope. These checks do not grant publication authority or certify an unselected
+peer.
 
 For a whole-inventory observation after both peers' targets exist, run
 `ethos prove --host --execute --gate external-links --expect-head OID --json`.
 Retain its complete report even when one peer is unavailable; that result does
 not invalidate independently verified delivery to the other peer. The local
-DDWG link check remains offline and guards delivered-source membership and
-confinement. Neither host observation issues repository proof.
+installed `markdown-links` gate remains offline and guards committed
+source membership and confinement; direct Lychee commands do not supply those
+checks. Neither host observation issues repository proof.
 A prepared Changelog's comparison links return 404 before its tag exists;
 do not waive selected-peer errors or count a pre-tag check as release acceptance.
 A Lychee pass does not authenticate a Forge destination. Use the selected
