@@ -78,33 +78,6 @@ work, not that duty.
 
 ## Execute and Verify
 
-```mermaid
----
-config:
-  htmlLabels: false
-  flowchart:
-    useMaxWidth: true
-    wrappingWidth: 140
-    nodeSpacing: 28
-    rankSpacing: 28
----
-flowchart LR
-    accTitle: Human–AI collaboration: delegation, verification, and acceptance
-    accDescr: A member gives an Agent scope, stop conditions, and acceptance criteria. The Agent returns work, sources, results, and limits. The member checks actual work and evidence and submits the checked result to an authorized acceptor. The acceptor examines it against agreed conditions, returns unmet work to the member for revision within scope, or accepts, records, and hands off a met result. People retain authority and responsibility, and roles may coincide.
-    M["`**Member**
-Set scope; check work and evidence`"]
-    A["`**Agent**
-Work within scope`"]
-    R["`**Authorized acceptor**
-Check agreed conditions`"]
-    F["`Accept, record, and hand off`"]
-    M -->|Delegate| A
-    A -->|Work and evidence| M
-    M -->|Submit checked result| R
-    R -->|Unmet: revise within scope| M
-    R -->|Met| F
-```
-
 1. The member gives the Agent the scope, stop conditions, and acceptance criteria.
 2. The Agent works within that scope and returns the work, sources, results, and limits.
 3. The member checks the actual work and evidence, then submits the checked work
