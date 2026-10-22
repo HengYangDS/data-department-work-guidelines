@@ -1,10 +1,9 @@
 import assert from "node:assert/strict";
-import { spawnSync } from "node:child_process";
-import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
-import { checkLineEndingAttributes, checkLicense } from "../../tools/docs/governance.mjs";
+import { checkLicense } from "../../tools/docs/governance.mjs";
 import { root } from "../../tools/runtime.mjs";
 
 test("MIT license, entry, and package metadata must agree", () => {
@@ -47,32 +46,5 @@ test("MIT license, entry, and package metadata must agree", () => {
     assert.throws(() => checkLicense(directory), /MIT package metadata/u);
   } finally {
     rmSync(directory, { recursive: true, force: true });
-  }
-});
-
-test("Git checkout normalizes text independently of host autocrlf", () => {
-  assert.doesNotThrow(() => checkLineEndingAttributes());
-  const directory = mkdtempSync(path.join(os.tmpdir(), "ddwg-checkout-text-"));
-  try {
-    const initialized = spawnSync("git", ["init", "--quiet", directory], {
-      encoding: "utf8",
-      timeout: 10_000,
-    });
-    assert.ifError(initialized.error);
-    assert.equal(initialized.status, 0, initialized.stderr);
-    const attributes = path.join(directory, ".gitattributes");
-    writeFileSync(path.join(directory, "README.md"), "# Text source\n");
-    writeFileSync(path.join(directory, "asset.bin"), Buffer.from([0, 255]));
-    writeFileSync(attributes, "* text=auto eol=lf\nasset.bin -text\n");
-    assert.doesNotThrow(() => checkLineEndingAttributes(directory));
-    writeFileSync(attributes, "* text=auto\n");
-    assert.throws(() => checkLineEndingAttributes(directory), /LF on every host/u);
-    writeFileSync(attributes, "* text=auto eol=lf\nREADME.md eol=crlf\n");
-    assert.throws(() => checkLineEndingAttributes(directory), /README\.md.*LF on every host/u);
-    writeFileSync(attributes, "* text=auto eol=lf\nREADME.md -text\nasset.bin -text\n");
-    assert.doesNotThrow(() => checkLineEndingAttributes(directory));
-  } finally {
-    rmSync(directory, { recursive: true, force: true });
-    assert.equal(existsSync(directory), false);
   }
 });

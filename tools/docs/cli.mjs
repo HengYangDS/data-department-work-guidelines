@@ -13,7 +13,7 @@ async function reportVerificationContext() {
 }
 
 async function checkRepository() {
-  const { checkLineEndingAttributes, checkLicense } = await import("./governance.mjs");
+  const { checkLicense } = await import("./governance.mjs");
   const { checkSourceBytes } = await import("./content.mjs");
   const { checkChangelog } = await import("./changelog.mjs");
   const { checkCi } = await import("./ci.mjs");
@@ -23,7 +23,6 @@ async function checkRepository() {
     JSON.parse(readText("package-lock.json")),
     parseDependencyPolicy(readText(dependencyPolicyPath)),
   );
-  checkLineEndingAttributes();
   checkLicense();
   checkChangelog();
   await checkSourceBytes();

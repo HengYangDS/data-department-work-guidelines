@@ -61,8 +61,10 @@ For an uncommitted edit, run `mise run check`,
 `ethos prove --host --execute --gate markdown-lint --json`,
 `npm run prose`, and `node tools/docs/cli.mjs check`. The shared lint gate checks Git-selected working
 Markdown without writing, including non-ignored candidate files. The repository
-command checks source bytes, Git text attributes, MIT license metadata, CI,
+command checks source bytes, MIT license metadata, CI,
 dependency declarations, and SemVer/Changelog.
+Installed ETHOS checks effective Git text and line-ending attributes through
+its repository paradigm; DDWG keeps no second implementation.
 
 `npm run prose` invokes the installed shared prose provider: Codespell, shipped
 Vale rules, and a temporary repository spelling increment. The full graph

@@ -181,6 +181,10 @@ the duplicate implementation, configuration, tests, and guidance in that same
 migration. Unrelated product work does not hold an independently qualified
 replacement.
 
+Installed ETHOS owns checkout normalization. It checks each tracked file's
+effective Git attributes, including later or nested overrides; text must use
+LF, while `-text` preserves exact bytes. This rule has no separate DDWG checker.
+
 Run the full applicable closure on the exact committed tree and keep its original
 diagnostics. Document output cannot replace behavior evidence; syntax alone
 cannot establish static correctness. Tests and structural checks also cannot
