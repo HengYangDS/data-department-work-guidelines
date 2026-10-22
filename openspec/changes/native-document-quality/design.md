@@ -440,20 +440,24 @@ v8.0.0 is not a release merely because `VERSION` names it.
    applicable source matrix, and natively retire the owned lane, proposal refs,
    and exact residue after their consumers release them.
 
-Retire a proposal ref on a peer after that peer accepts its exact source and
-required jobs pass, once no active review needs it. Completed GitHub aftercare
-does not wait for GitLab; preserve GitLab's unresolved review refs until their
-own acceptance. Retire local projections through native ETHOS after accepted
-absorption and evidence preservation, not merely after a remote accepts them.
-Active work remains until its declared obligations close. Earlier-HEAD proof,
-false task checks, or a second ledger cannot close later archive, publication,
-or retirement effects.
+Retire a proposal through installed ETHOS after its current native preview
+proves that no open review needs it and its exact tip remains preserved. The
+product may qualify accepted absorption or retention by an owned Work Lane or
+a same-peer closed-review ref; a resettable candidate ref preserves nothing.
+Do not require every peer or platform to finish before an independently admitted
+review-ref retirement. A remote observation failure holds only that peer's effect.
+Local refs have their own native retirement admission; remote deletion alone
+does not retire them or the Work Lane. Preserve active work and unique evidence
+until their actual consumers release them. Earlier-HEAD proof, false task checks,
+or a second ledger cannot close later archive, publication, or retirement effects.
 
 ## Open Questions
 
-No unresolved choice requires user input. Specific shared-product distribution
-and consumer interfaces remain integration prerequisites, not assumed completed
-implementations. Independent work continues while their owners close those gaps.
+Final ETHOS supply requires explicit approval of its actual version, source,
+wheel, and runtime; a historical public prerelease approval does not cover a
+later development snapshot. Specific shared-product distribution and consumer
+interfaces remain integration prerequisites, not assumed completed implementations.
+Independent work continues while their owners close those gaps.
 
 [baseline-review-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/blob/c8599ce9c91ed5f988abd6b3f3011ac94430283d/openspec/changes/archive/2026-09-30-work-guidance-completeness/design.md
 [baseline-review-github]: https://github.com/HengYangDS/data-department-work-guidelines/blob/c8599ce9c91ed5f988abd6b3f3011ac94430283d/openspec/changes/archive/2026-09-30-work-guidance-completeness/design.md
