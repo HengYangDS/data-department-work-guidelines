@@ -9,7 +9,6 @@
   "devDependencies": {
     "entities": "8.1.0",
     "markdownlint": "0.42.0",
-    "prettier": "3.9.10",
     "semver": "7.8.5",
     "smol-toml": "1.9.1",
     "yaml": "2.9.1"

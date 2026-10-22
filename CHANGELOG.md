@@ -125,6 +125,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   Use installed `markdown-links` on committed source in the shared proof floor;
   working-edit checks do not establish committed-link acceptance.
   The existing working/candidate link requirement still awaits shared qualification.
+- Remove the unused DDWG Prettier dependency and lock entry. Installed ETHOS supplies
+  its own formatter; native configuration and remaining maintenance consumers stay intact.
 - Remove the unused separate Taplo binary from DDWG supply, CI downloads, and offline
   inventory. Installed ETHOS supplies the formatter; the native TOML binding remains.
 - Remove the duplicate repository OpenSpec package and its generic apply test.
