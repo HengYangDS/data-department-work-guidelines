@@ -28,18 +28,18 @@ test("managed cached binaries verify bytes before version execution", async () =
       fs.mkdirSync(path.dirname(destination), { recursive: true });
       fs.copyFileSync(path.join(root, relative), destination);
     }
-    const descriptor = manifest.tools.vale;
-    const key = selectedAsset("vale").key;
+    const descriptor = manifest.tools.lychee;
+    const key = selectedAsset("lychee").key;
     const target = path.join(
       directory,
-      "build/runtime/tool-cache/vale",
+      "build/runtime/tool-cache/lychee",
       descriptor.version,
       key,
       descriptor.binary + (process.platform === "win32" ? ".exe" : ""),
     );
     const fixture = JSON.parse(JSON.stringify(manifest));
     const trusted = Buffer.from("trusted native fixture bytes");
-    fixture.tools.vale.assets[key].binarySha256 = createHash("sha256")
+    fixture.tools.lychee.assets[key].binarySha256 = createHash("sha256")
       .update(trusted)
       .digest("hex");
     const supply = path.join(directory, ".config/supply/native.json");
@@ -71,35 +71,35 @@ test("managed cached binaries verify bytes before version execution", async () =
         syncBuiltinESMExports();
         const runtime = await import(pathToFileURL(process.env.DDWG_FIXTURE_RUNTIME));
         const installer = await import(pathToFileURL(process.env.DDWG_FIXTURE_INSTALLER));
-        assert.throws(() => runtime.nativeToolBinary("vale"), /binary digest mismatch/);
-        await assert.rejects(installer.install({ tool: "vale" }), /binary digest mismatch/);
-        process.env.DDWG_VALE_BIN = target;
-        assert.throws(() => runtime.nativeToolBinary("vale"), /binary digest mismatch/);
-        process.env.DDWG_VALE_BIN = commandName;
+        assert.throws(() => runtime.nativeToolBinary("lychee"), /binary digest mismatch/);
+        await assert.rejects(installer.install({ tool: "lychee" }), /binary digest mismatch/);
+        process.env.DDWG_LYCHEE_BIN = target;
+        assert.throws(() => runtime.nativeToolBinary("lychee"), /binary digest mismatch/);
+        process.env.DDWG_LYCHEE_BIN = commandName;
         process.env.PATH = process.env.DDWG_FIXTURE_PATH;
-        assert.throws(() => runtime.nativeToolBinary("vale"), /binary digest mismatch/);
+        assert.throws(() => runtime.nativeToolBinary("lychee"), /binary digest mismatch/);
         const misplaced = target + ".unbound";
         fs.writeFileSync(misplaced, "unbound managed bytes");
         if (process.platform !== "win32") fs.chmodSync(misplaced, 0o755);
-        process.env.DDWG_VALE_BIN = misplaced;
-        assert.throws(() => runtime.nativeToolBinary("vale"), /managed.*identity/);
-        delete process.env.DDWG_VALE_BIN;
+        process.env.DDWG_LYCHEE_BIN = misplaced;
+        assert.throws(() => runtime.nativeToolBinary("lychee"), /managed.*identity/);
+        delete process.env.DDWG_LYCHEE_BIN;
         assert.equal(executions, 0, "changed cache must not execute");
         fs.writeFileSync(target, "trusted native fixture bytes");
-        assert.equal(runtime.nativeToolBinary("vale"), target);
-        assert.equal(await installer.install({ tool: "vale" }), target);
+        assert.equal(runtime.nativeToolBinary("lychee"), target);
+        assert.equal(await installer.install({ tool: "lychee" }), target);
         assert.equal(executions, 2, "valid cache still checks its native version");
-        process.env.DDWG_VALE_BIN = commandName;
-        assert.equal(runtime.nativeToolBinary("vale"), target);
-        delete process.env.DDWG_VALE_BIN;
+        process.env.DDWG_LYCHEE_BIN = commandName;
+        assert.equal(runtime.nativeToolBinary("lychee"), target);
+        delete process.env.DDWG_LYCHEE_BIN;
         assert.equal(executions, 3, "PATH selection binds the same valid executable");
         const supply = process.env.DDWG_FIXTURE_SUPPLY;
         const manifest = JSON.parse(fs.readFileSync(supply, "utf8"));
-        delete manifest.tools.vale.assets[process.env.DDWG_FIXTURE_KEY].binarySha256;
+        delete manifest.tools.lychee.assets[process.env.DDWG_FIXTURE_KEY].binarySha256;
         fs.writeFileSync(supply, JSON.stringify(manifest));
-        assert.throws(() => runtime.nativeToolBinary("vale"), /unpinned.*binary/);
-        delete installer.manifest.tools.vale.assets[process.env.DDWG_FIXTURE_KEY].binarySha256;
-        await assert.rejects(installer.install({ tool: "vale" }), /unpinned.*binary/);
+        assert.throws(() => runtime.nativeToolBinary("lychee"), /unpinned.*binary/);
+        delete installer.manifest.tools.lychee.assets[process.env.DDWG_FIXTURE_KEY].binarySha256;
+        await assert.rejects(installer.install({ tool: "lychee" }), /unpinned.*binary/);
         assert.equal(executions, 3, "missing byte identity must not execute");`,
       ],
       {
@@ -108,7 +108,7 @@ test("managed cached binaries verify bytes before version execution", async () =
         timeout: 10_000,
         env: {
           ...process.env,
-          DDWG_VALE_BIN: "",
+          DDWG_LYCHEE_BIN: "",
           DDWG_FIXTURE_TARGET: target,
           DDWG_FIXTURE_COMMAND: path.basename(target),
           DDWG_FIXTURE_PATH: path.dirname(target),
@@ -158,16 +158,16 @@ test("managed files stay inside their selected repository boundary", () => {
 });
 
 test("managed native caches reject links and non-regular entries before execution", async (context) => {
-  const originalSelection = process.env.DDWG_VALE_BIN;
-  delete process.env.DDWG_VALE_BIN;
+  const originalSelection = process.env.DDWG_LYCHEE_BIN;
+  delete process.env.DDWG_LYCHEE_BIN;
   context.after(() => {
-    if (originalSelection === undefined) delete process.env.DDWG_VALE_BIN;
-    else process.env.DDWG_VALE_BIN = originalSelection;
+    if (originalSelection === undefined) delete process.env.DDWG_LYCHEE_BIN;
+    else process.env.DDWG_LYCHEE_BIN = originalSelection;
   });
-  const selected = selectedAsset("vale");
+  const selected = selectedAsset("lychee");
   const target = path.join(
     root,
-    "build/runtime/tool-cache/vale",
+    "build/runtime/tool-cache/lychee",
     selected.version,
     selected.key,
     selected.binaryName,
@@ -198,8 +198,8 @@ test("managed native caches reject links and non-regular entries before executio
     ];
     syncBuiltinESMExports();
     try {
-      await assert.rejects(install({ tool: "vale" }), /regular|symbolic/u);
-      assert.throws(() => nativeToolBinary("vale"), /regular|symbolic/u);
+      await assert.rejects(install({ tool: "lychee" }), /regular|symbolic/u);
+      assert.throws(() => nativeToolBinary("lychee"), /regular|symbolic/u);
       assert.equal(executions, 0);
     } finally {
       for (const mock of mocks) mock.mock.restore();
@@ -209,16 +209,16 @@ test("managed native caches reject links and non-regular entries before executio
 });
 
 test("managed cache parent aliases fail before staging or execution", async (context) => {
-  const originalSelection = process.env.DDWG_VALE_BIN;
-  delete process.env.DDWG_VALE_BIN;
+  const originalSelection = process.env.DDWG_LYCHEE_BIN;
+  delete process.env.DDWG_LYCHEE_BIN;
   context.after(() => {
-    if (originalSelection === undefined) delete process.env.DDWG_VALE_BIN;
-    else process.env.DDWG_VALE_BIN = originalSelection;
+    if (originalSelection === undefined) delete process.env.DDWG_LYCHEE_BIN;
+    else process.env.DDWG_LYCHEE_BIN = originalSelection;
   });
-  const selected = selectedAsset("vale");
+  const selected = selectedAsset("lychee");
   const directory = path.join(
     root,
-    "build/runtime/tool-cache/vale",
+    "build/runtime/tool-cache/lychee",
     selected.version,
     selected.key,
   );
@@ -241,12 +241,12 @@ test("managed cache parent aliases fail before staging or execution", async (con
   ];
   syncBuiltinESMExports();
   try {
-    await assert.rejects(install({ tool: "vale" }), /regular|symbolic|directory/u);
+    await assert.rejects(install({ tool: "lychee" }), /regular|symbolic|directory/u);
     await assert.rejects(
-      install({ tool: "vale", assetFile: "absent-asset" }),
+      install({ tool: "lychee", assetFile: "absent-asset" }),
       /regular|symbolic|directory/u,
     );
-    assert.throws(() => nativeToolBinary("vale"), /regular|symbolic|directory/u);
+    assert.throws(() => nativeToolBinary("lychee"), /regular|symbolic|directory/u);
     assert.equal(executions, 0);
   } finally {
     for (const mock of mocks) mock.mock.restore();
@@ -255,17 +255,17 @@ test("managed cache parent aliases fail before staging or execution", async (con
 });
 
 test("a supplied install never changes the mode of an existing cache entry", async (context) => {
-  const selected = selectedAsset("vale");
+  const selected = selectedAsset("lychee");
   const target = path.join(
     root,
-    "build/runtime/tool-cache/vale",
+    "build/runtime/tool-cache/lychee",
     selected.version,
     selected.key,
     selected.binaryName,
   );
   const asset = path.resolve("fixture-native-asset");
   const bytes = Buffer.from("fixture-pinned-asset");
-  const descriptor = manifest.tools.vale.assets[selected.key];
+  const descriptor = manifest.tools.lychee.assets[selected.key];
   const originalDigest = descriptor.sha256;
   const originalBinaryDigest = descriptor.binarySha256;
   const actualRead = fs.readFileSync;
@@ -341,7 +341,7 @@ test("a supplied install never changes the mode of an existing cache entry", asy
   descriptor.binarySha256 = descriptor.sha256;
   syncBuiltinESMExports();
   try {
-    assert.equal(await install({ tool: "vale", assetFile: asset }), target);
+    assert.equal(await install({ tool: "lychee", assetFile: asset }), target);
     assert.equal(concurrentTarget, true);
     assert.equal(extractionCount, 1);
     assert.equal(modes.includes(target), false);

@@ -343,7 +343,7 @@ dependency or current authority.
 
 ### Requirement: One source-bound native quality supply
 
-One native manifest SHALL bind Vale, lychee, and OSV Scanner versions,
+One native manifest SHALL bind the remaining DDWG-managed Lychee and OSV Scanner versions,
 platform archives or raw binaries, asset and executable digests, raw sizes, and
 original notices. Archive and executable digests SHALL remain distinct; raw
 executables SHALL reuse the asset digest. Installer and source-bound bundle

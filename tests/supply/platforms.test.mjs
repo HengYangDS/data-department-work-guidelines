@@ -73,7 +73,7 @@ test("managed paths retain their bound manifest without rereading supply", () =>
   using workspace = fs.mkdtempDisposableSync(path.join(os.tmpdir(), "ddwg-native-path-binding-"));
   const repository = workspace.path;
   const before = structuredClone(manifest);
-  assert.throws(() => managedToolPath("vale", undefined, repository), {
+  assert.throws(() => managedToolPath("lychee", undefined, repository), {
     code: "ENOENT",
   });
   for (const [tool, descriptor] of Object.entries(manifest.tools)) {
@@ -145,29 +145,6 @@ test("print-spec is read-only and selects this host", () => {
   const spec = JSON.parse(result.stdout);
   assert.equal(spec.key, selectedAsset("lychee").key);
   assert.equal(spec.sha256, manifest.tools.lychee.assets[spec.key].sha256);
-});
-
-test("one supply manifest declares the complete selected native tool graph", () => {
-  assert.equal(manifest.schemaVersion, 1);
-  assert.deepEqual(Object.keys(manifest.tools), ["lychee", "vale", "osv-scanner"]);
-  const vale = manifest.tools.vale;
-  const platforms = Object.keys(manifest.tools.lychee.assets).sort();
-  for (const [tool, descriptor] of Object.entries(manifest.tools)) {
-    assert.deepEqual(
-      Object.keys(descriptor.assets).sort(),
-      platforms,
-      `${tool} supply must match the complete supported tool graph`,
-    );
-  }
-  for (const [key, asset] of Object.entries(vale.assets)) {
-    const selected = selectedAsset("vale", ...key.split("-"));
-    assert.equal(selected.sha256, asset.sha256);
-    assert.match(selected.url, /vale-cli\/vale/u);
-  }
-  assert.deepEqual(Object.keys(vale.licenses), ["LICENSE"]);
-  assert.match(vale.licenses.LICENSE.sha256, /^[0-9a-f]{64}$/u);
-  assert.throws(() => selectedAsset("unknown"), /unknown/u);
-  assert.throws(() => selectedAsset("vale", "linux", "riscv64"), /unsupported/u);
 });
 
 test("official OSV supply pins raw binaries and notices for every native host", () => {

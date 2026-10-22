@@ -57,10 +57,10 @@ test("explicit native tool selectors use portable names and retain version admis
 
 test("explicit native selectors preserve filesystem path semantics", (context) => {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), "ddwg-native-filesystem-selector-"));
-  const descriptor = manifest.tools.vale;
+  const descriptor = manifest.tools.lychee;
   const filename = descriptor.binary + (process.platform === "win32" ? ".exe" : "");
   const binary = path.join(directory, filename);
-  const originalSelection = process.env.DDWG_VALE_BIN;
+  const originalSelection = process.env.DDWG_LYCHEE_BIN;
   let expected = binary;
   let executions = 0;
   const spawn = context.mock.method(childProcess, "spawnSync", (command, args) => {
@@ -73,11 +73,11 @@ test("explicit native selectors preserve filesystem path semantics", (context) =
   try {
     fs.writeFileSync(binary, "independently owned executable fixture");
     if (process.platform !== "win32") fs.chmodSync(binary, 0o755);
-    process.env.DDWG_VALE_BIN = binary + path.sep;
-    assert.throws(() => nativeToolBinary("vale"), /not found/u);
+    process.env.DDWG_LYCHEE_BIN = binary + path.sep;
+    assert.throws(() => nativeToolBinary("lychee"), /not found/u);
     assert.equal(executions, 0, "a directory-qualified file cannot be executed");
-    process.env.DDWG_VALE_BIN = binary;
-    assert.equal(nativeToolBinary("vale"), binary);
+    process.env.DDWG_LYCHEE_BIN = binary;
+    assert.equal(nativeToolBinary("lychee"), binary);
     if (process.platform !== "win32") {
       const target = path.join(directory, "target");
       fs.mkdirSync(path.join(target, "nested"), { recursive: true });
@@ -86,13 +86,13 @@ test("explicit native selectors preserve filesystem path semantics", (context) =
       fs.symlinkSync(path.join(target, "nested"), path.join(directory, "alias"));
       expected = directory + "/alias/../" + filename;
       assert.equal(fs.readFileSync(expected, "utf8"), "filesystem-resolved fixture");
-      process.env.DDWG_VALE_BIN = expected;
-      assert.equal(nativeToolBinary("vale"), expected);
+      process.env.DDWG_LYCHEE_BIN = expected;
+      assert.equal(nativeToolBinary("lychee"), expected);
       assert.equal(executions, 2, "the native path must not select the lexical sibling");
     }
   } finally {
-    if (originalSelection === undefined) delete process.env.DDWG_VALE_BIN;
-    else process.env.DDWG_VALE_BIN = originalSelection;
+    if (originalSelection === undefined) delete process.env.DDWG_LYCHEE_BIN;
+    else process.env.DDWG_LYCHEE_BIN = originalSelection;
     spawn.mock.restore();
     syncBuiltinESMExports();
     fs.rmSync(directory, { recursive: true, force: true });
@@ -107,19 +107,19 @@ test("Windows native selection binds quoted paths and direct suffixes before exe
   const runtimePath = path.join(directory, "tools/supply.mjs");
   const target = path.join(
     directory,
-    "build/runtime/tool-cache/vale",
-    manifest.tools.vale.version,
-    "win32-x64/vale.exe",
+    "build/runtime/tool-cache/lychee",
+    manifest.tools.lychee.version,
+    "win32-x64/lychee.exe",
   );
   const fixture = JSON.parse(JSON.stringify(manifest));
   const trusted = Buffer.from("trusted Windows native fixture bytes");
-  fixture.tools.vale.assets["win32-x64"].binarySha256 = createHash("sha256")
+  fixture.tools.lychee.assets["win32-x64"].binarySha256 = createHash("sha256")
     .update(trusted)
     .digest("hex");
   const originalPlatform = Object.getOwnPropertyDescriptor(process, "platform");
   const originalArch = Object.getOwnPropertyDescriptor(process, "arch");
   const originalPath = process.env.PATH;
-  const originalSelection = process.env.DDWG_VALE_BIN;
+  const originalSelection = process.env.DDWG_LYCHEE_BIN;
   let executions = 0;
   let expected = target;
   const spawn = context.mock.method(childProcess, "spawnSync", (command, args) => {
@@ -128,7 +128,7 @@ test("Windows native selection binds quoted paths and direct suffixes before exe
     executions += 1;
     return {
       status: 0,
-      stdout: fixture.tools.vale.versionOutput,
+      stdout: fixture.tools.lychee.versionOutput,
       stderr: "",
     };
   });
@@ -158,34 +158,34 @@ test("Windows native selection binds quoted paths and direct suffixes before exe
       });
       const before = executions;
       fs.writeFileSync(target, "altered native bytes with unchanged version output");
-      process.env.DDWG_VALE_BIN = "vale.exe";
-      assert.throws(() => runtime.nativeToolBinary("vale"), /binary digest mismatch/u);
+      process.env.DDWG_LYCHEE_BIN = "lychee.exe";
+      assert.throws(() => runtime.nativeToolBinary("lychee"), /binary digest mismatch/u);
       assert.equal(executions, before, "quoted managed PATH must not bypass byte admission");
       fs.writeFileSync(target, trusted);
-      assert.equal(runtime.nativeToolBinary("vale"), target);
-      process.env.DDWG_VALE_BIN = target.slice(0, -4);
-      assert.equal(runtime.nativeToolBinary("vale"), target);
+      assert.equal(runtime.nativeToolBinary("lychee"), target);
+      process.env.DDWG_LYCHEE_BIN = target.slice(0, -4);
+      assert.equal(runtime.nativeToolBinary("lychee"), target);
     }
     assert.equal(
       executions,
       4,
       "x64 and ARM64 Node selectors start the same verified compatible file",
     );
-    process.env.DDWG_VALE_BIN = "absent-native-file.exe";
-    assert.throws(() => runtime.nativeToolBinary("vale"), /not found/u);
+    process.env.DDWG_LYCHEE_BIN = "absent-native-file.exe";
+    assert.throws(() => runtime.nativeToolBinary("lychee"), /not found/u);
     assert.equal(executions, 4, "unresolved selectors must not start an unbound command");
     expected = path.join(directory, "..com");
     fs.writeFileSync(expected, "independently owned single-dot lookup fixture");
-    process.env.DDWG_VALE_BIN = ".";
-    assert.throws(() => runtime.nativeToolBinary("vale"), /not found/u);
+    process.env.DDWG_LYCHEE_BIN = ".";
+    assert.throws(() => runtime.nativeToolBinary("lychee"), /not found/u);
     assert.equal(executions, 4, "the native single-dot refusal must precede startup");
   } finally {
     Object.defineProperty(process, "platform", originalPlatform);
     Object.defineProperty(process, "arch", originalArch);
     if (originalPath === undefined) delete process.env.PATH;
     else process.env.PATH = originalPath;
-    if (originalSelection === undefined) delete process.env.DDWG_VALE_BIN;
-    else process.env.DDWG_VALE_BIN = originalSelection;
+    if (originalSelection === undefined) delete process.env.DDWG_LYCHEE_BIN;
+    else process.env.DDWG_LYCHEE_BIN = originalSelection;
     spawn.mock.restore();
     syncBuiltinESMExports();
     fs.rmSync(directory, { recursive: true, force: true });
