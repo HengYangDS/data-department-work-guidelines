@@ -341,7 +341,7 @@ the edition. The steps below apply to each selected peer independently.
 ### 1. Prepare the edition
 
 Prepare the version under the official Change. Review the public rule and
-contributor-command diff under SemVer, then align `VERSION` and the charter.
+contributor-command diff under SemVer, then update the single value in `VERSION`.
 Record upcoming changes under `Unreleased` in `CHANGELOG.md`; do not assign a
 release date before the release cut. Run `npm ci --ignore-scripts` and
 `node tools/docs/cli.mjs audit` on the intended Work Lane. The full source
