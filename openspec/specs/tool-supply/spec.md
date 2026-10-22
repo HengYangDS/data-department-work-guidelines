@@ -83,22 +83,17 @@ portable graph without host paths or POSIX shells.
 - **THEN** each hosted job fails before running the repository verifier
 - **AND** both Forges preserve complete raw findings and execution output.
 
-#### Scenario: The approved native disposition is scoped and expires
+#### Scenario: The known braces finding remains non-blocking
 
-- **WHEN** the exact human-approved native OSV entry is active
-- **THEN** the existing input owner admits only npm `braces` 3.0.3 with its
-  approved integrity in development paths, before 2026-10-18 00:00 UTC
-- **AND** one unfiltered raw scan retains approved and unapproved findings;
-  any unrelated finding remains blocking
-- **AND** online qualification observes the public npm stable release through
-  isolated native configuration and a fresh cache with explicit online freshness;
-  its original command, configuration, output, and status remain with the raw scan
-- **WHEN** input bytes, finding subjects, or the stable release change, the
-  finding disappears, is withdrawn, has an official fix, or the entry expires
-- **THEN** qualification fails until the stale disposition is retired and the
-  changed inputs are qualified again
-- **AND** no package-wide ignore, private schema, filtered second scan, or
-  cross-repository waiver replaces that boundary.
+- **WHEN** checks, installation, CI, distribution, or a release reports the
+  user-accepted braces finding `GHSA-vfj7-8cjw-p6xm` or its native alias
+- **THEN** that finding does not block the operation, including after its former
+  expiry or when a newer version, official fix, disappearance, or withdrawal is
+  observed
+- **AND** complete reports and remediation tracking remain available; the finding
+  is not described as fixed or clean
+- **AND** unrelated findings, input integrity, report completeness, execution
+  failures, and other artifacts' approval boundaries remain separately applicable.
 
 #### Scenario: Native tools and the CI image need their own approval
 
