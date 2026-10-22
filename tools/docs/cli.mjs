@@ -1,16 +1,4 @@
-import { assertNodeRuntime, reportError, readText, workspaceObservation } from "../runtime.mjs";
-
-async function reportVerificationContext() {
-  // Finish this record before synchronous children inherit the same stream.
-  let onWriteError;
-  await new Promise((resolve, reject) => {
-    onWriteError = reject;
-    process.stdout.once("error", onWriteError);
-    process.stdout.write(`INFO ${JSON.stringify(workspaceObservation())}\n`, (error) =>
-      error ? reject(error) : resolve(),
-    );
-  }).finally(() => process.stdout.off("error", onWriteError));
-}
+import { assertNodeRuntime, reportError, readText } from "../runtime.mjs";
 
 async function checkRepository() {
   const { checkLicense } = await import("./governance.mjs");
@@ -36,7 +24,6 @@ try {
   switch (command) {
     case "check":
       if (arguments_.length) throw new Error("check accepts no arguments");
-      await reportVerificationContext();
       await checkRepository();
       break;
     case "audit": {

@@ -135,12 +135,11 @@ The [configuration map](configuration.md) locates native inputs.
 
 ### Observe the Execution Environment
 
-The source check records path, commit, tree, tracked changes, Node version,
-platform, process architecture, host name, and exact workspace-capacity bytes.
-Read errors fail the check. These diagnostics do not establish VM identity,
-host architecture, isolation, or throughput; the runner owner verifies guest
-and host separately. A mounted workspace may differ from the guest root volume.
-Host names belong in evidence, never portable configuration.
+Installed ETHOS binds execution to the selected source and records the command,
+result, and complete diagnostics. DDWG keeps no separate environment reporter.
+The runner owner verifies guest identity, host architecture, resources, isolation,
+and throughput where claimed. A mounted workspace may differ from the guest root
+volume; host-local observations belong in evidence, never portable configuration.
 
 ### Preserve Official OpenSpec Results
 
