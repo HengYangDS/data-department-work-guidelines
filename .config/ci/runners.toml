@@ -7,3 +7,4 @@ executables = ["mise", "mkdir"]
 [[runner]]
 forge = "gitlab"
 executables = ["mise", "mkdir", "New-Item", "Out-Null"]
+references = ["docker"]
