@@ -12,12 +12,11 @@ import {
   assertAssetDigest,
   install,
   manifest,
-  safeArchiveEntries,
   selectedAsset,
 } from "../../tools/ci/install-native.mjs";
 import { reportError, root } from "../../tools/runtime.mjs";
 
-test("asset digest is checked before extraction", () => {
+test("asset digest is checked before execution", () => {
   const bytes = Buffer.from("bounded fixture");
   const sha256 = createHash("sha256").update(bytes).digest("hex");
   assert.doesNotThrow(() => assertAssetDigest(bytes, { name: "fixture", sha256 }));
@@ -27,23 +26,10 @@ test("asset digest is checked before extraction", () => {
   );
 });
 
-test("archive listing rejects traversal and absolute paths", () => {
-  assert.deepEqual(
-    safeArchiveEntries("lychee-linux/lychee\n", "-rwxr-xr-x 0/0 10 lychee-linux/lychee\n"),
-    ["lychee-linux/lychee"],
-  );
-  for (const member of ["../lychee", "/tmp/lychee", "C:/outside/lychee", "bin\\..\\outside"]) {
-    assert.throws(
-      () => safeArchiveEntries(`${member}\n`, `-rwxr-xr-x 0/0 10 ${member}\n`),
-      /unsafe/u,
-    );
-  }
-});
-
 test("GitLab CLI mode fails closed without CI identity", () => {
   const result = spawnSync(
     process.execPath,
-    ["tools/ci/install-native.mjs", "lychee", "--gitlab-package"],
+    ["tools/ci/install-native.mjs", "osv-scanner", "--gitlab-package"],
     {
       cwd: root,
       encoding: "utf8",
@@ -73,7 +59,7 @@ test("installer cleanup uses bounded native retries on its own temporary stage",
   syncBuiltinESMExports();
   context.mock.method(globalThis, "fetch", async () => new Response(null, { status: 503 }));
   try {
-    await assert.rejects(install({ tool: "lychee", downloadSource: "github" }), /HTTP 503/u);
+    await assert.rejects(install({ tool: "osv-scanner", downloadSource: "github" }), /HTTP 503/u);
     assert.equal(calls.length, 1);
     assert.equal(
       path.dirname(calls[0].target),
@@ -82,9 +68,9 @@ test("installer cleanup uses bounded native retries on its own temporary stage",
         "build",
         "runtime",
         "tool-cache",
-        "lychee",
-        manifest.tools.lychee.version,
-        selectedAsset("lychee").key,
+        "osv-scanner",
+        manifest.tools["osv-scanner"].version,
+        selectedAsset("osv-scanner").key,
       ),
     );
     assert.match(path.basename(calls[0].target), /^\.install-/u);
@@ -114,7 +100,7 @@ test("persistent native installer cleanup errors remain failures", async (contex
   syncBuiltinESMExports();
   context.mock.method(globalThis, "fetch", async () => new Response(null, { status: 503 }));
   try {
-    await assert.rejects(install({ tool: "lychee", downloadSource: "github" }), (error) => {
+    await assert.rejects(install({ tool: "osv-scanner", downloadSource: "github" }), (error) => {
       assert.ok(error instanceof SuppressedError);
       assert.equal(error.error, failure);
       assert.match(error.suppressed.message, /HTTP 503/u);
@@ -225,7 +211,6 @@ test("binary native installation verifies bytes and version before atomic public
     format: "binary",
     sha256: createHash("sha256").update(packaged).digest("hex"),
     size: packaged.length,
-    binarySha256: createHash("sha256").update(bytes).digest("hex"),
   });
   syncBuiltinESMExports();
   try {
@@ -263,29 +248,16 @@ test("binary native installation verifies bytes and version before atomic public
   }
 });
 
-test("native extraction rejects links, duplicates, empty and unpaired listings", () => {
-  assert.deepEqual(safeArchiveEntries("bin/vale\n", "-rwxr-xr-x 0/0 10 bin/vale\n"), ["bin/vale"]);
-  for (const [names, verbose] of [
-    ["", ""],
-    ["vale\nvale\n", "-rwxr-xr-x 0/0 10 vale\n-rwxr-xr-x 0/0 10 vale\n"],
-    ["vale\n", "lrwxr-xr-x 0/0 0 vale -> outside\n"],
-    ["vale\n", "hrwxr-xr-x 0/0 0 vale link to outside\n"],
-    ["vale\n", ""],
-  ]) {
-    assert.throws(() => safeArchiveEntries(names, verbose), /unsafe|incomplete|regular/u);
-  }
-});
-
 test("native tools do not download when supply is absent", async () => {
   await assert.rejects(
-    install({ tool: "vale", assetFile: "fixture", downloadSource: "github" }),
+    install({ tool: "osv-scanner", assetFile: "fixture", downloadSource: "github" }),
     /one.*supply/u,
   );
 });
 
 test("an invalid supply source cannot reuse a cached native tool", async () => {
   await assert.rejects(
-    install({ tool: "vale", downloadSource: "unrecognized" }),
+    install({ tool: "osv-scanner", downloadSource: "unrecognized" }),
     /invalid.*supply/u,
   );
 });

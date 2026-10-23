@@ -8,29 +8,6 @@ import { manifest, selectedAsset } from "../../tools/ci/install-native.mjs";
 import { root } from "../../tools/runtime.mjs";
 import { managedToolPath, nativeToolPlatform, nativeToolBinary } from "../../tools/supply.mjs";
 
-test("official supply declares exactly the supported platform assets", () => {
-  assert.deepEqual(Object.keys(manifest.tools.lychee.assets).sort(), [
-    "darwin-arm64",
-    "darwin-x64",
-    "linux-arm64",
-    "linux-x64",
-    "win32-x64",
-  ]);
-  for (const [key, asset] of Object.entries(manifest.tools.lychee.assets)) {
-    assert.match(asset.sha256, /^[0-9a-f]{64}$/u);
-    assert.ok(selectedAsset("lychee", ...key.split("-")).url.endsWith(asset.name));
-  }
-  assert.deepEqual(Object.keys(manifest.tools.lychee.licenses).sort(), [
-    "LICENSE-APACHE",
-    "LICENSE-MIT",
-  ]);
-  for (const license of Object.values(manifest.tools.lychee.licenses)) {
-    assert.match(license.sha256, /^[0-9a-f]{64}$/u);
-    assert.match(license.source, /lychee-v0\.24\.2/u);
-  }
-  assert.equal(selectedAsset("lychee", "win32", "arm64").key, "win32-x64");
-});
-
 test("Windows ARM64 selects native assets before pinned compatible fallbacks", () => {
   for (const [tool, descriptor] of Object.entries(manifest.tools)) {
     const selected = selectedAsset(tool, "win32", "arm64");
@@ -66,14 +43,14 @@ test("all native consumers share the declared managed path", () => {
     }
   }
   assert.throws(() => managedToolPath("constructor"), /unknown native tool/u);
-  assert.throws(() => managedToolPath("lychee", "win32-riscv64"), /unsupported/u);
+  assert.throws(() => managedToolPath("osv-scanner", "win32-riscv64"), /unsupported/u);
 });
 
 test("managed paths retain their bound manifest without rereading supply", () => {
   using workspace = fs.mkdtempDisposableSync(path.join(os.tmpdir(), "ddwg-native-path-binding-"));
   const repository = workspace.path;
   const before = structuredClone(manifest);
-  assert.throws(() => managedToolPath("lychee", undefined, repository), {
+  assert.throws(() => managedToolPath("osv-scanner", undefined, repository), {
     code: "ENOENT",
   });
   for (const [tool, descriptor] of Object.entries(manifest.tools)) {
@@ -109,20 +86,18 @@ test("native tool identities must name declared manifest entries", () => {
 });
 
 test("native assets validate every declared size before supply effects", () => {
-  for (const tool of ["lychee", "osv-scanner"]) {
+  for (const tool of Object.keys(manifest.tools)) {
     const selected = selectedAsset(tool);
     const pin = manifest.tools[tool].assets[selected.key];
     const original = { ...pin };
     try {
-      for (const size of ["unbounded", -1, 64 * 1024 * 1024 + 1]) {
+      for (const size of [undefined, "unbounded", 0, -1, 64 * 1024 * 1024 + 1]) {
         pin.size = size;
         assert.throws(() => selectedAsset(tool), /format|size/u);
       }
       pin.size = 32;
       assert.equal(selectedAsset(tool).size, 32);
       pin.format = "gzip";
-      pin.binarySize = 32;
-      pin.binarySha256 = "0".repeat(64);
       assert.throws(() => selectedAsset(tool), /format/u);
     } finally {
       for (const key of Object.keys(pin)) delete pin[key];
@@ -134,7 +109,7 @@ test("native assets validate every declared size before supply effects", () => {
 test("print-spec is read-only and selects this host", () => {
   const result = spawnSync(
     process.execPath,
-    ["tools/ci/install-native.mjs", "lychee", "--print-spec"],
+    ["tools/ci/install-native.mjs", "osv-scanner", "--print-spec"],
     {
       cwd: root,
       encoding: "utf8",
@@ -143,18 +118,21 @@ test("print-spec is read-only and selects this host", () => {
   );
   assert.equal(result.status, 0, result.stderr);
   const spec = JSON.parse(result.stdout);
-  assert.equal(spec.key, selectedAsset("lychee").key);
-  assert.equal(spec.sha256, manifest.tools.lychee.assets[spec.key].sha256);
+  assert.equal(spec.key, selectedAsset("osv-scanner").key);
+  assert.equal(spec.sha256, manifest.tools["osv-scanner"].assets[spec.key].sha256);
 });
 
 test("official OSV supply pins raw binaries and notices for every native host", () => {
   const descriptor = manifest.tools["osv-scanner"];
   assert.ok(descriptor, "the existing supply owner must declare OSV Scanner");
   assert.equal(descriptor.format, "binary");
-  assert.deepEqual(
-    Object.keys(descriptor.assets).sort(),
-    Object.keys(manifest.tools.lychee.assets).sort(),
-  );
+  assert.deepEqual(Object.keys(descriptor.assets).sort(), [
+    "darwin-arm64",
+    "darwin-x64",
+    "linux-arm64",
+    "linux-x64",
+    "win32-x64",
+  ]);
   for (const [key, asset] of Object.entries(descriptor.assets)) {
     const selected = selectedAsset("osv-scanner", ...key.split("-"));
     assert.equal(selected.format, "binary");

@@ -9,7 +9,7 @@ export function readNativeSupply(repository = root) {
 }
 
 export function assertNativeBinaryDigest(bytes, asset, tool) {
-  const expected = asset?.format === "binary" ? asset.sha256 : asset?.binarySha256;
+  const expected = asset?.sha256;
   if (typeof expected !== "string" || !/^[0-9a-f]{64}$/u.test(expected))
     throw new Error(`unpinned ${tool} binary digest`);
   if (createHash("sha256").update(bytes).digest("hex") !== expected)
@@ -122,14 +122,7 @@ export function nativeToolBinary(tool) {
     if (path.relative(cached, resolved) !== "")
       throw new Error(`${tool} managed executable identity does not match its platform pin`);
     if (!managedFileExists(selectedPath)) throw new Error(`${tool} managed binary is missing`);
-    assertNativeBinaryDigest(
-      readFileSync(selected),
-      {
-        ...descriptor.assets[platform],
-        format: descriptor.assets[platform].format ?? descriptor.format ?? "archive",
-      },
-      tool,
-    );
+    assertNativeBinaryDigest(readFileSync(selected), descriptor.assets[platform], tool);
   }
   const version = run(selected, ["--version"], {
     capture: true,

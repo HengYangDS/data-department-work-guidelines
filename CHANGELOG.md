@@ -127,6 +127,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   The existing working/candidate link requirement still awaits shared qualification.
 - Remove duplicate Vale assets from the DDWG toolkit and its managed cache. Installed
   ETHOS supplies prose execution; the repository spelling increment remains.
+- Remove duplicate Lychee assets and notices from the DDWG toolkit, and retire its
+  unused single-tool archive installer. Installed ETHOS supplies link execution;
+  repository link policies, OSV binary checks, and the offline bundle mechanism remain.
+  Earlier source-bound bundles stay unchanged; the migrated source needs a new qualified bundle.
 - Remove the unused DDWG Prettier dependency and lock entry. Installed ETHOS supplies
   its own formatter; native configuration and remaining maintenance consumers stay intact.
 - Remove the unused separate Taplo binary from DDWG supply, CI downloads, and offline

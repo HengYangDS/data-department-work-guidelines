@@ -10,15 +10,15 @@ import {
 } from "../../tools/ci/install-native.mjs";
 
 test("GitLab package request stays on its own CI API with header-only identity", () => {
-  const asset = selectedAsset("lychee", "linux", "arm64");
-  const request = gitlabPackageRequest("lychee", asset, {
+  const asset = selectedAsset("osv-scanner", "linux", "arm64");
+  const request = gitlabPackageRequest("osv-scanner", asset, {
     CI_API_V4_URL: "https://gitlab.example.test/api/v4",
     CI_PROJECT_ID: "42",
     CI_JOB_TOKEN: "fixture-only",
   });
   assert.equal(
     request.url,
-    "https://gitlab.example.test/api/v4/projects/42/packages/generic/lychee/0.24.2/lychee-aarch64-unknown-linux-gnu.tar.gz",
+    "https://gitlab.example.test/api/v4/projects/42/packages/generic/osv-scanner/2.7.0/osv-scanner_linux_arm64",
   );
   assert.deepEqual(request.headers, { "JOB-TOKEN": "fixture-only" });
   assert.equal(request.redirect, "error");
@@ -26,12 +26,12 @@ test("GitLab package request stays on its own CI API with header-only identity",
 });
 
 test("GitLab package URLs preserve the exact origin and supported API prefix", () => {
-  const asset = selectedAsset("lychee", "linux", "arm64");
+  const asset = selectedAsset("osv-scanner", "linux", "arm64");
   for (const api of [
     "http://gitlab.example.test/api/v4",
     "https://gitlab.example.test/team/api/v4/",
   ]) {
-    const request = gitlabPackageRequest("lychee", asset, {
+    const request = gitlabPackageRequest("osv-scanner", asset, {
       CI_API_V4_URL: api,
       CI_PROJECT_ID: "42",
       CI_JOB_TOKEN: "fixture-only",
@@ -41,13 +41,13 @@ test("GitLab package URLs preserve the exact origin and supported API prefix", (
     assert.equal(actual.origin, expected.origin);
     assert.equal(
       actual.pathname,
-      `${expected.pathname.replace(/\/+$/u, "")}/projects/42/packages/generic/lychee/0.24.2/${asset.name}`,
+      `${expected.pathname.replace(/\/+$/u, "")}/projects/42/packages/generic/osv-scanner/2.7.0/${asset.name}`,
     );
   }
 });
 
 test("GitLab package request refuses missing or untrusted CI inputs", () => {
-  const asset = selectedAsset("lychee", "linux", "arm64");
+  const asset = selectedAsset("osv-scanner", "linux", "arm64");
   const valid = {
     CI_API_V4_URL: "https://gitlab.example.test/api/v4",
     CI_PROJECT_ID: "42",
@@ -64,7 +64,7 @@ test("GitLab package request refuses missing or untrusted CI inputs", () => {
     { CI_JOB_TOKEN: "fixture\u0000only" },
     { CI_JOB_TOKEN: "fixture\u0100only" },
   ]) {
-    assert.throws(() => gitlabPackageRequest("lychee", asset, { ...valid, ...changed }));
+    assert.throws(() => gitlabPackageRequest("osv-scanner", asset, { ...valid, ...changed }));
   }
 });
 
@@ -240,7 +240,7 @@ test("real authenticated redirects are refused without forwarding identity", asy
   });
   await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
   try {
-    const request = gitlabPackageRequest("lychee", selectedAsset("lychee"), {
+    const request = gitlabPackageRequest("osv-scanner", selectedAsset("osv-scanner"), {
       CI_API_V4_URL: `http://127.0.0.1:${server.address().port}/api/v4`,
       CI_PROJECT_ID: "42",
       CI_JOB_TOKEN: "fixture-only",

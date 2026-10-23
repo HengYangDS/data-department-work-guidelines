@@ -28,18 +28,18 @@ test("managed cached binaries verify bytes before version execution", async () =
       fs.mkdirSync(path.dirname(destination), { recursive: true });
       fs.copyFileSync(path.join(root, relative), destination);
     }
-    const descriptor = manifest.tools.lychee;
-    const key = selectedAsset("lychee").key;
+    const descriptor = manifest.tools["osv-scanner"];
+    const key = selectedAsset("osv-scanner").key;
     const target = path.join(
       directory,
-      "build/runtime/tool-cache/lychee",
+      "build/runtime/tool-cache/osv-scanner",
       descriptor.version,
       key,
       descriptor.binary + (process.platform === "win32" ? ".exe" : ""),
     );
     const fixture = JSON.parse(JSON.stringify(manifest));
     const trusted = Buffer.from("trusted native fixture bytes");
-    fixture.tools.lychee.assets[key].binarySha256 = createHash("sha256")
+    fixture.tools["osv-scanner"].assets[key].sha256 = createHash("sha256")
       .update(trusted)
       .digest("hex");
     const supply = path.join(directory, ".config/supply/native.json");
@@ -71,35 +71,35 @@ test("managed cached binaries verify bytes before version execution", async () =
         syncBuiltinESMExports();
         const runtime = await import(pathToFileURL(process.env.DDWG_FIXTURE_RUNTIME));
         const installer = await import(pathToFileURL(process.env.DDWG_FIXTURE_INSTALLER));
-        assert.throws(() => runtime.nativeToolBinary("lychee"), /binary digest mismatch/);
-        await assert.rejects(installer.install({ tool: "lychee" }), /binary digest mismatch/);
-        process.env.DDWG_LYCHEE_BIN = target;
-        assert.throws(() => runtime.nativeToolBinary("lychee"), /binary digest mismatch/);
-        process.env.DDWG_LYCHEE_BIN = commandName;
+        assert.throws(() => runtime.nativeToolBinary("osv-scanner"), /binary digest mismatch/);
+        await assert.rejects(installer.install({ tool: "osv-scanner" }), /binary digest mismatch/);
+        process.env.DDWG_OSV_SCANNER_BIN = target;
+        assert.throws(() => runtime.nativeToolBinary("osv-scanner"), /binary digest mismatch/);
+        process.env.DDWG_OSV_SCANNER_BIN = commandName;
         process.env.PATH = process.env.DDWG_FIXTURE_PATH;
-        assert.throws(() => runtime.nativeToolBinary("lychee"), /binary digest mismatch/);
+        assert.throws(() => runtime.nativeToolBinary("osv-scanner"), /binary digest mismatch/);
         const misplaced = target + ".unbound";
         fs.writeFileSync(misplaced, "unbound managed bytes");
         if (process.platform !== "win32") fs.chmodSync(misplaced, 0o755);
-        process.env.DDWG_LYCHEE_BIN = misplaced;
-        assert.throws(() => runtime.nativeToolBinary("lychee"), /managed.*identity/);
-        delete process.env.DDWG_LYCHEE_BIN;
+        process.env.DDWG_OSV_SCANNER_BIN = misplaced;
+        assert.throws(() => runtime.nativeToolBinary("osv-scanner"), /managed.*identity/);
+        delete process.env.DDWG_OSV_SCANNER_BIN;
         assert.equal(executions, 0, "changed cache must not execute");
         fs.writeFileSync(target, "trusted native fixture bytes");
-        assert.equal(runtime.nativeToolBinary("lychee"), target);
-        assert.equal(await installer.install({ tool: "lychee" }), target);
+        assert.equal(runtime.nativeToolBinary("osv-scanner"), target);
+        assert.equal(await installer.install({ tool: "osv-scanner" }), target);
         assert.equal(executions, 2, "valid cache still checks its native version");
-        process.env.DDWG_LYCHEE_BIN = commandName;
-        assert.equal(runtime.nativeToolBinary("lychee"), target);
-        delete process.env.DDWG_LYCHEE_BIN;
+        process.env.DDWG_OSV_SCANNER_BIN = commandName;
+        assert.equal(runtime.nativeToolBinary("osv-scanner"), target);
+        delete process.env.DDWG_OSV_SCANNER_BIN;
         assert.equal(executions, 3, "PATH selection binds the same valid executable");
         const supply = process.env.DDWG_FIXTURE_SUPPLY;
         const manifest = JSON.parse(fs.readFileSync(supply, "utf8"));
-        delete manifest.tools.lychee.assets[process.env.DDWG_FIXTURE_KEY].binarySha256;
+        delete manifest.tools["osv-scanner"].assets[process.env.DDWG_FIXTURE_KEY].sha256;
         fs.writeFileSync(supply, JSON.stringify(manifest));
-        assert.throws(() => runtime.nativeToolBinary("lychee"), /unpinned.*binary/);
-        delete installer.manifest.tools.lychee.assets[process.env.DDWG_FIXTURE_KEY].binarySha256;
-        await assert.rejects(installer.install({ tool: "lychee" }), /unpinned.*binary/);
+        assert.throws(() => runtime.nativeToolBinary("osv-scanner"), /unpinned.*binary/);
+        delete installer.manifest.tools["osv-scanner"].assets[process.env.DDWG_FIXTURE_KEY].sha256;
+        await assert.rejects(installer.install({ tool: "osv-scanner" }), /unsupported or unpinned/);
         assert.equal(executions, 3, "missing byte identity must not execute");`,
       ],
       {
@@ -108,7 +108,7 @@ test("managed cached binaries verify bytes before version execution", async () =
         timeout: 10_000,
         env: {
           ...process.env,
-          DDWG_LYCHEE_BIN: "",
+          DDWG_OSV_SCANNER_BIN: "",
           DDWG_FIXTURE_TARGET: target,
           DDWG_FIXTURE_COMMAND: path.basename(target),
           DDWG_FIXTURE_PATH: path.dirname(target),
@@ -158,16 +158,16 @@ test("managed files stay inside their selected repository boundary", () => {
 });
 
 test("managed native caches reject links and non-regular entries before execution", async (context) => {
-  const originalSelection = process.env.DDWG_LYCHEE_BIN;
-  delete process.env.DDWG_LYCHEE_BIN;
+  const originalSelection = process.env.DDWG_OSV_SCANNER_BIN;
+  delete process.env.DDWG_OSV_SCANNER_BIN;
   context.after(() => {
-    if (originalSelection === undefined) delete process.env.DDWG_LYCHEE_BIN;
-    else process.env.DDWG_LYCHEE_BIN = originalSelection;
+    if (originalSelection === undefined) delete process.env.DDWG_OSV_SCANNER_BIN;
+    else process.env.DDWG_OSV_SCANNER_BIN = originalSelection;
   });
-  const selected = selectedAsset("lychee");
+  const selected = selectedAsset("osv-scanner");
   const target = path.join(
     root,
-    "build/runtime/tool-cache/lychee",
+    "build/runtime/tool-cache/osv-scanner",
     selected.version,
     selected.key,
     selected.binaryName,
@@ -198,8 +198,8 @@ test("managed native caches reject links and non-regular entries before executio
     ];
     syncBuiltinESMExports();
     try {
-      await assert.rejects(install({ tool: "lychee" }), /regular|symbolic/u);
-      assert.throws(() => nativeToolBinary("lychee"), /regular|symbolic/u);
+      await assert.rejects(install({ tool: "osv-scanner" }), /regular|symbolic/u);
+      assert.throws(() => nativeToolBinary("osv-scanner"), /regular|symbolic/u);
       assert.equal(executions, 0);
     } finally {
       for (const mock of mocks) mock.mock.restore();
@@ -209,16 +209,16 @@ test("managed native caches reject links and non-regular entries before executio
 });
 
 test("managed cache parent aliases fail before staging or execution", async (context) => {
-  const originalSelection = process.env.DDWG_LYCHEE_BIN;
-  delete process.env.DDWG_LYCHEE_BIN;
+  const originalSelection = process.env.DDWG_OSV_SCANNER_BIN;
+  delete process.env.DDWG_OSV_SCANNER_BIN;
   context.after(() => {
-    if (originalSelection === undefined) delete process.env.DDWG_LYCHEE_BIN;
-    else process.env.DDWG_LYCHEE_BIN = originalSelection;
+    if (originalSelection === undefined) delete process.env.DDWG_OSV_SCANNER_BIN;
+    else process.env.DDWG_OSV_SCANNER_BIN = originalSelection;
   });
-  const selected = selectedAsset("lychee");
+  const selected = selectedAsset("osv-scanner");
   const directory = path.join(
     root,
-    "build/runtime/tool-cache/lychee",
+    "build/runtime/tool-cache/osv-scanner",
     selected.version,
     selected.key,
   );
@@ -241,12 +241,12 @@ test("managed cache parent aliases fail before staging or execution", async (con
   ];
   syncBuiltinESMExports();
   try {
-    await assert.rejects(install({ tool: "lychee" }), /regular|symbolic|directory/u);
+    await assert.rejects(install({ tool: "osv-scanner" }), /regular|symbolic|directory/u);
     await assert.rejects(
-      install({ tool: "lychee", assetFile: "absent-asset" }),
+      install({ tool: "osv-scanner", assetFile: "absent-asset" }),
       /regular|symbolic|directory/u,
     );
-    assert.throws(() => nativeToolBinary("lychee"), /regular|symbolic|directory/u);
+    assert.throws(() => nativeToolBinary("osv-scanner"), /regular|symbolic|directory/u);
     assert.equal(executions, 0);
   } finally {
     for (const mock of mocks) mock.mock.restore();
@@ -255,53 +255,33 @@ test("managed cache parent aliases fail before staging or execution", async (con
 });
 
 test("a supplied install never changes the mode of an existing cache entry", async (context) => {
-  const selected = selectedAsset("lychee");
+  const selected = selectedAsset("osv-scanner");
   const target = path.join(
     root,
-    "build/runtime/tool-cache/lychee",
+    "build/runtime/tool-cache/osv-scanner",
     selected.version,
     selected.key,
     selected.binaryName,
   );
   const asset = path.resolve("fixture-native-asset");
   const bytes = Buffer.from("fixture-pinned-asset");
-  const descriptor = manifest.tools.lychee.assets[selected.key];
-  const originalDigest = descriptor.sha256;
-  const originalBinaryDigest = descriptor.binarySha256;
+  const descriptor = manifest.tools["osv-scanner"].assets[selected.key];
+  const original = { ...descriptor };
   const actualRead = fs.readFileSync;
-  const actualEntries = fs.readdirSync;
   const actualStat = fs.lstatSync;
   const actualSpawn = childProcess.spawnSync;
   const modes = [];
   const executions = [];
   let concurrentTarget = false;
-  let extractionCount = 0;
   const mocks = [
     context.mock.method(fs, "readFileSync", (file, options) =>
-      file === asset ||
-      (file === target && concurrentTarget) ||
-      path.basename(path.dirname(file)) === "extracted"
-        ? bytes
-        : actualRead(file, options),
-    ),
-    context.mock.method(fs, "readdirSync", (directory, options) =>
-      path.basename(directory) === "extracted"
-        ? [
-            {
-              name: selected.binaryName,
-              isDirectory: () => false,
-              isFile: () => true,
-            },
-          ]
-        : actualEntries(directory, options),
+      file === asset || (file === target && concurrentTarget) ? bytes : actualRead(file, options),
     ),
     context.mock.method(fs, "lstatSync", (file, options) => {
       if (file === target) {
         return concurrentTarget ? { isFile: () => true, isSymbolicLink: () => false } : undefined;
       }
-      return path.basename(path.dirname(file)) === "extracted"
-        ? { isFile: () => true, isSymbolicLink: () => false }
-        : actualStat(file, options);
+      return actualStat(file, options);
     }),
     context.mock.method(fs, "chmodSync", (file) => modes.push(file)),
     context.mock.method(fs, "copyFileSync", () => {
@@ -317,20 +297,8 @@ test("a supplied install never changes the mode of an existing cache entry", asy
       });
     }),
     context.mock.method(childProcess, "spawnSync", (command, args, options) => {
-      if (command === "tar") {
-        if (args.includes("-xf")) {
-          extractionCount += 1;
-          assert.ok(args.includes("--no-same-owner"));
-        }
-        const stdout =
-          args[0] === "-tf"
-            ? `${selected.binaryName}\n`
-            : args[0] === "-tvf"
-              ? `-rwxr-xr-x 0/0 10 ${selected.binaryName}\n`
-              : "";
-        return { status: 0, stdout, stderr: "" };
-      }
-      if (command === target || path.basename(path.dirname(command)) === "extracted") {
+      assert.notEqual(command, "tar", "raw supply has no archive executor");
+      if (command === target || path.basename(command) === selected.name) {
         executions.push(command);
         return { status: 0, stdout: selected.versionOutput, stderr: "" };
       }
@@ -338,18 +306,17 @@ test("a supplied install never changes the mode of an existing cache entry", asy
     }),
   ];
   descriptor.sha256 = createHash("sha256").update(bytes).digest("hex");
-  descriptor.binarySha256 = descriptor.sha256;
+  descriptor.size = bytes.length;
   syncBuiltinESMExports();
   try {
-    assert.equal(await install({ tool: "lychee", assetFile: asset }), target);
+    assert.equal(await install({ tool: "osv-scanner", assetFile: asset }), target);
     assert.equal(concurrentTarget, true);
-    assert.equal(extractionCount, 1);
     assert.equal(modes.includes(target), false);
     assert.equal(executions.length, 2);
     assert.equal(executions[1], target);
   } finally {
-    descriptor.sha256 = originalDigest;
-    descriptor.binarySha256 = originalBinaryDigest;
+    for (const key of Object.keys(descriptor)) delete descriptor[key];
+    Object.assign(descriptor, original);
     for (const mock of mocks) mock.mock.restore();
     syncBuiltinESMExports();
   }

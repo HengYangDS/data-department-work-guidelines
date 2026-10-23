@@ -5,7 +5,6 @@ import {
   mkdirSync,
   mkdtempSync,
   readFileSync,
-  readdirSync,
   writeFileSync,
   chmodSync,
 } from "node:fs";
@@ -30,15 +29,14 @@ export function selectedAsset(tool, platform = process.platform, architecture = 
   if (!asset || !/^[0-9a-f]{64}$/u.test(asset.sha256)) {
     throw new Error(`unsupported or unpinned ${tool} platform: ${key}`);
   }
-  const format = asset.format ?? descriptor.format ?? "archive";
+  const format = asset.format ?? descriptor.format;
   if (
-    !["archive", "binary"].includes(format) ||
-    ((format === "binary" || asset.size !== undefined) &&
-      (!Number.isSafeInteger(asset.size) || asset.size <= 0 || asset.size > 64 * 1024 * 1024))
+    format !== "binary" ||
+    !Number.isSafeInteger(asset.size) ||
+    asset.size <= 0 ||
+    asset.size > 64 * 1024 * 1024
   )
     throw new Error(`invalid ${tool} asset format or size: ${key}`);
-  if (format !== "binary" && !/^[0-9a-f]{64}$/u.test(asset.binarySha256 ?? ""))
-    throw new Error(`unpinned ${tool} binary digest: ${key}`);
   return {
     ...asset,
     format,
@@ -60,44 +58,6 @@ export function gitlabPackageRequest(tool, asset = selectedAsset(tool), environm
     },
     environment,
   );
-}
-
-export function safeArchiveEntries(listing, verbose) {
-  const entries = listing.split(/\r?\n/u).filter(Boolean);
-  const details = verbose?.split(/\r?\n/u).filter(Boolean) ?? [];
-  if (!entries.length || entries.length !== details.length)
-    throw new Error("native archive listing is incomplete");
-  const seen = new Set();
-  for (const [index, entry] of entries.entries()) {
-    const normalized = entry.replace(/^\.\//u, "").replace(/\/$/u, "");
-    const parts = normalized.split("/");
-    if (
-      entry.startsWith("/") ||
-      entry.includes("\\") ||
-      entry.includes("\0") ||
-      entry.includes(":") ||
-      parts.includes("..") ||
-      (normalized !== "." && parts.includes(".")) ||
-      (normalized && parts.includes("")) ||
-      seen.has(normalized)
-    )
-      throw new Error(`unsafe native archive member: ${entry}`);
-    seen.add(normalized);
-    const directory = entry.endsWith("/") || entry === ".";
-    if (details[index][0] !== (directory ? "d" : "-"))
-      throw new Error(`non-regular native archive member: ${entry}`);
-  }
-  return entries;
-}
-
-function binaryFiles(directory, name) {
-  return readdirSync(directory, { withFileTypes: true }).flatMap((item) => {
-    const target = path.join(directory, item.name);
-    if (item.isDirectory()) return binaryFiles(target, name);
-    return item.isFile() && item.name === name && !lstatSync(target).isSymbolicLink()
-      ? [target]
-      : [];
-  });
 }
 
 function verifiedCached(target, selected) {
@@ -180,7 +140,6 @@ export async function install({ tool, assetFile = "", downloadSource = "" } = {}
       : downloadSource === "gitlab"
         ? gitlabPackageRequest(tool, selected)
         : null;
-  const binaryName = selected.binaryName;
   const target = managedToolPath(tool, selected.key, root, manifest);
   const directory = path.dirname(target);
   const cached = managedFileExists(target);
@@ -199,37 +158,12 @@ export async function install({ tool, assetFile = "", downloadSource = "" } = {}
       retryDelay: 200,
     }),
   );
-  const archive = path.join(temporary, selected.name);
+  const candidate = path.join(temporary, selected.name);
   const bytes = assetFile
     ? readFileSync(path.resolve(assetFile))
     : await downloadAsset(request, selected);
   assertAssetDigest(bytes, selected);
-  writeFileSync(archive, bytes);
-  let candidate = archive;
-  if (selected.format === "archive") {
-    safeArchiveEntries(
-      run("tar", ["-tf", archive], {
-        capture: true,
-        rejectStderr: true,
-        timeout: 30_000,
-      }),
-      run("tar", ["-tvf", archive], {
-        capture: true,
-        rejectStderr: true,
-        timeout: 30_000,
-      }),
-    );
-    const extracted = path.join(temporary, "extracted");
-    mkdirSync(extracted);
-    run("tar", ["-xf", archive, "--no-same-owner", "-C", extracted], {
-      rejectStderr: true,
-      timeout: 30_000,
-    });
-    const candidates = binaryFiles(extracted, binaryName);
-    if (candidates.length !== 1)
-      throw new Error(`${tool} archive has ${candidates.length} binaries`);
-    candidate = candidates[0];
-  }
+  writeFileSync(candidate, bytes);
   const verifiedBytes = readFileSync(candidate);
   assertNativeBinaryDigest(verifiedBytes, selected, tool);
   if (process.platform !== "win32") chmodSync(candidate, 0o755);

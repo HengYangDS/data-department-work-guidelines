@@ -237,8 +237,8 @@ to jobs.
 Installed ETHOS supplies the Vale and Lychee binaries for its prose and link
 gates. Those gates use the shipped policy and applicable repository inputs;
 the DDWG toolkit installers and binary selectors do not select their executables.
-The toolkit no longer supplies a separate Vale binary; keep the repository spelling
-increment for the installed prose provider.
+The toolkit no longer supplies separate Vale or Lychee binaries. Keep the repository
+spelling increment and link configuration for the installed providers.
 
 The remaining repository dependency audit uses the OSV Scanner version in the
 [native supply manifest](.config/supply/native.json). Your existing installation
