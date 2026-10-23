@@ -324,6 +324,10 @@ migration. Keep no second risk policy or gate.
 
 ## Runner and Transport Boundaries
 
+The [runner declarations](../../.config/ci/runners.toml) identify permitted
+command prerequisites by Forge. They do not establish executable availability,
+runner identity, isolation, capacity, or successful job execution.
+
 Verify GitHub's hosted platform matrix and GitLab's admitted Linux, macOS, and
 Windows runners through their jobs and native runner/guest observations. GitLab
 source and offline jobs use pinned project packages without public-download

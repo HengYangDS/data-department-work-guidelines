@@ -24,6 +24,7 @@ product, not this directory index.
 | Project dependency findings               | [OSV dispositions](../../.config/checks/dependencies/policy.toml)                                           |
 | Native tool acquisition                   | [Supply manifest](../../.config/supply/native.json)                                                         |
 | CI Node and npm selection                 | [Mise configuration](../../.config/mise/config.toml) and [lock](../../.config/mise/mise.lock)               |
+| CI runner command prerequisites           | [Runner declarations](../../.config/ci/runners.toml)                                                        |
 | Offline artifact inspection               | [Bundle identity](../../.config/release/offline-bundle.json)                                                |
 
 ## Change a native input
