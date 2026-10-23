@@ -330,8 +330,12 @@ runner identity, isolation, capacity, or successful job execution.
 
 Verify GitHub's hosted platform matrix and GitLab's admitted Linux, macOS, and
 Windows runners through their jobs and native runner/guest observations. GitLab
-source and offline jobs use pinned project packages without public-download
-fallbacks.
+source and offline jobs acquire managed toolkit binaries from pinned project
+packages without a public-download fallback. The Linux container acquires the
+byte-exact official Mise installer and archive from that registry, verifies the
+installer checksum and the archive through the original installer, and selects
+locked Node/npm. No upstream fallback is configured. Bootstrap does not establish
+whole-job offline or hosted acceptance.
 
 Bind bundle qualification to the exact source, artifact, and job results.
 Temporary qualification packages do not establish signed Releases,

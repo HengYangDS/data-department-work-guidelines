@@ -50,8 +50,6 @@ const workflowRules = [
 ];
 const hostMatrix = ["ubuntu-latest", "ubuntu-24.04-arm", "macos-latest", "windows-latest"];
 
-const npmBootstrap =
-  'npm install --global --ignore-scripts "npm@$(node -p \'require("./package.json").devEngines.packageManager.version\')"';
 const nativeSourceSupply = [
   "npm ci --ignore-scripts",
   "node tools/ci/install-native.mjs osv-scanner --gitlab-package",
@@ -64,6 +62,14 @@ const nativeRuntimeVariables = {
   MISE_YES: "1",
 };
 const nativeRuntimeSupply = ["mise install --locked --jobs=1"];
+const containerRuntimeSupply = [
+  "mkdir -p build/runtime/work/mise-bootstrap",
+  'curl --fail --silent --show-error --connect-timeout 10 --max-time 60 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/install.sh "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.10.17/install.sh"',
+  "sha256sum --check .config/mise/install.sha256",
+  'curl --fail --silent --show-error --connect-timeout 10 --max-time 90 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/mise-v2026.10.17-linux-arm64.tar.gz "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.10.17/mise-v2026.10.17-linux-arm64.tar.gz"',
+  'timeout --signal=TERM --kill-after=5s 120s env MISE_VERSION=2026.10.17 MISE_INSTALL_PATH=/usr/local/bin/mise MISE_INSTALL_HELP=0 MISE_INSTALL_EXT=tar.gz MISE_TARBALL_URL="file://$CI_PROJECT_DIR/build/runtime/work/mise-bootstrap/mise-v2026.10.17-linux-arm64.tar.gz" sh build/runtime/work/mise-bootstrap/install.sh',
+  ...nativeRuntimeSupply,
+];
 const windowsRuntimeEntry = [
   "$env:PATH = $env:PATH + [IO.Path]::PathSeparator + [Environment]::GetEnvironmentVariable('Path', 'Machine')",
 ];
@@ -255,8 +261,10 @@ function validateGitLabOffline(gitlab, expectedImage) {
   ) {
     throw new Error("GitLab offline verification needs the declared runner");
   }
-  if (!isDeepStrictEqual(job.variables, { GIT_DEPTH: "0" })) {
-    throw new Error("GitLab offline variables must preserve only full-history selection");
+  if (!isDeepStrictEqual(job.variables, { GIT_DEPTH: "0", ...nativeRuntimeVariables })) {
+    throw new Error(
+      "GitLab offline variables must preserve full history and isolated native supply",
+    );
   }
   const expectedRules = [
     candidateRule,
@@ -269,19 +277,19 @@ function validateGitLabOffline(gitlab, expectedImage) {
       "GitLab offline job requires an explicit protected candidate or post-publication pipeline",
     );
   }
-  if (JSON.stringify(job.before_script) !== JSON.stringify([npmBootstrap])) {
+  if (!isDeepStrictEqual(sourceSupply(job), containerRuntimeSupply)) {
     throw new Error(
       "GitLab offline job must explicitly acquire the declared package manager before offline work",
     );
   }
   const commands = job.script;
-  if (commands?.[0] !== "node tools/ci/offline-bundle.mjs acquire-gitlab") {
+  if (commands?.[0] !== selectedNativeOffline[0]) {
     throw new Error("GitLab offline acquisition must use its own package");
   }
-  if (commands[1] !== "node tools/ci/offline-bundle.mjs install") {
+  if (commands[1] !== selectedNativeOffline[1]) {
     throw new Error("GitLab offline installation must use the pinned bundle");
   }
-  if (commands[2] !== verifier || commands.length !== 3) {
+  if (commands[2] !== selectedNativeVerifier || commands.length !== 3) {
     throw new Error("GitLab offline verifier must run the full repository check");
   }
   return validateGitLabLinuxJob(gitlab, "offline", "offline");
@@ -398,7 +406,8 @@ export function validateCi(
   const supplyOwner = gitlab[".docs:source-supply"];
   if (
     Object.keys(supplyOwner ?? {}).join(",") !== "before_script" ||
-    JSON.stringify(sourceSupply(supplyOwner)) !== JSON.stringify(nativeSourceSupply)
+    JSON.stringify(sourceSupply(supplyOwner)) !==
+      JSON.stringify(nativeSourceSupply.map((command) => `mise exec --locked -- ${command}`))
   ) {
     throw new Error("GitLab native source supply must have one complete owner");
   }
@@ -531,21 +540,28 @@ export function validateCi(
       `GitLab verification must use a digest-pinned Node ${nodeMajor} image and declared container runner capability`,
     );
   }
-  if (!isDeepStrictEqual(gitlabJob.variables, { GIT_DEPTH: "0" })) {
-    throw new Error("GitLab variables must preserve only full history and release tags");
+  if (!isDeepStrictEqual(gitlabJob.variables, { GIT_DEPTH: "0", ...nativeRuntimeVariables })) {
+    throw new Error("GitLab variables must preserve full history and isolated native supply");
   }
   const before = sourceSupply(gitlabJob);
   if (
     !Array.isArray(before) ||
-    before.indexOf("npm ci --ignore-scripts") < 0 ||
-    before.indexOf("npm ci --ignore-scripts") >= before.indexOf(auditCommand)
+    before.indexOf("mise exec --locked -- npm ci --ignore-scripts") < 0 ||
+    before.indexOf("mise exec --locked -- npm ci --ignore-scripts") >=
+      before.indexOf(`mise exec --locked -- ${auditCommand}`)
   ) {
     throw new Error("GitLab dependency audit or locked tool supply is missing");
   }
-  if (JSON.stringify(before) !== JSON.stringify([npmBootstrap, ...nativeSourceSupply])) {
+  if (
+    JSON.stringify(before) !==
+    JSON.stringify([
+      ...containerRuntimeSupply,
+      ...selectedNativeSourceSupply.slice(nativeRuntimeSupply.length),
+    ])
+  ) {
     throw new Error("GitLab tool supply must use its own package registry");
   }
-  if (JSON.stringify(gitlabJob.script) !== JSON.stringify([verifier])) {
+  if (JSON.stringify(gitlabJob.script) !== JSON.stringify([selectedNativeVerifier])) {
     throw new Error("GitLab must invoke the same repository verifier as GitHub");
   }
   const gitlabHosts = [

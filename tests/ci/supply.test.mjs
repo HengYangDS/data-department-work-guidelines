@@ -31,6 +31,18 @@ test("the repository check rejects an undeclared Node major", () => {
 
 test("native shell jobs select locked process runtimes without changing host npm", () => {
   const pipeline = YAML.parse(gitlab);
+  for (const name of [".docs:verify", ".offline:verify"]) {
+    const job = pipeline[name];
+    assert.ok(job.before_script.flat(10).includes("mise install --locked --jobs=1"), name);
+    assert.equal(
+      job.variables.MISE_TRUSTED_CONFIG_PATHS,
+      "$CI_PROJECT_DIR/.config/mise/config.toml",
+    );
+    assert.ok(
+      job.script.every((command) => command.startsWith("mise exec --locked -- ")),
+      name,
+    );
+  }
   for (const system of ["macos", "windows"]) {
     for (const suffix of ["", ":review"]) {
       const job = pipeline[`docs:verify:${system}${suffix}`];
@@ -153,7 +165,11 @@ test("both providers refuse to skip the dependency audit", () => {
     /dependency audit/u,
   );
   assert.throws(
-    () => validateCi(github, gitlab.replace("- node tools/docs/cli.mjs audit", "- echo skipped")),
+    () =>
+      validateCi(
+        github,
+        gitlab.replace("- mise exec --locked -- node tools/docs/cli.mjs audit", "- echo skipped"),
+      ),
     /dependency audit|native source supply/u,
   );
 });
@@ -238,6 +254,7 @@ test("CI runtime follows the declared stable Node line", () => {
 });
 
 test("GitLab CI cannot regress to a GitHub-hosted tool download", () => {
+  assert.doesNotMatch(gitlab, /https:\/\/github\.com\//u);
   assert.throws(
     () => validateCi(github, gitlab.replace("--gitlab-package", "--download")),
     /GitLab.*supply/u,
@@ -305,7 +322,7 @@ test("native YAML aliases preserve one source-supply list and reject omissions",
   const supply = pipeline[".docs:source-supply"].before_script;
   const selectedSupply = pipeline[".docs:native-source-supply"].before_script;
   const windowsSupply = pipeline[".docs:windows-source-supply"].before_script;
-  assert.strictEqual(pipeline[".docs:verify"].before_script[1], supply);
+  assert.strictEqual(pipeline[".docs:verify"].before_script.at(-1), supply);
   for (const system of ["macos", "windows"]) {
     for (const suffix of ["", ":review"]) {
       assert.strictEqual(

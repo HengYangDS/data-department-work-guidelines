@@ -25,9 +25,9 @@ default:
 
 .docs:source-supply:
   before_script: &docs-source-supply
-    - npm ci --ignore-scripts
-    - node tools/ci/install-native.mjs osv-scanner --gitlab-package
-    - node tools/docs/cli.mjs audit
+    - mise exec --locked -- npm ci --ignore-scripts
+    - mise exec --locked -- node tools/ci/install-native.mjs osv-scanner --gitlab-package
+    - mise exec --locked -- node tools/docs/cli.mjs audit
 
 .docs:native-runtime:
   variables: &native-runtime
@@ -41,10 +41,7 @@ default:
 .docs:native-source-supply:
   before_script: &native-source-supply
     - *native-runtime-supply
-    - &selected-source-supply
-      - mise exec --locked -- npm ci --ignore-scripts
-      - mise exec --locked -- node tools/ci/install-native.mjs osv-scanner --gitlab-package
-      - mise exec --locked -- node tools/docs/cli.mjs audit
+    - *docs-source-supply
 
 .docs:windows-runtime:
   before_script: &windows-runtime-supply
@@ -54,7 +51,7 @@ default:
 .docs:windows-source-supply:
   before_script: &windows-source-supply
     - *windows-runtime-supply
-    - *selected-source-supply
+    - *docs-source-supply
 
 .docs:verify:
   stage: verify
@@ -62,15 +59,24 @@ default:
   interruptible: true
   variables:
     GIT_DEPTH: "0"
+    MISE_CONFIG_DIR: "$CI_PROJECT_DIR/build/runtime/work/mise-config"
+    MISE_CEILING_PATHS: "$CI_PROJECT_DIR/.."
+    MISE_TRUSTED_CONFIG_PATHS: "$CI_PROJECT_DIR/.config/mise/config.toml"
+    MISE_YES: "1"
   artifacts:
     when: always
     paths:
       - build/evidence/dependencies/
   before_script:
-    - npm install --global --ignore-scripts "npm@$(node -p 'require("./package.json").devEngines.packageManager.version')"
+    - mkdir -p build/runtime/work/mise-bootstrap
+    - 'curl --fail --silent --show-error --connect-timeout 10 --max-time 60 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/install.sh "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.10.17/install.sh"'
+    - sha256sum --check .config/mise/install.sha256
+    - 'curl --fail --silent --show-error --connect-timeout 10 --max-time 90 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/mise-v2026.10.17-linux-arm64.tar.gz "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.10.17/mise-v2026.10.17-linux-arm64.tar.gz"'
+    - 'timeout --signal=TERM --kill-after=5s 120s env MISE_VERSION=2026.10.17 MISE_INSTALL_PATH=/usr/local/bin/mise MISE_INSTALL_HELP=0 MISE_INSTALL_EXT=tar.gz MISE_TARBALL_URL="file://$CI_PROJECT_DIR/build/runtime/work/mise-bootstrap/mise-v2026.10.17-linux-arm64.tar.gz" sh build/runtime/work/mise-bootstrap/install.sh'
+    - *native-runtime-supply
     - *docs-source-supply
   script:
-    - npm run verify
+    - mise exec --locked -- npm run verify
 
 docs:verify:linux:
   extends: .docs:verify
@@ -160,12 +166,21 @@ docs:verify:windows:review:
     - if: '$CI_COMMIT_TAG =~ /^v[^\/]*$/ && $CI_PIPELINE_SOURCE == "api"'
   variables:
     GIT_DEPTH: "0"
+    MISE_CONFIG_DIR: "$CI_PROJECT_DIR/build/runtime/work/mise-config"
+    MISE_CEILING_PATHS: "$CI_PROJECT_DIR/.."
+    MISE_TRUSTED_CONFIG_PATHS: "$CI_PROJECT_DIR/.config/mise/config.toml"
+    MISE_YES: "1"
   before_script:
-    - npm install --global --ignore-scripts "npm@$(node -p 'require("./package.json").devEngines.packageManager.version')"
+    - mkdir -p build/runtime/work/mise-bootstrap
+    - 'curl --fail --silent --show-error --connect-timeout 10 --max-time 60 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/install.sh "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.10.17/install.sh"'
+    - sha256sum --check .config/mise/install.sha256
+    - 'curl --fail --silent --show-error --connect-timeout 10 --max-time 90 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/mise-v2026.10.17-linux-arm64.tar.gz "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.10.17/mise-v2026.10.17-linux-arm64.tar.gz"'
+    - 'timeout --signal=TERM --kill-after=5s 120s env MISE_VERSION=2026.10.17 MISE_INSTALL_PATH=/usr/local/bin/mise MISE_INSTALL_HELP=0 MISE_INSTALL_EXT=tar.gz MISE_TARBALL_URL="file://$CI_PROJECT_DIR/build/runtime/work/mise-bootstrap/mise-v2026.10.17-linux-arm64.tar.gz" sh build/runtime/work/mise-bootstrap/install.sh'
+    - *native-runtime-supply
   script:
-    - node tools/ci/offline-bundle.mjs acquire-gitlab
-    - node tools/ci/offline-bundle.mjs install
-    - npm run verify
+    - mise exec --locked -- node tools/ci/offline-bundle.mjs acquire-gitlab
+    - mise exec --locked -- node tools/ci/offline-bundle.mjs install
+    - mise exec --locked -- npm run verify
 
 offline:verify:linux:
   extends: .offline:verify

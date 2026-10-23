@@ -23,6 +23,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Select locked Node and npm for GitLab source and offline commands through native Mise,
+  instead of changing global npm with shell substitution. Preserve runner identities,
+  dependency auditing, offline acquisition, and deadlines; hosted acceptance remains separate.
 - Keep the JSON supply for the retained Node maintenance toolkit and offline-bundle records
   in its native toolchain directory. Preserve dependency-free bootstrap and existing
   record bytes; this relocation does not qualify a new offline bundle.

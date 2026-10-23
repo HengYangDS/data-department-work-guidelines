@@ -382,7 +382,10 @@ test("GitLab offline release CI runs only after a release asset is available", (
     [gitlab.replace("acquire-gitlab", "acquire-github"), /GitLab offline acquisition/u],
     [gitlab.replace("offline-bundle.mjs install", "npm ci"), /GitLab offline installation/u],
     [
-      gitlab.replace(/(\.offline:verify:[\s\S]*? {4}- )npm run verify/u, "$1npm run partial"),
+      gitlab.replace(
+        /(\.offline:verify:[\s\S]*? {4}- )mise exec --locked -- npm run verify/u,
+        "$1npm run partial",
+      ),
       /GitLab offline verifier/u,
     ],
   ]) {
