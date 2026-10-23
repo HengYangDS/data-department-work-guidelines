@@ -106,6 +106,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Removed
 
+- Remove the unused standalone Changelog command. The full repository check still
+  validates release history; audit and offline consumers remain unchanged.
 - Remove npm command aliases for verification and prose. Contributors and both CI planes
   invoke installed ETHOS directly; the retained Node toolkit still owns its remaining
   supply and audit duties.

@@ -28,14 +28,8 @@ try {
       auditDependencies();
       break;
     }
-    case "changelog": {
-      if (arguments_.length) throw new Error("changelog accepts no arguments");
-      const { checkChangelog } = await import("./changelog.mjs");
-      checkChangelog();
-      break;
-    }
     default:
-      throw new Error("usage: node tools/docs/cli.mjs check|changelog|audit");
+      throw new Error("usage: node tools/docs/cli.mjs check|audit");
   }
 } catch (error) {
   reportError(error);
