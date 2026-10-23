@@ -2,7 +2,7 @@ import { isDeepStrictEqual } from "node:util";
 import YAML from "yaml";
 import { declaredToolRuntime, readText } from "../runtime.mjs";
 
-const verifier = "npm run verify";
+const verifier = "ethos prove --host --execute --full --json";
 const auditCommand = "node tools/docs/cli.mjs audit";
 const verificationMinutes = { source: 20, offline: 25 };
 const gitlabLinuxProtectedCapability = "ci-linux-arm64-container-protected";

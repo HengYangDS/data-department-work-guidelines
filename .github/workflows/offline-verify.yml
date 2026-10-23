@@ -55,4 +55,4 @@ jobs:
         run: node tools/ci/offline-bundle.mjs install
 
       - name: Verify source and governance
-        run: npm run verify
+        run: ethos prove --host --execute --full --json

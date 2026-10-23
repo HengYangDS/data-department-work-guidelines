@@ -106,6 +106,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Removed
 
+- Remove npm command aliases for verification and prose. Contributors and both CI planes
+  invoke installed ETHOS directly; the retained Node toolkit still owns its remaining
+  supply and audit duties.
 - Remove the duplicate edition label and its charter-specific parser and fixtures.
   The charter links to `VERSION`; version notes and signed-release checks retain
   their existing owners.

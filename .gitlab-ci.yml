@@ -76,7 +76,7 @@ default:
     - *native-runtime-supply
     - *docs-source-supply
   script:
-    - mise exec --locked -- npm run verify
+    - mise exec --locked -- ethos prove --host --execute --full --json
 
 docs:verify:linux:
   extends: .docs:verify
@@ -102,7 +102,7 @@ docs:verify:macos:
   variables: *native-runtime
   before_script: *native-source-supply
   script:
-    - mise exec --locked -- npm run verify
+    - mise exec --locked -- ethos prove --host --execute --full --json
   tags:
     - ci-macos-arm64-shell
   rules:
@@ -116,7 +116,7 @@ docs:verify:macos:review:
   variables: *native-runtime
   before_script: *native-source-supply
   script:
-    - mise exec --locked -- npm run verify
+    - mise exec --locked -- ethos prove --host --execute --full --json
   tags:
     - ci-macos-arm64-review
   rules:
@@ -132,7 +132,7 @@ docs:verify:windows:
   variables: *native-runtime
   before_script: *windows-source-supply
   script:
-    - mise exec --locked -- npm run verify
+    - mise exec --locked -- ethos prove --host --execute --full --json
   tags:
     - ci-windows-arm64-shell
   rules:
@@ -147,7 +147,7 @@ docs:verify:windows:review:
   variables: *native-runtime
   before_script: *windows-source-supply
   script:
-    - mise exec --locked -- npm run verify
+    - mise exec --locked -- ethos prove --host --execute --full --json
   tags:
     - ci-windows-arm64-review
   rules:
@@ -180,7 +180,7 @@ docs:verify:windows:review:
   script:
     - mise exec --locked -- node tools/ci/offline-bundle.mjs acquire-gitlab
     - mise exec --locked -- node tools/ci/offline-bundle.mjs install
-    - mise exec --locked -- npm run verify
+    - mise exec --locked -- ethos prove --host --execute --full --json
 
 offline:verify:linux:
   extends: .offline:verify
@@ -196,7 +196,7 @@ offline:verify:macos:
   script:
     - mise exec --locked -- node tools/ci/offline-bundle.mjs acquire-gitlab
     - mise exec --locked -- node tools/ci/offline-bundle.mjs install
-    - mise exec --locked -- npm run verify
+    - mise exec --locked -- ethos prove --host --execute --full --json
   tags:
     - ci-macos-arm64-shell
 
@@ -210,6 +210,6 @@ offline:verify:windows:
   script:
     - mise exec --locked -- node tools/ci/offline-bundle.mjs acquire-gitlab
     - mise exec --locked -- node tools/ci/offline-bundle.mjs install
-    - mise exec --locked -- npm run verify
+    - mise exec --locked -- ethos prove --host --execute --full --json
   tags:
     - ci-windows-arm64-shell

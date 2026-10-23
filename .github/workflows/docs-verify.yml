@@ -67,4 +67,4 @@ jobs:
           if-no-files-found: error
 
       - name: Verify documentation and governance boundaries
-        run: npm run verify
+        run: ethos prove --host --execute --full --json

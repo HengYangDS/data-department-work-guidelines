@@ -233,7 +233,7 @@ test("release route runs the full source check after bundle identity is updated"
   const release = guide.split("## Publish a release")[1];
   assert.ok(release);
   const record = release.indexOf("Put that exact reviewed JSON");
-  const verify = release.indexOf("`npm run verify`");
+  const verify = release.indexOf("`ethos prove --host --execute --full --json`");
   assert.ok(record >= 0 && verify > record);
 });
 

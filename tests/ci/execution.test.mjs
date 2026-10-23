@@ -6,7 +6,7 @@ import { github, gitlab, offline, changedGitLab } from "./fixtures.mjs";
 
 test("both providers invoke one verifier on declared hosts", () => {
   const result = validateCi(github, gitlab);
-  assert.equal(result.verifier, "npm run verify");
+  assert.equal(result.verifier, "ethos prove --host --execute --full --json");
   assert.equal(result.audit, "node tools/docs/cli.mjs audit");
   assert.equal(result.nodeMajor, 26);
   assert.deepEqual(result.hosts, [
@@ -192,7 +192,11 @@ test("CI contract refuses a missing checkout and a changed verifier", () => {
     /missing actions\/checkout/u,
   );
   assert.throws(
-    () => validateCi(github, gitlab.replace("npm run verify", "npm run partial")),
+    () =>
+      validateCi(
+        github,
+        gitlab.replace("ethos prove --host --execute --full --json", "npm run partial"),
+      ),
     /same repository verifier/u,
   );
 });
@@ -259,7 +263,10 @@ test("offline release CI runs the source-pinned bundle on four hosted systems", 
       offline.replace("run: node tools/ci/offline-bundle.mjs install", "run: npm ci"),
       /offline installation/u,
     ],
-    [offline.replace("run: npm run verify", "run: npm run partial"), /offline verifier/u],
+    [
+      offline.replace("run: ethos prove --host --execute --full --json", "run: npm run partial"),
+      /offline verifier/u,
+    ],
     [
       offline.replace(
         "        run: node tools/ci/offline-bundle.mjs acquire-github",

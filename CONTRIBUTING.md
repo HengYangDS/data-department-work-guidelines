@@ -47,10 +47,10 @@ is unavailable.
 ### Run the full source check
 
 ```text
-npm run verify
+ethos prove --host --execute --full --json
 ```
 
-`npm run verify` invokes the installed ETHOS full host graph. ETHOS combines the
+The command executes the installed ETHOS full host graph. ETHOS combines the
 two temporary document roots with applicable shared checks. The full graph
 includes official OpenSpec validation, formatting, and native code-quality obligations.
 ETHOS selects tests from the committed Git source; there is no repository test
@@ -59,14 +59,14 @@ committed source and does not mint repository proof or source acceptance.
 
 For an uncommitted edit, run `mise run check`,
 `ethos prove --host --execute --gate markdown-lint --json`,
-`npm run prose`, and `node tools/docs/cli.mjs check`. The shared lint gate checks Git-selected working
+`ethos prove --host --execute --gate prose --json`, and `node tools/docs/cli.mjs check`. The shared lint gate checks Git-selected working
 Markdown without writing, including non-ignored candidate files. The repository
 command checks CI, dependency declarations, and SemVer/Changelog.
 Installed ETHOS checks authored-source bytes and the repository license grant.
 Installed ETHOS checks effective Git text and line-ending attributes through
 its repository paradigm; DDWG keeps no second implementation.
 
-`npm run prose` invokes the installed shared prose provider: Codespell, shipped
+The installed prose gate runs the shared provider: Codespell, shipped
 Vale rules, and a temporary repository spelling increment. The full graph
 includes the shared prose gate; `node tools/docs/cli.mjs check` does not check prose.
 The increment remains until shared spelling qualifies the same
@@ -111,13 +111,13 @@ Review the actual page: registry validation does not establish reading order
 or reader understanding. This host check does not establish repository proof
 or source acceptance.
 
-| When you need to                     | Command                          |
-| ------------------------------------ | -------------------------------- |
-| Preview selected source formatting   | `ethos lane format --json`       |
-| Check formatting without writing     | `mise run check`                 |
-| Apply admitted formatting            | `mise run fix --expect-head OID` |
-| Check source, release, and CI inputs | `node tools/docs/cli.mjs check`  |
-| Check spelling, prose, and terms     | `npm run prose`                  |
+| When you need to                     | Command                                            |
+| ------------------------------------ | -------------------------------------------------- |
+| Preview selected source formatting   | `ethos lane format --json`                         |
+| Check formatting without writing     | `mise run check`                                   |
+| Apply admitted formatting            | `mise run fix --expect-head OID`                   |
+| Check source, release, and CI inputs | `node tools/docs/cli.mjs check`                    |
+| Check spelling, prose, and terms     | `ethos prove --host --execute --gate prose --json` |
 
 `check` and `fix` invoke the installed ETHOS formatter directly. Replace `OID`
 with the current `git rev-parse HEAD` result. Preview and check leave source
@@ -160,7 +160,7 @@ must bind the selected Change and exact committed source.
 
 ### Make ETHOS available
 
-The installed `ethos` command must be available to the shell that runs npm.
+The installed `ethos` command must be available to the verification shell.
 Use the ETHOS product's native installation and supplied offline distribution;
 the repository's hooks and Git-common runtime do not install a shell command.
 Check the actual caller before running the full source check:
@@ -222,7 +222,7 @@ mise trust .config/mise/config.toml
 mise config ls --json
 mise exec --locked -- node --version
 mise exec --locked -- npm --version
-mise exec --locked -- npm run verify
+mise exec --locked -- ethos prove --host --execute --full --json
 ```
 
 Do not use `MISE_CONFIG_FILE` to select this project: that override makes Mise
@@ -294,7 +294,7 @@ the toolkit alone cannot qualify a clean or offline environment:
 ```text
 node tools/ci/offline-bundle.mjs inspect --bundle PATH
 node tools/ci/offline-bundle.mjs install --bundle PATH
-npm run verify
+ethos prove --host --execute --full --json
 ```
 
 The installer checks the bundle before extraction, uses `npm ci --offline`, and
@@ -387,7 +387,7 @@ node tools/ci/offline-bundle.mjs inspect --bundle BUNDLE_PATH
 
 A second build may have a different archive SHA even with the same declared
 inputs. Freeze one inspected file and its actual digest for the signed commit
-and later publication on both Forges. Re-run `npm run verify`.
+and later publication on both Forges. Re-run `ethos prove --host --execute --full --json`.
 
 ### 3. Prove and accept the source
 
@@ -396,7 +396,7 @@ selected Change. Commit with
 the configured trusted SSH signer. From a fresh checkout of the committed
 source with no `node_modules/` or application tool cache, use
 `node tools/ci/offline-bundle.mjs install --bundle BUNDLE_PATH` and
-`npm run verify` without remote supply, with ETHOS separately installed from
+`ethos prove --host --execute --full --json` without remote supply, with ETHOS separately installed from
 the accepted product supply. The source and bundle must match.
 Take the actual OID from `git rev-parse HEAD`, and execute
 `ethos prove --execute --full --change CHANGE_ID --expect-head OID --json`.

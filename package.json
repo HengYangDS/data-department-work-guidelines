@@ -2,10 +2,6 @@
   "name": "data-department-work-guidelines",
   "private": true,
   "description": "Documentation quality tooling for the data department work guidelines.",
-  "scripts": {
-    "verify": "ethos prove --host --execute --full --json",
-    "prose": "ethos prove --host --execute --gate prose --json"
-  },
   "devDependencies": {
     "entities": "8.1.0",
     "markdownlint": "0.42.0",

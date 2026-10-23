@@ -48,7 +48,7 @@ test("native shell jobs select locked process runtimes without changing host npm
       const job = pipeline[`docs:verify:${system}${suffix}`];
       assert.equal(
         job.script[0],
-        "mise exec --locked -- npm run verify",
+        "mise exec --locked -- ethos prove --host --execute --full --json",
         "the selected native runtime must execute the complete verifier",
       );
       assert.equal(
@@ -61,11 +61,11 @@ test("native shell jobs select locked process runtimes without changing host npm
     assert.deepEqual(pipeline[`offline:verify:${system}`].script, [
       "mise exec --locked -- node tools/ci/offline-bundle.mjs acquire-gitlab",
       "mise exec --locked -- node tools/ci/offline-bundle.mjs install",
-      "mise exec --locked -- npm run verify",
+      "mise exec --locked -- ethos prove --host --execute --full --json",
     ]);
   }
   const changed = structuredClone(pipeline);
-  changed["docs:verify:windows"].script = ["npm run verify"];
+  changed["docs:verify:windows"].script = ["ethos prove --host --execute --full --json"];
   assert.throws(
     () => validateCi(github, YAML.stringify(changed), offline),
     /native runtime|platform job/u,
@@ -208,7 +208,7 @@ test("both source planes preserve complete audit evidence after a failure", () =
 test("both providers supply tools without a browser installation", () => {
   assert.doesNotMatch(github, /setup-chrome|PUPPETEER|mermaid/u);
   assert.doesNotMatch(gitlab, /chromium|PUPPETEER|mermaid|apt-get/u);
-  assert.equal(validateCi(github, gitlab).verifier, "npm run verify");
+  assert.equal(validateCi(github, gitlab).verifier, "ethos prove --host --execute --full --json");
 });
 
 test("GitLab jobs pin the official multiarch Node image by digest", () => {
@@ -230,7 +230,10 @@ test("GitLab jobs pin the official multiarch Node image by digest", () => {
 
 test("CI uses the current official Debian base without weakening image pins", () => {
   const declared = YAML.parse(gitlab).default.image;
-  assert.equal(validateCi(github, gitlab, offline).verifier, "npm run verify");
+  assert.equal(
+    validateCi(github, gitlab, offline).verifier,
+    "ethos prove --host --execute --full --json",
+  );
   assert.throws(
     () =>
       validateCi(
@@ -334,7 +337,7 @@ test("native YAML aliases preserve one source-supply list and reject omissions",
   assert.doesNotThrow(() => validateCi(github, gitlab, offline));
   for (const change of [
     (owner) => owner.before_script.splice(2, 1),
-    (owner) => (owner.script = ["npm run verify"]),
+    (owner) => (owner.script = ["ethos prove --host --execute --full --json"]),
   ]) {
     assert.throws(
       () =>

@@ -29,8 +29,8 @@ repository proof. Follow [source verification](../CONTRIBUTING.md#verify-the-sou
 for the other document checks and their current prerequisites.
 
 ETHOS owns material-path attribution, write admission, proof, and closeout.
-`npm run verify` invokes the installed full host graph, including repository
-checks. It is not another lifecycle or scope authority and does not grant
+The full installed host graph includes the retained repository checks.
+Run `ethos prove --host --execute --full --json` directly. It is not another lifecycle or scope authority and does not grant
 repository proof or source acceptance. A method-pack plan, claim, dated
 report, or private scope list cannot replace a Change. Official archival closes
 completed work; its result needs its own commit, proof, and publication.
