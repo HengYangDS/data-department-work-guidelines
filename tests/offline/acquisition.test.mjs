@@ -45,7 +45,7 @@ test("rejected Forge downloads await response disposal without publishing output
       await buildFixture(async (inputs) => {
         const built = assembleBundle(inputs);
         writeFileSync(
-          path.join(inputs.repository, ".config/release/offline-bundle.json"),
+          path.join(inputs.repository, ".config/npm/offline-bundle.json"),
           JSON.stringify(built),
         );
         let requests = 0;
@@ -106,7 +106,7 @@ test("a failed concurrent acquisition preserves either Forge's verified output",
       await buildFixture(async (inputs) => {
         const built = assembleBundle(inputs);
         writeFileSync(
-          path.join(inputs.repository, ".config/release/offline-bundle.json"),
+          path.join(inputs.repository, ".config/npm/offline-bundle.json"),
           JSON.stringify(built),
         );
         const target = path.join(
@@ -157,7 +157,7 @@ test("bundle acquisition rejects linked managed parents before remote access", a
       await buildFixture(async (inputs) => {
         const built = assembleBundle(inputs);
         writeFileSync(
-          path.join(inputs.repository, ".config/release/offline-bundle.json"),
+          path.join(inputs.repository, ".config/npm/offline-bundle.json"),
           JSON.stringify(built),
         );
         const foreign = mkdtempSync(path.join(os.tmpdir(), "ddwg-acquisition-foreign-"));
@@ -195,7 +195,7 @@ test("concurrent successful acquisitions converge without replacing a prior targ
   await buildFixture(async (inputs) => {
     const built = assembleBundle(inputs);
     writeFileSync(
-      path.join(inputs.repository, ".config/release/offline-bundle.json"),
+      path.join(inputs.repository, ".config/npm/offline-bundle.json"),
       JSON.stringify(built),
     );
     const options = {
@@ -275,7 +275,7 @@ test("GitLab candidate acquisition verifies exact bytes and retires its download
   await buildFixture(async (inputs) => {
     const built = assembleBundle(inputs);
     writeFileSync(
-      path.join(inputs.repository, ".config", "release", "offline-bundle.json"),
+      path.join(inputs.repository, ".config", "npm", "offline-bundle.json"),
       JSON.stringify(built),
     );
     const environment = {
@@ -317,7 +317,7 @@ test("GitLab acquisition uses only the same project's pinned release package", a
   await buildFixture(async (inputs) => {
     const built = assembleBundle(inputs);
     writeFileSync(
-      path.join(inputs.repository, ".config", "release", "offline-bundle.json"),
+      path.join(inputs.repository, ".config", "npm", "offline-bundle.json"),
       JSON.stringify(built),
     );
     const environment = {
@@ -380,7 +380,7 @@ test("GitLab acquisition uses only the same project's pinned release package", a
   await buildFixture(async (inputs) => {
     const built = assembleBundle(inputs);
     writeFileSync(
-      path.join(inputs.repository, ".config", "release", "offline-bundle.json"),
+      path.join(inputs.repository, ".config", "npm", "offline-bundle.json"),
       JSON.stringify(built),
     );
     const target = path.join(

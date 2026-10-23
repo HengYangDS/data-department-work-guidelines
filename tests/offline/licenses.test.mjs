@@ -68,7 +68,7 @@ test("a bundle covers both native owners and their notices", () => {
     runCommand("tar", ["-xf", inputs.outputPath, "-C", stage]);
     assert.doesNotThrow(() => validateExtractedBundle(stage, inputs.repository));
     const supply = JSON.parse(
-      readFileSync(path.join(inputs.repository, ".config/supply/native.json")),
+      readFileSync(path.join(inputs.repository, ".config/npm/native.json")),
     );
     const valeAsset = path.join(
       stage,

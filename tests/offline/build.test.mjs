@@ -128,14 +128,14 @@ test("builder admits only pinned, licensed, regular supply", () => {
     );
   });
   buildFixture((inputs) => {
-    const manifestPath = path.join(inputs.repository, ".config", "supply", "native.json");
+    const manifestPath = path.join(inputs.repository, ".config", "npm", "native.json");
     const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
     manifest.tools.lychee.assets[`${process.platform}-${process.arch}`].name = "../outside.tar.gz";
     writeFileSync(manifestPath, JSON.stringify(manifest));
     assert.throws(() => assembleBundle(inputs), /unsafe.*asset/u);
   });
   buildFixture((inputs) => {
-    const manifestPath = path.join(inputs.repository, ".config", "supply", "native.json");
+    const manifestPath = path.join(inputs.repository, ".config", "npm", "native.json");
     const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
     manifest.tools.lychee.licenses["../outside"] = manifest.tools.lychee.licenses["LICENSE-MIT"];
     writeFileSync(manifestPath, JSON.stringify(manifest));

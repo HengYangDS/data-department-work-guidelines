@@ -271,9 +271,9 @@ remain exact-artifact evidence only while those artifacts are consumed:
   checks, controlled development CI, and the same hash-bound offline supply.
   The user approved the OSV successor on 2026-10-13 under the same scope and
   expiry; the complete findings and actual-platform qualification remain required.
-- The five Lychee 0.24.2 assets in
-  [native supply](../../../.config/supply/native.json), for the approved trusted
-  local checks, controlled development CI, and identical-asset distribution.
+- The five Lychee 0.24.2 assets from the previous DDWG supply, for the approved
+  trusted local checks, controlled development CI, and identical-asset distribution.
+  Their original pins remain in Git history; the current toolkit no longer supplies them.
 - The six official Taplo 0.10.0 assets from the previous DDWG supply, for trusted
   repository checks, controlled development CI, and the identical offline
   maintenance assets. The user approved this exact development scope on

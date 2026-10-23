@@ -213,7 +213,7 @@ test("offline temporary cleanup preserves the primary failure at each existing o
     await buildFixture(async (inputs) => {
       const built = assembleBundle(inputs);
       writeFileSync(
-        path.join(inputs.repository, ".config/release/offline-bundle.json"),
+        path.join(inputs.repository, ".config/npm/offline-bundle.json"),
         JSON.stringify(built),
       );
       if (owner === "build") unlinkSync(inputs.outputPath);

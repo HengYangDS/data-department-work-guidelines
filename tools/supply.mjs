@@ -3,7 +3,7 @@ import { accessSync, constants, readFileSync, realpathSync, statSync } from "nod
 import path from "node:path";
 import { filePath, managedFileExists, root, run } from "./runtime.mjs";
 
-export const nativeSupplyPath = ".config/supply/native.json";
+export const nativeSupplyPath = ".config/npm/native.json";
 export function readNativeSupply(repository = root) {
   return JSON.parse(readFileSync(path.join(repository, nativeSupplyPath), "utf8"));
 }

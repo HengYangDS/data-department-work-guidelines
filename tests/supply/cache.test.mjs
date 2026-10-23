@@ -42,7 +42,7 @@ test("managed cached binaries verify bytes before version execution", async () =
     fixture.tools["osv-scanner"].assets[key].sha256 = createHash("sha256")
       .update(trusted)
       .digest("hex");
-    const supply = path.join(directory, ".config/supply/native.json");
+    const supply = path.join(directory, ".config/npm/native.json");
     fs.mkdirSync(path.dirname(supply), { recursive: true });
     fs.writeFileSync(supply, JSON.stringify(fixture));
     fs.mkdirSync(path.dirname(target), { recursive: true });

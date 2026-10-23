@@ -244,8 +244,8 @@ configuration; local checks do not upgrade host tools or Runner services.
 
 ### Select and Verify Native Tools
 
-The [supply manifest](../../.config/supply/native.json) owns platform assets and
-upstream notices. The [bundle record](../../.config/release/offline-bundle.json)
+The [supply manifest](../../.config/npm/native.json) owns platform assets and
+upstream notices. The [bundle record](../../.config/npm/offline-bundle.json)
 binds the toolkit to its source, locks, native supply, and Node major. Verify
 complete bytes before extraction or execution. Version output alone cannot
 admit altered bytes, and a package-manager installation is not proof of

@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 
 export const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
-export const offlineBundleRecordPath = ".config/release/offline-bundle.json";
+export const offlineBundleRecordPath = ".config/npm/offline-bundle.json";
 
 export function filePath(relative) {
   const parts = relative.split("/");

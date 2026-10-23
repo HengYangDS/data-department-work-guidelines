@@ -23,6 +23,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Keep the retained Node maintenance toolkit's JSON supply and offline-bundle records
+  in its native toolchain directory. Preserve dependency-free bootstrap and existing
+  record bytes; this relocation does not qualify a new offline bundle.
 - Prepare v8.0.0 for incompatible review duties and reader routes. Replace v7.0.12's
   minimum monthly and quarterly review frequencies with defaults the responsible owner
   may adjust for a recorded reason and next review time. Preserve the review purposes

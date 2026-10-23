@@ -140,7 +140,7 @@ test("Windows native selection binds quoted paths and direct suffixes before exe
       path.join(root, "tools/runtime.mjs"),
       path.join(directory, "tools/runtime.mjs"),
     );
-    const supply = path.join(directory, ".config/supply/native.json");
+    const supply = path.join(directory, ".config/npm/native.json");
     fs.mkdirSync(path.dirname(supply), { recursive: true });
     fs.writeFileSync(supply, JSON.stringify(fixture));
     fs.mkdirSync(path.dirname(target), { recursive: true });

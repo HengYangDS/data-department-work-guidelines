@@ -16,6 +16,7 @@
 - [x] 2.6 Reject literal and variable decision command operands while preserving globs; verify execution remains distinct from ordinary descriptions.
 - [x] 2.7 Await bounded asynchronous installer cleanup; verify ordering, persistent errors, and actual Windows source CI installation.
 - [ ] 2.8 Finish accepted-paradigm migration after installed supply/carrier acceptance; bind the complete applicable shared floor without duplicate orchestration, pass native carrier, front-matter, commit, Changelog, and peer checks, and retire replaced bindings. Dependency: ETHOS default/binding reconciliation (#20).
+  - [ ] 2.8.1 Move the retained Node toolkit's JSON supply and bundle records into its toolchain directory; verify dependency-free bootstrap, unchanged record bytes and bundle identities, native placement, and all consumers without a converter or old-path fallback.
 - [x] 2.9 Bind links to Git-selected source; accept file, directory, and internal-alias routes while rejecting ignored state and escaping aliases.
 - [x] 2.10 Name GitLab jobs by purpose and platform with shared hidden templates; verify execution, admission, selectors, and symmetric naming.
 - [x] 2.11 Rewrite governance, decisions, and contribution guidance by reader question; verify duties, durable rationale, alternatives, evidence, links, prose, and rendering.

@@ -241,7 +241,7 @@ The toolkit no longer supplies separate Vale or Lychee binaries. Keep the reposi
 spelling increment and link configuration for the installed providers.
 
 The remaining repository dependency audit uses the OSV Scanner version in the
-[native supply manifest](.config/supply/native.json). Your existing installation
+[native supply manifest](.config/npm/native.json). Your existing installation
 owner may supply it. To install an already supplied asset in the repository's
 managed cache, use:
 
@@ -352,7 +352,7 @@ edition.
 ### 2. Build and freeze the toolkit
 
 Supply every platform asset and upstream license notice under `tools` in
-[the native supply manifest](.config/supply/native.json). Obtain their exact
+[the native supply manifest](.config/npm/native.json). Obtain their exact
 bytes from the declared sources or an already qualified mirror. Use two local
 directories outside Git, with `ASSET_DIR/TOOL/` and `LICENSE_DIR/TOOL/` for
 every declared tool. OSV Scanner uses its official raw binary, not a repacked
@@ -376,7 +376,7 @@ node tools/ci/offline-bundle.mjs build --assets ASSET_DIR --licenses LICENSE_DIR
 ```
 
 The build prints the actual bundle record. Put that exact reviewed JSON in
-[the tracked bundle record](.config/release/offline-bundle.json); never
+[the tracked bundle record](.config/npm/offline-bundle.json); never
 invent its digest or reuse one after the version, complete package manifest,
 lockfile, native supply manifest, or Node major changes. Only then run the
 command that reads that record:

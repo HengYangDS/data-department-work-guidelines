@@ -267,7 +267,7 @@ test("bundle extraction retains the current executor's ownership", (context) => 
 test("tracked bundle identity rejects source drift", () => {
   buildFixture((inputs) => {
     const built = assembleBundle(inputs);
-    const recordPath = path.join(inputs.repository, ".config", "release", "offline-bundle.json");
+    const recordPath = path.join(inputs.repository, ".config", "npm", "offline-bundle.json");
     writeFileSync(recordPath, JSON.stringify(built));
     assert.deepEqual(readBundleRecord(inputs.repository), built);
     writeFileSync(

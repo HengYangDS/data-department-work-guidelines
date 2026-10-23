@@ -93,8 +93,7 @@ export function buildFixture(run) {
     const cacheDirectory = path.join(directory, "cache");
     const assetDirectory = path.join(directory, "assets");
     const licenseDirectory = path.join(directory, "licenses");
-    mkdirSync(path.join(repository, ".config", "supply"), { recursive: true });
-    mkdirSync(path.join(repository, ".config", "release"));
+    mkdirSync(path.join(repository, ".config", "npm"), { recursive: true });
     mkdirSync(path.join(cacheDirectory, "_cacache", "index-v5"), {
       recursive: true,
     });
@@ -138,7 +137,7 @@ export function buildFixture(run) {
       licenses,
     };
     writeFileSync(
-      path.join(repository, ".config", "supply", "native.json"),
+      path.join(repository, ".config", "npm", "native.json"),
       JSON.stringify({
         schemaVersion: 1,
         tools: {

@@ -15,7 +15,7 @@ test("the public offline installer reports its actual package-manager version", 
   buildFixture((inputs) => {
     const built = assembleBundle(inputs);
     writeFileSync(
-      path.join(inputs.repository, ".config/release/offline-bundle.json"),
+      path.join(inputs.repository, ".config/npm/offline-bundle.json"),
       JSON.stringify(built),
     );
     for (const relative of [
@@ -53,7 +53,7 @@ childProcess.spawnSync = (command, args, options) => {
     }
     if (path.basename(args[0]) === "install-native.mjs") {
       const tool = args[1];
-      const native = JSON.parse(readFileSync(path.join(options.cwd, ".config/supply/native.json"), "utf8"));
+      const native = JSON.parse(readFileSync(path.join(options.cwd, ".config/npm/native.json"), "utf8"));
       const descriptor = native.tools[tool];
       const target = path.join(options.cwd, "build/runtime/tool-cache", tool, descriptor.version,
         process.platform + "-" + process.arch, descriptor.binary + (process.platform === "win32" ? ".exe" : ""));
@@ -229,10 +229,7 @@ test("Windows ARM64 offline installation consumes the pinned compatible assets",
         if (host !== "win32-x64") delete descriptor.assets[host];
       }
     }
-    writeFileSync(
-      path.join(inputs.repository, ".config/supply/native.json"),
-      JSON.stringify(native),
-    );
+    writeFileSync(path.join(inputs.repository, ".config/npm/native.json"), JSON.stringify(native));
     const built = assembleBundle(inputs);
     const npmEntry = npmCliPath();
     const previous = {
@@ -314,10 +311,7 @@ test("offline installation refuses an unsupported tool ABI before package-manage
     const otherPlatform = platform === "linux-arm64" ? "win32-x64" : "linux-arm64";
     native.tools.lychee.assets[otherPlatform] = native.tools.lychee.assets[platform];
     delete native.tools.lychee.assets[platform];
-    writeFileSync(
-      path.join(inputs.repository, ".config/supply/native.json"),
-      JSON.stringify(native),
-    );
+    writeFileSync(path.join(inputs.repository, ".config/npm/native.json"), JSON.stringify(native));
     const built = assembleBundle(inputs);
     const calls = [];
     assert.throws(

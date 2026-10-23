@@ -30,7 +30,7 @@ test("public downloads retain native causes; authenticated downloads expose only
     await buildFixture(async (inputs) => {
       const built = assembleBundle(inputs);
       writeFileSync(
-        path.join(inputs.repository, ".config/release/offline-bundle.json"),
+        path.join(inputs.repository, ".config/npm/offline-bundle.json"),
         JSON.stringify(built),
       );
       const native = Object.assign(new Error("native transport failed"), {
@@ -89,7 +89,7 @@ test("offline body-stream failures retain download context and authenticated cla
     await buildFixture(async (inputs) => {
       const built = assembleBundle(inputs);
       writeFileSync(
-        path.join(inputs.repository, ".config/release/offline-bundle.json"),
+        path.join(inputs.repository, ".config/npm/offline-bundle.json"),
         JSON.stringify(built),
       );
       for (const phase of ["body", "dispose", "missing", "size-cancel"]) {
@@ -177,7 +177,7 @@ test("offline body-stream failures retain download context and authenticated cla
 test("GitHub acquisition uses the exact public asset without a CLI or credential", async () => {
   await buildFixture(async (inputs) => {
     const built = assembleBundle(inputs);
-    const recordPath = path.join(inputs.repository, ".config", "release", "offline-bundle.json");
+    const recordPath = path.join(inputs.repository, ".config", "npm", "offline-bundle.json");
     writeFileSync(recordPath, JSON.stringify(built));
     const environment = {
       GITHUB_REPOSITORY: "Example/Repository",
@@ -232,7 +232,7 @@ test("GitHub acquisition uses the exact public asset without a CLI or credential
   await buildFixture(async (inputs) => {
     const built = assembleBundle(inputs);
     writeFileSync(
-      path.join(inputs.repository, ".config", "release", "offline-bundle.json"),
+      path.join(inputs.repository, ".config", "npm", "offline-bundle.json"),
       JSON.stringify(built),
     );
     const target = path.join(
@@ -285,7 +285,7 @@ test("public GitHub acquisition fails closed and removes only its failed output"
     await buildFixture(async (inputs) => {
       const built = assembleBundle(inputs);
       writeFileSync(
-        path.join(inputs.repository, ".config", "release", "offline-bundle.json"),
+        path.join(inputs.repository, ".config", "npm", "offline-bundle.json"),
         JSON.stringify(built),
       );
       await assert.rejects(
