@@ -23,7 +23,7 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
-- Keep the retained Node maintenance toolkit's JSON supply and offline-bundle records
+- Keep the JSON supply for the retained Node maintenance toolkit and offline-bundle records
   in its native toolchain directory. Preserve dependency-free bootstrap and existing
   record bytes; this relocation does not qualify a new offline bundle.
 - Prepare v8.0.0 for incompatible review duties and reader routes. Replace v7.0.12's
