@@ -97,18 +97,18 @@ Department terminology, current reader paths, selected native inputs, and any
 proved business-specific increment. Shared algorithms, defaults, schemas, and
 regression policy remain at their product owners.
 
-| Concern                         | Continuing owner                                          | DDWG retains                                               |
-| ------------------------------- | --------------------------------------------------------- | ---------------------------------------------------------- |
-| Content and work routes         | Department topics                                         | Meaning, duties, English text, and navigation.             |
-| Format, lint, prose, and links  | [Shared quality binding](specs/quality/spec.md)           | Selected content and necessary native parameters.          |
-| Source and proof selection      | [Verification binding](specs/verification/spec.md)        | Actual DDWG consumer acceptance.                           |
-| Installed maintenance inputs    | [Supply binding](specs/tool-supply/spec.md)               | Necessary product parameters.                              |
-| Peer and edition selection      | [Publication binding](specs/publication/spec.md)          | Declared repositories, platforms, and version.             |
-| Native authority                | [Governance binding](specs/repository-governance/spec.md) | Repository and branch parameters.                          |
-| Decisions and document carriers | Shared document contract                                  | Stable lowercase decision identities and actual rationale. |
-| Source execution and proof      | ETHOS command plane                                       | Actual source and applicable shared obligations.           |
-| Tool supply and diagnostics     | Installed product                                         | Necessary consumer inputs, not another supply manifest.    |
-| CI, history, and release        | Shared native contract and each Forge                     | Peers, platforms, document version, and meaningful notes.  |
+| Concern                         | Continuing owner                                            | DDWG retains                                               |
+| ------------------------------- | ----------------------------------------------------------- | ---------------------------------------------------------- |
+| Content and work routes         | Department topics                                           | Meaning, duties, English text, and navigation.             |
+| Format, lint, prose, and links  | [Shared quality binding](specs/quality/spec.md)             | Selected content and necessary native parameters.          |
+| Source and proof selection      | [Verification binding](specs/verification/spec.md)          | Actual DDWG consumer acceptance.                           |
+| Installed maintenance inputs    | Supply binding (main spec; DR-0005 withdrew the delta)      | Necessary product parameters.                              |
+| Peer and edition selection      | Publication binding (main spec; DR-0005 withdrew the delta) | Declared repositories, platforms, and version.             |
+| Native authority                | [Governance binding](specs/repository-governance/spec.md)   | Repository and branch parameters.                          |
+| Decisions and document carriers | Shared document contract                                    | Stable lowercase decision identities and actual rationale. |
+| Source execution and proof      | ETHOS command plane                                         | Actual source and applicable shared obligations.           |
+| Tool supply and diagnostics     | Installed product                                           | Necessary consumer inputs, not another supply manifest.    |
+| CI, history, and release        | Shared native contract and each Forge                       | Peers, platforms, document version, and meaningful notes.  |
 
 The installed-consumer diagnostic
 `02ee9de6274d93f6a97d2a6bc72b4a4ce7eb137eedd1f2f3a99128da16b0ef94`

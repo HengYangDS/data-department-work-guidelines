@@ -86,10 +86,12 @@ been established.
   delivery, communication, coaching, and feedback duties at their points of use.
 - [`verification`](specs/verification/spec.md): the selected DDWG shared proof
   contract and actual-consumer qualification.
-- [`tool-supply`](specs/tool-supply/spec.md): readable guidance independent of
-  tools and the DDWG binding to accepted product maintenance supply.
-- [`publication`](specs/publication/spec.md): the DDWG publication peers,
-  platform selection, and document-edition acceptance.
+- `tool-supply`: readable guidance independent of tools and the DDWG binding
+  to accepted product maintenance supply. DR-0005 withdrew this delta; the main
+  specification is unchanged.
+- `publication`: the DDWG publication peers, platform selection, and
+  document-edition acceptance. DR-0005 withdrew this delta; the main
+  specification is unchanged.
 
 ### Modified Capabilities
 
