@@ -2,9 +2,10 @@
 
 ## Purpose
 
-Define English source, native formatting and prose, reader links, decision-record
-form, and configuration ownership. These checks establish source properties,
-not Change authority, remote delivery, or team adoption.
+Define the English reader corpus, native prose and terminology checks, local and
+live links, literal input identity, and configuration ownership. These checks
+establish source properties, not Change authority, remote delivery, or team
+adoption; human review assesses meaning and reading quality.
 
 ## Requirements
 

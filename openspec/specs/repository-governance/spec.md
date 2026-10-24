@@ -2,9 +2,10 @@
 
 ## Purpose
 
-Define Change authority, source acceptance, task form, signed identity, and
-evidence boundaries without creating a second authority beside ETHOS and
-official OpenSpec.
+Define the repository's MIT reuse grant, tracked contributor exclusions, the
+signed commit graph both publication peers preserve, and the repository's
+branch, signature, release, and Change bindings to ETHOS and official OpenSpec without
+creating a second authority beside them.
 
 ## Requirements
 

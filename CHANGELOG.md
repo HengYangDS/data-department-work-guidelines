@@ -26,6 +26,11 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Align the main specifications with the delivered guidance and checks: two
+  work-practice scenarios follow the current communication and evolution topics,
+  quality and verification no longer name retired checks or commands, and the
+  quality and repository-governance purposes cover only their remaining
+  requirements.
 - Generate the GitHub and GitLab verification pipelines from installed ETHOS's common CUE
   model with DDWG parameters, and refuse drift in `check`. GitHub source checks move from
   `docs-verify.yml` to `ci.yml`, take locked Node and npm through native Mise, and accept
@@ -208,9 +213,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   notes-only changes, rebuild after package changes, and retain checkout, filters, and permissions.
 - Keep source and fixture selection faithful to Git: literal filenames, worktree deletions,
   encoding, text attributes, parser controls, and valid embedded examples remain covered.
-  Run every selected test through Node's official runner with two workers and the existing
-  deadline. Keep fixture support separate, fresh clones independent of host templates and
-  caches, and static checks, warning rejection, and cancellation intact.
+  Run every selected test through Node's official runner under the existing deadline. Keep
+  fixture support separate, fresh clones independent of host templates and caches, and static
+  checks, warning rejection, and cancellation intact.
 - Preserve each attempt's statuses, warnings, errors, partial output, and cleanup causes
   across validation, installation, bundle construction, and downloads. Report source identity,
   runtime, host name, and exact mounted capacity before children produce output; these do not
