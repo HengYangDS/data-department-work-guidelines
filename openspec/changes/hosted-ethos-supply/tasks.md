@@ -1,7 +1,7 @@
 ## 1. Hosted ETHOS Supply
 
-- [ ] 1.1 Declare the latest published ETHOS release in `.config/mise/config.toml` from its own Mise declaration and lock it with `mise lock`; done when `mise install --locked` installs it on macOS ARM64, `mise exec --locked -- ethos --version` reports that release, and the lock carries its linux-arm64, linux-x64, macos-arm64 and windows-x64 archives.
-- [ ] 1.2 Record the restored hosted verification under Fixed in the Changelog; the repository check passes.
+- [ ] 1.1 Declare the latest published ETHOS release in `.config/mise/config.toml` from its own Mise declaration and lock it with `mise lock`; done when `mise install --locked` installs it on macOS ARM64, its locked console reports that release when run outside a repository, and the lock carries its linux-arm64, linux-x64, macos-arm64 and windows-x64 archives.
+- [x] 1.2 Record the restored hosted verification under Fixed in the Changelog; the repository check passes.
 
 ## 2. Hosted Qualification
 

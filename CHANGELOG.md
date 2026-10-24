@@ -187,6 +187,12 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Fixed
 
+- Install ETHOS on GitHub's hosted verification runners from its published release. The
+  generated jobs ran `mise exec --locked -- ethos` without a declared ETHOS supply and failed
+  on every platform from 2026-10-14. `.config/mise/config.toml` now carries the release's own
+  Mise declaration, and `.config/mise/mise.lock` pins its archives for Linux x64 and ARM64,
+  macOS ARM64 and Windows x64. GitLab's jobs, including Windows ARM64, still wait for that
+  peer and that platform's supply.
 - Accept valid byte-exact text declared with Git `-text` while retaining UTF-8
   and NUL checks for native text carriers. Preserve declared binary assets and
   leave inspected bytes unchanged.
