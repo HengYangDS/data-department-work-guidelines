@@ -3,25 +3,25 @@
 lockfile_version = 3
 
 [[tools."http:ethos"]]
-version = "0.2.0-alpha.12"
+version = "0.2.0-alpha.13"
 backend = "http:ethos"
-specifiers = ["0.2.0-alpha.12"]
+specifiers = ["0.2.0-alpha.13"]
 
 [tools."http:ethos"."platforms.linux-arm64"]
-checksum = "sha256:5fd340d6c701e251ef2081c5634f090e84cd4419090df804a11f3f86025a9fe2"
-url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.12/ethos-0.2.0-alpha.12-linux-arm64.tar.gz"
+checksum = "sha256:349eb76e4f07e8de78dcca16e90f328d242ffba75f3239f5d942a4e4afabf66b"
+url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.13/ethos-0.2.0-alpha.13-linux-arm64.tar.gz"
 
 [tools."http:ethos"."platforms.linux-x64"]
-checksum = "sha256:8f7f16c9e02a53b6b7a5f867bbf666ddc4f6a94612d155fe5a37b79e4121dd24"
-url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.12/ethos-0.2.0-alpha.12-linux-x64.tar.gz"
+checksum = "sha256:7a572d3756680a524776f3589ec02a82f4c61948719becac8200efa0b3d6b069"
+url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.13/ethos-0.2.0-alpha.13-linux-x64.tar.gz"
 
 [tools."http:ethos"."platforms.macos-arm64"]
-checksum = "sha256:f3016ed9f44a218f573670a46039fa12f2a962e597eacebbaf8db86ec6e3fc3e"
-url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.12/ethos-0.2.0-alpha.12-macos-arm64.tar.gz"
+checksum = "sha256:6851515430bdb409c3cffac0f5114b11c839ca2a7b88d016022af439bce1b052"
+url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.13/ethos-0.2.0-alpha.13-macos-arm64.tar.gz"
 
 [tools."http:ethos"."platforms.windows-x64"]
-checksum = "sha256:2e7795e49986fa4096daea030e6bbc61b45a4088d9b0d727ad84511dd13a18a5"
-url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.12/ethos-0.2.0-alpha.12-windows-x64.tar.gz"
+checksum = "sha256:165f9a5ca4a5770580402755a90af0254e8f2050b6d7deceb906690e55357296"
+url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.13/ethos-0.2.0-alpha.13-windows-x64.tar.gz"
 
 [[tools.node]]
 version = "26.12.0"
