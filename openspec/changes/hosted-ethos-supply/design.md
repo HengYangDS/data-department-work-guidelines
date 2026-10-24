@@ -26,7 +26,7 @@ ARM64, and Windows x64; it publishes no Windows ARM64 archive.
   could drift from the published bytes.
 - Declare the latest published release. Qualify the hosted jobs with 0.2.0-alpha.12 first,
   because it is published, then move to 0.2.0-alpha.13 when ETHOS publishes it, since that
-  release keeps mise's state disposable and lets admitted commands run their own mise tasks.
+  release keeps the state of mise disposable and lets admitted commands run their own mise tasks.
 - Qualify the exact head that lands. Branch protection checks the commit itself, so the
   archived head is published as a proposal and lands only after its four `verify` jobs pass.
 
