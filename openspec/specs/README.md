@@ -18,4 +18,4 @@ shape; repository-private metadata does not extend them.
 | Publish or retire assets  | [Publication](publication/spec.md)                     |
 
 Requirements enter these files through official synchronization; that does not
-certify implementation or close the [active Change](../changes/native-document-quality/tasks.md).
+certify implementation or close the Change that carries them.

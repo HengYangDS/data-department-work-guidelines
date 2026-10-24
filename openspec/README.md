@@ -7,10 +7,9 @@ Task progress lives only there. [Accepted requirements](specs/README.md) enter
 Both require ETHOS write admission; an unbound direct edit cannot substitute for
 the Change.
 
-For the current Change, read its
-[proposal](changes/native-document-quality/proposal.md) for intent,
-[design](changes/native-document-quality/design.md) for choices, or
-[tasks](changes/native-document-quality/tasks.md) for actions and progress.
+When a Change is active, read its proposal for intent, its design for choices,
+and its `tasks.md` for actions and progress. Archived Changes keep those
+artifacts under `openspec/changes/archive/`.
 
 From the selected worktree, use installed ETHOS to check the official artifacts
 and plan the changed source:
