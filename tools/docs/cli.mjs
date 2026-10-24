@@ -2,7 +2,6 @@ import { assertNodeRuntime, reportError, readText } from "../runtime.mjs";
 
 async function checkRepository() {
   const { checkChangelog } = await import("./changelog.mjs");
-  const { checkCi } = await import("./ci.mjs");
   const { dependencyPolicyPath, parseDependencyPolicy, validateDependencyInput } =
     await import("./dependencies.mjs");
   validateDependencyInput(
@@ -10,7 +9,6 @@ async function checkRepository() {
     parseDependencyPolicy(readText(dependencyPolicyPath)),
   );
   checkChangelog();
-  checkCi();
   console.log("PASS repository source checks");
 }
 

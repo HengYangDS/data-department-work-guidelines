@@ -1,0 +1,57 @@
+name = "Documentation verification"
+accepted_branch = "dev"
+release_branch = "main"
+timeout_minutes = 20
+evidence_paths = ["build/evidence/dependencies/"]
+
+[supply]
+mise_version = "2026.10.17"
+
+[supply.checks]
+github = [
+  "mise exec --locked -- npm ci --ignore-scripts",
+  "mise exec --locked -- node tools/ci/install-native.mjs osv-scanner --download",
+  "mise exec --locked -- node tools/docs/cli.mjs audit",
+]
+gitlab = [
+  "mise exec --locked -- npm ci --ignore-scripts",
+  "mise exec --locked -- node tools/ci/install-native.mjs osv-scanner --gitlab-package",
+  "mise exec --locked -- node tools/docs/cli.mjs audit",
+]
+
+[github]
+runners = ["ubuntu-latest", "ubuntu-24.04-arm", "macos-latest", "windows-latest"]
+
+[gitlab]
+offline_candidate_variable = "DDWG_OFFLINE_CANDIDATE"
+
+[gitlab.variables]
+MISE_CONFIG_DIR = "$CI_PROJECT_DIR/build/runtime/work/mise-config"
+MISE_CEILING_PATHS = "$CI_PROJECT_DIR/.."
+MISE_TRUSTED_CONFIG_PATHS = "$CI_PROJECT_DIR/.config/mise/config.toml"
+MISE_YES = "1"
+
+[gitlab.runners.linux]
+system = "linux"
+review_tags = ["ci-linux-arm64-container"]
+protected_tags = ["ci-linux-arm64-container-protected"]
+image = "public.ecr.aws/docker/library/node:26-trixie@sha256:1b84b89ada025e3b14543cbb837ffaa1c1b5273b841c5b94dd1a8f9c1d8cf7fe"
+preparation = [
+  "mkdir -p build/runtime/work/mise-bootstrap",
+  'curl --fail --silent --show-error --connect-timeout 10 --max-time 60 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/install.sh "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.10.17/install.sh"',
+  "sha256sum --check .config/mise/install.sha256",
+  'curl --fail --silent --show-error --connect-timeout 10 --max-time 90 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/mise-v2026.10.17-linux-arm64.tar.gz "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.10.17/mise-v2026.10.17-linux-arm64.tar.gz"',
+  'timeout --signal=TERM --kill-after=5s 120s env MISE_VERSION=2026.10.17 MISE_INSTALL_PATH=/usr/local/bin/mise MISE_INSTALL_HELP=0 MISE_INSTALL_EXT=tar.gz MISE_TARBALL_URL="file://$CI_PROJECT_DIR/build/runtime/work/mise-bootstrap/mise-v2026.10.17-linux-arm64.tar.gz" sh build/runtime/work/mise-bootstrap/install.sh',
+]
+
+[gitlab.runners.macos]
+system = "macos"
+review_tags = ["ci-macos-arm64-review"]
+protected_tags = ["ci-macos-arm64-shell"]
+
+[gitlab.runners.windows]
+system = "windows"
+review_tags = ["ci-windows-arm64-review"]
+protected_tags = ["ci-windows-arm64-shell"]
+resource_group = "windows-verification"
+preparation = ["$env:PATH = $env:PATH + [IO.Path]::PathSeparator + [Environment]::GetEnvironmentVariable('Path', 'Machine')"]

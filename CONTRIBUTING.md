@@ -501,7 +501,7 @@ Require the returned project ID to match this repository, `tag` to be
 `true`, `ref` to be `vX.Y.Z`, `sha` to be the proved commit, and `source` to
 be `api` or `web`. A mismatch is not release qualification. Require the
 `offline:verify:linux`, `offline:verify:macos`, and `offline:verify:windows`
-jobs, not only the tag-push `docs:verify:<os>` jobs. Apply the
+jobs, not only the tag-push `verify:<os>:protected` source jobs. Apply the
 [Windows ARM64 supply boundary](docs/governance/README.md#tool-supply-and-offline-execution)
 for architecture observations and managed-asset selection evidence. Do not
 call an ARM64 host running x64 tools native x86_64 verification.

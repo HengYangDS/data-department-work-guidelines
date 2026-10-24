@@ -1,215 +1,247 @@
----
-workflow:
-  rules:
-    - &offline-candidate
-      if: >-
-        $DDWG_OFFLINE_CANDIDATE &&
-        $CI_COMMIT_REF_PROTECTED == "true" &&
-        ($CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main") &&
-        ($CI_PIPELINE_SOURCE == "api" || $CI_PIPELINE_SOURCE == "web")
-    - &exclude-candidate
-      if: "$DDWG_OFFLINE_CANDIDATE"
-      when: never
-    - if: '$CI_COMMIT_TAG =~ /^v[^\/]*$/'
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main"'
-    - if: '$CI_COMMIT_BRANCH =~ /^proposal\// && $CI_OPEN_MERGE_REQUESTS'
-      when: never
-    - if: '$CI_COMMIT_BRANCH =~ /^proposal\//'
-
-stages:
-  - verify
-
-default:
-  image: public.ecr.aws/docker/library/node:26-trixie@sha256:1b84b89ada025e3b14543cbb837ffaa1c1b5273b841c5b94dd1a8f9c1d8cf7fe
-
-.docs:source-supply:
-  before_script: &docs-source-supply
-    - mise exec --locked -- npm ci --ignore-scripts
-    - mise exec --locked -- node tools/ci/install-native.mjs osv-scanner --gitlab-package
-    - mise exec --locked -- node tools/docs/cli.mjs audit
-
-.docs:native-runtime:
-  variables: &native-runtime
-    MISE_CONFIG_DIR: "$CI_PROJECT_DIR/build/runtime/work/mise-config"
-    MISE_CEILING_PATHS: "$CI_PROJECT_DIR/.."
-    MISE_TRUSTED_CONFIG_PATHS: "$CI_PROJECT_DIR/.config/mise/config.toml"
-    MISE_YES: "1"
-  before_script: &native-runtime-supply
-    - mise install --locked --jobs=1
-
-.docs:native-source-supply:
-  before_script: &native-source-supply
-    - *native-runtime-supply
-    - *docs-source-supply
-
-.docs:windows-runtime:
-  before_script: &windows-runtime-supply
-    - $env:PATH = $env:PATH + [IO.Path]::PathSeparator + [Environment]::GetEnvironmentVariable('Path', 'Machine')
-    - *native-runtime-supply
-
-.docs:windows-source-supply:
-  before_script: &windows-source-supply
-    - *windows-runtime-supply
-    - *docs-source-supply
-
-.docs:verify:
-  stage: verify
-  timeout: 20m
-  interruptible: true
-  variables:
-    GIT_DEPTH: "0"
-    MISE_CONFIG_DIR: "$CI_PROJECT_DIR/build/runtime/work/mise-config"
-    MISE_CEILING_PATHS: "$CI_PROJECT_DIR/.."
-    MISE_TRUSTED_CONFIG_PATHS: "$CI_PROJECT_DIR/.config/mise/config.toml"
-    MISE_YES: "1"
-  artifacts:
-    when: always
-    paths:
-      - build/evidence/dependencies/
-  before_script:
-    - mkdir -p build/runtime/work/mise-bootstrap
-    - 'curl --fail --silent --show-error --connect-timeout 10 --max-time 60 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/install.sh "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.10.17/install.sh"'
-    - sha256sum --check .config/mise/install.sha256
-    - 'curl --fail --silent --show-error --connect-timeout 10 --max-time 90 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/mise-v2026.10.17-linux-arm64.tar.gz "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.10.17/mise-v2026.10.17-linux-arm64.tar.gz"'
-    - 'timeout --signal=TERM --kill-after=5s 120s env MISE_VERSION=2026.10.17 MISE_INSTALL_PATH=/usr/local/bin/mise MISE_INSTALL_HELP=0 MISE_INSTALL_EXT=tar.gz MISE_TARBALL_URL="file://$CI_PROJECT_DIR/build/runtime/work/mise-bootstrap/mise-v2026.10.17-linux-arm64.tar.gz" sh build/runtime/work/mise-bootstrap/install.sh'
-    - *native-runtime-supply
-    - *docs-source-supply
-  script:
-    - mise exec --locked -- ethos prove --host --execute --full --json
-
-docs:verify:linux:
-  extends: .docs:verify
-  tags:
-    - ci-linux-arm64-container-protected
-  rules:
-    - *exclude-candidate
-    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG =~ /^v[^\/]*$/'
-
-docs:verify:linux:review:
-  extends: .docs:verify
-  tags:
-    - ci-linux-arm64-container
-  rules:
-    - *exclude-candidate
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-    - if: '$CI_COMMIT_BRANCH =~ /^proposal\// && $CI_PIPELINE_SOURCE == "push"'
-
-docs:verify:macos:
-  extends: .docs:verify
-  inherit:
-    default: false
-  variables: *native-runtime
-  before_script: *native-source-supply
-  script:
-    - mise exec --locked -- ethos prove --host --execute --full --json
-  tags:
-    - ci-macos-arm64-shell
-  rules:
-    - *exclude-candidate
-    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG =~ /^v[^\/]*$/'
-
-docs:verify:macos:review:
-  extends: .docs:verify
-  inherit:
-    default: false
-  variables: *native-runtime
-  before_script: *native-source-supply
-  script:
-    - mise exec --locked -- ethos prove --host --execute --full --json
-  tags:
-    - ci-macos-arm64-review
-  rules:
-    - *exclude-candidate
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-    - if: '$CI_COMMIT_BRANCH =~ /^proposal\// && $CI_PIPELINE_SOURCE == "push"'
-
-docs:verify:windows:
-  resource_group: windows-verification
-  extends: .docs:verify
-  inherit:
-    default: false
-  variables: *native-runtime
-  before_script: *windows-source-supply
-  script:
-    - mise exec --locked -- ethos prove --host --execute --full --json
-  tags:
-    - ci-windows-arm64-shell
-  rules:
-    - *exclude-candidate
-    - if: '$CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG =~ /^v[^\/]*$/'
-
-docs:verify:windows:review:
-  resource_group: windows-verification
-  extends: .docs:verify
-  inherit:
-    default: false
-  variables: *native-runtime
-  before_script: *windows-source-supply
-  script:
-    - mise exec --locked -- ethos prove --host --execute --full --json
-  tags:
-    - ci-windows-arm64-review
-  rules:
-    - *exclude-candidate
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-    - if: '$CI_COMMIT_BRANCH =~ /^proposal\// && $CI_PIPELINE_SOURCE == "push"'
-
 .offline:verify:
   stage: verify
   timeout: 25m
   interruptible: true
   rules:
-    - *offline-candidate
-    - *exclude-candidate
-    - if: '$CI_COMMIT_TAG =~ /^v[^\/]*$/ && $CI_PIPELINE_SOURCE == "web"'
-    - if: '$CI_COMMIT_TAG =~ /^v[^\/]*$/ && $CI_PIPELINE_SOURCE == "api"'
+    - if: $DDWG_OFFLINE_CANDIDATE && $CI_COMMIT_REF_PROTECTED == "true" && ($CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main") && ($CI_PIPELINE_SOURCE == "api" || $CI_PIPELINE_SOURCE == "web")
+    - if: $DDWG_OFFLINE_CANDIDATE
+      when: never
+    - if: $CI_COMMIT_TAG =~ /^v[^\/]*$/ && $CI_PIPELINE_SOURCE == "web"
+    - if: $CI_COMMIT_TAG =~ /^v[^\/]*$/ && $CI_PIPELINE_SOURCE == "api"
   variables:
     GIT_DEPTH: "0"
-    MISE_CONFIG_DIR: "$CI_PROJECT_DIR/build/runtime/work/mise-config"
-    MISE_CEILING_PATHS: "$CI_PROJECT_DIR/.."
-    MISE_TRUSTED_CONFIG_PATHS: "$CI_PROJECT_DIR/.config/mise/config.toml"
+    MISE_CONFIG_DIR: $CI_PROJECT_DIR/build/runtime/work/mise-config
+    MISE_CEILING_PATHS: $CI_PROJECT_DIR/..
+    MISE_TRUSTED_CONFIG_PATHS: $CI_PROJECT_DIR/.config/mise/config.toml
     MISE_YES: "1"
   before_script:
     - mkdir -p build/runtime/work/mise-bootstrap
     - 'curl --fail --silent --show-error --connect-timeout 10 --max-time 60 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/install.sh "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.10.17/install.sh"'
     - sha256sum --check .config/mise/install.sha256
     - 'curl --fail --silent --show-error --connect-timeout 10 --max-time 90 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/mise-v2026.10.17-linux-arm64.tar.gz "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.10.17/mise-v2026.10.17-linux-arm64.tar.gz"'
-    - 'timeout --signal=TERM --kill-after=5s 120s env MISE_VERSION=2026.10.17 MISE_INSTALL_PATH=/usr/local/bin/mise MISE_INSTALL_HELP=0 MISE_INSTALL_EXT=tar.gz MISE_TARBALL_URL="file://$CI_PROJECT_DIR/build/runtime/work/mise-bootstrap/mise-v2026.10.17-linux-arm64.tar.gz" sh build/runtime/work/mise-bootstrap/install.sh'
-    - *native-runtime-supply
+    - timeout --signal=TERM --kill-after=5s 120s env MISE_VERSION=2026.10.17 MISE_INSTALL_PATH=/usr/local/bin/mise MISE_INSTALL_HELP=0 MISE_INSTALL_EXT=tar.gz MISE_TARBALL_URL="file://$CI_PROJECT_DIR/build/runtime/work/mise-bootstrap/mise-v2026.10.17-linux-arm64.tar.gz" sh build/runtime/work/mise-bootstrap/install.sh
+    - mise install --locked --jobs=1
   script:
     - mise exec --locked -- node tools/ci/offline-bundle.mjs acquire-gitlab
     - mise exec --locked -- node tools/ci/offline-bundle.mjs install
     - mise exec --locked -- ethos prove --host --execute --full --json
-
 offline:verify:linux:
   extends: .offline:verify
+  image: public.ecr.aws/docker/library/node:26-trixie@sha256:1b84b89ada025e3b14543cbb837ffaa1c1b5273b841c5b94dd1a8f9c1d8cf7fe
   tags:
     - ci-linux-arm64-container-protected
-
 offline:verify:macos:
   extends: .offline:verify
-  inherit:
-    default: false
-  variables: *native-runtime
-  before_script: *native-runtime-supply
-  script:
-    - mise exec --locked -- node tools/ci/offline-bundle.mjs acquire-gitlab
-    - mise exec --locked -- node tools/ci/offline-bundle.mjs install
-    - mise exec --locked -- ethos prove --host --execute --full --json
+  before_script:
+    - mise install --locked --jobs=1
   tags:
     - ci-macos-arm64-shell
-
 offline:verify:windows:
-  resource_group: windows-verification
   extends: .offline:verify
-  inherit:
-    default: false
-  variables: *native-runtime
-  before_script: *windows-runtime-supply
-  script:
-    - mise exec --locked -- node tools/ci/offline-bundle.mjs acquire-gitlab
-    - mise exec --locked -- node tools/ci/offline-bundle.mjs install
-    - mise exec --locked -- ethos prove --host --execute --full --json
+  resource_group: windows-verification
+  before_script:
+    - $env:PATH = $env:PATH + [IO.Path]::PathSeparator + [Environment]::GetEnvironmentVariable('Path', 'Machine')
+    - mise install --locked --jobs=1
   tags:
     - ci-windows-arm64-shell
+workflow:
+  rules:
+    - if: $DDWG_OFFLINE_CANDIDATE && $CI_COMMIT_REF_PROTECTED == "true" && ($CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main") && ($CI_PIPELINE_SOURCE == "api" || $CI_PIPELINE_SOURCE == "web")
+    - if: $DDWG_OFFLINE_CANDIDATE
+      when: never
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH =~ /^proposal\// && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    - if: $CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH =~ /^proposal\// || $CI_COMMIT_TAG =~ /^v[^\/]*$/
+stages:
+  - verify
+verify:linux:review:
+  before_script:
+    - mkdir -p build/runtime/work/mise-bootstrap
+    - 'curl --fail --silent --show-error --connect-timeout 10 --max-time 60 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/install.sh "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.10.17/install.sh"'
+    - sha256sum --check .config/mise/install.sha256
+    - 'curl --fail --silent --show-error --connect-timeout 10 --max-time 90 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/mise-v2026.10.17-linux-arm64.tar.gz "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.10.17/mise-v2026.10.17-linux-arm64.tar.gz"'
+    - timeout --signal=TERM --kill-after=5s 120s env MISE_VERSION=2026.10.17 MISE_INSTALL_PATH=/usr/local/bin/mise MISE_INSTALL_HELP=0 MISE_INSTALL_EXT=tar.gz MISE_TARBALL_URL="file://$CI_PROJECT_DIR/build/runtime/work/mise-bootstrap/mise-v2026.10.17-linux-arm64.tar.gz" sh build/runtime/work/mise-bootstrap/install.sh
+    - mise install --locked --jobs=1
+    - mise exec --locked -- npm ci --ignore-scripts
+    - mise exec --locked -- node tools/ci/install-native.mjs osv-scanner --gitlab-package
+    - mise exec --locked -- node tools/docs/cli.mjs audit
+    - mkdir -p build/evidence/ci
+  image: public.ecr.aws/docker/library/node:26-trixie@sha256:1b84b89ada025e3b14543cbb837ffaa1c1b5273b841c5b94dd1a8f9c1d8cf7fe
+  rules:
+    - if: $DDWG_OFFLINE_CANDIDATE
+      when: never
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" || ($CI_COMMIT_BRANCH =~ /^proposal\// && $CI_PIPELINE_SOURCE == "push")
+  stage: verify
+  tags:
+    - ci-linux-arm64-container
+  timeout: 20 minutes
+  interruptible: true
+  variables:
+    GIT_DEPTH: "0"
+    MISE_CONFIG_DIR: $CI_PROJECT_DIR/build/runtime/work/mise-config
+    MISE_CEILING_PATHS: $CI_PROJECT_DIR/..
+    MISE_TRUSTED_CONFIG_PATHS: $CI_PROJECT_DIR/.config/mise/config.toml
+    MISE_YES: "1"
+  script:
+    - mise exec --locked -- ethos prove --host --execute --full --json > build/evidence/ci/verification.json
+  artifacts:
+    when: always
+    paths:
+      - build/evidence/ci/verification.json
+      - build/evidence/dependencies/
+verify:linux:protected:
+  before_script:
+    - mkdir -p build/runtime/work/mise-bootstrap
+    - 'curl --fail --silent --show-error --connect-timeout 10 --max-time 60 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/install.sh "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.10.17/install.sh"'
+    - sha256sum --check .config/mise/install.sha256
+    - 'curl --fail --silent --show-error --connect-timeout 10 --max-time 90 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/mise-v2026.10.17-linux-arm64.tar.gz "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.10.17/mise-v2026.10.17-linux-arm64.tar.gz"'
+    - timeout --signal=TERM --kill-after=5s 120s env MISE_VERSION=2026.10.17 MISE_INSTALL_PATH=/usr/local/bin/mise MISE_INSTALL_HELP=0 MISE_INSTALL_EXT=tar.gz MISE_TARBALL_URL="file://$CI_PROJECT_DIR/build/runtime/work/mise-bootstrap/mise-v2026.10.17-linux-arm64.tar.gz" sh build/runtime/work/mise-bootstrap/install.sh
+    - mise install --locked --jobs=1
+    - mise exec --locked -- npm ci --ignore-scripts
+    - mise exec --locked -- node tools/ci/install-native.mjs osv-scanner --gitlab-package
+    - mise exec --locked -- node tools/docs/cli.mjs audit
+    - mkdir -p build/evidence/ci
+  image: public.ecr.aws/docker/library/node:26-trixie@sha256:1b84b89ada025e3b14543cbb837ffaa1c1b5273b841c5b94dd1a8f9c1d8cf7fe
+  rules:
+    - if: $DDWG_OFFLINE_CANDIDATE
+      when: never
+    - if: $CI_COMMIT_REF_PROTECTED == "true" && ($CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG =~ /^v[^\/]*$/)
+  stage: verify
+  tags:
+    - ci-linux-arm64-container-protected
+  timeout: 20 minutes
+  interruptible: true
+  variables:
+    GIT_DEPTH: "0"
+    MISE_CONFIG_DIR: $CI_PROJECT_DIR/build/runtime/work/mise-config
+    MISE_CEILING_PATHS: $CI_PROJECT_DIR/..
+    MISE_TRUSTED_CONFIG_PATHS: $CI_PROJECT_DIR/.config/mise/config.toml
+    MISE_YES: "1"
+  script:
+    - mise exec --locked -- ethos prove --host --execute --full --json > build/evidence/ci/verification.json
+  artifacts:
+    when: always
+    paths:
+      - build/evidence/ci/verification.json
+      - build/evidence/dependencies/
+verify:macos:review:
+  before_script:
+    - mise install --locked --jobs=1
+    - mise exec --locked -- npm ci --ignore-scripts
+    - mise exec --locked -- node tools/ci/install-native.mjs osv-scanner --gitlab-package
+    - mise exec --locked -- node tools/docs/cli.mjs audit
+    - mkdir -p build/evidence/ci
+  rules:
+    - if: $DDWG_OFFLINE_CANDIDATE
+      when: never
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" || ($CI_COMMIT_BRANCH =~ /^proposal\// && $CI_PIPELINE_SOURCE == "push")
+  stage: verify
+  tags:
+    - ci-macos-arm64-review
+  timeout: 20 minutes
+  interruptible: true
+  variables:
+    GIT_DEPTH: "0"
+    MISE_CONFIG_DIR: $CI_PROJECT_DIR/build/runtime/work/mise-config
+    MISE_CEILING_PATHS: $CI_PROJECT_DIR/..
+    MISE_TRUSTED_CONFIG_PATHS: $CI_PROJECT_DIR/.config/mise/config.toml
+    MISE_YES: "1"
+  script:
+    - mise exec --locked -- ethos prove --host --execute --full --json > build/evidence/ci/verification.json
+  artifacts:
+    when: always
+    paths:
+      - build/evidence/ci/verification.json
+      - build/evidence/dependencies/
+verify:macos:protected:
+  before_script:
+    - mise install --locked --jobs=1
+    - mise exec --locked -- npm ci --ignore-scripts
+    - mise exec --locked -- node tools/ci/install-native.mjs osv-scanner --gitlab-package
+    - mise exec --locked -- node tools/docs/cli.mjs audit
+    - mkdir -p build/evidence/ci
+  rules:
+    - if: $DDWG_OFFLINE_CANDIDATE
+      when: never
+    - if: $CI_COMMIT_REF_PROTECTED == "true" && ($CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG =~ /^v[^\/]*$/)
+  stage: verify
+  tags:
+    - ci-macos-arm64-shell
+  timeout: 20 minutes
+  interruptible: true
+  variables:
+    GIT_DEPTH: "0"
+    MISE_CONFIG_DIR: $CI_PROJECT_DIR/build/runtime/work/mise-config
+    MISE_CEILING_PATHS: $CI_PROJECT_DIR/..
+    MISE_TRUSTED_CONFIG_PATHS: $CI_PROJECT_DIR/.config/mise/config.toml
+    MISE_YES: "1"
+  script:
+    - mise exec --locked -- ethos prove --host --execute --full --json > build/evidence/ci/verification.json
+  artifacts:
+    when: always
+    paths:
+      - build/evidence/ci/verification.json
+      - build/evidence/dependencies/
+verify:windows:review:
+  before_script:
+    - $env:PATH = $env:PATH + [IO.Path]::PathSeparator + [Environment]::GetEnvironmentVariable('Path', 'Machine')
+    - mise install --locked --jobs=1
+    - mise exec --locked -- npm ci --ignore-scripts
+    - mise exec --locked -- node tools/ci/install-native.mjs osv-scanner --gitlab-package
+    - mise exec --locked -- node tools/docs/cli.mjs audit
+    - New-Item -ItemType Directory -Force build/evidence/ci
+  resource_group: windows-verification
+  rules:
+    - if: $DDWG_OFFLINE_CANDIDATE
+      when: never
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" || ($CI_COMMIT_BRANCH =~ /^proposal\// && $CI_PIPELINE_SOURCE == "push")
+  stage: verify
+  tags:
+    - ci-windows-arm64-review
+  timeout: 20 minutes
+  interruptible: true
+  variables:
+    GIT_DEPTH: "0"
+    MISE_CONFIG_DIR: $CI_PROJECT_DIR/build/runtime/work/mise-config
+    MISE_CEILING_PATHS: $CI_PROJECT_DIR/..
+    MISE_TRUSTED_CONFIG_PATHS: $CI_PROJECT_DIR/.config/mise/config.toml
+    MISE_YES: "1"
+  script:
+    - mise exec --locked -- ethos prove --host --execute --full --json > build/evidence/ci/verification.json
+  artifacts:
+    when: always
+    paths:
+      - build/evidence/ci/verification.json
+      - build/evidence/dependencies/
+verify:windows:protected:
+  before_script:
+    - $env:PATH = $env:PATH + [IO.Path]::PathSeparator + [Environment]::GetEnvironmentVariable('Path', 'Machine')
+    - mise install --locked --jobs=1
+    - mise exec --locked -- npm ci --ignore-scripts
+    - mise exec --locked -- node tools/ci/install-native.mjs osv-scanner --gitlab-package
+    - mise exec --locked -- node tools/docs/cli.mjs audit
+    - New-Item -ItemType Directory -Force build/evidence/ci
+  resource_group: windows-verification
+  rules:
+    - if: $DDWG_OFFLINE_CANDIDATE
+      when: never
+    - if: $CI_COMMIT_REF_PROTECTED == "true" && ($CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG =~ /^v[^\/]*$/)
+  stage: verify
+  tags:
+    - ci-windows-arm64-shell
+  timeout: 20 minutes
+  interruptible: true
+  variables:
+    GIT_DEPTH: "0"
+    MISE_CONFIG_DIR: $CI_PROJECT_DIR/build/runtime/work/mise-config
+    MISE_CEILING_PATHS: $CI_PROJECT_DIR/..
+    MISE_TRUSTED_CONFIG_PATHS: $CI_PROJECT_DIR/.config/mise/config.toml
+    MISE_YES: "1"
+  script:
+    - mise exec --locked -- ethos prove --host --execute --full --json > build/evidence/ci/verification.json
+  artifacts:
+    when: always
+    paths:
+      - build/evidence/ci/verification.json
+      - build/evidence/dependencies/

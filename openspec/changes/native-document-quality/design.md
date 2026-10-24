@@ -319,10 +319,14 @@ for GitLab delivery or the aggregate completion of history and peer tasks.
 Unobserved GitLab reading routes remain part of its deferred verification.
 
 Consume one accepted shared CI contract with peer-specific parameters. Its
-product owner chooses the representation and projection mechanism. Qualify
-stable input identity, native non-writing drift refusal, necessary event and
-transport adapters, and actual source/offline jobs. Do not require DDWG to adopt
-CUE, copy the compiler, or author equivalent common action lists twice.
+product owner chooses the representation and projection mechanism: installed
+ETHOS compiles its common CUE model with the typed DDWG parameters in
+`.config/ci/verification.toml`. The DDWG CUE instance holds only the retained GitLab
+offline jobs, and the GitHub offline workflow stays separate, until a public
+offline replacement passes exact release acceptance. Qualify stable input
+identity, native non-writing drift refusal, necessary event and transport
+adapters, and actual source/offline jobs. Do not copy the compiler or author
+the common action lists twice.
 
 Consume the accepted document-carrier, history, signing, SemVer, and
 Keep a Changelog contracts. Keep useful version notes and labeled native links

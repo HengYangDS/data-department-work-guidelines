@@ -23,6 +23,13 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Generate the GitHub and GitLab verification pipelines from installed ETHOS's common CUE
+  model with DDWG parameters, and refuse drift in `check`. GitHub source checks move from
+  `docs-verify.yml` to `ci.yml`, take locked Node and npm through native Mise, and accept
+  manual dispatch; GitLab source jobs become `verify:<os>:protected` and
+  `verify:<os>:review`. The GitLab offline jobs stay in the DDWG CUE instance and the GitHub
+  offline workflow stays separate. Runner identities, dependency auditing, offline
+  candidates, and deadlines are preserved; hosted acceptance remains separate.
 - Select locked Node and npm for GitLab source and offline commands through native Mise,
   instead of changing global npm with shell substitution. Preserve runner identities,
   dependency auditing, offline acquisition, and deadlines; hosted acceptance remains separate.
@@ -106,6 +113,10 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Removed
 
+- Remove the local CI validator, its repository-check call, its private tests, and its
+  exclusive `yaml` dependency. The installed projection check refuses generated-pipeline
+  drift; the separate GitHub offline workflow keeps no local structural check and relies
+  on hosted release acceptance.
 - Remove the unused standalone Changelog command. The full repository check still
   validates release history; audit and offline consumers remain unchanged.
 - Remove npm command aliases for verification and prose. Contributors and both CI planes

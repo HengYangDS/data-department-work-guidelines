@@ -17,8 +17,8 @@ description = "Prepare the currently declared Node and npm through locked native
 run = "mise install --locked node npm"
 
 [tasks.check]
-description = "Check selected source formatting without writing"
-run = "ethos lane format --check --json"
+description = "Check selected source formatting and generated CI files without writing"
+run = ["ethos lane format --check --json", "ethos lane project --check --json"]
 
 [tasks.fix]
 description = "Apply native formatting after exact Work Lane admission; pass --expect-head OID"
