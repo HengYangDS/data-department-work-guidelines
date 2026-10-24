@@ -9,11 +9,11 @@ for department work without adding authority or certifying team adoption.
 
 ### Requirement: Point-of-use analysis, data, and Agent boundaries
 
-Analysis SHALL choose a useful decomposition tied to the governing decision and
-make material gaps, relationships, and cross-cutting constraints explicit.
-Promotion into shared, production, or decision use SHALL require meaning,
-quality, permission and reproducibility. Agents SHALL review complete current
-claim-matched results, then report evidence, limits, and the delivery state;
+Analysis SHALL use a consistent classification basis at each level, cover the
+governing decision's needs, and expose material gaps, relationships and
+cross-cutting constraints. Shared, production or decision use SHALL require
+meaning, quality, permission and reproducibility. Agents SHALL review complete
+current claim-matched results and report evidence, limits and delivery state;
 people SHALL retain responsibility. Delivery coordination SHALL NOT replace
 other owners' professional judgments.
 
@@ -37,13 +37,23 @@ other owners' professional judgments.
 #### Scenario: An analysis is split into parts
 
 - **WHEN** a member decomposes a material problem before proposing options
-- **THEN** the decision topic requires a useful decomposition, a link from each
-  part back to the decision, and explicit material gaps, shared causes, and
+- **THEN** the decision topic requires a consistent classification basis at each
+  level, coverage of every part needed for the decision, a link from each part
+  back to that decision, and explicit material gaps, shared causes, and
   cross-cutting constraints without double-counting an effect
 - **AND** the charter's limit against forcing reality into a single model
   applies
 - **AND THEN** a longer list or polished prose does not substitute for the
   missing model.
+
+#### Scenario: A change targets an unverified environment
+
+- **WHEN** a member or Agent is about to make a change
+- **THEN** members and Agents SHALL verify the actual target
+  location, version, environment, current state, concurrent work, and recovery
+  path before the change
+- **AND** the collaboration topic links to that execution contract; a familiar
+  name or successful check elsewhere does not verify the intended target.
 
 #### Scenario: Decision readiness is mistaken for approval
 
@@ -61,6 +71,29 @@ other owners' professional judgments.
 - **AND THEN** exploration remains available without being mislabeled as an
   admitted asset.
 
+#### Scenario: Exploratory data is acquired, processed, or used
+
+- **WHEN** a member or Agent proposes acquiring, processing, or using exploratory
+  data
+- **THEN** exploration SHALL require permission for acquisition, processing, and
+  intended use; Agents SHALL also stay within their delegated scope
+- **AND** missing or unclear permission SHALL stop the affected action and be
+  escalated to its authorized decision owner through existing authority
+- **AND** unknown meaning, quality, or historical availability cannot supply that
+  permission or extend an Agent's delegation.
+
+#### Scenario: An authorized study lacks meaning, quality, or historical evidence
+
+- **WHEN** acquisition, processing, and intended use are permitted, an Agent stays
+  within its delegation, and meaning, quality, or historical availability remains
+  unresolved
+- **THEN** unknown meaning, quality, or historical availability MAY limit
+  exploratory claims without stopping otherwise permitted exploration
+- **AND** exploration may continue with matching limits on its conclusions,
+  without requiring full durable-asset admission or a new approval procedure
+- **AND** later promotion into shared, production, or decision use still requires
+  qualification and authorization for that use.
+
 #### Scenario: An Agent completes delegated work
 
 - **WHEN** an Agent reports completion or hands work back to a person
@@ -74,12 +107,26 @@ other owners' professional judgments.
   accepting the consequential result; the author's or Agent's account cannot
   substitute for that inspection.
 
+#### Scenario: Delegated work reaches review and acceptance
+
+- **WHEN** an Agent returns delegated work
+- **THEN** the member SHALL examine the actual work and evidence before presenting
+  them to the authorized acceptor
+- **AND** acceptance SHALL compare the agreed conditions: unmet work returns for
+  revision within the delegation; met work is accepted, recorded and handed off
+- **AND** those roles MAY belong to the same person unless current authority
+  requires a separate reviewer; no extra person or team is added for a label
+- **AND** delegation and acceptance SHALL NOT expand permission or transfer
+  responsibility; the complete decision remains readable without a diagram.
+
 #### Scenario: A task lead delegates the final judgment
 
 - **WHEN** a task lead delegates analysis or execution and sends the result to
   another authorized decision owner
 - **THEN** the collaboration topic keeps the goal, boundary, risk, final
   judgment, end-to-end result, and escalation with the task lead
+- **AND** the lead's judgment of delegated work does not replace other owners'
+  professional judgments or decisions about permitted use
 - **AND** that responsibility does not itself grant decision or acceptance
   authority.
 
@@ -107,6 +154,17 @@ other owners' professional judgments.
 - **AND** a query of a revised value cannot alone establish point-in-time
   validity; when first availability is unknown, exploratory work may continue
   within that stated evidence limit.
+
+#### Scenario: A value became available after a simulated decision
+
+- **WHEN** evidence establishes that a value first became available after the
+  decision time simulated in historical research
+- **THEN** the data topic identifies use of that value as information available
+  at that earlier decision as invalid, rather than merely unproved
+- **AND** it requires replacement or exclusion of the affected values and a new
+  run of the affected analysis before the result can support use admission
+- **AND** it distinguishes that demonstrated defect from missing availability
+  evidence without granting the Agent permission or certifying adoption.
 
 #### Scenario: A data-state label hides an unmet completion condition
 
@@ -251,9 +309,9 @@ Domain owners SHALL define meaning, quality, suitable use and judgment.
 Production owners SHALL ensure reliable long-term operation. Platform owners
 SHALL abstract repeated cross-domain capability. Governance owners SHALL operate
 admission, permissions, lineage, review, veto and exit in the workflow. Delivery
-owners SHALL expose priorities and open decisions. Shared interfaces SHALL NOT
-transfer responsibility or authority; suitable use SHALL NOT grant permission.
-Owners SHALL be accountable.
+owners SHALL expose priorities, resources, dependencies, risks and open decisions.
+Shared interfaces SHALL NOT transfer responsibility or authority. Owners SHALL
+remain accountable.
 
 #### Scenario: Research does not need a production feed
 
@@ -268,8 +326,9 @@ Owners SHALL be accountable.
 #### Scenario: Work is performed outside data production
 
 - **WHEN** a department member or delegated Agent acquires information, analyzes
-  or models data, performs data science, operates a platform or infrastructure,
-  governs a product, or delivers operational work
+  or models data, develops software, performs data science, operates a platform
+  or infrastructure, manages products or technical direction, governs a product,
+  or delivers operational work
 - **THEN** the data-quality topic SHALL apply its shared requirements across
   those activities and data production
 - **AND** each role's professional responsibility and action authority remain
@@ -302,6 +361,8 @@ Owners SHALL be accountable.
   governance reviewer changes business meaning through an admission review
 - **THEN** the data topic preserves professional judgment and permission as
   distinct responsibilities
+- **AND** suitable use, technical approval and passing tests SHALL NOT grant
+  permission
 - **AND** a shared interface or accountable task lead cannot grant the missing
   authority.
 
@@ -314,6 +375,70 @@ Owners SHALL be accountable.
   treated as an accepted change
 - **AND** tests, a written checklist, or a deployment cannot substitute for it;
   acceptance follows the work's existing authority and does not add a ceremony.
+
+#### Scenario: Data work assigns responsibilities
+
+- **WHEN** department work assigns outputs, activities, ownership, decisions or
+  acceptance
+- **THEN** the data topic SHALL explain that they may overlap in one person or
+  team and are not an exhaustive list of department jobs
+- **AND** these responsibilities SHALL NOT be presented as mutually exclusive
+  departments
+- **AND** existing organizational role and authority assignments SHALL select
+  actual owners without a second seat or reporting matrix in these guidelines
+- **AND** each important result or decision SHALL have an accountable owner,
+  decision mandate and acceptor in the existing work or product record
+- **AND** work SHALL distinguish outputs, activities, accountable ownership,
+  decision mandates and acceptance
+- **AND** business and data modeling, development, product management and
+  technical management SHALL retain explicit responsibility for their distinct
+  decisions
+- **AND** the assignments SHALL NOT require a new team, record or approval step.
+
+#### Scenario: A cross-domain model change preserves syntax but changes meaning
+
+- **WHEN** an issuer-identifier change keeps a schema valid but changes report
+  joins or exposes conflicting domain definitions
+- **THEN** business-model owners SHALL settle the intended entities, relations,
+  rules and metric meanings within their mandates
+- **AND** a named data-model owner SHALL reconcile grain, identity, keys,
+  constraints, time and version rules with that meaning across domains
+- **AND** development SHALL test the implementation and affected interfaces;
+  technical management SHALL settle architecture and compatibility within its
+  mandate
+- **AND** a task lead SHALL retain unresolved decisions rather than infer one
+  owner's approval from another owner's successful check.
+
+#### Scenario: A shared product is retired while a consumer still depends on it
+
+- **WHEN** a shared dataset or interface is changed or proposed for retirement
+- **THEN** its product owner SHALL identify intended consumers, use, value and
+  acceptance, and own consumer impact, versioning, migration or deprecation
+  notice, and retirement evidence
+- **AND** governance SHALL retain permission and exit controls, while production
+  SHALL retain release and recovery responsibility
+- **AND** no local passing test SHALL substitute for an unresolved consumer
+  migration or the required permission.
+
+#### Scenario: Engineering and professional work requires verification
+
+- **WHEN** work includes engineering, professional judgment or a model
+- **THEN** professional owners SHALL verify their judgments and models
+- **AND** engineering owners SHALL retain implementation and verification
+  responsibility rather than hand quality to a separate testing stage
+- **AND** engineering owners SHALL retain responsibility from requirements and
+  design through implementation, verification, release, operational feedback and
+  improvement as applicable
+- **AND** existing work evidence SHALL identify agreed criteria, affected interfaces and
+  migrations, actual inputs, version, environment, method, results, failed and
+  uncovered cases, their disposition and unresolved-risk owners
+- **AND** risk-based specialist or independent review SHALL follow current
+  authority without transferring implementation responsibility or requiring a
+  separate testing team
+- **AND** verification SHALL NOT grant acceptance, use admission or release
+  authority; a passing local test SHALL NOT establish consumer acceptance,
+  permission for use or release authority while an affected interface or
+  migration remains failed or unverified.
 
 ### Requirement: Communication and coaching preserve judgment
 

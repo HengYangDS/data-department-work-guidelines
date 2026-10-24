@@ -263,7 +263,7 @@ The previous DDWG supply received these separate development approvals. They
 remain exact-artifact evidence only while those artifacts are consumed:
 
 - Locked braces 3.0.3, `GHSA-vfj7-8cjw-p6xm`, under the native
-  [dependency policy](../../../.config/checks/dependencies/policy.toml).
+  [dependency policy](../../../../.config/checks/dependencies/policy.toml).
 - Official Node 26.12.0 Trixie image index
   `sha256:1b84b89ada025e3b14543cbb837ffaa1c1b5273b841c5b94dd1a8f9c1d8cf7fe`,
   only for the approved controlled development CI use.

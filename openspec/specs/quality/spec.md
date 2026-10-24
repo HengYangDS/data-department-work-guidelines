@@ -8,300 +8,6 @@ not Change authority, remote delivery, or team adoption.
 
 ## Requirements
 
-### Requirement: Repository boundary validation remains structural
-
-The repository SHALL reject a live `docs/superpowers/` execution-method tree, a
-date-named decision record, or an accepted decision record with malformed
-identity or sections. Its boundary validator SHALL NOT claim to perform OpenSpec
-lifecycle, material-path admission, proof, archive, or publication. Decision
-status SHALL come from record metadata rather than status directories.
-
-#### Scenario: Method carrier or malformed DR appears
-
-- **WHEN** a repository change adds `docs/superpowers/`, a date-named decision
-  record, or an accepted DR without its required identity and sections
-- **THEN** the repository boundary check rejects that structural violation
-- **AND THEN** lifecycle authority remains with ETHOS and official OpenSpec.
-
-### Requirement: Decision records exclude execution logs
-
-A DR SHALL use stable `DR-####`, lowercase `dr-####-*.md`, one matching root
-title, and only five ordered root sections: Context, Decision, Alternatives
-Rejected, Consequences and Boundary, Evidence and Revisit. It SHALL keep
-rationale, not tasks, readiness, execution, or acceptance reports. Native
-Markdown parsing SHALL reject additional or nested headings, code blocks,
-commands, task markers, and HTML except the validated leading registry comment,
-under any wrapper or language label.
-
-#### Scenario: Prose mentions an evidence asset
-
-- **WHEN** a DR contains a fenced, prompted, or inline invocation of a current
-  ETHOS or OpenSpec command
-- **THEN** the validator rejects the execution content
-- **AND WHEN** a DR uses natural-language lifecycle terms or a bare evidence
-  link
-- **THEN** the validator accepts that prose.
-- **AND** inline terms, ordinary decision lists/tables and quoted rationale
-  remain valid; code and executable examples stay linked at their producer.
-
-#### Scenario: Decision rationale is checked
-
-- **WHEN** a DR contains a transient delivery-state sentence instead of durable
-  rationale
-- **THEN** repository review moves that state to its owning Change or current
-  status surface
-- **AND THEN** the DR retains only the enduring choice and revisit trigger.
-- **AND** source syntax checks do not replace that editorial judgment or
-  ETHOS/OpenSpec lifecycle authority.
-
-#### Scenario: Markdown wrappers cannot hide execution or task progress
-
-- **WHEN** any code block or task marker appears inside a quote, list, long
-  fence or indented structure, regardless of a code language label
-- **THEN** the existing boundary fails with the source location
-- **AND THEN** ordinary decision lists, tables and meaningful links remain
-  valid.
-
-#### Scenario: Native shell operators do not hide an invocation
-
-- **WHEN** a DR embeds a supported compound command, redirection, or process
-  substitution around a recognized command
-- **THEN** the existing native lexer preserves its operator and argument
-  boundaries, and the public decision validator rejects the invocation
-- **AND** quotation, literal glob operands, ordinary operator descriptions,
-  and meaningful evidence links retain their existing boundaries
-- **AND THEN** inspection evaluates neither the command nor host variables.
-
-#### Scenario: Parsed headings define the actual decision sections
-
-- **WHEN** heading-like code or a quoted heading stands in for a required
-  top-level DR section, or the title contradicts the stable identity
-- **THEN** the validator rejects the malformed record
-- **AND THEN** command content and task status stay outside the decision
-  carrier.
-
-#### Scenario: A decision has additional or nested sections
-
-- **WHEN** a record includes a heading beyond its matching title and five
-  ordered root sections, including a deeper or nested heading
-- **THEN** the native structural boundary rejects the record
-- **AND** emphasized or entity-encoded headings with the correct reader text,
-  ordinary rationale lists, and meaningful evidence links remain valid.
-
-### Requirement: Decision identity and section completeness remain explicit
-
-Each current DR identifier SHALL be unique. Each of its five sections SHALL
-contain readable Markdown content. Ordinary command-table property names in
-prose SHALL NOT become shell commands or cause a classifier exception.
-Structural validity SHALL NOT claim to establish the quality of the reasoning.
-
-#### Scenario: A current record repeats a stable identity
-
-- **WHEN** two records use the same stable DR ID, even with different subjects
-- **THEN** the existing decision-tree boundary rejects the duplicate identity
-- **AND** distinct correctly identified records remain valid.
-
-#### Scenario: A required section has no readable content
-
-- **WHEN** a section is empty or contains only spacing, thematic breaks, or
-  reference definitions
-- **THEN** native token inspection rejects that section
-- **AND** readable links, lists, quotes, and table cells remain valid.
-
-#### Scenario: Prose begins with a JavaScript property name
-
-- **WHEN** ordinary rationale begins with `constructor`, `toString`,
-  `hasOwnProperty`, or `__proto__`
-- **THEN** command classification returns no invocation without an exception
-- **AND** a real command invocation remains rejected.
-
-#### Scenario: Shell inspection preserves execution and reader boundaries
-
-- **WHEN** quoted, compound, wrapped, or absolute-path invocations appear in a DR
-- **THEN** the native lexer supplies tokens and the existing boundary rejects
-  the invocation without evaluating the text or reading ambient variables
-- **AND** bare paths and ordinary interpreter prose remain valid.
-
-#### Scenario: Native shell glob arguments remain command operands
-
-- **WHEN** a selected removal or retrieval invocation contains a glob, one
-  literal operand, a variable, or an end-of-options marker
-- **THEN** native tokens remain in the current command argument group and the
-  DR boundary rejects the invocation, including a compound command
-- **AND** ordinary sentences describing a command and bare evidence paths
-  remain valid; inspected variables are never evaluated.
-
-### Requirement: Retained repository text uses English
-
-Tracked reader guidance, operations, decisions, changelog, OpenSpec artifacts,
-code comments, and test prose SHALL be English. The validator SHALL reject CJK,
-including supplementary Han scripts, in tracked or unignored candidate text
-with file and line. Human review SHALL assess clarity and faithful translation.
-Git history remains unchanged; translating a tracked archive SHALL NOT certify
-its earlier language or lifecycle retroactively.
-
-#### Scenario: A candidate reintroduces Chinese prose
-
-- **WHEN** a tracked or unignored candidate text contains a CJK character from
-  either the basic or supplementary planes
-- **THEN** the documentation gate fails and identifies its file and line
-- **AND** that check does not claim to assess translation quality.
-
-#### Scenario: An archived artifact is translated
-
-- **WHEN** an archived OpenSpec artifact's present tracked text is translated
-- **THEN** the original Git object remains recoverable and its historical
-  meaning and identifiers remain unchanged
-- **AND THEN** the translated artifact is not treated as fresh proof or as
-  retrospective certification of the original work.
-
-### Requirement: Retained source receives format and spacing checks
-
-Native format and Markdown checks SHALL cover all Git-selected source,
-including archives. Prettier alone SHALL own Markdown spacing for fix and check
-on identical inputs with unchanged second-pass output. It SHALL preserve tight
-lists and nested fences, one semantic separator in loose lists and between
-document blocks, and meaningful code/data spacing. Other lint SHALL NOT reject
-formatter-accepted structure or issue a duplicate spacing verdict.
-
-#### Scenario: An archived Markdown file breaks source hygiene
-
-- **WHEN** a tracked or unignored candidate Markdown file under an official
-  Change archive violates Prettier, Markdown lint, or the one-blank-line rule
-- **THEN** the repository verifier fails with the offending file
-- **AND** the archive remains a historical record, not a current reader route
-  or a substitute lifecycle authority.
-
-#### Scenario: Text without a filename extension contains visual padding
-
-- **WHEN** a tracked or unignored candidate UTF-8 text file without a filename
-  extension has consecutive blank lines
-- **THEN** the repository verifier fails with the file and line
-- **AND THEN** binary files and symlinks are not interpreted as prose.
-
-#### Scenario: Code requires literal blank lines
-
-- **WHEN** fenced or indented Markdown code contains meaningful consecutive
-  blank lines, including a nested or longer-fence example
-- **THEN** the native formatter preserves that literal content
-- **AND** the general text consumer does not reject it through a duplicate
-  raw Markdown spacing scan.
-
-#### Scenario: Structured source contains literal blank lines
-
-- **WHEN** JavaScript strings, YAML scalars, or TOML strings contain meaningful
-  consecutive blank lines
-- **THEN** the native formatter preserves those literal bytes and rejects only
-  structural format defects
-- **AND** the general text consumer does not apply a duplicate raw spacing scan.
-
-#### Scenario: TOML source is selected literally
-
-- **WHEN** Git selects a TOML source path with spaces or glob-like characters
-- **THEN** the formatter checks that exact file through its native public API
-- **AND** ambient exclusion files cannot remove it or change its policy
-- **AND** a syntax error, policy diagnostic, missing plugin, or meaningful-byte
-  change fails qualification rather than silently skipping the source.
-
-#### Scenario: Quoted paragraphs contain visual padding
-
-- **WHEN** ordinary or nested quoted paragraphs contain repeated empty quote
-  lines, or a quote lacks its separator from the preceding paragraph
-- **THEN** the native source format check rejects that exact Git-selected file
-- **AND** formatting restores one structural separator without changing nested
-  code literals or treating the standalone lint command as the full verifier.
-
-#### Scenario: A comment attempts to suppress formatting
-
-- **WHEN** a native formatter ignore comment exempts a byte-exact example
-- **THEN** the native formatter preserves that example through fix, check,
-  and a second fix pass
-- **AND** non-spacing Markdown rules still apply without a suppression blacklist
-  or second spacing parser; strings, YAML scalars, and ordinary TOML comments
-  retain their data and native formatting behavior.
-
-#### Scenario: Wrapped simple list items contain unnecessary gaps
-
-- **WHEN** wrapped, ordered, task, nested, or quoted list items have repeated
-  blank lines outside literal content
-- **THEN** native format check rejects the source and formatting reconciles its
-  container separators
-- **AND** Markdown lint accepts the fixed point without a second spacing verdict
-- **AND** ambient ignore files cannot remove Git-selected inputs from either
-  formatter invocation.
-
-#### Scenario: List structure requires separation
-
-- **WHEN** a list item has internally separated paragraphs or blocks
-- **THEN** the native formatter preserves literal content and reconciles
-  semantic loose-item separators
-- **AND** tight nested lists, separate lists, heading boundaries, and ordinary
-  paragraph separation retain their structure.
-
-#### Scenario: A tight list contains a fenced example
-
-- **WHEN** a tight list item contains a fence without surrounding blank lines,
-  including a nested, task, or quoted list
-- **THEN** native formatting preserves that fixed point and native lint
-  accepts it
-- **AND** fences outside lists still require reader-block separation; a fence
-  alone does not make a list loose.
-
-#### Scenario: Reader padding follows a valid code example
-
-- **WHEN** reader blocks have consecutive blank lines outside literal code
-- **THEN** the native format check rejects the selected source file
-- **AND** the valid code example does not hide the reader-layout defect.
-
-#### Scenario: A source without a filename extension has no native owner
-
-- **WHEN** an input without a filename extension is neither a declared plain-text
-  identity nor recognized by its actual repository-relative native parser
-- **THEN** the text check rejects the unowned input
-- **AND** recognized shebang source, ordinary text and structured literals keep
-  their native spacing rules regardless of the caller's working directory.
-
-#### Scenario: Source bytes would bypass text checks
-
-- **WHEN** text source contains NUL or invalid UTF-8, including a native text
-  carrier with `-text` declared for byte preservation
-- **THEN** the verifier rejects that source with its path
-- **AND** declared binary assets remain reachable without being interpreted
-  as prose, while effective text attributes require LF.
-
-#### Scenario: Native tools receive literal selected filenames
-
-- **WHEN** a selected source filename resembles a command option or contains
-  a line break
-- **THEN** the existing native tool invocation supplies that exact filename
-  without interpreting it as an option or splitting it into multiple inputs
-- **AND** a formatting defect or broken link still fails, while corrected source
-  passes without restricting valid repository filenames.
-
-### Requirement: Reader guidance separates visible content from registry metadata
-
-Current guidance SHALL present its title and task-facing content before any
-machine-only registry fields in ordinary GitLab and GitHub Markdown rendering.
-ETHOS SHALL still be able to identify each document's subject, role, state, and
-relations through its accepted product contract. The repository SHALL NOT
-introduce a private metadata schema, duplicate page, or second governance
-command to achieve this presentation.
-
-#### Scenario: A reader opens a current guidance page
-
-- **WHEN** a member or Agent opens a current topic or task map in either Forge
-- **THEN** the visible page begins with its title and reader-facing route
-- **AND THEN** internal metadata does not appear as a table or preamble before
-  the title.
-
-#### Scenario: Metadata is removed without a product replacement
-
-- **WHEN** a proposed edit hides or removes metadata from a current document
-  before ETHOS accepts its replacement representation
-- **THEN** installed-product registry validation or repository admission rejects
-  the edit
-- **AND THEN** a local rendering improvement alone cannot authorize the change.
-
 ### Requirement: Live links qualify the published edition
 
 Source link checks SHALL remain offline. Release qualification SHALL use pinned
@@ -509,30 +215,6 @@ records SHALL NOT gain converters, duplicate copies, or old-path fallback.
 - **THEN** each consumer uses its single required native record directly
 - **AND** no TOML converter, duplicate manifest, or bootstrap parser is added.
 
-### Requirement: Source text and binary ownership remain explicit
-
-Known plain-text identities, extensions, and native parsers SHALL define text
-ownership; files without extensions SHALL NOT default to plain text. Unowned code,
-invalid UTF-8, and NUL SHALL fail with a source path. Effective Git attributes
-SHALL select LF normalization or explicit binary/byte-preservation ownership;
-`-text` SHALL NOT exempt a native text carrier from byte checks. Symlinks SHALL
-remain excluded from text interpretation. Plain UTF-8 text SHALL receive native spacing checks.
-
-#### Scenario: An undeclared carrier would evade source checks
-
-- **WHEN** an input without an extension has no native owner, or native text
-  contains invalid UTF-8 or NUL, including under `-text`
-- **THEN** source validation refuses with its path rather than skipping it
-- **AND** declared binary assets, source aliases, and native structured formats
-  retain their own interpretation boundaries.
-
-#### Scenario: Git preserves a native text carrier's exact bytes
-
-- **WHEN** a valid UTF-8 text carrier declares `-text`
-- **THEN** byte checks accept it without changing its bytes
-- **AND** Git performs no text normalization; the native formatter and other
-  non-spacing checks retain their own selection and preservation controls.
-
 ### Requirement: Native selected inputs retain literal identity
 
 Native tools SHALL receive each exact selected filename, including option-like
@@ -549,3 +231,37 @@ archived source to guidance.
   the example through fix, check, and unchanged second fix
 - **AND** remaining source defects and non-spacing rules still fail without an
   ambient policy waiver or a duplicate spacing parser.
+
+### Requirement: DDWG source selects one English reader corpus
+
+DDWG SHALL select its current entrypoints, seven department topics, decisions,
+maintenance guidance, and retained source text through the accepted native
+content contract. English and Department terminology SHALL be declared
+parameters. Shared tools SHALL enforce their applicable checks; human review
+SHALL assess faithful meaning, clarity, and reading quality.
+
+#### Scenario: A member or Agent reads a current topic
+
+- **WHEN** the reader follows the task map to a department work question
+- **THEN** one English topic owns its duties, authority, conditions, and limits
+- **AND** machine metadata is declared as native YAML front matter for the
+  accepted registry, and an H1 identifies the reader-facing title.
+
+#### Scenario: A candidate changes the language or meaning
+
+- **WHEN** a candidate introduces new authored prose outside the declared English
+  language or changes a duty
+- **THEN** editorial review requires English prose and the existing original-duty
+  review assesses the meaning change
+- **AND** quoted originals, captured historical text, and meaningful code or data
+  literals retain their bytes; a whole-file character blacklist cannot replace
+  contextual language review
+- **AND** a passing language or style report does not certify translation,
+  complete equivalence, or team use.
+
+#### Scenario: Historical source is consulted
+
+- **WHEN** a retained original or earlier commit supports a clause review
+- **THEN** it remains a historical input rather than current authority
+- **AND** present translation or normalization does not certify its earlier
+  language, execution, or lifecycle retrospectively.
