@@ -20,6 +20,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   guideline source from checks.
 - Add protected-source offline qualification before a GitLab release. A temporary
   qualification package is not a signed Release or a substitute for source checks.
+- Add [DR-0005](docs/decisions/dr-0005-change-closure-scope.md): a Change closes on the tasks
+  it delivered. An unfinished task that waits on an unavailable environment keeps its line
+  without a checkbox, states its reason and returns through a new Change.
 
 ### Changed
 

@@ -398,6 +398,15 @@ actual source and installed bindings. Each keeps its own Change, lane,
 permission, and acceptance owner. A shared requirement does not make every
 unrelated product task a prerequisite for DDWG.
 
+### Close on the delivered scope
+
+On 2026-10-24, DR-0005 (`docs/decisions/dr-0005-change-closure-scope.md`)
+withdrew the tasks that this Change did not deliver. Each keeps its line in
+the task ledger without a checkbox, marked with its reason, and returns through
+a new Change when its environment can be observed or its work is taken up. The
+migration plan's later steps move with those tasks, and a retirement delta whose
+successor consumer has not qualified leaves this Change's deltas.
+
 ## Risks / Trade-offs
 
 Shared ownership reduces maintenance but only after actual input closure and

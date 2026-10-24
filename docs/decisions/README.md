@@ -13,10 +13,11 @@ Read a record when you need the reason for a lasting choice. The
 [official OpenSpec workspace](../../openspec/README.md) holds Change intent and
 progress.
 
-| Decision                                                             | Question it resolves                                                                    |
-| -------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| [DR-0001: Human–AI collaboration](dr-0001-human-ai-collaboration.md) | Why name the relationship separately from its executing Agent?                          |
-| [DR-0004: Official Change lifecycle](dr-0004-official-lifecycle.md)  | Why do OpenSpec and ETHOS govern material changes rather than methods or local scripts? |
+| Decision                                                             | Question it resolves                                                                        |
+| -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| [DR-0001: Human–AI collaboration](dr-0001-human-ai-collaboration.md) | Why name the relationship separately from its executing Agent?                              |
+| [DR-0004: Official Change lifecycle](dr-0004-official-lifecycle.md)  | Why do OpenSpec and ETHOS govern material changes rather than methods or local scripts?     |
+| [DR-0005: Change closure scope](dr-0005-change-closure-scope.md)     | Why does a Change close on the tasks it delivered instead of waiting for every environment? |
 
 ## Add Only a Decision Worth Keeping
 

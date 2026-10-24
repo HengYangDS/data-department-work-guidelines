@@ -1,98 +1,16 @@
 # Spec Delta
 
-## ADDED Requirements
-
-### Requirement: DDWG proof binds the shared document contract
-
-DDWG SHALL inherit the complete applicable shared floor through its accepted
-minimal ETHOS binding. Common obligations SHALL retain one product owner with
-actual input, policy and evidence bindings. DDWG SHALL consume native composition
-without copied or duplicate local execution contracts. Retained executable
-source SHALL keep applicable native obligations; content-only DDWG SHALL NOT
-keep a dummy suite to prove shared product code.
-
-#### Scenario: The declared default floor is resolved
-
-- **WHEN** installed ETHOS resolves the final DDWG profile
-- **THEN** the actual selected source receives the complete applicable shared
-  floor with product-owned identities and prerequisites
-- **AND** native composition preserves each gate identity and its input and
-  policy binding without duplicate local orchestration
-- **AND** retained executable source cannot lose its behavior or static obligations
-  merely because the repository is described as documentation-only
-- **AND** retired document-root names SHALL NOT require aliases or duplicate
-  common bindings.
-
-#### Scenario: An authored result attempts to replace proof
-
-- **WHEN** a document report is offered as code behavior, semantics, or acceptance
-- **THEN** the product's native proof contract rejects the substitution
-- **AND** shared code is qualified at ETHOS while retained DDWG code, if any,
-  receives its own applicable native obligations.
-
-#### Scenario: The actual source differs from the proof subject
-
-- **WHEN** a check, plan, commit, or later archive changes the selected source
-- **THEN** the corresponding native evidence identifies the exact applicable source
-- **AND** earlier-source success does not certify the new object or its delivery.
-
-### Requirement: DDWG consumer qualification retains the complete shared floor
-
-DDWG SHALL qualify each replacement through the accepted public installed
-interface on exact repository inputs. Existing tasks SHALL retain distinguishing
-cases and original failures at their producer until the consumer releases them.
-Common test algorithms and execution policy SHALL NOT become DDWG standards.
-
-#### Scenario: Distinguishing selected inputs reach the native owner
-
-- **WHEN** a consumer receives real selected source and a representative
-  adverse case
-- **THEN** the shared owner preserves literal identities, complete selection,
-  original diagnostics, and bounded execution without replay
-- **AND** corrected source passes; a parser result, silent empty run, or static
-  declaration alone does not qualify the consumer.
-
-#### Scenario: A predecessor is retired
-
-- **WHEN** the installed successor qualifies the complete replaced obligation
-- **THEN** shared implementation and regression ownership remain at ETHOS
-- **AND** DDWG retires its duplicate test code and standards in the same migration
-  while retaining necessary content cases and a proved business-specific increment.
-
-#### Scenario: One dependency remains unavailable
-
-- **WHEN** a specific shared capability has not reached accepted installed form
-- **THEN** only its dependent acceptance remains pending
-- **AND** independent content and reader work continues without false completion,
-  archive, or a prerequisite on unrelated product goals.
-
 ## REMOVED Requirements
 
-**Reason:** Proof, source execution, diagnostics, CI semantics, capacity, and
-carrier policy are shared product contracts. DDWG declares its source and
-necessary parameters, not another graph, executor, size rule, or CI mechanism.
+**Reason:** Workspace-context reporting and source-size admission are shared
+product contracts. DDWG declares its source and necessary parameters, not
+another reporter or size rule.
 
-**Migration:** Tasks 2.33, 2.45, and 2.46 qualify the accepted installed contract
-and its actual consumer inputs before retiring predecessors and standard copies.
-Final-source proof and hosted source/offline jobs follow in 3.3.1, 3.4, and 3.13;
-an unavailable peer holds only its own acceptance. Generic cases and original
-failures remain bound to their native producer, including captured source evidence
-`640cc1a0f708b9b8411d714f07d084376a8b691469e8518181d213366ab753e6`.
-
-### Requirement: Default proof and root binding are distinct
-
-### Requirement: One portable documentation verifier measures source properties
-
-### Requirement: Reader interpretation is reviewed without staged adoption theater
-
-### Requirement: Product-owned code evidence accompanies document proof
-
-### Requirement: Public-command integration has a bounded native execution budget
+**Migration:** Task 2.46.3.3 retired the repository environment reporter, its
+caller and its generic tests; installed ETHOS keeps source-bound execution and
+diagnostics. Task 2.46.6 qualified the installed limits for retained source,
+release history and official carriers, and DDWG keeps no size checker.
 
 ### Requirement: Verification reports its native workspace context
 
-### Requirement: Common CI semantics have one CUE owner
-
 ### Requirement: Shared source-size admission preserves semantic ownership
-
-### Requirement: Proof prerequisites retain product ownership

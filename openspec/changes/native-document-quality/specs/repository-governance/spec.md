@@ -2,35 +2,6 @@
 
 ## ADDED Requirements
 
-### Requirement: Repository declarations bind common product capabilities
-
-DDWG SHALL bind common governance and maintenance through accepted installed
-ETHOS contracts and native declarations. Its specifications SHALL define
-business content, necessary parameters, and justified unique increments, not
-another lifecycle, task schema, formatter, release rule, or progress authority.
-Actual consumer acceptance SHALL precede retirement of duplicate standards and
-implementations through this official Change.
-
-#### Scenario: Common capability ownership is corrected
-
-- **WHEN** a DDWG capability is replaced through its accepted installed owner
-- **THEN** the native interface validates the actual repository declaration
-- **AND** the same admitted migration retires duplicate code, generic tests,
-  dependencies, common configuration, procedures, and specification copies.
-
-#### Scenario: A common implementation is not yet consumable
-
-- **WHEN** the selected product interface or required installed input is absent
-- **THEN** its migration and dependent acceptance remain pending in existing tasks
-- **AND** DDWG retains required failures without a private companion, copied rule,
-  alternate executor, or false archive.
-
-#### Scenario: An independent product task remains unfinished
-
-- **WHEN** an ETHOS, AIGW, or Proxy task is unrelated to the capability being consumed
-- **THEN** it does not block independent DDWG content or reader work
-- **AND** each adopter keeps its own actual source, authority, and acceptance owner.
-
 ### Requirement: DDWG selects native source and branch parameters
 
 DDWG SHALL inherit ETHOS's fixed branch roles and mandatory SSH signatures
@@ -102,15 +73,19 @@ repository SHALL NOT retain a package solely to carry license metadata.
 
 ## REMOVED Requirements
 
-**Reason:** Shared admission, evidence, task, signing, identity, branch, and
-publication behavior must not be restated as another DDWG standard. The MIT
-reuse grant remains a repository choice at its existing owner.
+**Reason:** Installed ETHOS and official OpenSpec own branch mirroring,
+material-path attribution, publication refusal, Change completion, evidence
+retention, commit signing, and commit-message policy; DDWG keeps no code for
+them. No installed check rejects progress narration in `tasks.md`, so that
+sub-rule leaves without a new owner. The MIT reuse grant remains a repository
+choice at its existing owner.
 
-**Migration:** Native branch and profile declarations bind the shared owner.
-Existing tasks retain complete qualification and evidence obligations; accepted
-consumer transitions retire copied standards with their duplicate execution.
-Original requirement and scenario bytes remain in captured source evidence
-`640cc1a0f708b9b8411d714f07d084376a8b691469e8518181d213366ab753e6`.
+**Migration:** `.ethos/release.toml` and `.ethos/profile.toml` bind the shared
+owner, as the branch-parameter requirement above declares. Contributor
+exclusions stay in the main specification because the repository's own
+`.gitignore` owns them. Publication-peer graph protection stays until the withdrawn publication
+tasks return through a new Change. Original requirement and scenario bytes
+remain in captured source evidence `640cc1a0f708b9b8411d714f07d084376a8b691469e8518181d213366ab753e6`.
 
 ### Requirement: Accepted-to-release fast-forward mirror
 
@@ -126,8 +101,4 @@ Original requirement and scenario bytes remain in captured source evidence
 
 ### Requirement: New commit identity and message policy is native
 
-### Requirement: Contributor exclusions travel with source
-
 ### Requirement: Active task artifacts remain implementation checklists
-
-### Requirement: Publication peers preserve the governed commit graph
