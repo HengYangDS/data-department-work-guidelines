@@ -62,10 +62,10 @@ NOT influence this check.
 
 - **WHEN** a configured style rule loads but no longer diagnoses its declared
   defect
-- **THEN** the official Vale rule-test runner rejects its embedded cases and
-  uncovered rule through the existing test suite
-- **AND** project-level positive and negative prose checks still verify real
-  documents and configuration; rule cases do not replace them.
+- **THEN** that shipped rule and its embedded cases remain with installed ETHOS;
+  DDWG keeps no rule-test suite of its own
+- **AND** the installed prose check still verifies real documents and
+  configuration; rule cases do not replace it.
 
 #### Scenario: Reader syntax carries prose
 
@@ -86,7 +86,7 @@ NOT influence this check.
 
 - **WHEN** a real HTML comment contains a native Vale control in a block,
   paragraph, quote, list, or table, including an entity-encoded control
-- **THEN** the existing native Markdown linter rejects it
+- **THEN** the installed prose check rejects it
 - **AND** code examples, explanatory comments, and evidence links remain valid.
 
 #### Scenario: A table separates prose into cells
@@ -130,7 +130,7 @@ NOT influence this check.
 
 #### Scenario: Native removal encounters a temporary platform lock
 
-- **WHEN** the pinned tool installer removes its own fresh extraction stage
+- **WHEN** the pinned tool installer removes its own fresh temporary stage
 - **THEN** native removal retries are bounded and confined to that stage
 - **AND** the installer awaits one asynchronous native removal with at most ten
   retries with linearly increasing 200-millisecond waits before reporting
@@ -159,7 +159,7 @@ target existence and fragment checks.
   links but also emits standard error
 - **THEN** the existing link owner preserves those diagnostics and refuses
   acceptance before checking targets
-- **AND** its owned temporary input list is removed without another attempt.
+- **AND** no other attempt is made.
 
 ### Requirement: Configuration placement follows native ownership
 
@@ -172,27 +172,30 @@ records SHALL NOT gain converters, duplicate copies, or old-path fallback.
 #### Scenario: Native Markdown policy is selected
 
 - **WHEN** source verification selects Markdownlint policy
-- **THEN** the native core reads the concern-local TOML configuration through
-  its official configuration API and checks the complete Git-selected files
-- **AND** the existing Markdown rule implementation remains the comment owner
-- **AND** actual disabling comments fail while literal examples remain valid.
+- **THEN** installed `markdown-lint` reads its shipped policy through the
+  official configuration API and checks the Git-selected authored Markdown;
+  DDWG keeps no Markdownlint configuration
+- **AND** inline configuration comments cannot disable its rules while literal
+  examples remain valid.
 
 #### Scenario: Markdown source does not need a glob wrapper
 
-- **WHEN** Git selects current or official historical Markdown with literal
-  braces, spaces, or leading punctuation in a filename
-- **THEN** the native core checks those exact files with one configured policy
+- **WHEN** Git selects current Markdown with literal braces, spaces, or leading
+  punctuation in a filename
+- **THEN** installed `markdown-lint` checks those exact files with one
+  configured policy
 - **AND** no glob expansion, ambient per-directory policy, or retired CLI2
   dependency selects, excludes, or reinterprets that source.
 
 #### Scenario: Native configuration objects retain rule options
 
-- **WHEN** the TOML policy permits repeated categories under separate releases
-  and excludes tables, headings, and code from prose-width checking
-- **THEN** the native core preserves those options without adding exceptions
-- **AND** duplicate categories within one release, over-width prose, and
-  document-level suppression of required rules still fail with native location
-  and rule diagnostics.
+- **WHEN** the shipped policy permits repeated categories under separate
+  releases
+- **THEN** installed `markdown-lint` preserves that option without adding
+  exceptions
+- **AND** duplicate categories within one release and document-level
+  suppression of required rules still fail with native location and rule
+  diagnostics.
 
 #### Scenario: Formatting and links consume native policy
 
@@ -211,8 +214,8 @@ records SHALL NOT gain converters, duplicate copies, or old-path fallback.
 
 #### Scenario: Native formats differ
 
-- **WHEN** Vale requires INI and YAML or the offline installer reads machine
-  records before npm dependencies exist
+- **WHEN** Vale requires INI and text vocabulary or the offline installer reads
+  machine records before npm dependencies exist
 - **THEN** each consumer uses its single required native record directly
 - **AND** no TOML converter, duplicate manifest, or bootstrap parser is added.
 

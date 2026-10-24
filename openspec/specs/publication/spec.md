@@ -68,14 +68,17 @@ credential reachability. Runners SHALL be tagged-only: review
 
 - **WHEN** a GitHub source or offline job excludes a matrix host, skips a job or
   step, or tolerates a required failure
-- **THEN** the repository CI contract rejects the workflow before claiming
-  that its declared host matrix ran.
+- **THEN** the installed common model or its projection check rejects such a
+  source workflow before claiming that its declared host matrix ran
+- **AND** the separate offline workflow keeps no local structural check and
+  relies on hosted release acceptance.
 
 #### Scenario: Global setup alters GitLab offline supply
 
 - **WHEN** GitLab adds global setup, an extra default, or a remote CI include
-- **THEN** the repository CI contract rejects it rather than treating the
-  offline job's local script as proof of isolated supply.
+- **THEN** the installed projection check rejects it when generated-pipeline
+  drift introduces it, rather than treating the offline job's local script as
+  proof of isolated supply.
 
 #### Scenario: Native source routes are trust-separated
 
@@ -91,8 +94,9 @@ credential reachability. Runners SHALL be tagged-only: review
 - **THEN** proposal and merge-request source jobs select the review capability
 - **AND THEN** protected branch and tag source jobs and tag offline jobs select
   a distinct protected capability
-- **AND THEN** a missing job, shared tag, or review-tagged offline job fails the
-  repository CI contract before hosted execution is claimed.
+- **AND THEN** a missing job, shared tag, or review-tagged offline job that
+  generated-pipeline drift introduces fails the installed projection check
+  before hosted execution is claimed.
 
 #### Scenario: An open proposal has one review pipeline
 
@@ -176,7 +180,7 @@ credential reachability. Runners SHALL be tagged-only: review
 
 ### Requirement: Version identity follows SemVer compatibility
 
-`VERSION` SHALL hold one strict SemVer 2.0.0 value matching the charter; the
+`VERSION` SHALL hold one strict SemVer 2.0.0 value; the
 private npm manifest SHALL NOT declare a competing version. The public surface
 is normative duties, stable member and Agent routes, and contributor commands.
 Incompatible changes SHALL increment major, compatible additions or
@@ -261,8 +265,8 @@ be retroactively called releases.
 
 #### Scenario: A current release is prepared but not yet tagged
 
-- **WHEN** `VERSION` and the charter agree, `Unreleased` is empty and first,
-  and one dated current-version section is prepared without a local tag
+- **WHEN** `Unreleased` is empty and first, and one dated current-version
+  section is prepared without a local tag
 - **THEN** repository source validation may pass for preparation
 - **AND THEN** `Unreleased` compares from the prospective `vVERSION` tag to
   `main`, and the prepared section compares to that same prospective tag
@@ -304,11 +308,11 @@ SHALL own versions, platform assets and notices.
 
 - **WHEN** either Forge or a local installer receives bytes whose SHA-256 does
   not match the committed platform record
-- **THEN** extraction and executable installation are rejected.
+- **THEN** executable installation is rejected.
 
 #### Scenario: A contributor verifies without a Forge
 
-- **WHEN** a contributor supplies a pinned native-tool archive through the
+- **WHEN** a contributor supplies a pinned native-tool binary through the
   documented local asset option
 - **THEN** the installer verifies and installs it without contacting GitLab or
   GitHub.
@@ -530,8 +534,8 @@ validation without redirects or per-Forge rewrites.
 
 Every release comparison except the oldest SHALL start at its immediately
 preceding release tag. Native Git SHALL resolve history tags to commits.
-Selected-tag validation SHALL bind each evaluated Changelog, version, charter,
-npm metadata, and publication input to exact committed bytes. Untagged
+Selected-tag validation SHALL bind each evaluated Changelog, version, npm
+metadata, and publication input to exact committed bytes. Untagged
 development validation SHALL remain available.
 
 #### Scenario: Release metadata or its comparison interval is altered

@@ -38,12 +38,14 @@ portable graph without host paths or POSIX shells.
 
 - **WHEN** a GitLab source or offline verification job has a platform-less name,
   a duplicated old alias, or an incorrect shared parent
-- **THEN** the existing CI validator rejects the configuration
-- **AND** all declared jobs inherit their hidden phase owner without changing
-  runner capabilities, rules, or verification commands.
-- **AND** jobs use `docs:verify:<os>` or `offline:verify:<os>` for `linux`,
-  `macos`, and `windows`, with `:review` for source review; no runnable shared
-  owner or platform-specific parent substitutes for the hidden phase template.
+- **THEN** the installed projection check rejects the configuration when
+  generated-pipeline drift introduces that job
+- **AND** offline jobs inherit their hidden phase owner without changing runner
+  capabilities, rules, or verification commands, and the installed common model
+  generates each source job.
+- **AND** jobs use `verify:<os>:review`, `verify:<os>:protected`, or
+  `offline:verify:<os>` for `linux`, `macos`, and `windows`; no runnable shared
+  owner or platform-specific parent substitutes for the hidden offline template.
 
 #### Scenario: Temporary diagnosis cannot replace verification
 
@@ -60,7 +62,8 @@ portable graph without host paths or POSIX shells.
   become eligible for the same project's finite executor
 - **THEN** they declare one stable native project-scoped resource group,
   independent of the event and ref
-- **AND** the existing CI contract rejects missing or divergent reservations
+- **AND** the installed projection check rejects missing or divergent
+  reservations that generated-pipeline drift introduces
 - **AND** separate runner identities and ref admission remain unchanged
 - **AND** all discovered tests and existing deadlines remain mandatory;
   the reservation does not prove isolation from another project.
@@ -150,8 +153,8 @@ separate; the bundle SHALL NOT impersonate its authority.
 
 #### Scenario: An archive carries another machine's file ownership
 
-- **WHEN** a verified bundle or native-tool archive names the packaging
-  machine's owners and the destination cannot change file ownership
+- **WHEN** a verified bundle names the packaging machine's owners and the
+  destination cannot change file ownership
 - **THEN** native extraction retains the current executor's ownership without
   adding privileges, altering the source-pinned archive, or skipping validation
 - **AND** digest, confinement, license, and required executable-mode checks
@@ -338,12 +341,12 @@ dependency or current authority.
 
 ### Requirement: One source-bound native quality supply
 
-One native manifest SHALL bind the remaining DDWG-managed Lychee and OSV Scanner versions,
-platform archives or raw binaries, asset and executable digests, raw sizes, and
-original notices. Archive and executable digests SHALL remain distinct; raw
-executables SHALL reuse the asset digest. Installer and source-bound bundle
-SHALL consume this manifest without duplicated supply. Every declared platform
-SHALL supply the complete tool graph; missing local tools SHALL NOT be downloaded.
+One native manifest SHALL bind the remaining DDWG-managed OSV Scanner version,
+platform raw binaries, asset and executable digests, raw sizes, and original
+notices; raw executables SHALL reuse the asset digest. Installer and
+source-bound bundle SHALL consume this manifest without duplicated supply.
+Every declared platform SHALL supply the complete tool graph; missing local
+tools SHALL NOT be downloaded.
 
 #### Scenario: Reading guidelines needs no maintenance-tool installation
 
@@ -358,17 +361,23 @@ SHALL supply the complete tool graph; missing local tools SHALL NOT be downloade
 - **WHEN** GitHub verifies source or installs the frozen offline bundle
 - **THEN** both workflows use the same declared Linux x64, Linux ARM64, macOS,
   and Windows hosted selectors and execute the complete repository verifier
-- **AND** an omitted, duplicated, extra, or skipped host fails CI configuration
-  validation; matrix membership alone does not qualify platform execution
+- **AND** the installed projection check rejects generated-pipeline drift that
+  omits, duplicates, adds, or skips a source host, while the separate offline
+  workflow keeps no local structural check; matrix membership alone does not
+  qualify platform execution
 - **AND** each actual job retains its own source, runtime, and result evidence.
 
 #### Scenario: Node setup consumes one explicit runtime input
 
 - **WHEN** source or offline CI configures the project Node runtime
-- **THEN** the existing CI owner requires the declared major, latest-release
-  resolution, and disabled automatic package-manager caching as its only inputs
-- **AND** an alternative version-file input or undeclared setup option fails
-  configuration validation before hosted execution
+- **THEN** source and GitLab offline jobs select the locked Node and npm through
+  native Mise, while the GitHub offline setup action takes only the declared
+  major, latest-release resolution, and disabled automatic package-manager
+  caching
+- **AND** the installed common model rejects an undeclared input to the
+  generated GitHub setup action, and the installed projection check rejects
+  generated-pipeline drift; the separate offline workflow keeps no local
+  structural check
 - **AND** the action commit and subsequent native npm declaration remain separate
   supply inputs; a new action version does not establish an advisory-free artifact.
 
@@ -395,7 +404,7 @@ SHALL supply the complete tool graph; missing local tools SHALL NOT be downloade
 #### Scenario: A native tool is supplied offline
 
 - **WHEN** a supported host receives the exact source-bound bundle or a pinned
-  local archive
+  local binary
 - **THEN** the installer verifies source binding, asset digests, and safe archive
   members before extraction, then the executable digest before running its exact
   version check
@@ -435,10 +444,11 @@ SHALL supply the complete tool graph; missing local tools SHALL NOT be downloade
 
 #### Scenario: Standalone tests avoid unrelated quality startup
 
-- **WHEN** the public test command selects the complete Git-discovered test inventory
-- **THEN** the CLI loads only its invocation dependencies before native test execution
-- **AND** it preserves two workers, the 180-second outer deadline, every selected
-  test, and original process failures
+- **WHEN** installed ETHOS selects the complete Git-discovered test inventory
+- **THEN** its behavior provider starts native test execution without a
+  repository test command or its quality dependencies
+- **AND** it preserves the 180-second outer deadline, every selected test, and
+  original process failures
 - **AND** full verification still executes all declared repository checks; this
   dependency change does not qualify runner capacity or isolation.
 
@@ -466,7 +476,9 @@ GitHub offline acquisition retains source/version checks.
 
 - **WHEN** a GitLab workflow, protected-source rule, or offline rule admits any
   nonempty tag without the declared family constraint
-- **THEN** the existing CI contract rejects that broader route
+- **THEN** the installed common model rejects a broader workflow or
+  protected-source rule, and the installed projection check rejects
+  generated-pipeline drift that broadens any of these routes
 - **AND** unrelated and slash-containing tags are excluded before GitLab tool
   supply, while branch and review routes remain unchanged.
 
@@ -479,9 +491,10 @@ GitHub offline acquisition retains source/version checks.
 ### Requirement: Current commands and CI names remain executable
 
 Current command examples SHALL be checked against the installed CLI. GitLab
-jobs SHALL name purpose and platform symmetrically; hidden phase templates
-SHALL own common source and offline steps without changing full test selection,
-deadlines, or review/protected isolation.
+jobs SHALL name purpose and platform symmetrically. The installed common model
+SHALL own common source steps and a hidden phase template SHALL own common
+offline steps, without changing full test selection, deadlines, or
+review/protected isolation.
 
 #### Scenario: A platform-less job or absent command is documented
 

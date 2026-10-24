@@ -80,7 +80,7 @@ native contracts SHALL own admission, proof, history repair, and closure.
 
 #### Scenario: A contributor changes tracked source
 
-- **WHEN** the contributor selects this active Change and its owned leased lane
+- **WHEN** the contributor selects an active Change and its owned leased lane
 - **THEN** native admission binds the exact source, paths, actor, and current state
 - **AND** reader guidance and local checks do not grant additional authority.
 

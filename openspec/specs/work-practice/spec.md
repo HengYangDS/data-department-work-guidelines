@@ -212,9 +212,9 @@ long-standing open decisions in time for work to proceed.
 #### Scenario: A local data metric stands for whole-system value
 
 - **WHEN** a local metric is used to assess work or system value, including a
-  pipeline's record count
-- **THEN** local metrics SHALL NOT represent overall work or system value; the
-  evolution topic requires the use, quality, and cost boundaries of that judgment
+  pipeline's record count, without the use, quality, or cost boundaries of that
+  judgment
+- **THEN** local metrics SHALL NOT represent overall work or system value
 - **AND** the metric remains available for its stated decision, source, period,
   and boundary; no new evaluator or ranking is required.
 
@@ -531,8 +531,9 @@ member reasoning, and the existing decision authority.
 
 - **WHEN** a meeting records a decision but names no owner, deadline, or
   completion criterion because no separate action item was created
-- **THEN** the communication topic requires those commitments for the decision
-  itself as well as for each action
+- **THEN** the communication topic requires the decision record to name its
+  authorized owner, actual date, and basis, and each action to have an owner,
+  deadline, and completion criterion
 - **AND** a transcript or collective agreement does not establish those duties.
 
 #### Scenario: New facts disprove a stated judgment
