@@ -61,7 +61,8 @@ For an uncommitted edit, run `mise run check`,
 `ethos prove --host --execute --gate markdown-lint --json`,
 `ethos prove --host --execute --gate prose --json`, and `node tools/docs/cli.mjs check`. The shared lint gate checks Git-selected working
 Markdown without writing, including non-ignored candidate files. The repository
-command checks CI, dependency declarations, and SemVer/Changelog.
+command checks dependency declarations and SemVer/Changelog; `mise run check`
+also refuses drift between the generated CI files and their installed model.
 Installed ETHOS checks authored-source bytes and the repository license grant.
 Installed ETHOS checks effective Git text and line-ending attributes through
 its repository paradigm; DDWG keeps no second implementation.
@@ -111,13 +112,13 @@ Review the actual page: registry validation does not establish reading order
 or reader understanding. This host check does not establish repository proof
 or source acceptance.
 
-| When you need to                     | Command                                            |
-| ------------------------------------ | -------------------------------------------------- |
-| Preview selected source formatting   | `ethos lane format --json`                         |
-| Check formatting without writing     | `mise run check`                                   |
-| Apply admitted formatting            | `mise run fix --expect-head OID`                   |
-| Check source, release, and CI inputs | `node tools/docs/cli.mjs check`                    |
-| Check spelling, prose, and terms     | `ethos prove --host --execute --gate prose --json` |
+| When you need to                                  | Command                                            |
+| ------------------------------------------------- | -------------------------------------------------- |
+| Preview selected source formatting                | `ethos lane format --json`                         |
+| Check formatting and generated CI without writing | `mise run check`                                   |
+| Apply admitted formatting                         | `mise run fix --expect-head OID`                   |
+| Check dependency and release inputs               | `node tools/docs/cli.mjs check`                    |
+| Check spelling, prose, and terms                  | `ethos prove --host --execute --gate prose --json` |
 
 `check` and `fix` invoke the installed ETHOS formatter directly. Replace `OID`
 with the current `git rev-parse HEAD` result. Preview and check leave source
