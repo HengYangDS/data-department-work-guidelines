@@ -27,13 +27,17 @@ ARM64, and Windows x64; it publishes no Windows ARM64 archive.
 - Declare the latest published release. Qualify the hosted jobs with 0.2.0-alpha.12 first,
   because it is published, then move to 0.2.0-alpha.13 when ETHOS publishes it, since that
   release keeps the state of mise disposable and lets admitted commands run their own mise tasks.
-- Qualify the exact head that lands. Branch protection checks the commit itself, so the
-  archived head is published as a proposal and lands only after its four `verify` jobs pass.
+- Qualify the exact head that lands. Branch protection checks the commit itself. A proposal cannot
+  carry the head that declares the release while GitHub `dev` lags: the peer's older subject policy
+  rejects locally accepted commits that the proposal would introduce. That head therefore lands
+  first and is published once through a user-authorized administrator bypass of the protection,
+  restored right after the push, and its own four `verify` jobs qualify it. The archived head then
+  follows the ordinary route: proposal, four `verify` jobs, landing.
 
 ## Risks / Trade-offs
 
-- [A hosted platform fails with the installed release] → The failure stays on the proposal,
-  `dev` and `main` keep their current heads, and an ETHOS defect returns to ETHOS for its next
-  release.
+- [A hosted platform fails with the installed release] → `dev` and `main` on GitHub stay red on
+  that platform, as they have been since 2026-10-14, this Change stays open, and an ETHOS defect
+  returns to ETHOS for its next release.
 - [A runner whose platform has no archive, such as GitLab's Windows ARM64] → It cannot install
   from the lock and stays out of scope until ETHOS publishes that platform.

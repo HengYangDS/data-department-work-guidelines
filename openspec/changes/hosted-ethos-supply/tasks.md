@@ -5,8 +5,9 @@
 
 ## 2. Hosted Qualification
 
-- [ ] 2.1 Publish the head that declares the latest release as a `proposal/*` branch on GitHub; done when its `verify` job passes on ubuntu-latest, ubuntu-24.04-arm, macos-latest and windows-latest for that exact commit.
+- [ ] 2.1 Publish the landed head that declares the latest release to GitHub `dev` and `main`; done when its `verify` job passes on ubuntu-latest, ubuntu-24.04-arm, macos-latest and windows-latest for that exact commit.
 
 ## Workflow follow-up
 
-- Prove the exact head, archive this Change and prove the archived head. Publish the archived head as the proposal, wait for its four `verify` jobs to pass, then land, close out and publish `dev` and `main` to GitHub.
+- Prove the exact head and land it while this Change stays active. Publish `dev` and `main` through the one-time administrator bypass that the design records, then wait for the four `verify` jobs on that commit.
+- After 2.1 passes, archive this Change and prove the archived head. Publish it as a proposal, wait for its four `verify` jobs, then land, close out and publish `dev` and `main` to GitHub.
