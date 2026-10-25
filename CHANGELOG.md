@@ -28,9 +28,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 - Align the main specifications with the delivered guidance and checks: two
   work-practice scenarios follow the current communication and evolution topics,
-  quality and verification no longer name retired checks or commands, and the
-  quality and repository-governance purposes cover only their remaining
-  requirements.
+  quality, verification, tool-supply and publication no longer name retired checks
+  or commands, and the quality and repository-governance purposes cover only their
+  remaining requirements.
 - Generate the GitHub and GitLab verification pipelines from installed ETHOS's common CUE
   model with DDWG parameters, and refuse drift in `check`. GitHub source checks move from
   `docs-verify.yml` to `ci.yml`, take locked Node and npm through native Mise, and accept
