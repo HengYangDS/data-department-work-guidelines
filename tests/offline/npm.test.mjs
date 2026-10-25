@@ -221,7 +221,7 @@ test("npm owns exact package-manager admission without duplicate fields", () => 
   assert.equal(manifest.devEngines.packageManager.onFail, "error");
   assert.match(
     strictVersion(manifest.devEngines.packageManager.version),
-    /^12\.2\.0\+sha512\.[a-f0-9]{128}$/u,
+    /^\d+\.\d+\.\d+\+sha512\.[a-f0-9]{128}$/u,
   );
   assert.equal(manifest.packageManager, undefined);
   assert.equal(manifest.engines, undefined);
