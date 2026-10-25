@@ -26,6 +26,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Move the locked supply to the latest stable releases: Node 26.12.1, npm 12.2.1 and KaTeX
+  0.19.1, and Mise 2026.10.19 on GitHub's hosted runners. GitLab jobs keep Mise 2026.10.17
+  until the project's GitLab package registry carries the newer release.
 - Align the main specifications with the delivered guidance and checks: two
   work-practice scenarios follow the current communication and evolution topics,
   quality, verification, tool-supply and publication no longer name retired checks

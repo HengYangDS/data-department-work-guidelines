@@ -5,7 +5,7 @@ timeout_minutes = 20
 evidence_paths = ["build/evidence/dependencies/"]
 
 [supply]
-mise_version = "2026.10.17"
+mise_version = "2026.10.19"
 
 [supply.checks]
 github = [
