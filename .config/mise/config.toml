@@ -3,13 +3,13 @@ min_version = "2026.10.14"
 # Hosted jobs install ETHOS from its published release. These tables are the release's own
 # Mise declaration, unchanged; mise.lock pins the archive of each declared platform.
 [tools."http:ethos"]
-version = "0.2.0-alpha.13"
+version = "0.2.0-alpha.14"
 
 [tools."http:ethos".platforms]
-linux-arm64 = { url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.13/ethos-0.2.0-alpha.13-linux-arm64.tar.gz", checksum = "sha256:349eb76e4f07e8de78dcca16e90f328d242ffba75f3239f5d942a4e4afabf66b", bin_path = "ethos/bin" }
-linux-x64 = { url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.13/ethos-0.2.0-alpha.13-linux-x64.tar.gz", checksum = "sha256:7a572d3756680a524776f3589ec02a82f4c61948719becac8200efa0b3d6b069", bin_path = "ethos/bin" }
-macos-arm64 = { url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.13/ethos-0.2.0-alpha.13-macos-arm64.tar.gz", checksum = "sha256:6851515430bdb409c3cffac0f5114b11c839ca2a7b88d016022af439bce1b052", bin_path = "ethos/bin" }
-windows-x64 = { url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.13/ethos-0.2.0-alpha.13-windows-x64.tar.gz", checksum = "sha256:165f9a5ca4a5770580402755a90af0254e8f2050b6d7deceb906690e55357296", bin_path = "ethos/bin" }
+linux-arm64 = { url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.14/ethos-0.2.0-alpha.14-linux-arm64.tar.gz", checksum = "sha256:a3a7e0765df30ed6ebcde47855ae691ab348ab69ce01e4892516c5d2c2eb67d8", bin_path = "ethos/bin" }
+linux-x64 = { url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.14/ethos-0.2.0-alpha.14-linux-x64.tar.gz", checksum = "sha256:0df85862b7091109d3f08104c7d3c9664ecaf75d216162155ef84b4cdc06434d", bin_path = "ethos/bin" }
+macos-arm64 = { url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.14/ethos-0.2.0-alpha.14-macos-arm64.tar.gz", checksum = "sha256:2c757ee54e489c434948f4e324a9d0ade87e1341a8691296f86426c0518b9473", bin_path = "ethos/bin" }
+windows-x64 = { url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.14/ethos-0.2.0-alpha.14-windows-x64.tar.gz", checksum = "sha256:c81f543671c2df6be14d25f5248780df11f25922ad333d5fcf2d7870f5d10070", bin_path = "ethos/bin" }
 
 # package.json owns both development versions and npm archive integrity.
 # The native idiomatic parser needs no executable template or second declaration.
