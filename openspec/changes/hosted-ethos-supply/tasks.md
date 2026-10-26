@@ -6,7 +6,7 @@
 
 ## 2. Hosted Qualification
 
-- [ ] 2.1 Publish the landed head that declares the latest release to GitHub `dev` and `main`; done when its `verify` job passes on ubuntu-latest, ubuntu-24.04-arm, macos-latest and windows-latest for that exact commit.
+- [x] 2.1 Publish the landed head that declares the latest release to GitHub `dev` and `main`; done when its `verify` job passes on ubuntu-latest, ubuntu-24.04-arm, macos-latest and windows-latest for that exact commit.
 
 ## Workflow follow-up
 
