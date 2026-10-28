@@ -251,9 +251,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   Unrelated, incomplete, expired, or stale dispositions still fail qualification.
 - Prevent inherited math-renderer options from granting trusted rendering. Preserve ordinary
   math, Markdownlint tokens, and explicit trust without waiving the dependency finding.
-- Override markdownlint 0.42.0's exact re2js 2.8.6 pin with 2.8.8. re2js before 2.8.7 matches
-  lookbehind assertions in quadratic time (GHSA-gg6h-894w-4m9c, high, published on 2026-10-28),
-  and markdownlint 0.42.0 is its latest release.
+- Override markdownlint 0.42.0's exact re2js 2.8.6 pin with 2.8.8. re2js before 2.8.7 allows a
+  quadratic-time denial of service (GHSA-gg6h-894w-4m9c, high, published on 2026-10-28), and
+  markdownlint 0.42.0 is its latest release.
 
 ## [7.0.12] - 2026-10-04
 
