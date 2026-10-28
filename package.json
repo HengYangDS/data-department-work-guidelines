@@ -22,6 +22,9 @@
     }
   },
   "overrides": {
+    "markdownlint": {
+      "re2js": "2.8.8"
+    },
     "micromark-extension-math": {
       "katex": "0.19.1"
     }

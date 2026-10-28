@@ -1,7 +1,7 @@
 ## 1. Supply
 
-- [ ] 1.1 Override markdownlint's re2js with 2.8.8 in `package.json` and re-resolve `package-lock.json` with the locked npm; done when the lock holds one development `re2js` 2.8.8 with its registry integrity, no other lock entry changes, and the native dependency audit reports no unapproved finding.
-- [ ] 1.2 Record the override under Security in the Changelog; done when the repository check passes.
+- [x] 1.1 Override markdownlint's re2js with 2.8.8 in `package.json` and re-resolve `package-lock.json` with the locked npm; done when the lock holds one development `re2js` 2.8.8 with its registry integrity, no other lock entry changes, and the native dependency audit reports no unapproved finding. (The audit reports 54 identities and no finding.)
+- [x] 1.2 Record the override under Security in the Changelog; done when the repository check passes.
 
 ## Workflow follow-up
 
