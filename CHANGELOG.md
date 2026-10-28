@@ -26,6 +26,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
+- Move the declared ETHOS supply from 0.2.0-alpha.15 to 0.2.0-alpha.17 and bind the repository's
+  runtime to it, keeping 0.2.0-alpha.15 as the rollback.
 - Move the locked supply to the latest stable releases: Node 26.12.1, npm 12.2.1 and KaTeX
   0.19.1, and Mise 2026.10.19 on GitHub's hosted runners. GitLab jobs keep Mise 2026.10.17
   until the project's GitLab package registry carries the newer release.
