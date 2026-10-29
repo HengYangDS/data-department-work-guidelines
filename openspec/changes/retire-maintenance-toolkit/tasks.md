@@ -14,9 +14,9 @@
 
 ## 3. Hosted qualification
 
-- [ ] 3.1 Publish the implementation head as a proposal to GitHub. Done when its `verify` job passes on ubuntu-latest, ubuntu-24.04-arm, macos-latest and windows-latest for that exact commit.
-- [ ] 3.2 Publish the same head as a proposal to GitLab. Done when its Linux, macOS and Windows review jobs are observed for that exact commit, or the unavailable observation is recorded under DR-0005.
+- [x] 3.1 Publish the implementation head as a proposal to GitHub. Done when its `verify` job passes on ubuntu-latest, ubuntu-24.04-arm, macos-latest and windows-latest for that exact commit. Evidence: run 40917333355 at `9edf31643`.
+- 3.2 Withdrawn by DR-0005 (environment). Publish the same head as a proposal to GitLab. Done when its Linux, macOS and Windows review jobs are observed for that exact commit. The proposal ref reached GitLab at `9edf31643`, but GitLab's API refuses this host's credential (HTTP 401), so its pipelines cannot be observed; the observation returns through a new Change once a valid credential exists.
 
 ## Workflow follow-up
 
-- After 3.1 and 3.2, archive this Change, prove the archived head once, then land, close out and publish `dev` and `main` to both peers.
+- Archive this Change, prove the archived head once, then land, close out and publish `dev` and `main` to both peers.
