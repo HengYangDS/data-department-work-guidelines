@@ -432,7 +432,7 @@ revisit condition; transient implementation work SHALL NOT require a DR.
 
 #### Scenario: A contributor needs one governance boundary
 
-- **WHEN** a contributor needs to edit, publish, install offline, or admit a
+- **WHEN** a contributor needs to edit, publish, prepare ETHOS, or admit a
   runner
 - **THEN** the governance entry leads to that boundary and its existing
   procedure
@@ -462,3 +462,22 @@ reports SHALL state the prerequisite gap, its impact, and escalation.
   gap, impact, and escalation without concealing uncertainty
 - **AND** necessary prevention remains binding without automatically admitting
   another department practice.
+
+### Requirement: Reading guidance is independent of tool installation
+
+Members and Agents SHALL read and apply the guidelines without installing software.
+Maintenance SHALL need only installed ETHOS, a separate governance prerequisite. The
+repository SHALL ship no package, maintenance toolkit, or offline bundle of its own.
+
+#### Scenario: A reader needs a work rule rather than maintenance tools
+
+- **WHEN** a member or Agent follows a work-guidance route
+- **THEN** current documentation is available without any installation
+- **AND** Contributing names installed ETHOS as the only maintenance prerequisite.
+
+#### Scenario: A maintenance duty is proposed as repository code
+
+- **WHEN** a candidate adds authored code, a package manifest, or a repository
+  proof gate
+- **THEN** its official Change names the duty that no installed ETHOS check owns
+- **AND** review rejects a duty that an installed check already owns.
