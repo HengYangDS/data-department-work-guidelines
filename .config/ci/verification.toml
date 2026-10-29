@@ -2,28 +2,12 @@ name = "Documentation verification"
 accepted_branch = "dev"
 release_branch = "main"
 timeout_minutes = 20
-evidence_paths = ["build/evidence/dependencies/"]
 
 [supply]
 mise_version = "2026.10.19"
 
-[supply.checks]
-github = [
-  "mise exec --locked -- npm ci --ignore-scripts",
-  "mise exec --locked -- node tools/ci/install-native.mjs osv-scanner --download",
-  "mise exec --locked -- node tools/docs/cli.mjs audit",
-]
-gitlab = [
-  "mise exec --locked -- npm ci --ignore-scripts",
-  "mise exec --locked -- node tools/ci/install-native.mjs osv-scanner --gitlab-package",
-  "mise exec --locked -- node tools/docs/cli.mjs audit",
-]
-
 [github]
 runners = ["ubuntu-latest", "ubuntu-24.04-arm", "macos-latest", "windows-latest"]
-
-[gitlab]
-offline_candidate_variable = "DDWG_OFFLINE_CANDIDATE"
 
 [gitlab.variables]
 MISE_CONFIG_DIR = "$CI_PROJECT_DIR/build/runtime/work/mise-config"

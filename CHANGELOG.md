@@ -18,8 +18,6 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 - Add shared Git exclusions for editor state and Finder metadata without excluding
   guideline source from checks.
-- Add protected-source offline qualification before a GitLab release. A temporary
-  qualification package is not a signed Release or a substitute for source checks.
 - Add [DR-0005](docs/decisions/dr-0005-change-closure-scope.md): a Change closes on the tasks
   it delivered. An unfinished task that waits on an unavailable environment keeps its line
   without a checkbox, states its reason and returns through a new Change.
@@ -32,9 +30,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   runtime to it, keeping 0.2.0-alpha.17 as the rollback.
 - Move the declared ETHOS supply from 0.2.0-alpha.18 to 0.2.0-alpha.19 and bind the repository's
   runtime to it, keeping 0.2.0-alpha.18 as the rollback.
-- Move the locked supply to the latest stable releases: Node 26.12.1, npm 12.2.1 and KaTeX
-  0.19.1, and Mise 2026.10.19 on GitHub's hosted runners. GitLab jobs keep Mise 2026.10.17
-  until the project's GitLab package registry carries the newer release.
+- Run GitHub's hosted jobs with Mise 2026.10.19. GitLab jobs keep Mise 2026.10.17 until the
+  project's GitLab package registry carries the newer release.
 - Align the main specifications with the delivered guidance and checks: two
   work-practice scenarios follow the current communication and evolution topics,
   quality, verification, tool-supply and publication no longer name retired checks
@@ -42,17 +39,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   remaining requirements.
 - Generate the GitHub and GitLab verification pipelines from installed ETHOS's common CUE
   model with DDWG parameters, and refuse drift in `check`. GitHub source checks move from
-  `docs-verify.yml` to `ci.yml`, take locked Node and npm through native Mise, and accept
-  manual dispatch; GitLab source jobs become `verify:<os>:protected` and
-  `verify:<os>:review`. The GitLab offline jobs stay in the DDWG CUE instance and the GitHub
-  offline workflow stays separate. Runner identities, dependency auditing, offline
-  candidates, and deadlines are preserved; hosted acceptance remains separate.
-- Select locked Node and npm for GitLab source and offline commands through native Mise,
-  instead of changing global npm with shell substitution. Preserve runner identities,
-  dependency auditing, offline acquisition, and deadlines; hosted acceptance remains separate.
-- Keep the JSON supply for the retained Node maintenance toolkit and offline-bundle records
-  in its native toolchain directory. Preserve dependency-free bootstrap and existing
-  record bytes; this relocation does not qualify a new offline bundle.
+  `docs-verify.yml` to `ci.yml` and accept manual dispatch; GitLab source jobs become
+  `verify:<os>:protected` and `verify:<os>:review`. Runner identities and deadlines are
+  preserved; hosted acceptance remains separate.
 - Prepare v8.0.0 for incompatible review duties and reader routes. Replace v7.0.12's
   minimum monthly and quarterly review frequencies with defaults the responsible owner
   may adjust for a recorded reason and next review time. Preserve the review purposes
@@ -109,20 +98,12 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   updates, meeting records, and escalations, without fixed deletion quotas or layouts.
 - Use native YAML front matter, one body heading, tool-grouped configuration, and EditorConfig.
   Prettier 3.9.10 owns Markdown spacing at width 100 with preserved prose wrapping;
-  installed ETHOS supplies Taplo for TOML formatting and smol-toml 1.9.1 parses it. Keep tight and loose lists,
+  installed ETHOS supplies Taplo for TOML formatting. Keep tight and loose lists,
   literal examples, and native checks and fixes consistent, with independent non-spacing lint.
 - Use installed ETHOS for prose, official OpenSpec validation, local links and fragments, external-link reachability,
   document metadata, decision records, source formatting, configuration
-  checks, and inherited commit grammar.
-  Keep `docs-integrity` and `markdown-format` as the two default roots with the product's
-  native shared document checks and behavior/prose prerequisites. Remaining local checks stay
-  until their actual installed replacements qualify; document output does not prove
-  shared-product acceptance.
-- Resolve Node and npm from `package.json` through native Mise configuration and lock
-  discovery. Remove executable version and PATH templates and filename overrides;
-  preserve safe-mode preparation, global settings, and job isolation. Mise checks npm's
-  declared SHA-512 on acquisition; npm bootstrap alone does not enforce that checksum.
-  Windows ARM64 Node can select pinned compatible x64 tools without emulating Node itself.
+  checks, Changelog structure, and inherited commit grammar. The profile declares no
+  proof gates of its own; document output does not prove shared-product acceptance.
 - Admit the same governed signed merge graph on both Forges while retaining protected
   branches, required checks, and signatures. GitHub's source matrix includes Linux ARM64
   alongside Linux x64, macOS, and Windows. GitLab Windows jobs share one project-scoped
@@ -130,69 +111,31 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Removed
 
-- Remove the local CI validator, its repository-check call, its private tests, and its
-  exclusive `yaml` dependency. The installed projection check refuses generated-pipeline
-  drift; the separate GitHub offline workflow keeps no local structural check and relies
-  on hosted release acceptance.
-- Remove the unused standalone Changelog command. The full repository check still
-  validates release history; audit and offline consumers remain unchanged.
-- Remove npm command aliases for verification and prose. Contributors and both CI planes
-  invoke installed ETHOS directly; the retained Node toolkit still owns its remaining
-  supply and audit duties.
-- Remove the duplicate edition label and its charter-specific parser and fixtures.
-  The charter links to `VERSION`; version notes and signed-release checks retain
-  their existing owners.
-- Remove the local prose controller, CLI branch, suppression parser, duplicate plain styles,
-  and their private tests. The installed shared provider retains Codespell, Vale rules,
-  native severity and diagnostics. Keep only a temporary spelling/vocabulary increment
-  until shared spelling qualifies this corpus; CI and offline supply migration remain open.
-- Remove the private navigation controller, route tables, fixed reader cue, CLI branch,
-  generic fixtures, unused link-render helper, and its exclusive dependencies. Keep
-  the task map, reader duties, actual member/Agent journey
-  review, and native link/registry checks; no replacement route validator is added.
+- Remove the Node maintenance toolkit: `tools/`, `tests/`, `package.json` and its lock, the
+  OSV Scanner supply and dependency audit, the offline bundle with its builder, acquisition
+  and workflows, and the profile's repository gates. The contributor commands
+  `node tools/docs/cli.mjs check` and `audit`, `node tools/ci/install-native.mjs`, and
+  `node tools/ci/offline-bundle.mjs` are removed without replacement. Installed ETHOS runs
+  every remaining check; contributors install it with `mise install --locked`, and reading
+  the guidelines still needs no installation. Earlier editions keep their tags, notes, and
+  attached downloads.
+- Stop verifying Changelog comparison links and tag coverage. History rows remain reader
+  navigation; installed ETHOS checks the Changelog structure, and its release tag admission
+  requires the tag to match `VERSION`.
+- Retire the `tool-supply` specification. Reading without installation, source-event tag
+  routes, and command and CI-name currency move to guidance discovery, publication, and
+  verification.
+- Remove the duplicate edition label. The charter links to `VERSION`; version notes and
+  signed-release checks retain their existing owners.
 - Remove tests that freeze guideline wording, titles, paragraph positions, and reading order.
   Keep substantive duties in their topic and specification owners; source checks cannot
-  certify meaning or reader understanding. Retain tests for executable repository checks
-  until their installed replacements qualify.
+  certify meaning or reader understanding. Reader routes keep the task map and actual
+  member and Agent journey review.
 - Remove the whole-file character blacklist. New authored prose still requires English;
   quoted originals, historical text, and meaningful literals keep their bytes.
-- Remove the duplicate TOML parser, formatter-ownership classifier, and raw
-  blank-line rule from the repository text check, with their generic fixtures.
-  Installed ETHOS owns syntax and layout; the remaining text-byte checks stay
-  until their shared replacement qualifies.
-- Remove the duplicate local-link checker, its command, and generic fixtures.
-  Use installed `markdown-links` on committed source in the shared proof floor;
-  working-edit checks do not establish committed-link acceptance.
-  The existing working/candidate link requirement still awaits shared qualification.
-- Remove duplicate Vale assets from the DDWG toolkit and its managed cache. Installed
-  ETHOS supplies prose execution; the repository spelling increment remains.
-- Remove duplicate Lychee assets and notices from the DDWG toolkit, and retire its
-  unused single-tool archive installer. Installed ETHOS supplies link execution;
-  repository link policies, OSV binary checks, and the offline bundle mechanism remain.
-  Earlier source-bound bundles stay unchanged; the migrated source needs a new qualified bundle.
-- Remove the unused DDWG Prettier dependency and lock entry. Installed ETHOS supplies
-  its own formatter; native configuration and remaining maintenance consumers stay intact.
-- Remove the unused separate Taplo binary from DDWG supply, CI downloads, and offline
-  inventory. Installed ETHOS supplies the formatter; the native TOML binding remains.
-- Remove the duplicate repository OpenSpec package and its generic apply test.
-  Installed ETHOS supplies the official CLI and validates the same active Change;
-  department-specific task and practice checks remain.
 - Remove duplicate work-loop and data-use diagrams, custom diagram CSS, disconnected
   blocks, and wide data-use tables. Ordered steps, local evidence, and existing decision
   and role tables retain stages, relationships, return conditions, and authority limits.
-- Remove replaced online-link, OpenSpec-report, metadata, configuration, list-spacing,
-  and decision checks and their generic fixtures. Retire the repository formatter, its
-  command and package script, and replaced formatting fixtures after native check/fix
-  qualification. Retire the non-spacing Markdown lint driver and generic tests;
-  the installed shared gate covers working edits and committed proof. Retire the duplicate
-  YAML metadata parser and generic fixtures; the installed registry owns metadata.
-  Remove the private exact title-offset restriction without changing current page layout.
-  Remove duplicate registry and Markdown lint descriptors; ETHOS adds its applicable
-  shared checks to default and full graphs from the selected source.
-  Remove the repeated formatting provider; the shared `source-format` gate owns
-  formatting while the remaining local root supplies static analysis.
-  Keep common standards with their installed owner, historical source in Git, and unresolved obligations with the
-  active Change.
 
 ### Fixed
 
@@ -207,9 +150,6 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   leave inspected bytes unchanged.
 - Correct contributor guidance: the full native graph includes official OpenSpec
   validation; registry checks do not establish reading order or reader understanding.
-- Separate qualified shared checks from unfinished repository consumers in governance
-  guidance. Use installed ETHOS contracts for shared validation and decision structure;
-  retain working/candidate-link, history, supply, and CI obligations until their replacements qualify.
 - Restore direct routes to historical data evidence, use decisions, modeling responsibilities,
   operational safeguards, and Agent preconditions. Keep shared-tool quality guidance reachable
   from full task descriptions and require decision rationale to pair risks with chosen controls,
@@ -220,23 +160,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   Keep the task lead's judgment of delegated work distinct from professional judgments
   and use decisions owned by others.
 - Let a qualified peer publish while the other is unavailable. The returning peer receives
-  the same signed objects and assets after its own checks. Keep missing delivery and links
+  the same signed objects after its own checks. Keep missing delivery and links
   pending and retire absorbed proposal refs per accepted peer, preserving active reviews
   and required evidence. Publication does not establish observed team use.
-- Bind release notes, metadata, and comparisons to tagged source and adjacent releases.
-  Reject wrong-project pipelines and conflicting dispatch refs. Reuse frozen bundles for
-  notes-only changes, rebuild after package changes, and retain checkout, filters, and permissions.
-- Keep source and fixture selection faithful to Git: literal filenames, worktree deletions,
-  encoding, text attributes, parser controls, and valid embedded examples remain covered.
-  Run every selected test through Node's official runner under the existing deadline. Keep
-  fixture support separate, fresh clones independent of host templates and caches, and static
-  checks, warning rejection, and cancellation intact.
-- Preserve each attempt's statuses, warnings, errors, partial output, and cleanup causes
-  across validation, installation, bundle construction, and downloads. Report source identity,
-  runtime, host name, and exact mounted capacity before children produce output; these do not
-  prove VM identity, host architecture, isolation, or throughput. Keep native Git and Vale
-  diagnostics, reject linked or escaping inputs before access, enforce download limits,
-  publish verified tools atomically, and preserve concurrent attempts and foreign bytes.
 - Make emergency containment reachable from charter and delivery guidance. Cover data,
   production, downstream results, permissions, and compliance through discoverer containment,
   responsible-person follow-through, escalation, and correction checks. Management safeguards
@@ -245,19 +171,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Security
 
-- Keep the accepted braces finding non-blocking for checks, CI, installation, distribution,
-  and releases, with complete reports and remediation tracking. Other findings and changed
-  artifacts retain their own exact approvals, use limits, and expiry.
-- Refresh pinned tools and their official notices, including OSV Scanner 2.7.0, Markdown
-  parser and terminal-width fixes, setup-node 7.1.0, and the digest-bound stable Node 26 CI
-  image. Keep complete project, image, native-tool, and Lychee findings with their actual
-  subjects; source-lock reports do not establish complete shipped-binary coverage.
-  Unrelated, incomplete, expired, or stale dispositions still fail qualification.
-- Prevent inherited math-renderer options from granting trusted rendering. Preserve ordinary
-  math, Markdownlint tokens, and explicit trust without waiving the dependency finding.
-- Override markdownlint 0.42.0's exact re2js 2.8.6 pin with 2.8.8. re2js before 2.8.7 allows a
-  quadratic-time denial of service (GHSA-gg6h-894w-4m9c, high, published on 2026-10-28), and
-  markdownlint 0.42.0 is its latest release.
+- Pin GitLab's Linux jobs to the digest-bound stable Node 26 image, which the runner admits
+  only by that digest. Image and ETHOS findings stay with their actual subjects and owners.
 
 ## [7.0.12] - 2026-10-04
 

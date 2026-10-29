@@ -17,44 +17,5 @@ normative_sources = [
 # these patterns must be attributed to one selected active official Change.
 material_paths = ["**"]
 
-# Default roots and their complete native dependency closure have one owner.
-# The product supplies behavior evidence independently of document commands.
-[proof]
-code_correctness_gates = ["docs-integrity", "markdown-format"]
-
-[proof.code_correctness_map]
-behavior = "code-behavior"
-static-analysis = "markdown-format"
-
-[[proof.gates]]
-id = "docs-integrity"
-kind = "test"
-command = ["node", "tools/docs/cli.mjs", "check"]
-depends_on = ["code-behavior"]
-asset_classes = ["markdown-docs", "javascript-code"]
-dimensions = ["documentation"]
-evidence_class = "proof"
-trust_bearing = true
-network_policy = "offline"
-
-[[proof.gates]]
-id = "markdown-format"
-kind = "lint"
-providers = ["ethos.adapters.gates.code_quality:static_report"]
-asset_classes = ["markdown-docs", "javascript-code"]
-dimensions = ["static-analysis", "format", "markdown"]
-evidence_class = "contract"
-trust_bearing = true
-network_policy = "offline"
-
-[[proof.gates]]
-id = "code-behavior"
-kind = "test"
-providers = ["ethos.adapters.gates.code_quality:behavior_report"]
-asset_classes = ["javascript-code"]
-dimensions = ["behavior"]
-evidence_class = "proof"
-trust_bearing = true
-network_policy = "offline"
-timeout_seconds = 180
-cpu_reservation = 2
+# No proof gates: installed ETHOS derives the applicable shared checks from the
+# authored Markdown, configuration and OpenSpec artifacts.

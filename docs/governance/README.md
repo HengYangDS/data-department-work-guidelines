@@ -12,14 +12,14 @@ Material changes need one official OpenSpec Change and an owned ETHOS Work
 Lane. Publish through native admission and verify each Forge independently.
 For department work, start at the [task map](../README.md).
 
-| Your task                       | Read next                                             |
-| ------------------------------- | ----------------------------------------------------- |
-| Edit or accept source           | [Change authority](#change-authority)                 |
-| Publish an edition              | [Versioned releases](#versioned-releases)             |
-| Investigate a failed check      | [Quality and local state](#quality-and-local-state)   |
-| Prepare tools or offline checks | [Tool supply](#tool-supply-and-offline-execution)     |
-| Operate CI                      | [Runner boundaries](#runner-and-transport-boundaries) |
-| Retire replaced work            | [Evidence and retirement](#evidence-and-retirement)   |
+| Your task                  | Read next                                             |
+| -------------------------- | ----------------------------------------------------- |
+| Edit or accept source      | [Change authority](#change-authority)                 |
+| Publish an edition         | [Versioned releases](#versioned-releases)             |
+| Investigate a failed check | [Quality and local state](#quality-and-local-state)   |
+| Prepare ETHOS              | [Tool supply](#tool-supply)                           |
+| Operate CI                 | [Runner boundaries](#runner-and-transport-boundaries) |
+| Retire replaced work       | [Evidence and retirement](#evidence-and-retirement)   |
 
 [Contributing](../../CONTRIBUTING.md) owns executable procedures; this page owns
 permission, acceptance, and retirement boundaries.
@@ -30,7 +30,6 @@ permission, acceptance, and retirement boundaries.
 | ---------------------------------------------------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------------- |
 | [Official OpenSpec Change](../../openspec/README.md) | Material intent, requirements, design, and progress in `tasks.md`.                   | Does not authorize a write or publication.                 |
 | Installed ETHOS                                      | Changed-path attribution, lane lease, admission, proof, acceptance, and publication. | Acts on current source and policy, not remembered results. |
-| Repository checks                                    | Release history, CI, and retained dependency checks.                                 | Do not replace OpenSpec lifecycle or ETHOS admission.      |
 | [Decision record](../decisions/README.md)            | Durable rationale and rejected alternatives.                                         | Does not hold tasks, command output, or acceptance logs.   |
 
 Use the [official workspace](../../openspec/README.md) for artifact roles and
@@ -85,8 +84,8 @@ requirement conflicts with that contract.
 [`VERSION`](../../VERSION) holds the released identity between release cuts and
 the next edition during preparation. The charter links to this single value.
 Working source may contain [Unreleased changes](../../CHANGELOG.md#unreleased).
-Only the signed tag identifies exact release content. The private npm manifest
-carries no second release version.
+Only the signed tag identifies exact release content. No other manifest carries a
+second release version.
 
 The public surface includes normative duties, stable member and Agent routes,
 and documented contributor commands. Apply [SemVer 2.0.0](https://semver.org/spec/v2.0.0.html)
@@ -95,10 +94,11 @@ compatible additions or deprecations, minor; compatible corrections, patch.
 A parser or commit label cannot decide compatibility.
 
 [`CHANGELOG.md`](../../CHANGELOG.md) follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/).
-Use the six standard categories without duplicates; their order may vary and
-`[YANKED]` is valid. Use bracketed headings, including `[Unreleased]`, and one History row offering
+Use the six standard categories without duplicates; their order may vary. Use
+bracketed headings, including `[Unreleased]`, and one History row offering
 both GitLab and GitHub. The oldest tagged edition may link to its exact tag;
-later editions compare adjacent tags. The [release declaration](../../.ethos/release.toml)
+later editions compare adjacent tags. History rows are reader navigation; no
+check verifies their targets. The [release declaration](../../.ethos/release.toml)
 owns each Forge's web identity independently of Git transport. Use GitLab
 `/-/compare/` or `/-/tags/` and GitHub `/compare/` or `/releases/tag/`, with the
 same refs on both peers.
@@ -112,19 +112,19 @@ same refs on both peers.
   committed `VERSION`. An earlier proposal or later Changelog edit has a
   different identity. A later peer must qualify that same source before
   receiving the existing tag; do not sign another object for it.
-- Observe the selected Forge's tag, Release, asset, complete offline jobs, and
-  independently retrieved hashes. Its live links must resolve after their
+- Observe the selected Forge's tag, Release, and source jobs at the tagged
+  commit. Its live links must resolve after their
   targets exist; another peer's unavailable links remain pending, not passed.
   A heading, branch, or CI result is not a release. New commits, including
   archive commits, require a trusted SSH signature and correct attribution;
   each clone supplies its own
   identity, public signing-key path, and protected external trust anchor.
 
-The default integrity gate and both CI planes reject malformed Changelog
-structure, dates, links, version drift, and tag mismatch. Offline checks verify
-identity and ancestry. Each provider's authenticated comparison response must
-establish its real destination, not a login redirect or another repository's
-success. The same Changelog serves both peers and local readers.
+Installed ETHOS rejects malformed Changelog structure, dates, and version order.
+Its release tag admission requires the tag to match committed `VERSION` and the
+Changelog to have that version's entry. The release's live link check reports a
+broken comparison link for the selected peer. The same Changelog serves both
+peers and local readers.
 
 ## Quality and Local State
 
@@ -150,30 +150,28 @@ A summary or successful parse cannot replace clean validation or the lifecycle.
 
 ### Proof and Configuration
 
-The [profile](../../.ethos/profile.toml) still declares two temporary roots:
-`docs-integrity` calls the remaining repository checks after native behavior;
-`markdown-format` supplies static analysis only. Installed ETHOS owns their
-applicable shared closure. `source-format` checks selected source once, without
-a second formatter provider in the local root.
+The [profile](../../.ethos/profile.toml) declares no gates. Installed ETHOS
+selects the applicable shared checks from the authored Markdown, configuration,
+and OpenSpec artifacts; `source-format` checks selected source once.
 
 Installed `source-format` checks authored-source byte integrity before native
 layout; `config-quality` owns configuration syntax. These checks do not establish
 English prose quality or impose a second raw blank-line rule. Review new authored text for English and department terminology
 without rewriting quoted originals, historical text, or meaningful literals.
 
-| Concern                                | Current consumer                                          | Ownership boundary                                                              |
-| -------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| Metadata and decision structure        | Installed `docs-registry`.                                | The shared contract owns identity, structure, and non-execution inspection.     |
-| Source formatting and Markdown lint    | Installed `source-format` and `markdown-lint`.            | Native formatters own layout; shared lint owns non-spacing checks.              |
-| Official artifacts and configuration   | Installed OpenSpec and configuration checks.              | Use supplied validation and native inputs, without a repository parser.         |
-| Retained executable source             | Native behavior and static providers.                     | Keep applicable obligations while repository code remains.                      |
-| Local links and fragments              | Installed `markdown-links` in the shared floor.           | The shared provider owns committed targets, headings, aliases, and diagnostics. |
-| English prose and terms                | Installed `prose`, with a temporary spelling increment.   | Shared spelling still needs corpus and vocabulary qualification.                |
-| Release history                        | Repository check, alongside the applicable shared checks. | Complete replacement still needs actual-consumer qualification.                 |
-| Tool supply, offline execution, and CI | Current repository supply and job consumers.              | Public product supply and CI integration remain unfinished.                     |
+| Concern                              | Current consumer                                                | Ownership boundary                                                              |
+| ------------------------------------ | --------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| Metadata and decision structure      | Installed `docs-registry`.                                      | The shared contract owns identity, structure, and non-execution inspection.     |
+| Source formatting and Markdown lint  | Installed `source-format` and `markdown-lint`.                  | Native formatters own layout; shared lint owns non-spacing checks.              |
+| Official artifacts and configuration | Installed OpenSpec and configuration checks.                    | Use supplied validation and native inputs, without a repository parser.         |
+| Local links and fragments            | Installed `markdown-links` in the shared floor.                 | The shared provider owns committed targets, headings, aliases, and diagnostics. |
+| English prose and terms              | Installed `prose`, with a temporary spelling increment.         | Shared spelling still needs corpus and vocabulary qualification.                |
+| Release history                      | Installed repository paradigm and release tag admission.        | History links are navigation, not verified facts.                               |
+| ETHOS supply and CI                  | Mise installs the locked release; generated jobs run its graph. | GitLab's Windows ARM64 runners still lack ETHOS supply.                         |
 
-The selected Change owns remaining integration and its evidence. Shared rules
-or source code alone do not qualify a replacement. Keep each current consumer
+A repository adds code, a package, or a proof gate only for a duty that no
+installed check owns; the selected Change names that duty. Shared rules or
+source code alone do not qualify a replacement. Keep each current consumer
 until the accepted installed successor covers its complete duty, then retire
 the duplicate implementation, configuration, tests, and guidance in that same
 migration. Unrelated product work does not hold an independently qualified
@@ -184,9 +182,8 @@ effective Git attributes, including later or nested overrides; text must use
 LF, while `-text` preserves exact bytes. This rule has no separate DDWG checker.
 
 Run the full applicable closure on the exact committed tree and keep its original
-diagnostics. Document output cannot replace behavior evidence; syntax alone
-cannot establish static correctness. Tests and structural checks also cannot
-establish factual accuracy, semantic fidelity, reader understanding, or team use.
+diagnostics. Structural checks cannot establish factual accuracy, semantic
+fidelity, reader understanding, or team use.
 
 The task map and topic owners retain reader navigation. Review actual member and
 Agent journeys for scope, authority, next action, and stop conditions; do not use
@@ -204,8 +201,7 @@ resolves link destinations and headings; ETHOS checks delivered membership, inte
 source identity, warnings, and complete diagnostics. Missing headings, ignored
 local state, escaping or dangling aliases, and changed bytes fail the check.
 A delivered directory or internal alias is valid only when its target belongs
-to that source. An ignored supplied bundle is a separate explicit verification
-input. The [contributor procedure](../../CONTRIBUTING.md#run-the-full-source-check)
+to that source. The [contributor procedure](../../CONTRIBUTING.md#run-the-full-source-check)
 owns the command; DDWG keeps no duplicate link implementation.
 
 Formatting and lint can examine working edits and non-ignored candidate files.
@@ -226,101 +222,38 @@ inspection, without executing the input or requiring a second DDWG parser.
 Reviewers assess the rationale and trade-offs; a structural pass cannot establish
 a sound decision or current delivery.
 
-## Tool Supply and Offline Execution
+## Tool Supply
 
-Reading the guidelines requires no installation. Until the shared supply
-migration is accepted, maintainers and CI use the existing source-bound toolkit
-and install ETHOS separately. [Contributing](../../CONTRIBUTING.md#prepare-the-runtime-and-dependencies)
-owns Node/npm preparation, binary selection, acquisition, and offline commands.
-Those procedures preserve the destination's installation owner and global
-configuration; local checks do not upgrade host tools or Runner services.
+Reading the guidelines requires no installation. Maintainers and CI need only
+installed ETHOS: Mise installs the locked release from the
+[project configuration](../../.config/mise/config.toml) and its
+[lock](../../.config/mise/mise.lock). ETHOS supplies its own Node, formatters,
+and prose and link tools; the repository ships no package, maintenance toolkit,
+native binary, or offline bundle. [Contributing](../../CONTRIBUTING.md#make-ethos-available)
+owns the commands. Those procedures preserve the destination's installation owner
+and global configuration; local checks do not upgrade host tools or Runner services.
 
-| Operation            | Supply boundary                                        |
-| -------------------- | ------------------------------------------------------ |
-| Local verification   | Installed, version-checked tools; no downloads.        |
-| GitLab source CI     | Pinned project packages through its own job token.     |
-| GitHub source CI     | Pinned official upstream assets.                       |
-| Offline installation | Matching source-bound bundle; no replacement download. |
-
-### Select and Verify Native Tools
-
-The [supply manifest](../../.config/npm/native.json) owns platform assets and
-upstream notices. The [bundle record](../../.config/npm/offline-bundle.json)
-binds the toolkit to its source, locks, native supply, and Node major. Verify
-complete bytes before extraction or execution. Version output alone cannot
-admit altered bytes, and a package-manager installation is not proof of
-byte-equivalence to a release asset. The repository's MIT grant does not
-relicense supplied packages.
-
-### Acquire Supplied Assets
-
-Follow the [acquisition procedure](../../CONTRIBUTING.md#acquire-supplied-assets).
-It preserves bounded downloads, credential boundaries, concurrent callers,
-permissions, original diagnostics, and cleanup of only the caller's temporary
-stage. Acquisition grants no use or distribution approval.
+| Operation          | Supply boundary                                                                |
+| ------------------ | ------------------------------------------------------------------------------ |
+| Local verification | Mise installs the locked ETHOS release; the repository downloads nothing else. |
+| GitHub source CI   | Mise from its pinned action, then the locked ETHOS release.                    |
+| GitLab source CI   | Mise from the project's package registry, then the locked ETHOS release.       |
 
 ### Qualify Each Platform
 
-Run the complete declared graph on each claimed platform. Observe host,
-Node-process, and tool architectures separately; a declared asset or container
-name does not qualify an ABI. Prefer native ARM64 Node on Windows ARM64. A tool
-without a native ARM64 asset may use its declared pinned x64 asset under
-emulation; that does not require x64 Node.
+Run the complete declared graph on each claimed platform. Observe host and tool
+architectures separately; a declared asset or container name does not qualify
+an ABI. GitLab's Windows ARM64 runners need an ETHOS release asset for that
+platform before their jobs can qualify it.
 
-Qualify cold offline use separately with fresh HOME, no inherited configuration
-or cache, and denied remote connections. A job that first downloads its tools
-is not whole-job network-isolation evidence. For a managed tool, run
-`node tools/ci/install-native.mjs TOOL --print-spec` with the verification
-command's Node executable. Record the selected asset key and hashes, not cache
-directory names. The installation owner supplies external executable provenance.
-Independently retrieve and hash each Forge asset.
+### Audit Artifacts
 
-### Audit Dependencies and Artifacts
-
-Audit Node, npm, native-tool, and ETHOS artifacts separately from the project
-lock. Bind each audit to its digest, platform, and component inventory from a
-native extractor. Missing or empty inventories leave coverage unproved. Keep
-raw findings separate from binary-symbol results; symbols do not establish
-runtime reachability, and a failed scan cannot establish a clean audit.
-
-#### Project-Lock Reports
-
-On each hosted plane, retain one complete unfiltered OSV project scan, its exact
-lock and [policy](../../.config/checks/dependencies/policy.toml), streams, and
-status. Apply the accepted finding disposition without a second filtered scan.
-The known braces finding does not block checks, CI, installation, distribution,
-or releases. Its former expiry, a newer package version, an available fix, or a
-finding's disappearance or withdrawal must not turn that acceptance into a hold.
-Remove the obsolete disposition when it no longer applies as ordinary maintenance,
-not as a prerequisite for delivery. Keep complete reports and remediation tracking;
-an accepted finding is not a clean audit.
-
-Unapproved findings, input drift, failed or warning-bearing execution, and
-malformed or incomplete reports still fail qualification. Other artifact approvals
-keep their own scope and expiry. Source checks contact no advisory service and
-cannot grant or renew those approvals.
-
-### Bound Known Findings
-
-An authorized risk decision must identify the exact artifact and finding,
-allowed use and distribution, expiry or withdrawal condition, and complete
-reports. Keep that binding with the native policy or producing Change and
-evidence. This page grants no approval; the
-[dependency policy](../../.config/checks/dependencies/policy.toml) owns only
-project-lock dispositions, not image or native-binary approvals.
-
-The [project-lock disposition](#project-lock-reports) makes the known braces
-finding non-blocking without accepting other findings or removing integrity
-checks.
-
-A development approval for other findings cannot cover production, arbitrary untrusted input,
-other findings, changed artifacts, or another repository. Verify authenticity,
-complete bytes, hashes, licenses, function, and each claimed platform separately.
-Source-lock advisories, including maintenance findings and aliases, cannot
-establish a complete shipped-binary inventory; retain that limit and the full
-reports. Replace a compatibility check only after the accepted installed
-successor qualifies the same consumer, then remove the old check in that
-migration. Keep no second risk policy or gate.
+ETHOS audits its own release supply and publishes its known findings with each
+release. The pinned CI image and Mise keep their own owners' approvals. An
+authorized risk decision must identify the exact artifact and finding, allowed
+use and distribution, and expiry or withdrawal condition, with complete reports;
+keep it with the producing Change and evidence. This page grants no approval,
+and an approval for one artifact cannot cover another.
 
 ## Runner and Transport Boundaries
 
@@ -329,19 +262,12 @@ command prerequisites by Forge. They do not establish executable availability,
 runner identity, isolation, capacity, or successful job execution.
 
 Verify GitHub's hosted platform matrix and GitLab's admitted Linux, macOS, and
-Windows runners through their jobs and native runner/guest observations. GitLab
-source and offline jobs acquire managed toolkit binaries from pinned project
-packages without a public-download fallback. The Linux container acquires the
-byte-exact official Mise installer and archive from that registry, verifies the
-installer checksum and the archive through the original installer, and selects
-locked Node/npm. No upstream fallback is configured. Bootstrap does not establish
-whole-job offline or hosted acceptance.
-
-Bind bundle qualification to the exact source, artifact, and job results.
-Temporary qualification packages do not establish signed Releases,
-authenticated release downloads, or whole-job network isolation. Wait for all
-jobs to become terminal, preserve their results, then retire the exact temporary
-package. [Contributing](../../CONTRIBUTING.md#publish-a-release) owns the route.
+Windows runners through their jobs and native runner/guest observations. GitLab's
+Linux container acquires the byte-exact official Mise installer and archive from
+the project's package registry, verifies the installer checksum and the archive
+through the original installer, then installs the locked ETHOS release. No
+upstream fallback is configured for Mise. Bootstrap does not establish hosted
+acceptance.
 
 ### Review and Protected Execution
 
@@ -358,9 +284,7 @@ package. [Contributing](../../CONTRIBUTING.md#publish-a-release) owns the route.
 - Once a proposal has an open MR, use its MR pipeline instead of a duplicate
   branch-push pipeline.
 - Before Linux admission, verify the exact CI OCI digest is allowed and cached.
-  Native hosts follow the [tool-supply boundary](#tool-supply-and-offline-execution).
-- Signed-tag offline jobs start only after package and Release exist. Source
-  tag-push jobs cannot qualify an asset published afterward.
+  Native hosts follow the [tool-supply boundary](#tool-supply).
 
 ### Credential-Bearing Paths
 
@@ -382,7 +306,8 @@ prove and publish that commit separately afterward.
 ### Retained Downloads
 
 Keep downloads for the latest qualified release and one qualified rollback,
-plus native packages consumed by source or CI. Before retirement, verify exact
+plus native packages consumed by source or CI, such as the Mise bootstrap package.
+Editions from 8.0.0 attach no download. Before retirement, verify exact
 identities and consumers. Preserve signed tags, source, original release notes,
 and historical evidence; remove withdrawn download links and add a dated notice.
 Recheck retained hashes and the affected Forge's inventory. Retire downloads
@@ -393,8 +318,8 @@ owns the procedure.
 
 ### Local Evidence and Workspaces
 
-Keep evidence with its producer and claim. Local `build/`, `node_modules/`,
-leases, and caches do not establish repository truth, and no root evidence folder
+Keep evidence with its producer and claim. Local `build/`, leases, and caches do
+not establish repository truth, and no root evidence folder
 is required. Required failures and job results need a named consumer, exact
 source binding, and release condition. Later success does not release them.
 

@@ -21,26 +21,23 @@ product, not this directory index.
 | Non-spacing Markdown checks               | [Installed ETHOS](../governance/README.md#proof-and-configuration), using shared native policy              |
 | English prose and department terms        | Installed `prose`, with a temporary [spelling increment](../../.config/checks/vale/vale.ini) and vocabulary |
 | Committed local links and fragments       | Installed `markdown-links`, with [Lychee parameters](../../.config/checks/lychee/lychee.toml)               |
-| Project dependency findings               | [OSV dispositions](../../.config/checks/dependencies/policy.toml)                                           |
-| Native tool acquisition                   | [Supply manifest](../../.config/npm/native.json)                                                            |
-| CI Node and npm selection                 | [Mise configuration](../../.config/mise/config.toml) and [lock](../../.config/mise/mise.lock)               |
+| ETHOS installation                        | [Mise configuration](../../.config/mise/config.toml) and [lock](../../.config/mise/mise.lock)               |
+| Generated CI parameters                   | [Verification parameters](../../.config/ci/verification.toml)                                               |
 | CI runner command prerequisites           | [Runner declarations](../../.config/ci/runners.toml)                                                        |
-| Offline artifact inspection               | [Bundle identity](../../.config/npm/offline-bundle.json)                                                    |
 
 ## Change a native input
 
 Use the consumer's supported format. Vale requires INI for its main
 configuration and text for vocabulary. The shipped policy owns common styles;
 the repository retains only a temporary spelling increment pending shared
-corpus and vocabulary qualification. The installer reads
-its supply and bundle JSON from `.config/npm/` before npm dependencies are available.
-These records belong to the retained Node maintenance toolkit, not the document edition. Do not add
-format converters or duplicate declarations.
+corpus and vocabulary qualification. Do not add format converters or duplicate
+declarations.
 
-`package.json` owns the Node line and exact npm version/checksum. Mise discovers
-the project configuration and adjacent lock, then scopes the selected runtime
-to its child command. [Runtime preparation](../../CONTRIBUTING.md#prepare-the-runtime-and-dependencies)
-owns setup and CI isolation.
+Mise installs only the locked ETHOS release; ETHOS supplies its own Node and
+native tools. Mise discovers the project configuration and adjacent lock, then
+scopes ETHOS to its child command. [Making ETHOS available](../../CONTRIBUTING.md#make-ethos-available)
+owns setup and CI isolation. The installed common model generates both Forges'
+pipelines from the verification parameters; `mise run check` refuses drift.
 
 Run `mise run check` and `mise run fix --expect-head OID` on the same Git-selected
 inputs, substituting the current commit OID. Both invoke installed ETHOS's native
@@ -52,6 +49,6 @@ For wording and reader judgment, use the [communication guidance](../communicate
 Review an input change with its consumers and current findings. Keep each
 native check until its accepted replacement qualifies the same source and
 execution boundaries, then retire the replaced input and its references in
-that migration. [Tool supply](../governance/README.md#tool-supply-and-offline-execution)
+that migration. [Tool supply](../governance/README.md#tool-supply)
 owns artifact approvals and their limits. This map adds no second rule or
 exception policy.

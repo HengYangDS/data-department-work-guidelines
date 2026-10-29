@@ -1,5 +1,4 @@
-# Reproducible dependencies, generated output, and native local state.
-node_modules/
+# Generated output and native local state.
 build/
 .ethos/state/
 

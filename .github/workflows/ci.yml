@@ -38,12 +38,6 @@ jobs:
           cache: false
       - name: Acquire locked product supply
         run: mise install --locked --jobs=1
-      - name: Check locked supply
-        run: mise exec --locked -- npm ci --ignore-scripts
-      - name: Check locked supply
-        run: mise exec --locked -- node tools/ci/install-native.mjs osv-scanner --download
-      - name: Check locked supply
-        run: mise exec --locked -- node tools/docs/cli.mjs audit
       - name: Prepare owned evidence directory
         shell: bash
         run: mkdir -p build/evidence/ci
@@ -54,7 +48,5 @@ jobs:
         if: always()
         with:
           name: verification-${{ matrix.os }}
-          path: |-
-            build/evidence/ci/verification.json
-            build/evidence/dependencies/
+          path: build/evidence/ci/verification.json
           if-no-files-found: error

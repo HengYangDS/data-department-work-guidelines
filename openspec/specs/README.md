@@ -13,7 +13,6 @@ shape; repository-private metadata does not extend them.
 | Apply it to actual work   | [Work practice](work-practice/spec.md)                 |
 | Maintain readable source  | [Document quality](quality/spec.md)                    |
 | Establish checked results | [Verification](verification/spec.md)                   |
-| Supply maintenance tools  | [Tool supply](tool-supply/spec.md)                     |
 | Change or accept source   | [Repository governance](repository-governance/spec.md) |
 | Publish or retire assets  | [Publication](publication/spec.md)                     |
 

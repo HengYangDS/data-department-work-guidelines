@@ -3,7 +3,7 @@ tags = ["v*"]
 
 [publication]
 local_verification_command = "ethos prove --host --execute --full --json"
-local_installation_command = "npm ci --ignore-scripts"
+local_installation_command = "mise install --locked"
 
 [[publication.peers]]
 id = "gitlab"

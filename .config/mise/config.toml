@@ -1,7 +1,8 @@
 min_version = "2026.10.14"
 
-# Hosted jobs install ETHOS from its published release. These tables are the release's own
-# Mise declaration, unchanged; mise.lock pins the archive of each declared platform.
+# Contributors and hosted jobs install ETHOS from its published release. These tables are the
+# release's own Mise declaration, unchanged; mise.lock pins the archive of each declared platform.
+# ETHOS is the only declared tool and supplies its own Node and native checks.
 [tools."http:ethos"]
 version = "0.2.0-alpha.19"
 
@@ -11,21 +12,8 @@ linux-x64 = { url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.
 macos-arm64 = { url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.19/ethos-0.2.0-alpha.19-macos-arm64.tar.gz", checksum = "sha256:5a0f745f327a4af890b0c62f5cba3985fb4faf67ab03a6ba6d6313922d9d4130", bin_path = "ethos/bin" }
 windows-x64 = { url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.19/ethos-0.2.0-alpha.19-windows-x64.tar.gz", checksum = "sha256:015d29b34d87ec3eb5946a4ce293aa0b9df7ea8d83fd9f42e1b50c5023be8661", bin_path = "ethos/bin" }
 
-# package.json owns both development versions and npm archive integrity.
-# The native idiomatic parser needs no executable template or second declaration.
-[tool_alias]
-npm = "npm:npm"
-
 [settings]
 locked = true
-idiomatic_version_file_enable_tools = ["node", "npm"]
-
-[settings.npm]
-package_manager = "npm"
-
-[tasks.bootstrap]
-description = "Prepare the currently declared Node and npm through locked native Mise supply"
-run = "mise install --locked node npm"
 
 [tasks.check]
 description = "Check selected source formatting and generated CI files without writing"
