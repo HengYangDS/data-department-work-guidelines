@@ -116,7 +116,7 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   and workflows, and the profile's repository gates. The contributor commands
   `node tools/docs/cli.mjs check` and `audit`, `node tools/ci/install-native.mjs`, and
   `node tools/ci/offline-bundle.mjs` are removed without replacement. Installed ETHOS runs
-  every remaining check; contributors install it with `mise install --locked`, and reading
+  every remaining check; contributors install it with `mise run bootstrap`, and reading
   the guidelines still needs no installation. Earlier editions keep their tags, notes, and
   attached downloads.
 - Stop verifying Changelog comparison links and tag coverage. History rows remain reader

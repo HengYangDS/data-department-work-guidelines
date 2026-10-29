@@ -24,7 +24,7 @@ of shared duties.
   parameters and regenerate both projections. Hosted jobs install ETHOS through Mise and run its
   full host graph.
 - Keep Mise for ETHOS alone. Remove Node and npm from its configuration and lock, and declare
-  `mise install --locked` as the local installation command.
+  `mise install --locked` as the local installation command and the `bootstrap` task.
 - Stop verifying Changelog comparison links and tag coverage. History rows remain reader
   navigation, written by the release procedure.
 - Rewrite Contributing, repository governance and the configuration map for the toolkit-free

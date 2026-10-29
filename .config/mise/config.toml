@@ -15,6 +15,10 @@ windows-x64 = { url = "https://github.com/HengYangDS/ethos/releases/download/v0.
 [settings]
 locked = true
 
+[tasks.bootstrap]
+description = "Install the locked ETHOS release"
+run = "mise install --locked"
+
 [tasks.check]
 description = "Check selected source formatting and generated CI files without writing"
 run = ["ethos lane format --check --json", "ethos lane project --check --json"]

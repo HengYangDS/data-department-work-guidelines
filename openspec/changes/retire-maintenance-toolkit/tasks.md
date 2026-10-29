@@ -3,7 +3,7 @@
 ## 1. Toolkit retirement
 
 - [x] 1.1 Remove `tools/`, `tests/`, `package.json`, `package-lock.json`, `.config/npm/`, `.config/checks/dependencies/` and `.github/workflows/offline-verify.yml`. Done when `git ls-files` lists none of them and no current guide or configuration names a removed path.
-- [x] 1.2 Remove the profile's gates, declare `mise install --locked` as the local installation command, and drop Node and npm from the Mise configuration and lock. Done when `ethos status --json` passes and the lock names only ETHOS.
+- [x] 1.2 Remove the profile's gates, declare `mise install --locked` as the local installation command and the `bootstrap` task, and drop Node and npm from the Mise configuration and lock. Done when `ethos status --json` passes, a proof preview reports no repository paradigm gap and the lock names only ETHOS.
 - [x] 1.3 Remove the supply checks, dependency evidence and GitLab offline jobs from the CI parameters and source, and regenerate both projections. Done when `ethos lane project --check --json` reports no drift.
 
 ## 2. Guidance and specifications

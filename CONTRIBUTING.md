@@ -150,10 +150,10 @@ must bind the selected Change and exact committed source.
 ### Make ETHOS available
 
 Install ETHOS through Mise from the repository's locked declaration, then check
-the actual caller:
+the actual caller. The `bootstrap` task runs `mise install --locked`:
 
 ```text
-mise install --locked
+mise run bootstrap
 mise exec --locked -- ethos --version
 mise exec --locked -- ethos status --json
 ```
