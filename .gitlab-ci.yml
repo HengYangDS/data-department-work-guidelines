@@ -154,6 +154,7 @@ verify:windows:review:
   timeout: 20 minutes
   interruptible: true
   variables:
+    FF_DISABLE_POWERSHELL_STDIN: "true"
     GIT_DEPTH: "0"
     MISE_CONFIG_DIR: $CI_PROJECT_DIR/build/runtime/work/mise-config
     MISE_DATA_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise
@@ -185,6 +186,7 @@ verify:windows:protected:
   timeout: 20 minutes
   interruptible: true
   variables:
+    FF_DISABLE_POWERSHELL_STDIN: "true"
     GIT_DEPTH: "0"
     MISE_CONFIG_DIR: $CI_PROJECT_DIR/build/runtime/work/mise-config
     MISE_DATA_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise
