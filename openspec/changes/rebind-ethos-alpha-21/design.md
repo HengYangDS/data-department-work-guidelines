@@ -25,6 +25,8 @@ runners fail at ETHOS supply, because no earlier release declared that platform.
 - The Windows ARM64 archive carries the x64 runtime that the release qualified on a Windows ARM64
   host, which runs it through emulation. The release declares that archive for the platform, so the
   GitLab runner gets it through the same lock as every other platform.
+- Declare the five lock platforms in `lockfile_platforms`. The default set of native `mise lock`
+  omits Windows ARM64, so without the setting a later lock would drop that platform again.
 - 0.2.0-alpha.21 changes no contract this repository relies on. Its other notes widen which
   references prewrite treats as owned, report the semantic reference closure beside a proof's audit
   without changing its verdict, and let a first release be cut from a newly formed repository.

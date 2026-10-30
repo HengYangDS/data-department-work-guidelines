@@ -167,7 +167,7 @@ without rewriting quoted originals, historical text, or meaningful literals.
 | Local links and fragments            | Installed `markdown-links` in the shared floor.                 | The shared provider owns committed targets, headings, aliases, and diagnostics. |
 | English prose and terms              | Installed `prose`, with a temporary spelling increment.         | Shared spelling still needs corpus and vocabulary qualification.                |
 | Release history                      | Installed repository paradigm and release tag admission.        | History links are navigation, not verified facts.                               |
-| ETHOS supply and CI                  | Mise installs the locked release; generated jobs run its graph. | GitLab's Windows ARM64 runners still lack ETHOS supply.                         |
+| ETHOS supply and CI                  | Mise installs the locked release; generated jobs run its graph. | GitLab's Windows ARM64 runners run the x64 runtime under emulation.             |
 
 A repository adds code, a package, or a proof gate only for a duty that no
 installed check owns; the selected Change names that duty. Shared rules or
@@ -243,8 +243,8 @@ and global configuration; local checks do not upgrade host tools or Runner servi
 
 Run the complete declared graph on each claimed platform. Observe host and tool
 architectures separately; a declared asset or container name does not qualify
-an ABI. GitLab's Windows ARM64 runners need an ETHOS release asset for that
-platform before their jobs can qualify it.
+an ABI. GitLab's Windows ARM64 runners install the release's Windows ARM64
+archive, which carries the x64 runtime that Windows runs through emulation.
 
 ### Audit Artifacts
 
