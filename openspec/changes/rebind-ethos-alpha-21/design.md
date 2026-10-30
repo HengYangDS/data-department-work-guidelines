@@ -29,11 +29,14 @@ runners fail at ETHOS supply, because no earlier release declared that platform.
 - Declare the five lock platforms in `lockfile_platforms`. The default set of native `mise lock`
   omits Windows ARM64, so without the setting a later lock would drop that platform again.
 - Keep `MISE_DATA_DIR` and `MISE_CACHE_DIR` under each GitLab job's
-  `build/runtime/tool-cache/mise`. On the Windows ARM64 review runner, Mise installed the archive
-  and then could not copy its shim into the runner account's profile (`os error 5`). The values
-  are the ones `architecture-publisher` uses, whose Windows ARM64 review jobs pass. Job-local state
-  also stops sharing Mise data across jobs and projects. Each job then downloads ETHOS once, about
-  two minutes on the Windows runner.
+  `build/runtime/tool-cache/mise`, with the values `architecture-publisher` uses. Job-local state
+  stops sharing Mise data across jobs and projects. Each job then downloads ETHOS once, about two
+  minutes on the Windows runner.
+- Set `MISE_WINDOWS_SHIM_MODE` to `file`. On the Windows ARM64 review runner, Mise installed the
+  archive and then could not copy `mise-shim.exe` as a tool shim (`os error 5`), in the runner
+  account's profile and in the job's own directory alike. The `file` mode writes batch and script
+  shims instead. The jobs run ETHOS through `mise exec`, so no job needs an executable shim, and
+  other systems ignore the setting.
 - 0.2.0-alpha.21 changes no contract this repository relies on. Its other notes widen which
   references prewrite treats as owned, report the semantic reference closure beside a proof's audit
   without changing its verdict, and let a first release be cut from a newly formed repository.

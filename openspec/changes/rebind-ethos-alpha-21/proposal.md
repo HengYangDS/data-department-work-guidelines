@@ -20,9 +20,9 @@ the authenticated entry observes this project's pipelines.
 - State in repository governance that GitLab's Windows ARM64 runners install the release's Windows
   ARM64 archive.
 - Keep each GitLab job's Mise data and cache under its own execution root, as
-  `architecture-publisher` does, and generate both pipelines again. On the Windows ARM64 review
-  runner the installed archive was refused only when Mise rebuilt its shims in the runner
-  account's profile.
+  `architecture-publisher` does, write Windows shims as files, and generate both pipelines again.
+  On the Windows ARM64 review runner the installed archive was refused only when Mise copied its
+  executable shim.
 - Record the move under Changed in the Changelog.
 - Qualify the head on both Forges, including GitLab's Windows ARM64 review job.
 

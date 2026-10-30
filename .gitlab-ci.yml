@@ -33,6 +33,7 @@ verify:linux:review:
     MISE_CONFIG_DIR: $CI_PROJECT_DIR/build/runtime/work/mise-config
     MISE_DATA_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise
     MISE_CACHE_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise/cache
+    MISE_WINDOWS_SHIM_MODE: file
     MISE_CEILING_PATHS: $CI_PROJECT_DIR/..
     MISE_TRUSTED_CONFIG_PATHS: $CI_PROJECT_DIR/.config/mise/config.toml
     MISE_YES: "1"
@@ -66,6 +67,7 @@ verify:linux:protected:
     MISE_CONFIG_DIR: $CI_PROJECT_DIR/build/runtime/work/mise-config
     MISE_DATA_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise
     MISE_CACHE_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise/cache
+    MISE_WINDOWS_SHIM_MODE: file
     MISE_CEILING_PATHS: $CI_PROJECT_DIR/..
     MISE_TRUSTED_CONFIG_PATHS: $CI_PROJECT_DIR/.config/mise/config.toml
     MISE_YES: "1"
@@ -93,6 +95,7 @@ verify:macos:review:
     MISE_CONFIG_DIR: $CI_PROJECT_DIR/build/runtime/work/mise-config
     MISE_DATA_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise
     MISE_CACHE_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise/cache
+    MISE_WINDOWS_SHIM_MODE: file
     MISE_CEILING_PATHS: $CI_PROJECT_DIR/..
     MISE_TRUSTED_CONFIG_PATHS: $CI_PROJECT_DIR/.config/mise/config.toml
     MISE_YES: "1"
@@ -120,6 +123,7 @@ verify:macos:protected:
     MISE_CONFIG_DIR: $CI_PROJECT_DIR/build/runtime/work/mise-config
     MISE_DATA_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise
     MISE_CACHE_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise/cache
+    MISE_WINDOWS_SHIM_MODE: file
     MISE_CEILING_PATHS: $CI_PROJECT_DIR/..
     MISE_TRUSTED_CONFIG_PATHS: $CI_PROJECT_DIR/.config/mise/config.toml
     MISE_YES: "1"
@@ -149,6 +153,7 @@ verify:windows:review:
     MISE_CONFIG_DIR: $CI_PROJECT_DIR/build/runtime/work/mise-config
     MISE_DATA_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise
     MISE_CACHE_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise/cache
+    MISE_WINDOWS_SHIM_MODE: file
     MISE_CEILING_PATHS: $CI_PROJECT_DIR/..
     MISE_TRUSTED_CONFIG_PATHS: $CI_PROJECT_DIR/.config/mise/config.toml
     MISE_YES: "1"
@@ -178,6 +183,7 @@ verify:windows:protected:
     MISE_CONFIG_DIR: $CI_PROJECT_DIR/build/runtime/work/mise-config
     MISE_DATA_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise
     MISE_CACHE_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise/cache
+    MISE_WINDOWS_SHIM_MODE: file
     MISE_CEILING_PATHS: $CI_PROJECT_DIR/..
     MISE_TRUSTED_CONFIG_PATHS: $CI_PROJECT_DIR/.config/mise/config.toml
     MISE_YES: "1"

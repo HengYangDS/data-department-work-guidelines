@@ -188,7 +188,8 @@ and Windows jobs use the runner's existing Mise installation. Every hosted job
 then installs the same locked ETHOS release and keeps a job-local
 `MISE_CONFIG_DIR`, without changing the host's global configuration. GitLab
 jobs also keep `MISE_DATA_DIR` and `MISE_CACHE_DIR` under the job's
-`build/runtime/tool-cache/mise`.
+`build/runtime/tool-cache/mise`, and write Windows shims as files
+(`MISE_WINDOWS_SHIM_MODE=file`).
 
 ## Commit and release
 
