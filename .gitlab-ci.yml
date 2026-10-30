@@ -17,7 +17,6 @@ verify:linux:review:
     - 'curl --fail --silent --show-error --connect-timeout 10 --max-time 90 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/mise-v2026.10.17-linux-arm64.tar.gz "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.10.17/mise-v2026.10.17-linux-arm64.tar.gz"'
     - timeout --signal=TERM --kill-after=5s 120s env MISE_VERSION=2026.10.17 MISE_INSTALL_PATH=/usr/local/bin/mise MISE_INSTALL_HELP=0 MISE_INSTALL_EXT=tar.gz MISE_TARBALL_URL="file://$CI_PROJECT_DIR/build/runtime/work/mise-bootstrap/mise-v2026.10.17-linux-arm64.tar.gz" sh build/runtime/work/mise-bootstrap/install.sh
     - mise install --locked --jobs=1
-    - mise exec --locked -- ethos --version
     - mkdir -p build/evidence/ci
   image: public.ecr.aws/docker/library/node:26-trixie@sha256:1b84b89ada025e3b14543cbb837ffaa1c1b5273b841c5b94dd1a8f9c1d8cf7fe
   rules:
@@ -52,7 +51,6 @@ verify:linux:protected:
     - 'curl --fail --silent --show-error --connect-timeout 10 --max-time 90 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/mise-v2026.10.17-linux-arm64.tar.gz "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.10.17/mise-v2026.10.17-linux-arm64.tar.gz"'
     - timeout --signal=TERM --kill-after=5s 120s env MISE_VERSION=2026.10.17 MISE_INSTALL_PATH=/usr/local/bin/mise MISE_INSTALL_HELP=0 MISE_INSTALL_EXT=tar.gz MISE_TARBALL_URL="file://$CI_PROJECT_DIR/build/runtime/work/mise-bootstrap/mise-v2026.10.17-linux-arm64.tar.gz" sh build/runtime/work/mise-bootstrap/install.sh
     - mise install --locked --jobs=1
-    - mise exec --locked -- ethos --version
     - mkdir -p build/evidence/ci
   image: public.ecr.aws/docker/library/node:26-trixie@sha256:1b84b89ada025e3b14543cbb837ffaa1c1b5273b841c5b94dd1a8f9c1d8cf7fe
   rules:
@@ -82,7 +80,6 @@ verify:linux:protected:
 verify:macos:review:
   before_script:
     - mise install --locked --jobs=1
-    - mise exec --locked -- ethos --version
     - mkdir -p build/evidence/ci
   rules:
     - if: $ETHOS_OFFLINE_CANDIDATE
@@ -111,7 +108,6 @@ verify:macos:review:
 verify:macos:protected:
   before_script:
     - mise install --locked --jobs=1
-    - mise exec --locked -- ethos --version
     - mkdir -p build/evidence/ci
   rules:
     - if: $ETHOS_OFFLINE_CANDIDATE
@@ -141,7 +137,6 @@ verify:windows:review:
   before_script:
     - $env:PATH = $env:PATH + [IO.Path]::PathSeparator + [Environment]::GetEnvironmentVariable('Path', 'Machine')
     - mise install --locked --jobs=1
-    - mise exec --locked -- ethos --version
     - New-Item -ItemType Directory -Force build/evidence/ci
   resource_group: windows-verification
   rules:
@@ -154,7 +149,6 @@ verify:windows:review:
   timeout: 20 minutes
   interruptible: true
   variables:
-    FF_DISABLE_POWERSHELL_STDIN: "true"
     GIT_DEPTH: "0"
     MISE_CONFIG_DIR: $CI_PROJECT_DIR/build/runtime/work/mise-config
     MISE_DATA_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise
@@ -173,7 +167,6 @@ verify:windows:protected:
   before_script:
     - $env:PATH = $env:PATH + [IO.Path]::PathSeparator + [Environment]::GetEnvironmentVariable('Path', 'Machine')
     - mise install --locked --jobs=1
-    - mise exec --locked -- ethos --version
     - New-Item -ItemType Directory -Force build/evidence/ci
   resource_group: windows-verification
   rules:
@@ -186,7 +179,6 @@ verify:windows:protected:
   timeout: 20 minutes
   interruptible: true
   variables:
-    FF_DISABLE_POWERSHELL_STDIN: "true"
     GIT_DEPTH: "0"
     MISE_CONFIG_DIR: $CI_PROJECT_DIR/build/runtime/work/mise-config
     MISE_DATA_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise

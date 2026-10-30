@@ -10,7 +10,8 @@ runners fail at ETHOS supply, because no earlier release declared that platform.
 **Goals:**
 
 - Run every gate and lifecycle command of the family, locally and in hosted jobs, on
-  0.2.0-alpha.21, including the GitLab Windows ARM64 jobs.
+  0.2.0-alpha.21. The GitLab Windows ARM64 jobs install it, but their launcher still exits before
+  ETHOS runs, so their acceptance is withdrawn under DR-0005 (task 2.2).
 - Keep the 0.2.0-alpha.20 runtime available as the rollback until the landing is accepted.
 
 **Non-Goals:**
@@ -47,15 +48,18 @@ runners fail at ETHOS supply, because no earlier release declared that platform.
 
 - [A gate that passed under 0.2.0-alpha.20 fails under 0.2.0-alpha.21] → The full proof runs at the
   archived head before landing; a failure is repaired at its owner, or the rebind rolls back.
-- [The Windows ARM64 runner cannot install or run the emulated runtime] → The proposal's GitLab
-  review job runs it before the governance statement is accepted, and the landing waits for it.
+- [The Windows ARM64 runner installs the archive, but the launcher exits 6 at process start] →
+  Three probes narrowed it to the launcher start under the runner's service account: `prove`, then
+  `ethos --version` without a redirect, then the same with GitLab Runner's PowerShell stdin flag.
+  The job-local Mise state and file shims stay, because they removed the earlier shim refusal.
+  ETHOS owns the follow-up, and the observation returns through a new Change.
 - [The release ships `uv` 0.13.5, whose embedded `rustls` 0.23.45 carries four advisories, and npm
   12.2.1, whose bundled packages carry six, none with an upstream fix yet] → The release notes
   record them, as they did for 0.2.0-alpha.20.
 
 ## Migration Plan
 
-Copy the declaration, lock it, install the locked supply, bind the runtime, qualify the head on both
-Forges and prove the archived head. To roll back, restore the 0.2.0-alpha.20 declaration and lock
-and bind the retained runtime with its own console's
+Copy the declaration, lock it, install the locked supply, bind the runtime, qualify the head on
+GitHub and GitLab's Linux and macOS jobs, and prove the archived head. To roll back, restore the
+0.2.0-alpha.20 declaration and lock and bind the retained runtime with its own console's
 `hook install --runtime <0.2.0-alpha.20 runtime path>`.

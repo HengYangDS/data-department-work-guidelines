@@ -159,15 +159,15 @@ layout; `config-quality` owns configuration syntax. These checks do not establis
 English prose quality or impose a second raw blank-line rule. Review new authored text for English and department terminology
 without rewriting quoted originals, historical text, or meaningful literals.
 
-| Concern                              | Current consumer                                                | Ownership boundary                                                              |
-| ------------------------------------ | --------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| Metadata and decision structure      | Installed `docs-registry`.                                      | The shared contract owns identity, structure, and non-execution inspection.     |
-| Source formatting and Markdown lint  | Installed `source-format` and `markdown-lint`.                  | Native formatters own layout; shared lint owns non-spacing checks.              |
-| Official artifacts and configuration | Installed OpenSpec and configuration checks.                    | Use supplied validation and native inputs, without a repository parser.         |
-| Local links and fragments            | Installed `markdown-links` in the shared floor.                 | The shared provider owns committed targets, headings, aliases, and diagnostics. |
-| English prose and terms              | Installed `prose`, with a temporary spelling increment.         | Shared spelling still needs corpus and vocabulary qualification.                |
-| Release history                      | Installed repository paradigm and release tag admission.        | History links are navigation, not verified facts.                               |
-| ETHOS supply and CI                  | Mise installs the locked release; generated jobs run its graph. | GitLab's Windows ARM64 runners run the x64 runtime under emulation.             |
+| Concern                              | Current consumer                                                | Ownership boundary                                                                   |
+| ------------------------------------ | --------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Metadata and decision structure      | Installed `docs-registry`.                                      | The shared contract owns identity, structure, and non-execution inspection.          |
+| Source formatting and Markdown lint  | Installed `source-format` and `markdown-lint`.                  | Native formatters own layout; shared lint owns non-spacing checks.                   |
+| Official artifacts and configuration | Installed OpenSpec and configuration checks.                    | Use supplied validation and native inputs, without a repository parser.              |
+| Local links and fragments            | Installed `markdown-links` in the shared floor.                 | The shared provider owns committed targets, headings, aliases, and diagnostics.      |
+| English prose and terms              | Installed `prose`, with a temporary spelling increment.         | Shared spelling still needs corpus and vocabulary qualification.                     |
+| Release history                      | Installed repository paradigm and release tag admission.        | History links are navigation, not verified facts.                                    |
+| ETHOS supply and CI                  | Mise installs the locked release; generated jobs run its graph. | GitLab's Windows ARM64 runners install ETHOS, but its launcher exits before running. |
 
 A repository adds code, a package, or a proof gate only for a duty that no
 installed check owns; the selected Change names that duty. Shared rules or
@@ -244,7 +244,8 @@ and global configuration; local checks do not upgrade host tools or Runner servi
 Run the complete declared graph on each claimed platform. Observe host and tool
 architectures separately; a declared asset or container name does not qualify
 an ABI. GitLab's Windows ARM64 runners install the release's Windows ARM64
-archive, which carries the x64 runtime that Windows runs through emulation.
+archive, but its launcher exits before ETHOS runs, so those jobs do not yet
+qualify the platform.
 
 ### Audit Artifacts
 

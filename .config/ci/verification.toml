@@ -6,9 +6,6 @@ timeout_minutes = 20
 [supply]
 mise_version = "2026.10.19"
 
-[supply.checks]
-gitlab = ["mise exec --locked -- ethos --version"]
-
 [github]
 runners = ["ubuntu-latest", "ubuntu-24.04-arm", "macos-latest", "windows-latest"]
 
@@ -45,4 +42,3 @@ review_tags = ["ci-windows-arm64-review"]
 protected_tags = ["ci-windows-arm64-shell"]
 resource_group = "windows-verification"
 preparation = ["$env:PATH = $env:PATH + [IO.Path]::PathSeparator + [Environment]::GetEnvironmentVariable('Path', 'Machine')"]
-variables = { FF_DISABLE_POWERSHELL_STDIN = "true" }

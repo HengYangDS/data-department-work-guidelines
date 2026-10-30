@@ -34,9 +34,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   runtime to it, keeping 0.2.0-alpha.19 as the rollback.
 - Move the declared ETHOS supply from 0.2.0-alpha.20 to 0.2.0-alpha.21 and bind the repository's
   runtime to it, keeping 0.2.0-alpha.20 as the rollback. The release declares Windows ARM64, so
-  GitLab's Windows ARM64 jobs install ETHOS. GitLab jobs keep the Mise data and cache under their
-  own execution root and write Windows shims as files, because the Windows runner refuses the copy
-  of the Mise executable shim.
+  GitLab's Windows ARM64 jobs install ETHOS; its launcher still exits there before ETHOS runs.
+  GitLab jobs keep the Mise data and cache under their own execution root and write Windows shims
+  as files, because the Windows runner refuses the copy of the Mise executable shim.
 - Run GitHub's hosted jobs with Mise 2026.10.19. GitLab jobs keep Mise 2026.10.17 until the
   project's GitLab package registry carries the newer release.
 - Align the main specifications with the delivered guidance and checks: two
