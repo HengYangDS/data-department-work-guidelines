@@ -30,6 +30,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   runtime to it, keeping 0.2.0-alpha.17 as the rollback.
 - Move the declared ETHOS supply from 0.2.0-alpha.18 to 0.2.0-alpha.19 and bind the repository's
   runtime to it, keeping 0.2.0-alpha.18 as the rollback.
+- Move the declared ETHOS supply from 0.2.0-alpha.19 to 0.2.0-alpha.20 and bind the repository's
+  runtime to it, keeping 0.2.0-alpha.19 as the rollback.
 - Run GitHub's hosted jobs with Mise 2026.10.19. GitLab jobs keep Mise 2026.10.17 until the
   project's GitLab package registry carries the newer release.
 - Align the main specifications with the delivered guidance and checks: two
