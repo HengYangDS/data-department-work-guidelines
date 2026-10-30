@@ -6,6 +6,9 @@ timeout_minutes = 20
 [supply]
 mise_version = "2026.10.19"
 
+[supply.checks]
+gitlab = ["mise exec --locked -- ethos --version"]
+
 [github]
 runners = ["ubuntu-latest", "ubuntu-24.04-arm", "macos-latest", "windows-latest"]
 
