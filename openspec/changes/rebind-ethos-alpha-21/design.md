@@ -15,7 +15,8 @@ runners fail at ETHOS supply, because no earlier release declared that platform.
 
 **Non-Goals:**
 
-- Changing any gate, check, guideline, generated pipeline or runner declaration.
+- Changing any gate, check, guideline or runner declaration. The generated pipelines change only
+  by the job-local Mise variables.
 
 ## Decisions
 
@@ -27,6 +28,12 @@ runners fail at ETHOS supply, because no earlier release declared that platform.
   GitLab runner gets it through the same lock as every other platform.
 - Declare the five lock platforms in `lockfile_platforms`. The default set of native `mise lock`
   omits Windows ARM64, so without the setting a later lock would drop that platform again.
+- Keep `MISE_DATA_DIR` and `MISE_CACHE_DIR` under each GitLab job's
+  `build/runtime/tool-cache/mise`. On the Windows ARM64 review runner, Mise installed the archive
+  and then could not copy its shim into the runner account's profile (`os error 5`). The values
+  are the ones `architecture-publisher` uses, whose Windows ARM64 review jobs pass. Job-local state
+  also stops sharing Mise data across jobs and projects. Each job then downloads ETHOS once, about
+  two minutes on the Windows runner.
 - 0.2.0-alpha.21 changes no contract this repository relies on. Its other notes widen which
   references prewrite treats as owned, report the semantic reference closure beside a proof's audit
   without changing its verdict, and let a first release be cut from a newly formed repository.

@@ -11,6 +11,8 @@ runners = ["ubuntu-latest", "ubuntu-24.04-arm", "macos-latest", "windows-latest"
 
 [gitlab.variables]
 MISE_CONFIG_DIR = "$CI_PROJECT_DIR/build/runtime/work/mise-config"
+MISE_DATA_DIR = "$CI_PROJECT_DIR/build/runtime/tool-cache/mise"
+MISE_CACHE_DIR = "$CI_PROJECT_DIR/build/runtime/tool-cache/mise/cache"
 MISE_CEILING_PATHS = "$CI_PROJECT_DIR/.."
 MISE_TRUSTED_CONFIG_PATHS = "$CI_PROJECT_DIR/.config/mise/config.toml"
 MISE_YES = "1"

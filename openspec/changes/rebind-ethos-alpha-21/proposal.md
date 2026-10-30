@@ -19,6 +19,10 @@ the authenticated entry observes this project's pipelines.
   `hook install`, keeping the 0.2.0-alpha.20 runtime as the rollback.
 - State in repository governance that GitLab's Windows ARM64 runners install the release's Windows
   ARM64 archive.
+- Keep each GitLab job's Mise data and cache under its own execution root, as
+  `architecture-publisher` does, and generate both pipelines again. On the Windows ARM64 review
+  runner the installed archive was refused only when Mise rebuilt its shims in the runner
+  account's profile.
 - Record the move under Changed in the Changelog.
 - Qualify the head on both Forges, including GitLab's Windows ARM64 review job.
 
@@ -35,7 +39,8 @@ sets `skip_specs: true`.
 
 ## Impact
 
-`.config/mise/config.toml`, `.config/mise/mise.lock`, `CHANGELOG.md`,
-`docs/governance/README.md` and the repository-common runtime selection. Hosted jobs on both Forges
-install the declared supply, including the GitLab Windows ARM64 jobs. `tasks.md` is the sole
-progress ledger.
+`.config/mise/config.toml`, `.config/mise/mise.lock`, `.config/ci/verification.toml`, the
+generated `.gitlab-ci.yml`, `CHANGELOG.md`, `CONTRIBUTING.md`, `docs/governance/README.md` and the
+repository-common runtime selection. Hosted jobs on both Forges install the declared supply,
+including the GitLab Windows ARM64 jobs, and each GitLab job downloads ETHOS into its own
+execution root. `tasks.md` is the sole progress ledger.

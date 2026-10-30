@@ -266,8 +266,10 @@ Windows runners through their jobs and native runner/guest observations. GitLab'
 Linux container acquires the byte-exact official Mise installer and archive from
 the project's package registry, verifies the installer checksum and the archive
 through the original installer, then installs the locked ETHOS release. No
-upstream fallback is configured for Mise. Bootstrap does not establish hosted
-acceptance.
+upstream fallback is configured for Mise. Every GitLab job keeps the Mise
+configuration, data, and cache under its own execution root, so no job writes
+the runner account's profile or shares Mise state with another job. Bootstrap
+does not establish hosted acceptance.
 
 ### Review and Protected Execution
 

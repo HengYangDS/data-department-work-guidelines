@@ -31,6 +31,8 @@ verify:linux:review:
   variables:
     GIT_DEPTH: "0"
     MISE_CONFIG_DIR: $CI_PROJECT_DIR/build/runtime/work/mise-config
+    MISE_DATA_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise
+    MISE_CACHE_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise/cache
     MISE_CEILING_PATHS: $CI_PROJECT_DIR/..
     MISE_TRUSTED_CONFIG_PATHS: $CI_PROJECT_DIR/.config/mise/config.toml
     MISE_YES: "1"
@@ -62,6 +64,8 @@ verify:linux:protected:
   variables:
     GIT_DEPTH: "0"
     MISE_CONFIG_DIR: $CI_PROJECT_DIR/build/runtime/work/mise-config
+    MISE_DATA_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise
+    MISE_CACHE_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise/cache
     MISE_CEILING_PATHS: $CI_PROJECT_DIR/..
     MISE_TRUSTED_CONFIG_PATHS: $CI_PROJECT_DIR/.config/mise/config.toml
     MISE_YES: "1"
@@ -87,6 +91,8 @@ verify:macos:review:
   variables:
     GIT_DEPTH: "0"
     MISE_CONFIG_DIR: $CI_PROJECT_DIR/build/runtime/work/mise-config
+    MISE_DATA_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise
+    MISE_CACHE_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise/cache
     MISE_CEILING_PATHS: $CI_PROJECT_DIR/..
     MISE_TRUSTED_CONFIG_PATHS: $CI_PROJECT_DIR/.config/mise/config.toml
     MISE_YES: "1"
@@ -112,6 +118,8 @@ verify:macos:protected:
   variables:
     GIT_DEPTH: "0"
     MISE_CONFIG_DIR: $CI_PROJECT_DIR/build/runtime/work/mise-config
+    MISE_DATA_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise
+    MISE_CACHE_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise/cache
     MISE_CEILING_PATHS: $CI_PROJECT_DIR/..
     MISE_TRUSTED_CONFIG_PATHS: $CI_PROJECT_DIR/.config/mise/config.toml
     MISE_YES: "1"
@@ -139,6 +147,8 @@ verify:windows:review:
   variables:
     GIT_DEPTH: "0"
     MISE_CONFIG_DIR: $CI_PROJECT_DIR/build/runtime/work/mise-config
+    MISE_DATA_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise
+    MISE_CACHE_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise/cache
     MISE_CEILING_PATHS: $CI_PROJECT_DIR/..
     MISE_TRUSTED_CONFIG_PATHS: $CI_PROJECT_DIR/.config/mise/config.toml
     MISE_YES: "1"
@@ -166,6 +176,8 @@ verify:windows:protected:
   variables:
     GIT_DEPTH: "0"
     MISE_CONFIG_DIR: $CI_PROJECT_DIR/build/runtime/work/mise-config
+    MISE_DATA_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise
+    MISE_CACHE_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise/cache
     MISE_CEILING_PATHS: $CI_PROJECT_DIR/..
     MISE_TRUSTED_CONFIG_PATHS: $CI_PROJECT_DIR/.config/mise/config.toml
     MISE_YES: "1"

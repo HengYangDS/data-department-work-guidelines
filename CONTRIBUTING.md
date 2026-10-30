@@ -186,7 +186,9 @@ the retired maintenance toolkit. Delete it; nothing reads it.
 GitLab's Linux jobs obtain Mise from the project's package registry; its macOS
 and Windows jobs use the runner's existing Mise installation. Every hosted job
 then installs the same locked ETHOS release and keeps a job-local
-`MISE_CONFIG_DIR`, without changing the host's global configuration.
+`MISE_CONFIG_DIR`, without changing the host's global configuration. GitLab
+jobs also keep `MISE_DATA_DIR` and `MISE_CACHE_DIR` under the job's
+`build/runtime/tool-cache/mise`.
 
 ## Commit and release
 

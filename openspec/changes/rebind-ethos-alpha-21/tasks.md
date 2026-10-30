@@ -4,6 +4,7 @@
 - [x] 1.2 Bind the repository family to the 0.2.0-alpha.21 runtime with the locked console's `hook install`, keeping 0.2.0-alpha.20 as the rollback; done when `ethos status` reports the lane ready under the 0.2.0-alpha.21 runtime.
 - [x] 1.3 State in `docs/governance/README.md` that GitLab's Windows ARM64 runners install the release's Windows ARM64 archive; done when the prose, Markdown lint and link gates pass.
 - [x] 1.4 Record the move under Changed in the Changelog; done when the repository check passes.
+- [x] 1.5 Keep `MISE_DATA_DIR` and `MISE_CACHE_DIR` under each GitLab job's `build/runtime/tool-cache/mise` in `.config/ci/verification.toml`, regenerate both pipelines, and describe it in Contributing and repository governance; done when `ethos lane project --check --json` reports no drift.
 
 ## 2. Hosted qualification
 
