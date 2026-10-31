@@ -1,7 +1,7 @@
 ## 1. Windows ARM64
 
-- [ ] 1.1 State in `docs/governance/README.md`, in the supply table and under "Qualify Each Platform", that GitLab's Windows ARM64 runners run the locked release's complete verifier and qualify the platform; done when the prose, Markdown lint and link gates pass.
-- [ ] 1.2 Record the change under Changed in the Changelog; done when the repository check passes.
+- [x] 1.1 State in `docs/governance/README.md`, in the supply table and under "Qualify Each Platform", that GitLab's Windows ARM64 runners run the locked release's complete verifier and qualify the platform; done when the prose, Markdown lint and link gates pass. The native formatter realigned the table, and the prose, Markdown lint and link gates pass.
+- [x] 1.2 Record the change under Changed in the Changelog; done when the repository check passes.
 
 ## Workflow follow-up
 
