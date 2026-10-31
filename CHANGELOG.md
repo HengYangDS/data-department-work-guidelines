@@ -42,6 +42,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   to 500 lines, which every current document here already meets. Hosted jobs that install Mise use
   2026.10.24, GitLab's Linux jobs from the project's package registry.
 - Run GitLab's Linux jobs in the current `node:26-trixie` image, which the runners now admit.
+- Move the declared ETHOS supply from 0.2.0-alpha.22 to 0.2.0-alpha.23 and bind the repository's
+  runtime to it, keeping 0.2.0-alpha.22 as the rollback. The release extends the 500-line ceiling
+  to code in every registered language; this repository tracks no such file.
 - Run GitHub's hosted jobs with Mise 2026.10.19. GitLab jobs keep Mise 2026.10.17 until the
   project's GitLab package registry carries the newer release.
 - Align the main specifications with the delivered guidance and checks: two
