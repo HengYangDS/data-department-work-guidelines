@@ -1,17 +1,17 @@
-min_version = "2026.10.14"
+min_version = "2026.10.24"
 
 # Contributors and hosted jobs install ETHOS from its published release. These tables are the
 # release's own Mise declaration, unchanged; mise.lock pins the archive of each declared platform.
 # ETHOS is the only declared tool and supplies its own Node and native checks.
 [tools."http:ethos"]
-version = "0.2.0-alpha.21"
+version = "0.2.0-alpha.22"
 
 [tools."http:ethos".platforms]
-linux-arm64 = { url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.21/ethos-0.2.0-alpha.21-linux-arm64.tar.gz", checksum = "sha256:3d6d679064291800e005e93d055a876aaaadc63f9dba6a20629239c32990a350", bin_path = "ethos/bin" }
-linux-x64 = { url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.21/ethos-0.2.0-alpha.21-linux-x64.tar.gz", checksum = "sha256:aa8bb94b5f16bd12bc0a12b96a3008f146877d0039d81b28cec28d5355fcd873", bin_path = "ethos/bin" }
-macos-arm64 = { url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.21/ethos-0.2.0-alpha.21-macos-arm64.tar.gz", checksum = "sha256:0be57d6e2fae6f8af70c07c6d1449c1ef4741a11ee1d0e2600c7f2551ac4418b", bin_path = "ethos/bin" }
-windows-arm64 = { url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.21/ethos-0.2.0-alpha.21-windows-arm64.tar.gz", checksum = "sha256:432fc27b07d6b1bd9545907be72ded593ecb83b49f000d9bf3c3360d0b1c719f", bin_path = "ethos/bin" }
-windows-x64 = { url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.21/ethos-0.2.0-alpha.21-windows-x64.tar.gz", checksum = "sha256:f4e8ec759eddc20191ca34242b10e1c40992b364f0ccadf07beb82bd12dd6c70", bin_path = "ethos/bin" }
+linux-arm64 = { url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.22/ethos-0.2.0-alpha.22-linux-arm64.tar.gz", checksum = "sha256:07299ec33741eef1ff9693d81c3ea045350e932a678d97d1aba6651c6c09264c", bin_path = "ethos/bin" }
+linux-x64 = { url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.22/ethos-0.2.0-alpha.22-linux-x64.tar.gz", checksum = "sha256:2fe2b6458fa25e9314f6ebff876007fe377ccde5d72507356ebada92b979a67e", bin_path = "ethos/bin" }
+macos-arm64 = { url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.22/ethos-0.2.0-alpha.22-macos-arm64.tar.gz", checksum = "sha256:044fbf6a52c8ab2ec9d58051851038a4645434a67d6a4e6bf03684667466e170", bin_path = "ethos/bin" }
+windows-arm64 = { url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.22/ethos-0.2.0-alpha.22-windows-arm64.tar.gz", checksum = "sha256:cbeba21f59ed755a189015a6ef4a6385046596b9f071ecb7627bda55dca4f6a5", bin_path = "ethos/bin" }
+windows-x64 = { url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.22/ethos-0.2.0-alpha.22-windows-x64.tar.gz", checksum = "sha256:0909f1a8028597a0644039ad11ddad16519b3728d8adafa644777bdb9ef50d61", bin_path = "ethos/bin" }
 
 [settings]
 locked = true
