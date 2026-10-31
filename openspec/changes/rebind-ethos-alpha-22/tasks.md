@@ -6,7 +6,7 @@
 ## 2. Hosted supply
 
 - [x] 2.1 Stage Mise 2026.10.24's installer and Linux ARM64 archive in the project's GitLab package registry; done when both files equal the release's published asset digests and `SHASUMS256.txt` and read back unchanged. `install.sh` `9f4fe9fc…` and `mise-v2026.10.24-linux-arm64.tar.gz` `8c8f5d7f…` equal their release digests and read back unchanged from package 347.
-- [x] 2.2 Move `[supply] mise_version`, GitLab's Linux bootstrap, `.config/mise/install.sha256`, `min_version` and the floor in `CONTRIBUTING.md` to Mise 2026.10.24, and GitLab's Linux image to the current `node:26-trixie` digest, then generate both pipelines again; done when `ethos lane project --check --json` reports no drift. The regenerated GitHub workflow also takes `jdx/mise-action` v5.2.4 from the common model, and the check reports the projections conforming.
+- [x] 2.2 Move `[supply] mise_version`, GitLab's Linux bootstrap and `.config/mise/install.sha256` to Mise 2026.10.24, and generate both pipelines again; done when `ethos lane project --check --json` reports no drift. The regenerated GitHub workflow also takes `jdx/mise-action` v5.2.4 from the common model, and the check reports the projections conforming. The floor and GitLab's Linux image stay: in proposal pipeline 13500 at `6dd714fc`, a 2026.10.24 floor stopped the macOS runner, whose guest provides Mise 2026.10.15, and the Linux runner refused the current `node:26-trixie` digest as a disallowed image. Both were reverted, and the archive was compensated to change them.
 - [x] 2.3 Record the moves under Changed in the Changelog; done when the repository check passes.
 
 ## Workflow follow-up

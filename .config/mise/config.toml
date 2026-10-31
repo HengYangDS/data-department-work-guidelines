@@ -1,4 +1,4 @@
-min_version = "2026.10.24"
+min_version = "2026.10.14"
 
 # Contributors and hosted jobs install ETHOS from its published release. These tables are the
 # release's own Mise declaration, unchanged; mise.lock pins the archive of each declared platform.

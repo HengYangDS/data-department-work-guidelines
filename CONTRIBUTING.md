@@ -166,7 +166,7 @@ formatters, and prose and link tools. Run this guide's commands through
 hooks and Git-common runtime do not install a shell command, and an existing host
 installation does not prove the clean route that CI uses.
 
-Use Mise 2026.10.24 or later, as the project configuration requires. Upgrade
+Use Mise 2026.10.14 or later, as the project configuration requires. Upgrade
 through the destination's existing installation owner; the version floor rejects
 unsupported Mise before a child command runs. Mise discovers the project
 configuration and adjacent lock from the repository root. Leave

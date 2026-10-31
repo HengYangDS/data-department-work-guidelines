@@ -39,9 +39,8 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   as files, because the Windows runner refuses the copy of the Mise executable shim.
 - Move the declared ETHOS supply from 0.2.0-alpha.21 to 0.2.0-alpha.22 and bind the repository's
   runtime to it, keeping 0.2.0-alpha.21 as the rollback. The release lowers the per-file ceilings
-  to 500 lines, which every current document here already meets. Hosted jobs install Mise
-  2026.10.24, GitLab's Linux jobs from the project's package registry; the Mise floor and GitLab's
-  Linux image move to the current releases.
+  to 500 lines, which every current document here already meets. Hosted jobs that install Mise use
+  2026.10.24, GitLab's Linux jobs from the project's package registry.
 - Run GitHub's hosted jobs with Mise 2026.10.19. GitLab jobs keep Mise 2026.10.17 until the
   project's GitLab package registry carries the newer release.
 - Align the main specifications with the delivered guidance and checks: two

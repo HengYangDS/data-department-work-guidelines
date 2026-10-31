@@ -36,7 +36,13 @@ GitLab's Linux image, and ETHOS's common model generates both pipelines from it.
   only files whose digests equal the release's published asset digests and `SHASUMS256.txt`, and
   read both back. GitLab's Linux bootstrap keeps its shape: the pinned installer installs the staged
   archive, so no job reaches GitHub for Mise.
-- Pin the `node:26-trixie` image by the digest of its current multi-platform index, as before.
+- Keep `min_version` at 2026.10.14. The floor states the oldest Mise that reads this
+  configuration, not the release in use: the first proposal pipeline raised it to 2026.10.24, and
+  GitLab's macOS runner, whose guest provides Mise 2026.10.15, refused to start (pipeline 13500).
+  The guests' Mise moves to the latest release through their owner.
+- Keep GitLab's Linux image at its reviewed digest. The runners admit only listed images, and the
+  current `node:26-trixie` index digest was refused as a disallowed image in pipeline 13500. The
+  image moves in a follow-up Change once the runners' owner admits the current digest.
 - Bind through the locked 0.2.0-alpha.22 console, so the selected runtime is the one the lock
   declares.
 
@@ -45,9 +51,8 @@ GitLab's Linux image, and ETHOS's common model generates both pipelines from it.
 - [A gate that passed under 0.2.0-alpha.21 fails under 0.2.0-alpha.22] → The 0.2.0-alpha.22 gates
   run against the repository before the bind and the full proof runs at the archived head before
   landing; a failure is repaired at its owner, or the rebind rolls back.
-- [Mise 2026.10.24 or the new image changes a hosted bootstrap] → The proposal's hosted runs on
-  both Forges qualify it before landing; the 2026.10.17 package and the earlier digest stay
-  available to roll back.
+- [Mise 2026.10.24 changes a hosted bootstrap] → The proposal's hosted runs on both Forges qualify
+  it before landing; the 2026.10.17 package stays available to roll back.
 - [The GitLab Windows ARM64 runners still exit 6 at the launcher start] → The acceptance stays
   withdrawn, and GitLab keeps the job traces for the ETHOS follow-up.
 - [The release ships supply with advisories that no stable upstream release fixes yet] → The
@@ -57,7 +62,7 @@ GitLab's Linux image, and ETHOS's common model generates both pipelines from it.
 ## Migration Plan
 
 Stage the Mise package, copy the declaration, lock it, install the locked supply, bind the runtime,
-move the Mise and image parameters, generate both pipelines, prove the archived head and qualify it
-on GitHub and GitLab's Linux and macOS jobs. To roll back, restore the 0.2.0-alpha.21 declaration,
-lock and CI parameters and bind the retained runtime with its own console's
+move the Mise parameters, generate both pipelines, prove the archived head and qualify it on GitHub
+and GitLab's Linux and macOS jobs. To roll back, restore the 0.2.0-alpha.21 declaration, lock and
+CI parameters and bind the retained runtime with its own console's
 `hook install --runtime <0.2.0-alpha.21 runtime path>`.
