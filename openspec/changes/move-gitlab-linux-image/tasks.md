@@ -1,7 +1,7 @@
 ## 1. Image
 
-- [ ] 1.1 Pin GitLab's Linux image to `node:26-trixie@sha256:6d2c7d5d074bf72f81ddc252b4fbb5d625bc028eeda49cb4b8c2ff8eda1ee617` in `.config/ci/verification.toml` and generate both pipelines again; done when `ethos lane project --check --json` reports no drift.
-- [ ] 1.2 Record the move under Changed in the Changelog; done when the repository check passes.
+- [x] 1.1 Pin GitLab's Linux image to `node:26-trixie@sha256:6d2c7d5d074bf72f81ddc252b4fbb5d625bc028eeda49cb4b8c2ff8eda1ee617` in `.config/ci/verification.toml` and generate both pipelines again; done when `ethos lane project --check --json` reports no drift. The regenerated `.gitlab-ci.yml` names the digest in both Linux jobs, and the check reports the projections conforming.
+- [x] 1.2 Record the move under Changed in the Changelog; done when the repository check passes.
 
 ## Workflow follow-up
 

@@ -18,7 +18,7 @@ verify:linux:review:
     - timeout --signal=TERM --kill-after=5s 120s env MISE_VERSION=2026.10.24 MISE_INSTALL_PATH=/usr/local/bin/mise MISE_INSTALL_HELP=0 MISE_INSTALL_EXT=tar.gz MISE_TARBALL_URL="file://$CI_PROJECT_DIR/build/runtime/work/mise-bootstrap/mise-v2026.10.24-linux-arm64.tar.gz" sh build/runtime/work/mise-bootstrap/install.sh
     - mise install --locked --jobs=1
     - mkdir -p build/evidence/ci
-  image: public.ecr.aws/docker/library/node:26-trixie@sha256:1b84b89ada025e3b14543cbb837ffaa1c1b5273b841c5b94dd1a8f9c1d8cf7fe
+  image: public.ecr.aws/docker/library/node:26-trixie@sha256:6d2c7d5d074bf72f81ddc252b4fbb5d625bc028eeda49cb4b8c2ff8eda1ee617
   rules:
     - if: $ETHOS_OFFLINE_CANDIDATE
       when: never
@@ -52,7 +52,7 @@ verify:linux:protected:
     - timeout --signal=TERM --kill-after=5s 120s env MISE_VERSION=2026.10.24 MISE_INSTALL_PATH=/usr/local/bin/mise MISE_INSTALL_HELP=0 MISE_INSTALL_EXT=tar.gz MISE_TARBALL_URL="file://$CI_PROJECT_DIR/build/runtime/work/mise-bootstrap/mise-v2026.10.24-linux-arm64.tar.gz" sh build/runtime/work/mise-bootstrap/install.sh
     - mise install --locked --jobs=1
     - mkdir -p build/evidence/ci
-  image: public.ecr.aws/docker/library/node:26-trixie@sha256:1b84b89ada025e3b14543cbb837ffaa1c1b5273b841c5b94dd1a8f9c1d8cf7fe
+  image: public.ecr.aws/docker/library/node:26-trixie@sha256:6d2c7d5d074bf72f81ddc252b4fbb5d625bc028eeda49cb4b8c2ff8eda1ee617
   rules:
     - if: $ETHOS_OFFLINE_CANDIDATE
       when: never
