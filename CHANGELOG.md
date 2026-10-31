@@ -48,6 +48,9 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 - Move the declared ETHOS supply from 0.2.0-alpha.23 to 0.2.0-alpha.24 and bind the repository's
   runtime to it, keeping 0.2.0-alpha.23 as the rollback. The release shortens the installed
   runtime's directory on Windows, whose length stopped GitLab's Windows ARM64 jobs.
+- Move the declared ETHOS supply from 0.2.0-alpha.24 to 0.2.0-alpha.25 and bind the repository's
+  runtime to it, keeping 0.2.0-alpha.24 as the rollback. The release reads text as UTF-8 on every
+  host, which GitLab's Windows ARM64 jobs, in code page 936, need.
 - Run GitHub's hosted jobs with Mise 2026.10.19. GitLab jobs keep Mise 2026.10.17 until the
   project's GitLab package registry carries the newer release.
 - Align the main specifications with the delivered guidance and checks: two
