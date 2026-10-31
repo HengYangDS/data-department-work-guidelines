@@ -28,10 +28,10 @@ GitLab's Linux image, and ETHOS's common model generates both pipelines from it.
   moves did. Each platform checksum is checked against the release's `SHA256SUMS` and the published
   asset digests first, so the URLs and checksums keep one published source.
 - 0.2.0-alpha.22 lowers the per-file ceilings from 512 to 500: effective lines for each tracked
-  Python file and nonblank lines for each current authored Markdown document. This repository
-  tracks no Python, and its largest current document, `CONTRIBUTING.md`, has 311 nonblank lines, so
-  the repository declares no `[paradigm.size]` value. The release requires no Mise floor of its
-  adopters; Mise 2026.10.24 follows from the latest-stable direction.
+  Python file and lines that are not blank for each current authored Markdown document. This
+  repository tracks no Python, and its largest current document, `CONTRIBUTING.md`, has 311 such
+  lines, so the repository declares no `[paradigm.size]` value. The release requires no Mise floor
+  of its adopters; Mise 2026.10.24 follows from the latest-stable direction.
 - Stage Mise 2026.10.24 in the project's GitLab package registry before the hosted run, uploading
   only files whose digests equal the release's published asset digests and `SHASUMS256.txt`, and
   read both back. GitLab's Linux bootstrap keeps its shape: the pinned installer installs the staged
