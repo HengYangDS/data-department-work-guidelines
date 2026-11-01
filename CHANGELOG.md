@@ -14,6 +14,10 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
+## [8.0.0] - 2026-11-01
+
+History: [GitLab][8.0.0-gitlab] · [GitHub][8.0.0-github]
+
 ### Added
 
 - Add shared Git exclusions for editor state and Finder metadata without excluding
@@ -24,37 +28,19 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Changed
 
-- Move the declared ETHOS supply from 0.2.0-alpha.15 to 0.2.0-alpha.17 and bind the repository's
-  runtime to it, keeping 0.2.0-alpha.15 as the rollback.
-- Move the declared ETHOS supply from 0.2.0-alpha.17 to 0.2.0-alpha.18 and bind the repository's
-  runtime to it, keeping 0.2.0-alpha.17 as the rollback.
-- Move the declared ETHOS supply from 0.2.0-alpha.18 to 0.2.0-alpha.19 and bind the repository's
-  runtime to it, keeping 0.2.0-alpha.18 as the rollback.
-- Move the declared ETHOS supply from 0.2.0-alpha.19 to 0.2.0-alpha.20 and bind the repository's
-  runtime to it, keeping 0.2.0-alpha.19 as the rollback.
-- Move the declared ETHOS supply from 0.2.0-alpha.20 to 0.2.0-alpha.21 and bind the repository's
-  runtime to it, keeping 0.2.0-alpha.20 as the rollback. The release declares Windows ARM64, so
-  GitLab's Windows ARM64 jobs install ETHOS; its launcher still exits there before ETHOS runs.
-  GitLab jobs keep the Mise data and cache under their own execution root and write Windows shims
-  as files, because the Windows runner refuses the copy of the Mise executable shim.
-- Move the declared ETHOS supply from 0.2.0-alpha.21 to 0.2.0-alpha.22 and bind the repository's
-  runtime to it, keeping 0.2.0-alpha.21 as the rollback. The release lowers the per-file ceilings
-  to 500 lines, which every current document here already meets. Hosted jobs that install Mise use
-  2026.10.24, GitLab's Linux jobs from the project's package registry.
+- Move the declared ETHOS supply from 0.2.0-alpha.15 to 0.2.0-alpha.25 and bind the repository's
+  runtime to it, keeping 0.2.0-alpha.24 as the rollback. Along the way the releases lowered the
+  per-file ceilings to 500 lines for documents and for code in every registered language, which
+  this repository already meets; declared Windows ARM64, so GitLab's Windows ARM64 jobs install
+  ETHOS; shortened the installed runtime's directory on Windows; and read text as UTF-8 on every
+  host, which those jobs, in code page 936, need. GitLab jobs keep the Mise data and cache under
+  their own execution root and write Windows shims as files, because the Windows runner refuses
+  the copy of the Mise executable shim.
 - Run GitLab's Linux jobs in the current `node:26-trixie` image, which the runners now admit.
-- Move the declared ETHOS supply from 0.2.0-alpha.22 to 0.2.0-alpha.23 and bind the repository's
-  runtime to it, keeping 0.2.0-alpha.22 as the rollback. The release extends the 500-line ceiling
-  to code in every registered language; this repository tracks no such file.
-- Move the declared ETHOS supply from 0.2.0-alpha.23 to 0.2.0-alpha.24 and bind the repository's
-  runtime to it, keeping 0.2.0-alpha.23 as the rollback. The release shortens the installed
-  runtime's directory on Windows, whose length stopped GitLab's Windows ARM64 jobs.
-- Move the declared ETHOS supply from 0.2.0-alpha.24 to 0.2.0-alpha.25 and bind the repository's
-  runtime to it, keeping 0.2.0-alpha.24 as the rollback. The release reads text as UTF-8 on every
-  host, which GitLab's Windows ARM64 jobs, in code page 936, need.
 - Return GitLab's Windows ARM64 jobs to the hosted acceptance, which `rebind-ethos-alpha-21`
   withdrew under DR-0005: since 0.2.0-alpha.25 they run the complete verifier.
-- Run GitHub's hosted jobs with Mise 2026.10.19. GitLab jobs keep Mise 2026.10.17 until the
-  project's GitLab package registry carries the newer release.
+- Run the hosted jobs on both Forges with Mise 2026.10.24; GitLab's jobs install it from the
+  project's package registry.
 - Align the main specifications with the delivered guidance and checks: two
   work-practice scenarios follow the current communication and evolution topics,
   quality, verification, tool-supply and publication no longer name retired checks
@@ -166,8 +152,7 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
   generated jobs ran `mise exec --locked -- ethos` without a declared ETHOS supply and failed
   on every platform from 2026-10-14. `.config/mise/config.toml` now carries the release's own
   Mise declaration, and `.config/mise/mise.lock` pins its archives for Linux x64 and ARM64,
-  macOS ARM64 and Windows x64. GitLab's jobs, including Windows ARM64, still wait for that
-  peer and that platform's supply.
+  macOS ARM64 and Windows x64 and ARM64.
 - Accept valid byte-exact text declared with Git `-text` while retaining UTF-8
   and NUL checks for native text carriers. Preserve declared binary assets and
   leave inspected bytes unchanged.
@@ -822,8 +807,10 @@ History: [GitLab][4.0.0-gitlab] · [GitHub][4.0.0-github]
   separate.
 - Normalized tracked text checkout to LF across supported hosts.
 
-[Unreleased-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.12...main
-[Unreleased-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.12...main
+[Unreleased-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v8.0.0...main
+[Unreleased-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v8.0.0...main
+[8.0.0-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.12...v8.0.0
+[8.0.0-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.12...v8.0.0
 [7.0.12-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.11...v7.0.12
 [7.0.12-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.11...v7.0.12
 [7.0.11-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.10...v7.0.11
