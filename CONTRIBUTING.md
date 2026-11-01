@@ -350,33 +350,34 @@ Runner bindings still serving earlier releases.
 
 ## Retire superseded downloads
 
-Editions up to 7.0.12 attached an offline maintenance bundle, and GitLab's
-package registry holds tool packages of the retired toolkit. Keep attached assets
-for the latest edition qualified on each Forge and one qualified rollback on that
-Forge. A release on GitHub does not release an older GitLab asset's consumers.
-Keep native tool packages consumed by retained source or current CI, including
-the Mise bootstrap package. Signed tags, source revisions, original release
-notes, and historical verification remain available; they do not require every
-binary to stay online indefinitely.
+Editions up to 7.0.12 attached an offline maintenance bundle. On 2026-11-01 the
+owner withdrew those downloads from both Forges, and editions from 8.0.0 attach
+none. GitLab's package registry keeps only native tool packages consumed by
+retained source or current CI, such as the Mise bootstrap package, and the
+preceding version for a rollback of current CI. Signed tags, source revisions,
+original release notes, and historical verification remain available.
 
-1. Inventory exact package and asset IDs, names, versions, bytes, digests,
-   release links, and active jobs on each Forge. Resolve source and CI
-   consumers. Preserve anything current, required for rollback, or of unknown
+1. Inventory exact package, asset, and CI record IDs, names, versions, bytes,
+   digests, release links, and active jobs on each Forge, and each Forge's open
+   proposal refs. Resolve source and CI consumers. Preserve anything current,
+   needed for a rollback of current CI, owned by another lane, or of unknown
    ownership.
-2. Freeze the deletion set and preservation set. Re-read each affected Release
-   and package immediately before changing it; stop if its identity or consumer
-   changed. Use the Forge's native API, with closed input, no-prompt execution,
-   and an owned deadline. Do not delete a signed tag or rewrite asset bytes.
-3. Remove only the selected attached downloads and obsolete package entries.
-   Remove their download links and append a dated withdrawal notice to each
-   affected Release, preserving the original notes. Retired editions are not
-   still advertised as available offline distributions.
-4. Re-read each affected inventory and retained file digests. Check the current and
-   rollback download routes, confirm exact retired resources are absent, and
-   preserve the before/after evidence with the producing Change. Report storage
-   reduction only after the provider's statistics confirm it.
+2. Freeze the deletion set as exact identifiers. Select CI records only when
+   their commits are proper ancestors of the release commit; never select by age
+   or as everything except the newest, because records created after the
+   inventory fall into such a set. Re-read each affected Release and package
+   immediately before changing it; stop if its identity or consumer changed. Use
+   the Forge's native API, with closed input, no-prompt execution, and an owned
+   deadline. Do not delete a signed tag or rewrite asset bytes.
+3. Remove only the frozen identifiers. For a withdrawn download, remove its link
+   and append a dated withdrawal notice to the Release, preserving the original
+   notes.
+4. Re-read each affected inventory and retained file digests, confirm the retired
+   resources are absent, and preserve the before/after evidence with the
+   producing Change. Report storage reduction only after the provider's
+   statistics confirm it.
 
 Run this aftercare when a release qualifies on the affected Forge and supersedes
-its predecessor, rather than letting superseded downloads accumulate. The
+its predecessor, rather than letting superseded packages accumulate. The
 [governance boundary](docs/governance/README.md#evidence-and-retirement) defines
 what may retire; this procedure does not grant authority over another project.

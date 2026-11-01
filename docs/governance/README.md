@@ -49,8 +49,8 @@ Earlier-HEAD evidence cannot establish those later effects.
 | Plane         | Required observation                                   | Does not establish                   |
 | ------------- | ------------------------------------------------------ | ------------------------------------ |
 | Local source  | Attribution, checks, exact-HEAD proof, and acceptance. | Delivery to either Forge.            |
-| GitLab        | Its exact ref, hosted jobs, Release, and asset.        | GitHub delivery or team use.         |
-| GitHub        | Its independent ref, hosted jobs, Release, and asset.  | GitLab delivery or team use.         |
+| GitLab        | Its exact ref, hosted jobs, and Release.               | GitHub delivery or team use.         |
+| GitHub        | Its independent ref, hosted jobs, and Release.         | GitLab delivery or team use.         |
 | Ordinary work | Actual use with subject, source, time, and limits.     | Repository or publication integrity. |
 
 Local verification contacts neither Forge. GitLab is the organization's primary
@@ -307,16 +307,18 @@ prove and publish that commit separately afterward.
 
 ### Retained Downloads
 
-Keep downloads for the latest qualified release and one qualified rollback,
-plus native packages consumed by source or CI, such as the Mise bootstrap package.
-Editions from 8.0.0 attach no download. Before retirement, verify exact
-identities and consumers. Preserve signed tags, source, original release notes,
-and historical evidence; remove withdrawn download links and add a dated notice.
-Recheck retained hashes and the affected Forge's inventory. Retire downloads
-only after their successor qualifies on that same Forge; an outage on the other
-Forge does not block this aftercare or release its consumers. Report reclaimed
-space only from provider confirmation. [Contributing](../../CONTRIBUTING.md#retire-superseded-downloads)
-owns the procedure.
+Editions from 8.0.0 attach no download. On 2026-11-01 the owner withdrew the
+downloads attached to earlier editions from both Forges, with the packages of
+the retired toolkit and the CI history before 8.0.0; each affected Release keeps
+its tag and notes and states the withdrawal. Keep native packages consumed by
+source or CI, such as the Mise bootstrap package, and the preceding version for
+a rollback of current CI. Before retiring a package or CI record, verify exact
+identities and consumers, freeze the exact identifiers, and leave every record
+of another active lane. Preserve signed tags, source, original release notes,
+and historical evidence. Recheck retained hashes and the affected Forge's
+inventory. Report reclaimed space only from provider confirmation.
+[Contributing](../../CONTRIBUTING.md#retire-superseded-downloads) owns the
+procedure.
 
 ### Local Evidence and Workspaces
 

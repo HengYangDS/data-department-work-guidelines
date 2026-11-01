@@ -19,6 +19,13 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 - Run the hosted jobs on both Forges with Mise 2026.10.25; GitLab's jobs install it from the
   project's package registry.
 
+### Removed
+
+- Withdraw the offline-tool downloads attached to the 7.0.11 and 7.0.12 Releases from both Forges,
+  with the packages of the retired toolkit and the CI history before 8.0.0, as the owner decided
+  on 2026-11-01. Each affected Release keeps its tag and notes and now states the withdrawal; this
+  corrects the 8.0.0 note that earlier editions keep their attached downloads.
+
 ## [8.0.0] - 2026-11-01
 
 History: [GitLab][8.0.0-gitlab] · [GitHub][8.0.0-github]
