@@ -14,6 +14,11 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
+### Changed
+
+- Run the hosted jobs on both Forges with Mise 2026.10.25; GitLab's jobs install it from the
+  project's package registry.
+
 ## [8.0.0] - 2026-11-01
 
 History: [GitLab][8.0.0-gitlab] · [GitHub][8.0.0-github]

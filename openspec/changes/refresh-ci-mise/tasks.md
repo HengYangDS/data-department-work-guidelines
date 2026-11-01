@@ -1,8 +1,8 @@
 ## 1. Hosted supply
 
-- [ ] 1.1 Stage Mise 2026.10.25's installer and Linux ARM64 archive in the project's GitLab package registry; done when both files equal the release's published asset digests and `SHASUMS256.txt` and read back unchanged.
-- [ ] 1.2 Move `[supply] mise_version`, GitLab's Linux bootstrap and `.config/mise/install.sha256` to Mise 2026.10.25, and generate both pipelines again; done when `ethos lane project --check --json` reports no drift.
-- [ ] 1.3 Record the move under Changed in the Changelog's Unreleased section; done when the repository check passes.
+- [x] 1.1 Stage Mise 2026.10.25's installer and Linux ARM64 archive in the project's GitLab package registry; done when both files equal the release's published asset digests and `SHASUMS256.txt` and read back unchanged. `install.sh` `61cb4d61…` and `mise-v2026.10.25-linux-arm64.tar.gz` `a7d1e2ad…` equal their release digests and read back unchanged from package 354.
+- [x] 1.2 Move `[supply] mise_version`, GitLab's Linux bootstrap and `.config/mise/install.sha256` to Mise 2026.10.25, and generate both pipelines again; done when `ethos lane project --check --json` reports no drift. The check reports both projections conforming.
+- [x] 1.3 Record the move under Changed in the Changelog's Unreleased section; done when the repository check passes.
 
 ## Workflow follow-up
 
