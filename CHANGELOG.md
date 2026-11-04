@@ -18,7 +18,7 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 - Run the hosted jobs on both Forges with Mise 2026.10.25; GitLab's jobs install it from the
   project's package registry.
-- Run ETHOS 0.2.0-alpha.29 in every lane and hosted job, and generate the GitHub workflow with
+- Run ETHOS 0.2.0-alpha.30 in every lane and hosted job, and generate the GitHub workflow with
   `jdx/mise-action` v5.2.6.
 
 ### Removed
