@@ -149,6 +149,7 @@ verify:windows:review:
   timeout: 20 minutes
   interruptible: true
   variables:
+    GET_SOURCES_ATTEMPTS: "3"
     GIT_DEPTH: "0"
     MISE_CONFIG_DIR: $CI_PROJECT_DIR/build/runtime/work/mise-config
     MISE_DATA_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise
@@ -179,6 +180,7 @@ verify:windows:protected:
   timeout: 20 minutes
   interruptible: true
   variables:
+    GET_SOURCES_ATTEMPTS: "3"
     GIT_DEPTH: "0"
     MISE_CONFIG_DIR: $CI_PROJECT_DIR/build/runtime/work/mise-config
     MISE_DATA_DIR: $CI_PROJECT_DIR/build/runtime/tool-cache/mise

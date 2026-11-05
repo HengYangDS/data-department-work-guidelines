@@ -3,26 +3,26 @@
 lockfile_version = 3
 
 [[tools."http:ethos"]]
-version = "0.2.0-alpha.30"
+version = "0.2.0-beta.2"
 backend = "http:ethos"
-specifiers = ["0.2.0-alpha.30"]
+specifiers = ["0.2.0-beta.2"]
 
 [tools."http:ethos"."platforms.linux-arm64"]
-checksum = "sha256:ec8903d9f7081096b076677a5c4d95f9277e31d0d773683887d9d868729c3337"
-url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.30/ethos-0.2.0-alpha.30-linux-arm64.tar.gz"
+checksum = "sha256:5f5edfdc0f7ec44a59afdcc0ec1cfa3786b89587ccee5d307bcfec10ed37c244"
+url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-beta.2/ethos-0.2.0-beta.2-linux-arm64.tar.gz"
 
 [tools."http:ethos"."platforms.linux-x64"]
-checksum = "sha256:9ef0a3b72770d2da443181247bce0a9f4a91b4ae85a85c3a389b630fdcfb257b"
-url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.30/ethos-0.2.0-alpha.30-linux-x64.tar.gz"
+checksum = "sha256:6278c961f97b9d3bdbb37ee668d96e71c570e2a79615ae1fb25749f5e7fd1602"
+url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-beta.2/ethos-0.2.0-beta.2-linux-x64.tar.gz"
 
 [tools."http:ethos"."platforms.macos-arm64"]
-checksum = "sha256:adaec74bebda90adfd8942b68a1fbf55fb4f94215f6b3d55602ce360a2657466"
-url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.30/ethos-0.2.0-alpha.30-macos-arm64.tar.gz"
+checksum = "sha256:12aaad93c7edc9b4601aa292e1f8dfab461a8f46ad61dceb42164570e34e155a"
+url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-beta.2/ethos-0.2.0-beta.2-macos-arm64.tar.gz"
 
 [tools."http:ethos"."platforms.windows-arm64"]
-checksum = "sha256:699edf21f6c7a57fa4830c8ccb2b81cb4bce9fc214e77d9a36092c24f3e0c187"
-url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.30/ethos-0.2.0-alpha.30-windows-arm64.tar.gz"
+checksum = "sha256:c8d3eb4e9f87a6f813721321760d26aaec601bd14f528d890926234cfd01fb7f"
+url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-beta.2/ethos-0.2.0-beta.2-windows-arm64.tar.gz"
 
 [tools."http:ethos"."platforms.windows-x64"]
-checksum = "sha256:bd3ecb39e5f0b89c06e57235e253edbe0a51ae1560273ca2e2c22cea8e8910f7"
-url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-alpha.30/ethos-0.2.0-alpha.30-windows-x64.tar.gz"
+checksum = "sha256:486ab19d8519a97099dc89b3a7f4240594d18cc966091cf15164745e69a8ddfc"
+url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-beta.2/ethos-0.2.0-beta.2-windows-x64.tar.gz"
