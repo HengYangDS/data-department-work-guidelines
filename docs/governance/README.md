@@ -95,13 +95,11 @@ A parser or commit label cannot decide compatibility.
 
 [`CHANGELOG.md`](../../CHANGELOG.md) follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/).
 Use the six standard categories without duplicates; their order may vary. Use
-bracketed headings, including `[Unreleased]`, and one History row offering
-both GitLab and GitHub. The oldest tagged edition may link to its exact tag;
-later editions compare adjacent tags. History rows are reader navigation; no
-check verifies their targets. The [release declaration](../../.ethos/release.toml)
-owns each Forge's web identity independently of Git transport. Use GitLab
-`/-/compare/` or `/-/tags/` and GitHub `/compare/` or `/releases/tag/`, with the
-same refs on both peers.
+bracketed headings, including `[Unreleased]`. The Changelog names no peer: it
+carries no History row or other link to a Forge, because every peer receives
+the same file. ETHOS reads each peer's web repository from the clone's own Git
+configuration, the remote's URL or `remote.<name>.forgeRepository`, never from
+a tracked file.
 
 - Keep upcoming notes under `Unreleased` and assign the actual date at release
   cut. One untagged dated heading is allowed only while that exact release-cut
@@ -113,18 +111,15 @@ same refs on both peers.
   different identity. A later peer must qualify that same source before
   receiving the existing tag; do not sign another object for it.
 - Observe the selected Forge's tag, Release, and source jobs at the tagged
-  commit. Its live links must resolve after their
-  targets exist; another peer's unavailable links remain pending, not passed.
-  A heading, branch, or CI result is not a release. New commits, including
+  commit. A heading, branch, or CI result is not a release. New commits, including
   archive commits, require a trusted SSH signature and correct attribution;
   each clone supplies its own
   identity, public signing-key path, and protected external trust anchor.
 
 Installed ETHOS rejects malformed Changelog structure, dates, and version order.
 Its release tag admission requires the tag to match committed `VERSION` and the
-Changelog to have that version's entry. The release's live link check reports a
-broken comparison link for the selected peer. The same Changelog serves both
-peers and local readers.
+Changelog to have that version's entry. The same Changelog serves both peers and
+local readers.
 
 ## Quality and Local State
 
@@ -166,7 +161,7 @@ without rewriting quoted originals, historical text, or meaningful literals.
 | Official artifacts and configuration | Installed OpenSpec and configuration checks.                    | Use supplied validation and native inputs, without a repository parser.            |
 | Local links and fragments            | Installed `markdown-links` in the shared floor.                 | The shared provider owns committed targets, headings, aliases, and diagnostics.    |
 | English prose and terms              | Installed `prose`, with a temporary spelling increment.         | Shared spelling still needs corpus and vocabulary qualification.                   |
-| Release history                      | Installed repository paradigm and release tag admission.        | History links are navigation, not verified facts.                                  |
+| Release history                      | Installed repository paradigm and release tag admission.        | The Changelog names no peer.                                                       |
 | ETHOS supply and CI                  | Mise installs the locked release; generated jobs run its graph. | Each declared runner, Windows ARM64 included, qualifies by running the full graph. |
 
 A repository adds code, a package, or a proof gate only for a duty that no

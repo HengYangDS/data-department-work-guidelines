@@ -12,8 +12,6 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
-History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
-
 ### Changed
 
 - Run the hosted jobs on both Forges with Mise 2026.10.25; GitLab's jobs install it from the
@@ -24,14 +22,15 @@ History: [GitLab][Unreleased-gitlab] · [GitHub][Unreleased-github]
 
 ### Removed
 
+- Remove the History rows and their links to both Forges, and each peer's repository address from
+  the release declaration, so that no shared file names a peer. Each clone keeps its peers' web
+  addresses in its own Git configuration.
 - Withdraw the offline-tool downloads attached to the 7.0.11 and 7.0.12 Releases from both Forges,
   with the packages of the retired toolkit and the CI history before 8.0.0, as the owner decided
   on 2026-11-01. Each affected Release keeps its tag and notes and now states the withdrawal; this
   corrects the 8.0.0 note that earlier editions keep their attached downloads.
 
 ## [8.0.0] - 2026-11-01
-
-History: [GitLab][8.0.0-gitlab] · [GitHub][8.0.0-github]
 
 ### Added
 
@@ -199,8 +198,6 @@ History: [GitLab][8.0.0-gitlab] · [GitHub][8.0.0-github]
 
 ## [7.0.12] - 2026-10-04
 
-History: [GitLab][7.0.12-gitlab] · [GitHub][7.0.12-github]
-
 ### Fixed
 
 - Keep online registry caches in a short, isolated temporary directory and
@@ -268,8 +265,6 @@ History: [GitLab][7.0.12-gitlab] · [GitHub][7.0.12-github]
 
 ## [7.0.11] - 2026-10-03
 
-History: [GitLab][7.0.11-gitlab] · [GitHub][7.0.11-github]
-
 ### Fixed
 
 - Update the decision check's native shell lexer to the stable release,
@@ -277,8 +272,6 @@ History: [GitLab][7.0.11-gitlab] · [GitHub][7.0.11-github]
   without executing inspected input.
 
 ## [7.0.10] - 2026-10-03
-
-History: [GitLab][7.0.10-gitlab] · [GitHub][7.0.10-github]
 
 ### Fixed
 
@@ -291,8 +284,6 @@ History: [GitLab][7.0.10-gitlab] · [GitHub][7.0.10-github]
 
 ## [7.0.9] - 2026-10-02
 
-History: [GitLab][7.0.9-gitlab] · [GitHub][7.0.9-github]
-
 ### Fixed
 
 - Reject prose defects before unrelated native source prerequisites, and
@@ -302,8 +293,6 @@ History: [GitLab][7.0.9-gitlab] · [GitHub][7.0.9-github]
   samples without losing inputs, findings, or source-preservation checks.
 
 ## [7.0.8] - 2026-10-02
-
-History: [GitLab][7.0.8-gitlab] · [GitHub][7.0.8-github]
 
 ### Fixed
 
@@ -315,8 +304,6 @@ History: [GitLab][7.0.8-gitlab] · [GitHub][7.0.8-github]
   executes the real pinned tool.
 
 ## [7.0.7] - 2026-10-02
-
-History: [GitLab][7.0.7-gitlab] · [GitHub][7.0.7-github]
 
 ### Fixed
 
@@ -336,8 +323,6 @@ History: [GitLab][7.0.7-gitlab] · [GitHub][7.0.7-github]
 
 ## [7.0.6] - 2026-10-02
 
-History: [GitLab][7.0.6-gitlab] · [GitHub][7.0.6-github]
-
 ### Fixed
 
 - Changelog versions no longer send readers implicitly to one Forge. Every
@@ -346,8 +331,6 @@ History: [GitLab][7.0.6-gitlab] · [GitHub][7.0.6-github]
   source serves both platforms and offline readers.
 
 ## [7.0.5] - 2026-10-02
-
-History: [GitLab][7.0.5-gitlab] · [GitHub][7.0.5-github]
 
 ### Changed
 
@@ -372,8 +355,6 @@ History: [GitLab][7.0.5-gitlab] · [GitHub][7.0.5-github]
   does not claim an ETHOS product repair or cross-adopter acceptance.
 
 ## [7.0.4] - 2026-10-01
-
-History: [GitLab][7.0.4-gitlab] · [GitHub][7.0.4-github]
 
 ### Fixed
 
@@ -406,8 +387,6 @@ History: [GitLab][7.0.4-gitlab] · [GitHub][7.0.4-github]
 
 ## [7.0.3] - 2026-10-01
 
-History: [GitLab][7.0.3-gitlab] · [GitHub][7.0.3-github]
-
 ### Fixed
 
 - Separated check policy, native tool supply, and release identity by
@@ -418,8 +397,6 @@ History: [GitLab][7.0.3-gitlab] · [GitHub][7.0.3-github]
   ambient editor settings. Public commands and department duties are unchanged.
 
 ## [7.0.2] - 2026-10-01
-
-History: [GitLab][7.0.2-gitlab] · [GitHub][7.0.2-github]
 
 ### Fixed
 
@@ -434,8 +411,6 @@ History: [GitLab][7.0.2-gitlab] · [GitHub][7.0.2-github]
   unnoticed.
 
 ## [7.0.1] - 2026-10-01
-
-History: [GitLab][7.0.1-gitlab] · [GitHub][7.0.1-github]
 
 ### Fixed
 
@@ -452,8 +427,6 @@ History: [GitLab][7.0.1-gitlab] · [GitHub][7.0.1-github]
   roles, forms, meetings, or a competing rule source.
 
 ## [7.0.0] - 2026-10-01
-
-History: [GitLab][7.0.0-gitlab] · [GitHub][7.0.0-github]
 
 ### Changed
 
@@ -481,8 +454,6 @@ History: [GitLab][7.0.0-gitlab] · [GitHub][7.0.0-github]
 
 ## [6.1.1] - 2026-10-01
 
-History: [GitLab][6.1.1-gitlab] · [GitHub][6.1.1-github]
-
 ### Fixed
 
 - Decision records now reject quoted or list-nested terminal commands, task
@@ -493,8 +464,6 @@ History: [GitLab][6.1.1-gitlab] · [GitHub][6.1.1-github]
   terms and evidence links remain valid. Department duties are unchanged.
 
 ## [6.1.0] - 2026-10-01
-
-History: [GitLab][6.1.0-gitlab] · [GitHub][6.1.0-github]
 
 ### Added
 
@@ -514,8 +483,6 @@ History: [GitLab][6.1.0-gitlab] · [GitHub][6.1.0-github]
 
 ## [6.0.1] - 2026-10-01
 
-History: [GitLab][6.0.1-gitlab] · [GitHub][6.0.1-github]
-
 ### Changed
 
 - Updated the native package-manager requirement to stable npm 12.2.0 and
@@ -523,8 +490,6 @@ History: [GitLab][6.0.1-gitlab] · [GitHub][6.0.1-github]
   remain unchanged.
 
 ## [6.0.0] - 2026-10-01
-
-History: [GitLab][6.0.0-gitlab] · [GitHub][6.0.0-github]
 
 ### Changed
 
@@ -546,8 +511,6 @@ History: [GitLab][6.0.0-gitlab] · [GitHub][6.0.0-github]
 
 ## [5.2.4] - 2026-09-30
 
-History: [GitLab][5.2.4-gitlab] · [GitHub][5.2.4-github]
-
 ### Changed
 
 - Refreshed the compatible documentation-tool dependency closure and rebuilt its
@@ -555,8 +518,6 @@ History: [GitLab][5.2.4-gitlab] · [GitHub][5.2.4-github]
   routes remain unchanged.
 
 ## [5.2.3] - 2026-09-30
-
-History: [GitLab][5.2.3-gitlab] · [GitHub][5.2.3-github]
 
 ### Fixed
 
@@ -569,8 +530,6 @@ History: [GitLab][5.2.3-gitlab] · [GitHub][5.2.3-github]
 
 ## [5.2.2] - 2026-09-30
 
-History: [GitLab][5.2.2-gitlab] · [GitHub][5.2.2-github]
-
 ### Changed
 
 - Refreshed compatible transitive packages in the locked documentation toolchain
@@ -579,16 +538,12 @@ History: [GitLab][5.2.2-gitlab] · [GitHub][5.2.2-github]
 
 ## [5.2.1] - 2026-09-30
 
-History: [GitLab][5.2.1-gitlab] · [GitHub][5.2.1-github]
-
 ### Fixed
 
 - Split GitLab Linux review from protected source and offline jobs, with
   separate Runner capabilities and regression checks for cross-boundary routes.
 
 ## [5.2.0] - 2026-09-30
-
-History: [GitLab][5.2.0-gitlab] · [GitHub][5.2.0-github]
 
 ### Added
 
@@ -609,8 +564,6 @@ History: [GitLab][5.2.0-gitlab] · [GitHub][5.2.0-github]
   so a warm CI cache cannot mask a missing offline package.
 
 ## [5.1.0] - 2026-09-29
-
-History: [GitLab][5.1.0-gitlab] · [GitHub][5.1.0-github]
 
 ### Added
 
@@ -635,8 +588,6 @@ History: [GitLab][5.1.0-gitlab] · [GitHub][5.1.0-github]
 
 ## [5.0.6] - 2026-09-29
 
-History: [GitLab][5.0.6-gitlab] · [GitHub][5.0.6-github]
-
 ### Fixed
 
 - Bound the direct OpenSpec command to the installed locked package instead of a
@@ -648,8 +599,6 @@ History: [GitLab][5.0.6-gitlab] · [GitHub][5.0.6-github]
 
 ## [5.0.5] - 2026-09-29
 
-History: [GitLab][5.0.5-gitlab] · [GitHub][5.0.5-github]
-
 ### Fixed
 
 - Applied the existing format and lint checks to retained OpenSpec Markdown, and
@@ -658,16 +607,12 @@ History: [GitLab][5.0.5-gitlab] · [GitHub][5.0.5-github]
 
 ## [5.0.4] - 2026-09-28
 
-History: [GitLab][5.0.4-gitlab] · [GitHub][5.0.4-github]
-
 ### Fixed
 
 - Kept explicitly selected files in the spelling check even when a CSpell ignore
   rule matches them; refreshed the locked CSpell tool and offline supply.
 
 ## [5.0.3] - 2026-09-28
-
-History: [GitLab][5.0.3-gitlab] · [GitHub][5.0.3-github]
 
 ### Added
 
@@ -686,16 +631,12 @@ History: [GitLab][5.0.3-gitlab] · [GitHub][5.0.3-github]
 
 ## [5.0.2] - 2026-09-27
 
-History: [GitLab][5.0.2-gitlab] · [GitHub][5.0.2-github]
-
 ### Fixed
 
 - Removed host-specific extended attributes from the offline bundle and made
   archive warnings fail verification instead of silently passing on Linux.
 
 ## [5.0.1] - 2026-09-27
-
-History: [GitLab][5.0.1-gitlab] · [GitHub][5.0.1-github]
 
 ### Fixed
 
@@ -704,8 +645,6 @@ History: [GitLab][5.0.1-gitlab] · [GitHub][5.0.1-github]
   and comparison-ancestry checks.
 
 ## [5.0.0] - 2026-09-27
-
-History: [GitLab][5.0.0-gitlab] · [GitHub][5.0.0-github]
 
 ### Changed
 
@@ -729,8 +668,6 @@ History: [GitLab][5.0.0-gitlab] · [GitHub][5.0.0-github]
 
 ## [4.2.1] - 2026-09-26
 
-History: [GitLab][4.2.1-gitlab] · [GitHub][4.2.1-github]
-
 ### Fixed
 
 - Closed a release-validation gap with a post-publication GitLab job that
@@ -739,8 +676,6 @@ History: [GitLab][4.2.1-gitlab] · [GitHub][4.2.1-github]
   hosted success remains a separate release acceptance requirement.
 
 ## [4.2.0] - 2026-09-26
-
-History: [GitLab][4.2.0-gitlab] · [GitHub][4.2.0-github]
 
 ### Added
 
@@ -751,16 +686,12 @@ History: [GitLab][4.2.0-gitlab] · [GitHub][4.2.0-github]
 
 ## [4.1.1] - 2026-09-26
 
-History: [GitLab][4.1.1-gitlab] · [GitHub][4.1.1-github]
-
 ### Fixed
 
 - Made GitLab CI obtain its SHA-256-pinned lychee archive from the same
   project's package registry instead of depending on GitHub Releases.
 
 ## [4.1.0] - 2026-09-26
-
-History: [GitLab][4.1.0-gitlab] · [GitHub][4.1.0-github]
 
 ### Added
 
@@ -774,16 +705,12 @@ History: [GitLab][4.1.0-gitlab] · [GitHub][4.1.0-github]
 
 ## [4.0.1] - 2026-09-26
 
-History: [GitLab][4.0.1-gitlab] · [GitHub][4.0.1-github]
-
 ### Fixed
 
 - Reject history comparisons outside a release's ancestry and repair the
   `v4.0.0` comparison after the signed history rewrite.
 
 ## [4.0.0] - 2026-09-26
-
-History: [GitLab][4.0.0-gitlab] · [GitHub][4.0.0-github]
 
 ### Added
 
@@ -821,80 +748,3 @@ History: [GitLab][4.0.0-gitlab] · [GitHub][4.0.0-github]
   verification sequence while keeping local, GitLab, and GitHub results
   separate.
 - Normalized tracked text checkout to LF across supported hosts.
-
-[Unreleased-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v8.0.0...main
-[Unreleased-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v8.0.0...main
-[8.0.0-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.12...v8.0.0
-[8.0.0-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.12...v8.0.0
-[7.0.12-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.11...v7.0.12
-[7.0.12-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.11...v7.0.12
-[7.0.11-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.10...v7.0.11
-[7.0.11-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.10...v7.0.11
-[7.0.10-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.9...v7.0.10
-[7.0.10-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.9...v7.0.10
-[7.0.9-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.8...v7.0.9
-[7.0.9-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.8...v7.0.9
-[7.0.8-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.7...v7.0.8
-[7.0.8-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.7...v7.0.8
-[7.0.7-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.6...v7.0.7
-[7.0.7-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.6...v7.0.7
-[7.0.6-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.5...v7.0.6
-[7.0.6-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.5...v7.0.6
-[7.0.5-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.4...v7.0.5
-[7.0.5-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.4...v7.0.5
-[7.0.4-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.3...v7.0.4
-[7.0.4-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.3...v7.0.4
-[7.0.3-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.2...v7.0.3
-[7.0.3-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.2...v7.0.3
-[7.0.2-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.1...v7.0.2
-[7.0.2-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.1...v7.0.2
-[7.0.1-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v7.0.0...v7.0.1
-[7.0.1-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v7.0.0...v7.0.1
-[7.0.0-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v6.1.1...v7.0.0
-[7.0.0-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.1.1...v7.0.0
-[6.1.1-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v6.1.0...v6.1.1
-[6.1.1-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.1.0...v6.1.1
-[6.1.0-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v6.0.1...v6.1.0
-[6.1.0-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.0.1...v6.1.0
-[6.0.1-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v6.0.0...v6.0.1
-[6.0.1-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v6.0.0...v6.0.1
-[6.0.0-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v5.2.4...v6.0.0
-[6.0.0-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.4...v6.0.0
-[5.2.4-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v5.2.3...v5.2.4
-[5.2.4-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.3...v5.2.4
-[5.2.3-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v5.2.2...v5.2.3
-[5.2.3-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.2...v5.2.3
-[5.2.2-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v5.2.1...v5.2.2
-[5.2.2-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.1...v5.2.2
-[5.2.1-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v5.2.0...v5.2.1
-[5.2.1-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.2.0...v5.2.1
-[5.2.0-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v5.1.0...v5.2.0
-[5.2.0-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.1.0...v5.2.0
-[5.1.0-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v5.0.6...v5.1.0
-[5.1.0-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.6...v5.1.0
-[5.0.6-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v5.0.5...v5.0.6
-[5.0.6-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.5...v5.0.6
-[5.0.5-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v5.0.4...v5.0.5
-[5.0.5-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.4...v5.0.5
-[5.0.4-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v5.0.3...v5.0.4
-[5.0.4-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.3...v5.0.4
-[5.0.3-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v5.0.2...v5.0.3
-[5.0.3-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.2...v5.0.3
-[5.0.2-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v5.0.1...v5.0.2
-[5.0.2-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.1...v5.0.2
-[5.0.1-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v5.0.0...v5.0.1
-[5.0.1-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v5.0.0...v5.0.1
-[5.0.0-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v4.2.1...v5.0.0
-[5.0.0-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.2.1...v5.0.0
-[4.2.1-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v4.2.0...v4.2.1
-[4.2.1-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.2.0...v4.2.1
-[4.2.0-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v4.1.1...v4.2.0
-[4.2.0-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.1.1...v4.2.0
-[4.1.1-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v4.1.0...v4.1.1
-[4.1.1-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.1.0...v4.1.1
-[4.1.0-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v4.0.1...v4.1.0
-[4.1.0-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.0.1...v4.1.0
-[4.0.1-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/v4.0.0...v4.0.1
-[4.0.1-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/v4.0.0...v4.0.1
-[4.0.0-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/compare/b72b5e813ead5f5d5203ac7672eb72c8f32ecd1e...v4.0.0
-[4.0.0-github]: https://github.com/HengYangDS/data-department-work-guidelines/compare/b72b5e813ead5f5d5203ac7672eb72c8f32ecd1e...v4.0.0

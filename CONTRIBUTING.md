@@ -52,8 +52,7 @@ repository proof or source acceptance.
 
 `ethos status --json` reports the repository paradigm, including Changelog
 structure: `Unreleased` first, standard categories, strict SemVer headings, real
-dates, and newest-first versions. History links are reader navigation; no check
-verifies their targets.
+dates, and newest-first versions. The Changelog carries no link to a Forge.
 
 For an uncommitted edit, run `mise run check`,
 `ethos prove --host --execute --gate markdown-lint --json`, and
@@ -244,9 +243,7 @@ raw-push around an ETHOS refusal.
 ### 3. Cut and tag the release
 
 At the release cut, move the `Unreleased` items into a dated `X.Y.Z`
-Changelog section using the actual date. Add its History row and both
-definitions, comparing the previous release tag with the new tag. Leave
-`Unreleased` empty and advance both of its bases to the new tag. Commit that
+Changelog section using the actual date, and leave `Unreleased` empty. Commit that
 exact source, repeat the proof from Step 2, and follow the native acceptance
 continuation. Run the publication preview for the selected peer, then follow its
 exact receipt continuation. For example, for GitHub:
@@ -338,8 +335,7 @@ not invalidate independently verified delivery to the other peer. The local
 installed `markdown-links` gate remains offline and guards committed
 source membership and confinement; direct Lychee commands do not supply those
 checks. Neither host observation issues repository proof.
-A prepared Changelog's comparison links return 404 before its tag exists;
-do not waive selected-peer errors or count a pre-tag check as release acceptance.
+Do not waive selected-peer errors or count a pre-tag check as release acceptance.
 
 Check the selected Forge's exact refs, Release object, and source CI at the
 selected tag. One successful host or peer proves nothing about another. Keep
