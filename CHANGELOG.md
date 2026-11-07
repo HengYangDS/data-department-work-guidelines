@@ -14,7 +14,7 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ### Changed
 
-- Run the hosted jobs on both Forges with Mise 2026.10.25; GitLab's jobs install it from the
+- Run the hosted jobs on both Forges with Mise 2026.11.3; GitLab's jobs install it from the
   project's package registry.
 - Run ETHOS 0.2.0-beta.6 in every lane and hosted job, generate the GitHub workflow with
   `jdx/mise-action` v5.2.6, and retry the source checkout of the GitLab Windows jobs up to three
