@@ -16,12 +16,14 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 - Run the hosted jobs on both Forges with Mise 2026.10.25; GitLab's jobs install it from the
   project's package registry.
-- Run ETHOS 0.2.0-beta.5 in every lane and hosted job, generate the GitHub workflow with
+- Run ETHOS 0.2.0-beta.6 in every lane and hosted job, generate the GitHub workflow with
   `jdx/mise-action` v5.2.6, and retry the source checkout of the GitLab Windows jobs up to three
   times.
 
 ### Removed
 
+- Remove the local verification and installation commands from the release declaration, which
+  ETHOS 0.2.0-beta.6 retires; the hosted jobs and the proof keep running the repository's checks.
 - Remove the History rows and their links to both Forges, and each peer's repository address from
   the release declaration, so that no shared file names a peer. Each clone keeps its peers' web
   addresses in its own Git configuration.
