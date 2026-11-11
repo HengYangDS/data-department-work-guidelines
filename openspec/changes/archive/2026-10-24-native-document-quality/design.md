@@ -472,7 +472,7 @@ later development snapshot. Specific shared-product distribution and consumer
 interfaces remain integration prerequisites, not assumed completed implementations.
 Independent work continues while their owners close those gaps.
 
-[baseline-review-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/blob/c8599ce9c91ed5f988abd6b3f3011ac94430283d/openspec/changes/archive/2026-09-30-work-guidance-completeness/design.md
+[baseline-review-gitlab]: http://4358705e2986f0965a8d07ee6cfb92c7.af4b8a395b3e1851cc5b82d01d654646.private-peer.invalid/-/blob/c8599ce9c91ed5f988abd6b3f3011ac94430283d/openspec/changes/archive/2026-09-30-work-guidance-completeness/design.md
 [baseline-review-github]: https://github.com/HengYangDS/data-department-work-guidelines/blob/c8599ce9c91ed5f988abd6b3f3011ac94430283d/openspec/changes/archive/2026-09-30-work-guidance-completeness/design.md
-[previous-design-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/blob/934293b8a6ab0600af75ea86fbdbdf36c46d1bd9/openspec/changes/native-document-quality/design.md
+[previous-design-gitlab]: http://4358705e2986f0965a8d07ee6cfb92c7.af4b8a395b3e1851cc5b82d01d654646.private-peer.invalid/-/blob/934293b8a6ab0600af75ea86fbdbdf36c46d1bd9/openspec/changes/native-document-quality/design.md
 [previous-design-github]: https://github.com/HengYangDS/data-department-work-guidelines/blob/934293b8a6ab0600af75ea86fbdbdf36c46d1bd9/openspec/changes/native-document-quality/design.md

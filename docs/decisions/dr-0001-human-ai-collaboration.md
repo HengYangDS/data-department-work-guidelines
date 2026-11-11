@@ -52,5 +52,5 @@ normalization preserves its scope without certifying the original work under the
 later OpenSpec lifecycle. Revisit the name if actual use weakens human
 accountability or projects cannot apply it accurately.
 
-[original-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/blob/fad08e7379fd8454d9f92775477e0dc98edcb6c0/docs/decisions/2026-07-12-human-intelligence-collaboration.md
+[original-gitlab]: http://4358705e2986f0965a8d07ee6cfb92c7.af4b8a395b3e1851cc5b82d01d654646.private-peer.invalid/-/blob/fad08e7379fd8454d9f92775477e0dc98edcb6c0/docs/decisions/2026-07-12-human-intelligence-collaboration.md
 [original-github]: https://github.com/HengYangDS/data-department-work-guidelines/blob/fad08e7379fd8454d9f92775477e0dc98edcb6c0/docs/decisions/2026-07-12-human-intelligence-collaboration.md

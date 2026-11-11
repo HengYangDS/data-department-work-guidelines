@@ -66,7 +66,7 @@ Revisit the product and adopter boundary if the official mechanism cannot bind
 material changes or completion claims. A defect needs an explicit authorized
 repair, not a permanent private lifecycle.
 
-[adoption-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/blob/c8599ce9c91ed5f988abd6b3f3011ac94430283d/openspec/changes/archive/2026-07-18-adoption-lifecycle-repair/design.md
+[adoption-gitlab]: http://4358705e2986f0965a8d07ee6cfb92c7.af4b8a395b3e1851cc5b82d01d654646.private-peer.invalid/-/blob/c8599ce9c91ed5f988abd6b3f3011ac94430283d/openspec/changes/archive/2026-07-18-adoption-lifecycle-repair/design.md
 [adoption-github]: https://github.com/HengYangDS/data-department-work-guidelines/blob/c8599ce9c91ed5f988abd6b3f3011ac94430283d/openspec/changes/archive/2026-07-18-adoption-lifecycle-repair/design.md
-[english-gitlab]: http://192.168.64.101:18086/dig/misc/guidelines/data-department-work-guidelines/-/blob/c8599ce9c91ed5f988abd6b3f3011ac94430283d/openspec/changes/archive/2026-09-25-ddwg-english-release-truth/design.md
+[english-gitlab]: http://4358705e2986f0965a8d07ee6cfb92c7.af4b8a395b3e1851cc5b82d01d654646.private-peer.invalid/-/blob/c8599ce9c91ed5f988abd6b3f3011ac94430283d/openspec/changes/archive/2026-09-25-ddwg-english-release-truth/design.md
 [english-github]: https://github.com/HengYangDS/data-department-work-guidelines/blob/c8599ce9c91ed5f988abd6b3f3011ac94430283d/openspec/changes/archive/2026-09-25-ddwg-english-release-truth/design.md
