@@ -11,6 +11,9 @@ normative_sources = [
   "docs/human-agent.md",
   "docs/evolve.md",
 ]
+record_roots = [
+  "docs/decisions/",
+]
 
 [openspec]
 # ETHOS owns this repository-relative admission contract. Changed paths matching
