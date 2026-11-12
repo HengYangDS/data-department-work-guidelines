@@ -3,22 +3,21 @@ subject: data-department-work-guidelines:configuration
 role: reference
 state: canonical
 relations:
-  current_owner: README.md
+  current_owner: checks-and-ci.md
 ---
 
 # Configuration
 
 Use this map to find the native input for a check. [Contributing](../../CONTRIBUTING.md)
-owns the commands; [repository governance](../governance/README.md) owns
-change and acceptance boundaries. Common rules come from the installed ETHOS
-product, not this directory index.
+owns the commands; [source checks and CI](checks-and-ci.md) owns their
+boundaries. Common rules come from the installed ETHOS product, not this map.
 
 | Check or operation                        | Current native input                                                                                        |
 | ----------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | Markdown, code, JSON, and YAML formatting | [Prettier](../../.config/checks/prettier/prettier.toml)                                                     |
-| Configuration syntax and formatting       | [Installed ETHOS](../governance/README.md#proof-and-configuration)                                          |
+| Configuration syntax and formatting       | [Installed ETHOS](checks-and-ci.md#proof-and-configuration)                                                 |
 | TOML formatting                           | [Taplo](../../.config/checks/taplo/taplo.toml)                                                              |
-| Non-spacing Markdown checks               | [Installed ETHOS](../governance/README.md#proof-and-configuration), using shared native policy              |
+| Non-spacing Markdown checks               | [Installed ETHOS](checks-and-ci.md#proof-and-configuration), using shared native policy                     |
 | English prose and department terms        | Installed `prose`, with a temporary [spelling increment](../../.config/checks/vale/vale.ini) and vocabulary |
 | Committed local links and fragments       | Installed `markdown-links`, with [Lychee parameters](../../.config/checks/lychee/lychee.toml)               |
 | ETHOS installation                        | [Mise configuration](../../.config/mise/config.toml) and [lock](../../.config/mise/mise.lock)               |
@@ -49,6 +48,6 @@ For wording and reader judgment, use the [communication guidance](../communicate
 Review an input change with its consumers and current findings. Keep each
 native check until its accepted replacement qualifies the same source and
 execution boundaries, then retire the replaced input and its references in
-that migration. [Tool supply](../governance/README.md#tool-supply)
+that migration. [Tool supply](checks-and-ci.md#tool-supply)
 owns artifact approvals and their limits. This map adds no second rule or
 exception policy.

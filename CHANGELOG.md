@@ -6,7 +6,7 @@ This file follows
 follow [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html).
 
 For release states and publication rules, see the
-[release contract](docs/governance/README.md#versioned-releases).
+[release contract](docs/governance/change-and-release.md#versioned-releases).
 Earlier branch editions had no versioned release tags; their original records
 remain in Git history rather than being relabeled as formal SemVer releases.
 
@@ -20,6 +20,10 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 - Run ETHOS 0.2.0-beta.9 in every lane and hosted job, generate the GitHub workflow with
   `jdx/mise-action` v5.2.7, and retry the source checkout of the GitLab Windows jobs up to three
   times.
+- Turn the governance README into a navigation index and move its rules, by reader task, to
+  `docs/governance/change-and-release.md` and `docs/governance/checks-and-ci.md`, which link to
+  installed ETHOS and the contributor procedure instead of restating them. Links to the former
+  README sections now point to those pages.
 
 ### Removed
 

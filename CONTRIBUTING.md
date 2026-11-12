@@ -201,7 +201,7 @@ Use a scoped
 [Conventional Commit](https://www.conventionalcommits.org/en/v1.0.0/) subject,
 for example `docs(guidance): clarify data-use boundaries`. Judge compatibility
 from the actual public rule, route, or contributor-command change, not its label.
-The [release contract](docs/governance/README.md#versioned-releases) defines SemVer,
+The [release contract](docs/governance/change-and-release.md#versioned-releases) defines SemVer,
 Changelog structure, signed tags, and independent Forge acceptance.
 
 ## Publish a release
@@ -375,5 +375,5 @@ original release notes, and historical verification remain available.
 
 Run this aftercare when a release qualifies on the affected Forge and supersedes
 its predecessor, rather than letting superseded packages accumulate. The
-[governance boundary](docs/governance/README.md#evidence-and-retirement) defines
+[governance boundary](docs/governance/change-and-release.md#evidence-and-retirement) defines
 what may retire; this procedure does not grant authority over another project.
