@@ -22,7 +22,7 @@ MISE_YES = "1"
 system = "linux"
 review_tags = ["ci-linux-arm64-container"]
 protected_tags = ["ci-linux-arm64-container-protected"]
-image = "public.ecr.aws/docker/library/node:26-trixie@sha256:438603bbb5cda404b9416f0b5c8026f61501ab911760d861ec28c36b5d675725"
+image = "public.ecr.aws/docker/library/node:26-trixie@sha256:e18c3ccdf7d71619990b0e85639f506e2028a95410999cab24cc373cbd10e0ac"
 preparation = [
   "mkdir -p build/runtime/work/mise-bootstrap",
   'curl --fail --silent --show-error --connect-timeout 10 --max-time 60 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/install.sh "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.11.5/install.sh"',
