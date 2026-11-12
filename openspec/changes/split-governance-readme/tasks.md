@@ -10,9 +10,10 @@
 
 ## 2. Index and links
 
-- [ ] 2.1 Rewrite `docs/governance/README.md` as a `role: index` page with a route for each reader
-      task; done when the registry and link checks pass.
-- [ ] 2.2 Point the rule links in `CONTRIBUTING.md`, `CHANGELOG.md` and
+- [x] 2.1 Rewrite `docs/governance/README.md` as a `role: index` page with a route for each reader
+      task; done when the registry and link checks pass. At `53f546be` the registry passes and the
+      committed link check resolves every route and fragment.
+- [x] 2.2 Point the rule links in `CONTRIBUTING.md`, `CHANGELOG.md` and
       `docs/governance/configuration.md`, and the configuration page's owner relation, at the page
       that holds each rule, and add the Changelog entry; done when the Markdown, prose and link
-      checks pass.
+      checks pass. At `53f546be` the Markdown lint, prose and committed link checks pass.
