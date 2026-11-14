@@ -14,9 +14,9 @@ boundaries. Common rules come from the installed ETHOS product, not this map.
 
 | Check or operation                        | Current native input                                                                                        |
 | ----------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| Markdown, code, JSON, and YAML formatting | [Prettier](../../.config/checks/prettier/prettier.toml)                                                     |
+| Markdown, code, JSON, and YAML formatting | [Installed ETHOS](checks-and-ci.md#proof-and-configuration), using its shipped Prettier policy              |
 | Configuration syntax and formatting       | [Installed ETHOS](checks-and-ci.md#proof-and-configuration)                                                 |
-| TOML formatting                           | [Taplo](../../.config/checks/taplo/taplo.toml)                                                              |
+| TOML formatting                           | [Installed ETHOS](checks-and-ci.md#proof-and-configuration), using its shipped Taplo policy                 |
 | Non-spacing Markdown checks               | [Installed ETHOS](checks-and-ci.md#proof-and-configuration), using shared native policy                     |
 | English prose and department terms        | Installed `prose`, with a temporary [spelling increment](../../.config/checks/vale/vale.ini) and vocabulary |
 | Committed local links and fragments       | Installed `markdown-links`, with [Lychee parameters](../../.config/checks/lychee/lychee.toml)               |

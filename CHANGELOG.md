@@ -32,6 +32,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ### Removed
 
+- Remove the Prettier and Taplo configuration files, which repeated the policies that installed
+  ETHOS ships and always applies; formatting is decided by the same settings as before.
 - Remove the local verification and installation commands from the release declaration, which
   ETHOS 0.2.0-beta.6 retires; the hosted jobs and the proof keep running the repository's checks.
 - Remove the History rows and their links to both Forges, and each peer's repository address from
