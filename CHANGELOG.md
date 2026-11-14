@@ -16,11 +16,15 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 - Run GitLab's Linux jobs in the current `node:26-trixie` image, with Node 26.13.1 and a refreshed
   Debian base.
-- Run the hosted jobs on both Forges with Mise 2026.11.7; GitLab's jobs install it from the
-  project's package registry.
-- Run ETHOS 0.2.0-beta.9 in every lane and hosted job, generate the GitHub workflow with
+- Run GitHub's jobs and GitLab's Linux jobs with Mise 2026.11.8, which the Linux jobs install from
+  the project's package registry. GitLab's macOS and Windows jobs keep the Mise that is installed
+  on their runners.
+- Run ETHOS 0.2.0-beta.10 in every lane and hosted job, generate the GitHub workflow with
   `jdx/mise-action` v5.2.7, and retry the source checkout of the GitLab Windows jobs up to three
   times.
+- Declare a release age of 0 hours in the Mise configuration, so that a tool declared there takes
+  its newest release without the one-day wait that Mise applies by default. ETHOS stays pinned to
+  its release archives.
 - Turn the governance README into a navigation index and move its rules, by reader task, to
   `docs/governance/change-and-release.md` and `docs/governance/checks-and-ci.md`, which link to
   installed ETHOS and the contributor procedure instead of restating them. Links to the former

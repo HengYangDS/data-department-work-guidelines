@@ -12,10 +12,10 @@ stages:
 verify:linux:review:
   before_script:
     - mkdir -p build/runtime/work/mise-bootstrap
-    - 'curl --fail --silent --show-error --connect-timeout 10 --max-time 60 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/install.sh "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.11.7/install.sh"'
+    - 'curl --fail --silent --show-error --connect-timeout 10 --max-time 60 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/install.sh "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.11.8/install.sh"'
     - sha256sum --check .config/mise/install.sha256
-    - 'curl --fail --silent --show-error --connect-timeout 10 --max-time 90 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/mise-v2026.11.7-linux-arm64.tar.gz "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.11.7/mise-v2026.11.7-linux-arm64.tar.gz"'
-    - timeout --signal=TERM --kill-after=5s 120s env MISE_VERSION=2026.11.7 MISE_INSTALL_PATH=/usr/local/bin/mise MISE_INSTALL_HELP=0 MISE_INSTALL_EXT=tar.gz MISE_TARBALL_URL="file://$CI_PROJECT_DIR/build/runtime/work/mise-bootstrap/mise-v2026.11.7-linux-arm64.tar.gz" sh build/runtime/work/mise-bootstrap/install.sh
+    - 'curl --fail --silent --show-error --connect-timeout 10 --max-time 90 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/mise-v2026.11.8-linux-arm64.tar.gz "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.11.8/mise-v2026.11.8-linux-arm64.tar.gz"'
+    - timeout --signal=TERM --kill-after=5s 120s env MISE_VERSION=2026.11.8 MISE_INSTALL_PATH=/usr/local/bin/mise MISE_INSTALL_HELP=0 MISE_INSTALL_EXT=tar.gz MISE_TARBALL_URL="file://$CI_PROJECT_DIR/build/runtime/work/mise-bootstrap/mise-v2026.11.8-linux-arm64.tar.gz" sh build/runtime/work/mise-bootstrap/install.sh
     - mise install --locked --jobs=1
     - mkdir -p build/evidence/ci
   image: public.ecr.aws/docker/library/node:26-trixie@sha256:e18c3ccdf7d71619990b0e85639f506e2028a95410999cab24cc373cbd10e0ac
@@ -46,10 +46,10 @@ verify:linux:review:
 verify:linux:protected:
   before_script:
     - mkdir -p build/runtime/work/mise-bootstrap
-    - 'curl --fail --silent --show-error --connect-timeout 10 --max-time 60 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/install.sh "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.11.7/install.sh"'
+    - 'curl --fail --silent --show-error --connect-timeout 10 --max-time 60 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/install.sh "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.11.8/install.sh"'
     - sha256sum --check .config/mise/install.sha256
-    - 'curl --fail --silent --show-error --connect-timeout 10 --max-time 90 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/mise-v2026.11.7-linux-arm64.tar.gz "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.11.7/mise-v2026.11.7-linux-arm64.tar.gz"'
-    - timeout --signal=TERM --kill-after=5s 120s env MISE_VERSION=2026.11.7 MISE_INSTALL_PATH=/usr/local/bin/mise MISE_INSTALL_HELP=0 MISE_INSTALL_EXT=tar.gz MISE_TARBALL_URL="file://$CI_PROJECT_DIR/build/runtime/work/mise-bootstrap/mise-v2026.11.7-linux-arm64.tar.gz" sh build/runtime/work/mise-bootstrap/install.sh
+    - 'curl --fail --silent --show-error --connect-timeout 10 --max-time 90 --header "JOB-TOKEN: $CI_JOB_TOKEN" --output build/runtime/work/mise-bootstrap/mise-v2026.11.8-linux-arm64.tar.gz "$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/mise/2026.11.8/mise-v2026.11.8-linux-arm64.tar.gz"'
+    - timeout --signal=TERM --kill-after=5s 120s env MISE_VERSION=2026.11.8 MISE_INSTALL_PATH=/usr/local/bin/mise MISE_INSTALL_HELP=0 MISE_INSTALL_EXT=tar.gz MISE_TARBALL_URL="file://$CI_PROJECT_DIR/build/runtime/work/mise-bootstrap/mise-v2026.11.8-linux-arm64.tar.gz" sh build/runtime/work/mise-bootstrap/install.sh
     - mise install --locked --jobs=1
     - mkdir -p build/evidence/ci
   image: public.ecr.aws/docker/library/node:26-trixie@sha256:e18c3ccdf7d71619990b0e85639f506e2028a95410999cab24cc373cbd10e0ac
