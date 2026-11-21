@@ -13,9 +13,3 @@
 - [x] 2.2 Add one line under `## [Unreleased]` / `### Changed` in `CHANGELOG.md` saying that
       GitLab's macOS jobs use the guest's own Mise store and the Windows jobs keep theirs in the
       job's directory; done when the Changelog's format check passes.
-
-## 3. Measure after
-
-- [ ] 3.1 Read the macOS job's `mise install --locked` seconds in the proposal's pipeline and two
-      more runs; done when the three readings are recorded beside those of 1.1 and the Windows job
-      still passes.
