@@ -14,6 +14,10 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ### Changed
 
+- Let GitLab's macOS jobs use the Mise tools already in the macOS guest's own store instead of
+  downloading every locked tool again in each job. The Windows jobs keep their tools in the job's
+  directory, because Mise cannot copy its shims into the Windows runner's shared profile; the Linux
+  jobs start in a new container each time, as before.
 - Run GitLab's Linux jobs in the current `node:26-trixie` image, with Node 26.13.1 and a refreshed
   Debian base.
 - Run GitHub's jobs and GitLab's Linux jobs with Mise 2026.11.10, which the Linux jobs install from
