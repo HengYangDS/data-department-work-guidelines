@@ -20,7 +20,7 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   jobs start in a new container each time, as before.
 - Run GitLab's Linux jobs in the current `node:26-trixie` image, with Node 26.13.1 and a refreshed
   Debian base.
-- Run GitHub's jobs and GitLab's Linux jobs with Mise 2026.11.10, which the Linux jobs install from
+- Run GitHub's jobs and GitLab's Linux jobs with Mise 2026.11.11, which the Linux jobs install from
   the project's package registry. GitLab's macOS and Windows jobs keep the Mise that is installed
   on their runners.
 - Run ETHOS 0.2.0-beta.11 in every lane and hosted job, keep hosted CI artifacts for 14 days,
