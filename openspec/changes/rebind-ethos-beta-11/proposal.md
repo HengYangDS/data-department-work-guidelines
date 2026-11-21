@@ -83,7 +83,7 @@ None. The guidelines, their checks and their publication behave as before, so `.
 
 ## Impact
 
-`.config/mise/config.toml`, `.config/mise/mise.lock`, `.config/ci/verification.toml`,
-`.config/mise/install.sha256`, both generated pipelines, `CHANGELOG.md` and the repository-common
-runtime selection. GitLab's Linux image and the declared peers stay as they are. `tasks.md` is the
-sole progress ledger.
+`.config/mise/config.toml`, `.config/mise/mise.lock`, both generated pipelines, `CHANGELOG.md` and
+the repository-common runtime selection; the hosted jobs' Mise moves in the same lane's Change
+`move-hosted-mise-2026-11-10`. GitLab's Linux image and the declared peers stay as they are.
+`tasks.md` is the sole progress ledger.
