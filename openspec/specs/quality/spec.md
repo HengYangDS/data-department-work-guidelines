@@ -133,7 +133,7 @@ archived source to guidance.
 
 ### Requirement: DDWG source selects one English reader corpus
 
-DDWG SHALL select its current entrypoints, seven department topics, decisions,
+DDWG SHALL select its current entrypoints, department topics, decisions,
 maintenance guidance, and retained source text through the accepted native
 content contract. English and Department terminology SHALL be declared
 parameters. Shared tools SHALL enforce their applicable checks; human review

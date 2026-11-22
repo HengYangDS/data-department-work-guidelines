@@ -72,7 +72,7 @@ reviewer; format, link, local proof, or CI success alone SHALL NOT establish it.
 
 ### Requirement: Task routes preserve the work-quality contract
 
-Entry and seven topics SHALL retain hard boundaries, risk-scaled minimums,
+Entry and every topic SHALL retain hard boundaries, risk-scaled minimums,
 six task boundaries, work states, evidence limits, and learning triggers.
 Problem resolution, tested bounded judgment, and system improvement SHALL stay
 distinct. Topics SHALL expose start, stop, and verification cues without
@@ -96,7 +96,8 @@ reports SHALL name gap, impact, and escalation.
 
 #### Scenario: Numbered clauses omit an original chapter introduction
 
-- **WHEN** the retired guidelines are used to check the seven current topics
+- **WHEN** the retired guidelines are used to check the current topics that
+  replaced them
 - **THEN** the review SHALL cover the complete original text, including chapter
   introductions, diagrams, action cards, templates, and final checks outside
   numbered subsections
