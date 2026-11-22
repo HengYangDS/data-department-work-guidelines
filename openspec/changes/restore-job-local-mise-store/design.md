@@ -12,9 +12,10 @@ See [proposal.md](proposal.md). ETHOS's CI model unifies `[gitlab.variables]` wi
 
 **Non-Goals:**
 
-- A faster macOS job. A shared store with a verification step (an empty data directory per job, or a
-  check of each installed tree against the lock) is a later choice for the owner, with its trade-off
-  stated in the governance pages.
+- A faster macOS job that stays verifiable, such as a shared download cache with an empty data
+  directory per job (the Mise documentation: "With `--locked`, only pinned downloads are reused, so
+  a restored download cache is safe to trust"). That is a later choice for the owner, with its
+  trade-off stated in the governance pages.
 
 ## Decisions
 
@@ -27,5 +28,7 @@ See [proposal.md](proposal.md). ETHOS's CI model unifies `[gitlab.variables]` wi
 
 ## Migration Plan
 
-Move the variables back, generate the pipelines, prove the archived head, read the hosted jobs, and
-land. To roll back, apply `share-the-macos-guest-mise-store`'s configuration again.
+Move the variables back and generate the pipelines (task 1.1), and remove the Changelog line (task
+1.2). The lane's proof and the landing are ETHOS lane steps, and the hosted jobs are the forges'
+runs; each keeps its own record. To roll back, apply `share-the-macos-guest-mise-store`'s
+configuration again.
