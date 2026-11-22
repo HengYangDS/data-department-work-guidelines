@@ -83,8 +83,8 @@ silently choose the convenient rule.
 2. **Stay in bounds.** You must not cross the applicable subject, time,
    professional competence, permission, data, security, compliance, or action
    limits.
-3. **Name the owner.** Important judgments, decisions, changes, and acceptances
-   must have an accountable person.
+3. **Name the owner.** Judgments, decisions, changes, and acceptances must have
+   an accountable person.
 4. **Do not claim false completion.** You must not claim a result is complete,
    correct, usable, or adopted without current evidence matching that claim.
 

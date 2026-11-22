@@ -24,6 +24,12 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   promotion after two consecutive periods at S or A with the next grade's responsibility carried;
   and hiring against the same grades. The scoring section links to it.
 
+### Fixed
+
+- Make the third non-negotiable boundary bind every risk level: judgments, decisions, changes, and
+  acceptances must have an accountable person. "Important" had left it open whether L0 work was
+  meant; at L0 the accountable person is the one doing the work, with no added record.
+
 ## [9.0.0] - 2026-11-22
 
 ### Changed
