@@ -157,10 +157,10 @@ member reasoning, and the existing decision authority.
 Domain owners SHALL define meaning, quality, suitable use and judgment.
 Production owners SHALL ensure reliable long-term operation. Platform owners
 SHALL abstract repeated cross-domain capability. Governance owners SHALL operate
-asset admission, use admission, permissions, lineage, review, veto and exit in
-the workflow. Delivery owners SHALL expose priorities, resources, dependencies,
-risks and open decisions. Shared interfaces SHALL NOT transfer responsibility or
-authority. Owners SHALL remain accountable.
+admission, permissions, lineage, review, veto and exit in the workflow. Delivery
+owners SHALL expose priorities, resources, dependencies, risks and open decisions.
+Shared interfaces SHALL NOT transfer responsibility or authority. Owners SHALL
+remain accountable.
 
 #### Scenario: Research does not need a production feed
 

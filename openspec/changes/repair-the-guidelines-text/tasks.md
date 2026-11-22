@@ -31,8 +31,9 @@
 ## 4. Data admission, risk levels and definitions
 
 - [x] 4.1 Name asset admission and use admission on the data page and in `work-practice`; done when
-      "admission" never stands alone for either act. Asset admission and use admission are named on
-      the data page, in the charter and in `work-practice`.
+      "admission" never stands alone for one of the two acts. Asset admission and use admission are
+      named on the data page, in the charter and in `work-practice`'s scenarios; the requirement's
+      own text keeps "admission" for both, within OpenSpec's 500-character limit.
 - [x] 4.2 Replace the four risk qualifiers with L1 or L2 work and name L0 low risk in the charter's
       table, in the pages, `work-practice` and `guidance-discovery`; done when none of the four
       words remains as a qualifier. The four qualifiers read L1 or L2 work; the charter's table
