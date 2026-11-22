@@ -1,9 +1,9 @@
 # Data Department Work Guidelines
 
-We turn signals from the world into judgments and data assets that can be
-explained, checked, and used within clear limits. These guidelines help us tell
-apart facts, responsibility, action, and evidence. They do not require every
-task to fill out the same form.
+We turn signals from the world into judgments, data assets, and actions that
+can be explained, checked, and relied on within clear limits. These guidelines
+help us tell apart facts, responsibility, action, and evidence. They do not
+require every task to fill out the same form.
 
 **Start with your work question:** the [documentation map](docs/README.md)
 leads to the applicable rule and its limits. You do not need to read every

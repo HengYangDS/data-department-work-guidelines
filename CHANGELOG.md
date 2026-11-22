@@ -45,6 +45,9 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   authorized designation, weak structural signals as a description rather than a condition, L0 named
   low risk in the charter's table, the end-to-end result of a whole task with its task lead, and
   repeated Agent work stated plainly.
+- State the value of data work alike in the README and the charter: judgments, data assets, and
+  actions that can be explained, checked, and relied on within clear limits. The README had left
+  out actions.
 - Run GitLab's Linux jobs in the current `node:26-trixie` image, with Node 26.13.1 and a refreshed
   Debian base.
 - Run GitHub's jobs and GitLab's Linux jobs with Mise 2026.11.11, which the Linux jobs install from
