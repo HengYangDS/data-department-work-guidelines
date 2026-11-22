@@ -58,6 +58,8 @@ the same guidance; each topic owns its rules and points to the related work.
     output](human-agent.md#check-agent-output).
 - [Coach a member](evolve.md#grow-capability-through-real-work): Review the reasoning
   at important decisions and agree on an observable improvement for the next task.
+- [Assess a period or a promotion](grow.md#assess-fairly): Judge a member's work
+  at their own grade from records, with two assessors and no quota.
 - [Improve a practice](evolve.md#admit-practices-and-prevent-recurrence):
   Review risks and feedback, and keep or retire practices from net benefit.
   - Review rhythm: Adjust the

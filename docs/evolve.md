@@ -129,8 +129,10 @@ boundaries](charter.md#four-non-negotiable-boundaries).
 
 If scoring is used, you should define its levels, observable behavior, and
 purpose. A score expresses delivery risk; it must not label a person or stand
-for their overall worth. If a five-level review is used, you should keep its
-meaning stable:
+for their overall worth. It judges one piece of work; a member's work over a
+period is judged by a [tier at their
+grade](grow.md#tiers-performance-at-ones-own-grade). If a five-level review is
+used, you should keep its meaning stable:
 
 | Level             | Observable delivery risk                                                                         |
 | ----------------- | ------------------------------------------------------------------------------------------------ |

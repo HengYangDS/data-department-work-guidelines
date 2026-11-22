@@ -10,6 +10,7 @@ normative_sources = [
   "docs/communicate.md",
   "docs/human-agent.md",
   "docs/evolve.md",
+  "docs/grow.md",
 ]
 record_roots = [
   "docs/decisions/",

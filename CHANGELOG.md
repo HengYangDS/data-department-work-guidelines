@@ -12,6 +12,18 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [9.1.0] - 2026-11-22
+
+### Added
+
+- Add [grades, tiers, and growth](docs/grow.md): a work score judges one piece of work, a tier a
+  member's work over one period at their own grade, and a grade the responsibility they have shown
+  they can reliably carry. One professional sequence of eight grades in four bands (器: 学徒,
+  专员; 术: 初级, 中级; 法: 高级, 资深; 道: 专家, 首席); six tiers, S to E, with B as the grade's
+  bar; the evidence a tier needs; assessment by two assessors from records, with no quota;
+  promotion after two consecutive periods at S or A with the next grade's responsibility carried;
+  and hiring against the same grades. The scoring section links to it.
+
 ## [9.0.0] - 2026-11-22
 
 ### Changed
