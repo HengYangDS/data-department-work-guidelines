@@ -19,8 +19,8 @@ or its consequences are unclear, and either ask an authorized person to decide
 or escalate. Use [execution and delivery](deliver.md) to verify a later result.
 
 The value of data work is not a file acquired, a table produced, a report
-written, or a process started. This guideline is a work-quality contract against
-four failures:
+written, or a process started. These guidelines are a work-quality contract
+against four failures:
 
 - Disordered reasoning that confuses facts with choices.
 - Quick fixes that leave the underlying mechanism untouched.
@@ -68,7 +68,7 @@ factual evidence does not itself grant permission to act.
 
 If an authorized request conflicts with verified facts, you must report the
 conflict and its impact. You must not alter the record or silently act as if
-either authority had resolved the other.
+either authority had overridden the other.
 
 Project rules may refine sources of truth, permissions, and acceptance. They
 should link to these guidelines rather than restate shared rules. If they
@@ -84,7 +84,7 @@ silently choose the convenient rule.
    professional competence, permission, data, security, compliance, or action
    limits.
 3. **Name the owner.** Important judgments, decisions, changes, and acceptances
-   have an accountable person.
+   must have an accountable person.
 4. **Do not claim false completion.** You must not claim a result is complete,
    correct, usable, or adopted without current evidence matching that claim.
 
@@ -120,7 +120,7 @@ review; they do not replace judgment, authorization, or human acceptance.
 
 For urgent containment, follow [emergencies and exceptions](evolve.md#emergencies-and-exceptions).
 
-You should not call a task L0 merely to avoid a necessary record. Within every
+You must not call a task L0 merely to avoid a necessary record. Within every
 level, facts, scope, ownership, evidence, and acceptance must remain clear. For
 a cross-domain task, you must name accountable ownership and the professional
 interfaces: what each side needs and what evidence accompanies delivery.

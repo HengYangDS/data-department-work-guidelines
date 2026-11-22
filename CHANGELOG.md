@@ -18,11 +18,11 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 - Prepare v9.0.0 for incompatible duties. "Important work", "consequential delegation",
   "high-impact" work, and "important result or decision" now mean L1 or L2 work, so L1 work gains
-  the duties those words carried. Every imperative outside pointers and examples now states its
-  force: it says must, must not, should, or may as the accepted requirement that covers it states;
-  what no requirement states takes should, should not, or may, and a restatement of the four
-  non-negotiable boundaries takes must or must not. Before upgrading, recheck L1 work against
-  [problem framing](docs/decide.md#frame-the-right-problem),
+  the duties those words carried. Every imperative outside pointers, examples, and the quoted
+  definition now states its force: it says must, must not, should, or may as the accepted
+  requirement that covers it states; what no requirement states takes should, should not, or may,
+  and a restatement of the four non-negotiable boundaries takes must or must not. Before upgrading,
+  recheck L1 work against [problem framing](docs/decide.md#frame-the-right-problem),
   [delegation](docs/human-agent.md#delegate-a-boundary-not-a-pile-of-context), [closing
   work](docs/deliver.md#close-the-work), and [data
   ownership](docs/data.md#ownership-and-change-boundaries), and recheck any practice you treated as

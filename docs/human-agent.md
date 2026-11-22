@@ -14,7 +14,7 @@ tests, or review to an Agent.
 Agents extend people's capacity to investigate, reason, and act within a
 delegated boundary. People retain direction, authorization, decisions, and
 responsibility for consequences. An Agent is an executing or reasoning entity,
-not a source of organizational authorization. You must stop when the target,
+not a source of organizational authorization. It must stop when the target,
 fact source, responsible person, or permission cannot be established; a person
 checks the actual work and evidence before accepting an Agent's result.
 
@@ -41,8 +41,8 @@ path, and who approves irreversible actions.
 
 If missing context does not materially affect direction, safety, or authority,
 the Agent should continue with reasonable stated assumptions. If the target,
-fact source, responsible person, authority, or irreversible consequence cannot
-be established, the Agent must stop and ask. “Finish this for me” is not an
+fact source, responsible person, authority, or consequence cannot be
+established, the Agent must stop and ask. “Finish this for me” is not an
 authorization boundary.
 
 > **Illustrative delegation:** “Compare the vendor's earlier and revised price
@@ -84,10 +84,10 @@ work, not that duty.
    and evidence to the authorized acceptor.
 4. The authorized acceptor checks the work and evidence against the agreed conditions.
 
-| Conditions | Response                                                                            |
-| ---------- | ----------------------------------------------------------------------------------- |
-| Unmet      | You must return the work to the member for revision within the delegation boundary. |
-| Met        | You must accept the work, record acceptance, and hand off the result.               |
+| Conditions | Response                                                                                     |
+| ---------- | -------------------------------------------------------------------------------------------- |
+| Unmet      | The acceptor must return the work to the member for revision within the delegation boundary. |
+| Met        | The acceptor must accept the work, record acceptance, and hand off the result.               |
 
 An Agent's summary cannot substitute for examination of the actual work and
 evidence. These roles may belong to the same person. People retain direction,
@@ -105,7 +105,7 @@ A member checks the actual work, not just the Agent's prose summary:
   inspect counterexamples, risks, non-goals, and uncovered cases.
 - You must confirm that verification actually ran against the current version
   and correct environment, the completion claim stays within its evidence, and
-  an authorized person explicitly approved high-risk actions.
+  the decision owner explicitly approved high-risk actions.
 - You should preserve reviewable outputs, evidence, and follow-up ownership.
 
 Even checked Agent output becomes a durable team fact only when
@@ -146,9 +146,9 @@ test or review code, analysis, and documents in proportion to risk.
 
 ### Parallel Work
 
-You may use multiple Agents in parallel only when independent questions, paths,
-or review angles can be separated. You must default parallel work to independent
-read-only research, review, or cross-checking.
+You must not use multiple Agents in parallel unless independent questions,
+paths, or review angles can be separated. You should default parallel work to
+independent read-only research, review, or cross-checking.
 
 You must give each subtask explicit inputs, outputs, scope, stop conditions, and
 ownership. You must name an integration owner to resolve conflicts, remove
@@ -161,7 +161,8 @@ ownership.
 
 ## Stop and Handoff
 
-You must stop the affected action and escalate if any of these conditions holds:
+An Agent must stop the affected action and escalate if any of these conditions
+holds:
 
 - Instructions materially conflict, or the target, fact source, or responsible
   person cannot be identified.

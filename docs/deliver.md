@@ -12,7 +12,7 @@ relations:
 completion.
 
 You must make the commitment, owner, and completion condition visible first. The
-form may shrink with risk; the chain of trust may not skip a link. When
+form may shrink with risk; the chain of trust must not skip a link. When
 authority, the target, or critical facts are missing, you must follow the [stop
 rule](charter.md#purpose).
 
@@ -51,7 +51,7 @@ record so collaborators work from the same commitment.
 
 ## Close the Work
 
-You may say “complete” only when **all** conditions hold:
+You must not say “complete” unless **all** conditions hold:
 
 - The deliverable is at the agreed location.
 - Every completion criterion is satisfied.
@@ -79,12 +79,12 @@ see [repository governance](governance/README.md).
 
 ## The Working Loop
 
-1. You must **frame** the subject, outcome, and limits.
-2. You should **analyze** facts, the model, and alternatives.
-3. You must **decide** within authority.
-4. You must **execute** bounded action.
-5. You must **verify** current evidence.
-6. You should **learn** what to retain, revise, or retire.
+1. **Frame** the subject, outcome, and limits.
+2. **Analyze** facts, the model, and alternatives.
+3. **Decide** within authority.
+4. **Execute** bounded action.
+5. **Verify** current evidence.
+6. **Learn** what to retain, revise, or retire.
 
 These actions guide the work; they are not mandatory separate stages. When
 evidence or risk changes, you must review the affected judgment. You must frame
@@ -118,7 +118,7 @@ Every completion claim must answer: **What is claimed, about which subject and
 version, verified when, by whom, using what method, covering what, and leaving
 what unproved?** Evidence must be current, reviewable, and matched to the
 claim's scope. When evidence is missing, you must narrow the claim rather than
-enlarge the language.
+inflate the wording.
 
 | What was observed                                | What it does not establish by itself                                          |
 | ------------------------------------------------ | ----------------------------------------------------------------------------- |

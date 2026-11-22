@@ -138,8 +138,8 @@ Analysis, proposal, and decision documents should follow this order by default:
 
 1. You must give the title's subject, purpose, and status, and then you should
    summarize the conclusion, decisive facts, and requested decision.
-2. You should explain the background and problem, then must explain scope,
-   non-goals, and constraints.
+2. You should explain the background and problem, and then you must explain
+   scope, non-goals, and constraints.
 3. You should present facts, evidence, and unknowns, then the model and
    alternative explanations, followed by options and trade-offs.
 4. You should state the recommendation or decision. You should pair each
@@ -163,8 +163,8 @@ gaps. You should link to an existing source of truth rather than copying it.
 
 You must revise every sentence that does not help the reader understand, judge,
 or act. You must combine repetition and remove filler; you must keep examples,
-qualifications, and transitions that carry meaning. You may keep a shorter
-version only if it preserves the facts, reasoning, limits, responsibilities, and
+qualifications, and transitions that carry meaning. You must not keep a shorter
+version unless it preserves the facts, reasoning, limits, responsibilities, and
 expressive quality. No deletion fraction or fixed document shape is a writing
 standard.
 

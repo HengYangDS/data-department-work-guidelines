@@ -117,7 +117,7 @@ boundaries](charter.md#four-non-negotiable-boundaries). A member should reliably
 carry critical responsibilities within their competence and authority, without
 depending on repeated rescue. Required review and acceptance still apply.
 
-You may call a result exceptional only when it produces evidenced net benefit,
+You must not call a result exceptional unless it produces evidenced net benefit,
 transfers a method, reduces long-term complexity, and improves others' capacity.
 Exceptional performance also shows the ability to [detect weak structural
 signals](#detect-drift-before-failure); this describes such results and is not a
@@ -166,19 +166,19 @@ risk, verify at the end, and preserve a handoff when interrupted. You must
 escalate high-risk signals when observed; a calendar must not delay containment
 or a decision.
 
-You must maintain a regular review rhythm, not just a response to incidents. The
-department head or appointed guideline maintainer owns it. You must use these
-defaults during active work:
+The department head or appointed guideline maintainer owns a regular review
+rhythm, not just a response to incidents, and must maintain it. The owner should
+use these defaults during active work:
 
-| Review                          | Default interval | Required result                                                                                                                                                                              |
-| ------------------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Calibrate judgment              | Weekly           | You must compare real work samples against evidence and criteria; you must correct a misunderstanding or identify a coaching need.                                                           |
-| Review mechanisms               | Monthly          | You must examine recurring failures, weak signals, escaped quality issues, Agent misuse, and needless coordination; you must decide the correction, owner, and next action.                  |
-| Review practices and capability | Quarterly        | With the people using the practices, you must assess rules, templates, tools, and Agent workflows for net benefit; you must keep, revise, or retire them and identify capability priorities. |
+| Review                          | Default interval | Required result                                                                                                                                                                      |
+| ------------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Calibrate judgment              | Weekly           | Must compare real work samples against evidence and criteria; must correct a misunderstanding or identify a coaching need.                                                           |
+| Review mechanisms               | Monthly          | Must examine recurring failures, weak signals, escaped quality issues, Agent misuse, and needless coordination; must decide the correction, owner, and next action.                  |
+| Review practices and capability | Quarterly        | With the people using the practices, must assess rules, templates, tools, and Agent workflows for net benefit; must keep, revise, or retire them and identify capability priorities. |
 
 The owner may adjust an interval for work volume, risk, the speed of change, and
-the quality of existing feedback. You must record the reason and next review
-time in an existing work record; you must revisit the choice when those
+the quality of existing feedback. The owner must record the reason and next
+review time in an existing work record and must revisit the choice when those
 conditions change. You must preserve all three review purposes rather than
 silently dropping periodic review. A trial or high-risk task needs a review
 point before its evidence or authorization expires; an urgent signal must not
@@ -234,9 +234,9 @@ threatens data, production, downstream use, or compliance:
 1. **Whoever discovers it** takes containment steps within their existing
    authority and notifies the responsible data or production owner.
 2. **The person responsible for the affected work**, usually the task lead, owns
-   the response and follow-through. You must preserve the inputs and versions
+   the response and follow-through. They must preserve the inputs and versions
    needed to establish the impact and verify a correction. If the response needs
-   further permission, you must escalate to the decision owner.
+   further permission, they must escalate to the decision owner.
 
 The [hard boundaries](charter.md#four-non-negotiable-boundaries) still apply:
 you must report known facts and uncertainty honestly, keep responsibility
