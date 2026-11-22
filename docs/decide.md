@@ -11,10 +11,11 @@ relations:
 **When to use:** The task is unclear, an anomaly needs explanation, or a choice
 must be made.
 
-Identify the decision the analysis must support before choosing
-its depth. Do not begin by filling a template or collecting material. If the
-decision owner or subject is unknown, pause the affected action; test a proposed
-answer against shared criteria, counterexamples, and stated limits.
+You should identify the decision the analysis must support before choosing its
+depth. You should not begin by filling a template or collecting material. If the
+decision owner or subject is unknown, you must follow the [stop
+rule](charter.md#purpose); you should test a proposed answer against shared
+criteria, counterexamples, and stated limits.
 
 For an unclear task, [frame the problem](#frame-the-right-problem). For an
 anomaly or failed result, [diagnose the cause and prevention
@@ -25,7 +26,7 @@ an authorized decision.
 
 ## Frame the Right Problem
 
-In the existing ticket, discussion, or proposal, answer:
+In the existing ticket, discussion, or proposal, you must answer:
 
 - **Decision:** Who must decide what, and by when?
 - **Problem:** What is the subject, who is affected, and what are the present
@@ -38,14 +39,15 @@ In the existing ticket, discussion, or proposal, answer:
 A low-risk matter may need one conversation; L1 and L2 work needs a reviewable
 record under the [charter's risk levels](charter.md#form-follows-risk).
 
-Name the time, cost, compliance, technical, and resource constraints. A target
-without those limits is not an executable commitment.
+You must name the time, cost, compliance, technical, and resource constraints. A
+target without those limits is not an executable commitment.
 
-If the subject, authority, or irreversible consequences are unclear, stop the
-affected action and ask an authorized person to decide. **Collecting information
-is not the goal; explain which judgment it could change.**
+If the subject, authority, or consequences are unclear, you must follow the
+[stop rule](charter.md#purpose). **Collecting information is not the goal; you
+should explain which judgment it could change.**
 
-For important work, make six boundaries explicit:
+For [L1 and L2 work](charter.md#form-follows-risk), you should make six
+boundaries explicit:
 
 - **Subject:** The system, data, people, or decision.
 - **Scope:** What is in and out.
@@ -70,8 +72,8 @@ An attractive solution to an unnamed subject is not yet a proposal.
 
 A retelling, cache, Agent analysis, or “this is usually true” may provide a
 lead; it does not become a fact without verification. If the subject,
-definition, comparison criterion, or time cutoff changes during discussion, say
-so explicitly.
+definition, comparison criterion, or time cutoff changes during discussion, you
+must say so explicitly.
 
 For example, a pipeline log records 4 timeouts in 12 runs of the same revision
 in one test environment. This is an illustrative observation about those runs,
@@ -82,51 +84,56 @@ when checking a repair; a later success does not erase them.
 
 ## Use the Smallest Sufficient Model
 
-1. **Model the relationships.** Define the central concepts and subjects. Keep
-   one meaning for each concept within the same discussion, then identify
-   causal, dependency, constraint, and feedback relationships.
+1. **Model the relationships.** You should define the central concepts and
+   subjects. You must keep one meaning for each concept within the same
+   discussion, then identify causal, dependency, constraint, and feedback
+   relationships.
 
-   Use one consistent basis to divide the problem at each level. Cover every
-   part needed for the decision and explain how it connects to that decision.
-   Show material gaps, shared causes, and cross-cutting constraints; do not
-   force interacting parts into non-overlapping boxes or count the same effect
-   twice. A long list or polished prose cannot substitute for that model.
+   You must use one consistent basis to divide the problem at each level. You
+   must cover every part needed for the decision and explain how it connects to
+   that decision. You must show material gaps, shared causes, and cross-cutting
+   constraints; you must not force interacting parts into non-overlapping boxes
+   or count the same effect twice. A long list or polished prose cannot
+   substitute for that model.
 
-2. **Bind the observations.** Attach source and time to important facts; state
-   how each unknown affects the decision. Separate observation from explanation.
-3. **Test the hypotheses.** Offer falsifiable hypotheses. Check counterexamples,
-   the baseline, and the option of not acting. Prefer the smallest experiment
-   that distinguishes plausible explanations.
+2. **Bind the observations.** You should attach source and time to important
+   facts; you should state how each unknown affects the decision. You should
+   separate observation from explanation.
+3. **Test the hypotheses.** You should offer falsifiable hypotheses. You should
+   check counterexamples, the baseline, and the option of not acting. You should
+   prefer the smallest experiment that distinguishes plausible explanations.
 
-   Rank candidates by explanatory power, likelihood under the known facts, and
-   the cost of a decisive test. An easy test does not make a weak explanation
-   more likely.
+   You should rank candidates by explanatory power, likelihood under the known
+   facts, and the cost of a decisive test. An easy test does not make a weak
+   explanation more likely.
 
-4. **Bound the conclusion.** Give a bounded conclusion: what the evidence
-   supports, your confidence and limits, what remains possible, the next
-   verification action, and what later observation would change the judgment.
+4. **Bound the conclusion.** You must give a bounded conclusion: what the
+   evidence supports, your confidence and limits, what remains possible, the
+   next verification action, and what later observation would change the
+   judgment.
 
 ### Diagnose a Failure and Its Prevention Gap
 
-For an incident, anomaly, delay, quality problem, or recurring dispute, preserve
-the original symptom and timeline, including changes before it began;
-distinguish affected from unaffected subjects,
-and explain both the direct cause and **why the existing system did not prevent
-or detect it in time**. Address immediate containment, direct repair, and
-prevention of recurrence as distinct layers. Choose the lightest prevention
+For an incident, anomaly, delay, quality problem, or recurring dispute, you must
+preserve the original symptom and timeline, including changes before it began;
+you must distinguish affected from unaffected subjects, and explain both the
+direct cause and **why the existing system did not prevent or detect it in
+time**. You should address immediate containment, direct repair, and prevention
+of recurrence as distinct layers. You must choose the lightest prevention
 measure sufficient for the risk. Completing only the first two is not a systemic
 fix.
 
-Reproduce the original symptom with recorded inputs and conditions when it is
-safe to do so. If reproduction is unsafe or unavailable, define an observation
-or sampling plan that could distinguish the leading hypotheses. After a repair,
-check the original symptom, adjacent paths, and unintended side effects; name
-what was not exercised. In review, distinguish judgments that helped from those
-that failed, and explain why; a fix without changed judgment invites recurrence.
+You must reproduce the original symptom with recorded inputs and conditions when
+it is safe to do so. If reproduction is unsafe or unavailable, you must define
+an observation or sampling plan that could distinguish the leading hypotheses.
+After a repair, you must check the original symptom, and should check adjacent
+paths and unintended side effects; you must name what was not exercised. In
+review, you should distinguish judgments that helped from those that failed, and
+explain why; a fix without changed judgment invites recurrence.
 
 ### Check the Reasoning
 
-Check the reasoning for:
+You should check the reasoning for:
 
 - Correlation presented as causation.
 - A case presented as a population.
@@ -139,41 +146,41 @@ Check the reasoning for:
 
 ## Make the Choice Comparable and Actionable
 
-- **Compare options:** Include feasible options, including the status quo.
-  Compare them on the same basis: benefit, cost, risk, reversibility, and
-  opportunity cost.
-- **Test the fit:** Prefer an option that solves the framed problem, removes
-  the main failure mode, and operates within current boundaries and resources.
-  It should be verifiable, observable, and recoverable, reduce total maintenance
-  and reliance on individual memory, repeated coordination, and manual rescue,
-  and have clear exit and replacement conditions. Novelty, completeness, or
-  popularity does not establish suitability.
-- **Recommend:** State the premises, strongest objection, first step if chosen,
-  and revisit trigger.
+- **Compare options:** You should include feasible options, including the status
+  quo. You should compare them on the same basis: benefit, cost, risk,
+  reversibility, and opportunity cost.
+- **Test the fit:** You should prefer an option that solves the framed problem,
+  removes the main failure mode, and operates within current boundaries and
+  resources. It should be verifiable, observable, and recoverable, reduce total
+  maintenance and reliance on individual memory, repeated coordination, and
+  manual rescue, and have clear exit and replacement conditions. Novelty,
+  completeness, or popularity does not establish suitability.
+- **Recommend:** You should state the premises, strongest objection, first step
+  if chosen, and revisit trigger.
 
 The authorized person decides; a long analysis cannot stand in for authorization.
 
 ### Record the Choice and Next Action
 
-Once a choice is made, use the [decision-document order](communicate.md#structure-a-decision-document)
-and record what was decided, by whom, on what date, and why, with its revisit
-trigger in the existing work record. Record the first action,
-its owner, and its completion condition there too. A deadline says when a
-decision is needed; it does not establish when approval occurred.
+Once a choice is made, you should use the [decision-document
+order](communicate.md#structure-a-decision-document) and must record what was
+decided, by whom, on what date, and why, with its revisit trigger in the
+existing work record. You must record the first action, its owner, and its
+completion condition there too. A deadline says when a decision is needed; it
+does not establish when approval occurred.
 
 ### Decision Readiness
 
-When a proposal cannot yet proceed, distinguish its decision readiness from the
-state of execution:
+When a proposal cannot yet proceed, you should distinguish its decision
+readiness from the state of execution:
 
-| State    | Say and do                                                                                |
-| -------- | ----------------------------------------------------------------------------------------- |
-| Ready    | Ready for the authorized owner's decision, not approved or accepted.                      |
-| Blocked  | Name the unacceptable gap, owner, and condition for release.                              |
-| Deferred | Name the missing information or timing condition, how to resolve it, and when to revisit. |
+| State    | Say and do                                                                                         |
+| -------- | -------------------------------------------------------------------------------------------------- |
+| Ready    | Ready for the authorized owner's decision, not approved or accepted.                               |
+| Blocked  | You must name the unacceptable gap, owner, and condition for release.                              |
+| Deferred | You must name the missing information or timing condition, how to resolve it, and when to revisit. |
 
 “Agreed in principle,” “keep looking,” and “continue progressing” are not
-decisions. Correct a conclusion when new facts overturn it rather than
-protecting sunk costs or earlier wording. Once action begins, use
-[execution and delivery](deliver.md) for dependencies, verification, and
-completion claims.
+decisions. You must correct a conclusion when new facts overturn it rather than
+protecting sunk costs or earlier wording. Once action begins, use [execution and
+delivery](deliver.md) for dependencies, verification, and completion claims.

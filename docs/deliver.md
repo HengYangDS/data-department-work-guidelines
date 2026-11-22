@@ -11,10 +11,10 @@ relations:
 **When to use:** Before acting, reporting progress, accepting work, or claiming
 completion.
 
-Make the commitment, owner, and completion condition visible first.
-The form may shrink with risk; the chain of trust may not skip a link. Pause the
-affected action and escalate when authority, the target, or critical facts are
-missing.
+You must make the commitment, owner, and completion condition visible first. The
+form may shrink with risk; the chain of trust may not skip a link. When
+authority, the target, or critical facts are missing, you must follow the [stop
+rule](charter.md#purpose).
 
 Before changing anything, [check the commitment](#before-acting). To report or
 accept a result, [apply the completion conditions](#close-the-work).
@@ -23,11 +23,11 @@ accept a result, [apply the completion conditions](#close-the-work).
 > current evidence → bounded claim → acceptance and learning.
 
 These duties can share one work record; each step does not need its own
-document. [L0 work](charter.md#form-follows-risk) may close in one exchange.
-For L1 and L2 work, follow the [charter's risk levels](charter.md#form-follows-risk)
-for the required record and safeguards, using the existing ticket, review, or
-project document.
-Urgent containment follows [emergencies and exceptions](evolve.md#emergencies-and-exceptions).
+document. [L0 work](charter.md#form-follows-risk) may close in one exchange. For
+L1 and L2 work, you must follow the [charter's risk
+levels](charter.md#form-follows-risk) for the required record and safeguards,
+using the existing ticket, review, or project document. Urgent containment
+follows [emergencies and exceptions](evolve.md#emergencies-and-exceptions).
 
 ## Before Acting
 
@@ -41,37 +41,37 @@ Urgent containment follows [emergencies and exceptions](evolve.md#emergencies-an
 - **What if it goes wrong?** Triggers to pause, degrade, roll back, or hand
   control to a person.
 
-Check the actual target location, version, environment, current state,
-concurrent work, and recovery path before making a change. Expose critical-path
-blockers when observed; do not wait for dependent work to fail. Activity volume
-and “active progress” are not state changes. If scope or risk materially changes,
-return to the authorized decision owner. Record the change and the decision
-that resolves it in the existing work record so collaborators work from the
-same commitment.
+You must check the actual target location, version, environment, current state,
+concurrent work, and recovery path before making a change. You must expose
+critical-path blockers when observed; you must not wait for dependent work to
+fail. Activity volume and “active progress” are not state changes. If scope or
+risk materially changes, you must return to the authorized decision owner. You
+must record the change and the decision that resolves it in the existing work
+record so collaborators work from the same commitment.
 
 ## Close the Work
 
-Say “complete” only when **all** conditions hold:
+You may say “complete” only when **all** conditions hold:
 
 - The deliverable is at the agreed location.
 - Every completion criterion is satisfied.
 - Current verification matching the claim has run and passed.
 - Risks, limits, uncovered cases, and follow-up ownership are recorded.
-- The agreed lifecycle state is reached.
+- The agreed [lifecycle state](#name-the-state-not-the-effort) is reached.
 - When human acceptance is required, an authorized person has accepted the
   result.
 
 A nearby state or a planned check does not satisfy this gate.
 
-For L1 and L2 work, leave the material decision, actual result, limits, and
-remaining owner in the existing work record. Without a reviewable record, do
-not say the organization has learned from the work.
+For L1 and L2 work, you must leave the material decision, actual result, limits,
+and remaining owner in the existing work record. Without a reviewable record,
+you must not say the organization has learned from the work.
 
-Before calling high-impact or repeated work complete, leave the necessary
-test, monitor, rule, or recovery
-path in the existing system of responsibility so the next occurrence is found
-earlier and judged more easily. Do not create an unconsumed evidence
-directory or report to prove effort.
+Before calling [L1 or L2](charter.md#form-follows-risk) or repeated work
+complete, you must leave the necessary test, monitor, rule, or recovery path in
+the existing system of responsibility so the next occurrence is found earlier
+and judged more easily. You should not create an unconsumed evidence directory
+or report to prove effort.
 
 For data delivery, see
 [data quality and adoption](data.md); for this repository's source lifecycle,
@@ -79,45 +79,46 @@ see [repository governance](governance/README.md).
 
 ## The Working Loop
 
-1. **Frame** the subject, outcome, and limits.
-2. **Analyze** facts, the model, and alternatives.
-3. **Decide** within authority.
-4. **Execute** bounded action.
-5. **Verify** current evidence.
-6. **Learn** what to retain, revise, or retire.
+1. You must **frame** the subject, outcome, and limits.
+2. You should **analyze** facts, the model, and alternatives.
+3. You must **decide** within authority.
+4. You must **execute** bounded action.
+5. You must **verify** current evidence.
+6. You should **learn** what to retain, revise, or retire.
 
 These actions guide the work; they are not mandatory separate stages. When
-evidence or risk changes, review the affected judgment. Frame the task again when the
-subject, outcome, or boundaries change; retain verified parts whose inputs and
-conditions still hold. Combine or revisit actions as needed, preserving every
-applicable duty above.
+evidence or risk changes, you must review the affected judgment. You must frame
+the task again when the subject, outcome, or boundaries change; you should
+retain verified parts whose inputs and conditions still hold. You may combine or
+revisit actions as needed, preserving every applicable duty above.
 
 ## Name the State, Not the Effort
 
-| State                 | What it permits you to say                                                                 |
-| --------------------- | ------------------------------------------------------------------------------------------ |
-| Unframed              | The problem, scope, or completion condition is still missing.                              |
-| Planned               | A route and owner exist; execution has not happened.                                       |
-| Executing             | Work is under way; the result has not passed verification.                                 |
-| Blocked               | A prerequisite prevents the affected action; name the gap, its impact, and the escalation. |
-| Awaiting verification | The deliverable exists, but the agreed checks have not passed.                             |
-| Verified              | Checks passed for a stated subject, version, environment, and limit.                       |
-| Accepted              | An authorized acceptor confirmed the agreed result.                                        |
-| Published             | The result reached the agreed publication destination; use remains unproved.               |
-| Effective or in use   | The result operates or is used at the agreed target; state what was observed.              |
+| State                 | What it permits you to say                                                                          |
+| --------------------- | --------------------------------------------------------------------------------------------------- |
+| Unframed              | The problem, scope, or completion condition is still missing.                                       |
+| Planned               | A route and owner exist; execution has not happened.                                                |
+| Executing             | Work is under way; the result has not passed verification.                                          |
+| Blocked               | A prerequisite prevents the affected action; you must name the gap, its impact, and the escalation. |
+| Awaiting verification | The deliverable exists, but the agreed checks have not passed.                                      |
+| Verified              | Checks passed for a stated subject, version, environment, and limit.                                |
+| Accepted              | An authorized acceptor confirmed the agreed result.                                                 |
+| Published             | The result reached the agreed publication destination; use remains unproved.                        |
+| Effective or in use   | The result operates or is used at the agreed target; you must state what was observed.              |
 
-Do not rename “executing” as “almost done,” infer publication from verification,
-or infer actual use from publication. A blocked task can contain useful work;
-the affected action stays blocked until its prerequisite is satisfied.
-Continue independent, authorized work that does not depend on that prerequisite.
+You must not rename “executing” as “almost done,” infer publication from
+verification, or infer actual use from publication. A blocked task can contain
+useful work; the affected action stays blocked until its prerequisite is
+satisfied. You may continue independent, authorized work that does not depend on
+that prerequisite.
 
 ## Evidence Sets the Limit of the Claim
 
 Every completion claim must answer: **What is claimed, about which subject and
 version, verified when, by whom, using what method, covering what, and leaving
 what unproved?** Evidence must be current, reviewable, and matched to the
-claim's scope. When evidence is missing, narrow the claim rather than enlarge
-the language.
+claim's scope. When evidence is missing, you must narrow the claim rather than
+enlarge the language.
 
 | What was observed                                | What it does not establish by itself                                          |
 | ------------------------------------------------ | ----------------------------------------------------------------------------- |

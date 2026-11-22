@@ -46,6 +46,7 @@ CSpell
 DRs
 ESLint
 ETHOS
+Fu(?:'s)?
 GitHub
 GitLab
 OpenSpec
@@ -55,4 +56,5 @@ Taplo
 Trixie
 Vale
 Wasm
+Yan
 Codespell

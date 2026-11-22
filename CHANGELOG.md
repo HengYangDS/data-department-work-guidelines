@@ -14,6 +14,35 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ### Changed
 
+- Prepare v9.0.0 for incompatible duties. "Important work", "consequential delegation",
+  "high-impact" work, and "important result or decision" now mean L1 or L2 work, so L1 work gains
+  the duties those words carried. Every imperative outside pointers and examples now states its force: it says must, must not, should, or may
+  as the accepted requirement that covers it states; what no requirement states
+  takes should, should not, or may, and a restatement of the four non-negotiable boundaries takes
+  must or must not. Before upgrading, recheck L1 work against [problem
+  framing](docs/decide.md#frame-the-right-problem),
+  [delegation](docs/human-agent.md#delegate-a-boundary-not-a-pile-of-context), [closing
+  work](docs/deliver.md#close-the-work), and [data
+  ownership](docs/data.md#ownership-and-change-boundaries), and recheck any practice you treated as
+  mandatory that now reads should.
+- State the four words of force in full: must and must not allow no departure; should and the newly
+  defined should not set the default, from which a stated reason allows departure; may leaves a
+  choice ([form follows risk](docs/charter.md#form-follows-risk)).
+- Quote the single definition of fidelity, clarity, and elegance (信、达、雅) word for word in
+  [communication](docs/communicate.md#write-for-fidelity-clarity-and-elegance); the charter, the
+  README, and the writing requirement link to it instead of restating it.
+- State the stop rule once, in the [charter](docs/charter.md#purpose), with every condition the
+  pages named; a consequence counts whether or not it is irreversible. The other pages link to it.
+- Name the two data admissions: asset admission for the eight conditions of a durable asset, and use
+  admission for a specified use. An admitted asset may serve the uses its last condition lists; any
+  other use needs its own use admission. Define critical management chains as the data chains that
+  feed key management decisions or reports.
+- Correct smaller references and wording: the four non-negotiable boundaries where "hard boundaries"
+  stood, the classification basis, permission for every intended use, the agreed lifecycle state
+  linked to the delivery states, projections that become a source of truth only by explicit
+  authorized designation, weak structural signals as a description rather than a condition, L0 named
+  low risk in the charter's table, the end-to-end result of a whole task with its task lead, and
+  repeated Agent work stated plainly.
 - Run GitLab's Linux jobs in the current `node:26-trixie` image, with Node 26.13.1 and a refreshed
   Debian base.
 - Run GitHub's jobs and GitLab's Linux jobs with Mise 2026.11.11, which the Linux jobs install from

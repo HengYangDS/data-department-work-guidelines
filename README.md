@@ -1,16 +1,16 @@
 # Data Department Work Guidelines
 
 We turn signals from the world into judgments and data assets that can be
-explained, checked, and used within clear limits. These guidelines help us
-separate facts, responsibility, action, and evidence. They do not require every
+explained, checked, and used within clear limits. These guidelines help us tell
+apart facts, responsibility, action, and evidence. They do not require every
 task to fill out the same form.
 
 **Start with your work question:** the [documentation map](docs/README.md)
 leads to the applicable rule and its limits. You do not need to read every
 topic first.
 
-The same care applies to expression: understand the subject accurately, keep
-meaning faithful, and write with clarity, beauty, and taste.
+The same care applies to expression: you must write with [fidelity, clarity, and
+elegance](docs/communicate.md#write-for-fidelity-clarity-and-elegance).
 
 This is a documentation repository. Members and Agents can read and use the
 guidelines without installing software.

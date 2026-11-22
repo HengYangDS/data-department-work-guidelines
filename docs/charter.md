@@ -13,8 +13,10 @@ relations:
 ## Purpose
 
 Start here when the question is who may decide, which facts may be trusted, or
-which boundary must hold. Pause when the subject, authority, or consequence is
-unclear; use [execution and delivery](deliver.md) to verify a later result.
+which boundary must hold. Members and their Agents must stop the affected action
+when its subject or target, the authority or decision owner, the critical facts,
+or its consequences are unclear, and either ask an authorized person to decide
+or escalate. Use [execution and delivery](deliver.md) to verify a later result.
 
 The value of data work is not a file acquired, a table produced, a report
 written, or a process started. This guideline is a work-quality contract against
@@ -30,18 +32,19 @@ A task should resolve the problem, test the judgment and its limits, and leave
 the system better able to recognize or handle the next occurrence. These are
 three distinct outcomes, not three required reports. Data work converts
 real-world signals into reliable judgments, data assets, and actions. Before a
-result enters a lasting work system, apply the
-[data-admission conditions](data.md#admit-a-durable-data-asset).
+result enters a lasting work system, you must apply the [asset-admission
+conditions](data.md#admit-a-durable-data-asset).
 
-Understand the situation and reason from evidence. Use the minimum structure
-needed for a sound decision and a reliable result, without forcing reality
-into a single model. Revise it when the evidence changes. Names, tools, and
-models do not define reality. Old approaches, tools, identities, documents, and
-sunk costs do not outrank new facts.
+You should understand the situation and reason from evidence. You must use the
+minimum structure needed for a sound decision and a reliable result, without
+forcing reality into a single model. You must revise it when the evidence
+changes. Names, tools, and models do not define reality. Old approaches, tools,
+identities, documents, and sunk costs do not outrank new facts.
 
 ## Two Kinds of Authority
 
-**Authority to act** answers who may decide what to do. Apply this order:
+**Authority to act** answers who may decide what to do. You must apply this
+order:
 
 1. Law, regulation, security requirements, and mandatory company policy.
 2. Within those boundaries, the explicit decision of the authorized owner for
@@ -50,88 +53,90 @@ sunk costs do not outrank new facts.
 4. Work plans, provisional agreements, and personal preferences.
 
 Projects may clarify this order. Clarifying it does not grant waiver authority;
-establish the authority to waive an obligation and resolve any conflict before
-acting.
+you must establish the authority to waive an obligation and resolve any conflict
+before acting.
 
 An Agent, tool, or repository file cannot grant organizational authority to
 itself.
 
-**Authority about facts** answers what can establish what is true. Prefer
-primary records and repeatable observations with a source, time, subject, and
-scope. Analysis and formal records must trace back to their original basis.
+**Authority about facts** answers what can establish what is true. You should
+prefer primary records and repeatable observations with a source, time, subject,
+and scope. Analysis and formal records must trace back to their original basis.
 Secondhand accounts, caches, generated views, Agent output, and memory are
 leads, not verified facts. Authority to act cannot make a false fact true;
 factual evidence does not itself grant permission to act.
 
-If an authorized request conflicts with verified facts, report the conflict
-and its impact. Do not alter the record or silently act as if either authority
-had resolved the other.
+If an authorized request conflicts with verified facts, you must report the
+conflict and its impact. You must not alter the record or silently act as if
+either authority had resolved the other.
 
 Project rules may refine sources of truth, permissions, and acceptance. They
 should link to these guidelines rather than restate shared rules. If they
-conflict with these guidelines or a higher constraint, expose the conflict and
-its impact for an authorized decision. Do not guess or silently choose the
-convenient rule.
+conflict with these guidelines or a higher constraint, you must expose the
+conflict and its impact for an authorized decision. You must not guess or
+silently choose the convenient rule.
 
 ## Four Non-Negotiable Boundaries
 
-1. **Tell the truth.** Do not fabricate, hide, or selectively present facts, or
-   dress uncertainty as certainty.
-2. **Stay in bounds.** Do not cross the applicable subject, time, professional
-   competence, permission, data, security, compliance, or action limits.
+1. **Tell the truth.** You must not fabricate, hide, or selectively present
+   facts, or dress uncertainty as certainty.
+2. **Stay in bounds.** You must not cross the applicable subject, time,
+   professional competence, permission, data, security, compliance, or action
+   limits.
 3. **Name the owner.** Important judgments, decisions, changes, and acceptances
    have an accountable person.
-4. **Do not claim false completion.** Do not claim a result is complete, correct,
-   usable, or adopted without current evidence matching that claim.
+4. **Do not claim false completion.** You must not claim a result is complete,
+   correct, usable, or adopted without current evidence matching that claim.
 
 Within these boundaries, autonomy, exploration, and creative work are welcome.
-When a boundary would be crossed, stop, make it visible, and escalate. If a
-breach has occurred, stop the affected action, disclose it, correct it within
-your authority, and escalate according to risk.
+When a boundary would be crossed, you must stop, make it visible, and escalate.
+If a breach has occurred, you must stop the affected action, disclose it,
+correct it within your authority, and escalate according to risk.
 
 Professional judgment belongs with people who have relevant competence and
-access to the facts. Bring in the appropriate domain owner when either is
-missing; expertise does not itself grant authority to decide or act.
+access to the facts. You should bring in the appropriate domain owner when
+either is missing; expertise does not itself grant authority to decide or act.
 
 ## Form Follows Risk
 
 The same rule words bind members and their Agents unless a rule names a narrower
-subject. **Must** and **must not** mark a hard boundary; **should** is the
-default unless a reason for departure is given; **may** leaves a choice to the
-responsible person. Risk determines the form, not whether the underlying duty
-exists.
+subject. **Must** and **must not** allow no departure; **should** and **should
+not** set the default, from which a stated reason allows departure; **may**
+leaves a choice to the responsible person. Risk determines the form, not whether
+the underlying duty exists.
 
-| Level         | When it applies                                                                                                               | Minimum response                                                                                                                |
-| ------------- | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| L0: light     | Local, reversible work without an external commitment.                                                                        | State the conclusion, basis, and action in one clear exchange.                                                                  |
-| L1: standard  | Cross-role or extended work, competing options, or material uncertainty.                                                      | Record the problem, options, execution path, and acceptance in the existing work record.                                        |
-| L2: high risk | Production, funds, sensitive data, security or compliance, deletion or overwrite, irreversibility, or an external commitment. | Obtain a written decision and explicit authorization, a rollback or degradation path, independent review, and human acceptance. |
+| Level         | When it applies                                                                                                               | Minimum response                                                                                                                         |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| L0: low risk  | Local, reversible work without an external commitment.                                                                        | You must state the conclusion, basis, and action in one clear exchange.                                                                  |
+| L1: standard  | Cross-role or extended work, competing options, or material uncertainty.                                                      | You must record the problem, options, execution path, and acceptance in the existing work record.                                        |
+| L2: high risk | Production, funds, sensitive data, security or compliance, deletion or overwrite, irreversibility, or an external commitment. | You must obtain a written decision and explicit authorization, a rollback or degradation path, independent review, and human acceptance. |
 
 Independent review examines the actual facts, reasoning, changes, and evidence,
 rather than accepting the author's or Agent's own account. The applicable policy
 or authorized decision determines who must review. If it requires a separate
-reviewer, the author cannot fill that role; otherwise, do not add a person or
-team merely to label the review independent. Technical checks support this
+reviewer, the author cannot fill that role; otherwise, you must not add a person
+or team merely to label the review independent. Technical checks support this
 review; they do not replace judgment, authorization, or human acceptance.
 
 For urgent containment, follow [emergencies and exceptions](evolve.md#emergencies-and-exceptions).
 
-Do not call a task L0 merely to avoid a necessary record. Within every level,
-facts, scope, ownership, evidence, and acceptance must remain clear. For a
-cross-domain task, name accountable ownership and the professional interfaces:
-what each side needs and what evidence accompanies delivery. Interfaces may be
-shared; end-to-end responsibility must not dissolve into “everyone.”
-Accountability remains mandatory. The
-[data topic](data.md#ownership-and-change-boundaries) owns the default lead
+You should not call a task L0 merely to avoid a necessary record. Within every
+level, facts, scope, ownership, evidence, and acceptance must remain clear. For
+a cross-domain task, you must name accountable ownership and the professional
+interfaces: what each side needs and what evidence accompanies delivery.
+Interfaces may be shared; end-to-end responsibility must not dissolve into
+“everyone.” Accountability remains mandatory. The [data
+topic](data.md#ownership-and-change-boundaries) owns the default lead
 arrangement for cross-domain work.
 
-Keep a concept, role, process, tool, or document when it serves a current
-obligation or produces evidenced net benefit. Combine or retire it when another
-owner can carry the same duty more clearly at lower cost. Use the
-[practice-admission test](evolve.md#admit-practices-and-prevent-recurrence) before
-making a method a department rule. Prefer one clear interface or automatic check
-to recurring meetings and reminders when they control the same risk. Do not build
-a large platform for a low-risk, occasional problem.
+You should keep a concept, role, process, tool, or document when it serves a
+current obligation or produces evidenced net benefit. You should combine or
+retire it when another owner can carry the same duty more clearly at lower cost.
+You must use the [practice-admission
+test](evolve.md#admit-practices-and-prevent-recurrence) before making a method a
+department rule. You should prefer one clear interface or automatic check to
+recurring meetings and reminders when they control the same risk. You should not
+build a large platform for a low-risk, occasional problem.
 
 ## From Principle to Action
 
@@ -141,8 +146,9 @@ a large platform for a low-risk, occasional problem.
   claim to evidence.
 - For data use or production, use [data quality and adoption](data.md) to
   examine source, meaning, time, quality, and permission.
-- For conveying judgment, use [communication](communicate.md): first be
-  faithful, then clear, then elegant.
+- For conveying judgment, use [communication](communicate.md), and you must
+  write with [fidelity, clarity, and
+  elegance](communicate.md#write-for-fidelity-clarity-and-elegance).
 - For intelligent tools, use [human–AI collaboration](human-agent.md) to extend
   capability without transferring human responsibility.
 - For team practices, use [practice and evolution](evolve.md) to judge net
@@ -156,9 +162,10 @@ adopted these guidelines nor that department quality has improved.
 
 **Accountability:** The department head owns these guidelines and may appoint
 maintainers to organize calibration and revisions. A task lead, authorized
-decision owner, and acceptor may be the same person when policy permits;
-do not infer one role's authority from another.
+decision owner, and acceptor may be the same person when policy permits; you
+must not infer one role's authority from another.
 
 [`VERSION`](../VERSION) identifies the edition in preparation or the last
-release. Working branches may include [Unreleased changes](../CHANGELOG.md#unreleased);
-use the signed tag for exact released content.
+release. Working branches may include [Unreleased
+changes](../CHANGELOG.md#unreleased); you should use the signed tag for exact
+released content.

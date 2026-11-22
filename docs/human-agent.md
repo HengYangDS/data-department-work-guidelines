@@ -11,22 +11,22 @@ relations:
 **When to use:** When a member delegates search, analysis, drafting, changes,
 tests, or review to an Agent.
 
-Agents extend people's capacity to investigate,
-reason, and act within a delegated boundary. People retain direction,
-authorization, decisions, and responsibility for consequences. An Agent is an
-executing or reasoning entity, not a source of organizational authorization.
-Stop when the target, fact source, responsible person, or permission cannot be
-established; a person checks the actual work and evidence before accepting an
-Agent's result.
+Agents extend people's capacity to investigate, reason, and act within a
+delegated boundary. People retain direction, authorization, decisions, and
+responsibility for consequences. An Agent is an executing or reasoning entity,
+not a source of organizational authorization. You must stop when the target,
+fact source, responsible person, or permission cannot be established; a person
+checks the actual work and evidence before accepting an Agent's result.
 
-To assign work, [set the delegation boundary](#delegate-a-boundary-not-a-pile-of-context).
-Before acceptance, [check the actual output](#check-agent-output).
-If work stops, [preserve a usable handoff](#report-and-preserve-a-handoff).
-Agents follow the [execution boundaries](#agent-execution) before acting.
+To assign work, [set the delegation
+boundary](#delegate-a-boundary-not-a-pile-of-context). Before acceptance, [check
+the actual output](#check-agent-output). If work stops, [preserve a usable
+handoff](#report-and-preserve-a-handoff). Agents follow the [execution
+boundaries](#agent-execution) before acting.
 
 ## Delegate a Boundary, Not a Pile of Context
 
-A consequential delegation states:
+A delegation of [L1 or L2 work](charter.md#form-follows-risk) states:
 
 - **Purpose and scope:** Goal, decision it supports, current authorities and
   fact sources, subject, scope, and non-goals.
@@ -42,8 +42,8 @@ path, and who approves irreversible actions.
 If missing context does not materially affect direction, safety, or authority,
 the Agent should continue with reasonable stated assumptions. If the target,
 fact source, responsible person, authority, or irreversible consequence cannot
-be established, stop and ask. “Finish this for me” is not an authorization
-boundary.
+be established, the Agent must stop and ask. “Finish this for me” is not an
+authorization boundary.
 
 > **Illustrative delegation:** “Compare the vendor's earlier and revised price
 > snapshots for the stated research cutoff. Work read-only. Report the source
@@ -54,10 +54,10 @@ boundary.
 | Role             | May do                                                                    | Retained duty or limit                                                                 |
 | ---------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
 | Task lead        | Clarify the goal and boundary; coordinate work, resources, and decisions. | Goal, boundary, risk, final judgment, end-to-end result, and escalation.               |
-| Executing member | Decompose, delegate, implement, integrate, and verify.                    | Understand and check Agent output before submission.                                   |
+| Executing member | Decompose, delegate, implement, integrate, and verify.                    | Must understand and check Agent output before submission.                              |
 | Agent            | Search, reason, draft, implement, test, review, and present options.      | Must not grant itself organizational authority or make commitments on people's behalf. |
-| Reviewer         | Independently check facts, changes, and evidence.                         | State findings and limits; review alone does not authorize action.                     |
-| Acceptor         | Confirm agreed completion when authorized.                                | Make the acceptance decision after examining the actual work.                          |
+| Reviewer         | Independently check facts, changes, and evidence.                         | Should state findings and limits; review alone does not authorize action.              |
+| Acceptor         | Confirm agreed completion when authorized.                                | Must make the acceptance decision after examining the actual work.                     |
 
 The task lead remains responsible for the judgment submitted with delegated
 work and its end-to-end result. That judgment does not replace the
@@ -84,10 +84,10 @@ work, not that duty.
    and evidence to the authorized acceptor.
 4. The authorized acceptor checks the work and evidence against the agreed conditions.
 
-| Conditions | Response                                                                   |
-| ---------- | -------------------------------------------------------------------------- |
-| Unmet      | Return the work to the member for revision within the delegation boundary. |
-| Met        | Accept the work, record acceptance, and hand off the result.               |
+| Conditions | Response                                                                            |
+| ---------- | ----------------------------------------------------------------------------------- |
+| Unmet      | You must return the work to the member for revision within the delegation boundary. |
+| Met        | You must accept the work, record acceptance, and hand off the result.               |
 
 An Agent's summary cannot substitute for examination of the actual work and
 evidence. These roles may belong to the same person. People retain direction,
@@ -98,14 +98,15 @@ or transfer responsibility.
 
 A member checks the actual work, not just the Agent's prose summary:
 
-- Confirm the correct authority and current state, true and complete current
-  inputs, and clear separation of assumptions, inferences, and judgments.
-- Compare actual changes with the agreed and reported scope; inspect
-  counterexamples, risks, non-goals, and uncovered cases.
-- Confirm that verification actually ran against the current version and
-  correct environment, the completion claim stays within its evidence, and
+- You must confirm the correct authority and current state, true and complete
+  current inputs, and clear separation of assumptions, inferences, and
+  judgments.
+- You must compare actual changes with the agreed and reported scope; you must
+  inspect counterexamples, risks, non-goals, and uncovered cases.
+- You must confirm that verification actually ran against the current version
+  and correct environment, the completion claim stays within its evidence, and
   an authorized person explicitly approved high-risk actions.
-- Preserve reviewable outputs, evidence, and follow-up ownership.
+- You should preserve reviewable outputs, evidence, and follow-up ownership.
 
 Even checked Agent output becomes a durable team fact only when
 its underlying source and limits are recorded in the authoritative system for
@@ -114,10 +115,10 @@ that work.
 ## Agent Execution
 
 An Agent must first confirm the task, target, current state, responsible person,
-and applicable local rules; repository work also requires the exact root.
-It must make the goal, scope, non-goals, and completion condition clear. Restate
-them when needed to resolve ambiguity or keep collaborators aligned; a simple
-task does not need a separate recital of an already clear request.
+and applicable local rules; repository work also requires the exact root. It
+must make the goal, scope, non-goals, and completion condition clear. It should
+restate them when needed to resolve ambiguity or keep collaborators aligned; a
+simple task does not need a separate recital of an already clear request.
 
 It must distinguish fact, hypothesis, inference, judgment, decision, and action;
 build the [smallest sufficient model](decide.md#use-the-smallest-sufficient-model)
@@ -137,31 +138,30 @@ material. The Agent must check a source against the original, version, time,
 and applicable scope, and check whether the inputs are complete enough for the
 decision.
 
-It must run current checks that match the claim and read their
-complete results before summarizing. It must keep the command, target, exit
-status, and decisive output with the producing task; success excerpts do not
-replace inspection of warnings, omissions, or failures elsewhere in the
-selected results. Test or review code, analysis, and documents in proportion
-to risk.
+It must run current checks that match the claim and read their complete results
+before summarizing. It must keep the command, target, exit status, and decisive
+output with the producing task; success excerpts do not replace inspection of
+warnings, omissions, or failures elsewhere in the selected results. It should
+test or review code, analysis, and documents in proportion to risk.
 
 ### Parallel Work
 
-Use multiple Agents in parallel only when independent questions, paths, or
-review angles can be separated. Default parallel work to independent read-only
-research, review, or cross-checking.
+You may use multiple Agents in parallel only when independent questions, paths,
+or review angles can be separated. You must default parallel work to independent
+read-only research, review, or cross-checking.
 
-Give each subtask explicit inputs, outputs,
-scope, stop conditions, and ownership. Name an integration owner to resolve
-conflicts, remove duplicates, verify the combined result, and make the final
-judgment. Multiple Agents must not edit the same source of truth or worktree
-without coordination.
+You must give each subtask explicit inputs, outputs, scope, stop conditions, and
+ownership. You must name an integration owner to resolve conflicts, remove
+duplicates, verify the combined result, and make the final judgment. Multiple
+Agents must not edit the same source of truth or worktree without coordination.
 
-A majority opinion is not evidence; resolve disagreement against facts and
-criteria. Do not close, overwrite, or clean up work of unknown ownership.
+A majority opinion is not evidence; you should resolve disagreement against
+facts and criteria. You must not close, overwrite, or clean up work of unknown
+ownership.
 
 ## Stop and Handoff
 
-Stop the affected action and escalate if any of these conditions holds:
+You must stop the affected action and escalate if any of these conditions holds:
 
 - Instructions materially conflict, or the target, fact source, or responsible
   person cannot be identified.
@@ -189,14 +189,15 @@ reached and gives:
   acceptance still needed.
 
 Partial work names its affected scope and the delivery state reached.
-[Deferral](decide.md#decision-readiness) is a decision state; record its resolving
-action and revisit time as that topic requires. Neither label replaces a
-completion check. State what remains incomplete and why; distinguish a missing
-dependency from work that has not been attempted.
+[Deferral](decide.md#decision-readiness) is a decision state; you must record
+its resolving action and revisit time as that topic requires. Neither label
+replaces a completion check. You must state what remains incomplete and should
+state why; you should distinguish a missing dependency from work that has not
+been attempted.
 
-End with the next responsible person, action, and due time; do not write only
-“follow up.”
+You must end with the next responsible person, action, and due time; you must
+not write only “follow up.”
 
-On interruption, preserve state, uncommitted work, attempts and
+On interruption, you must preserve state, uncommitted work, attempts and
 failures, the recovery entry, and retries known to be ineffective. Repository
 Agents also start at the [Agent entry](../AGENTS.md).

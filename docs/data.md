@@ -11,18 +11,19 @@ relations:
 **When to use:** Acquiring data, defining a metric, studying history, deploying
 a production pipeline, or allowing a business use.
 
-Qualify data for a specific use before treating it as trusted. A readable file,
-attractive chart, or promising model signal does not by itself establish its
-meaning, quality, permission, or reproducibility. Keep the proposed use
-exploratory within its authorized scope until the evidence supports it.
+You must qualify data for a specific use before treating it as trusted. A
+readable file, attractive chart, or promising model signal does not by itself
+establish its meaning, quality, permission, or reproducibility. You must keep
+the proposed use exploratory within its authorized scope until the evidence
+supports it.
 
-Before relying on a result, recheck key findings, reproducibility, and permission
-for the intended use. Stop the proposed controlled use and escalate if its
-meaning or quality is unverified or permission is insufficient.
+Before relying on a result, you must recheck key findings, reproducibility, and
+permission for the intended use. You must stop the proposed controlled use and
+escalate if its meaning or quality is unverified or permission is insufficient.
 
 | Your work question                                   | Read next                                                                        |
 | ---------------------------------------------------- | -------------------------------------------------------------------------------- |
-| Is the asset ready for lasting use?                  | [All eight admission conditions](#admit-a-durable-data-asset) must hold.         |
+| Is the asset ready for lasting use?                  | [All eight asset-admission conditions](#admit-a-durable-data-asset) must hold.   |
 | What was knowable at an earlier decision?            | Preserve the [historical point of view](#preserve-the-historical-point-of-view). |
 | Who decides a shared definition or model change?     | [Modeling and lifecycle decisions](#assign-modeling-and-lifecycle-decisions).    |
 | May the result serve this use?                       | [Evidence and use admission](#move-from-a-signal-to-controlled-use).             |
@@ -40,40 +41,41 @@ meaning or quality is unverified or permission is insufficient.
 | How may it be used?     | Use cases, permissions, limits, misuse risks, owner, and exit conditions.       |
 
 Data with unknown meaning, quality, or historical availability may be explored
-within an authorized scope, but must not be presented as a durable trusted asset.
-Exploration still requires permission for acquisition, processing, and the
-intended use. Agents must also stay within their delegated scope. If permission is
-missing or unclear, stop the affected action and escalate to the authorized
-decision owner.
+within an authorized scope, but must not be presented as a durable trusted
+asset. Exploration still requires permission for acquisition, processing, and
+the intended use. Agents must also stay within their delegated scope. If
+permission is missing or unclear, you must stop the affected action and escalate
+to the authorized decision owner.
 
 Exploratory code and temporary data may move quickly inside that boundary.
 Neither may enter a shared, production, or decision path until its meaning,
 quality, permissions, and reproducibility are qualified for that use.
 
-Keep source data, production data, experimental results, service views,
-platform-derived views, and reporting views distinct. Reports,
-catalogs, caches, and Agent summaries are projections; none may quietly become
-the source of truth. Preserve the source and history of revisions, backfills,
-and derivations so the current value can be explained.
+You should keep source data, production data, experimental results, service
+views, platform-derived views, and reporting views distinct. Reports, catalogs,
+caches, and Agent summaries are projections; none may become the source of truth
+without an explicit, authorized designation. You should preserve the source and
+history of revisions, backfills, and derivations so the current value can be
+explained.
 
 ## Preserve the Historical Point of View
 
 For historical research, event analysis, model validation, or cross-source
-comparison, distinguish what could have been known then from what can be seen
-in hindsight. Availability time is when a value became accessible to the
-relevant user or system, not when someone later queried it. Check historical
-revisions, backfills, and restatements, and whether sample selection, entity
-changes, market calendars, or survival status introduce bias. Explain how
-missingness, delay, conflict, and anomalies affect the conclusion.
+comparison, you must distinguish what could have been known then from what can
+be seen in hindsight. Availability time is when a value became accessible to the
+relevant user or system, not when someone later queried it. You must check
+historical revisions, backfills, and restatements, and whether sample selection,
+entity changes, market calendars, or survival status introduce bias. You must
+explain how missingness, delay, conflict, and anomalies affect the conclusion.
 
-Distinguish a missing fact from an established timing defect. If evidence shows
-that a value first became available after a simulated decision, it cannot be
-used as information available at that decision. Replace or exclude the affected
-values and rerun the analysis. If availability is unknown, point-in-time
-validity remains unproved; authorized exploratory analysis may continue within
-that stated limit. Do not make research or business commitments that exceed the
-evidence.
-State confidence, alternative explanations, and conclusions the data cannot support.
+You must distinguish a missing fact from an established timing defect. If
+evidence shows that a value first became available after a simulated decision,
+it cannot be used as information available at that decision. You must replace or
+exclude the affected values and rerun the analysis. If availability is unknown,
+point-in-time validity remains unproved; authorized exploratory analysis may
+continue within that stated limit. You must not make research or business
+commitments that exceed the evidence. You must state confidence, alternative
+explanations, and conclusions the data cannot support.
 
 ## Admit a Durable Data Asset
 
@@ -90,40 +92,45 @@ Before data enters a lasting work system, **all eight conditions must hold**:
 | Its owner is identifiable.   | The accountable owner, decision mandate, and acceptor.                       |
 | Its use is bounded.          | Permitted consumers and uses, restrictions, and exit conditions.             |
 
-If any condition is unmet, label the data exploratory, temporary, limited-use,
-or awaiting verification. A limited use requires its own evidence and
-permission; it does not make the data a fully qualified asset. Close the
-specific completion claim through [execution and delivery](deliver.md).
+If any condition is unmet, you must label the data exploratory, temporary,
+limited-use, or awaiting verification. A limited use requires its own evidence
+and permission; it does not make the data a fully qualified asset. You must
+close the specific completion claim through [execution and
+delivery](deliver.md). An admitted asset may serve the uses its last condition
+lists; any other use needs its own use admission.
 
 ## Move from a Signal to Controlled Use
 
-For the proposed use, answer each applicable question below. These are not
-mandatory stages; combine them when useful. Research need not become
-production, but operational deployment requires production qualification and
-safeguards. Obtain permission before a use that requires it, even if production
-evidence is ready. Revisit the affected value, meaning, or quality judgment when
-facts or intended use change; deployment and feedback do not authorize another
-use.
+For the proposed use, you should answer each applicable question below. These
+are not mandatory stages; you may combine them when useful. Research need not
+become production, but operational deployment requires production qualification
+and safeguards. You must obtain permission for the intended use before it
+begins, even if production evidence is ready. You must revisit the affected
+value, meaning, or quality judgment when facts or intended use change;
+deployment and feedback do not authorize another use.
 
-- **Opportunity:** Is evaluation worthwhile? Establish the business question,
-  value hypothesis, source, and information boundary.
-- **Exploration:** What is the data? Examine samples, meaning, timeline, quality
-  profile, and alternative sources.
-- **Reproduction:** Can key findings be reproduced? Use a replayable method,
-  controls, anomalies, and failure explanation.
-- **Production:** Can it run reliably? Require tests, release, backfill,
-  monitoring, ownership, and recovery.
-- **Admission:** May it serve this use? Establish acceptance, permissions,
-  lineage, limits, veto, and exit conditions.
-- **Feedback:** Do results support continued use? Review use feedback, quality
-  trends, cost, and incidents. Keep the review result and any changed judgment
-  with the [existing work evidence](deliver.md#evidence-sets-the-limit-of-the-claim).
+- **Opportunity:** Is evaluation worthwhile? You should establish the business
+  question, value hypothesis, source, and information boundary.
+- **Exploration:** What is the data? You should examine samples, meaning,
+  timeline, quality profile, and alternative sources.
+- **Reproduction:** Can key findings be reproduced? You must use a replayable
+  method, and should use controls, anomalies, and failure explanation.
+- **Production:** Can it run reliably? You must require tests, release,
+  backfill, monitoring, ownership, and recovery.
+- **Use admission:** May it serve this use? You must establish domain meaning,
+  acceptance, permissions, lineage, limits, veto, and exit conditions; a
+  high-risk use also needs the authorized decision owner's approval
+  ([data changes](#change-shared-or-production-data)).
+- **Feedback:** Do results support continued use? You should review use
+  feedback, quality trends, cost, and incidents. You should keep the review
+  result and any changed judgment with the [existing work
+  evidence](deliver.md#evidence-sets-the-limit-of-the-claim).
 
-Assess technical feasibility and business value separately. Label data according
-to its evidence and permission: exploratory, temporary, limited-use, awaiting
-verification, or admitted. Starting to use it does not resolve an open risk.
-Admission permits a specified use under stated conditions; adoption is observed
-use within them, not inferred from deployment.
+You should assess technical feasibility and business value separately. You must
+label data according to its evidence and permission: exploratory, temporary,
+limited-use, awaiting verification, or admitted. Starting to use it does not
+resolve an open risk. Use admission permits a specified use under stated
+conditions; adoption is observed use within them, not inferred from deployment.
 
 ### Worked decision: revised market history
 
@@ -146,54 +153,57 @@ For historical validity, the finding determines the next action:
 
 - **First availability is unknown.** Point-in-time validity remains unproved;
   today's corrected series cannot establish what was knowable then. Obtain the
-  earlier snapshot and correction history; recheck availability before requesting
-  admission.
+  earlier snapshot and correction history; recheck availability before
+  requesting use admission.
 - **First availability is later than the simulated decision.** Using that
   value as information available then is invalid for that earlier decision.
   Replace or exclude that value and rerun affected results before requesting
-  admission.
+  use admission.
 
 An accurate operational feed does not settle either historical claim. Keep the
 proposed historical use exploratory until its evidence supports that use and
-the authorized owner has made the admission decision.
+the authorized owner has made the use-admission decision.
 
 An Agent may locate snapshots, compare revisions, or run replay checks within
-its delegation. It cannot decide that the dataset is admitted. The task lead
-brings the evidence and open risks to the decision owner and acceptor; later
-observed use, not these checks, establishes adoption.
+its delegation. It cannot make the use-admission decision. The
+task lead brings the evidence and open risks to the decision owner and acceptor;
+later observed use, not these checks, establishes adoption.
 
 ## Ownership and Change Boundaries
 
-Apply this contract to information acquisition, analysis and modeling, data
-science, software development, data production, platforms and infrastructure,
-product and technical management, governance, and operational delivery.
+You must apply this contract to information acquisition, analysis and modeling,
+data science, software development, data production, platforms and
+infrastructure, product and technical management, governance, and operational
+delivery.
 
-Assign responsibility for the actual work. Distinguish its output, the
-activities that produce or support it, and who decides and accepts it. The
-following responsibilities may overlap in one person or team. Assign them
-through the department's current role and authority arrangements; this page
-defines data-work obligations, not seats or reporting lines.
+You must assign responsibility for the actual work. You must distinguish its
+output, the activities that produce or support it, and who decides and accepts
+it. The following responsibilities may overlap in one person or team. You must
+assign them through the department's current role and authority arrangements;
+this page defines data-work obligations, not seats or reporting lines.
 
 | Responsibility | Work that must be owned                                                                                                                 |
 | -------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
 | Domain         | Define meaning, quality requirements, suitable use cases, and professional judgments.                                                   |
 | Production     | Ensure deployability, backfill, monitoring, recovery, and reliable long-term operation.                                                 |
 | Platform       | Abstract repeated, cross-domain capabilities needed for durable operation without replacing domain judgment.                            |
-| Governance     | Define admission, permissions, lineage, review, veto, and exit, and make those controls work in the actual workflow.                    |
+| Governance     | Define asset and use admission, permissions, lineage, review, veto, and exit, and make those controls work in the actual workflow.      |
 | Delivery       | Make priorities, resources, dependencies, risks, and open decisions visible without replacing the other owners' professional judgments. |
 
 Cross-domain work should have one accountable task lead and clear professional
-interfaces. Explain any different arrangement; accountability remains mandatory.
-For each important result or decision, name its accountable owner, decision
-mandate, and acceptor in the existing work or product record. These assignments
-may be held by the same person where authority and risk permit. A shared
-interface does not transfer responsibility or grant authority over another
-owner's judgment. Use the [charter's interface contract](charter.md#form-follows-risk)
-to make each side's needs and delivery evidence explicit.
+interfaces. You should explain any different arrangement; accountability remains
+mandatory. For each result or decision of [L1 or L2
+work](charter.md#form-follows-risk), you must name its accountable owner,
+decision mandate, and acceptor in the existing work or product record. These
+assignments may be held by the same person where authority and risk permit. A
+shared interface does not transfer responsibility or grant authority over
+another owner's judgment. You must use the [charter's interface
+contract](charter.md#form-follows-risk) to make each side's needs and delivery
+evidence explicit.
 
 ### Assign Modeling and Lifecycle Decisions
 
-Keep these decisions distinct when planning a data change:
+You must keep these decisions distinct when planning a data change:
 
 | Decision           | What must be settled                                                                                                                                     | Accountable owner                                                         |
 | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
@@ -203,14 +213,14 @@ Keep these decisions distinct when planning a data change:
 | Technical choices  | Architecture, compatibility, reliability and capacity limits, shared standards, and dependencies.                                                        | Technical owner acting within the existing mandate.                       |
 | Product management | Intended consumers, use, value, acceptance, and evolution; consumer impact, versioning, migration or deprecation notice, and evidence before retirement. | Product owner for the asset or service.                                   |
 
-Bring conflicting meanings to the authorized domain owners. Choosing a
+You must bring conflicting meanings to the authorized domain owners. Choosing a
 convenient schema does not resolve that conflict, and a technical decision
 cannot grant business or use permission.
 
 Asset governance retains permission and exit controls; production retains
 release and recovery. The task lead coordinates the decisions without taking
-over their owners' authority. Apply the department's existing assignments;
-these responsibilities do not require separate people or teams.
+over their owners' authority. You must apply the department's existing
+assignments; these responsibilities do not require separate people or teams.
 
 #### Worked change: a shared issuer identifier
 
@@ -277,17 +287,18 @@ Before handing over a result, its owner must identify:
 - Each failure or discrepancy, its disposition, and the owner of any unresolved
   risk.
 
-Keep these details with the
-[existing work evidence](deliver.md#evidence-sets-the-limit-of-the-claim).
-Apply the [charter's risk-level safeguards](charter.md#form-follows-risk), including
-independent review for L2 work. The existing authority may also require specialist
-review. Neither removes implementation quality responsibility or requires a
-new testing team. Verification supports acceptance, use admission, and release
-decisions; passing checks cannot grant them.
+You must keep these details with the [existing work
+evidence](deliver.md#evidence-sets-the-limit-of-the-claim). You must apply the
+[charter's risk-level safeguards](charter.md#form-follows-risk), including
+independent review for L2 work. The existing authority may also require
+specialist review. Neither removes implementation quality responsibility or
+requires a new testing team. Verification supports acceptance, use admission,
+and release decisions; passing checks cannot grant them.
 
 ### Change Shared or Production Data
 
-Changes to production, shared assets, or critical management chains require:
+Changes to production, shared assets, or critical management chains (data
+chains that feed key management decisions or reports) require:
 
 - A defined subject, impact, task lead, and authority.
 - Replayable inputs, logic, version, and outputs.

@@ -65,10 +65,11 @@ the same guidance; each topic owns its rules and points to the related work.
 
 ## Follow the Work Through
 
-Open only the topic needed for the next decision. Identify the decision owner
-and what must be known before acting; stop when authority, target, or critical
-facts are missing. Before reporting a result, follow its verification and
-acceptance link. These groups are reading routes, not mandatory work stages.
+Open only the topic needed for the next decision. You must identify the decision
+owner and what must be known before acting; you must follow the [stop
+rule](charter.md#purpose) when authority, target, or critical facts are missing.
+Before reporting a result, follow its verification and acceptance link. These
+groups are reading routes, not mandatory work stages.
 
 For a concrete path from research to permitted use, follow the
 [revised-market-history example](data.md#worked-decision-revised-market-history).
@@ -78,8 +79,8 @@ An Agent must also stay within the delegation in
 ## Maintain This Repository
 
 Temporary methods, project-specific facts, and records of actual work stay in
-the system that produced them. Link to those sources; do not copy them into a
-second set of general guidelines.
+the system that produced them. You should link to those sources; you should not
+copy them into a second set of general guidelines.
 
 [OpenSpec and ETHOS](governance/README.md) own repository change authority and
 historical-source recovery and retirement. [Decision records](decisions/README.md)
