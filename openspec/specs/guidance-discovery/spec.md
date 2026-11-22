@@ -333,7 +333,7 @@ reports SHALL name gap, impact, and escalation.
   trial, a responsible owner, and evidence of net benefit from the practice
 - **AND** mandatory task-specific prevention SHALL NOT wait for an incident;
   producing its asset SHALL NOT automatically standardize it as department practice
-- **AND** high-impact or repeated work cannot be called complete while its
+- **AND** L1 or L2 work, or repeated work, cannot be called complete while its
   necessary test, monitor, rule, or recovery path is missing from its existing owner
 - **AND** an extra report or evidence directory does not satisfy that condition.
 

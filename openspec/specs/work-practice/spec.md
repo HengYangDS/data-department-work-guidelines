@@ -349,8 +349,9 @@ remain accountable.
 - **AND** the charter SHALL define shared interfaces by each side's needs and
   delivery evidence
 - **AND** domain owners define meaning, quality requirements, suitable use
-  cases, and professional judgments; governance owners make admission,
-  permissions, lineage, review, veto, and exit operate in the workflow
+  cases, and professional judgments; governance owners make asset admission, use
+  admission, permissions, lineage, review, veto, and exit operate in the
+  workflow
 - **AND** when coordination proposes a use without domain judgment or operative
   governance controls, the data topic identifies the owners and missing decision
 - **AND** a coordination role cannot grant itself the missing authority.
@@ -358,7 +359,8 @@ remain accountable.
 #### Scenario: One data owner assumes another owner's authority
 
 - **WHEN** a domain owner treats a suitable use case as permission, or a
-  governance reviewer changes business meaning through an admission review
+  governance reviewer changes business meaning through an asset-admission or
+  use-admission review
 - **THEN** the data topic preserves professional judgment and permission as
   distinct responsibilities
 - **AND** suitable use, technical approval and passing tests SHALL NOT grant
@@ -369,7 +371,8 @@ remain accountable.
 #### Scenario: Data-change criteria are defined but never accepted
 
 - **WHEN** a production, shared-asset, or critical management-chain change is
-  proposed, executed, or reported
+  proposed, executed, or reported; a critical management chain is a data chain
+  that feeds key management decisions or reports
 - **THEN** production, shared-asset, and critical management-chain changes SHALL
   have actual acceptance against agreed criteria before the result can be
   treated as an accepted change
@@ -386,8 +389,8 @@ remain accountable.
   departments
 - **AND** existing organizational role and authority assignments SHALL select
   actual owners without a second seat or reporting matrix in these guidelines
-- **AND** each important result or decision SHALL have an accountable owner,
-  decision mandate and acceptor in the existing work or product record
+- **AND** each result or decision of L1 or L2 work SHALL have an accountable
+  owner, decision mandate and acceptor in the existing work or product record
 - **AND** work SHALL distinguish outputs, activities, accountable ownership,
   decision mandates and acceptance
 - **AND** business and data modeling, development, product management and
@@ -503,14 +506,14 @@ member reasoning, and the existing decision authority.
 
 - **WHEN** an author treats removing filler, using precise words, or keeping a
   measured tone as the complete meaning of elegance
-- **THEN** the communication topic states fidelity as faithful meaning, clarity
-  as accurate understanding conveyed clearly and fluently, and elegance as
-  expressive beauty with aesthetic judgment, taste, and artistic and cultural
-  refinement
-- **AND** revision attends to sentence rhythm, transitions, and fitting form
-  while preserving actors, conditions, responsibilities, evidence, and limits
+- **THEN** the communication topic's definition applies, under which those
+  techniques are means to elegance, not its definition
+- **AND** revision attends to wording, structure, rhythm and transitions, and
+  layout while preserving actors, conditions, responsibilities, evidence, and
+  limits
 - **AND** source checks or a shorter draft do not establish aesthetic quality
-  or semantic equivalence.
+  or semantic equivalence; a reader other than the writer finding the text
+  natural and fitting is the check.
 
 #### Scenario: A draft decision could be mistaken for acceptance
 
@@ -586,12 +589,11 @@ purposes SHALL remain covered without another mandatory meeting or report.
 
 ### Requirement: Writing serves fidelity, clarity, and elegance
 
-Writing SHALL preserve intended meaning without distortion, start from accurate
-understanding, convey it clearly and fluently, and pursue expressive beauty
-through aesthetic judgment, taste, and artistic and cultural refinement suited
-to its subject and audience. Techniques SHALL serve these aims, not replace
-their meanings. An editing fraction or fixed document shape SHALL NOT become
-a writing standard.
+Writing SHALL serve fidelity, clarity, and elegance (信、达、雅) exactly as the
+communication topic's single definition states them, including the order in
+which they prevail when they conflict. Techniques SHALL serve these aims, not
+replace their meanings. An editing fraction or fixed document shape SHALL NOT
+become a writing standard.
 
 #### Scenario: Editing removes necessary meaning or expressive quality
 
@@ -601,6 +603,15 @@ a writing standard.
   quality remain
 - **AND** sentence rhythm, transitions, and form serve the audience; a shorter
   draft or source check does not prove semantic equivalence or aesthetic quality.
+
+#### Scenario: Another page restates the principle in its own words
+
+- **WHEN** a page outside the communication topic names fidelity, clarity, and
+  elegance
+- **THEN** it links to the communication topic's definition and does not
+  restate or paraphrase it
+- **AND** the communication topic quotes the definition word for word, without
+  a reading of its own.
 
 ### Requirement: Delegation and coaching retain member judgment
 
