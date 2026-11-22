@@ -101,13 +101,14 @@ lists; any other use needs its own use admission.
 
 ## Move from a Signal to Controlled Use
 
-For the proposed use, you should answer each applicable question below. These
-are not mandatory stages; you may combine them when useful. Research need not
-become production, but operational deployment requires production qualification
-and safeguards. You must obtain permission for the intended use before it
-begins, even if production evidence is ready. You must revisit the affected
-value, meaning, or quality judgment when facts or intended use change;
-deployment and feedback do not authorize another use.
+The questions below apply as the proposed use requires, and the duties under
+each bind with the force they state. These are not mandatory stages; you may
+combine them when useful. Research need not become production, but operational
+deployment requires production qualification and safeguards. You must obtain
+permission for the intended use before it begins, even if production evidence is
+ready. You must revisit the affected value, meaning, or quality judgment when
+facts or intended use change; deployment and feedback do not authorize another
+use.
 
 - **Opportunity:** Is evaluation worthwhile? You should establish the business
   question, value hypothesis, source, and information boundary.

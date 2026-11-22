@@ -118,8 +118,8 @@ In practice:
   meanings](decide.md#keep-six-meanings-distinct) distinct; and you must not
   hide counterexamples, uncertainty, failure, or limits.
 - You should let the title name the subject and purpose; for an analysis,
-  proposal, or decision document, the title must name its subject, purpose, and
-  status ([Structure a Decision Document](#structure-a-decision-document)). You
+  proposal, or decision document, [Structure a Decision
+  Document](#structure-a-decision-document) states what the title must give. You
   should give the conclusion, the decision request, or the reason no conclusion
   is available on the first screen.
 - You should make one main point per paragraph, define important terms at first

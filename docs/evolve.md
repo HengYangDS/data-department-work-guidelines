@@ -181,21 +181,21 @@ use these defaults during active work:
 The owner may adjust an interval for work volume, risk, the speed of change, and
 the quality of existing feedback. The owner must record the reason and next
 review time in an existing work record and must revisit the choice when those
-conditions change. You must preserve all three review purposes rather than
-silently dropping periodic review. A trial or high-risk task needs a review
+conditions change. The owner must preserve all three review purposes rather
+than silently dropping periodic review. A trial or high-risk task needs a review
 point before its evidence or authorization expires; an urgent signal must not
 wait for it.
 
-You must use enough real samples and time to resolve the review question, not a
-fixed sample count or meeting length. You may combine reviews when useful, but
-must distinguish whether the decision concerns judgment, a failing mechanism, or
-a practice that no longer earns its cost. A stricter applicable review
-requirement still holds.
+The owner must use enough real samples and time to resolve the review question,
+not a fixed sample count or meeting length. The owner may combine reviews when
+useful, but must distinguish whether the decision concerns judgment, a failing
+mechanism, or a practice that no longer earns its cost. A stricter applicable
+review requirement still holds.
 
-You must use existing meetings, tickets, and reviews; you must record each
-material decision and its owner there. You must not create a form or meeting
-unless existing carriers cannot hold the necessary review. No routine “nothing
-happened” activity report is required.
+The owner must use existing meetings, tickets, and reviews and must record each
+material decision and its owner there. The owner must not create a form or
+meeting unless existing carriers cannot hold the necessary review. No routine
+“nothing happened” activity report is required.
 
 ## Management Responsibilities
 
@@ -240,10 +240,10 @@ threatens data, production, downstream use, or compliance:
    needed to establish the impact and verify a correction. If the response needs
    further permission, they must escalate to the decision owner.
 
-The [hard boundaries](charter.md#four-non-negotiable-boundaries) still apply:
-you must report known facts and uncertainty honestly, keep responsibility
-explicit, and observe permission and compliance limits. Urgency does not make an
-uncertain result reliable or grant authority to act.
+The [four non-negotiable boundaries](charter.md#four-non-negotiable-boundaries)
+still apply: you must report known facts and uncertainty honestly, keep
+responsibility explicit, and observe permission and compliance limits. Urgency
+does not make an uncertain result reliable or grant authority to act.
 
 You must contain the impact before completing the record when recording first
 would delay the response. You must record who decided what, the facts and

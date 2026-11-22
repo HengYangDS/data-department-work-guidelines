@@ -29,6 +29,13 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 - Make the third non-negotiable boundary bind every risk level: judgments, decisions, changes, and
   acceptances must have an accountable person. "Important" had left it open whether L0 work was
   meant; at L0 the accountable person is the one doing the work, with no added record.
+- Name the narrower actor where 9.0.0 still addressed every reader: the review rhythm's owner for
+  its samples, combined reviews, and carriers, and the member for the checks of Agent output.
+  The questions on controlled data use apply as the use requires, with the force their duties
+  state; the evolution page names the four non-negotiable boundaries alike; the Agent's stop
+  condition in the collaboration page's opening lists all five conditions; and the decision
+  document's title duty is stated once. The 9.0.0 note that every imperative states its force
+  also excepts the steps of the working loop, which name steps rather than duties.
 
 ## [9.0.0] - 2026-11-22
 

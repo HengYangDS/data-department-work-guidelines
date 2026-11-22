@@ -14,9 +14,9 @@ tests, or review to an Agent.
 Agents extend people's capacity to investigate, reason, and act within a
 delegated boundary. People retain direction, authorization, decisions, and
 responsibility for consequences. An Agent is an executing or reasoning entity,
-not a source of organizational authorization. It must stop when the target,
-fact source, responsible person, or permission cannot be established; a person
-checks the actual work and evidence before accepting an Agent's result.
+not a source of organizational authorization. It must stop when the target, fact
+source, responsible person, authority, or consequence cannot be established; a
+person checks the actual work and evidence before accepting an Agent's result.
 
 To assign work, [set the delegation
 boundary](#delegate-a-boundary-not-a-pile-of-context). Before acceptance, [check
@@ -98,15 +98,16 @@ or transfer responsibility.
 
 A member checks the actual work, not just the Agent's prose summary:
 
-- You must confirm the correct authority and current state, true and complete
-  current inputs, and clear separation of assumptions, inferences, and
+- The member must confirm the correct authority and current state, true and
+  complete current inputs, and clear separation of assumptions, inferences, and
   judgments.
-- You must compare actual changes with the agreed and reported scope; you must
-  inspect counterexamples, risks, non-goals, and uncovered cases.
-- You must confirm that verification actually ran against the current version
-  and correct environment, the completion claim stays within its evidence, and
-  the decision owner explicitly approved high-risk actions.
-- You should preserve reviewable outputs, evidence, and follow-up ownership.
+- The member must compare actual changes with the agreed and reported scope and
+  must inspect counterexamples, risks, non-goals, and uncovered cases.
+- The member must confirm that verification actually ran against the current
+  version and correct environment, the completion claim stays within its
+  evidence, and the decision owner explicitly approved high-risk actions.
+- The member should preserve reviewable outputs, evidence, and follow-up
+  ownership.
 
 Even checked Agent output becomes a durable team fact only when
 its underlying source and limits are recorded in the authoritative system for
