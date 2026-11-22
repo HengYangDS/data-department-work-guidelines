@@ -12,7 +12,7 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
-## [9.1.0] - 2026-11-22
+## [9.1.0] - 2026-11-23
 
 ### Added
 
