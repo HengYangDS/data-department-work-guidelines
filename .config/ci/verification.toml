@@ -12,7 +12,6 @@ runners = ["ubuntu-latest", "ubuntu-24.04-arm", "macos-latest", "windows-latest"
 [gitlab.variables]
 MISE_CONFIG_DIR = "$CI_PROJECT_DIR/build/runtime/work/mise-config"
 MISE_DATA_DIR = "$CI_PROJECT_DIR/build/runtime/tool-cache/mise"
-MISE_CACHE_DIR = "$CI_PROJECT_DIR/build/runtime/tool-cache/mise/cache"
 MISE_WINDOWS_SHIM_MODE = "file"
 MISE_CEILING_PATHS = "$CI_PROJECT_DIR/.."
 MISE_TRUSTED_CONFIG_PATHS = "$CI_PROJECT_DIR/.config/mise/config.toml"
@@ -31,10 +30,18 @@ preparation = [
   'timeout --signal=TERM --kill-after=5s 120s env MISE_VERSION=2026.11.11 MISE_INSTALL_PATH=/usr/local/bin/mise MISE_INSTALL_HELP=0 MISE_INSTALL_EXT=tar.gz MISE_TARBALL_URL="file://$CI_PROJECT_DIR/build/runtime/work/mise-bootstrap/mise-v2026.11.11-linux-arm64.tar.gz" sh build/runtime/work/mise-bootstrap/install.sh',
 ]
 
+[gitlab.runners.linux.variables]
+# Each Linux runner keeps its own /cache volume; the job's container and builds directory are new each time.
+MISE_CACHE_DIR = "/cache/mise"
+
 [gitlab.runners.macos]
 system = "macos"
 review_tags = ["ci-macos-arm64-review"]
 protected_tags = ["ci-macos-arm64-shell"]
+
+[gitlab.runners.macos.variables]
+# The shell runner's builds directory persists; this sits outside the cloned project.
+MISE_CACHE_DIR = "$CI_BUILDS_DIR/mise-cache"
 
 [gitlab.runners.windows]
 system = "windows"
@@ -42,3 +49,6 @@ review_tags = ["ci-windows-arm64-review"]
 protected_tags = ["ci-windows-arm64-shell"]
 resource_group = "windows-verification"
 preparation = ["$env:PATH = $env:PATH + [IO.Path]::PathSeparator + [Environment]::GetEnvironmentVariable('Path', 'Machine')"]
+
+[gitlab.runners.windows.variables]
+MISE_CACHE_DIR = "$CI_BUILDS_DIR/mise-cache"

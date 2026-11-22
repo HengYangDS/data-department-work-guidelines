@@ -186,9 +186,12 @@ GitLab's Linux jobs obtain Mise from the project's package registry; its macOS
 and Windows jobs use the runner's existing Mise installation. Every hosted job
 then installs the same locked ETHOS release and keeps a job-local
 `MISE_CONFIG_DIR`, without changing the host's global configuration. GitLab
-jobs also keep `MISE_DATA_DIR` and `MISE_CACHE_DIR` under the job's
-`build/runtime/tool-cache/mise`, and write Windows shims as files
-(`MISE_WINDOWS_SHIM_MODE=file`).
+jobs also keep `MISE_DATA_DIR` under the job's `build/runtime/tool-cache/mise`,
+so each job unpacks the locked tools itself, and write Windows shims as files
+(`MISE_WINDOWS_SHIM_MODE=file`). Their `MISE_CACHE_DIR` holds downloads, which
+`mise install --locked` reuses only after checking them against the lockfile;
+each runner keeps it between jobs, in the Linux runners' own `/cache` volume and
+in the macOS and Windows runners' builds directory.
 
 ## Commit and release
 

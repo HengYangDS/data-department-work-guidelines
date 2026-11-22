@@ -12,6 +12,12 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+### Changed
+
+- Keep the Mise download cache on each GitLab runner between jobs, so a guest job downloads the
+  locked ETHOS release once per runner instead of in every job; installs stay job-local and every
+  download is checked against the lockfile before use.
+
 ## [9.1.0] - 2026-11-23
 
 ### Added
