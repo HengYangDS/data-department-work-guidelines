@@ -29,5 +29,5 @@ None. CI parameters only; the change uses the official no-spec marker.
 
 ## Impact
 
-`.config/ci/verification.toml`, the generated `.gitlab-ci.yml`, `CONTRIBUTING.md`, and the
-Changelog. No guideline page changes, so no release is cut for it.
+`.config/ci/verification.toml`, the generated `.gitlab-ci.yml`, `CONTRIBUTING.md`, the checks and CI
+governance page, and the Changelog. No guideline page changes, so no release is cut for it.

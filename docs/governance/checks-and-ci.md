@@ -121,9 +121,12 @@ Verify GitHub's hosted platform matrix and GitLab's admitted Linux, macOS, and W
 through their jobs and native runner/guest observations. GitLab's Linux container acquires the
 byte-exact official Mise installer and archive from the project's package registry, verifies the
 installer checksum and the archive through the original installer, then installs the locked ETHOS
-release. No upstream fallback is configured for Mise. Every GitLab job keeps the Mise configuration,
-data, and cache under its own execution root, so no job writes the runner account's profile or
-shares Mise state with another job. Bootstrap does not establish hosted acceptance.
+release. No upstream fallback is configured for Mise. Every GitLab job keeps the Mise configuration and data
+under its own execution root, so no job writes the runner account's profile or shares installed
+tools with another job. Each runner keeps the Mise download cache between its jobs, one store per
+concurrent slot and separate for review and protected runners: Mise hashes a stored download
+against the lockfile before reusing it and fetches again on a mismatch, so the cache can save a
+download but cannot change what is installed. Bootstrap does not establish hosted acceptance.
 
 ### Review and Protected Execution
 
