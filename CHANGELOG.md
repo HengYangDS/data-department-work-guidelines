@@ -12,8 +12,14 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [9.2.0] - 2026-11-23
+
 ### Changed
 
+- Name who does the work beside who is responsible in the first sentence of
+  [fidelity](docs/communicate.md#write-for-fidelity-clarity-and-elegance): meaning, facts, conditions
+  and limits, who does the work and who is responsible, and what is uncertain all stay intact. The
+  person who does a piece of work and the person accountable for it are often different.
 - Keep the Mise download cache on each GitLab runner between jobs, so a guest job downloads the
   locked ETHOS release once per runner instead of in every job; installs stay job-local and every
   download is checked against the lockfile before use.

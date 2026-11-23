@@ -89,9 +89,9 @@ or English: documents, reports, replies, handoffs, commit messages, and the
 human-readable text of interfaces and command output. The first sentence of each
 item can be cited alone.
 
-- **Fidelity (信): meaning, facts, conditions and limits, who is responsible, and
-  what is uncertain all stay intact.** The words are accurate; nothing is
-  exaggerated or omitted, and no guess is written as fact.
+- **Fidelity (信): meaning, facts, conditions and limits, who does the work and
+  who is responsible, and what is uncertain all stay intact.** The words are
+  accurate; nothing is exaggerated or omitted, and no guess is written as fact.
 - **Clarity (达): the reader understands the text and can judge and act on it.**
   It rests on the writer understanding the subject accurately first. The meaning
   arrives whole, in fluent, natural, idiomatic language, without word-for-word
