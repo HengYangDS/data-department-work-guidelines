@@ -700,21 +700,23 @@ attainment; rewards and sanctions MAY take the tier as one of their grounds.
 #### Scenario: Assessors decide between adjacent tiers
 
 - **WHEN** assessors decide between two adjacent tiers
-- **THEN** they answer one question about one kind of record: whether every
-  requirement has an accepted and used result and none of D's other conditions
-  holds (C), and whether the key judgment in each is the member's own (B); and,
-  of a period that meets B, whether it shows an item of the capability the next
-  grade adds (A) and whether one of the next grade's responsibilities was
-  delegated and carried for a full cycle (S)
-- **AND** A and S each require B and rest on the value their users record, and
-  when one of D's conditions holds the period reads D.
+- **THEN**, after D's conditions, which are read first, each tier answers one
+  yes-or-no question: whether every requirement has an accepted and used result
+  (C); whether each has one in which the key judgment is the member's own (B);
+  and, of a period that meets B, whether it shows an item that the next grade's
+  "What the grade shows" adds (A) and whether a responsibility that the next
+  grade's "Responsibility it can carry" adds was delegated and carried for a full
+  cycle (S)
+- **AND** A and S each require B and rest on the value their users record, S
+  does not require A, and when one of D's conditions holds the period reads D.
 
 #### Scenario: A 资深 member's records show work the grade already asks for
 
 - **WHEN** a 资深 turned a method into a review rule that other teams use
 - **THEN** the guidelines read it toward B, because the 资深 row asks for it
-- **AND** A needs an item the 专家 row adds, and S a 专家 responsibility
-  delegated and carried for a full cycle, each with its users' record of value.
+- **AND** A needs an item that the 专家 row's "What the grade shows" adds, and S
+  a responsibility that its "Responsibility it can carry" adds, delegated and
+  carried for a full cycle, each with its users' record of value.
 
 ### Requirement: Tier assessment is evidenced and fair
 
@@ -729,7 +731,8 @@ computed automatically.
 #### Scenario: Two assessors disagree
 
 - **WHEN** two assessors, judging separately from the original records, are
-  two or more tiers apart
+  two or more tiers apart, other than B and S when every assessor's written
+  judgment answers A's question no
 - **THEN** they record "insufficient evidence" and name what to examine next,
   without averaging or using half tiers
 - **AND** an S adds an assessor from another domain, and the member may ask for
