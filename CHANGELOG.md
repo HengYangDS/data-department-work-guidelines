@@ -12,6 +12,20 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [9.3.0] - 2026-11-24
+
+### Changed
+
+- Name the department's nine functions in a table in the
+  [data topic](docs/data.md#ownership-and-change-boundaries), with their Chinese names: six vertical
+  functions along the data value chain (information acquisition, development and production,
+  analysis and modeling, data science, platform engineering, infrastructure) and three horizontal
+  functions across them (paradigm research, product governance, operations and delivery), as areas
+  of responsibility rather than departments or an organization chart. State how a data item's
+  responsibilities fall to the functions by default: the domain owner by the kind and frequency of
+  the data, production to development and production once the data is in production; no
+  responsibility absorbs another. The page's obligations apply to all nine.
+
 ## [9.2.0] - 2026-11-23
 
 ### Changed

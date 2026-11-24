@@ -172,10 +172,26 @@ later observed use, not these checks, establishes adoption.
 
 ## Ownership and Change Boundaries
 
-You must apply this contract to information acquisition, analysis and modeling,
-data science, software development, data production, platforms and
-infrastructure, product and technical management, governance, and operational
-delivery.
+The department's work falls into nine functions: six vertical functions that
+carry professional judgment and produce lasting output along the data value
+chain, and three horizontal functions that run across all six, lift local
+experience into department-wide methods and governance, and settle trade-offs
+across the chain. They are areas of responsibility, not departments or an
+organization chart. Four vertical functions also hold a department-wide duty,
+called a center, for all data; a center is a duty, not a unit. You must apply
+this page's obligations to all nine.
+
+| Function                   | 中文     | Axis       | What it owns                                                                                                                                                                                                       |
+| -------------------------- | -------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Information acquisition    | 信息采集 | Vertical   | Acquiring data from external sources: methods, stability, source authorization, and compliance.                                                                                                                    |
+| Development and production | 开发生产 | Vertical   | Professional ownership of minute-level, tick, and snapshot data; and, as the production center, the development, release, scheduling, checks, backfill, and long-term operation of all data in production.         |
+| Analysis and modeling      | 分析建模 | Vertical   | Daily and lower-frequency structured data other than alternative data: its meaning, metrics, and models; and, as the semantic center, the trading calendars, time zones, and corporate actions all data relies on. |
+| Data science               | 数据科学 | Vertical   | Alternative data at any frequency: its value, research usability, isolation, and protection against look-ahead bias.                                                                                               |
+| Platform engineering       | 平台工程 | Vertical   | The shared data platform, as the capability center: ingestion and landing, processing and warehousing, data-governance tooling, evaluation support for data science, and internal tools.                           |
+| Infrastructure             | 基础设施 | Vertical   | The resource center: compute (including AI compute), storage, network, and cloud resources, with their capacity, reliability, and cost.                                                                            |
+| Paradigm research          | 范式研究 | Horizontal | The department's technical direction, such as agents and big data.                                                                                                                                                 |
+| Product governance         | 产品治理 | Horizontal | Data services and products: their value, admission, permissions, and exit.                                                                                                                                         |
+| Operations and delivery    | 运营交付 | Horizontal | Department operations, priorities, resources and dependencies, and the delivery of projects.                                                                                                                       |
 
 You must assign responsibility for the actual work. You must distinguish its
 output, the activities that produce or support it, and who decides and accepts
@@ -190,6 +206,23 @@ this page defines data-work obligations, not seats or reporting lines.
 | Platform       | Abstract repeated, cross-domain capabilities needed for durable operation without replacing domain judgment.                            |
 | Governance     | Define asset and use admission, permissions, lineage, review, veto, and exit, and make those controls work in the actual workflow.      |
 | Delivery       | Make priorities, resources, dependencies, risks, and open decisions visible without replacing the other owners' professional judgments. |
+
+Every data item must have a domain owner, a production owner once it enters
+production, platform support, and governance and delivery interfaces. Unless
+the department's role and authority arrangements say otherwise, they fall to
+the functions this way. The domain owner is the function that knows the kind
+and frequency of the data: development and production for minute-level, tick,
+and snapshot data; analysis and modeling for daily and lower-frequency
+structured data other than alternative data; and data science for alternative
+data. Information acquisition owns the acquisition step, not the data's
+meaning. Trading calendars, time zones, and corporate actions stay with
+analysis and modeling for all data. Once the data enters production,
+development and production owns its production; before that, research needs
+no production operation. Platform engineering supplies shared capabilities and
+infrastructure supplies resources. Product governance and operations and
+delivery provide the governance and delivery interfaces. One function may hold
+several of these responsibilities for an item, but no responsibility may
+absorb another.
 
 Cross-domain work should have one accountable task lead and clear professional
 interfaces. You should explain any different arrangement; accountability remains
