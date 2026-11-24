@@ -18,14 +18,29 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 - Read [tiers](docs/grow.md#tiers-performance-at-ones-own-grade) on five letters, S to D, each with
   its Chinese name: B is the performance the grade expects, C is the passing line, and D falls below
-  it. Each boundary between adjacent tiers asks about one kind of record: an accepted and used
-  result for each requirement (C), the member's own key judgment in each (B), an item of the
-  capability the next grade adds (A), and one of the next grade's responsibilities delegated and
-  carried for a full cycle (S); A and S also rest on the value their users record. D also covers an
-  agreed improvement period that ended with a requirement not met, and two crossings of the same
-  non-negotiable boundary in a period. For 首席, the decision owner states before the period what
-  counts as A and as S. The tier definitions are published before each period, and the review after
-  the first two periods covers every boundary.
+  it. D's conditions are read first: a requirement with no accepted and used result in any of the
+  period's work, an agreed improvement period that ended in the period with a requirement not met,
+  or two crossings of the same non-negotiable boundary in a period. Above D, each tier answers one
+  yes-or-no question: whether every requirement has an accepted and used result (C); whether each
+  has one with the member's own key judgment (B); and, of a period that meets B, whether the same
+  item that the next grade's "What the grade shows" adds shows in two pieces of work (A), and
+  whether a responsibility that the next grade's "Responsibility it can carry" adds was delegated
+  and carried for a full cycle (S). A and S also rest on their users' record of value, which is now
+  a kind of evidence. For the chief grade, the decision owner states A and S in writing before the
+  period. The tier definitions are published before each period; an assessor from another domain
+  joins when either assessor reads S; B and S are reconciled as adjacent tiers when every assessor
+  answers A's question no; and the review after the first two periods covers every boundary between
+  adjacent tiers. No tier is set from one piece of work in place of the period's records; S may rest
+  on one delegated responsibility, however many pieces of work that is, and is read in the period in
+  which that responsibility's full cycle ends or, when the result's use falls after that period, in
+  the period in which it is used; other work delivered or used after a period's end is read in the
+  period in which it is used. After a C, the next period gives each requirement still short a goal
+  and a coach; a second shortfall, or a D, leads to an improvement period that names, for each
+  requirement, whether C's test or B's applies. Promotion reads the next grade's responsibility from
+  the same delegation records as S.
+- Name the grades in English in the growth page's running text and the work-practice requirements;
+  their Chinese names stay in the grade table, the list of bands, and the titles of two
+  work-practice scenarios, which OpenSpec keeps as their identity.
 
 ## [9.3.0] - 2026-11-24
 

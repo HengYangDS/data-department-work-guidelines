@@ -31,11 +31,12 @@ not redefine them.
 | Tier       | A member's work over one period, at their own grade             | S, A, B, C, D | Once per period                       |
 | Grade      | The responsibility the member has shown they can reliably carry | Eight grades  | At hiring, then at a promotion review |
 
-Evidence flows one way: work records, and work scores where used, support a
-tier; tiers over several periods, with the responsibility actually carried,
-support a change of grade. The entry grade is set at hiring against the grade's
-description. You must not set a tier from one piece of work or a grade from one
-period. A tier does not change a work score, and a grade does not change a tier.
+Evidence flows one way: work records, and work scores where used, support a tier;
+tiers over several periods, with the responsibility actually carried, support a
+change of grade. The entry grade is set at hiring against the grade's description.
+You must not set a tier from one piece of work in place of the period's records,
+or a grade from one period. A tier does not change a work score, and a grade does
+not change a tier.
 
 ## The Professional Sequence
 
@@ -53,13 +54,14 @@ level: a team lead is a member of the sequence who also leads a team.
 | 道 direction | 专家 expert       | Defines methodology, architecture routes, and the standard for judging hard problems.                                                          | Team lead or cross-team expert; routes, standards, and decisive vetoes.                                      |
 | 道 direction | 首席 chief        | Sets department-level or cross-department technical direction, paradigms, and critical architecture judgments.                                 | Department-wide technical authority across teams; does not lead a team.                                      |
 
-A grade's requirements are the items stated in the two columns of its row. A grade shows the
-responsibility a member can carry when the authorized owner assigns it; it does
-not itself grant authority ([two kinds of
+A grade's requirements are the items stated in the two columns of its row. A grade
+shows the responsibility a member can carry when the authorized owner assigns it;
+it does not itself grant authority ([two kinds of
 authority](charter.md#two-kinds-of-authority)). Each band changes the kind of
-responsibility: 器 uses tools and norms correctly, 术 gets work done with a
-method, 法 owns problems and builds methods, and 道 defines direction and the
-standards of judgment. At every grade a member grows along the [capability
+responsibility: the tools band uses tools and norms correctly, the craft band gets
+work done with a method, the method band owns problems and builds methods, and the
+direction band defines direction and the standards of judgment. At every grade a
+member grows along the [capability
 path](evolve.md#grow-capability-through-real-work).
 
 "Independently" means the next person can use what was delivered as it is, with
@@ -67,70 +69,73 @@ what was not checked stated; it does not mean speed or fluency with tools. At
 every grade, work done with Agents counts as the member's when the member set
 its boundary, checked what came back, and answers for it ([delegate a
 boundary](human-agent.md#delegate-a-boundary-not-a-pile-of-context)). Years in a
-grade are not a requirement. A member below 高级 does not lead a team; a 高级, 资深,
-or 专家 may lead one while still delivering first-line work under their own name.
+grade are not a requirement. A member below senior does not lead a team; a senior,
+staff, or expert member may lead one while still delivering first-line work under
+their own name.
 
 ## Tiers: Performance at One's Own Grade
 
 A tier describes a member's work in one period at their own grade. Each tier has
-one definition across the department, read at the height the grade sets: a 学徒's
-B and a 资深's B describe different absolute levels, and tiers at different grades
-are not compared. B is the performance the grade expects, C is the passing line,
-and D falls below it. Each tier is a different kind of contribution. D's
-conditions are read first; above D, each tier answers one yes-or-no question.
-Within the member's grade: whether every requirement has an accepted and used
-result (C), and whether each has one in which the key judgment is the member's
-own (B). Toward the next grade, two questions asked of a period that meets B,
-each also needing its users' record of value: whether the work shows an item that
-the next grade's "What the grade shows" adds (A), and whether a responsibility
-that the next grade's "Responsibility it can carry" adds was delegated to the
-member and carried for a full cycle (S).
+one definition across the department, read at the height the grade sets: an
+apprentice's B and a staff member's B describe different absolute levels, and
+tiers at different grades are not compared. B is the performance the grade
+expects, C is the passing line, and D falls below it. Each tier is a different
+kind of contribution. D's conditions are read first; above D, each tier answers
+one yes-or-no question. Within the member's grade: whether every requirement has
+an accepted and used result (C), and whether each has one in which the key
+judgment is the member's own (B). Toward the next grade, two questions asked of a
+period that meets B, each also needing its users' record of value: whether the
+same item that the next grade's "What the grade shows" adds shows in at least two
+different pieces of work (A), and whether a responsibility that the next grade's
+"Responsibility it can carry" adds was delegated to the member and carried for a
+full cycle (S).
 
-| Tier | 中文     | The member's work in the period, at their own grade                                                                                                                                                                                                                                                                                                                  |
-| ---- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| S    | 远超预期 | Far exceeds expectation: meets B, and one responsibility that the next grade's "Responsibility it can carry" adds to the member's own row, other than leading a team below 高级, was formally delegated to the member, who carried it for one full cycle of that responsibility; its users record value at the scope that responsibility names.                      |
-| A    | 超出预期 | Exceeds expectation: meets B, and the same item that the next grade's "What the grade shows" adds to the member's own row shows in at least two different pieces of work assigned at the member's grade; its users record what the result changed, within the scope of the member's own work.                                                                        |
-| B    | 符合预期 | Meets expectation: meets C, and every requirement the period's assignments touched has at least one accepted and used result in which the key judgment was the member's own.                                                                                                                                                                                         |
-| C    | 及格     | Passes: every requirement the period's assignments touched has at least one result that was accepted and used.                                                                                                                                                                                                                                                       |
-| D    | 不及格   | Below the passing line: at least one requirement the period's assignments touched has no accepted and used result in any of the period's work; or an agreed improvement period ended with a requirement it named recorded as not met; or the work crossed the same [non-negotiable boundary](charter.md#four-non-negotiable-boundaries) twice or more in the period. |
+| Tier | 中文     | The member's work in the period, at their own grade                                                                                                                                                                                                                                                                                                                                |
+| ---- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| S    | 远超预期 | Far exceeds expectation: meets B, and one responsibility that the next grade's "Responsibility it can carry" adds to the member's own row, other than leading a team below senior, was formally delegated to the member, who carried it for one full cycle of that responsibility; its users record value at the scope that responsibility names.                                  |
+| A    | 超出预期 | Exceeds expectation: meets B, and the same item that the next grade's "What the grade shows" adds to the member's own row shows in at least two different pieces of work assigned at the member's grade; its users record what the result changed, within the scope of the member's own work.                                                                                      |
+| B    | 符合预期 | Meets expectation: meets C, and every requirement the period's assignments touched has at least one accepted and used result in which the key judgment was the member's own.                                                                                                                                                                                                       |
+| C    | 及格     | Passes: every requirement the period's assignments touched has at least one result that was accepted and used.                                                                                                                                                                                                                                                                     |
+| D    | 不及格   | Below the passing line: at least one requirement the period's assignments touched has no accepted and used result in any of the period's work; or an agreed improvement period ended in the period with a requirement it named recorded as not met; or the work crossed the same [non-negotiable boundary](charter.md#four-non-negotiable-boundaries) twice or more in the period. |
 
-When one of D's conditions holds, the period reads D whatever the other rows
-show; otherwise it reads the highest tier its records show. A and S each require
-B; S does not require A. S and A differ in kind and in the reach of their value,
-not in the count of their evidence: A shows the next grade's capability within the
+When one of D's conditions holds, the period reads D whatever the other rows show;
+otherwise it reads the highest tier its records show. A and S each require B; S
+does not require A. S and A differ in kind and in the reach of their value, not in
+the count of their evidence: A shows the next grade's capability within the
 member's own work, while S means one of the next grade's responsibilities was
-delegated and carried, with value at that responsibility's scope. For a 中级, the
-responsibility S asks for is lead responsibility for a critical data pipeline, a
-complex analysis, or a platform module, carried for one full cycle; leading a team
-stays at 高级 and above.
+delegated and carried, with value at that responsibility's scope. For an
+intermediate member, the responsibility S asks for is lead responsibility for a
+critical data pipeline, a complex analysis, or a platform module, carried for one
+full cycle; leading a team stays at senior and above.
 
 A requirement is each item of work or capability stated in the two columns of the
-grade's row, such as a 中级's "states its main risks and bounds"; a limit such as
-"does not lead a team" is not one, and an item the period's assignments did not
-touch does not count. A result counts as accepted and used when it was accepted
-and taken into use, even if another person supplied or corrected its key
-judgment; a returned result, or one not delivered when due, does not. Work whose
-delivery or planned use falls after the period's end does not touch a requirement
-in that period; it is read in the period in which it is used. Judgments the
-grade's own row leaves to others, such as a 学徒's guidance, a 专员's acceptance,
-or a 初级's explicit review, count as the member's own for B. What the member's
-own row already asks counts toward B only: a 资深 who turns a method into a review
-rule shows B, not A, and shows A only when the work shows what the 专家 row's
-"What the grade shows" adds, such as setting the standard for judging hard
-problems.
+grade's row, such as an intermediate member's "states its main risks and bounds";
+a limit such as "does not lead a team" is not one, and an item the period's
+assignments did not touch does not count. A result counts as accepted and used
+when it was accepted and taken into use, even if another person supplied or
+corrected its key judgment; a returned result, or one not delivered when due, does
+not. Work whose delivery or planned use falls after the period's end does not
+touch a requirement in that period; it is read in the period in which it is used.
+Judgments the grade's own row leaves to others, such as an apprentice's guidance,
+an associate's acceptance, or a junior member's explicit review, count as the
+member's own for B. What the member's own row already asks counts toward B only: a
+staff member who turns a method into a review rule shows B, not A, and shows A
+only when the work shows what the expert row's "What the grade shows" adds, such
+as setting the standard for judging hard problems.
 
 A full cycle is one complete round of the work the responsibility governs, from
 its start to acceptance, such as one reporting period or one release. S is read in
-the period in which that cycle ends; before it ends, no period reads S. Value is
-what the users of a result record: who used it, and what it changed in research,
-production, a decision, cost, or risk. Without that record, neither A nor S
-holds. 首席 has no next row. Before the period, the decision owner states in
-writing what counts as A, a capability beyond the 首席 row shown in the member's
-own work, and what counts as S, a responsibility beyond that row delegated to the
-member and carried for a full cycle; for both, a user other than the decision
-owner records the value. A tier not stated before the period cannot be read:
-without the statement of A the period cannot read A, and without the statement of
-S it cannot read S.
+the period in which that cycle ends, or, when the result's use falls after that
+period, in the period in which it is used; before the cycle ends, that
+responsibility gives no period an S. Value is what the users of a result record:
+who used it, and what it changed in research, production, a decision, cost, or
+risk. Without that record, neither A nor S holds. The chief grade has no next row.
+Before the period, the decision owner states in writing what counts as A, a
+capability beyond the chief row shown in the member's own work, and what counts as
+S, a responsibility beyond that row delegated to the member and carried for a full
+cycle; for both, a user other than the decision owner records the value. A tier
+not stated before the period cannot be read: without the statement of A the period
+cannot read A, and without the statement of S it cannot read S.
 
 A single boundary crossing follows the charter's [breach
 rule](charter.md#four-non-negotiable-boundaries) and does not by itself set the
@@ -175,9 +180,9 @@ the member did not check are leads, not evidence.
   delegation record, the record of the responsibility's full cycle, and its users'
   record of value. Another witness may add to them but not replace one.
 - B, C, and D state, requirement by requirement, the records they rest on, and a D
-  names each of its conditions that holds: the delivery records that show no accepted
-  result, the written improvement agreement and its closing record, or the two
-  boundary records.
+  names each of its conditions that holds: the delivery records that show no
+  accepted result, the written improvement agreement and its closing record, or
+  the two boundary records.
 - One strong piece of work does not raise a tier to A, and one weak piece does not
   lower a tier while another piece in the period meets the same requirement; S
   rests on its delegated responsibility, however many pieces of work that is.
@@ -203,13 +208,12 @@ chooses two assessors who know the work, neither of them the member.
    records, not from summaries. When either assessor reads S, the decision owner
    adds an assessor from another domain, who judges in the same way; step 3 then
    compares the highest and the lowest of the three tiers.
-3. **Reconcile on evidence.** When the assessors' tiers are adjacent, or are B
-   and S and every assessor's written judgment answers A's question no, they
-   re-read the evidence together;
-   if they still differ, the decision owner chooses between the two from the
-   records and states why. Otherwise they record "insufficient evidence", name
-   what to examine next, and judge again once it is examined. They do not
-   average or use half tiers.
+3. **Reconcile on evidence.** When the assessors' tiers are adjacent, or are B and
+   S and every assessor's written judgment answers A's question no, they re-read
+   the evidence together; if they still differ, the decision owner chooses between
+   the two from the records and states why. When their tiers differ in any other
+   way, they record "insufficient evidence", name what to examine next, and judge
+   again once it is examined. They do not average or use half tiers.
 4. **Confirm and record.** The decision owner confirms the tier, which is
    recorded with its period, scope, and the records it rests on.
 5. **Review on request.** The member may ask for one review with new evidence;
@@ -232,17 +236,18 @@ declared for its period; a later revision of either does not reopen it.
 ## Promotion
 
 A member may be promoted only when they have reached S or A at their grade in at
-least two consecutive periods and already carry the next grade's responsibility
-in their actual work, read from the same delegation records as S; entering 高级 or 专家 also requires the evidence below. The
-count restarts after a grade change.
+least two consecutive periods and already carry the next grade's responsibility,
+other than leading a team below senior, in their actual work, read from the same
+delegation records as S; entering senior or expert also requires the evidence
+below. The count restarts after a grade change.
 
-- **Entering 高级:** in at least two different pieces of work, a method the
+- **Entering senior:** in at least two different pieces of work, a method the
   member designed was adopted by another person, ran a full cycle, and held when
   conditions changed; and at least once the member named, before the result,
   where it was most likely to fail, and another person used the conclusion
   directly. A full cycle is one complete round of the work the method serves,
   from start to acceptance, such as one reporting period or one release.
-- **Entering 专家:** a standard, check, or judgment the member set holds when
+- **Entering expert:** a standard, check, or judgment the member set holds when
   they are not there, has been adopted for a full cycle by people outside their
   own work, and a cross-domain review found it fit to use and stated when it
   stops applying.
