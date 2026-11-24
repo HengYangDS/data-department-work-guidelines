@@ -65,7 +65,7 @@ comparison, you must distinguish what could have been known then from what can
 be seen in hindsight. Availability time is when a value became accessible to the
 relevant user or system, not when someone later queried it. You must check
 historical revisions, backfills, and restatements, and whether sample selection,
-entity changes, market calendars, or survival status introduce bias. You must
+entity changes, trading calendars, or survival status introduce bias. You must
 explain how missingness, delay, conflict, and anomalies affect the conclusion.
 
 You must distinguish a missing fact from an established timing defect. If
