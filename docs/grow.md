@@ -92,7 +92,7 @@ full cycle (S).
 
 | Tier | 中文     | The member's work in the period, at their own grade                                                                                                                                                                                                                                                                                                                                |
 | ---- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| S    | 远超预期 | Far exceeds expectation: meets B, and one responsibility that the next grade's "Responsibility it can carry" adds to the member's own row, other than leading a team below senior, was formally delegated to the member, who carried it for one full cycle of that responsibility; its users record value at the scope that responsibility names.                                  |
+| S    | 远超预期 | Far exceeds expectation: meets B, and one responsibility that the next grade's "Responsibility it can carry" adds to the member's own row, other than leading a team while below senior, was formally delegated to the member, who carried it for one full cycle of that responsibility; its users record value at the scope that responsibility names.                            |
 | A    | 超出预期 | Exceeds expectation: meets B, and the same item that the next grade's "What the grade shows" adds to the member's own row shows in at least two different pieces of work assigned at the member's grade; its users record what the result changed, at the scope of the piece of work it came from.                                                                                 |
 | B    | 符合预期 | Meets expectation: meets C, and every requirement the period's assignments touched has at least one accepted and used result in which the key judgment was the member's own.                                                                                                                                                                                                       |
 | C    | 及格     | Passes: every requirement the period's assignments touched has at least one result that was accepted and used.                                                                                                                                                                                                                                                                     |
@@ -243,22 +243,24 @@ declared for its period; a later revision of either does not reopen it.
 ## Promotion
 
 A member may be promoted only when they have reached S or A at their grade in at
-least two consecutive periods and already carry the next grade's responsibility,
-other than leading a team below senior, in their actual work, read from the same
-delegation records as S; entering senior or expert also requires the evidence
-below. The count restarts after a grade change.
+least two consecutive periods and already carry one of the next grade's
+responsibilities, other than leading a team while below senior, in their actual
+work, read from the same delegation records as S; entering senior or expert also
+requires the evidence below. The count restarts after a grade change.
 
-- **Entering senior:** in at least two different pieces of work, a method the
-  member designed was adopted by another person, ran a full cycle, and held when
-  conditions changed; and at least once the result bore out the member's
-  prediction, made before the result, of where the work was most likely to fail,
-  and another person used the conclusion directly.
+- **Entering senior:** in each of at least two different pieces of work, a
+  method the member designed was adopted by another person, ran a full cycle,
+  and held when conditions changed; the methods need not be the same. At least
+  once, the member predicted, before the result was known, where a piece of
+  their work was most likely to fail; the result bore the prediction out, and
+  another person used the member's conclusion directly.
 - **Entering expert:** a standard, check, or judgment the member set holds when
-  they are not there, has been adopted for a full cycle by people outside their
-  own work, and a cross-domain review found it fit to use and stated when it
-  stops applying.
+  the member is not there, has been adopted for a full cycle by people outside
+  the member's own work, and has been found fit to use by a cross-domain review
+  that stated when it stops applying.
 
-Years, calendar time, and a single high score do not replace this evidence.
+Years, calendar time, and a single high score do not replace any of this
+evidence.
 
 After the first year of use, the department reviews how many consecutive periods
 promotion requires.

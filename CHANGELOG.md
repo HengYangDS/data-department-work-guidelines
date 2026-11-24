@@ -12,6 +12,17 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [10.0.3] - 2026-11-25
+
+### Fixed
+
+- Say, for [entering senior](docs/grow.md#promotion), that each of at least two pieces of work shows
+  a method the member designed and that the methods need not be the same, as the owner decided;
+  give the borne-out prediction a sentence of its own, with the member's conclusion that another
+  person used; state that promotion asks for one of the next grade's responsibilities, read from the
+  same delegation records as S; and tidy the wording of entering expert and of "below senior". On
+  the [data page](docs/data.md), call the trading calendar by one name.
+
 ## [10.0.2] - 2026-11-25
 
 ### Fixed
