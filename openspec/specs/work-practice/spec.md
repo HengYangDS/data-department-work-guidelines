@@ -700,10 +700,12 @@ attainment; rewards and sanctions MAY take the tier as one of their grounds.
 #### Scenario: Assessors decide between adjacent tiers
 
 - **WHEN** assessors decide between two adjacent tiers
-- **THEN** they answer one question about one kind of record: an accepted and
-  used result for each requirement (C), the member's own key judgment in each
-  (B), an item of the capability the next grade adds (A), or one of the next
-  grade's responsibilities delegated and carried for a full cycle (S)
+- **THEN** they answer one question about one kind of record: whether every
+  requirement has an accepted and used result and none of D's other conditions
+  holds (C), and whether the key judgment in each is the member's own (B); and,
+  of a period that meets B, whether it shows an item of the capability the next
+  grade adds (A) and whether one of the next grade's responsibilities was
+  delegated and carried for a full cycle (S)
 - **AND** A and S each require B and rest on the value their users record, and
   when one of D's conditions holds the period reads D.
 
