@@ -260,7 +260,8 @@ below. The count restarts after a grade change.
 
 Years, calendar time, and a single high score do not replace this evidence.
 
-The department reviews the number of periods after the first year of use.
+After the first year of use, the department reviews how many consecutive periods
+promotion requires.
 
 ## Hiring
 

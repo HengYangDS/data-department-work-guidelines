@@ -12,6 +12,17 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [10.0.2] - 2026-11-25
+
+### Fixed
+
+- Bring the work-practice specification's promotion requirement to the
+  [promotion](docs/grow.md#promotion) section: the carried responsibility is read from the same
+  delegation records as S, and the scenario for a member proposed for senior asks for the borne-out
+  prediction at least once, as the page does, not in two pieces of work. The page and the scenario
+  say that after the first year of use the department reviews how many consecutive periods
+  promotion requires.
+
 ## [10.0.1] - 2026-11-25
 
 ### Fixed
