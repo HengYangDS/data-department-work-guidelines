@@ -77,10 +77,11 @@ one definition across the department, read at the height the grade sets: a 学�
 B and a 资深's B describe different absolute levels, and tiers at different grades
 are not compared. B is the performance the grade expects, C is the passing line,
 and D falls below it. Each tier is a different kind of contribution, and each
-boundary between adjacent tiers is a yes-or-no question about one kind of record:
-within the member's grade, whether every requirement has an accepted and used
-result (C) and whether the key judgment in each is the member's own (B); toward
-the next grade, whether the work already shows an item of the capability the next
+boundary between adjacent tiers is a yes-or-no question about one kind of record.
+Within the member's grade: whether every requirement has an accepted and used
+result and none of D's other conditions holds (C), and whether the key judgment in
+each is the member's own (B). Toward the next grade, two questions asked of a
+period that meets B: whether the work shows an item of the capability the next
 grade adds (A), and whether one of the next grade's responsibilities was delegated
 to the member and carried for a full cycle (S).
 
