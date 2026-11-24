@@ -12,6 +12,21 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [10.0.0] - 2026-11-25
+
+### Changed
+
+- Read [tiers](docs/grow.md#tiers-performance-at-ones-own-grade) on five letters, S to D, each with
+  its Chinese name: B is the performance the grade expects, C is the passing line, and D falls below
+  it. Each boundary between adjacent tiers asks about one kind of record: an accepted and used
+  result for each requirement (C), the member's own key judgment in each (B), an item of the
+  capability the next grade adds (A), and one of the next grade's responsibilities delegated and
+  carried for a full cycle (S); A and S also rest on the value their users record. D also covers an
+  agreed improvement period that ended with a requirement not met, and two crossings of the same
+  non-negotiable boundary in a period. For 首席, the decision owner states before the period what
+  counts as A and as S. A tier does not set pay and is not a sanction; the tier definitions are
+  published before each period; the review after the first two periods covers every boundary.
+
 ## [9.3.0] - 2026-11-24
 
 ### Changed
