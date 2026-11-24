@@ -137,10 +137,7 @@ You should use a tier to show each member where they stand at their grade and
 where to go next, to recognize and reward good work, to plan development, as
 evidence for promotion, and in selection. Pay follows the grade and attainment,
 meaning how far the member reached the goals agreed for the period; rewards and
-sanctions take the tier as one of their grounds. A tier does not set pay and is
-not a sanction: decisions on pay, position, or employment follow the company's
-published rules and the procedures the law requires, and the tier with its records
-is one of their factual grounds.
+sanctions take the tier as one of their grounds.
 
 After the first two periods, the department reviews whether assessors agree at
 each boundary between adjacent tiers, and rewrites the wording of a boundary where

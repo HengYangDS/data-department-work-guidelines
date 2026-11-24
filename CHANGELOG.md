@@ -24,8 +24,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
   carried for a full cycle (S); A and S also rest on the value their users record. D also covers an
   agreed improvement period that ended with a requirement not met, and two crossings of the same
   non-negotiable boundary in a period. For 首席, the decision owner states before the period what
-  counts as A and as S. A tier does not set pay and is not a sanction; the tier definitions are
-  published before each period; the review after the first two periods covers every boundary.
+  counts as A and as S. The tier definitions are published before each period, and the review after
+  the first two periods covers every boundary.
 
 ## [9.3.0] - 2026-11-24
 
