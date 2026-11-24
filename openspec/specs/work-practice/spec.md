@@ -757,7 +757,8 @@ evidence.
 - **WHEN** a promotion to senior is reviewed
 - **THEN** the record shows, in at least two different pieces of work, a method
   the member designed that another person adopted, that ran a full cycle, and
-  that held when conditions changed
+  that held when conditions changed, and a prediction of where the work was most
+  likely to fail that the result bore out
 - **AND** the department reviews the number of periods after the first year of
   use.
 
