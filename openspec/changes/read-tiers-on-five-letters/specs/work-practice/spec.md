@@ -2,20 +2,12 @@
 
 ### Requirement: A tier describes performance at the member's own grade
 
-A tier SHALL describe a member's work in one period at their own grade, with
-one department-wide definition per tier read at the height the grade sets. There
-SHALL be five tiers, S, A, B, C, and D: B SHALL be the performance the grade
-expects, C the passing line, and D below it. Each boundary between adjacent tiers
-SHALL be read from one kind of record: an accepted and used result for each
-requirement (C), the member's own key judgment in each (B), the capability the
-next grade adds (A), and one of the next grade's responsibilities delegated and
-carried for a full cycle (S). A and S SHALL each require B, and both SHALL rest
-on the value their users record. When one of D's conditions holds, the period
-SHALL read D; otherwise it SHALL read the highest tier its records show. Tiers at
-different grades SHALL NOT be compared. A tier SHALL be assessed and read against
-the grade requirements and tier definitions declared for its period. Pay SHALL
-follow the grade and attainment; rewards and sanctions MAY take the tier as one
-of their grounds, and a tier SHALL NOT itself set pay or be a sanction.
+A tier SHALL describe a member's work in one period at their own grade, with one
+definition per tier across the department. There SHALL be five tiers: B the
+performance the grade expects, S and A above it, C the passing line, and D below
+it. Tiers at different grades SHALL NOT be compared, and a tier SHALL be assessed
+against the definitions declared for its period. Pay SHALL follow the grade and
+attainment; rewards and sanctions MAY take the tier as one of their grounds.
 
 #### Scenario: Two members' tiers at different grades are compared
 
@@ -23,6 +15,16 @@ of their grounds, and a tier SHALL NOT itself set pay or be a sanction.
 - **THEN** the guidelines read each tier only against its own grade's row
 - **AND** the tier is used to show the member where they stand and where to go
   next, to recognize good work, and to plan development.
+
+#### Scenario: Assessors decide between adjacent tiers
+
+- **WHEN** assessors decide between two adjacent tiers
+- **THEN** they answer one question about one kind of record: an accepted and
+  used result for each requirement (C), the member's own key judgment in each
+  (B), an item of the capability the next grade adds (A), or one of the next
+  grade's responsibilities delegated and carried for a full cycle (S)
+- **AND** A and S each require B and rest on the value their users record, and
+  when one of D's conditions holds the period reads D.
 
 #### Scenario: A 资深 member's records show work the grade already asks for
 
@@ -34,12 +36,12 @@ of their grounds, and a tier SHALL NOT itself set pay or be a sanction.
 ### Requirement: Tier assessment is evidenced and fair
 
 The same grade and the same evidence SHALL lead to the same tier. A SHALL rest on
-at least three independent pieces of evidence from at least two pieces of work; S
-on the delegation record, the record of the responsibility's full cycle, and its
-users' record of value; and D's last two conditions on the records they name. The
-department SHALL NOT set a quota or forced distribution. A tier SHALL NOT be cited
-without its period, scope, and record, and SHALL NOT be published with a name,
-placed in a file an Agent reads, or computed automatically.
+at least three independent pieces of evidence from at least two pieces of work,
+S on its delegation, full cycle, and users' record of value, and D on the records
+of the condition it names. The department SHALL NOT set a quota or forced
+distribution. A tier SHALL NOT be cited without its period, scope, and record,
+and SHALL NOT be published with a name, placed in a file an Agent reads, or
+computed automatically.
 
 #### Scenario: Two assessors disagree
 
@@ -49,3 +51,11 @@ placed in a file an Agent reads, or computed automatically.
   without averaging or using half tiers
 - **AND** an S adds an assessor from another domain, and the member may ask for
   one review with new evidence.
+
+#### Scenario: A tier would feed pay or a sanction
+
+- **WHEN** a decision on pay, position, or employment cites a tier
+- **THEN** the decision follows the company's published rules and the
+  procedures the law requires, since a tier does not itself set pay or a
+  sanction
+- **AND** the tier with its records is one of its factual grounds.
