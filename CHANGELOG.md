@@ -12,6 +12,19 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [10.0.1] - 2026-11-25
+
+### Fixed
+
+- Correct the wording of [tiers](docs/grow.md#tiers-performance-at-ones-own-grade) and their
+  evidence, after a reader of the book found eight places it could not follow: adjacent tiers differ
+  in kind, not in amount; a prediction the member's own row asks for counts toward B, and toward A
+  only when it shows the item the next grade adds; a late result counts once accepted and used, and
+  only a result due in the period and still undelivered at its end is no result; A's value is read
+  at the scope of the piece of work it came from; a full cycle is defined once; the period after a C
+  is named. Entering senior asks that the result bore out the member's prediction of where the work
+  was most likely to fail, as the committee text approved on 2026-11-22 said.
+
 ## [10.0.0] - 2026-11-25
 
 ### Changed
