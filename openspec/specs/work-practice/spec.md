@@ -735,11 +735,9 @@ computed automatically.
 
 #### Scenario: A tier would feed pay or a sanction
 
-- **WHEN** a decision on pay, position, or employment cites a tier
-- **THEN** the decision follows the company's published rules and the
-  procedures the law requires, since a tier does not itself set pay or a
-  sanction
-- **AND** the tier with its records is one of its factual grounds.
+- **WHEN** a decision on pay, a reward, or a sanction cites a tier
+- **THEN** pay follows the grade and attainment
+- **AND** the decision takes the tier with its records as one of its grounds.
 
 ### Requirement: Promotion follows sustained evidence and carried responsibility
 
