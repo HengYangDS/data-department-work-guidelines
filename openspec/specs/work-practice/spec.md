@@ -325,14 +325,33 @@ remain accountable.
 
 #### Scenario: Work is performed outside data production
 
-- **WHEN** a department member or delegated Agent acquires information, analyzes
-  or models data, develops software, performs data science, operates a platform
-  or infrastructure, manages products or technical direction, governs a product,
-  or delivers operational work
-- **THEN** the data-quality topic SHALL apply its shared requirements across
-  those activities and data production
-- **AND** each role's professional responsibility and action authority remain
-  distinct under that common contract.
+- **WHEN** a department member or delegated Agent works in a function other
+  than development and production: information acquisition, analysis and
+  modeling, data science, platform engineering, infrastructure, paradigm
+  research, product governance, or operations and delivery
+- **THEN** the data-quality topic SHALL apply its shared requirements to that
+  work as to development and production
+- **AND** each function's professional responsibility and each owner's action
+  authority remain distinct under these shared requirements.
+
+#### Scenario: The data topic names the department's functions
+
+- **WHEN** the data topic states where its obligations apply
+- **THEN** it SHALL name nine functions: six vertical functions along the data
+  value chain (information acquisition, development and production, analysis
+  and modeling, data science, platform engineering, infrastructure) and three
+  horizontal functions across them (paradigm research, product governance,
+  operations and delivery)
+- **AND** it SHALL state the data that development and production, analysis
+  and modeling, and data science each own professionally, and which four
+  vertical functions also hold the production, semantic, capability, and
+  resource centers for all data
+- **AND** it SHALL state how a data item's domain, production, platform,
+  governance, and delivery responsibilities fall to the functions by default,
+  where they MAY be held together but none SHALL absorb another
+- **AND** it SHALL present the functions as areas of responsibility, not
+  departments or an organization chart, and keep platform engineering apart
+  from infrastructure.
 
 #### Scenario: Feedback challenges the reason for using data
 
