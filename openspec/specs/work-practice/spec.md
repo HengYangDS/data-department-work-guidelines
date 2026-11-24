@@ -655,8 +655,7 @@ The department SHALL judge one piece of work by a work score, a member's work
 over one period by a tier read at the member's own grade, and the responsibility
 a member has shown they can reliably carry by a grade. All three SHALL rest only
 on work the member did and SHALL NOT judge personality, background, loyalty, or
-worth. A tier SHALL NOT be set from one piece of work, nor a grade from one
-period.
+worth. A tier SHALL NOT be set from one piece of work in place of the period's records, nor a grade from one period.
 
 #### Scenario: One strong piece of work is offered as a tier
 
@@ -669,15 +668,16 @@ period.
 ### Requirement: One professional sequence of eight grades
 
 Every member SHALL be on one professional sequence of eight grades in four
-bands: 器 (学徒, 专员), 术 (初级, 中级), 法 (高级, 资深), and 道 (专家, 首席). A
-grade SHALL state what it shows and the responsibility it can carry, and SHALL
-NOT be a management level. A member below 高级 SHALL NOT lead a team, and a 首席
-SHALL NOT lead one.
+bands: tools 器 (apprentice 学徒, associate 专员), craft 术 (junior 初级,
+intermediate 中级), method 法 (senior 高级, staff 资深), and direction 道 (expert
+专家, chief 首席). A grade SHALL state what it shows and the responsibility it can
+carry, and SHALL NOT be a management level. A member below senior SHALL NOT lead
+a team, and a chief SHALL NOT lead one.
 
 #### Scenario: Years in a grade are offered as a reason to promote
 
 - **WHEN** a manager cites time in a grade as the reason for a promotion
-- **THEN** the guidelines treat years as a usual reading, not a requirement
+- **THEN** the guidelines do not treat years in a grade as a requirement, and years do not replace the promotion evidence
 - **AND** "independently" means the next person can use the delivered work as
   it is, with what was not checked stated.
 
@@ -703,8 +703,7 @@ attainment; rewards and sanctions MAY take the tier as one of their grounds.
 - **THEN**, after D's conditions, which are read first, each tier answers one
   yes-or-no question: whether every requirement has an accepted and used result
   (C); whether each has one in which the key judgment is the member's own (B);
-  and, of a period that meets B, whether it shows an item that the next grade's
-  "What the grade shows" adds (A) and whether a responsibility that the next
+  and, of a period that meets B, whether the same item that the next grade's "What the grade shows" adds shows in at least two different pieces of work (A) and whether a responsibility that the next
   grade's "Responsibility it can carry" adds was delegated and carried for a full
   cycle (S)
 - **AND** A and S each require B and rest on the value their users record, S
@@ -712,9 +711,10 @@ attainment; rewards and sanctions MAY take the tier as one of their grounds.
 
 #### Scenario: A 资深 member's records show work the grade already asks for
 
-- **WHEN** a 资深 turned a method into a review rule that other teams use
-- **THEN** the guidelines read it toward B, because the 资深 row asks for it
-- **AND** A needs an item that the 专家 row's "What the grade shows" adds, and S
+- **WHEN** a staff member turned a method into a review rule that other teams
+  use
+- **THEN** the guidelines read it toward B, because the staff row asks for it
+- **AND** A needs an item that the expert row's "What the grade shows" adds, and S
   a responsibility that its "Responsibility it can carry" adds, delegated and
   carried for a full cycle, each with its users' record of value.
 
@@ -747,15 +747,14 @@ computed automatically.
 ### Requirement: Promotion follows sustained evidence and carried responsibility
 
 A member SHALL be promoted only after reaching S or A at their grade in at least
-two consecutive periods while already carrying the next grade's responsibility
-in their actual work; the count SHALL restart after a grade change. Entering
-高级 and entering 专家 SHALL each require the crossing evidence the guidelines
-name. Years, calendar time, and a single high score SHALL NOT replace that
+two consecutive periods while already carrying the next grade's responsibility, other than leading a team below senior, in their actual work; the count SHALL restart after a grade change. Entering
+senior and entering expert SHALL each require the crossing evidence the
+guidelines name. Years, calendar time, and a single high score SHALL NOT replace that
 evidence.
 
 #### Scenario: A member is proposed for 高级
 
-- **WHEN** a promotion to 高级 is reviewed
+- **WHEN** a promotion to senior is reviewed
 - **THEN** the record shows, in at least two different pieces of work, a method
   the member designed that another person adopted, that ran a full cycle, and
   that held when conditions changed
