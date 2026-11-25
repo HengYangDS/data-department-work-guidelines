@@ -128,9 +128,8 @@ boundaries](charter.md#four-non-negotiable-boundaries).
 ### Use Scores with Care
 
 If scoring is used, you should define its levels, observable behavior, and
-purpose. A score expresses delivery risk; it must not label a person or stand
-for their overall worth. It judges one piece of work; a member's work over a
-period is judged by a [tier at their
+purpose. A score expresses delivery risk. It judges one piece of work; a member's
+work over a period is judged by a [tier at their
 grade](grow.md#tiers-performance-at-ones-own-grade). If a five-level review is
 used, you should keep its meaning stable:
 
@@ -155,9 +154,8 @@ You should watch the work from three angles:
   and whether a new mechanism lowers total cost.
 
 For every metric, you should first name the decision it supports, its fact
-source, period, boundary, and how it could be gamed. No single metric may stand
-for a person's overall worth, and no local metric may stand for the overall
-value of work or a system. You must investigate anomalies through cases and
+source, period, boundary, and how it could be gamed. No local metric may stand for
+the overall value of work or a system. You must investigate anomalies through cases and
 mechanisms; you must not equate them directly with individual performance.
 
 ## Cadence and Responsibilities

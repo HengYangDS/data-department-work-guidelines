@@ -19,8 +19,7 @@ delivery risk of one piece of work. A tier judges a member's work over one
 period, at the member's own grade. A grade states the responsibility a member
 has shown they can reliably carry. All three rest only on work the member did:
 the professional understanding, capability, and quality of delivered work it
-shows. None of them judges personality, background, loyalty, or a person's
-worth. Projects and other documents use these grades and tiers as written and do
+shows. Projects and other documents use these grades and tiers as written and do
 not redefine them.
 
 ## Three Scales, One Line of Evidence
