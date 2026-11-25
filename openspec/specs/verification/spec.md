@@ -92,7 +92,8 @@ steps without changing deadlines or review and protected isolation.
 #### Scenario: Windows verification events share a finite executor
 
 - **WHEN** the repository validates its GitLab jobs
-- **THEN** it declares no Windows job and therefore no Windows resource group
-- **AND** a Windows job or reservation that generated-pipeline drift introduces
-  fails the installed projection check
+- **THEN** it declares only ARM macOS jobs and therefore no resource group for a
+  shared executor of another platform
+- **AND** a job of another platform or a reservation that generated-pipeline
+  drift introduces fails the installed projection check
 - **AND** separate runner identities and ref admission remain unchanged.
