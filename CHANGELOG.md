@@ -12,6 +12,16 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [10.1.0] - 2026-11-25
+
+### Changed
+
+- Run CI only on ARM macOS, on both Forges, selected by one label, as the owner decided: GitHub's
+  hosted `macos-latest` runner, and on GitLab the project-locked ARM macOS guest, whose runners
+  carry `macos-latest` with `review` or `protected`. The Linux and Windows jobs, the Linux container
+  image and the Mise download from the package registry are retired, and the
+  [checks and CI](docs/governance/checks-and-ci.md) page and the contributing guide say so.
+
 ## [10.0.3] - 2026-11-25
 
 ### Fixed

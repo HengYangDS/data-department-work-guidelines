@@ -36,16 +36,16 @@ configuration syntax. These checks do not establish English prose quality or imp
 blank-line rule. Review new authored text for English and department terminology without rewriting
 quoted originals, historical text, or meaningful literals.
 
-| Concern                              | Current consumer                                                    | Ownership boundary                                                                 |
-| ------------------------------------ | ------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| Metadata and decision structure      | Installed `docs-registry`.                                          | The shared contract owns identity, structure, and non-execution inspection.        |
-| Source formatting and Markdown lint  | Installed `source-format` and `markdown-lint`.                      | Native formatters own layout; shared lint owns non-spacing checks.                 |
-| Checkout normalization               | Installed ETHOS, from each tracked file's effective Git attributes. | Text uses LF and `-text` preserves exact bytes; DDWG keeps no checker.             |
-| Official artifacts and configuration | Installed OpenSpec and `config-quality`.                            | Use supplied validation and native inputs, without a repository parser.            |
-| Local links and fragments            | Installed `markdown-links` in the shared floor.                     | The shared provider owns committed targets, headings, aliases, and diagnostics.    |
-| English prose and terms              | Installed `prose`, with a temporary spelling increment.             | Shared spelling still needs corpus and vocabulary qualification.                   |
-| Release history                      | Installed repository paradigm and release tag admission.            | The Changelog names no peer.                                                       |
-| ETHOS supply and CI                  | Mise installs the locked release; generated jobs run its graph.     | Each declared runner, Windows ARM64 included, qualifies by running the full graph. |
+| Concern                              | Current consumer                                                    | Ownership boundary                                                              |
+| ------------------------------------ | ------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| Metadata and decision structure      | Installed `docs-registry`.                                          | The shared contract owns identity, structure, and non-execution inspection.     |
+| Source formatting and Markdown lint  | Installed `source-format` and `markdown-lint`.                      | Native formatters own layout; shared lint owns non-spacing checks.              |
+| Checkout normalization               | Installed ETHOS, from each tracked file's effective Git attributes. | Text uses LF and `-text` preserves exact bytes; DDWG keeps no checker.          |
+| Official artifacts and configuration | Installed OpenSpec and `config-quality`.                            | Use supplied validation and native inputs, without a repository parser.         |
+| Local links and fragments            | Installed `markdown-links` in the shared floor.                     | The shared provider owns committed targets, headings, aliases, and diagnostics. |
+| English prose and terms              | Installed `prose`, with a temporary spelling increment.             | Shared spelling still needs corpus and vocabulary qualification.                |
+| Release history                      | Installed repository paradigm and release tag admission.            | The Changelog names no peer.                                                    |
+| ETHOS supply and CI                  | Mise installs the locked release; generated jobs run its graph.     | Each declared runner qualifies by running the full graph.                       |
 
 A repository adds code, a package, or a proof gate only for a duty that no installed check owns; the
 selected Change names that duty. Shared rules or source code alone do not qualify a replacement.
@@ -94,20 +94,20 @@ host tools or Runner services.
 | ------------------ | ------------------------------------------------------------------------------ |
 | Local verification | Mise installs the locked ETHOS release; the repository downloads nothing else. |
 | GitHub source CI   | Mise from its pinned action, then the locked ETHOS release.                    |
-| GitLab source CI   | Mise from the project's package registry, then the locked ETHOS release.       |
+| GitLab source CI   | Mise on the ARM macOS guest, then the locked ETHOS release.                    |
 
-### Qualify Each Platform
+### Qualify the Platform
 
-Run the complete declared graph on each claimed platform. Observe host and tool architectures
-separately; a declared asset or container name does not qualify an ABI. GitLab's Windows ARM64
-runners run the locked release's complete graph since 0.2.0-alpha.25, so their jobs qualify the
-platform.
+CI claims one platform, ARM macOS, on both Forges, as the owner decided on 2026-11-25. Run the
+complete declared graph there and observe host and tool architectures separately: a label or an
+asset name does not qualify an ABI, so read the architecture that each job's log reports, such as
+GitHub's runner-image name or `arch=arm64 os=darwin`.
 
 ### Audit Artifacts
 
-ETHOS audits its own release supply and publishes its known findings with each release. The pinned
-CI image and Mise keep their own owners' approvals. An authorized risk decision must identify the
-exact artifact and finding, allowed use and distribution, and expiry or withdrawal condition, with
+ETHOS audits its own release supply and publishes its known findings with each release. The supply
+approvals of Mise stay with its own owner. An authorized risk decision must identify the exact
+artifact and finding, allowed use and distribution, and expiry or withdrawal condition, with
 complete reports; keep it with the producing Change and evidence. This page grants no approval, and
 an approval for one artifact cannot cover another.
 
@@ -117,36 +117,31 @@ The [runner declarations](../../.config/ci/runners.toml) identify permitted comm
 Forge. They do not establish executable availability, runner identity, isolation, capacity, or
 successful job execution.
 
-Verify GitHub's hosted platform matrix and GitLab's admitted Linux, macOS, and Windows runners
-through their jobs and native runner/guest observations. GitLab's Linux container acquires the
-byte-exact official Mise installer and archive from the project's package registry, verifies the
-installer checksum and the archive through the original installer, then installs the locked ETHOS
-release. No upstream fallback is configured for Mise. Every GitLab job keeps the Mise configuration and data
-under its own execution root, so no job writes the runner account's profile or shares installed
-tools with another job. Each runner keeps the Mise download cache between its jobs, one store per
-concurrent slot and separate for review and protected runners: Mise hashes a stored download
-against the lockfile before reusing it and fetches again on a mismatch, so the cache can save a
-download but cannot change what is installed. Bootstrap does not establish hosted acceptance.
+Verify GitHub's hosted `macos-latest` runner and GitLab's admitted ARM macOS guest runners through
+their jobs and native runner/guest observations. Both Forges select the runner by the label
+`macos-latest`; GitLab adds `review` or `protected`. The guest supplies Mise, which installs the
+locked ETHOS release. Every GitLab job keeps the Mise configuration and data under its own execution
+root, so no job writes the runner account's profile or shares installed tools with another job. Each
+runner keeps the Mise download cache between its jobs, one store per concurrent slot and separate
+for review and protected runners: Mise hashes a stored download against the lockfile before reusing
+it and fetches again on a mismatch, so the cache can save a download but cannot change what is
+installed. Installing Mise or ETHOS does not establish hosted acceptance.
 
 ### Review and Protected Execution
 
 - Proposal and merge-request jobs use review runners. Protected `dev`, `main`, and release jobs use
   separate trusted runners. Accounts, identities, workspaces, caches, and credential reachability do
-  not cross that boundary; another tag or container on the same runner does not provide separation.
+  not cross that boundary; another tag on the same runner does not provide separation.
 - Require project locking and tagged-only scheduling on every GitLab runner; trusted runners also
   require native `ref_protected` access. Keep `dev`, `main`, and `v*` protected so proposal YAML
   cannot select a trusted runner.
-- All eligible Windows jobs reserve one native project-scoped resource group, independent of ref and
-  event. This schedules capacity, not trust or cross-project isolation. Preserve complete test
-  discovery and deadlines.
 - Once a proposal has an open MR, use its MR pipeline instead of a duplicate branch-push pipeline.
-- Before Linux admission, verify the exact CI OCI digest is allowed and cached. Native hosts follow
-  the [tool-supply boundary](#tool-supply).
+- The macOS guest follows the [tool-supply boundary](#tool-supply).
 
 ### Credential-Bearing Paths
 
-Observe registration/polling, clone, and `CI_JOB_TOKEN` package requests separately. The
-administrator's HTTP-only GitLab is a fixed deployment boundary. A registration tunnel protects
-neither clone nor package traffic; each unencrypted path needs an authorized bounded risk decision
-for the isolated network. Tags, images, YAML, or older green runs prove neither actual execution nor
+Observe registration/polling and clone separately. The
+administrator's HTTP-only GitLab is a fixed deployment boundary. A registration tunnel does not
+protect clone traffic; each unencrypted path needs an authorized bounded risk decision
+for the isolated network. Tags, YAML, or older green runs prove neither actual execution nor
 registration and isolation.

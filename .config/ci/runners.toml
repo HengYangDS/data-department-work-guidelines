@@ -6,5 +6,4 @@ executables = ["mise", "mkdir"]
 
 [[runner]]
 forge = "gitlab"
-executables = ["mise", "mkdir", "New-Item", "curl", "sha256sum", "timeout", "env", "sh"]
-references = ["docker"]
+executables = ["mise", "mkdir"]

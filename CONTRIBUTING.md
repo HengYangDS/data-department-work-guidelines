@@ -182,16 +182,14 @@ mise trust .config/mise/config.toml
 Clones made before 8.0.0 may hold an untracked `node_modules/` directory from
 the retired maintenance toolkit. Delete it; nothing reads it.
 
-GitLab's Linux jobs obtain Mise from the project's package registry; its macOS
-and Windows jobs use the runner's existing Mise installation. Every hosted job
-then installs the same locked ETHOS release and keeps a job-local
-`MISE_CONFIG_DIR`, without changing the host's global configuration. GitLab
-jobs also keep `MISE_DATA_DIR` under the job's `build/runtime/tool-cache/mise`,
-so each job unpacks the locked tools itself, and write Windows shims as files
-(`MISE_WINDOWS_SHIM_MODE=file`). Their `MISE_CACHE_DIR` holds downloads, which
+GitHub's job gets Mise from its pinned action, and GitLab's jobs use the
+existing Mise installation of the ARM macOS guest. Every hosted job then
+installs the same locked ETHOS release and keeps a job-local `MISE_CONFIG_DIR`,
+without changing the host's global configuration. GitLab jobs also keep
+`MISE_DATA_DIR` under the job's `build/runtime/tool-cache/mise`, so each job
+unpacks the locked tools itself. Their `MISE_CACHE_DIR` holds downloads, which
 `mise install --locked` reuses only after checking them against the lockfile;
-each runner keeps it between jobs, in the Linux runners' own `/cache` volume and
-in the macOS and Windows runners' builds directory.
+each runner keeps it between jobs in its builds directory.
 
 ## Commit and release
 
@@ -257,8 +255,8 @@ ethos publish --peer github --ref refs/heads/dev --ref refs/heads/main --probe-r
 
 Re-read that peer's protected `dev` and `main` refs and require every declared
 source job to pass at this release-cut commit. An earlier proposal or accepted
-SHA does not qualify it. A missing or failed selected-peer matrix stops that
-peer's release; an unavailable unselected peer does not.
+SHA does not qualify it. A missing or failed source job on the selected peer
+stops that peer's release; an unavailable unselected peer does not.
 
 Only then sign an annotated `vX.Y.Z` tag on that same proved commit,
 run `git tag -v vX.Y.Z`, and preview its publication through ETHOS:
@@ -271,8 +269,8 @@ Installed ETHOS admits the tag only when its name matches committed `VERSION`
 and the Changelog has that version's entry. Follow the current receipt
 continuation and re-read that peer's exact tag object and peeled commit before
 creating its Release. For later GitLab synchronization, repeat the source checks
-with `--peer gitlab` and publish the existing tag only after its own source
-matrix passes. Never recreate the tag.
+with `--peer gitlab` and publish the existing tag only after its own source jobs
+pass. Never recreate the tag.
 
 When GitLab is selected, its SSH remote does not identify the configured API
 scheme, host, or port. Set `GITLAB_HOST` in the
@@ -352,9 +350,11 @@ Runner bindings still serving earlier releases.
 Editions up to 7.0.12 attached an offline maintenance bundle. On 2026-11-01 the
 owner withdrew those downloads from both Forges, and editions from 8.0.0 attach
 none. GitLab's package registry keeps only native tool packages consumed by
-retained source or current CI, such as the Mise bootstrap package, and the
-preceding version for a rollback of current CI. Signed tags, source revisions,
-original release notes, and historical verification remain available.
+retained source or current CI, and the preceding version for a rollback of
+current CI. Current CI consumes none from 10.1.0, so the Mise bootstrap package
+stays only while a rollback to the preceding CI still needs it. Signed tags,
+source revisions, original release notes, and historical verification remain
+available.
 
 1. Inventory exact package, asset, and CI record IDs, names, versions, bytes,
    digests, release links, and active jobs on each Forge, and each Forge's open
