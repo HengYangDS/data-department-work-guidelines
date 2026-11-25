@@ -12,11 +12,11 @@ relations:
 tool, or rule is proposed, or an existing mechanism has become a burden.
 
 The aim of learning is to find the next failure earlier, judge it more easily,
-and need less manual rescue, not to increase the file count. Before admitting a
-rule, template, tool, Agent workflow, or platform mechanism as department
-practice, you must establish an observed problem, substantiated material risk,
-or applicable obligation. You must require a bounded trial, a responsible owner,
-and evidence of net benefit from the proposed practice.
+and need less manual rescue. Before admitting a rule, template, tool, Agent
+workflow, or platform mechanism as department practice, you must establish an
+observed problem, substantiated material risk, or applicable obligation. You
+must require a bounded trial, a responsible owner, and evidence of net benefit
+from the proposed practice.
 
 For an urgent failure or breach, go directly to
 [emergencies and exceptions](#emergencies-and-exceptions). For routine work,
@@ -39,7 +39,7 @@ Before admitting a practice, you must establish:
 Necessary safeguards must not wait for an incident or practice admission. You
 must meet the applicable obligation within existing authority; you must use the
 trial to choose and verify a proportionate implementation, not to decide whether
-the obligation applies. An untested preference is not a department rule.
+the obligation applies.
 
 You should retire a rule that has lost its subject, has no user, duplicates a
 source of truth, or costs more than it returns.
@@ -66,14 +66,14 @@ a failure:
 
 A reusable asset may be a test, monitor, checklist, decision record, example,
 rule, platform capability, or clearer ownership interface. You must improve or
-link an existing asset before creating another; repetition alone does not
-require a new file. A task-specific prevention asset need not become department
-practice; if it does, the admission conditions above still apply. You must
-choose the lightest form sufficient to prevent the failure or its recurrence.
-You should keep it findable, usable, and maintained at its existing owner. You
-should link to an existing authority rather than copying it. For repeated
-failures, or failures in [L1 or L2 work](charter.md#form-follows-risk), you
-should distinguish containment, direct correction, and prevention of recurrence.
+link an existing asset before creating another. A task-specific prevention asset
+need not become department practice; if it does, the admission conditions above
+still apply. You must choose the lightest form sufficient to prevent the failure
+or its recurrence. You should keep it findable, usable, and maintained at its
+existing owner. You should link to an existing authority rather than copying it.
+For repeated failures, or failures in [L1 or L2
+work](charter.md#form-follows-risk), you should distinguish containment, direct
+correction, and prevention of recurrence.
 
 ## Grow Capability Through Real Work
 
@@ -119,10 +119,8 @@ depending on repeated rescue. Required review and acceptance still apply.
 
 You must not call a result exceptional unless it produces evidenced net benefit,
 transfers a method, reduces long-term complexity, and improves others' capacity.
-Exceptional performance also shows the ability to [detect weak structural
-signals](#detect-drift-before-failure); this describes such results and is not a
-fifth condition. Not every task needs an exceptional result; every task still
-owes its agreed outcome and the [four non-negotiable
+Not every task needs an exceptional result; every task still owes its agreed
+outcome and the [four non-negotiable
 boundaries](charter.md#four-non-negotiable-boundaries).
 
 ### Use Scores with Care
@@ -167,8 +165,8 @@ escalate high-risk signals when observed; a calendar must not delay containment
 or a decision.
 
 The department head or appointed guideline maintainer owns a regular review
-rhythm, not just a response to incidents, and must maintain it. The owner should
-use these defaults during active work:
+rhythm and must maintain it. The owner should use these defaults during active
+work:
 
 | Review                          | Default interval | Required result                                                                                                                                                                      |
 | ------------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -179,10 +177,9 @@ use these defaults during active work:
 The owner may adjust an interval for work volume, risk, the speed of change, and
 the quality of existing feedback. The owner must record the reason and next
 review time in an existing work record and must revisit the choice when those
-conditions change. The owner must preserve all three review purposes rather
-than silently dropping periodic review. A trial or high-risk task needs a review
-point before its evidence or authorization expires; an urgent signal must not
-wait for it.
+conditions change. The owner must preserve all three review purposes. A trial or
+high-risk task needs a review point before its evidence or authorization
+expires; an urgent signal must not wait for it.
 
 The owner must use enough real samples and time to resolve the review question,
 not a fixed sample count or meeting length. The owner may combine reviews when
@@ -202,11 +199,11 @@ They resolve cross-domain conflicts and long-standing open decisions in time
 for work to proceed, and ensure that results, anomalies, and actual-use effects
 return promptly to the responsible owner.
 
-They show how they judge and communicate through concrete work examples, not
-only abstract requirements. They protect people who honestly expose problems
-and must not penalize honest uncertainty or make one person's repeated rescue
-the department's normal way of operating. They must not use these guidelines
-for retrospective fault-finding, ceremonial review, or micromanagement.
+They show how they judge and communicate through concrete work examples. They
+protect people who honestly expose problems and must not penalize honest
+uncertainty or make one person's repeated rescue the department's normal way of
+operating. They must not use these guidelines for retrospective fault-finding,
+ceremonial review, or micromanagement.
 
 When goals conflict, priorities drift, resources are short, decisions stall, or
 interfaces mislead, you should repair the management system before blaming a

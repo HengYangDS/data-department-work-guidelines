@@ -102,13 +102,11 @@ lists; any other use needs its own use admission.
 ## Move from a Signal to Controlled Use
 
 The questions below apply as the proposed use requires, and the duties under
-each bind with the force they state. These are not mandatory stages; you may
-combine them when useful. Research need not become production, but operational
-deployment requires production qualification and safeguards. You must obtain
-permission for the intended use before it begins, even if production evidence is
-ready. You must revisit the affected value, meaning, or quality judgment when
-facts or intended use change; deployment and feedback do not authorize another
-use.
+each bind with the force they state. Operational deployment requires production
+qualification and safeguards. You must obtain permission for the intended use
+before it begins, even if production evidence is ready. You must revisit the
+affected value, meaning, or quality judgment when facts or intended use change;
+deployment and feedback do not authorize another use.
 
 - **Opportunity:** Is evaluation worthwhile? You should establish the business
   question, value hypothesis, source, and information boundary.
@@ -129,9 +127,9 @@ use.
 
 You should assess technical feasibility and business value separately. You must
 label data according to its evidence and permission: exploratory, temporary,
-limited-use, awaiting verification, or admitted. Starting to use it does not
-resolve an open risk. Use admission permits a specified use under stated
-conditions; adoption is observed use within them, not inferred from deployment.
+limited-use, awaiting verification, or admitted. Use admission permits a
+specified use under stated conditions; adoption is observed use within them, not
+inferred from deployment.
 
 ### Worked decision: revised market history
 
@@ -161,14 +159,13 @@ For historical validity, the finding determines the next action:
   Replace or exclude that value and rerun affected results before requesting
   use admission.
 
-An accurate operational feed does not settle either historical claim. Keep the
+Keep the
 proposed historical use exploratory until its evidence supports that use and
 the authorized owner has made the use-admission decision.
 
 An Agent may locate snapshots, compare revisions, or run replay checks within
-its delegation. It cannot make the use-admission decision. The
-task lead brings the evidence and open risks to the decision owner and acceptor;
-later observed use, not these checks, establishes adoption.
+its delegation. It cannot make the use-admission decision. The task lead brings
+the evidence and open risks to the decision owner and acceptor.
 
 ## Ownership and Change Boundaries
 
@@ -178,8 +175,8 @@ chain, and three horizontal functions that run across all six, lift local
 experience into department-wide methods and governance, and settle trade-offs
 across the chain. They are areas of responsibility, not departments or an
 organization chart. Four vertical functions also hold a department-wide duty,
-called a center, for all data; a center is a duty, not a unit. You must apply
-this page's obligations to all nine.
+called a center, for all data. You must apply this page's obligations to all
+nine.
 
 | Function                   | 中文     | Axis       | What it owns                                                                                                                                                                                                       |
 | -------------------------- | -------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -196,8 +193,7 @@ this page's obligations to all nine.
 You must assign responsibility for the actual work. You must distinguish its
 output, the activities that produce or support it, and who decides and accepts
 it. The following responsibilities may overlap in one person or team. You must
-assign them through the department's current role and authority arrangements;
-this page defines data-work obligations, not seats or reporting lines.
+assign them through the department's current role and authority arrangements.
 
 | Responsibility | Work that must be owned                                                                                                                 |
 | -------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
@@ -254,7 +250,7 @@ cannot grant business or use permission.
 Asset governance retains permission and exit controls; production retains
 release and recovery. The task lead coordinates the decisions without taking
 over their owners' authority. You must apply the department's existing
-assignments; these responsibilities do not require separate people or teams.
+assignments.
 
 #### Worked change: a shared issuer identifier
 

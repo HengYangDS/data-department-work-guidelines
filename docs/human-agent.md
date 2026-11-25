@@ -42,8 +42,7 @@ path, and who approves irreversible actions.
 If missing context does not materially affect direction, safety, or authority,
 the Agent should continue with reasonable stated assumptions. If the target,
 fact source, responsible person, authority, or consequence cannot be
-established, the Agent must stop and ask. “Finish this for me” is not an
-authorization boundary.
+established, the Agent must stop and ask.
 
 > **Illustrative delegation:** “Compare the vendor's earlier and revised price
 > snapshots for the stated research cutoff. Work read-only. Report the source
@@ -59,22 +58,20 @@ authorization boundary.
 | Reviewer         | Independently check facts, changes, and evidence.                         | Should state findings and limits; review alone does not authorize action.              |
 | Acceptor         | Confirm agreed completion when authorized.                                | Must make the acceptance decision after examining the actual work.                     |
 
-The task lead remains responsible for the judgment submitted with delegated
-work and its end-to-end result. That judgment does not replace the
-[professional and use decisions](data.md#assign-modeling-and-lifecycle-decisions)
-owned by others. A task lead may also decide or accept when authorized; the
-lead's title alone grants neither power.
+The task lead remains responsible for the judgment submitted with delegated work
+and its end-to-end result. That judgment does not replace the [professional and
+use decisions](data.md#assign-modeling-and-lifecycle-decisions) owned by others.
+A task lead may also decide or accept when authorized.
 
 Review and acceptance require examination of facts, reasoning, changes, and
 evidence. The author's or Agent's own account must not substitute for that
-examination; people retain responsibility for commitments and consequences.
+examination.
 
 **The person who calls an Agent owns its context, permissions, verification, and
 result.**
 
 Submitting Agent-assisted work means the member has understood and checked the
-result and accepts responsibility for its consequences. Delegation transfers
-work, not that duty.
+result and accepts responsibility for its consequences.
 
 ## Execute and Verify
 
@@ -89,8 +86,7 @@ work, not that duty.
 | Unmet      | The acceptor must return the work to the member for revision within the delegation boundary. |
 | Met        | The acceptor must accept the work, record acceptance, and hand off the result.               |
 
-An Agent's summary cannot substitute for examination of the actual work and
-evidence. These roles may belong to the same person. People retain direction,
+These roles may belong to the same person. People retain direction,
 authority, and responsibility; delegation and acceptance do not expand permission
 or transfer responsibility.
 
@@ -118,8 +114,7 @@ that work.
 An Agent must first confirm the task, target, current state, responsible person,
 and applicable local rules; repository work also requires the exact root. It
 must make the goal, scope, non-goals, and completion condition clear. It should
-restate them when needed to resolve ambiguity or keep collaborators aligned; a
-simple task does not need a separate recital of an already clear request.
+restate them when needed to resolve ambiguity or keep collaborators aligned.
 
 It must distinguish fact, hypothesis, inference, judgment, decision, and action;
 build the [smallest sufficient model](decide.md#use-the-smallest-sufficient-model)
@@ -197,8 +192,7 @@ replaces a completion check. You must state what remains incomplete and should
 state why; you should distinguish a missing dependency from work that has not
 been attempted.
 
-You must end with the next responsible person, action, and due time; you must
-not write only “follow up.”
+You must end with the next responsible person, action, and due time.
 
 On interruption, you must preserve state, uncommitted work, attempts and
 failures, the recovery entry, and retries known to be ineffective. Repository

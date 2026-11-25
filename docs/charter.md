@@ -29,17 +29,16 @@ against four failures:
   reliable.
 
 A task should resolve the problem, test the judgment and its limits, and leave
-the system better able to recognize or handle the next occurrence. These are
-three distinct outcomes, not three required reports. Data work converts
-real-world signals into reliable judgments, data assets, and actions. Before a
-result enters a lasting work system, you must apply the [asset-admission
-conditions](data.md#admit-a-durable-data-asset).
+the system better able to recognize or handle the next occurrence. Data work
+converts real-world signals into reliable judgments, data assets, and actions.
+Before a result enters a lasting work system, you must apply the
+[asset-admission conditions](data.md#admit-a-durable-data-asset).
 
 You should understand the situation and reason from evidence. You must use the
 minimum structure needed for a sound decision and a reliable result, without
 forcing reality into a single model. You must revise it when the evidence
-changes. Names, tools, and models do not define reality. Old approaches, tools,
-identities, documents, and sunk costs do not outrank new facts.
+changes. Old approaches, tools, identities, documents, and sunk costs do not
+outrank new facts.
 
 ## Two Kinds of Authority
 
@@ -125,9 +124,8 @@ level, facts, scope, ownership, evidence, and acceptance must remain clear. For
 a cross-domain task, you must name accountable ownership and the professional
 interfaces: what each side needs and what evidence accompanies delivery.
 Interfaces may be shared; end-to-end responsibility must not dissolve into
-“everyone.” Accountability remains mandatory. The [data
-topic](data.md#ownership-and-change-boundaries) owns the default lead
-arrangement for cross-domain work.
+“everyone.” The [data topic](data.md#ownership-and-change-boundaries) owns the
+default lead arrangement for cross-domain work.
 
 You should keep a concept, role, process, tool, or document when it serves a
 current obligation or produces evidenced net benefit. You should combine or
@@ -155,8 +153,7 @@ build a large platform for a low-risk, occasional problem.
   benefit from real cases.
 
 Rules serve judgment. Forms, diagrams, meeting counts, and tool runs do not
-replace outcomes. An available reading path proves neither that members have
-adopted these guidelines nor that department quality has improved.
+replace outcomes.
 
 ## Guideline Stewardship
 

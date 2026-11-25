@@ -12,8 +12,7 @@ relations:
 must be made.
 
 You should identify the decision the analysis must support before choosing its
-depth. You should not begin by filling a template or collecting material. If the
-decision owner or subject is unknown, you must follow the [stop
+depth. If the decision owner or subject is unknown, you must follow the [stop
 rule](charter.md#purpose); you should test a proposed answer against shared
 criteria, counterexamples, and stated limits.
 
@@ -39,8 +38,7 @@ In the existing ticket, discussion, or proposal, you must answer:
 A low-risk matter may need one conversation; L1 and L2 work needs a reviewable
 record under the [charter's risk levels](charter.md#form-follows-risk).
 
-You must name the time, cost, compliance, technical, and resource constraints. A
-target without those limits is not an executable commitment.
+You must name the time, cost, compliance, technical, and resource constraints.
 
 If the subject, authority, or consequences are unclear, you must follow the
 [stop rule](charter.md#purpose). **Collecting information is not the goal; you
@@ -56,8 +54,6 @@ boundaries explicit:
   to inform.
 - **Evidence:** What it does and does not establish.
 - **Action:** What is authorized and what requires escalation.
-
-An attractive solution to an unnamed subject is not yet a proposal.
 
 ## Keep Six Meanings Distinct
 
@@ -104,8 +100,7 @@ when checking a repair; a later success does not erase them.
    prefer the smallest experiment that distinguishes plausible explanations.
 
    You should rank candidates by explanatory power, likelihood under the known
-   facts, and the cost of a decisive test. An easy test does not make a weak
-   explanation more likely.
+   facts, and the cost of a decisive test.
 
 4. **Bound the conclusion.** You must give a bounded conclusion: what the
    evidence supports, your confidence and limits, what remains possible, the
@@ -153,8 +148,7 @@ You should check the reasoning for:
   removes the main failure mode, and operates within current boundaries and
   resources. It should be verifiable, observable, and recoverable, reduce total
   maintenance and reliance on individual memory, repeated coordination, and
-  manual rescue, and have clear exit and replacement conditions. Novelty,
-  completeness, or popularity does not establish suitability.
+  manual rescue, and have clear exit and replacement conditions.
 - **Recommend:** You should state the premises, strongest objection, first step
   if chosen, and revisit trigger.
 

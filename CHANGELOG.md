@@ -12,6 +12,12 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [10.1.3] - 2026-11-25
+
+### Changed
+
+- Say each rule once, in the form that states it.
+
 ## [10.1.2] - 2026-11-25
 
 ### Changed

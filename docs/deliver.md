@@ -22,12 +22,12 @@ accept a result, [apply the completion conditions](#close-the-work).
 > Authorized person and subject → commitment and boundary → bounded action →
 > current evidence → bounded claim → acceptance and learning.
 
-These duties can share one work record; each step does not need its own
-document. [L0 work](charter.md#form-follows-risk) may close in one exchange. For
-L1 and L2 work, you must follow the [charter's risk
-levels](charter.md#form-follows-risk) for the required record and safeguards,
-using the existing ticket, review, or project document. Urgent containment
-follows [emergencies and exceptions](evolve.md#emergencies-and-exceptions).
+These duties can share one work record. [L0 work](charter.md#form-follows-risk)
+may close in one exchange. For L1 and L2 work, you must follow the [charter's
+risk levels](charter.md#form-follows-risk) for the required record and
+safeguards, using the existing ticket, review, or project document. Urgent
+containment follows [emergencies and
+exceptions](evolve.md#emergencies-and-exceptions).
 
 ## Before Acting
 
@@ -86,11 +86,11 @@ see [repository governance](governance/README.md).
 5. **Verify** current evidence.
 6. **Learn** what to retain, revise, or retire.
 
-These actions guide the work; they are not mandatory separate stages. When
-evidence or risk changes, you must review the affected judgment. You must frame
-the task again when the subject, outcome, or boundaries change; you should
-retain verified parts whose inputs and conditions still hold. You may combine or
-revisit actions as needed, preserving every applicable duty above.
+These actions guide the work. When evidence or risk changes, you must review the
+affected judgment. You must frame the task again when the subject, outcome, or
+boundaries change; you should retain verified parts whose inputs and conditions
+still hold. You may combine or revisit actions as needed, preserving every
+applicable duty above.
 
 ## Name the State, Not the Effort
 

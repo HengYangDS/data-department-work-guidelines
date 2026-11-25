@@ -70,8 +70,7 @@ the same guidance; each topic owns its rules and points to the related work.
 Open only the topic needed for the next decision. You must identify the decision
 owner and what must be known before acting; you must follow the [stop
 rule](charter.md#purpose) when authority, target, or critical facts are missing.
-Before reporting a result, follow its verification and acceptance link. These
-groups are reading routes, not mandatory work stages.
+Before reporting a result, follow its verification and acceptance link.
 
 For a concrete path from research to permitted use, follow the
 [revised-market-history example](data.md#worked-decision-revised-market-history).

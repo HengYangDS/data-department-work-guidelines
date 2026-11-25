@@ -130,17 +130,16 @@ problems.
 A full cycle is one complete round of the work that a responsibility governs, or
 to which a method, standard, check, or judgment applies, from its start to
 acceptance, such as one reporting period or one release. S is read in the period
-in which the delegated responsibility's full cycle ends, or, when the result's use
-falls after that period, in the period in which it is used; before that cycle
-ends, the responsibility gives no period an S. Value is what the users of a result
-record: who used it, and what it changed in research, production, a decision,
-cost, or risk. Without that record, neither A nor S holds. The chief grade has no
-next row. Before the period, the decision owner states in writing what counts as
-A, a capability beyond the chief row shown in the member's own work, and what
-counts as S, a responsibility beyond that row delegated to the member and carried
-for a full cycle; for both, a user other than the decision owner records the
-value. A tier not stated before the period cannot be read: without the statement
-of A the period cannot read A, and without the statement of S it cannot read S.
+in which the delegated responsibility's full cycle ends, or, when the result's
+use falls after that period, in the period in which it is used; before that
+cycle ends, the responsibility gives no period an S. Value is what the users of
+a result record: who used it, and what it changed in research, production, a
+decision, cost, or risk. Without that record, neither A nor S holds. The chief
+grade has no next row. Before the period, the decision owner states in writing
+what counts as A, a capability beyond the chief row shown in the member's own
+work, and what counts as S, a responsibility beyond that row delegated to the
+member and carried for a full cycle; for both, a user other than the decision
+owner records the value. A tier not stated before the period cannot be read.
 
 A single boundary crossing follows the charter's [breach
 rule](charter.md#four-non-negotiable-boundaries) and does not by itself set the
@@ -232,9 +231,9 @@ A tier travels with its period, scope, and record, and you must not cite it
 without them. Each period is assessed afresh. Only the member, the assessors,
 and the decision owner see a tier; the decision owner carries it into the
 reward, promotion, and selection decisions it informs. It is never published
-with a name, placed in a file an Agent reads, or computed automatically, and it
-does not feed back into work scores. Each period, you should publish the
-assessors' agreement rate and the share of "insufficient evidence" as counts.
+with a name, placed in a file an Agent reads, or computed automatically. Each
+period, you should publish the assessors' agreement rate and the share of
+"insufficient evidence" as counts.
 
 A tier is assessed and read against the grade requirements and tier definitions
 declared for its period; a later revision of either does not reopen it.
