@@ -12,6 +12,13 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [10.1.1] - 2026-11-25
+
+### Removed
+
+- Stop pinning and locking ETHOS's Windows archives, as the owner decided that no governed
+  repository supports Windows; the macOS and Linux archives stay for contributors' local installs.
+
 ## [10.1.0] - 2026-11-25
 
 ### Changed

@@ -18,11 +18,3 @@ url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-beta.11/etho
 [tools."http:ethos"."platforms.macos-arm64"]
 checksum = "sha256:59a2b154e82b9fb5a5f94f12cba6eb5825102235a7e4e802b60bafe82f8b966e"
 url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-beta.11/ethos-0.2.0-beta.11-macos-arm64.tar.gz"
-
-[tools."http:ethos"."platforms.windows-arm64"]
-checksum = "sha256:6c48a4e784c3e6f92331f670fb4533f4cf590ce511f771b5f898edd2138a534d"
-url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-beta.11/ethos-0.2.0-beta.11-windows-arm64.tar.gz"
-
-[tools."http:ethos"."platforms.windows-x64"]
-checksum = "sha256:85a914179bd660da1f7f0e8a1995fcbf195eb36240c3346aec304ac25da4c826"
-url = "https://github.com/HengYangDS/ethos/releases/download/v0.2.0-beta.11/ethos-0.2.0-beta.11-windows-x64.tar.gz"
