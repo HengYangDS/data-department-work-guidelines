@@ -91,11 +91,8 @@ steps without changing deadlines or review and protected isolation.
 
 #### Scenario: Windows verification events share a finite executor
 
-- **WHEN** Windows review and protected-source jobs become eligible for the same
-  project's finite executor
-- **THEN** they declare one stable native project-scoped resource group,
-  independent of the event and ref
-- **AND** the installed projection check rejects missing or divergent
-  reservations that generated-pipeline drift introduces
-- **AND** separate runner identities and ref admission remain unchanged; the
-  reservation does not prove isolation from another project.
+- **WHEN** the repository validates its GitLab jobs
+- **THEN** it declares no Windows job and therefore no Windows resource group
+- **AND** a Windows job or reservation that generated-pipeline drift introduces
+  fails the installed projection check
+- **AND** separate runner identities and ref admission remain unchanged.

@@ -9,32 +9,33 @@ release navigation, and bounded download retirement on both independent Forges.
 
 ### Requirement: Hosted documentation verification begins from a Git checkout
 
-Each hosted job SHALL run the installed ETHOS full host graph from a Git checkout. GitHub SHALL
-check out first on a managed runner; GitLab SHALL supply Git in its Linux container and
-project-locked macOS and Windows runners. Both SHALL install the locked ETHOS release through
-Mise, and the command and repository-relative inputs SHALL NOT differ by provider. Actions SHALL
-pin immutable maintained releases; workflow YAML alone SHALL NOT count as hosted execution.
+Each hosted job SHALL run the installed ETHOS full host graph from a Git checkout on ARM macOS.
+GitHub SHALL check out first on its hosted `macos-latest` runner; GitLab SHALL run on its
+project-locked ARM macOS guest, which supplies Git. Both SHALL install the locked ETHOS release
+through Mise, and the command and repository-relative inputs SHALL NOT differ by provider. Actions
+SHALL pin immutable maintained releases; workflow YAML alone SHALL NOT count as hosted execution.
 
 #### Scenario: GitHub runner-native checkout is configured
 
 - **WHEN** the repository validates the GitHub documentation workflow
-- **THEN** the job has no job-level container
+- **THEN** the job runs on `macos-latest` and has no job-level container
 - **AND THEN** checkout precedes runtime commands and the locked ETHOS installation
 - **AND THEN** the installed full host graph remains the verification command.
 
 #### Scenario: GitLab Docker runtime is configured
 
-- **WHEN** the repository validates the GitLab Linux documentation job
-- **THEN** Git and the Mise bootstrap prerequisites are available from the pinned
-  image without a browser package installation
-- **AND THEN** its verifier command is identical to the GitHub projection.
+- **WHEN** the repository validates its GitLab documentation jobs
+- **THEN** no job runs in a Docker container or on a Linux or Windows runner, and Git
+  and Mise come from the ARM macOS guest without a browser package installation
+- **AND THEN** each job's verifier command is identical to the GitHub projection.
 
 #### Scenario: GitLab native runtimes are configured
 
-- **WHEN** the repository validates the GitLab macOS and Windows jobs
-- **THEN** each selects its project-locked operating-system capability and
-  installs the locked ETHOS release before the common verifier
-- **AND THEN** neither job relies on the Linux container image or a host path.
+- **WHEN** the repository validates the GitLab macOS jobs
+- **THEN** each selects the project-locked ARM macOS guest by the tags
+  `macos-latest` and `review`, or `macos-latest` and `protected`, and installs the
+  locked ETHOS release before the common verifier
+- **AND THEN** no job relies on a container image or a host path.
 
 #### Scenario: Hosted evidence remains independent
 
@@ -83,31 +84,6 @@ malformed headings, duplicate versions, and out-of-order versions or dates.
 - **THEN** installed ETHOS accepts that structure
 - **AND THEN** human review still judges whether the change descriptions are
   useful.
-
-### Requirement: GitLab Runner image admission matches the source pin
-
-The declared GitLab Linux ARM64 Runner SHALL allow only the exact OCI image
-digest pinned by both repository CI jobs and SHALL use a local-only image pull
-policy. Before unpausing that Runner, the deployment owner SHALL verify that
-its Docker store resolves the same digest for Linux ARM64. A cached image under
-a floating tag, an older successful job, or an available registry endpoint
-SHALL NOT substitute for that check.
-
-#### Scenario: Exact image is ready before a job
-
-- **WHEN** the Runner policy allows the CI image digest and Docker resolves it
-  locally for Linux ARM64
-- **THEN** the Runner may be admitted for an exact-source job without fetching
-  a replacement image at job start
-- **AND THEN** hosted success is claimed only after that job actually passes.
-
-#### Scenario: Cache or allowlist differs from source
-
-- **WHEN** the pinned digest is absent from the Runner allowlist or local Docker
-  store, even if the matching image tag exists
-- **THEN** the Runner remains paused or the job fails closed under its local-only
-  pull policy
-- **AND THEN** the source pin is not weakened to obtain a passing CI result.
 
 ### Requirement: Release operations are reproducible from the contributor route
 
@@ -183,18 +159,17 @@ rewritten or deleted.
 
 ### Requirement: Per-Forge runner isolation protects source verification
 
-Both Forges SHALL run the full verifier on Linux, macOS, and Windows. GitHub
-SHALL use hosted runners; GitLab SHALL use project-locked ARM64 Runners. On
-every GitLab OS route, including Linux containers, review and protected jobs
-SHALL have distinct Runner identities, accounts, execution roots, caches, and
-credential reachability. Runners SHALL be tagged-only: review `not_protected`,
-protected `ref_protected`. GitLab SHALL protect `dev`, `main`, and `v*`.
+Both Forges SHALL run the full verifier only on ARM macOS, selected by the label `macos-latest`:
+GitHub on its hosted runner, GitLab on project-locked Runners of its ARM macOS guest, whose tags
+add `review` or `protected`. GitLab review and protected jobs SHALL have distinct Runner
+identities, accounts, execution roots, caches, and credential reachability. Runners SHALL be tagged-only:
+review `not_protected`, protected `ref_protected`. GitLab SHALL protect `dev`, `main`, and `v*`.
 
 #### Scenario: Repository workflow bindings are statically valid
 
 - **WHEN** the repository validates its GitHub and GitLab documentation jobs
-- **THEN** GitHub selects its declared hosted matrix, checks out first, and
-  installs the locked ETHOS release
+- **THEN** GitHub selects its declared hosted runner `macos-latest`, checks out
+  first, and installs the locked ETHOS release
 - **AND THEN** GitHub admits `dev`, `main`, `proposal/**`, and `v*` push events
   and pull requests targeting `dev` or `main`
 - **AND THEN** GitLab selects review or protected project capabilities according
@@ -202,10 +177,10 @@ protected `ref_protected`. GitLab SHALL protect `dev`, `main`, and `v*`.
 
 #### Scenario: A declared hosted check is skipped
 
-- **WHEN** a GitHub source job excludes a matrix host, skips a job or step, or
-  tolerates a required failure
+- **WHEN** a GitHub source job drops its declared host (for example by a matrix
+  `exclude`), skips a job or step, or tolerates a required failure
 - **THEN** the installed common model or its projection check rejects such a
-  source workflow before claiming that its declared host matrix ran.
+  source workflow before claiming that its declared host ran.
 
 #### Scenario: Global setup alters a GitLab job
 
@@ -216,19 +191,19 @@ protected `ref_protected`. GitLab SHALL protect `dev`, `main`, and `v*`.
 #### Scenario: Native source routes are trust-separated
 
 - **WHEN** GitLab evaluates a proposal push or merge request
-- **THEN** only the Linux, macOS, and Windows review jobs are eligible
+- **THEN** only the macOS review job is eligible
 - **AND WHEN** GitLab evaluates `dev`, `main`, or a version tag
-- **THEN** only the Linux, macOS, and Windows protected source jobs are eligible.
+- **THEN** only the macOS protected source job is eligible.
 
 #### Scenario: Linux selectors cannot cross the trust boundary
 
-- **WHEN** the repository validates its GitLab Linux source jobs
-- **THEN** proposal and merge-request jobs select the review capability
-- **AND THEN** protected branch and tag jobs select a distinct protected
-  capability
-- **AND THEN** a missing job or shared tag that generated-pipeline drift
-  introduces fails the installed projection check before hosted execution is
-  claimed.
+- **WHEN** the repository validates its GitLab source jobs
+- **THEN** it declares no Linux source job
+- **AND THEN** proposal and merge-request jobs select the review capability, and
+  protected branch and tag jobs select a distinct protected capability
+- **AND THEN** a Linux job, a missing job, or a job whose tags both a review and a
+  protected Runner carry, such as `macos-latest` alone, fails the installed
+  projection check before hosted execution is claimed.
 
 #### Scenario: An open proposal has one review pipeline
 
@@ -242,8 +217,7 @@ protected `ref_protected`. GitLab SHALL protect `dev`, `main`, and `v*`.
 #### Scenario: Runner labels hide a shared native account
 
 - **WHEN** review and protected selectors resolve to the same Runner identity,
-  account, container daemon or socket, workspace, cache, or credential
-  reachability
+  account, workspace, cache, or credential reachability
 - **THEN** fleet admission refuses the setup even if CI lint and local checks
   pass
 - **AND THEN** GitLab platform proof remains incomplete.
@@ -260,7 +234,7 @@ protected `ref_protected`. GitLab SHALL protect `dev`, `main`, and `v*`.
 #### Scenario: Registration tunneling leaves other credential paths exposed
 
 - **WHEN** a GitLab Runner registers or polls through an encrypted tunnel
-  while its source clone or job-token package request still uses HTTP
+  while its source clone still uses HTTP
 - **THEN** fleet admission separately observes the effective endpoint of each
   credential-bearing path in an actual job
 - **AND THEN** transport is not called complete without encryption for those
@@ -278,8 +252,8 @@ protected `ref_protected`. GitLab SHALL protect `dev`, `main`, and `v*`.
 - **WHEN** a required GitLab job cannot run on its declared project-specific
   operating-system capability
 - **THEN** GitLab platform proof remains incomplete
-- **AND THEN** local lint, another GitLab platform, or GitHub success does not
-  substitute for the missing job.
+- **AND THEN** local lint, a job on the other GitLab capability, or GitHub
+  success does not substitute for the missing job.
 
 #### Scenario: Local configuration is not hosted evidence
 
@@ -331,26 +305,6 @@ or CI result alone SHALL NOT establish publication.
   that version's entry
 - **THEN** installed ETHOS refuses the tag's admission
 - **AND THEN** earlier untagged editions are not retroactively called releases.
-
-### Requirement: GitLab bootstraps Mise from its own package registry
-
-GitLab Linux jobs SHALL obtain the pinned Mise installer and archive from the
-same project's package registry with the CI API URL, project ID, and job token,
-check the installer's committed digest before running it, and SHALL NOT fall
-back to another origin. Tokens SHALL appear only in request headers, never in
-URLs or logs.
-
-#### Scenario: The package or job identity is unavailable
-
-- **WHEN** a package request fails or the standard CI URL, project ID, or job
-  token is missing
-- **THEN** the job fails without downloading Mise from another origin
-- **AND** it does not log the token or mark verification successful.
-
-#### Scenario: The supplied installer is altered
-
-- **WHEN** the downloaded installer's SHA-256 differs from the committed record
-- **THEN** the job stops before running it.
 
 ### Requirement: Source-event tag routes match the release family
 
