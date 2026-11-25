@@ -206,8 +206,7 @@ long-standing open decisions in time for work to proceed.
   Agent-correction counts
 - **THEN** the evolution topic keeps the review focused on mechanism problems
   rather than ranking people
-- **AND** a single metric SHALL NOT represent personal worth, while
-  case-based feedback and coaching remain available.
+- **AND** case-based feedback and coaching remain available.
 
 #### Scenario: A local data metric stands for whole-system value
 
@@ -654,8 +653,7 @@ delegation SHALL name output format, destination, audience, and detail.
 The department SHALL judge one piece of work by a work score, a member's work
 over one period by a tier read at the member's own grade, and the responsibility
 a member has shown they can reliably carry by a grade. All three SHALL rest only
-on work the member did and SHALL NOT judge personality, background, loyalty, or
-worth. A tier SHALL NOT be set from one piece of work in place of the period's records, nor a grade from one period.
+on work the member did. A tier SHALL NOT be set from one piece of work in place of the period's records, nor a grade from one period.
 
 #### Scenario: One strong piece of work is offered as a tier
 
