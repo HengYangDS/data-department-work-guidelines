@@ -4,7 +4,7 @@ release_branch = "main"
 timeout_minutes = 20
 
 [supply]
-mise_version = "2026.11.11"
+mise_version = "2026.11.14"
 
 # CI runs only on ARM macOS, and both Forges select it by one label: GitHub's hosted
 # `macos-latest`, and on GitLab the project-locked macOS guest's runners, which carry the same
