@@ -14,6 +14,7 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ### Changed
 
+- Run ETHOS 0.2.0-beta.12 in every lane and hosted job.
 - The hosted GitHub job installs Mise 2026.11.14 instead of 2026.11.11.
 
 ## [10.1.3] - 2026-11-25
