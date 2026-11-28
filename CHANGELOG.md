@@ -12,6 +12,8 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 ## [Unreleased]
 
+## [10.1.4] - 2026-11-28
+
 ### Changed
 
 - Run ETHOS 0.2.0-beta.12 in every lane and hosted job.
