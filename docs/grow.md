@@ -8,9 +8,16 @@ relations:
 
 # Grades, Tiers, and Growth
 
-**When to use:** You set what a grade expects, review a member's work over a
-period, decide a promotion, set a hiring bar, or coach a member toward the next
-grade.
+**When to use:** You coach a member toward the next grade, set what a grade
+expects, review a member's work over a period, decide a promotion, or set a
+hiring bar.
+
+Grades and tiers are there to help each member grow, on a fair basis declared
+before each period. You should use a tier to show each member where they stand
+at their grade and where to go next, to recognize and reward good work, to plan
+development, as evidence for promotion, and in selection. Pay follows the grade
+and attainment, meaning how far the member reached the goals agreed for the
+period; rewards and sanctions take the tier as one of their grounds.
 
 The department judges one piece of work, and a member's professional competence
 and work performance over a period, separately, each by its own standard. A
@@ -40,7 +47,12 @@ not change a tier.
 ## The Professional Sequence
 
 Every member is on one professional sequence. A grade is not a management
-level: a team lead is a member of the sequence who also leads a team.
+level: a team lead is a member of the sequence who also leads a team. Each band
+changes the kind of responsibility: the tools band uses tools and norms
+correctly, the craft band gets work done with a method, the method band owns
+problems and builds methods, and the direction band defines direction and the
+standards of judgment. At every grade a member grows along the [capability
+path](evolve.md#grow-capability-through-real-work).
 
 | Band         | Grade             | What the grade shows                                                                                                                           | Responsibility it can carry                                                                                  |
 | ------------ | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
@@ -56,12 +68,7 @@ level: a team lead is a member of the sequence who also leads a team.
 A grade's requirements are the items stated in the two columns of its row. A grade
 shows the responsibility a member can carry when the authorized owner assigns it;
 it does not itself grant authority ([two kinds of
-authority](charter.md#two-kinds-of-authority)). Each band changes the kind of
-responsibility: the tools band uses tools and norms correctly, the craft band gets
-work done with a method, the method band owns problems and builds methods, and the
-direction band defines direction and the standards of judgment. At every grade a
-member grows along the [capability
-path](evolve.md#grow-capability-through-real-work).
+authority](charter.md#two-kinds-of-authority)).
 
 "Independently" means the next person can use what was delivered as it is, with
 what was not checked stated; it does not mean speed or fluency with tools. At
@@ -77,17 +84,19 @@ their own name.
 A tier describes a member's work in one period at their own grade. Each tier has
 one definition across the department, read at the height the grade sets: an
 apprentice's B and a staff member's B describe different absolute levels, and
-tiers at different grades are not compared. B is the performance the grade
-expects, C is the passing line, and D falls below it. Adjacent tiers differ in
-kind, not in amount. D's conditions are read first; above D, each tier answers one
-yes-or-no question. Within the member's grade: whether every requirement has an
-accepted and used result (C), and whether each has one in which the key judgment
-is the member's own (B). Toward the next grade, two questions asked of a period
-that meets B, each also needing its users' record of value: whether the same item
-that the next grade's "What the grade shows" adds shows in at least two different
-pieces of work (A), and whether a responsibility that the next grade's
-"Responsibility it can carry" adds was delegated to the member and carried for a
-full cycle (S).
+tiers at different grades are not compared.
+
+The tiers are clearest read from B, the performance the grade expects; C is the
+passing line, and D falls below it. Above D, each tier answers one yes-or-no
+question. Within the member's grade: whether each requirement has an accepted
+and used result in which the key judgment is the member's own (B), and whether
+every requirement has an accepted and used result (C). Toward the next grade,
+two questions asked of a period that meets B, each also needing its users'
+record of value: whether the same item that the next grade's "What the grade
+shows" adds shows in at least two different pieces of work (A), and whether a
+responsibility that the next grade's "Responsibility it can carry" adds was
+delegated to the member and carried for a full cycle (S). Adjacent tiers differ
+in kind, not in amount.
 
 | Tier | 中文     | The member's work in the period, at their own grade                                                                                                                                                                                                                                                                                                                                |
 | ---- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -97,13 +106,42 @@ full cycle (S).
 | C    | 及格     | Passes: every requirement the period's assignments touched has at least one result that was accepted and used.                                                                                                                                                                                                                                                                     |
 | D    | 不及格   | Below the passing line: at least one requirement the period's assignments touched has no accepted and used result in any of the period's work; or an agreed improvement period ended in the period with a requirement it named recorded as not met; or the work crossed the same [non-negotiable boundary](charter.md#four-non-negotiable-boundaries) twice or more in the period. |
 
-When one of D's conditions holds, the period reads D whatever the other rows show;
-otherwise it reads the highest tier its records show. A and S each require B; S
-does not require A. S and A differ in kind and in the reach of their value, not in
-the count of their evidence: A shows the next grade's capability in the member's
-own work, with value at the scope of the piece of work it came from, while S means
-one of the next grade's responsibilities was delegated and carried, with value at
-that responsibility's scope. For an intermediate member, the responsibility S asks
+### The Next Step
+
+Each tier also points to a next step. From B, A, or S, it is what A, S, and
+promotion ask: a capability that the next grade adds, shown in the member's own
+work, and a responsibility that it adds, carried once it is delegated; for the
+chief grade, what the decision owner stated before the period. From C or D, it
+begins with support.
+
+After a C, the member keeps the grade, and for the next period the department
+gives the member a goal and a coach for each requirement that had no result
+with the member's own key judgment, with an in-person check in the middle of the
+period. When the same requirement falls short again in that next period, the
+member and the decision owner agree on an improvement period. After D, they
+agree on one at once. An improvement period is agreed in writing; it names the
+training or coaching the member receives, the requirements to be met and, for
+each, whether it is met by C's test or by B's, and its length, which is one
+period unless they agree otherwise. At its end, each named requirement is
+recorded as met or not met by that test, with its records.
+
+### How a Period Is Read
+
+D's conditions are read first: when one of them holds, the period reads D
+whatever the other rows show; otherwise it reads the highest tier its records
+show. The non-negotiable boundaries are the conditions under which others can
+rely on the member, so two crossings of the same boundary in a period read D;
+one event counts as one crossing, however many records show it. A single
+boundary crossing follows the charter's [breach
+rule](charter.md#four-non-negotiable-boundaries) and does not by itself set the
+tier.
+
+A and S each require B; S does not require A. S and A differ in kind and in the
+reach of their value, not in the count of their evidence: A shows the next
+grade's capability in the member's own work, with value at the scope of the
+piece of work it came from, while S means one of the next grade's
+responsibilities was delegated and carried, with value at that
+responsibility's scope. For an intermediate member, the responsibility S asks
 for is lead responsibility for a critical data pipeline, a complex analysis, or a
 platform module, carried for one full cycle; leading a team stays at senior and
 above.
@@ -140,27 +178,6 @@ what counts as A, a capability beyond the chief row shown in the member's own
 work, and what counts as S, a responsibility beyond that row delegated to the
 member and carried for a full cycle; for both, a user other than the decision
 owner records the value. A tier not stated before the period cannot be read.
-
-A single boundary crossing follows the charter's [breach
-rule](charter.md#four-non-negotiable-boundaries) and does not by itself set the
-tier. Two crossings of the same boundary in a period read D, because the
-boundaries are the conditions under which others can rely on the member; one event
-counts as one crossing, however many records show it. After a C, the member keeps
-the grade, and the next period gives each requirement that had no result with the
-member's own key judgment a goal and a coach, with an in-person check in the
-middle of the period; when the same requirement falls short again in that next
-period, the member and the decision owner agree on an improvement period. After D,
-they agree on one at once. An improvement period is agreed in writing; it names
-the requirements to be met and, for each, whether it is met by C's test or by B's,
-the training or coaching given, and its length, which is one period unless they
-agree otherwise, and at its end each named requirement is recorded as met or not
-met by that test, with its records.
-
-You should use a tier to show each member where they stand at their grade and
-where to go next, to recognize and reward good work, to plan development, as
-evidence for promotion, and in selection. Pay follows the grade and attainment,
-meaning how far the member reached the goals agreed for the period; rewards and
-sanctions take the tier as one of their grounds.
 
 After the first two periods, the department reviews whether assessors agree at
 each boundary between adjacent tiers, and rewrites the wording of a boundary where
@@ -240,11 +257,12 @@ declared for its period; a later revision of either does not reopen it.
 
 ## Promotion
 
-A member may be promoted only when they have reached S or A at their grade in at
-least two consecutive periods and already carry one of the next grade's
-responsibilities, other than leading a team while below senior, in their actual
-work, read from the same delegation records as S; entering senior or expert also
-requires the evidence below. The count restarts after a grade change.
+A promotion recognizes responsibility the member already carries. A member may
+be promoted only when they have reached S or A at their grade in at least two
+consecutive periods and already carry one of the next grade's responsibilities,
+other than leading a team while below senior, in their actual work, read from
+the same delegation records as S; entering senior or expert also requires the
+evidence below. The count restarts after a grade change.
 
 - **Entering senior:** in each of at least two different pieces of work, a
   method the member designed was adopted by another person, ran a full cycle,

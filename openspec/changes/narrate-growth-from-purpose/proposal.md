@@ -20,7 +20,9 @@ department's support after the shortfall, and gives a tier's purpose only after 
   coaching) before the conditions that follow.
 - Make the member the subject of what they do, learn and need, and give the reason for the boundary
   rule before the rule.
-- Elsewhere under `docs/`, reword each sentence that treats people as objects.
+- Elsewhere under `docs/`, reword each sentence that treats people as objects. One does: on the
+  practice page, an exceptional result improves others' "capability" rather than their "capacity",
+  which can read as throughput counted like a resource.
 - Record the change under `Unreleased` in the Changelog.
 
 No grade, tier, evidence rule, assessment step, promotion or hiring rule changes in meaning. Every
@@ -36,9 +38,11 @@ None.
 ### Modified Capabilities
 
 None. The accepted requirements stay as they are, and the Change sets the official `skip_specs`
-marker. One work-practice scenario pins wording that this Change moves: "Assessors decide between
-adjacent tiers" reads "after D's conditions, which are read first", and the page keeps "D's
-conditions are read first" in how a period is read, after the narration that starts at B.
+marker. Two work-practice scenarios touch wording that this Change moves or rewords, and both keep
+their meaning. "Assessors decide between adjacent tiers" reads "after D's conditions, which are read
+first"; the page keeps "D's conditions are read first" in how a period is read, after the narration
+that starts at B. "A member reports a failure or receives a review score" reads "improved capacity
+for others"; the practice page now says "capability" for the same thing.
 
 ## Impact
 
