@@ -22,7 +22,7 @@
 - [x] 3.2 Have a reviewer who did not write the change read the whole diff against that list, and
       settle each point in the page or in this Change; done when the review and its answers are in
       the lane's evidence.
-- [ ] 3.3 Run the format, Markdown lint, prose, OpenSpec, link and registry checks on the committed
+- [x] 3.3 Run the format, Markdown lint, prose, OpenSpec, link and registry checks on the committed
       source; done when each passes.
 - [x] 3.4 List each place outside this repository that uses the grades and tiers, and how it
       differs from this page; done when the list is in the lane's evidence.
