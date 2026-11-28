@@ -118,7 +118,7 @@ carry critical responsibilities within their competence and authority, without
 depending on repeated rescue. Required review and acceptance still apply.
 
 You must not call a result exceptional unless it produces evidenced net benefit,
-transfers a method, reduces long-term complexity, and improves others' capability.
+transfers a method, reduces long-term complexity, and improves others' capacity.
 Not every task needs an exceptional result; every task still owes its agreed
 outcome and the [four non-negotiable
 boundaries](charter.md#four-non-negotiable-boundaries).

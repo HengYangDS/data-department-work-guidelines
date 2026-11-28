@@ -58,9 +58,9 @@ before answering.
 ## Make Meetings Produce Decisions, Not Transcripts
 
 Before a meeting, you should name the question, necessary participants, and
-inputs; you should not meet for work that can be resolved asynchronously. You
-should not invite someone only out of courtesy if they supply no necessary fact,
-hold no decision authority, and own no action.
+inputs; you should not meet for work that can be resolved asynchronously. To
+spare people's time, you should not invite someone only out of courtesy if they
+supply no necessary fact, hold no decision authority, and own no action.
 
 In the meeting, you should align facts and definitions before comparing options.
 When the discussion drifts, you must return to the question that needs a

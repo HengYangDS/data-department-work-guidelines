@@ -9,7 +9,7 @@ purpose before mechanism, the person as the subject, and support before limits.
 
 **Goals:**
 
-- The same rules in a new order and wording, each normative statement with one counterpart.
+- The same rules in a new order and wording; each normative statement has a counterpart.
 
 **Non-Goals:**
 
@@ -20,31 +20,33 @@ purpose before mechanism, the person as the subject, and support before limits.
 
 ## Decisions
 
-- **Purpose leads the page.** The statement of what a tier is for, and the sentence on pay, move from
-  the end of the tier section to the page's opening; the separation of work score, tier and grade
-  follows them.
-- **Read from B, keep D's precedence.** The narration starts at B and ends with A and S. The rule
-  that D's conditions are read first, and otherwise the period reads the highest tier its records
-  show, stays one sentence in how a period is read, so the specification scenario's wording holds.
-  Dropping "read first" and relying on "whatever the other rows show" was rejected because the
-  scenario names it.
-- **Support before conditions.** What follows a C or a D becomes its own subsection. It opens with
-  what the department provides; the escalation to an improvement period follows, then what the
-  agreement names. The sentence "the next period gives each requirement a goal and a coach" names
-  the department as the giver, the page's existing collective actor; the member and the decision
-  owner keep the improvement agreement.
-- **The next step as narration.** One sentence says where a period that reads B, A or S points: the
-  next grade's row. It carries no word of force and follows from the definitions of A and S.
+- **Purpose leads the page.** The statement of what a tier is for moves from the end of the tier
+  section to the page's opening. The sentence on pay, rewards and sanctions moves to "Assess
+  Fairly", beside the decisions a tier informs, so the reader meets what a tier is for before what
+  follows from it.
+- **Explain from B, keep D's precedence.** The explanation starts from B and ends with A and S. The
+  rule that D's conditions are read first, and otherwise the period reads the highest tier its
+  records show, stays one sentence at the head of how a period is read, so the specification
+  scenario's wording holds. "Read" keeps its one sense on the page, to assess; the explanation says
+  the other tiers are "easiest to understand" from B.
+- **The next step points to the rules.** One paragraph says where each tier points: from B, A or S
+  to the next grade's row, as A and S ask; from C or D to the goal, coaching and improvement period
+  set out below. It restates no condition of promotion, which keeps its own section.
+- **Support before conditions.** After a C, the department sets a goal and names a coach; the
+  escalation to an improvement period follows, then what the agreement names, its training or
+  coaching first. "The department", the page's existing collective actor, is named as the one who
+  sets the goal; the member and the decision owner keep the improvement agreement.
 - **Sweep criterion.** A sentence on another page changes only when it handles a person as an item,
   sorts colleagues into kinds, or opens a rule about people on suspicion or shortfall before its
   purpose and support. Role labels, data-ownership functions and the review of work stay as they
-  are.
+  are. "Improves others' capacity" on the practice page stays: the word sits in a condition that a
+  specification scenario repeats, and changing it could narrow the condition.
 
 ## Risks / Trade-offs
 
 - [A reordering drops or shifts a condition] → A sentence-level list maps each normative statement
   before and after, and a reviewer who did not write the change reads the whole diff against it.
-- [Naming the department as the giver changes who is responsible] → No role gains or loses a duty;
-  the decision owner's duties stay as written.
-- [The book's lane quotes earlier wording] → The book cites conditions by meaning; its lane reads
-  the new page before it lands.
+- [Naming the department as the one who sets the goal changes who is responsible] → No role gains
+  or loses a duty; the decision owner's duties stay as written.
+- [The book and the recruitment documents restate the old wording] → The consumer list names each
+  place; they align after this edition is released, each pinned to it.

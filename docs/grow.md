@@ -12,12 +12,10 @@ relations:
 expects, review a member's work over a period, decide a promotion, or set a
 hiring bar.
 
-Grades and tiers are there to help each member grow, on a fair basis declared
-before each period. You should use a tier to show each member where they stand
-at their grade and where to go next, to recognize and reward good work, to plan
-development, as evidence for promotion, and in selection. Pay follows the grade
-and attainment, meaning how far the member reached the goals agreed for the
-period; rewards and sanctions take the tier as one of their grounds.
+Grades and tiers exist to help each member grow, and what they ask is declared
+before each period starts. You should use a tier to show each member where they
+stand at their grade and where to go next, to recognize and reward good work, to
+plan development, as evidence for promotion, and in selection.
 
 The department judges one piece of work, and a member's professional competence
 and work performance over a period, separately, each by its own standard. A
@@ -86,11 +84,12 @@ one definition across the department, read at the height the grade sets: an
 apprentice's B and a staff member's B describe different absolute levels, and
 tiers at different grades are not compared.
 
-The tiers are clearest read from B, the performance the grade expects; C is the
-passing line, and D falls below it. Above D, each tier answers one yes-or-no
-question. Within the member's grade: whether each requirement has an accepted
-and used result in which the key judgment is the member's own (B), and whether
-every requirement has an accepted and used result (C). Toward the next grade,
+B is the performance the grade expects, and the other tiers are easiest to
+understand from it: C is the passing line, and D falls below it. Above D, each
+tier answers one yes-or-no question. Within the member's grade: whether each
+requirement has an accepted and used result in which the key judgment is the
+member's own (B), and whether every requirement has an accepted and used result
+(C). Toward the next grade,
 two questions asked of a period that meets B, each also needing its users'
 record of value: whether the same item that the next grade's "What the grade
 shows" adds shows in at least two different pieces of work (A), and whether a
@@ -108,14 +107,15 @@ in kind, not in amount.
 
 ### The Next Step
 
-Each tier also points to a next step. From B, A, or S, it is what A, S, and
-promotion ask: a capability that the next grade adds, shown in the member's own
-work, and a responsibility that it adds, carried once it is delegated; for the
-chief grade, what the decision owner stated before the period. From C or D, it
-begins with support.
+Each tier also points to a next step. From B, A, or S, it lies in the next
+grade's row: the capability that row adds, shown in the member's own work, as A
+asks, and the responsibility it adds, delegated to the member and carried for a
+full cycle, as S asks; for the chief grade, it is what the decision owner states
+before the period. From C or D, it is the goal, coaching, and improvement period
+set out below.
 
 After a C, the member keeps the grade, and for the next period the department
-gives the member a goal and a coach for each requirement that had no result
+sets the member a goal and names a coach for each requirement that had no result
 with the member's own key judgment, with an in-person check in the middle of the
 period. When the same requirement falls short again in that next period, the
 member and the decision owner agree on an improvement period. After D, they
@@ -129,19 +129,12 @@ recorded as met or not met by that test, with its records.
 
 D's conditions are read first: when one of them holds, the period reads D
 whatever the other rows show; otherwise it reads the highest tier its records
-show. The non-negotiable boundaries are the conditions under which others can
-rely on the member, so two crossings of the same boundary in a period read D;
-one event counts as one crossing, however many records show it. A single
-boundary crossing follows the charter's [breach
-rule](charter.md#four-non-negotiable-boundaries) and does not by itself set the
-tier.
-
-A and S each require B; S does not require A. S and A differ in kind and in the
-reach of their value, not in the count of their evidence: A shows the next
-grade's capability in the member's own work, with value at the scope of the
+show. A and S each require B; S does not require A. S and A differ in kind and
+in the reach of their value, not in the count of their evidence: A shows the
+next grade's capability in the member's own work, with value at the scope of the
 piece of work it came from, while S means one of the next grade's
-responsibilities was delegated and carried, with value at that
-responsibility's scope. For an intermediate member, the responsibility S asks
+responsibilities was delegated and carried, with value at that responsibility's
+scope. For an intermediate member, the responsibility S asks
 for is lead responsibility for a critical data pipeline, a complex analysis, or a
 platform module, carried for one full cycle; leading a team stays at senior and
 above.
@@ -179,9 +172,15 @@ work, and what counts as S, a responsibility beyond that row delegated to the
 member and carried for a full cycle; for both, a user other than the decision
 owner records the value. A tier not stated before the period cannot be read.
 
-After the first two periods, the department reviews whether assessors agree at
-each boundary between adjacent tiers, and rewrites the wording of a boundary where
-they do not.
+The non-negotiable boundaries are the conditions under which others can rely on
+the member, so two crossings of the same boundary in a period read D; one event
+counts as one crossing, however many records show it. A single boundary crossing
+follows the charter's [breach rule](charter.md#four-non-negotiable-boundaries)
+and does not by itself set the tier.
+
+After the first two periods, the department reviews whether assessors agree on
+where each pair of adjacent tiers divides, and rewrites the wording that divides
+them where they do not.
 
 ## Evidence for a Tier
 
@@ -247,22 +246,25 @@ neither counts toward nor breaks a run of periods for promotion.
 A tier travels with its period, scope, and record, and you must not cite it
 without them. Each period is assessed afresh. Only the member, the assessors,
 and the decision owner see a tier; the decision owner carries it into the
-reward, promotion, and selection decisions it informs. It is never published
-with a name, placed in a file an Agent reads, or computed automatically. Each
-period, you should publish the assessors' agreement rate and the share of
-"insufficient evidence" as counts.
+reward, promotion, and selection decisions it informs. Pay follows the grade and
+attainment, meaning how far the member reached the goals agreed for the period;
+rewards and sanctions take the tier as one of their grounds. A tier is never
+published with a name, placed in a file an Agent reads, or computed
+automatically. Each period, you should publish the assessors' agreement rate
+and the share of "insufficient evidence" as counts.
 
 A tier is assessed and read against the grade requirements and tier definitions
 declared for its period; a later revision of either does not reopen it.
 
 ## Promotion
 
-A promotion recognizes responsibility the member already carries. A member may
-be promoted only when they have reached S or A at their grade in at least two
-consecutive periods and already carry one of the next grade's responsibilities,
-other than leading a team while below senior, in their actual work, read from
-the same delegation records as S; entering senior or expert also requires the
-evidence below. The count restarts after a grade change.
+A promotion recognizes a responsibility of the next grade that the member
+already carries. A member may be promoted only when they have reached S or A at
+their grade in at least two consecutive periods and already carry one of the
+next grade's responsibilities, other than leading a team while below senior, in
+their actual work, read from the same delegation records as S; entering senior
+or expert also requires the evidence below. The count restarts after a grade
+change.
 
 - **Entering senior:** in each of at least two different pieces of work, a
   method the member designed was adopted by another person, ran a full cycle,

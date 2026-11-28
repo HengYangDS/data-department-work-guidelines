@@ -16,11 +16,12 @@ remain in Git history rather than being relabeled as formal SemVer releases.
 
 - Run ETHOS 0.2.0-beta.12 in every lane and hosted job.
 - The hosted GitHub job installs Mise 2026.11.14 instead of 2026.11.11.
-- Tell [grades, tiers, and growth](docs/grow.md) from their purpose: a tier first shows each member
-  where they stand and where to go next; the tiers are read from B, with the next step each points
-  to; and after a C or a D the department's support comes before the conditions that follow. On
-  the [practice page](docs/evolve.md), an exceptional result improves others' capability. No grade,
-  tier, evidence rule, assessment step, or promotion or hiring rule changes.
+- Retell [grades, tiers, and growth](docs/grow.md) purpose first: the page opens with what grades
+  and tiers are for, explains the tiers starting from B with the next step each points to, and,
+  after a C or a D, states the department's support before the conditions that follow. The
+  [charter](docs/charter.md) gives the reason for its four boundaries, and the
+  [communication page](docs/communicate.md) the reason for its rule on meeting invitations. No
+  grade, tier, evidence rule, assessment step, or promotion or hiring rule changes.
 
 ## [10.1.3] - 2026-11-25
 

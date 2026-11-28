@@ -77,6 +77,9 @@ silently choose the convenient rule.
 
 ## Four Non-Negotiable Boundaries
 
+These four boundaries are the conditions under which colleagues can rely on one
+another.
+
 1. **Tell the truth.** You must not fabricate, hide, or selectively present
    facts, or dress uncertainty as certainty.
 2. **Stay in bounds.** You must not cross the applicable subject, time,

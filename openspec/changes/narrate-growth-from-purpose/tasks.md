@@ -1,10 +1,10 @@
 ## 1. Growth page
 
-- [x] 1.1 Number each sentence and table cell of the growth page before the edit; done when the
+- [x] 1.1 Number each sentence and table row of the growth page before the edit; done when the
       numbered list is in the lane's evidence.
-- [x] 1.2 Reorder and reword the growth page: purpose first, tiers read from B with the next step
-      each points to, support before the conditions that follow a C or D, and the member as the
-      subject; done when the working-edit format and lint checks pass.
+- [x] 1.2 Reorder and reword the growth page; done when it opens with the purpose, explains the
+      tiers starting from B with the next step each points to, and after a C states the department's
+      support before the conditions that follow.
 
 ## 2. Other pages
 
@@ -17,14 +17,17 @@
 ## 3. Verification
 
 - [x] 3.1 Map every normative statement before the edit to its counterpart after it; done when the
-      one-to-one list is in the lane's evidence and leaves no statement unmatched.
-- [ ] 3.2 Have a reviewer who did not write the change read the whole diff against that list, and
+      list is in the lane's evidence, every statement has a counterpart, and each joined or split
+      statement is named.
+- [x] 3.2 Have a reviewer who did not write the change read the whole diff against that list, and
       settle each point in the page or in this Change; done when the review and its answers are in
       the lane's evidence.
-- [ ] 3.3 Run the working-edit checks for format, Markdown lint, prose and OpenSpec on the committed
+- [ ] 3.3 Run the format, Markdown lint, prose, OpenSpec, link and registry checks on the committed
       source; done when each passes.
+- [x] 3.4 List each place outside this repository that uses the grades and tiers, and how it
+      differs from this page; done when the list is in the lane's evidence.
 
 ## Workflow follow-up
 
-- Archive the Change, run the full proof of the archive head, and ask the owner before landing on
-  `dev`.
+- Archive the Change, run the full proof of the archive head, and ask the department head before
+  landing on `dev`.
